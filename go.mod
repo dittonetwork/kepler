@@ -1,8 +1,6 @@
 module kepler
 
-go 1.22
-
-toolchain go1.23.1
+go 1.23
 
 replace (
 	// fix upstream GHSA-h395-qcrw-5vmq vulnerability.

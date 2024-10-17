@@ -27,4 +27,5 @@ keplerd tx staking create-validator $NODE2_DIR/validator_info.json \
   --fees 100000stake \
   --chain-id kepler \
   --broadcast-mode sync \
+  --keyring-backend=test \
   --yes
