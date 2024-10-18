@@ -52,5 +52,5 @@ make create-validator
 Now you could check list of validators, there are should be 2:
 
 ``
-make check-validator
+make check-validators
 ``
