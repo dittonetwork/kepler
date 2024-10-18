@@ -9,7 +9,7 @@ NODE1_HOME := $(NODE1_DIR)/node1home
 NODE2_HOME := $(NODE2_DIR)/node2home
 
 # Targets
-.PHONY: init clean setup build init-nodes add-genesis-accounts gentx collect-gentxs start-node1 start-node2 create-validator
+.PHONY: init clean setup build init-nodes add-genesis-accounts gentx collect-gentxs start-node1 start-node2 create-validator check-validators
 
 init: clean setup build init-nodes add-genesis-accounts gentx collect-gentxs
 
@@ -34,10 +34,6 @@ add-genesis-accounts:
 	@yes "heavy notice slice boil dune monitor pet slight denial sea train notable section boring fancy evolve kangaroo lazy pride cluster gaze any hotel chimney" | keplerd keys add node2-account --recover --keyring-backend=test --home $(NODE2_HOME)
 	@keplerd genesis add-genesis-account $$(keplerd keys show node1-account -a --keyring-backend=test --home $(NODE1_HOME)) 100000000000000000000000000stake --home $(NODE1_HOME)
 	@keplerd genesis add-genesis-account $$(keplerd keys show node2-account -a --keyring-backend=test --home $(NODE2_HOME)) 100000000000000000000000000stake --home $(NODE1_HOME)
-
-import-genesis-accounts: clean setup init-nodes
-#	@yes "again glare leg choice input april tone brush goose seek forum dinosaur link speed digital question ticket caught strike quote release crowd fork deposit" | keplerd keys add node1-account --recover --keyring-backend=test --home $(NODE1_HOME)
-#	@yes "heavy notice slice boil dune monitor pet slight denial sea train notable section boring fancy evolve kangaroo lazy pride cluster gaze any hotel chimney" | keplerd keys add node2-account --recover --keyring-backend=test --home $(NODE2_HOME)
 
 gentx:
 	@echo "Generating genesis transaction..."
