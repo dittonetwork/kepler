@@ -1,0 +1,17 @@
+syntax = "proto3";
+package kepler.kepler;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "kepler/kepler/params.proto";
+
+option go_package = "kepler/x/kepler/types";
+
+// GenesisState defines the kepler module's genesis state.
+message GenesisState {
+  // params defines all the parameters of the module.
+  Params params = 1 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}
