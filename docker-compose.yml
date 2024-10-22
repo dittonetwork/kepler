@@ -1,0 +1,85 @@
+x-common-base: &common-base
+  image: "kepler:local"
+  cap_add:
+    - SYS_PTRACE
+  security_opt:
+    - seccomp:unconfined
+  restart: always
+  command:
+    ["start", "--home", "/root/.kepler"]
+
+
+services:
+  keplernode1:
+    container_name: node1
+    <<: *common-base
+    ports:
+      - "26656-26657:26656-26657"
+      - "1317:1317"
+      - "9090:9090"
+      - "2345:2345"
+    volumes:
+      - ./localnet/node1/node1home:/root/.kepler:rw
+    networks:
+      localnet:
+        ipv4_address: 192.168.10.2
+
+  keplernode2:
+    container_name: node2
+    <<: *common-base
+    ports:
+      - "26666-26667:26656-26657"
+      - "1318:1317"
+      - "9091:9090"
+    volumes:
+      - ./localnet/node2/node2home:/root/.kepler:rw
+    networks:
+      localnet:
+        ipv4_address: 192.168.10.3
+
+  keplernode3:
+    container_name: node3
+    <<: *common-base
+    ports:
+      - "26676-26677:26656-26657"
+      - "1319:1317"
+      - "9092:9090"
+    volumes:
+      - ./localnet/node3/node3home:/root/.kepler:rw
+    networks:
+      localnet:
+        ipv4_address: 192.168.10.4
+
+  keplernode4:
+    container_name: node4
+    <<: *common-base
+    ports:
+      - "26686-26687:26656-26657"
+      - "1320:1317"
+      - "9093:9090"
+    volumes:
+      - ./localnet/node4/node4home:/root/.kepler:rw
+    networks:
+      localnet:
+        ipv4_address: 192.168.10.5
+
+  keplernode5:
+    container_name: node5
+    <<: *common-base
+    ports:
+      - "26696-26697:26656-26657"
+      - "1321:1317"
+      - "9094:9090"
+    volumes:
+      - ./localnet/node5/node5home:/root/.kepler:rw
+    networks:
+      localnet:
+        ipv4_address: 192.168.10.6
+
+networks:
+  localnet:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.10.0/25
