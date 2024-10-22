@@ -1,14 +1,16 @@
 #!/bin/sh
 
-NODE2_HOME=$1
-NODE2_DIR=$2
+NODE_HOME=$1
+NODE_DIR=$2
+MONIKER=$3
+account=$4
 
 # Create validator_info.json
-cat > $NODE2_DIR/validator_info.json << EOF
+cat > $NODE_DIR/validator_info.json << EOF
 {
-  "pubkey": $(keplerd comet show-validator --home $NODE2_HOME),
+  "pubkey": $(keplerd comet show-validator --home $NODE_HOME),
   "amount": "10000000000stake",
-  "moniker": "node2",
+  "moniker": "$MONIKER",
   "identity": "",
   "website": "",
   "security": "",
@@ -21,9 +23,9 @@ cat > $NODE2_DIR/validator_info.json << EOF
 EOF
 
 # Create validator
-keplerd tx staking create-validator $NODE2_DIR/validator_info.json \
-  --from node2-account \
-  --home $NODE2_HOME \
+keplerd tx staking create-validator $NODE_DIR/validator_info.json \
+  --from $account \
+  --home $NODE_HOME \
   --fees 100000stake \
   --chain-id kepler \
   --broadcast-mode sync \
