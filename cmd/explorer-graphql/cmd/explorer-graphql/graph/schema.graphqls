@@ -1,0 +1,12 @@
+scalar Time
+
+type Block {
+  height: Int!
+  chainId: String!
+  createdAt: Time!
+}
+
+type Query {
+  block(height: Int!): Block
+  blocks(heights: [Int!]): [Block]
+}
