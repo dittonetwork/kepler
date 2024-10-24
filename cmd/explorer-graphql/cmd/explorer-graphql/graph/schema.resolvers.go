@@ -16,8 +16,8 @@ func (r *queryResolver) Block(ctx context.Context, height int) (*model.Block, er
 }
 
 // Blocks is the resolver for the blocks field.
-func (r *queryResolver) Blocks(ctx context.Context, heights []int) ([]*model.Block, error) {
-	return loaders.GetBlocks(ctx, heights)
+func (r *queryResolver) Blocks(ctx context.Context, cursor *int, limit int) (*model.BlockPaginated, error) {
+	return loaders.GetBlocks(ctx, cursor, limit)
 }
 
 // Query returns QueryResolver implementation.

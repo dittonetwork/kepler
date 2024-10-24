@@ -53,15 +53,25 @@ type ComplexityRoot struct {
 		Height    func(childComplexity int) int
 	}
 
+	BlockPaginated struct {
+		Edges    func(childComplexity int) int
+		PageInfo func(childComplexity int) int
+	}
+
+	PageInfoInt struct {
+		HasNextPage func(childComplexity int) int
+		NextCursor  func(childComplexity int) int
+	}
+
 	Query struct {
 		Block  func(childComplexity int, height int) int
-		Blocks func(childComplexity int, heights []int) int
+		Blocks func(childComplexity int, cursor *int, limit int) int
 	}
 }
 
 type QueryResolver interface {
 	Block(ctx context.Context, height int) (*model.Block, error)
-	Blocks(ctx context.Context, heights []int) ([]*model.Block, error)
+	Blocks(ctx context.Context, cursor *int, limit int) (*model.BlockPaginated, error)
 }
 
 type executableSchema struct {
@@ -104,6 +114,34 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Block.Height(childComplexity), true
 
+	case "BlockPaginated.edges":
+		if e.complexity.BlockPaginated.Edges == nil {
+			break
+		}
+
+		return e.complexity.BlockPaginated.Edges(childComplexity), true
+
+	case "BlockPaginated.pageInfo":
+		if e.complexity.BlockPaginated.PageInfo == nil {
+			break
+		}
+
+		return e.complexity.BlockPaginated.PageInfo(childComplexity), true
+
+	case "PageInfoInt.hasNextPage":
+		if e.complexity.PageInfoInt.HasNextPage == nil {
+			break
+		}
+
+		return e.complexity.PageInfoInt.HasNextPage(childComplexity), true
+
+	case "PageInfoInt.nextCursor":
+		if e.complexity.PageInfoInt.NextCursor == nil {
+			break
+		}
+
+		return e.complexity.PageInfoInt.NextCursor(childComplexity), true
+
 	case "Query.block":
 		if e.complexity.Query.Block == nil {
 			break
@@ -126,7 +164,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.Blocks(childComplexity, args["heights"].([]int)), true
+		return e.complexity.Query.Blocks(childComplexity, args["cursor"].(*int), args["limit"].(int)), true
 
 	}
 	return 0, false
@@ -285,23 +323,41 @@ func (ec *executionContext) field_Query_block_argsHeight(
 func (ec *executionContext) field_Query_blocks_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	arg0, err := ec.field_Query_blocks_argsHeights(ctx, rawArgs)
+	arg0, err := ec.field_Query_blocks_argsCursor(ctx, rawArgs)
 	if err != nil {
 		return nil, err
 	}
-	args["heights"] = arg0
+	args["cursor"] = arg0
+	arg1, err := ec.field_Query_blocks_argsLimit(ctx, rawArgs)
+	if err != nil {
+		return nil, err
+	}
+	args["limit"] = arg1
 	return args, nil
 }
-func (ec *executionContext) field_Query_blocks_argsHeights(
+func (ec *executionContext) field_Query_blocks_argsCursor(
 	ctx context.Context,
 	rawArgs map[string]interface{},
-) ([]int, error) {
-	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("heights"))
-	if tmp, ok := rawArgs["heights"]; ok {
-		return ec.unmarshalOInt2ᚕintᚄ(ctx, tmp)
+) (*int, error) {
+	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("cursor"))
+	if tmp, ok := rawArgs["cursor"]; ok {
+		return ec.unmarshalOInt2ᚖint(ctx, tmp)
 	}
 
-	var zeroVal []int
+	var zeroVal *int
+	return zeroVal, nil
+}
+
+func (ec *executionContext) field_Query_blocks_argsLimit(
+	ctx context.Context,
+	rawArgs map[string]interface{},
+) (int, error) {
+	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("limit"))
+	if tmp, ok := rawArgs["limit"]; ok {
+		return ec.unmarshalNInt2int(ctx, tmp)
+	}
+
+	var zeroVal int
 	return zeroVal, nil
 }
 
@@ -491,6 +547,196 @@ func (ec *executionContext) fieldContext_Block_createdAt(_ context.Context, fiel
 	return fc, nil
 }
 
+func (ec *executionContext) _BlockPaginated_edges(ctx context.Context, field graphql.CollectedField, obj *model.BlockPaginated) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_BlockPaginated_edges(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Edges, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*model.Block)
+	fc.Result = res
+	return ec.marshalNBlock2ᚕᚖexplorerᚑgraphqlᚋgraphᚋmodelᚐBlock(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_BlockPaginated_edges(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "BlockPaginated",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "height":
+				return ec.fieldContext_Block_height(ctx, field)
+			case "chainId":
+				return ec.fieldContext_Block_chainId(ctx, field)
+			case "createdAt":
+				return ec.fieldContext_Block_createdAt(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Block", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _BlockPaginated_pageInfo(ctx context.Context, field graphql.CollectedField, obj *model.BlockPaginated) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_BlockPaginated_pageInfo(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PageInfo, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.PageInfoInt)
+	fc.Result = res
+	return ec.marshalNPageInfoInt2ᚖexplorerᚑgraphqlᚋgraphᚋmodelᚐPageInfoInt(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_BlockPaginated_pageInfo(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "BlockPaginated",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "nextCursor":
+				return ec.fieldContext_PageInfoInt_nextCursor(ctx, field)
+			case "hasNextPage":
+				return ec.fieldContext_PageInfoInt_hasNextPage(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PageInfoInt", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PageInfoInt_nextCursor(ctx context.Context, field graphql.CollectedField, obj *model.PageInfoInt) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PageInfoInt_nextCursor(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.NextCursor, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PageInfoInt_nextCursor(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PageInfoInt",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PageInfoInt_hasNextPage(ctx context.Context, field graphql.CollectedField, obj *model.PageInfoInt) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PageInfoInt_hasNextPage(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.HasNextPage, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PageInfoInt_hasNextPage(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PageInfoInt",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Query_block(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Query_block(ctx, field)
 	if err != nil {
@@ -565,7 +811,7 @@ func (ec *executionContext) _Query_blocks(ctx context.Context, field graphql.Col
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Blocks(rctx, fc.Args["heights"].([]int))
+		return ec.resolvers.Query().Blocks(rctx, fc.Args["cursor"].(*int), fc.Args["limit"].(int))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -574,9 +820,9 @@ func (ec *executionContext) _Query_blocks(ctx context.Context, field graphql.Col
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.([]*model.Block)
+	res := resTmp.(*model.BlockPaginated)
 	fc.Result = res
-	return ec.marshalOBlock2ᚕᚖexplorerᚑgraphqlᚋgraphᚋmodelᚐBlock(ctx, field.Selections, res)
+	return ec.marshalOBlockPaginated2ᚖexplorerᚑgraphqlᚋgraphᚋmodelᚐBlockPaginated(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_blocks(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -587,14 +833,12 @@ func (ec *executionContext) fieldContext_Query_blocks(ctx context.Context, field
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
-			case "height":
-				return ec.fieldContext_Block_height(ctx, field)
-			case "chainId":
-				return ec.fieldContext_Block_chainId(ctx, field)
-			case "createdAt":
-				return ec.fieldContext_Block_createdAt(ctx, field)
+			case "edges":
+				return ec.fieldContext_BlockPaginated_edges(ctx, field)
+			case "pageInfo":
+				return ec.fieldContext_BlockPaginated_pageInfo(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type Block", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type BlockPaginated", field.Name)
 		},
 	}
 	defer func() {
@@ -2570,6 +2814,94 @@ func (ec *executionContext) _Block(ctx context.Context, sel ast.SelectionSet, ob
 	return out
 }
 
+var blockPaginatedImplementors = []string{"BlockPaginated"}
+
+func (ec *executionContext) _BlockPaginated(ctx context.Context, sel ast.SelectionSet, obj *model.BlockPaginated) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, blockPaginatedImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("BlockPaginated")
+		case "edges":
+			out.Values[i] = ec._BlockPaginated_edges(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "pageInfo":
+			out.Values[i] = ec._BlockPaginated_pageInfo(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var pageInfoIntImplementors = []string{"PageInfoInt"}
+
+func (ec *executionContext) _PageInfoInt(ctx context.Context, sel ast.SelectionSet, obj *model.PageInfoInt) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, pageInfoIntImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("PageInfoInt")
+		case "nextCursor":
+			out.Values[i] = ec._PageInfoInt_nextCursor(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "hasNextPage":
+			out.Values[i] = ec._PageInfoInt_hasNextPage(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
 var queryImplementors = []string{"Query"}
 
 func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) graphql.Marshaler {
@@ -2984,6 +3316,44 @@ func (ec *executionContext) ___Type(ctx context.Context, sel ast.SelectionSet, o
 
 // region    ***************************** type.gotpl *****************************
 
+func (ec *executionContext) marshalNBlock2ᚕᚖexplorerᚑgraphqlᚋgraphᚋmodelᚐBlock(ctx context.Context, sel ast.SelectionSet, v []*model.Block) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalOBlock2ᚖexplorerᚑgraphqlᚋgraphᚋmodelᚐBlock(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	return ret
+}
+
 func (ec *executionContext) unmarshalNBoolean2bool(ctx context.Context, v interface{}) (bool, error) {
 	res, err := graphql.UnmarshalBoolean(v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -3012,6 +3382,16 @@ func (ec *executionContext) marshalNInt2int(ctx context.Context, sel ast.Selecti
 		}
 	}
 	return res
+}
+
+func (ec *executionContext) marshalNPageInfoInt2ᚖexplorerᚑgraphqlᚋgraphᚋmodelᚐPageInfoInt(ctx context.Context, sel ast.SelectionSet, v *model.PageInfoInt) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._PageInfoInt(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalNString2string(ctx context.Context, v interface{}) (string, error) {
@@ -3297,52 +3677,18 @@ func (ec *executionContext) marshalN__TypeKind2string(ctx context.Context, sel a
 	return res
 }
 
-func (ec *executionContext) marshalOBlock2ᚕᚖexplorerᚑgraphqlᚋgraphᚋmodelᚐBlock(ctx context.Context, sel ast.SelectionSet, v []*model.Block) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalOBlock2ᚖexplorerᚑgraphqlᚋgraphᚋmodelᚐBlock(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	return ret
-}
-
 func (ec *executionContext) marshalOBlock2ᚖexplorerᚑgraphqlᚋgraphᚋmodelᚐBlock(ctx context.Context, sel ast.SelectionSet, v *model.Block) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._Block(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOBlockPaginated2ᚖexplorerᚑgraphqlᚋgraphᚋmodelᚐBlockPaginated(ctx context.Context, sel ast.SelectionSet, v *model.BlockPaginated) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._BlockPaginated(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalOBoolean2bool(ctx context.Context, v interface{}) (bool, error) {
@@ -3371,42 +3717,20 @@ func (ec *executionContext) marshalOBoolean2ᚖbool(ctx context.Context, sel ast
 	return res
 }
 
-func (ec *executionContext) unmarshalOInt2ᚕintᚄ(ctx context.Context, v interface{}) ([]int, error) {
+func (ec *executionContext) unmarshalOInt2ᚖint(ctx context.Context, v interface{}) (*int, error) {
 	if v == nil {
 		return nil, nil
 	}
-	var vSlice []interface{}
-	if v != nil {
-		vSlice = graphql.CoerceList(v)
-	}
-	var err error
-	res := make([]int, len(vSlice))
-	for i := range vSlice {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNInt2int(ctx, vSlice[i])
-		if err != nil {
-			return nil, err
-		}
-	}
-	return res, nil
+	res, err := graphql.UnmarshalInt(v)
+	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalOInt2ᚕintᚄ(ctx context.Context, sel ast.SelectionSet, v []int) graphql.Marshaler {
+func (ec *executionContext) marshalOInt2ᚖint(ctx context.Context, sel ast.SelectionSet, v *int) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
-	ret := make(graphql.Array, len(v))
-	for i := range v {
-		ret[i] = ec.marshalNInt2int(ctx, sel, v[i])
-	}
-
-	for _, e := range ret {
-		if e == graphql.Null {
-			return graphql.Null
-		}
-	}
-
-	return ret
+	res := graphql.MarshalInt(*v)
+	return res
 }
 
 func (ec *executionContext) unmarshalOString2ᚖstring(ctx context.Context, v interface{}) (*string, error) {

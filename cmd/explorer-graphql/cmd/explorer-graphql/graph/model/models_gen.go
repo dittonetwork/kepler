@@ -12,5 +12,15 @@ type Block struct {
 	CreatedAt time.Time `json:"createdAt"`
 }
 
+type BlockPaginated struct {
+	Edges    []*Block     `json:"edges"`
+	PageInfo *PageInfoInt `json:"pageInfo"`
+}
+
+type PageInfoInt struct {
+	NextCursor  int  `json:"nextCursor"`
+	HasNextPage bool `json:"hasNextPage"`
+}
+
 type Query struct {
 }
