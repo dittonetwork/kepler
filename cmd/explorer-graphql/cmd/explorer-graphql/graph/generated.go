@@ -670,14 +670,11 @@ func (ec *executionContext) _PageInfoInt_nextCursor(ctx context.Context, field g
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
-	res := resTmp.(int)
+	res := resTmp.(*int)
 	fc.Result = res
-	return ec.marshalNInt2int(ctx, field.Selections, res)
+	return ec.marshalOInt2ᚖint(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PageInfoInt_nextCursor(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -2871,9 +2868,6 @@ func (ec *executionContext) _PageInfoInt(ctx context.Context, sel ast.SelectionS
 			out.Values[i] = graphql.MarshalString("PageInfoInt")
 		case "nextCursor":
 			out.Values[i] = ec._PageInfoInt_nextCursor(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
 		case "hasNextPage":
 			out.Values[i] = ec._PageInfoInt_hasNextPage(ctx, field, obj)
 			if out.Values[i] == graphql.Null {

@@ -90,11 +90,16 @@ func (r *blockReader) getBlockPaginated(ctx context.Context, cursor *int, limit 
 		blocks = append(blocks, &block)
 	}
 
+	var nextCursor *int
+	if len(blocks) > 1 {
+		nextCursor = &blocks[len(blocks)-1].Height
+	}
+
 	res := model.BlockPaginated{
 		Edges: blocks,
 		PageInfo: &model.PageInfoInt{
 			HasNextPage: len(blocks) == limit+1,
-			NextCursor:  blocks[len(blocks)-1].Height,
+			NextCursor:  nextCursor,
 		},
 	}
 

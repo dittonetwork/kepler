@@ -18,7 +18,7 @@ type BlockPaginated struct {
 }
 
 type PageInfoInt struct {
-	NextCursor  int  `json:"nextCursor"`
+	NextCursor  *int `json:"nextCursor,omitempty"`
 	HasNextPage bool `json:"hasNextPage"`
 }
 
