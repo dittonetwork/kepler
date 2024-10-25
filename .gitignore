@@ -9,3 +9,5 @@ release/
 *.ign
 bin
 localnet/
+third_party
+node_modules
