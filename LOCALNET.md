@@ -98,3 +98,13 @@ wait 5-10 seconds for txs applying and check validators' list, there should be 5
 ``
 make check-validators
 ``
+
+## 5. Separate postgres without docker nodes
+
+`make setup-postgres-indexer`
+
+`docker compose up postgres -d`
+
+## 6. Localnet with postgres
+
+`make localnet-postgres`

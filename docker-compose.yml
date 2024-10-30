@@ -76,6 +76,22 @@ services:
       localnet:
         ipv4_address: 192.168.10.6
 
+  postgres:
+    container_name: postgres
+    image: postgres:17
+    environment:
+      POSTGRES_DB: kepler
+      POSTGRES_USER: kepler
+      POSTGRES_PASSWORD: kepler
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./localnet/postgres:/var/lib/postgresql/data
+      - ./scripts/db:/docker-entrypoint-initdb.d/
+    networks:
+      localnet:
+        ipv4_address: 192.168.10.7
+
 networks:
   localnet:
     driver: bridge

@@ -22,6 +22,7 @@ NODE5_HOME := $(NODE5_DIR)/node5home
 init: clean setup build init-nodes add-genesis-accounts gentx collect-gentxs
 
 localnet: down clean setup build build-docker init-nodes add-genesis-accounts gentx collect-gentxs update-configs up
+localnet-postgres: down clean setup build build-docker init-nodes setup-postgres-indexer add-genesis-accounts gentx collect-gentxs update-configs up
 
 clean:
 	@rm -rf localnet
@@ -44,6 +45,12 @@ init-nodes:
 	@keplerd init node3 --home $(NODE3_HOME)
 	@keplerd init node4 --home $(NODE4_HOME)
 	@keplerd init node5 --home $(NODE5_HOME)
+
+setup-postgres-indexer:
+	@echo "Setting up postgres indexer..."
+
+	@keplerd config set --home $(NODE1_HOME) config tx_index.indexer psql -s
+	@keplerd config set --home $(NODE1_HOME) config tx_index.psql-conn postgresql://kepler:kepler@192.168.10.7:5432/kepler?sslmode=disable -s
 
 add-genesis-accounts:
 	@echo "Adding genesis accounts..."
