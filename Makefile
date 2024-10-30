@@ -22,7 +22,7 @@ NODE5_HOME := $(NODE5_DIR)/node5home
 init: clean setup build init-nodes add-genesis-accounts gentx collect-gentxs
 
 localnet: down clean setup build build-docker init-nodes add-genesis-accounts gentx collect-gentxs update-configs up
-localnet-postgres: down clean setup build build-docker init-nodes setup-postgres-indexer add-genesis-accounts gentx collect-gentxs update-configs up
+localnet-postgres: down clean setup build build-docker build-explorer-graphql init-nodes setup-postgres-indexer add-genesis-accounts gentx collect-gentxs update-configs up
 
 clean:
 	@rm -rf localnet
@@ -36,6 +36,9 @@ build:
 
 build-docker:
 	@docker build -t kepler:local -f build/Dockerfile .
+
+build-explorer-graphql:
+	@docker build -t kepler-explorer-graphql:local -f cmd/explorer-graphql/Dockerfile .
 
 init-nodes:
 	@echo "Initializing nodes..."

@@ -1,6 +1,6 @@
 version: 1
 validation: sovereign
-accounts: 
+accounts:
 - name: alice
   coins:
   - 20000token
@@ -9,6 +9,8 @@ accounts:
   coins:
   - 10000token
   - 100000000stake
+build:
+  main: cmd/keplerd
 client:
   openapi:
     path: docs/static/openapi.yml

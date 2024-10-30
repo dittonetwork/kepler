@@ -1,0 +1,38 @@
+scalar Time
+scalar Map
+
+directive @goField(
+  forceResolver: Boolean
+  name: String
+  omittable: Boolean
+) on INPUT_FIELD_DEFINITION | FIELD_DEFINITION
+
+type Event {
+  rowId: ID!
+  blockId: ID!
+  txId: ID
+  type: String!
+  attributes: Map
+}
+
+type Tx {
+  rowId: ID!
+  blockId: ID!
+  index: Int!
+  createdAt: Time!
+  txHash: String!
+}
+
+type Block {
+  rowId: ID!
+  height: Int!
+  chainId: String!
+  createdAt: Time!
+  events(offset: Int, limit: Int!): [Event] @goField(forceResolver: true)
+  tx(offset: Int, limit: Int!): [Tx] @goField(forceResolver: true)
+}
+
+type Query {
+  block(height: Int!): Block
+  blocks(offset: Int, limit: Int!): [Block]
+}

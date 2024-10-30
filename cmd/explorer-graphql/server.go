@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"explorer-graphql/graph"
+	"explorer-graphql/internal/graph"
 	"explorer-graphql/internal/loaders"
 	"fmt"
 	"net/http"
@@ -17,7 +17,6 @@ import (
 )
 
 const defaultPort = "8080"
-const connectionString = "postgresql://myuser:mypassword@localhost:5432/mydb?sslmode=disable"
 
 func main() {
 	port := os.Getenv("PORT")
@@ -33,6 +32,8 @@ func main() {
 	defer logger.Sync()
 
 	// Set up database connection
+	connectionString := os.Getenv("PG_CONNECTION_STRING")
+
 	pgConfig, err := pgxpool.ParseConfig(connectionString)
 	if err != nil {
 		zap.L().Fatal("failed to parse connection string", zap.Error(err))
@@ -53,6 +54,10 @@ func main() {
 
 	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	http.Handle("/query", srv)
+	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintln(w, "OK")
+	})
 
 	zap.L().Info("connect to GraphQL playground",
 		zap.String("url", fmt.Sprintf("http://localhost:%s/", port)),

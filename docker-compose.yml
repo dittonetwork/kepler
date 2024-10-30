@@ -92,6 +92,17 @@ services:
       localnet:
         ipv4_address: 192.168.10.7
 
+  explorer-graphql:
+    container_name: explorer-graphql
+    image: "kepler-explorer-graphql:local"
+    environment:
+      - PG_CONNECTION_STRING=postgresql://kepler:kepler@postgres:5432/kepler?sslmode=disable
+    ports:
+      - "8080:8080"
+    networks:
+      localnet:
+        ipv4_address: 192.168.10.8
+
 networks:
   localnet:
     driver: bridge
