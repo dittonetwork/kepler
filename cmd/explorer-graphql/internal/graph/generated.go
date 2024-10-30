@@ -41,6 +41,7 @@ type Config struct {
 
 type ResolverRoot interface {
 	Block() BlockResolver
+	Event() EventResolver
 	Query() QueryResolver
 }
 
@@ -82,6 +83,9 @@ type ComplexityRoot struct {
 type BlockResolver interface {
 	Events(ctx context.Context, obj *model.Block, offset *int, limit int) ([]*model.Event, error)
 	Tx(ctx context.Context, obj *model.Block, offset *int, limit int) ([]*model.Tx, error)
+}
+type EventResolver interface {
+	Attributes(ctx context.Context, obj *model.Event) (map[string]interface{}, error)
 }
 type QueryResolver interface {
 	Block(ctx context.Context, height int) (*model.Block, error)
@@ -1075,7 +1079,7 @@ func (ec *executionContext) _Event_attributes(ctx context.Context, field graphql
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Attributes, nil
+		return ec.resolvers.Event().Attributes(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1093,8 +1097,8 @@ func (ec *executionContext) fieldContext_Event_attributes(_ context.Context, fie
 	fc = &graphql.FieldContext{
 		Object:     "Event",
 		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Map does not have child fields")
 		},
@@ -3498,22 +3502,53 @@ func (ec *executionContext) _Event(ctx context.Context, sel ast.SelectionSet, ob
 		case "rowId":
 			out.Values[i] = ec._Event_rowId(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
-				out.Invalids++
+				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "blockId":
 			out.Values[i] = ec._Event_blockId(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
-				out.Invalids++
+				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "txId":
 			out.Values[i] = ec._Event_txId(ctx, field, obj)
 		case "type":
 			out.Values[i] = ec._Event_type(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
-				out.Invalids++
+				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "attributes":
-			out.Values[i] = ec._Event_attributes(ctx, field, obj)
+			field := field
+
+			innerFunc := func(ctx context.Context, _ *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Event_attributes(ctx, field, obj)
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}

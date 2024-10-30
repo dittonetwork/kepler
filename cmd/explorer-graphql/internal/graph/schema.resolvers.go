@@ -26,6 +26,14 @@ func (r *blockResolver) Tx(ctx context.Context, obj *model.Block, offset *int, l
 	return loaders.GetTransactions(ctx, &obj.RowID, offset, limit)
 }
 
+// Attributes is the resolver for the attributes field.
+func (r *eventResolver) Attributes(ctx context.Context, obj *model.Event) (map[string]interface{}, error) {
+	if obj == nil {
+		return nil, nil
+	}
+	return loaders.GetAttributes(ctx, obj.RowID)
+}
+
 // Block is the resolver for the block field.
 func (r *queryResolver) Block(ctx context.Context, height int) (*model.Block, error) {
 	return loaders.GetBlock(ctx, height)
@@ -39,8 +47,12 @@ func (r *queryResolver) Blocks(ctx context.Context, offset *int, limit int) ([]*
 // Block returns BlockResolver implementation.
 func (r *Resolver) Block() BlockResolver { return &blockResolver{r} }
 
+// Event returns EventResolver implementation.
+func (r *Resolver) Event() EventResolver { return &eventResolver{r} }
+
 // Query returns QueryResolver implementation.
 func (r *Resolver) Query() QueryResolver { return &queryResolver{r} }
 
 type blockResolver struct{ *Resolver }
+type eventResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }

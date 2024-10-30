@@ -16,21 +16,24 @@ const (
 )
 
 type Loaders struct {
-	EventReader *eventReader
-	TxReader    *txReader
-	BlockReader *blockReader
-	BlockLoader *dataloadgen.Loader[int, *model.Block]
+	EventReader      *eventReader
+	TxReader         *txReader
+	AttributesLoader *dataloadgen.Loader[int64, map[string]interface{}]
+	BlockReader      *blockReader
+	BlockLoader      *dataloadgen.Loader[int, *model.Block]
 }
 
 func NewLoaders(pool *pgxpool.Pool) *Loaders {
 	br := &blockReader{pool: pool}
 	er := &eventReader{pool: pool}
-	tx := &txReader{pool: pool}
+	txr := &txReader{pool: pool}
+	atr := &attributesReader{pool: pool}
 	return &Loaders{
-		EventReader: er,
-		TxReader:    tx,
-		BlockReader: br,
-		BlockLoader: dataloadgen.NewLoader(br.getBlocks),
+		EventReader:      er,
+		TxReader:         txr,
+		AttributesLoader: dataloadgen.NewLoader(atr.getAttributes),
+		BlockReader:      br,
+		BlockLoader:      dataloadgen.NewLoader(br.getBlocks),
 	}
 }
 

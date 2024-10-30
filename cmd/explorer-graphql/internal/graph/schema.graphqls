@@ -12,7 +12,7 @@ type Event {
   blockId: ID!
   txId: ID
   type: String!
-  attributes: Map
+  attributes: Map @goField(forceResolver: true)
 }
 
 type Tx {
