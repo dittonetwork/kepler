@@ -20,7 +20,7 @@ func (r *blockReader) getBlocks(ctx context.Context, ids []int) ([]*model.Block,
 	}
 	defer conn.Release()
 
-	rows, err := conn.Query(ctx, "SELECT * FROM blocks WHERE height = ANY($1)", ids)
+	rows, err := conn.Query(ctx, "SELECT * FROM blocks WHERE height = ANY($1) ORDER BY array_position($1, height)", ids)
 	if err != nil {
 		zap.L().Error("failed to query blocks", zap.Error(err))
 		return nil, []error{err}
