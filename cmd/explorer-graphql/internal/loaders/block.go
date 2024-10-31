@@ -12,7 +12,7 @@ type blockReader struct {
 	pool *pgxpool.Pool
 }
 
-func (r *blockReader) getBlocks(ctx context.Context, ids []int) ([]*model.Block, []error) {
+func (r *blockReader) getBlocks(ctx context.Context, ids []int64) ([]*model.Block, []error) {
 	conn, err := r.pool.Acquire(ctx)
 	if err != nil {
 		zap.L().Error("failed to acquire connection", zap.Error(err))
@@ -71,7 +71,7 @@ func (r *blockReader) getBlockPaginated(ctx context.Context, offset *int, limit 
 	return blocks, nil
 }
 
-func GetBlock(ctx context.Context, blockId int) (*model.Block, error) {
+func GetBlock(ctx context.Context, blockId int64) (*model.Block, error) {
 	loader := For(ctx)
 	return loader.BlockLoader.Load(ctx, blockId)
 }

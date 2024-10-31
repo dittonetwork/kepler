@@ -67,7 +67,7 @@ type ComplexityRoot struct {
 	}
 
 	Query struct {
-		Block  func(childComplexity int, height int) int
+		Block  func(childComplexity int, height int64) int
 		Blocks func(childComplexity int, offset *int, limit int) int
 	}
 
@@ -88,7 +88,7 @@ type EventResolver interface {
 	Attributes(ctx context.Context, obj *model.Event) (map[string]interface{}, error)
 }
 type QueryResolver interface {
-	Block(ctx context.Context, height int) (*model.Block, error)
+	Block(ctx context.Context, height int64) (*model.Block, error)
 	Blocks(ctx context.Context, offset *int, limit int) ([]*model.Block, error)
 }
 
@@ -208,7 +208,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.Block(childComplexity, args["height"].(int)), true
+		return e.complexity.Query.Block(childComplexity, args["height"].(int64)), true
 
 	case "Query.blocks":
 		if e.complexity.Query.Blocks == nil {
@@ -483,13 +483,13 @@ func (ec *executionContext) field_Query_block_args(ctx context.Context, rawArgs 
 func (ec *executionContext) field_Query_block_argsHeight(
 	ctx context.Context,
 	rawArgs map[string]interface{},
-) (int, error) {
+) (int64, error) {
 	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("height"))
 	if tmp, ok := rawArgs["height"]; ok {
-		return ec.unmarshalNInt2int(ctx, tmp)
+		return ec.unmarshalNID2int64(ctx, tmp)
 	}
 
-	var zeroVal int
+	var zeroVal int64
 	return zeroVal, nil
 }
 
@@ -658,9 +658,9 @@ func (ec *executionContext) _Block_height(ctx context.Context, field graphql.Col
 		}
 		return graphql.Null
 	}
-	res := resTmp.(int)
+	res := resTmp.(int64)
 	fc.Result = res
-	return ec.marshalNInt2int(ctx, field.Selections, res)
+	return ec.marshalNID2int64(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Block_height(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -670,7 +670,7 @@ func (ec *executionContext) fieldContext_Block_height(_ context.Context, field g
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Int does not have child fields")
+			return nil, errors.New("field of type ID does not have child fields")
 		},
 	}
 	return fc, nil
@@ -1120,7 +1120,7 @@ func (ec *executionContext) _Query_block(ctx context.Context, field graphql.Coll
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Block(rctx, fc.Args["height"].(int))
+		return ec.resolvers.Query().Block(rctx, fc.Args["height"].(int64))
 	})
 	if err != nil {
 		ec.Error(ctx, err)

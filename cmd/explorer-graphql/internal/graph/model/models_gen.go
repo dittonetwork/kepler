@@ -8,7 +8,7 @@ import (
 
 type Block struct {
 	RowID     int64     `json:"rowId"`
-	Height    int       `json:"height"`
+	Height    int64     `json:"height"`
 	ChainID   string    `json:"chainId"`
 	CreatedAt time.Time `json:"createdAt"`
 	Events    []*Event  `json:"events,omitempty"`

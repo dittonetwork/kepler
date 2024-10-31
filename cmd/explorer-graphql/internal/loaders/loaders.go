@@ -20,7 +20,7 @@ type Loaders struct {
 	TxReader         *txReader
 	AttributesLoader *dataloadgen.Loader[int64, map[string]interface{}]
 	BlockReader      *blockReader
-	BlockLoader      *dataloadgen.Loader[int, *model.Block]
+	BlockLoader      *dataloadgen.Loader[int64, *model.Block]
 }
 
 func NewLoaders(pool *pgxpool.Pool) *Loaders {

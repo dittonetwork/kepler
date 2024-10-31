@@ -35,7 +35,7 @@ func (r *eventResolver) Attributes(ctx context.Context, obj *model.Event) (map[s
 }
 
 // Block is the resolver for the block field.
-func (r *queryResolver) Block(ctx context.Context, height int) (*model.Block, error) {
+func (r *queryResolver) Block(ctx context.Context, height int64) (*model.Block, error) {
 	return loaders.GetBlock(ctx, height)
 }
 

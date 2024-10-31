@@ -25,7 +25,7 @@ type Tx {
 
 type Block {
   rowId: ID!
-  height: Int!
+  height: ID!
   chainId: String!
   createdAt: Time!
   events(offset: Int, limit: Int!): [Event] @goField(forceResolver: true)
@@ -33,6 +33,6 @@ type Block {
 }
 
 type Query {
-  block(height: Int!): Block
+  block(height: ID!): Block
   blocks(offset: Int, limit: Int!): [Block]
 }
