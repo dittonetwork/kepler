@@ -8,6 +8,9 @@ NODE2_DIR := $(TESTNET_DIR)/node2
 NODE1_HOME := $(NODE1_DIR)/node1home
 NODE2_HOME := $(NODE2_DIR)/node2home
 
+# Includes
+include x/symbiotic/abi/Makefile.inc
+
 # Targets
 .PHONY: init clean setup build init-nodes add-genesis-accounts gentx collect-gentxs start-node1 start-node2 create-validator check-validators
 
@@ -19,7 +22,7 @@ clean:
 setup:
 	@mkdir -p $(NODE1_HOME) $(NODE2_HOME)
 
-build:
+build: gen-contracts
 	@echo "Building Kepler chain..."
 	@ignite chain build
 

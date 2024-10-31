@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package kepler.symbiotic;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "kepler/symbiotic/params.proto";
+import "kepler/symbiotic/staked_amount_info.proto";
+import "kepler/symbiotic/contract_address.proto";
+
+option go_package = "kepler/x/symbiotic/types";
+
+// GenesisState defines the symbiotic module's genesis state.
+message GenesisState {
+  
+  // params defines all the parameters of the module.
+           Params           params               = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+  repeated StakedAmountInfo stakedAmountInfoList = 2 [(gogoproto.nullable) = false] ;
+           ContractAddress  contractAddress      = 3;
+}
+
