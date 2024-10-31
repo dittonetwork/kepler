@@ -32,7 +32,7 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				ContractAddress: &types.ContractAddress{
-					Address: "22",
+					Address: "6",
 				},
 				// this line is used by starport scaffolding # types/genesis/validField
 			},

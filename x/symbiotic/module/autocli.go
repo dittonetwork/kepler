@@ -46,15 +46,15 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 				},
 				{
 					RpcMethod:      "CreateStakedAmountInfo",
-					Use:            "create-staked-amount-info [ethereumAddress] [stakedAmount] [lastUpdated]",
+					Use:            "create-staked-amount-info [ethereumAddress] [stakedAmount] [lastUpdateTs]",
 					Short:          "Create a new StakedAmountInfo",
-					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "ethereumAddress"}, {ProtoField: "stakedAmount"}, {ProtoField: "lastUpdated"}},
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "ethereumAddress"}, {ProtoField: "stakedAmount"}, {ProtoField: "lastUpdateTs"}},
 				},
 				{
 					RpcMethod:      "UpdateStakedAmountInfo",
-					Use:            "update-staked-amount-info [ethereumAddress] [stakedAmount] [lastUpdated]",
+					Use:            "update-staked-amount-info [ethereumAddress] [stakedAmount] [lastUpdateTs]",
 					Short:          "Update StakedAmountInfo",
-					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "ethereumAddress"}, {ProtoField: "stakedAmount"}, {ProtoField: "lastUpdated"}},
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "ethereumAddress"}, {ProtoField: "stakedAmount"}, {ProtoField: "lastUpdateTs"}},
 				},
 				{
 					RpcMethod:      "DeleteStakedAmountInfo",

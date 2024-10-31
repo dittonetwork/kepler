@@ -49,7 +49,7 @@ message MsgCreateStakedAmountInfo {
   string creator         = 1;
   string ethereumAddress = 2;
   string stakedAmount    = 3;
-  uint64 lastUpdated     = 4;
+  uint64 lastUpdateTs    = 4;
 }
 
 message MsgCreateStakedAmountInfoResponse {}
@@ -59,7 +59,7 @@ message MsgUpdateStakedAmountInfo {
   string creator         = 1;
   string ethereumAddress = 2;
   string stakedAmount    = 3;
-  uint64 lastUpdated     = 4;
+  uint64 lastUpdateTs    = 4;
 }
 
 message MsgUpdateStakedAmountInfoResponse {}

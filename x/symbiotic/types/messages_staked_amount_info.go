@@ -12,14 +12,14 @@ func NewMsgCreateStakedAmountInfo(
 	creator string,
 	ethereumAddress string,
 	stakedAmount string,
-	lastUpdated uint64,
+	lastUpdateTs uint64,
 
 ) *MsgCreateStakedAmountInfo {
 	return &MsgCreateStakedAmountInfo{
 		Creator:         creator,
 		EthereumAddress: ethereumAddress,
 		StakedAmount:    stakedAmount,
-		LastUpdated:     lastUpdated,
+		LastUpdateTs:    lastUpdateTs,
 	}
 }
 
@@ -37,14 +37,14 @@ func NewMsgUpdateStakedAmountInfo(
 	creator string,
 	ethereumAddress string,
 	stakedAmount string,
-	lastUpdated uint64,
+	lastUpdateTs uint64,
 
 ) *MsgUpdateStakedAmountInfo {
 	return &MsgUpdateStakedAmountInfo{
 		Creator:         creator,
 		EthereumAddress: ethereumAddress,
 		StakedAmount:    stakedAmount,
-		LastUpdated:     lastUpdated,
+		LastUpdateTs:    lastUpdateTs,
 	}
 }
 

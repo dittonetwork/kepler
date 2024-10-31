@@ -24,7 +24,7 @@ func TestGenesis(t *testing.T) {
 			},
 		},
 		ContractAddress: &types.ContractAddress{
-			Address: "73",
+			Address: "67",
 		},
 		// this line is used by starport scaffolding # genesis/test/state
 	}

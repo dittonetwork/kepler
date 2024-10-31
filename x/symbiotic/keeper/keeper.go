@@ -8,6 +8,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
+	"kepler/pkg/common"
 	"kepler/x/symbiotic/types"
 )
 
@@ -21,7 +22,9 @@ type (
 		// should be the x/gov module account.
 		authority string
 
-		apiUrls types.ApiUrls
+		beaconKeeper types.BeaconKeeper
+
+		rpcUrls *common.ApiUrls
 	}
 )
 
@@ -31,6 +34,7 @@ func NewKeeper(
 	logger log.Logger,
 	authority string,
 
+	beaconKeeper types.BeaconKeeper,
 ) Keeper {
 	if _, err := sdk.AccAddressFromBech32(authority); err != nil {
 		panic(fmt.Sprintf("invalid authority address: %s", authority))
@@ -42,7 +46,9 @@ func NewKeeper(
 		authority:    authority,
 		logger:       logger,
 
-		apiUrls: types.NewApiUrls(),
+		beaconKeeper: beaconKeeper,
+
+		rpcUrls: types.NewRpcUrls(),
 	}
 }
 

@@ -26,7 +26,7 @@ func (k msgServer) CreateStakedAmountInfo(goCtx context.Context, msg *types.MsgC
 		Creator:         msg.Creator,
 		EthereumAddress: msg.EthereumAddress,
 		StakedAmount:    msg.StakedAmount,
-		LastUpdated:     msg.LastUpdated,
+		LastUpdateTs:    msg.LastUpdateTs,
 	}
 
 	k.SetStakedAmountInfo(
@@ -57,7 +57,7 @@ func (k msgServer) UpdateStakedAmountInfo(goCtx context.Context, msg *types.MsgU
 		Creator:         msg.Creator,
 		EthereumAddress: msg.EthereumAddress,
 		StakedAmount:    msg.StakedAmount,
-		LastUpdated:     msg.LastUpdated,
+		LastUpdateTs:    msg.LastUpdateTs,
 	}
 
 	k.SetStakedAmountInfo(ctx, stakedAmountInfo)

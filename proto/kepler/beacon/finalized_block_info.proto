@@ -1,0 +1,12 @@
+syntax = "proto3";
+package kepler.beacon;
+
+option go_package = "kepler/x/beacon/types";
+
+message FinalizedBlockInfo {
+  uint64 slotNum = 1; 
+  uint64 blockTimestamp = 2; 
+  uint64 blockNum = 3; 
+  string blockHash = 4; 
+  string creator = 5;
+}

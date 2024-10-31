@@ -2,9 +2,16 @@ package types
 
 import (
 	"context"
+	"kepler/x/beacon/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
+
+type BeaconKeeper interface {
+	// TODO Add methods imported from beacon should be defined here
+	SyncNeeded(ctx context.Context) bool
+	GetFinalizedBlockInfo(ctx context.Context) (val types.FinalizedBlockInfo, found bool)
+}
 
 // AccountKeeper defines the expected interface for the Account module.
 type AccountKeeper interface {
