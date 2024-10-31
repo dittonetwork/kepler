@@ -19,7 +19,8 @@ func (r *attributesReader) getAttributes(ctx context.Context, eventIds []int64) 
 	}
 	defer conn.Release()
 
-	rows, err := conn.Query(ctx, "SELECT event_id, key, value FROM attributes WHERE event_id = ANY($1)", eventIds)
+	// Using array_position to preserve the order of the eventIds for correct mapping in the dataloader
+	rows, err := conn.Query(ctx, "SELECT event_id, key, value FROM attributes WHERE event_id = ANY($1) ORDER BY array_position($1, event_id)", eventIds)
 	if err != nil {
 		zap.L().Error("failed to query events", zap.Error(err))
 		return nil, []error{err}
@@ -28,7 +29,7 @@ func (r *attributesReader) getAttributes(ctx context.Context, eventIds []int64) 
 
 	attributes := make([]map[string]interface{}, 0)
 	errors := make([]error, 0)
-	var attribute map[string]interface{}
+	var attribute map[string]interface{} = make(map[string]interface{})
 	var previousEventId int64
 	var eventId int64
 
@@ -42,14 +43,17 @@ func (r *attributesReader) getAttributes(ctx context.Context, eventIds []int64) 
 		if err != nil {
 			zap.L().Error("failed to scan event", zap.Error(err))
 		}
-		if previousEventId != eventId {
+
+		if previousEventId != 0 && previousEventId != eventId {
 			attributes = append(attributes, attribute)
 			errors = append(errors, err)
 			attribute = make(map[string]interface{})
 		}
-		attribute[key] = value
 
+		attribute[key] = value
 	}
+	attributes = append(attributes, attribute)
+	errors = append(errors, nil)
 
 	return attributes, errors
 }
