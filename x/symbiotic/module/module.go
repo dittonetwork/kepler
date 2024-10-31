@@ -158,7 +158,6 @@ func (am AppModule) EndBlock(ctx context.Context) error {
 	}
 
 	return nil
-
 }
 
 // IsOnePerModuleType implements the depinject.OnePerModuleType interface.
@@ -188,6 +187,7 @@ type ModuleInputs struct {
 
 	AccountKeeper types.AccountKeeper
 	BankKeeper    types.BankKeeper
+	BeaconKeeper  types.BeaconKeeper
 }
 
 type ModuleOutputs struct {
@@ -208,6 +208,7 @@ func ProvideModule(in ModuleInputs) ModuleOutputs {
 		in.StoreService,
 		in.Logger,
 		authority.String(),
+		in.BeaconKeeper,
 	)
 	m := NewAppModule(
 		in.Cdc,

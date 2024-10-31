@@ -6,7 +6,7 @@ option go_package = "kepler/x/symbiotic/types";
 message StakedAmountInfo {
   string ethereumAddress = 1; 
   string stakedAmount = 2; 
-  uint64 lastUpdated = 3; 
+  uint64 lastUpdateTs = 3; 
   string creator = 4;
 }
 

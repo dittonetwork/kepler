@@ -53,8 +53,11 @@ import (
 	ibcexported "github.com/cosmos/ibc-go/v8/modules/core/exported"
 	"google.golang.org/protobuf/types/known/durationpb"
 
+	beaconmodulev1 "kepler/api/kepler/beacon/module"
 	keplermodulev1 "kepler/api/kepler/kepler/module"
 	symbioticmodulev1 "kepler/api/kepler/symbiotic/module"
+	_ "kepler/x/beacon/module" // import for side-effects
+	beaconmoduletypes "kepler/x/beacon/types"
 	_ "kepler/x/kepler/module" // import for side-effects
 	keplermoduletypes "kepler/x/kepler/types"
 	_ "kepler/x/symbiotic/module" // import for side-effects
@@ -97,6 +100,7 @@ var (
 		circuittypes.ModuleName,
 		// chain modules
 		keplermoduletypes.ModuleName,
+		beaconmoduletypes.ModuleName,
 		symbioticmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/initGenesis
 	}
@@ -123,6 +127,7 @@ var (
 		ibcfeetypes.ModuleName,
 		// chain modules
 		keplermoduletypes.ModuleName,
+		beaconmoduletypes.ModuleName,
 		symbioticmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/beginBlockers
 	}
@@ -143,6 +148,7 @@ var (
 		ibcfeetypes.ModuleName,
 		// chain modules
 		keplermoduletypes.ModuleName,
+		beaconmoduletypes.ModuleName, // beacon module before symbiotic, so later could use updated block
 		symbioticmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/endBlockers
 	}
@@ -302,6 +308,10 @@ var (
 			{
 				Name:   keplermoduletypes.ModuleName,
 				Config: appconfig.WrapAny(&keplermodulev1.Module{}),
+			},
+			{
+				Name:   beaconmoduletypes.ModuleName,
+				Config: appconfig.WrapAny(&beaconmodulev1.Module{}),
 			},
 			{
 				Name:   symbioticmoduletypes.ModuleName,

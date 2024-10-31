@@ -7,14 +7,21 @@ import (
 	"kepler/x/symbiotic/types"
 	"time"
 
+	"kepler/pkg/common"
+
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
-	"github.com/ethereum/go-ethereum/common"
+	ethcommon "github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
 )
 
+const (
+	SLEEP_ON_RETRY = 200
+	RETRIES        = 5
+)
+
 func (k Keeper) UpdateStakedAmounts(ctx context.Context) error {
-	if !k.SyncNeeded(ctx) {
+	if !k.beaconKeeper.SyncNeeded(ctx) {
 		k.Logger().Debug("no need to update stakes yet")
 		return nil
 	}
@@ -22,12 +29,12 @@ func (k Keeper) UpdateStakedAmounts(ctx context.Context) error {
 	sdkCtx := sdk.UnwrapSDKContext(ctx)
 	k.Logger().Debug("updating stakes amount", "height", sdkCtx.BlockHeight())
 
-	blkHash, err := k.GetFinalizedBlockHash(ctx)
-	if err != nil {
-		return err
+	finalizedBlock, exists := k.beaconKeeper.GetFinalizedBlockInfo(ctx)
+	if !exists {
+		return types.ErrNoFinalizedBlockInBeaconModule
 	}
 
-	amountsInfo, err := k.fetchStakedAmountsFromBlock(ctx, blkHash)
+	amountsInfo, err := k.fetchStakedAmountsFromBlock(ctx, ethcommon.HexToHash(finalizedBlock.BlockHash))
 	if errors.Is(err, types.ErrContractNotInStorage) {
 		k.Logger().Warn("contract address is not set, stakes won't be updated")
 		return nil
@@ -41,7 +48,7 @@ func (k Keeper) UpdateStakedAmounts(ctx context.Context) error {
 		if found && prevInfo.StakedAmount == stakedAmountInfo.StakedAmount {
 			continue
 		}
-		stakedAmountInfo.LastUpdated = uint64(sdk.UnwrapSDKContext(ctx).BlockTime().Unix())
+		stakedAmountInfo.LastUpdateTs = uint64(sdk.UnwrapSDKContext(ctx).BlockTime().Unix())
 		k.SetStakedAmountInfo(ctx, stakedAmountInfo)
 	}
 
@@ -49,7 +56,7 @@ func (k Keeper) UpdateStakedAmounts(ctx context.Context) error {
 	return nil
 }
 
-func (k Keeper) fetchStakedAmountsFromBlock(ctx context.Context, blkHash common.Hash) ([]types.StakedAmountInfo, error) {
+func (k Keeper) fetchStakedAmountsFromBlock(ctx context.Context, blkHash ethcommon.Hash) ([]types.StakedAmountInfo, error) {
 	contractAddr, exists := k.GetContractAddress(ctx)
 	if !exists {
 		return nil, types.ErrContractNotInStorage
@@ -62,21 +69,21 @@ func (k Keeper) fetchStakedAmountsFromBlock(ctx context.Context, blkHash common.
 		return nil, nil
 	}
 
-	err := Retry(
+	err := common.Retry(
 		func() error {
-			client, err := ethclient.Dial(k.apiUrls.GetEthApiUrl())
+			client, err := ethclient.Dial(k.rpcUrls.GetCurrentUrl())
 			if err != nil {
-				k.Logger().Error("rpc error: ethclient dial error", "url", k.apiUrls.GetEthApiUrl(), "err", err)
-				k.apiUrls.RotateEthUrl()
+				k.Logger().Error("rpc error: ethclient dial error", "url", k.rpcUrls.GetCurrentUrl(), "err", err)
+				k.rpcUrls.RotateUrl()
 				return err
 			}
 			defer client.Close()
 
-			k.Logger().Debug("creating contracts caller", "address", common.HexToAddress(contractAddr.Address))
-			contractCaller, err := contracts.NewContractsCaller(common.HexToAddress(contractAddr.Address), client)
+			k.Logger().Debug("creating contracts caller", "address", ethcommon.HexToAddress(contractAddr.Address))
+			contractCaller, err := contracts.NewContractsCaller(ethcommon.HexToAddress(contractAddr.Address), client)
 			if err != nil {
 				k.Logger().Error("contract caller creation error", "err", err)
-				k.apiUrls.RotateEthUrl()
+				k.rpcUrls.RotateUrl()
 				return err
 			}
 
@@ -84,7 +91,7 @@ func (k Keeper) fetchStakedAmountsFromBlock(ctx context.Context, blkHash common.
 			validatorSet, err := contractCaller.GetValidatorSet(&bind.CallOpts{BlockHash: blkHash})
 			if err != nil {
 				k.Logger().Error("get validator set error", "err", err)
-				k.apiUrls.RotateEthUrl()
+				k.rpcUrls.RotateUrl()
 				return err
 			}
 
@@ -105,9 +112,4 @@ func (k Keeper) fetchStakedAmountsFromBlock(ctx context.Context, blkHash common.
 	}
 
 	return stakes, nil
-}
-
-func (k *Keeper) SyncNeeded(ctx context.Context) bool {
-	sdkCtx := sdk.UnwrapSDKContext(ctx)
-	return (sdkCtx.BlockHeader().Height % SYNC_PERIOD) == 0
 }

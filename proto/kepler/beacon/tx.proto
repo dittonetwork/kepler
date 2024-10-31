@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package kepler.beacon;
+
+import "amino/amino.proto";
+import "cosmos/msg/v1/msg.proto";
+import "cosmos_proto/cosmos.proto";
+import "gogoproto/gogo.proto";
+import "kepler/beacon/params.proto";
+import "kepler/beacon/finalized_block_info.proto";
+
+option go_package = "kepler/x/beacon/types";
+
+// Msg defines the Msg service.
+service Msg {
+  option (cosmos.msg.v1.service) = true;
+  
+  // UpdateParams defines a (governance) operation for updating the module
+  // parameters. The authority defaults to the x/gov module account.
+  rpc UpdateParams             (MsgUpdateParams            ) returns (MsgUpdateParamsResponse            );
+  rpc CreateFinalizedBlockInfo (MsgCreateFinalizedBlockInfo) returns (MsgCreateFinalizedBlockInfoResponse);
+  rpc UpdateFinalizedBlockInfo (MsgUpdateFinalizedBlockInfo) returns (MsgUpdateFinalizedBlockInfoResponse);
+  rpc DeleteFinalizedBlockInfo (MsgDeleteFinalizedBlockInfo) returns (MsgDeleteFinalizedBlockInfoResponse);
+}
+// MsgUpdateParams is the Msg/UpdateParams request type.
+message MsgUpdateParams {
+  option (cosmos.msg.v1.signer) =                       "authority";
+  option           (amino.name) = "kepler/x/beacon/MsgUpdateParams";
+  
+  // authority is the address that controls the module (defaults to x/gov unless overwritten).
+  string authority = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  
+  // params defines the module parameters to update.
+  
+  // NOTE: All parameters must be supplied.
+  Params params = 2 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+}
+
+// MsgUpdateParamsResponse defines the response structure for executing a
+// MsgUpdateParams message.
+message MsgUpdateParamsResponse {}
+
+message MsgCreateFinalizedBlockInfo {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator        = 1;
+  uint64 slotNum        = 3;
+  uint64 blockTimestamp = 4;
+  uint64 blockNum       = 5;
+  string blockHash      = 6;
+}
+
+message MsgCreateFinalizedBlockInfoResponse {}
+
+message MsgUpdateFinalizedBlockInfo {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator        = 1;
+  uint64 slotNum        = 3;
+  uint64 blockTimestamp = 4;
+  uint64 blockNum       = 5;
+  string blockHash      = 6;
+}
+
+message MsgUpdateFinalizedBlockInfoResponse {}
+
+message MsgDeleteFinalizedBlockInfo {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1;
+}
+
+message MsgDeleteFinalizedBlockInfoResponse {}
+
