@@ -1,0 +1,72 @@
+syntax = "proto3";
+
+package kepler.symbiotic;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "kepler/symbiotic/params.proto";
+import "kepler/symbiotic/staked_amount_info.proto";
+import "kepler/symbiotic/contract_address.proto";
+
+option go_package = "kepler/x/symbiotic/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  
+  // Parameters queries the parameters of the module.
+  rpc Params (QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/kepler/symbiotic/params";
+  
+  }
+  
+  // Queries a list of StakedAmountInfo items.
+  rpc StakedAmountInfo    (QueryGetStakedAmountInfoRequest) returns (QueryGetStakedAmountInfoResponse) {
+    option (google.api.http).get = "/kepler/symbiotic/staked_amount_info/{ethereumAddress}";
+  
+  }
+  rpc StakedAmountInfoAll (QueryAllStakedAmountInfoRequest) returns (QueryAllStakedAmountInfoResponse) {
+    option (google.api.http).get = "/kepler/symbiotic/staked_amount_info";
+  
+  }
+  
+  // Queries a ContractAddress by index.
+  rpc ContractAddress (QueryGetContractAddressRequest) returns (QueryGetContractAddressResponse) {
+    option (google.api.http).get = "/kepler/symbiotic/contract_address";
+  
+  }
+}
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  
+  // params holds all the parameters of this module.
+  Params params = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+}
+
+message QueryGetStakedAmountInfoRequest {
+  string ethereumAddress = 1;
+}
+
+message QueryGetStakedAmountInfoResponse {
+  StakedAmountInfo stakedAmountInfo = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllStakedAmountInfoRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllStakedAmountInfoResponse {
+  repeated StakedAmountInfo                       stakedAmountInfo = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination       = 2;
+}
+
+message QueryGetContractAddressRequest {}
+
+message QueryGetContractAddressResponse {
+  ContractAddress ContractAddress = 1 [(gogoproto.nullable) = false];
+}
+

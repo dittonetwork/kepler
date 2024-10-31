@@ -54,8 +54,11 @@ import (
 	"google.golang.org/protobuf/types/known/durationpb"
 
 	keplermodulev1 "kepler/api/kepler/kepler/module"
+	symbioticmodulev1 "kepler/api/kepler/symbiotic/module"
 	_ "kepler/x/kepler/module" // import for side-effects
 	keplermoduletypes "kepler/x/kepler/types"
+	_ "kepler/x/symbiotic/module" // import for side-effects
+	symbioticmoduletypes "kepler/x/symbiotic/types"
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 )
 
@@ -94,6 +97,7 @@ var (
 		circuittypes.ModuleName,
 		// chain modules
 		keplermoduletypes.ModuleName,
+		symbioticmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/initGenesis
 	}
 
@@ -119,6 +123,7 @@ var (
 		ibcfeetypes.ModuleName,
 		// chain modules
 		keplermoduletypes.ModuleName,
+		symbioticmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/beginBlockers
 	}
 
@@ -138,6 +143,7 @@ var (
 		ibcfeetypes.ModuleName,
 		// chain modules
 		keplermoduletypes.ModuleName,
+		symbioticmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/endBlockers
 	}
 
@@ -296,6 +302,10 @@ var (
 			{
 				Name:   keplermoduletypes.ModuleName,
 				Config: appconfig.WrapAny(&keplermodulev1.Module{}),
+			},
+			{
+				Name:   symbioticmoduletypes.ModuleName,
+				Config: appconfig.WrapAny(&symbioticmodulev1.Module{}),
 			},
 			// this line is used by starport scaffolding # stargate/app/moduleConfig
 		},

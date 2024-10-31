@@ -16,6 +16,9 @@ NODE3_HOME := $(NODE3_DIR)/node3home
 NODE4_HOME := $(NODE4_DIR)/node4home
 NODE5_HOME := $(NODE5_DIR)/node5home
 
+# Includes
+include x/symbiotic/abi/Makefile.inc
+
 # Targets
 .PHONY: init clean setup build start-node1 start-node2 create-validator up down localnet create-validators-localnet check-validators
 
@@ -30,7 +33,7 @@ clean:
 setup:
 	@mkdir -p $(NODE1_HOME) $(NODE2_HOME) $(NODE3_HOME) $(NODE4_HOME) $(NODE5_HOME)
 
-build:
+build: gen-contracts
 	@echo "Building Kepler chain..."
 	@ignite chain build
 

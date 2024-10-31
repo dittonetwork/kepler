@@ -1,0 +1,12 @@
+syntax = "proto3";
+package kepler.symbiotic;
+
+option go_package = "kepler/x/symbiotic/types";
+
+message StakedAmountInfo {
+  string ethereumAddress = 1; 
+  string stakedAmount = 2; 
+  uint64 lastUpdated = 3; 
+  string creator = 4;
+}
+
