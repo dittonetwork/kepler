@@ -75,8 +75,6 @@ import (
 	ibctransferkeeper "github.com/cosmos/ibc-go/v8/modules/apps/transfer/keeper"
 	ibckeeper "github.com/cosmos/ibc-go/v8/modules/core/keeper"
 
-	keplermodulekeeper "kepler/x/kepler/keeper"
-
 	beaconmodulekeeper "kepler/x/beacon/keeper"
 
 	symbioticmodulekeeper "kepler/x/symbiotic/keeper"
@@ -145,7 +143,6 @@ type App struct {
 	ScopedICAHostKeeper       capabilitykeeper.ScopedKeeper
 	ScopedKeepers             map[string]capabilitykeeper.ScopedKeeper
 
-	KeplerKeeper    keplermodulekeeper.Keeper
 	BeaconKeeper    beaconmodulekeeper.Keeper
 	SymbioticKeeper symbioticmodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
@@ -251,7 +248,6 @@ func New(
 		&app.NFTKeeper,
 		&app.GroupKeeper,
 		&app.CircuitBreakerKeeper,
-		&app.KeplerKeeper,
 		&app.BeaconKeeper,
 		&app.SymbioticKeeper,
 		// this line is used by starport scaffolding # stargate/app/keeperDefinition
