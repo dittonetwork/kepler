@@ -13,9 +13,43 @@ option go_package = "kepler/x/horizon/types";
 service Msg {
   option (cosmos.msg.v1.service) = true;
 
+  // ScheduleAutomation defines an operation for scheduling automation execution.
+  rpc ScheduleAutomation(MsgScheduleAutomationParams) returns (MsgScheduleAutomationResponse);
+
   // UpdateParams defines a (governance) operation for updating the module
   // parameters. The authority defaults to the x/gov module account.
   rpc UpdateParams(MsgUpdateParams) returns (MsgUpdateParamsResponse);
+}
+
+// MsgScheduleAutomationParams is the Msg/ScheduleAutomation request type.
+message MsgScheduleAutomationParams {
+  option (cosmos.msg.v1.signer) = "creator";
+  option (amino.name) = "kepler/x/horizon/MsgScheduleAutomationParams";
+
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string signer  = 3;
+
+  string target_chain_id = 100;
+  string max_gas_price   = 101;
+
+  string active_from                = 200;
+  string active_to                  = 201;
+  string trigger_expression         = 202;
+  uint32 trigger_expression_version = 203;
+  uint32 max_number_of_executions   = 204;
+
+  repeated string precondition_checkers    = 300;
+  repeated bytes  precondition_check_calls = 301;
+  repeated string action_targets           = 302;
+  repeated bytes  action_target_calls      = 303;
+
+  bytes signature = 400;
+}
+
+// MsgScheduleAutomationResponse defines the response structure for executing a
+// MsgScheduleAutomation message.
+message MsgScheduleAutomationResponse {
+  uint64 id = 1;
 }
 
 // MsgUpdateParams is the Msg/UpdateParams request type.

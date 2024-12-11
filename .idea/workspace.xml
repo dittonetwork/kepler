@@ -4,17 +4,9 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="39183646-e71c-4300-97bb-6f5187d022db" name="Changes" comment="ORM support added">
-      <change afterPath="$PROJECT_DIR$/x/horizon/keeper/state.go" afterDir="false" />
+    <list default="true" id="39183646-e71c-4300-97bb-6f5187d022db" name="Changes" comment="State added to Horizon module">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proto_orm/x/horizon/state/automation.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/proto_orm/x/horizon/state/time_based_trigger.proto" beforeDir="false" afterPath="$PROJECT_DIR$/proto_orm/x/horizon/types/state.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/x/horizon/keeper/keeper.go" beforeDir="false" afterPath="$PROJECT_DIR$/x/horizon/keeper/keeper.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/x/horizon/module/depinject.go" beforeDir="false" afterPath="$PROJECT_DIR$/x/horizon/module/depinject.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/x/horizon/state/automation.cosmos_orm.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/x/horizon/state/automation.pb.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/x/horizon/state/time_based_trigger.cosmos_orm.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/x/horizon/state/time_based_trigger.pb.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/proto/kepler/horizon/v1/tx.proto" beforeDir="false" afterPath="$PROJECT_DIR$/proto/kepler/horizon/v1/tx.proto" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +107,8 @@
     <MESSAGE value="go.sum added" />
     <MESSAGE value="Horizon module scaffolded" />
     <MESSAGE value="ORM support added" />
-    <option name="LAST_COMMIT_MESSAGE" value="ORM support added" />
+    <MESSAGE value="State added to Horizon module" />
+    <option name="LAST_COMMIT_MESSAGE" value="State added to Horizon module" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
