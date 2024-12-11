@@ -7,6 +7,7 @@ replace (
 	cosmossdk.io/client/v2 => cosmossdk.io/client/v2 v2.0.0-20241202180139-76f8af9617cd
 	cosmossdk.io/core => cosmossdk.io/core v1.0.0-alpha.6
 	cosmossdk.io/core/testing => cosmossdk.io/core/testing v0.0.0-20241202173430-9d9c19c0f854
+	cosmossdk.io/orm => github.com/cosmos/cosmos-sdk/orm v1.0.0-beta.3.0.20241205105745-66c593f14740
 	cosmossdk.io/store => cosmossdk.io/store v1.0.0-rc.0.0.20241202173430-9d9c19c0f854
 	cosmossdk.io/tools/confix => cosmossdk.io/tools/confix v0.0.0-20241202180139-76f8af9617cd
 	cosmossdk.io/x/accounts => cosmossdk.io/x/accounts v0.0.0-20241202180139-76f8af9617cd
@@ -49,6 +50,7 @@ require (
 	cosmossdk.io/errors/v2 v2.0.0-20241211115139-cef0f8497fe2
 	cosmossdk.io/log v1.5.0
 	cosmossdk.io/math v1.4.0
+	cosmossdk.io/orm v0.0.0-00010101000000-000000000000
 	cosmossdk.io/store v1.1.1-0.20240909133312-50288938d1b6
 	cosmossdk.io/tools/confix v0.1.2
 	cosmossdk.io/x/accounts v0.0.0-20240913065641-0064ccbce64e

@@ -1,0 +1,437 @@
+syntax = "proto3";
+package kepler.horizon.state;
+
+import "cosmos/orm/v1/orm.proto";
+
+option go_package = "kepler/x/horizon/state";
+
+message TimeBasedTrigger {
+
+  option (cosmos.orm.v1.table) = {
+    id: 2;
+    primary_key: {
+      fields: "automation_id"
+    };
+    index: [
+      { id: 1, fields: "deleted" },
+      { id: 2, fields: "expired" },
+      { id: 3, fields: "target_chain_id" },
+      // Seconds
+      { id: 100, fields: "second_00" },
+      { id: 101, fields: "second_01" },
+      { id: 102, fields: "second_02" },
+      { id: 103, fields: "second_03" },
+      { id: 104, fields: "second_04" },
+      { id: 105, fields: "second_05" },
+      { id: 106, fields: "second_06" },
+      { id: 107, fields: "second_07" },
+      { id: 108, fields: "second_08" },
+      { id: 109, fields: "second_09" },
+      { id: 110, fields: "second_10" },
+      { id: 111, fields: "second_11" },
+      { id: 112, fields: "second_12" },
+      { id: 113, fields: "second_13" },
+      { id: 114, fields: "second_14" },
+      { id: 115, fields: "second_15" },
+      { id: 116, fields: "second_16" },
+      { id: 117, fields: "second_17" },
+      { id: 118, fields: "second_18" },
+      { id: 119, fields: "second_19" },
+      { id: 120, fields: "second_20" },
+      { id: 121, fields: "second_21" },
+      { id: 122, fields: "second_22" },
+      { id: 123, fields: "second_23" },
+      { id: 124, fields: "second_24" },
+      { id: 125, fields: "second_25" },
+      { id: 126, fields: "second_26" },
+      { id: 127, fields: "second_27" },
+      { id: 128, fields: "second_28" },
+      { id: 129, fields: "second_29" },
+      { id: 130, fields: "second_30" },
+      { id: 131, fields: "second_31" },
+      { id: 132, fields: "second_32" },
+      { id: 133, fields: "second_33" },
+      { id: 134, fields: "second_34" },
+      { id: 135, fields: "second_35" },
+      { id: 136, fields: "second_36" },
+      { id: 137, fields: "second_37" },
+      { id: 138, fields: "second_38" },
+      { id: 139, fields: "second_39" },
+      { id: 140, fields: "second_40" },
+      { id: 141, fields: "second_41" },
+      { id: 142, fields: "second_42" },
+      { id: 143, fields: "second_43" },
+      { id: 144, fields: "second_44" },
+      { id: 145, fields: "second_45" },
+      { id: 146, fields: "second_46" },
+      { id: 147, fields: "second_47" },
+      { id: 148, fields: "second_48" },
+      { id: 149, fields: "second_49" },
+      { id: 150, fields: "second_50" },
+      { id: 151, fields: "second_51" },
+      { id: 152, fields: "second_52" },
+      { id: 153, fields: "second_53" },
+      { id: 154, fields: "second_54" },
+      { id: 155, fields: "second_55" },
+      { id: 156, fields: "second_56" },
+      { id: 157, fields: "second_57" },
+      { id: 158, fields: "second_58" },
+      { id: 159, fields: "second_59" },
+      // Minutes
+      { id: 200, fields: "minute_00" },
+      { id: 201, fields: "minute_01" },
+      { id: 202, fields: "minute_02" },
+      { id: 203, fields: "minute_03" },
+      { id: 204, fields: "minute_04" },
+      { id: 205, fields: "minute_05" },
+      { id: 206, fields: "minute_06" },
+      { id: 207, fields: "minute_07" },
+      { id: 208, fields: "minute_08" },
+      { id: 209, fields: "minute_09" },
+      { id: 210, fields: "minute_10" },
+      { id: 211, fields: "minute_11" },
+      { id: 212, fields: "minute_12" },
+      { id: 213, fields: "minute_13" },
+      { id: 214, fields: "minute_14" },
+      { id: 215, fields: "minute_15" },
+      { id: 216, fields: "minute_16" },
+      { id: 217, fields: "minute_17" },
+      { id: 218, fields: "minute_18" },
+      { id: 219, fields: "minute_19" },
+      { id: 220, fields: "minute_20" },
+      { id: 221, fields: "minute_21" },
+      { id: 222, fields: "minute_22" },
+      { id: 223, fields: "minute_23" },
+      { id: 224, fields: "minute_24" },
+      { id: 225, fields: "minute_25" },
+      { id: 226, fields: "minute_26" },
+      { id: 227, fields: "minute_27" },
+      { id: 228, fields: "minute_28" },
+      { id: 229, fields: "minute_29" },
+      { id: 230, fields: "minute_30" },
+      { id: 231, fields: "minute_31" },
+      { id: 232, fields: "minute_32" },
+      { id: 233, fields: "minute_33" },
+      { id: 234, fields: "minute_34" },
+      { id: 235, fields: "minute_35" },
+      { id: 236, fields: "minute_36" },
+      { id: 237, fields: "minute_37" },
+      { id: 238, fields: "minute_38" },
+      { id: 239, fields: "minute_39" },
+      { id: 240, fields: "minute_40" },
+      { id: 241, fields: "minute_41" },
+      { id: 242, fields: "minute_42" },
+      { id: 243, fields: "minute_43" },
+      { id: 244, fields: "minute_44" },
+      { id: 245, fields: "minute_45" },
+      { id: 246, fields: "minute_46" },
+      { id: 247, fields: "minute_47" },
+      { id: 248, fields: "minute_48" },
+      { id: 249, fields: "minute_49" },
+      { id: 250, fields: "minute_50" },
+      { id: 251, fields: "minute_51" },
+      { id: 252, fields: "minute_52" },
+      { id: 253, fields: "minute_53" },
+      { id: 254, fields: "minute_54" },
+      { id: 255, fields: "minute_55" },
+      { id: 256, fields: "minute_56" },
+      { id: 257, fields: "minute_57" },
+      { id: 258, fields: "minute_58" },
+      { id: 259, fields: "minute_59" },
+      // Hours
+      { id: 300, fields: "hour_00" },
+      { id: 301, fields: "hour_01" },
+      { id: 302, fields: "hour_02" },
+      { id: 303, fields: "hour_03" },
+      { id: 304, fields: "hour_04" },
+      { id: 305, fields: "hour_05" },
+      { id: 306, fields: "hour_06" },
+      { id: 307, fields: "hour_07" },
+      { id: 308, fields: "hour_08" },
+      { id: 309, fields: "hour_09" },
+      { id: 310, fields: "hour_10" },
+      { id: 311, fields: "hour_11" },
+      { id: 312, fields: "hour_12" },
+      { id: 313, fields: "hour_13" },
+      { id: 314, fields: "hour_14" },
+      { id: 315, fields: "hour_15" },
+      { id: 316, fields: "hour_16" },
+      { id: 317, fields: "hour_17" },
+      { id: 318, fields: "hour_18" },
+      { id: 319, fields: "hour_19" },
+      { id: 320, fields: "hour_20" },
+      { id: 321, fields: "hour_21" },
+      { id: 322, fields: "hour_22" },
+      { id: 323, fields: "hour_23" },
+      // Days of week
+      { id: 401, fields: "day_of_week_01" },
+      { id: 402, fields: "day_of_week_02" },
+      { id: 403, fields: "day_of_week_03" },
+      { id: 404, fields: "day_of_week_04" },
+      { id: 405, fields: "day_of_week_05" },
+      { id: 406, fields: "day_of_week_06" },
+      { id: 407, fields: "day_of_week_07" },
+      // Days of month
+      { id: 501, fields: "day_of_month_01" },
+      { id: 502, fields: "day_of_month_02" },
+      { id: 503, fields: "day_of_month_03" },
+      { id: 504, fields: "day_of_month_04" },
+      { id: 505, fields: "day_of_month_05" },
+      { id: 506, fields: "day_of_month_06" },
+      { id: 507, fields: "day_of_month_07" },
+      { id: 508, fields: "day_of_month_08" },
+      { id: 509, fields: "day_of_month_09" },
+      { id: 510, fields: "day_of_month_10" },
+      { id: 511, fields: "day_of_month_11" },
+      { id: 512, fields: "day_of_month_12" },
+      { id: 513, fields: "day_of_month_13" },
+      { id: 514, fields: "day_of_month_14" },
+      { id: 515, fields: "day_of_month_15" },
+      { id: 516, fields: "day_of_month_16" },
+      { id: 517, fields: "day_of_month_17" },
+      { id: 518, fields: "day_of_month_18" },
+      { id: 519, fields: "day_of_month_19" },
+      { id: 520, fields: "day_of_month_20" },
+      { id: 521, fields: "day_of_month_21" },
+      { id: 522, fields: "day_of_month_22" },
+      { id: 523, fields: "day_of_month_23" },
+      { id: 524, fields: "day_of_month_24" },
+      { id: 525, fields: "day_of_month_25" },
+      { id: 526, fields: "day_of_month_26" },
+      { id: 527, fields: "day_of_month_27" },
+      { id: 528, fields: "day_of_month_28" },
+      { id: 529, fields: "day_of_month_29" },
+      { id: 530, fields: "day_of_month_30" },
+      { id: 531, fields: "day_of_month_31" },
+      // Months
+      { id: 601, fields: "month_01" },
+      { id: 602, fields: "month_02" },
+      { id: 603, fields: "month_03" },
+      { id: 604, fields: "month_04" },
+      { id: 605, fields: "month_05" },
+      { id: 606, fields: "month_06" },
+      { id: 607, fields: "month_07" },
+      { id: 608, fields: "month_08" },
+      { id: 609, fields: "month_09" },
+      { id: 610, fields: "month_10" },
+      { id: 611, fields: "month_11" },
+      { id: 612, fields: "month_12" }
+    ]
+  };
+
+  uint64 automation_id = 1;
+  bool   deleted       = 2;
+  bool   expired       = 3;
+
+  string target_chain_id = 4;
+
+  string active_from                    = 5;
+  string active_to                      = 6;
+  uint32 remaining_number_of_executions = 7;
+
+  // Seconds
+  bool second_00 = 100;
+  bool second_01 = 101;
+  bool second_02 = 102;
+  bool second_03 = 103;
+  bool second_04 = 104;
+  bool second_05 = 105;
+  bool second_06 = 106;
+  bool second_07 = 107;
+  bool second_08 = 108;
+  bool second_09 = 109;
+  bool second_10 = 110;
+  bool second_11 = 111;
+  bool second_12 = 112;
+  bool second_13 = 113;
+  bool second_14 = 114;
+  bool second_15 = 115;
+  bool second_16 = 116;
+  bool second_17 = 117;
+  bool second_18 = 118;
+  bool second_19 = 119;
+  bool second_20 = 120;
+  bool second_21 = 121;
+  bool second_22 = 122;
+  bool second_23 = 123;
+  bool second_24 = 124;
+  bool second_25 = 125;
+  bool second_26 = 126;
+  bool second_27 = 127;
+  bool second_28 = 128;
+  bool second_29 = 129;
+  bool second_30 = 130;
+  bool second_31 = 131;
+  bool second_32 = 132;
+  bool second_33 = 133;
+  bool second_34 = 134;
+  bool second_35 = 135;
+  bool second_36 = 136;
+  bool second_37 = 137;
+  bool second_38 = 138;
+  bool second_39 = 139;
+  bool second_40 = 140;
+  bool second_41 = 141;
+  bool second_42 = 142;
+  bool second_43 = 143;
+  bool second_44 = 144;
+  bool second_45 = 145;
+  bool second_46 = 146;
+  bool second_47 = 147;
+  bool second_48 = 148;
+  bool second_49 = 149;
+  bool second_50 = 150;
+  bool second_51 = 151;
+  bool second_52 = 152;
+  bool second_53 = 153;
+  bool second_54 = 154;
+  bool second_55 = 155;
+  bool second_56 = 156;
+  bool second_57 = 157;
+  bool second_58 = 158;
+  bool second_59 = 159;
+
+  // Minutes
+  bool minute_00 = 200;
+  bool minute_01 = 201;
+  bool minute_02 = 202;
+  bool minute_03 = 203;
+  bool minute_04 = 204;
+  bool minute_05 = 205;
+  bool minute_06 = 206;
+  bool minute_07 = 207;
+  bool minute_08 = 208;
+  bool minute_09 = 209;
+  bool minute_10 = 210;
+  bool minute_11 = 211;
+  bool minute_12 = 212;
+  bool minute_13 = 213;
+  bool minute_14 = 214;
+  bool minute_15 = 215;
+  bool minute_16 = 216;
+  bool minute_17 = 217;
+  bool minute_18 = 218;
+  bool minute_19 = 219;
+  bool minute_20 = 220;
+  bool minute_21 = 221;
+  bool minute_22 = 222;
+  bool minute_23 = 223;
+  bool minute_24 = 224;
+  bool minute_25 = 225;
+  bool minute_26 = 226;
+  bool minute_27 = 227;
+  bool minute_28 = 228;
+  bool minute_29 = 229;
+  bool minute_30 = 230;
+  bool minute_31 = 231;
+  bool minute_32 = 232;
+  bool minute_33 = 233;
+  bool minute_34 = 234;
+  bool minute_35 = 235;
+  bool minute_36 = 236;
+  bool minute_37 = 237;
+  bool minute_38 = 238;
+  bool minute_39 = 239;
+  bool minute_40 = 240;
+  bool minute_41 = 241;
+  bool minute_42 = 242;
+  bool minute_43 = 243;
+  bool minute_44 = 244;
+  bool minute_45 = 245;
+  bool minute_46 = 246;
+  bool minute_47 = 247;
+  bool minute_48 = 248;
+  bool minute_49 = 249;
+  bool minute_50 = 250;
+  bool minute_51 = 251;
+  bool minute_52 = 252;
+  bool minute_53 = 253;
+  bool minute_54 = 254;
+  bool minute_55 = 255;
+  bool minute_56 = 256;
+  bool minute_57 = 257;
+  bool minute_58 = 258;
+  bool minute_59 = 259;
+
+  // Hours
+  bool hour_00 = 300;
+  bool hour_01 = 301;
+  bool hour_02 = 302;
+  bool hour_03 = 303;
+  bool hour_04 = 304;
+  bool hour_05 = 305;
+  bool hour_06 = 306;
+  bool hour_07 = 307;
+  bool hour_08 = 308;
+  bool hour_09 = 309;
+  bool hour_10 = 310;
+  bool hour_11 = 311;
+  bool hour_12 = 312;
+  bool hour_13 = 313;
+  bool hour_14 = 314;
+  bool hour_15 = 315;
+  bool hour_16 = 316;
+  bool hour_17 = 317;
+  bool hour_18 = 318;
+  bool hour_19 = 319;
+  bool hour_20 = 320;
+  bool hour_21 = 321;
+  bool hour_22 = 322;
+  bool hour_23 = 323;
+
+  // Days of week
+  bool day_of_week_01 = 401;
+  bool day_of_week_02 = 402;
+  bool day_of_week_03 = 403;
+  bool day_of_week_04 = 404;
+  bool day_of_week_05 = 405;
+  bool day_of_week_06 = 406;
+  bool day_of_week_07 = 407;
+
+  // Days of month
+  bool day_of_month_01 = 501;
+  bool day_of_month_02 = 502;
+  bool day_of_month_03 = 503;
+  bool day_of_month_04 = 504;
+  bool day_of_month_05 = 505;
+  bool day_of_month_06 = 506;
+  bool day_of_month_07 = 507;
+  bool day_of_month_08 = 508;
+  bool day_of_month_09 = 509;
+  bool day_of_month_10 = 510;
+  bool day_of_month_11 = 511;
+  bool day_of_month_12 = 512;
+  bool day_of_month_13 = 513;
+  bool day_of_month_14 = 514;
+  bool day_of_month_15 = 515;
+  bool day_of_month_16 = 516;
+  bool day_of_month_17 = 517;
+  bool day_of_month_18 = 518;
+  bool day_of_month_19 = 519;
+  bool day_of_month_20 = 520;
+  bool day_of_month_21 = 521;
+  bool day_of_month_22 = 522;
+  bool day_of_month_23 = 523;
+  bool day_of_month_24 = 524;
+  bool day_of_month_25 = 525;
+  bool day_of_month_26 = 526;
+  bool day_of_month_27 = 527;
+  bool day_of_month_28 = 528;
+  bool day_of_month_29 = 529;
+  bool day_of_month_30 = 530;
+  bool day_of_month_31 = 531;
+
+  // Months
+  bool month_01 = 601;
+  bool month_02 = 602;
+  bool month_03 = 603;
+  bool month_04 = 604;
+  bool month_05 = 605;
+  bool month_06 = 606;
+  bool month_07 = 607;
+  bool month_08 = 608;
+  bool month_09 = 609;
+  bool month_10 = 610;
+  bool month_11 = 611;
+  bool month_12 = 612;
+}

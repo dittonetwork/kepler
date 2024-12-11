@@ -69,8 +69,11 @@ protoImageName=ghcr.io/cosmos/proto-builder:$(protoVer)
 protoImage=$(DOCKER) run --rm -v $(CURDIR):/workspace --workdir /workspace $(protoImageName)
 
 proto-gen:
-	@echo "Generating protobuf files..."
+	@echo "Generating Ignite protobuf files..."
 	@ignite generate proto-go --yes
+	@echo "Generating Cosmos ORM protobuf files..."
+	@buf generate --template ./proto_orm/buf.gen.orm.yaml
+	@echo "✔ Generated Go code"
 
 .PHONY: proto-gen
 
