@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="39183646-e71c-4300-97bb-6f5187d022db" name="Changes" comment="State added to Horizon module">
+    <list default="true" id="39183646-e71c-4300-97bb-6f5187d022db" name="Changes" comment="ScheduleAutomation message processing added to Horizon module">
+      <change afterPath="$PROJECT_DIR$/x/horizon/types/tx.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proto/kepler/horizon/v1/tx.proto" beforeDir="false" afterPath="$PROJECT_DIR$/proto/kepler/horizon/v1/tx.proto" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +61,7 @@
     "git-widget-placeholder": "cosmos-sdk-0.52.x-migration",
     "go.import.settings.migrated": "true",
     "go.sdk.automatically.set": "true",
-    "last_opened_file_path": "/Users/yuryglushkov/Projects/dittonetwork/kepler-3/proto_orm/x/horizon/state",
+    "last_opened_file_path": "/Users/yuryglushkov/Projects/dittonetwork/kepler-3/x/horizon/keeper",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm"
@@ -69,6 +69,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/x/horizon/keeper" />
       <recent name="$PROJECT_DIR$/proto_orm/x/horizon/state" />
       <recent name="$PROJECT_DIR$/proto_orm" />
     </key>
@@ -108,7 +109,8 @@
     <MESSAGE value="Horizon module scaffolded" />
     <MESSAGE value="ORM support added" />
     <MESSAGE value="State added to Horizon module" />
-    <option name="LAST_COMMIT_MESSAGE" value="State added to Horizon module" />
+    <MESSAGE value="ScheduleAutomation message processing added to Horizon module" />
+    <option name="LAST_COMMIT_MESSAGE" value="ScheduleAutomation message processing added to Horizon module" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
