@@ -1,0 +1,17 @@
+syntax = "proto3";
+package kepler.horizon.v1;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "kepler/horizon/v1/params.proto";
+
+option go_package = "kepler/x/horizon/types";
+
+// GenesisState defines the horizon module's genesis state.
+message GenesisState {
+  // params defines all the parameters of the module.
+  Params params = 1 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}

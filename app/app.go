@@ -31,6 +31,7 @@ import (
 	authkeeper "github.com/cosmos/cosmos-sdk/x/auth/keeper"
 
 	"kepler/docs"
+	horizonmodulekeeper "kepler/x/horizon/keeper"
 )
 
 const (
@@ -63,6 +64,7 @@ type App struct {
 	StakingKeeper  *stakingkeeper.Keeper
 	DistrKeeper    distrkeeper.Keeper
 
+	HorizonKeeper horizonmodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
 	// simulation manager
@@ -130,6 +132,7 @@ func New(
 		&app.BankKeeper,
 		&app.StakingKeeper,
 		&app.DistrKeeper,
+		&app.HorizonKeeper,
 	); err != nil {
 		panic(err)
 	}
