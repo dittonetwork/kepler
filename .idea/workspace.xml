@@ -4,9 +4,19 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="39183646-e71c-4300-97bb-6f5187d022db" name="Changes" comment="ScheduleAutomation message processing added to Horizon module">
-      <change afterPath="$PROJECT_DIR$/x/horizon/types/tx.go" afterDir="false" />
+    <list default="true" id="39183646-e71c-4300-97bb-6f5187d022db" name="Changes" comment="MsgScheduleAutomationParams validation (basic) added">
+      <change afterPath="$PROJECT_DIR$/x/horizon/types/trigger.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/x/horizon/types/trigger_expression.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/x/horizon/types/tx_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/proto_orm/x/horizon/types/state.proto" beforeDir="false" afterPath="$PROJECT_DIR$/proto_orm/x/horizon/types/state/state.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/x/horizon/keeper/keeper.go" beforeDir="false" afterPath="$PROJECT_DIR$/x/horizon/keeper/keeper.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/x/horizon/keeper/msg_schedule_automation_params.go" beforeDir="false" afterPath="$PROJECT_DIR$/x/horizon/keeper/msg_schedule_automation.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/x/horizon/keeper/msg_schedule_automation_params_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/x/horizon/keeper/msg_schedule_automation_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/x/horizon/keeper/state.go" beforeDir="false" afterPath="$PROJECT_DIR$/x/horizon/keeper/state.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/x/horizon/types/state.cosmos_orm.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/x/horizon/types/state.pb.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/x/horizon/types/tx.go" beforeDir="false" afterPath="$PROJECT_DIR$/x/horizon/types/tx.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +71,7 @@
     "git-widget-placeholder": "cosmos-sdk-0.52.x-migration",
     "go.import.settings.migrated": "true",
     "go.sdk.automatically.set": "true",
-    "last_opened_file_path": "/Users/yuryglushkov/Projects/dittonetwork/kepler-3/x/horizon/keeper",
+    "last_opened_file_path": "/Users/yuryglushkov/Projects/dittonetwork/kepler-3/proto_orm/x/horizon/types/state",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm"
@@ -69,11 +79,13 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/proto_orm/x/horizon/types/state" />
       <recent name="$PROJECT_DIR$/x/horizon/keeper" />
       <recent name="$PROJECT_DIR$/proto_orm/x/horizon/state" />
       <recent name="$PROJECT_DIR$/proto_orm" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/proto_orm/x/horizon/types/state" />
       <recent name="$PROJECT_DIR$/proto_orm/x/horizon/types" />
       <recent name="$PROJECT_DIR$/proto_orm/x/horizon" />
     </key>
@@ -110,7 +122,8 @@
     <MESSAGE value="ORM support added" />
     <MESSAGE value="State added to Horizon module" />
     <MESSAGE value="ScheduleAutomation message processing added to Horizon module" />
-    <option name="LAST_COMMIT_MESSAGE" value="ScheduleAutomation message processing added to Horizon module" />
+    <MESSAGE value="MsgScheduleAutomationParams validation (basic) added" />
+    <option name="LAST_COMMIT_MESSAGE" value="MsgScheduleAutomationParams validation (basic) added" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

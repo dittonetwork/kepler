@@ -3,7 +3,7 @@ package kepler.horizon.state;
 
 import "cosmos/orm/v1/orm.proto";
 
-option go_package = "kepler/x/horizon/types";
+option go_package = "kepler/x/horizon/types/state";
 
 message Automation {
 

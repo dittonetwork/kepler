@@ -7,7 +7,6 @@ import (
 
 func (m *MsgScheduleAutomationParams) Validate() error {
 	// Trigger
-
 	if m.TriggerExpressionVersion != 1 {
 		return fmt.Errorf(`trigger expression version [%d] is invalid`, m.TriggerExpressionVersion)
 	}

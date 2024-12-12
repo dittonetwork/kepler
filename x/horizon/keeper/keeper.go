@@ -10,6 +10,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/codec"
 
 	"kepler/x/horizon/types"
+	"kepler/x/horizon/types/state"
 )
 
 type Keeper struct {
@@ -18,7 +19,7 @@ type Keeper struct {
 	addressCodec address.Codec
 	authority    []byte
 	cdc          codec.BinaryCodec
-	state        types.StateStore
+	state        state.StateStore
 
 	Schema collections.Schema
 	Params collections.Item[types.Params]
@@ -42,7 +43,7 @@ func NewKeeper(
 		panic(err)
 	}
 
-	state, err := types.NewStateStore(modDb)
+	db, err := state.NewStateStore(modDb)
 	if err != nil {
 		panic(err)
 	}
@@ -54,7 +55,7 @@ func NewKeeper(
 		authority:    authority,
 		cdc:          cdc,
 		Environment:  env,
-		state:        state,
+		state:        db,
 
 		Params: collections.NewItem(sb, types.ParamsKey, "params", codec.CollValue[types.Params](cdc)),
 		// this line is used by starport scaffolding # collection/instantiate
