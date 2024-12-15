@@ -157,14 +157,14 @@ func initAppForTestnet(app *app.App, args valArgs) *app.App {
 	iterator.Close()
 
 	// Add our validator to power and last validators store
-	app.StakingKeeper.SetValidator(ctx, newVal)
+	_ = app.StakingKeeper.SetValidator(ctx, newVal)
 	err = app.StakingKeeper.SetValidatorByConsAddr(ctx, newVal)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
 		os.Exit(1)
 	}
-	app.StakingKeeper.SetValidatorByPowerIndex(ctx, newVal)
-	app.StakingKeeper.SetLastValidatorPower(ctx, validator, 0)
+	_ = app.StakingKeeper.SetValidatorByPowerIndex(ctx, newVal)
+	_ = app.StakingKeeper.SetLastValidatorPower(ctx, validator, 0)
 	if err := app.StakingKeeper.Hooks().AfterValidatorCreated(ctx, validator); err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
 		os.Exit(1)
@@ -174,10 +174,10 @@ func initAppForTestnet(app *app.App, args valArgs) *app.App {
 	//
 
 	// Initialize records for this validator across all distribution stores
-	app.DistrKeeper.ValidatorHistoricalRewards.Set(ctx, collections.Join(sdk.ValAddress(validator), uint64(0)), distrtypes.NewValidatorHistoricalRewards(sdk.DecCoins{}, 1))
-	app.DistrKeeper.ValidatorCurrentRewards.Set(ctx, validator, distrtypes.NewValidatorCurrentRewards(sdk.DecCoins{}, 1))
-	app.DistrKeeper.ValidatorsAccumulatedCommission.Set(ctx, validator, distrtypes.InitialValidatorAccumulatedCommission())
-	app.DistrKeeper.ValidatorOutstandingRewards.Set(ctx, validator, distrtypes.ValidatorOutstandingRewards{Rewards: sdk.DecCoins{}})
+	_ = app.DistrKeeper.ValidatorHistoricalRewards.Set(ctx, collections.Join(sdk.ValAddress(validator), uint64(0)), distrtypes.NewValidatorHistoricalRewards(sdk.DecCoins{}, 1))
+	_ = app.DistrKeeper.ValidatorCurrentRewards.Set(ctx, validator, distrtypes.NewValidatorCurrentRewards(sdk.DecCoins{}, 1))
+	_ = app.DistrKeeper.ValidatorsAccumulatedCommission.Set(ctx, validator, distrtypes.InitialValidatorAccumulatedCommission())
+	_ = app.DistrKeeper.ValidatorOutstandingRewards.Set(ctx, validator, distrtypes.ValidatorOutstandingRewards{Rewards: sdk.DecCoins{}})
 
 	// BANK
 	//

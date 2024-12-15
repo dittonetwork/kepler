@@ -1,8 +1,9 @@
 package keeper
 
 import (
-	ormv1alpha1 "cosmossdk.io/api/cosmos/orm/v1alpha1"
 	"kepler/x/horizon/types/state"
+
+	ormv1alpha1 "cosmossdk.io/api/cosmos/orm/v1alpha1"
 )
 
 var StateSchema = &ormv1alpha1.ModuleSchemaDescriptor{

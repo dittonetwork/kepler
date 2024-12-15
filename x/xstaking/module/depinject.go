@@ -1,4 +1,4 @@
-package horizon
+package xstaking
 
 import (
 	"cosmossdk.io/core/address"
@@ -8,10 +8,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/codec"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 
-	// this line is used by starport scaffolding # 1
-
-	"kepler/x/horizon/keeper"
-	"kepler/x/horizon/types"
+	"kepler/x/xstaking/keeper"
+	"kepler/x/xstaking/types"
 )
 
 var _ depinject.OnePerModuleType = AppModule{}
@@ -38,8 +36,8 @@ type ModuleInputs struct {
 type ModuleOutputs struct {
 	depinject.Out
 
-	HorizonKeeper keeper.Keeper
-	Module        appmodule.AppModule
+	XstakingKeeper keeper.Keeper
+	Module         appmodule.AppModule
 }
 
 func ProvideModule(in ModuleInputs) ModuleOutputs {
@@ -56,5 +54,5 @@ func ProvideModule(in ModuleInputs) ModuleOutputs {
 	)
 	m := NewAppModule(in.Cdc, k)
 
-	return ModuleOutputs{HorizonKeeper: k, Module: m}
+	return ModuleOutputs{XstakingKeeper: k, Module: m}
 }

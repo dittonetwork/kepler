@@ -7,11 +7,12 @@
 package state
 
 import (
+	reflect "reflect"
+	sync "sync"
+
 	_ "cosmossdk.io/orm"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
-	reflect "reflect"
-	sync "sync"
 )
 
 const (

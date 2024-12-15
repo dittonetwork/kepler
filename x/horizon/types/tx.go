@@ -69,9 +69,10 @@ func (m *MsgScheduleAutomationParams) Validate() error {
 
 	// TODO: Validate max gas price if necessary
 
-	if m.MaxNumberOfExecutions < 0 {
-		return fmt.Errorf(`invalid value for MaxNumberOfExecutions [%d]: it should be greater than zero`, m.MaxNumberOfExecutions)
-	}
+	// @TODO: @PaterSantyago remove that cause uint32 cannot be less than 0
+	//if m.MaxNumberOfExecutions < 0 {
+	//	return fmt.Errorf(`invalid value for MaxNumberOfExecutions [%d]: it should be greater than zero`, m.MaxNumberOfExecutions)
+	//}
 
 	// TODO: Define max value for MaxNumberOfExecutions, probably via module params
 	// if m.MaxNumberOfExecutions > 0 {
