@@ -57,6 +57,8 @@ cosmossdk.io/x/consensus v0.0.0-20241202180139-76f8af9617cd h1:aj5bcm1LxeteaT2K4
 cosmossdk.io/x/consensus v0.0.0-20241202180139-76f8af9617cd/go.mod h1:RxFVOJEjZBgUHwegZ3TfIB77nsZjrViIKney/+A+qQM=
 cosmossdk.io/x/distribution v0.0.0-20241202180139-76f8af9617cd h1:Dk1K+a4n1omMpGcVKEgntXoX2JshYsD5Oo/iJV2gd7Q=
 cosmossdk.io/x/distribution v0.0.0-20241202180139-76f8af9617cd/go.mod h1:TnzwSHjo/EnEeIiye0CMhIAMF0KNIzQalxw7yDCz4mY=
+cosmossdk.io/x/epochs v0.0.0-20241202180139-76f8af9617cd h1:pXnPNvhFMGjgMgv9DyAvnKvCJgI8J+yDYXFs0acqBoo=
+cosmossdk.io/x/epochs v0.0.0-20241202180139-76f8af9617cd/go.mod h1:qe2+ymf3WbXlAXd/bOpFOJFD8jQpnvg0rNvpYYk04+o=
 cosmossdk.io/x/feegrant v0.0.0-20241202180139-76f8af9617cd h1:uHQK0ted5fYwe16mDA/J/x6Hr4kk4ykKHEDRqsEMkIE=
 cosmossdk.io/x/feegrant v0.0.0-20241202180139-76f8af9617cd/go.mod h1:UC9mZlBJ9Wmq9DfZOixQuIkaYbXz8Dl2VC6P4WspMZA=
 cosmossdk.io/x/gov v0.0.0-20241202180139-76f8af9617cd h1:YfCt1QugXO682tfbFIpuHuIjKw9hNbh56DQWd/oIZa4=
