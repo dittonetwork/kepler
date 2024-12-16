@@ -1,8 +1,6 @@
 package app
 
 import (
-	"io"
-
 	clienthelpers "cosmossdk.io/client/v2/helpers"
 	"cosmossdk.io/core/appmodule"
 	"cosmossdk.io/core/registry"
@@ -15,8 +13,10 @@ import (
 	multisigdepinject "cosmossdk.io/x/accounts/defaults/multisig/depinject"
 	bankkeeper "cosmossdk.io/x/bank/keeper"
 	distrkeeper "cosmossdk.io/x/distribution/keeper"
+	epochskeeper "cosmossdk.io/x/epochs/keeper"
 	_ "cosmossdk.io/x/protocolpool"
 	stakingkeeper "cosmossdk.io/x/staking/keeper"
+	"io"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/client"
@@ -63,6 +63,7 @@ type App struct {
 	BankKeeper     bankkeeper.Keeper
 	StakingKeeper  *stakingkeeper.Keeper
 	DistrKeeper    distrkeeper.Keeper
+	EpochsKeeper   *epochskeeper.Keeper
 
 	HorizonKeeper horizonmodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
@@ -133,6 +134,7 @@ func New(
 		&app.StakingKeeper,
 		&app.DistrKeeper,
 		&app.HorizonKeeper,
+		&app.EpochsKeeper,
 	); err != nil {
 		panic(err)
 	}

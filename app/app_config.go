@@ -8,6 +8,7 @@ import (
 	bankmodulev1 "cosmossdk.io/api/cosmos/bank/module/v1"
 	consensusmodulev1 "cosmossdk.io/api/cosmos/consensus/module/v1"
 	distrmodulev1 "cosmossdk.io/api/cosmos/distribution/module/v1"
+	epochsmodulev1 "cosmossdk.io/api/cosmos/epochs/module/v1"
 	genutilmodulev1 "cosmossdk.io/api/cosmos/genutil/module/v1"
 	poolmodulev1 "cosmossdk.io/api/cosmos/protocolpool/module/v1"
 	stakingmodulev1 "cosmossdk.io/api/cosmos/staking/module/v1"
@@ -20,6 +21,8 @@ import (
 	consensustypes "cosmossdk.io/x/consensus/types"
 	_ "cosmossdk.io/x/distribution" // import for side-effects
 	distrtypes "cosmossdk.io/x/distribution/types"
+	_ "cosmossdk.io/x/epochs" // import for side-effects
+	epochstypes "cosmossdk.io/x/epochs/types"
 	minttypes "cosmossdk.io/x/mint/types"
 	_ "cosmossdk.io/x/protocolpool" // import for side-effects
 	pooltypes "cosmossdk.io/x/protocolpool/types"
@@ -82,6 +85,7 @@ var (
 						stakingtypes.ModuleName,
 						// chain modules
 						horizonmoduletypes.ModuleName,
+						epochstypes.ModuleName,
 						// this line is used by starport scaffolding # stargate/app/beginBlockers
 					},
 					EndBlockers: []string{
@@ -114,6 +118,7 @@ var (
 						stakingtypes.ModuleName,
 						genutiltypes.ModuleName,
 						pooltypes.ModuleName,
+						epochstypes.ModuleName,
 						// chain modules
 						horizonmoduletypes.ModuleName,
 						// this line is used by starport scaffolding # stargate/app/initGenesis
@@ -177,6 +182,10 @@ var (
 			{
 				Name:   horizonmoduletypes.ModuleName,
 				Config: appconfig.WrapAny(&horizonmoduletypes.Module{}),
+			},
+			{
+				Name:   epochstypes.ModuleName,
+				Config: appconfig.WrapAny(&epochsmodulev1.Module{}),
 			},
 			// this line is used by starport scaffolding # stargate/app/moduleConfig
 		},
