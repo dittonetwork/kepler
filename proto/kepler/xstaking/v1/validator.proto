@@ -53,7 +53,7 @@ message Validator {
   // jailed defined whether the validator has been jailed
   bool jailed = 3;
 
-  // status is the validator status (bonded/unbonding/unbonded/pending)
+  // status is the validator status (bonded/unbonding/unbonded/bonding)
   BondStatus status = 4;
 
   // vault_power is abstract vault power converted from external real token in ethereum
@@ -90,6 +90,28 @@ enum BondStatus {
   // BONDED defines a validator that is bonded.
   BOND_STATUS_BONDED = 3 [(gogoproto.enumvalue_customname) = "Bonded"];
 
-  // PENDING defines a validator registered in Restaking Protocol but not active in Kepler
-  BOND_STATUS_PENDING = 4 [(gogoproto.enumvalue_customname) = "Pending"];
+  // BONDING defines a validator registered in Restaking Protocol but not active in Kepler
+  BOND_STATUS_BONDING = 4 [(gogoproto.enumvalue_customname) = "Bonding"];
+}
+
+// ValAddressesOfRotatedConsKeys contains the array of validator addresses which rotated their keys
+// This is to block the validator's next rotation till unbonding period.
+message ValAddressesOfRotatedConsKeys {
+  repeated bytes addresses = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+}
+
+
+// ConsPubKeyRotationHistory contains a validator's consensus public key rotation history.
+message ConsPubKeyRotationHistory {
+  option (gogoproto.equal)           = false;
+  option (gogoproto.goproto_getters) = false;
+
+  // operator_address defines the address of the validator's operator; bech encoded in JSON.
+  bytes operator_address = 1;
+  // old_cons_pubkey is the old consensus public key of the validator, as a Protobuf Any.
+  google.protobuf.Any old_cons_pubkey = 2 [(cosmos_proto.accepts_interface) = "cosmos.crypto.PubKey"];
+  // new_cons_pubkey is the new consensus public key of the validator, as a Protobuf Any.
+  google.protobuf.Any new_cons_pubkey = 3 [(cosmos_proto.accepts_interface) = "cosmos.crypto.PubKey"];
+  // height defines the block height at which the rotation event occurred.
+  uint64 height = 4;
 }

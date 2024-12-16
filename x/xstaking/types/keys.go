@@ -1,6 +1,12 @@
 package types
 
-import "cosmossdk.io/collections"
+import (
+	"cosmossdk.io/collections"
+	addresscodec "cosmossdk.io/core/address"
+	"cosmossdk.io/math"
+	"encoding/binary"
+	sdk "github.com/cosmos/cosmos-sdk/types"
+)
 
 const (
 	// ModuleName defines the module name
@@ -15,5 +21,48 @@ const (
 	GovModuleName = "gov"
 )
 
-// ParamsKey is the prefix to retrieve all Params
-var ParamsKey = collections.NewPrefix("p_xstaking")
+var (
+	ValidatorsKey             = collections.NewPrefix(33)
+	ValidatorsByConsAddrKey   = collections.NewPrefix(34)
+	ValidatorsByPowerIndexKey = collections.NewPrefix(35)
+
+	// ParamsKey is the prefix to retrieve all Params
+	ParamsKey = collections.NewPrefix(81)
+)
+
+// GetValidatorsByPowerIndexKey creates the validator by power index.
+// Power index is the key used in the power-store, and represents the relative
+// power ranking of the validator.
+// VALUE: validator operator address ([]byte)
+func GetValidatorsByPowerIndexKey(validator Validator, powerReduction math.Int, valAc addresscodec.Codec) []byte {
+	// NOTE the address doesn't need to be stored because counter bytes must always be different
+	// NOTE the larger values are of higher value
+
+	consensusPower := validator.VaultPower
+	consensusPowerBytes := make([]byte, 8)
+	binary.BigEndian.PutUint64(consensusPowerBytes, consensusPower.Uint64())
+
+	powerBytes := consensusPowerBytes
+	powerBytesLen := len(powerBytes) // 8
+
+	addr, err := valAc.StringToBytes(validator.OperatorAddress)
+	if err != nil {
+		panic(err)
+	}
+	operAddrInvr := sdk.CopyBytes(addr)
+	addrLen := len(operAddrInvr)
+
+	for i, b := range operAddrInvr {
+		operAddrInvr[i] = ^b
+	}
+
+	// key is of format prefix || powerbytes || addrLen (1byte) || addrBytes
+	key := make([]byte, 1+powerBytesLen+1+addrLen)
+
+	key[0] = ValidatorsByPowerIndexKey[0]
+	copy(key[1:powerBytesLen+1], powerBytes)
+	key[powerBytesLen+1] = byte(addrLen)
+	copy(key[powerBytesLen+2:], operAddrInvr)
+
+	return key
+}

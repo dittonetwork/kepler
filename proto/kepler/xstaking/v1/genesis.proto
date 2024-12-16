@@ -3,7 +3,10 @@ package kepler.xstaking.v1;
 
 import "amino/amino.proto";
 import "gogoproto/gogo.proto";
+import "cosmos_proto/cosmos.proto";
+import "google/protobuf/timestamp.proto";
 import "kepler/xstaking/v1/params.proto";
+import "kepler/xstaking/v1/validator.proto";
 
 option go_package = "kepler/x/xstaking/types";
 
@@ -14,4 +17,57 @@ message GenesisState {
     (gogoproto.nullable) = false,
     (amino.dont_omitempty) = true
   ];
+
+  bytes last_total_power = 2 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "cosmossdk.io/math.Int",
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+
+  // last_validator_powers is a special index that provides a historical list
+  // of the last-block's bonded validators.
+  repeated LastValidatorPower last_validator_powers = 3 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+
+  // validators defines the validator set at genesis.
+  repeated Validator validators = 4 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+
+  // exported defines a bool to identify whether the chain dealing with exported or initialized genesis.
+  bool exported = 5;
+
+  repeated RotationIndexRecord rotation_index_records = 6 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+
+  repeated ConsPubKeyRotationHistory rotation_history = 7
+  [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+
+  repeated RotationQueueRecord rotation_queue = 8 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+}
+
+// LastValidatorPower required for validator set update logic.
+message LastValidatorPower {
+  option (gogoproto.equal)           = false;
+  option (gogoproto.goproto_getters) = false;
+
+  // address is the address of the validator.
+  string address = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+
+  // power defines the power of the validator.
+  int64 power = 2;
+
+}
+
+
+// RotationIndexRecord is a record of the address and time of the rotation index.
+message RotationIndexRecord {
+  option (gogoproto.equal)           = false;
+  option (gogoproto.goproto_getters) = false;
+
+  bytes                     address = 1;
+  google.protobuf.Timestamp time    = 6 [(gogoproto.stdtime) = true];
+}
+
+// RotationQueueRecord is a record of the address and time of the rotation queue.
+message RotationQueueRecord {
+  ValAddressesOfRotatedConsKeys val_addresses = 1;
+  google.protobuf.Timestamp time      = 2 [(gogoproto.stdtime) = true];
 }

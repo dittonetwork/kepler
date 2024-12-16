@@ -1,5 +1,12 @@
 package types
 
+func NewGenesisState(params Params, validators []Validator) *GenesisState {
+	return &GenesisState{
+		Params:     params,
+		Validators: validators,
+	}
+}
+
 // DefaultGenesis returns the default genesis state
 func DefaultGenesis() *GenesisState {
 	return &GenesisState{
