@@ -1,6 +1,9 @@
 package types
 
-import "time"
+import (
+	"cosmossdk.io/math"
+	"time"
+)
 
 const (
 	// DefaultUnbondingTime is the default time duration for unbonding
@@ -9,13 +12,21 @@ const (
 
 	// DefaultMaxValidators is the default maximum number of validators
 	DefaultMaxValidators uint32 = 100
+
+	// DefaultPowerReduction is the default power reduction
+	DefaultPowerReduction = 1000000
 )
 
 // NewParams creates a new Params instance.
-func NewParams(unbondingTime time.Duration, maxValidators uint32) Params {
+func NewParams(
+	unbondingTime time.Duration,
+	maxValidators uint32,
+	powerReduction math.Int,
+) Params {
 	return Params{
-		UnbondingTime: unbondingTime,
-		MaxValidators: maxValidators,
+		UnbondingTime:  unbondingTime,
+		MaxValidators:  maxValidators,
+		PowerReduction: powerReduction,
 	}
 }
 
@@ -24,6 +35,7 @@ func DefaultParams() Params {
 	return NewParams(
 		DefaultUnbondingTime,
 		DefaultMaxValidators,
+		math.NewInt(DefaultPowerReduction),
 	)
 }
 

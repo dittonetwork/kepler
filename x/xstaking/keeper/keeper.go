@@ -4,6 +4,7 @@ import (
 	"cosmossdk.io/collections"
 	collcodec "cosmossdk.io/collections/codec"
 	"cosmossdk.io/core/address"
+	addresscodec "cosmossdk.io/core/address"
 	"cosmossdk.io/core/appmodule"
 	"fmt"
 	"github.com/cosmos/cosmos-sdk/codec"
@@ -17,6 +18,8 @@ type Keeper struct {
 
 	cdc          codec.BinaryCodec
 	addressCodec address.Codec
+
+	validatorAddressCodec addresscodec.Codec
 	// Address capable of executing a MsgUpdateParams message.
 	// Typically, this should be the x/gov module account.
 	authority []byte
@@ -36,10 +39,14 @@ func NewKeeper(
 	cdc codec.BinaryCodec,
 	addressCodec address.Codec,
 	authority []byte,
-
+	validatorAddressCodec addresscodec.Codec,
 ) Keeper {
 	if _, err := addressCodec.BytesToString(authority); err != nil {
 		panic(fmt.Sprintf("invalid authority address %s: %s", authority, err))
+	}
+
+	if validatorAddressCodec == nil {
+		panic("validator address codec is required")
 	}
 
 	sb := collections.NewSchemaBuilder(env.KVStoreService)
@@ -49,6 +56,8 @@ func NewKeeper(
 		cdc:          cdc,
 		addressCodec: addressCodec,
 		authority:    authority,
+
+		validatorAddressCodec: validatorAddressCodec,
 
 		Validators: collections.NewMap(
 			sb,
@@ -79,4 +88,9 @@ func NewKeeper(
 // GetAuthority returns the module's authority.
 func (k Keeper) GetAuthority() []byte {
 	return k.authority
+}
+
+// ValidatorAddressCodec returns the validator address codec.
+func (k Keeper) ValidatorAddressCodec() addresscodec.Codec {
+	return k.validatorAddressCodec
 }

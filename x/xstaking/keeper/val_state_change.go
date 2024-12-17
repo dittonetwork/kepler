@@ -58,9 +58,14 @@ func (k Keeper) ApplyAndReturnValidatorSetUpdates(ctx context.Context) ([]appmod
 			return nil, errors.New("should never retrieve a jailed validator from the power store")
 		}
 
+		power, err := k.PowerReduction(ctx)
+		if err != nil {
+			return nil, err
+		}
+
 		// if we get to a zero-power validator (which we don't bond),
 		// there are no more possible bonded validators
-		if validator.VaultPower.IsZero() {
+		if validator.PotentialConsensusPower(power) == 0 {
 			break
 		}
 
@@ -103,5 +108,21 @@ func (k Keeper) unbondingToBonded(ctx context.Context, validator types.Validator
 }
 
 func (k Keeper) bondValidator(ctx context.Context, validator types.Validator) (types.Validator, error) {
-	panic("implement me")
+	if err := k.DeleteValidatorByPowerIndex(ctx, validator); err != nil {
+		return validator, err
+	}
+
+	validator.UpdateStatus(types.Bonded)
+
+	if err := k.SetValidator(ctx, validator); err != nil {
+		return validator, err
+	}
+
+	if err := k.SetValidatorByPowerIndex(ctx, validator); err != nil {
+		return validator, err
+	}
+
+	// @TODO: remove from waiting queue if present
+
+	panic("implement hooks and return validator")
 }

@@ -2,6 +2,7 @@ syntax = "proto3";
 package kepler.xstaking.v1;
 
 import "amino/amino.proto";
+import "cosmos_proto/cosmos.proto";
 import "google/protobuf/duration.proto";
 import "gogoproto/gogo.proto";
 
@@ -18,4 +19,11 @@ message Params {
 
   // max_validators is the maximum number of validators.
   uint32 max_validators = 2;
+
+  // power_reduction is amount of staking tokens required for 1 unit of consensus-engine power
+  uint64 power_reduction = 3 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "cosmossdk.io/math.Int",
+    (gogoproto.nullable) = false
+  ];
 }

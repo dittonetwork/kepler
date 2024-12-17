@@ -56,8 +56,8 @@ message Validator {
   // status is the validator status (bonded/unbonding/unbonded/bonding)
   BondStatus status = 4;
 
-  // vault_power is abstract vault power converted from external real token in ethereum
-  string vault_power = 5 [
+  // tokens is abstract tokens converted from external real token in ethereum
+  string tokens = 5 [
     (cosmos_proto.scalar) = "cosmos.Int",
     (gogoproto.customtype) = "cosmossdk.io/math.Int",
     (gogoproto.nullable) = false

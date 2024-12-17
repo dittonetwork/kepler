@@ -22,10 +22,13 @@ func (k Keeper) ValidatorsPowerStoreIterator(ctx context.Context) (corestore.Ite
 
 // DeleteValidatorByPowerIndex deletes a record by power index
 func (k Keeper) DeleteValidatorByPowerIndex(ctx context.Context, validator types.Validator) error {
-	panic("implement me")
-	// @TODO: Implement this. Think about convert abstract tokens to consensus-engine power
-	//store := k.KVStoreService.OpenKVStore(ctx)
-	//return store.Delete(types.GetValidatorsByPowerIndexKey(validator, k.PowerReduction(ctx), k.validatorAddressCodec))
+	store := k.KVStoreService.OpenKVStore(ctx)
+	power, err := k.PowerReduction(ctx)
+	if err != nil {
+		return err
+	}
+
+	return store.Delete(types.GetValidatorsByPowerIndexKey(validator, power, k.validatorAddressCodec))
 }
 
 // GetValidator gets a single validator
@@ -38,4 +41,34 @@ func (k Keeper) GetValidator(ctx context.Context, addr sdk.ValAddress) (validato
 		return validator, err
 	}
 	return validator, nil
+}
+
+// SetValidator sets the main record holding validator details
+func (k Keeper) SetValidator(ctx context.Context, validator types.Validator) error {
+	valBz, err := k.ValidatorAddressCodec().StringToBytes(validator.GetOperator())
+	if err != nil {
+		return err
+	}
+
+	return k.Validators.Set(ctx, valBz, validator)
+}
+
+// SetValidatorByPowerIndex sets a validator by power index
+func (k Keeper) SetValidatorByPowerIndex(ctx context.Context, validator types.Validator) error {
+	if validator.Jailed {
+		return nil
+	}
+
+	store := k.KVStoreService.OpenKVStore(ctx)
+	str, err := k.validatorAddressCodec.StringToBytes(validator.GetOperator())
+	if err != nil {
+		return err
+	}
+
+	power, err := k.PowerReduction(ctx)
+	if err != nil {
+		return err
+	}
+
+	return store.Set(types.GetValidatorsByPowerIndexKey(validator, power, k.validatorAddressCodec), str)
 }
