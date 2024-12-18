@@ -27,10 +27,11 @@ func init() {
 type ModuleInputs struct {
 	depinject.In
 
-	Config       *types.Module
-	Environment  appmodule.Environment
-	Cdc          codec.Codec
-	AddressCodec address.Codec
+	Config                *types.Module
+	Environment           appmodule.Environment
+	Cdc                   codec.Codec
+	AddressCodec          address.Codec
+	ValidatorAddressCodec address.ValidatorAddressCodec
 }
 
 type ModuleOutputs struct {
@@ -51,6 +52,7 @@ func ProvideModule(in ModuleInputs) ModuleOutputs {
 		in.Cdc,
 		in.AddressCodec,
 		authority,
+		in.ValidatorAddressCodec,
 	)
 	m := NewAppModule(in.Cdc, k)
 

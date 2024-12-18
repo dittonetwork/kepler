@@ -71,7 +71,6 @@ message Validator {
   // unbonding_time is the unix timestamp for unbonding time
   google.protobuf.Timestamp unbonding_time = 8
       [(gogoproto.nullable) = false, (amino.dont_omitempty) = true, (gogoproto.stdtime) = true];
-
 }
 
 // BondStatus is the status of a validator
@@ -114,4 +113,10 @@ message ConsPubKeyRotationHistory {
   google.protobuf.Any new_cons_pubkey = 3 [(cosmos_proto.accepts_interface) = "cosmos.crypto.PubKey"];
   // height defines the block height at which the rotation event occurred.
   uint64 height = 4;
+}
+
+
+// ValAddresses defines a repeated set of validator addresses.
+message ValAddresses {
+  repeated string addresses = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 }

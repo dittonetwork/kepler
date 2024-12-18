@@ -22,9 +22,14 @@ const (
 )
 
 var (
+	LastValidatorPowerKey = collections.NewPrefix(17)
+	LastTotalPowerKey     = collections.NewPrefix(18)
+
 	ValidatorsKey             = collections.NewPrefix(33)
 	ValidatorsByConsAddrKey   = collections.NewPrefix(34)
 	ValidatorsByPowerIndexKey = collections.NewPrefix(35)
+
+	ValidatorQueueKey = collections.NewPrefix(67)
 
 	// ParamsKey is the prefix to retrieve all Params
 	ParamsKey = collections.NewPrefix(81)

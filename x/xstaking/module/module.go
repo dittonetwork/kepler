@@ -16,13 +16,16 @@ import (
 	"kepler/x/xstaking/types"
 )
 
+const (
+	consensusVersion uint64 = 1
+)
+
 var (
 	_ appmodule.AppModule             = (*AppModule)(nil)
 	_ appmodule.HasGenesis            = (*AppModule)(nil)
 	_ appmodule.HasConsensusVersion   = (*AppModule)(nil)
 	_ appmodule.HasRegisterInterfaces = AppModule{}
 	_ appmodule.HasBeginBlocker       = (*AppModule)(nil)
-	_ appmodule.HasEndBlocker         = (*AppModule)(nil)
 )
 
 // AppModule implements the AppModule interface that defines the inter-dependent methods that modules need to implement
@@ -109,7 +112,7 @@ func (am AppModule) ExportGenesis(ctx context.Context) (json.RawMessage, error) 
 // ConsensusVersion is a sequence number for state-breaking change of the module.
 // It should be incremented on each consensus-breaking change introduced by the module.
 // To avoid wrong/empty versions, the initial version should be set to 1.
-func (AppModule) ConsensusVersion() uint64 { return 1 }
+func (AppModule) ConsensusVersion() uint64 { return consensusVersion }
 
 // BeginBlock contains the logic that is automatically triggered at the beginning of each block.
 // The begin block implementation is optional.
@@ -119,6 +122,6 @@ func (am AppModule) BeginBlock(_ context.Context) error {
 
 // EndBlock contains the logic that is automatically triggered at the end of each block.
 // The end block implementation is optional.
-func (am AppModule) EndBlock(_ context.Context) error {
-	return nil
+func (am AppModule) EndBlock(ctx context.Context) ([]appmodule.ValidatorUpdate, error) {
+	return am.keeper.EndBlocker(ctx)
 }

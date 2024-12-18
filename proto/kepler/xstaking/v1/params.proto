@@ -21,7 +21,7 @@ message Params {
   uint32 max_validators = 2;
 
   // power_reduction is amount of staking tokens required for 1 unit of consensus-engine power
-  uint64 power_reduction = 3 [
+  string power_reduction = 3 [
     (cosmos_proto.scalar) = "cosmos.Int",
     (gogoproto.customtype) = "cosmossdk.io/math.Int",
     (gogoproto.nullable) = false
