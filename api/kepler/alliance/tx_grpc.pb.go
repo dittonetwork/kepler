@@ -20,8 +20,11 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Msg_UpdateParams_FullMethodName = "/kepler.alliance.Msg/UpdateParams"
-	Msg_AddEntropy_FullMethodName   = "/kepler.alliance.Msg/AddEntropy"
+	Msg_UpdateParams_FullMethodName        = "/kepler.alliance.Msg/UpdateParams"
+	Msg_AddEntropy_FullMethodName          = "/kepler.alliance.Msg/AddEntropy"
+	Msg_CreateSharedEntropy_FullMethodName = "/kepler.alliance.Msg/CreateSharedEntropy"
+	Msg_UpdateSharedEntropy_FullMethodName = "/kepler.alliance.Msg/UpdateSharedEntropy"
+	Msg_DeleteSharedEntropy_FullMethodName = "/kepler.alliance.Msg/DeleteSharedEntropy"
 )
 
 // MsgClient is the client API for Msg service.
@@ -32,6 +35,9 @@ type MsgClient interface {
 	// parameters. The authority defaults to the x/gov module account.
 	UpdateParams(ctx context.Context, in *MsgUpdateParams, opts ...grpc.CallOption) (*MsgUpdateParamsResponse, error)
 	AddEntropy(ctx context.Context, in *MsgAddEntropy, opts ...grpc.CallOption) (*MsgAddEntropyResponse, error)
+	CreateSharedEntropy(ctx context.Context, in *MsgCreateSharedEntropy, opts ...grpc.CallOption) (*MsgCreateSharedEntropyResponse, error)
+	UpdateSharedEntropy(ctx context.Context, in *MsgUpdateSharedEntropy, opts ...grpc.CallOption) (*MsgUpdateSharedEntropyResponse, error)
+	DeleteSharedEntropy(ctx context.Context, in *MsgDeleteSharedEntropy, opts ...grpc.CallOption) (*MsgDeleteSharedEntropyResponse, error)
 }
 
 type msgClient struct {
@@ -60,6 +66,33 @@ func (c *msgClient) AddEntropy(ctx context.Context, in *MsgAddEntropy, opts ...g
 	return out, nil
 }
 
+func (c *msgClient) CreateSharedEntropy(ctx context.Context, in *MsgCreateSharedEntropy, opts ...grpc.CallOption) (*MsgCreateSharedEntropyResponse, error) {
+	out := new(MsgCreateSharedEntropyResponse)
+	err := c.cc.Invoke(ctx, Msg_CreateSharedEntropy_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) UpdateSharedEntropy(ctx context.Context, in *MsgUpdateSharedEntropy, opts ...grpc.CallOption) (*MsgUpdateSharedEntropyResponse, error) {
+	out := new(MsgUpdateSharedEntropyResponse)
+	err := c.cc.Invoke(ctx, Msg_UpdateSharedEntropy_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) DeleteSharedEntropy(ctx context.Context, in *MsgDeleteSharedEntropy, opts ...grpc.CallOption) (*MsgDeleteSharedEntropyResponse, error) {
+	out := new(MsgDeleteSharedEntropyResponse)
+	err := c.cc.Invoke(ctx, Msg_DeleteSharedEntropy_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 // All implementations must embed UnimplementedMsgServer
 // for forward compatibility
@@ -68,6 +101,9 @@ type MsgServer interface {
 	// parameters. The authority defaults to the x/gov module account.
 	UpdateParams(context.Context, *MsgUpdateParams) (*MsgUpdateParamsResponse, error)
 	AddEntropy(context.Context, *MsgAddEntropy) (*MsgAddEntropyResponse, error)
+	CreateSharedEntropy(context.Context, *MsgCreateSharedEntropy) (*MsgCreateSharedEntropyResponse, error)
+	UpdateSharedEntropy(context.Context, *MsgUpdateSharedEntropy) (*MsgUpdateSharedEntropyResponse, error)
+	DeleteSharedEntropy(context.Context, *MsgDeleteSharedEntropy) (*MsgDeleteSharedEntropyResponse, error)
 	mustEmbedUnimplementedMsgServer()
 }
 
@@ -80,6 +116,15 @@ func (UnimplementedMsgServer) UpdateParams(context.Context, *MsgUpdateParams) (*
 }
 func (UnimplementedMsgServer) AddEntropy(context.Context, *MsgAddEntropy) (*MsgAddEntropyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddEntropy not implemented")
+}
+func (UnimplementedMsgServer) CreateSharedEntropy(context.Context, *MsgCreateSharedEntropy) (*MsgCreateSharedEntropyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateSharedEntropy not implemented")
+}
+func (UnimplementedMsgServer) UpdateSharedEntropy(context.Context, *MsgUpdateSharedEntropy) (*MsgUpdateSharedEntropyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateSharedEntropy not implemented")
+}
+func (UnimplementedMsgServer) DeleteSharedEntropy(context.Context, *MsgDeleteSharedEntropy) (*MsgDeleteSharedEntropyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteSharedEntropy not implemented")
 }
 func (UnimplementedMsgServer) mustEmbedUnimplementedMsgServer() {}
 
@@ -130,6 +175,60 @@ func _Msg_AddEntropy_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_CreateSharedEntropy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgCreateSharedEntropy)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).CreateSharedEntropy(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_CreateSharedEntropy_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).CreateSharedEntropy(ctx, req.(*MsgCreateSharedEntropy))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_UpdateSharedEntropy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgUpdateSharedEntropy)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).UpdateSharedEntropy(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_UpdateSharedEntropy_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).UpdateSharedEntropy(ctx, req.(*MsgUpdateSharedEntropy))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_DeleteSharedEntropy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgDeleteSharedEntropy)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).DeleteSharedEntropy(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_DeleteSharedEntropy_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).DeleteSharedEntropy(ctx, req.(*MsgDeleteSharedEntropy))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Msg_ServiceDesc is the grpc.ServiceDesc for Msg service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -144,6 +243,18 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AddEntropy",
 			Handler:    _Msg_AddEntropy_Handler,
+		},
+		{
+			MethodName: "CreateSharedEntropy",
+			Handler:    _Msg_CreateSharedEntropy_Handler,
+		},
+		{
+			MethodName: "UpdateSharedEntropy",
+			Handler:    _Msg_UpdateSharedEntropy_Handler,
+		},
+		{
+			MethodName: "DeleteSharedEntropy",
+			Handler:    _Msg_DeleteSharedEntropy_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

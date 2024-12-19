@@ -7,6 +7,7 @@ import "cosmos/msg/v1/msg.proto";
 import "cosmos_proto/cosmos.proto";
 import "gogoproto/gogo.proto";
 import "kepler/alliance/params.proto";
+import "kepler/alliance/shared_entropy.proto";
 
 option go_package = "kepler/x/alliance/types";
 
@@ -16,8 +17,11 @@ service Msg {
   
   // UpdateParams defines a (governance) operation for updating the module
   // parameters. The authority defaults to the x/gov module account.
-  rpc UpdateParams (MsgUpdateParams) returns (MsgUpdateParamsResponse);
-  rpc AddEntropy   (MsgAddEntropy  ) returns (MsgAddEntropyResponse  );
+  rpc UpdateParams        (MsgUpdateParams       ) returns (MsgUpdateParamsResponse       );
+  rpc AddEntropy          (MsgAddEntropy         ) returns (MsgAddEntropyResponse         );
+  rpc CreateSharedEntropy (MsgCreateSharedEntropy) returns (MsgCreateSharedEntropyResponse);
+  rpc UpdateSharedEntropy (MsgUpdateSharedEntropy) returns (MsgUpdateSharedEntropyResponse);
+  rpc DeleteSharedEntropy (MsgDeleteSharedEntropy) returns (MsgDeleteSharedEntropyResponse);
 }
 // MsgUpdateParams is the Msg/UpdateParams request type.
 message MsgUpdateParams {
@@ -44,4 +48,27 @@ message MsgAddEntropy {
 }
 
 message MsgAddEntropyResponse {}
+
+message MsgCreateSharedEntropy {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1;
+  uint64 entropy = 3;
+}
+
+message MsgCreateSharedEntropyResponse {}
+
+message MsgUpdateSharedEntropy {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1;
+  uint64 entropy = 3;
+}
+
+message MsgUpdateSharedEntropyResponse {}
+
+message MsgDeleteSharedEntropy {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1;
+}
+
+message MsgDeleteSharedEntropyResponse {}
 

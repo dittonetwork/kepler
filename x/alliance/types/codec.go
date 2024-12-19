@@ -11,6 +11,11 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 	registry.RegisterImplementations((*sdk.Msg)(nil),
 		&MsgAddEntropy{},
 	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgCreateSharedEntropy{},
+		&MsgUpdateSharedEntropy{},
+		&MsgDeleteSharedEntropy{},
+	)
 	// this line is used by starport scaffolding # 3
 
 	registry.RegisterImplementations((*sdk.Msg)(nil),

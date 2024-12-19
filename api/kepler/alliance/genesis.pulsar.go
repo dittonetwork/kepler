@@ -16,14 +16,16 @@ import (
 )
 
 var (
-	md_GenesisState        protoreflect.MessageDescriptor
-	fd_GenesisState_params protoreflect.FieldDescriptor
+	md_GenesisState               protoreflect.MessageDescriptor
+	fd_GenesisState_params        protoreflect.FieldDescriptor
+	fd_GenesisState_sharedEntropy protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_kepler_alliance_genesis_proto_init()
 	md_GenesisState = File_kepler_alliance_genesis_proto.Messages().ByName("GenesisState")
 	fd_GenesisState_params = md_GenesisState.Fields().ByName("params")
+	fd_GenesisState_sharedEntropy = md_GenesisState.Fields().ByName("sharedEntropy")
 }
 
 var _ protoreflect.Message = (*fastReflection_GenesisState)(nil)
@@ -97,6 +99,12 @@ func (x *fastReflection_GenesisState) Range(f func(protoreflect.FieldDescriptor,
 			return
 		}
 	}
+	if x.SharedEntropy != nil {
+		value := protoreflect.ValueOfMessage(x.SharedEntropy.ProtoReflect())
+		if !f(fd_GenesisState_sharedEntropy, value) {
+			return
+		}
+	}
 }
 
 // Has reports whether a field is populated.
@@ -114,6 +122,8 @@ func (x *fastReflection_GenesisState) Has(fd protoreflect.FieldDescriptor) bool 
 	switch fd.FullName() {
 	case "kepler.alliance.GenesisState.params":
 		return x.Params != nil
+	case "kepler.alliance.GenesisState.sharedEntropy":
+		return x.SharedEntropy != nil
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.alliance.GenesisState"))
@@ -132,6 +142,8 @@ func (x *fastReflection_GenesisState) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
 	case "kepler.alliance.GenesisState.params":
 		x.Params = nil
+	case "kepler.alliance.GenesisState.sharedEntropy":
+		x.SharedEntropy = nil
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.alliance.GenesisState"))
@@ -150,6 +162,9 @@ func (x *fastReflection_GenesisState) Get(descriptor protoreflect.FieldDescripto
 	switch descriptor.FullName() {
 	case "kepler.alliance.GenesisState.params":
 		value := x.Params
+		return protoreflect.ValueOfMessage(value.ProtoReflect())
+	case "kepler.alliance.GenesisState.sharedEntropy":
+		value := x.SharedEntropy
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
 	default:
 		if descriptor.IsExtension() {
@@ -173,6 +188,8 @@ func (x *fastReflection_GenesisState) Set(fd protoreflect.FieldDescriptor, value
 	switch fd.FullName() {
 	case "kepler.alliance.GenesisState.params":
 		x.Params = value.Message().Interface().(*Params)
+	case "kepler.alliance.GenesisState.sharedEntropy":
+		x.SharedEntropy = value.Message().Interface().(*SharedEntropy)
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.alliance.GenesisState"))
@@ -198,6 +215,11 @@ func (x *fastReflection_GenesisState) Mutable(fd protoreflect.FieldDescriptor) p
 			x.Params = new(Params)
 		}
 		return protoreflect.ValueOfMessage(x.Params.ProtoReflect())
+	case "kepler.alliance.GenesisState.sharedEntropy":
+		if x.SharedEntropy == nil {
+			x.SharedEntropy = new(SharedEntropy)
+		}
+		return protoreflect.ValueOfMessage(x.SharedEntropy.ProtoReflect())
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.alliance.GenesisState"))
@@ -213,6 +235,9 @@ func (x *fastReflection_GenesisState) NewField(fd protoreflect.FieldDescriptor) 
 	switch fd.FullName() {
 	case "kepler.alliance.GenesisState.params":
 		m := new(Params)
+		return protoreflect.ValueOfMessage(m.ProtoReflect())
+	case "kepler.alliance.GenesisState.sharedEntropy":
+		m := new(SharedEntropy)
 		return protoreflect.ValueOfMessage(m.ProtoReflect())
 	default:
 		if fd.IsExtension() {
@@ -287,6 +312,10 @@ func (x *fastReflection_GenesisState) ProtoMethods() *protoiface.Methods {
 			l = options.Size(x.Params)
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
+		if x.SharedEntropy != nil {
+			l = options.Size(x.SharedEntropy)
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
 		if x.unknownFields != nil {
 			n += len(x.unknownFields)
 		}
@@ -315,6 +344,20 @@ func (x *fastReflection_GenesisState) ProtoMethods() *protoiface.Methods {
 		if x.unknownFields != nil {
 			i -= len(x.unknownFields)
 			copy(dAtA[i:], x.unknownFields)
+		}
+		if x.SharedEntropy != nil {
+			encoded, err := options.Marshal(x.SharedEntropy)
+			if err != nil {
+				return protoiface.MarshalOutput{
+					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+					Buf:               input.Buf,
+				}, err
+			}
+			i -= len(encoded)
+			copy(dAtA[i:], encoded)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+			i--
+			dAtA[i] = 0x12
 		}
 		if x.Params != nil {
 			encoded, err := options.Marshal(x.Params)
@@ -415,6 +458,42 @@ func (x *fastReflection_GenesisState) ProtoMethods() *protoiface.Methods {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
 				}
 				iNdEx = postIndex
+			case 2:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field SharedEntropy", wireType)
+				}
+				var msglen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					msglen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if msglen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + msglen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if x.SharedEntropy == nil {
+					x.SharedEntropy = &SharedEntropy{}
+				}
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.SharedEntropy); err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				iNdEx = postIndex
 			default:
 				iNdEx = preIndex
 				skippy, err := runtime.Skip(dAtA[iNdEx:])
@@ -470,7 +549,8 @@ type GenesisState struct {
 	unknownFields protoimpl.UnknownFields
 
 	// params defines all the parameters of the module.
-	Params *Params `protobuf:"bytes,1,opt,name=params,proto3" json:"params,omitempty"`
+	Params        *Params        `protobuf:"bytes,1,opt,name=params,proto3" json:"params,omitempty"`
+	SharedEntropy *SharedEntropy `protobuf:"bytes,2,opt,name=sharedEntropy,proto3" json:"sharedEntropy,omitempty"`
 }
 
 func (x *GenesisState) Reset() {
@@ -500,6 +580,13 @@ func (x *GenesisState) GetParams() *Params {
 	return nil
 }
 
+func (x *GenesisState) GetSharedEntropy() *SharedEntropy {
+	if x != nil {
+		return x.SharedEntropy
+	}
+	return nil
+}
+
 var File_kepler_alliance_genesis_proto protoreflect.FileDescriptor
 
 var file_kepler_alliance_genesis_proto_rawDesc = []byte{
@@ -510,22 +597,29 @@ var file_kepler_alliance_genesis_proto_rawDesc = []byte{
 	0x6f, 0x74, 0x6f, 0x1a, 0x14, 0x67, 0x6f, 0x67, 0x6f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x67,
 	0x6f, 0x67, 0x6f, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1c, 0x6b, 0x65, 0x70, 0x6c, 0x65,
 	0x72, 0x2f, 0x61, 0x6c, 0x6c, 0x69, 0x61, 0x6e, 0x63, 0x65, 0x2f, 0x70, 0x61, 0x72, 0x61, 0x6d,
-	0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x4a, 0x0a, 0x0c, 0x47, 0x65, 0x6e, 0x65, 0x73,
-	0x69, 0x73, 0x53, 0x74, 0x61, 0x74, 0x65, 0x12, 0x3a, 0x0a, 0x06, 0x70, 0x61, 0x72, 0x61, 0x6d,
-	0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x17, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72,
-	0x2e, 0x61, 0x6c, 0x6c, 0x69, 0x61, 0x6e, 0x63, 0x65, 0x2e, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73,
-	0x42, 0x09, 0xc8, 0xde, 0x1f, 0x00, 0xa8, 0xe7, 0xb0, 0x2a, 0x01, 0x52, 0x06, 0x70, 0x61, 0x72,
-	0x61, 0x6d, 0x73, 0x42, 0x9c, 0x01, 0x0a, 0x13, 0x63, 0x6f, 0x6d, 0x2e, 0x6b, 0x65, 0x70, 0x6c,
-	0x65, 0x72, 0x2e, 0x61, 0x6c, 0x6c, 0x69, 0x61, 0x6e, 0x63, 0x65, 0x42, 0x0c, 0x47, 0x65, 0x6e,
-	0x65, 0x73, 0x69, 0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x1a, 0x6b, 0x65, 0x70,
-	0x6c, 0x65, 0x72, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x61,
-	0x6c, 0x6c, 0x69, 0x61, 0x6e, 0x63, 0x65, 0xa2, 0x02, 0x03, 0x4b, 0x41, 0x58, 0xaa, 0x02, 0x0f,
-	0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x41, 0x6c, 0x6c, 0x69, 0x61, 0x6e, 0x63, 0x65, 0xca,
-	0x02, 0x0f, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x5c, 0x41, 0x6c, 0x6c, 0x69, 0x61, 0x6e, 0x63,
-	0x65, 0xe2, 0x02, 0x1b, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x5c, 0x41, 0x6c, 0x6c, 0x69, 0x61,
-	0x6e, 0x63, 0x65, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea,
-	0x02, 0x10, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x3a, 0x3a, 0x41, 0x6c, 0x6c, 0x69, 0x61, 0x6e,
-	0x63, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x24, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f,
+	0x61, 0x6c, 0x6c, 0x69, 0x61, 0x6e, 0x63, 0x65, 0x2f, 0x73, 0x68, 0x61, 0x72, 0x65, 0x64, 0x5f,
+	0x65, 0x6e, 0x74, 0x72, 0x6f, 0x70, 0x79, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x90, 0x01,
+	0x0a, 0x0c, 0x47, 0x65, 0x6e, 0x65, 0x73, 0x69, 0x73, 0x53, 0x74, 0x61, 0x74, 0x65, 0x12, 0x3a,
+	0x0a, 0x06, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x17,
+	0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x61, 0x6c, 0x6c, 0x69, 0x61, 0x6e, 0x63, 0x65,
+	0x2e, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x42, 0x09, 0xc8, 0xde, 0x1f, 0x00, 0xa8, 0xe7, 0xb0,
+	0x2a, 0x01, 0x52, 0x06, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x12, 0x44, 0x0a, 0x0d, 0x73, 0x68,
+	0x61, 0x72, 0x65, 0x64, 0x45, 0x6e, 0x74, 0x72, 0x6f, 0x70, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x0b, 0x32, 0x1e, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x61, 0x6c, 0x6c, 0x69, 0x61,
+	0x6e, 0x63, 0x65, 0x2e, 0x53, 0x68, 0x61, 0x72, 0x65, 0x64, 0x45, 0x6e, 0x74, 0x72, 0x6f, 0x70,
+	0x79, 0x52, 0x0d, 0x73, 0x68, 0x61, 0x72, 0x65, 0x64, 0x45, 0x6e, 0x74, 0x72, 0x6f, 0x70, 0x79,
+	0x42, 0x9c, 0x01, 0x0a, 0x13, 0x63, 0x6f, 0x6d, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e,
+	0x61, 0x6c, 0x6c, 0x69, 0x61, 0x6e, 0x63, 0x65, 0x42, 0x0c, 0x47, 0x65, 0x6e, 0x65, 0x73, 0x69,
+	0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x1a, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72,
+	0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x61, 0x6c, 0x6c, 0x69,
+	0x61, 0x6e, 0x63, 0x65, 0xa2, 0x02, 0x03, 0x4b, 0x41, 0x58, 0xaa, 0x02, 0x0f, 0x4b, 0x65, 0x70,
+	0x6c, 0x65, 0x72, 0x2e, 0x41, 0x6c, 0x6c, 0x69, 0x61, 0x6e, 0x63, 0x65, 0xca, 0x02, 0x0f, 0x4b,
+	0x65, 0x70, 0x6c, 0x65, 0x72, 0x5c, 0x41, 0x6c, 0x6c, 0x69, 0x61, 0x6e, 0x63, 0x65, 0xe2, 0x02,
+	0x1b, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x5c, 0x41, 0x6c, 0x6c, 0x69, 0x61, 0x6e, 0x63, 0x65,
+	0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x10, 0x4b,
+	0x65, 0x70, 0x6c, 0x65, 0x72, 0x3a, 0x3a, 0x41, 0x6c, 0x6c, 0x69, 0x61, 0x6e, 0x63, 0x65, 0x62,
+	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -542,16 +636,18 @@ func file_kepler_alliance_genesis_proto_rawDescGZIP() []byte {
 
 var file_kepler_alliance_genesis_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_kepler_alliance_genesis_proto_goTypes = []interface{}{
-	(*GenesisState)(nil), // 0: kepler.alliance.GenesisState
-	(*Params)(nil),       // 1: kepler.alliance.Params
+	(*GenesisState)(nil),  // 0: kepler.alliance.GenesisState
+	(*Params)(nil),        // 1: kepler.alliance.Params
+	(*SharedEntropy)(nil), // 2: kepler.alliance.SharedEntropy
 }
 var file_kepler_alliance_genesis_proto_depIdxs = []int32{
 	1, // 0: kepler.alliance.GenesisState.params:type_name -> kepler.alliance.Params
-	1, // [1:1] is the sub-list for method output_type
-	1, // [1:1] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	2, // 1: kepler.alliance.GenesisState.sharedEntropy:type_name -> kepler.alliance.SharedEntropy
+	2, // [2:2] is the sub-list for method output_type
+	2, // [2:2] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_kepler_alliance_genesis_proto_init() }
@@ -560,6 +656,7 @@ func file_kepler_alliance_genesis_proto_init() {
 		return
 	}
 	file_kepler_alliance_params_proto_init()
+	file_kepler_alliance_shared_entropy_proto_init()
 	if !protoimpl.UnsafeEnabled {
 		file_kepler_alliance_genesis_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GenesisState); i {

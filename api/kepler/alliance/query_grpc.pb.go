@@ -20,7 +20,8 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Query_Params_FullMethodName = "/kepler.alliance.Query/Params"
+	Query_Params_FullMethodName        = "/kepler.alliance.Query/Params"
+	Query_SharedEntropy_FullMethodName = "/kepler.alliance.Query/SharedEntropy"
 )
 
 // QueryClient is the client API for Query service.
@@ -29,6 +30,8 @@ const (
 type QueryClient interface {
 	// Parameters queries the parameters of the module.
 	Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error)
+	// Queries a SharedEntropy by index.
+	SharedEntropy(ctx context.Context, in *QueryGetSharedEntropyRequest, opts ...grpc.CallOption) (*QueryGetSharedEntropyResponse, error)
 }
 
 type queryClient struct {
@@ -48,12 +51,23 @@ func (c *queryClient) Params(ctx context.Context, in *QueryParamsRequest, opts .
 	return out, nil
 }
 
+func (c *queryClient) SharedEntropy(ctx context.Context, in *QueryGetSharedEntropyRequest, opts ...grpc.CallOption) (*QueryGetSharedEntropyResponse, error) {
+	out := new(QueryGetSharedEntropyResponse)
+	err := c.cc.Invoke(ctx, Query_SharedEntropy_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueryServer is the server API for Query service.
 // All implementations must embed UnimplementedQueryServer
 // for forward compatibility
 type QueryServer interface {
 	// Parameters queries the parameters of the module.
 	Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error)
+	// Queries a SharedEntropy by index.
+	SharedEntropy(context.Context, *QueryGetSharedEntropyRequest) (*QueryGetSharedEntropyResponse, error)
 	mustEmbedUnimplementedQueryServer()
 }
 
@@ -63,6 +77,9 @@ type UnimplementedQueryServer struct {
 
 func (UnimplementedQueryServer) Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Params not implemented")
+}
+func (UnimplementedQueryServer) SharedEntropy(context.Context, *QueryGetSharedEntropyRequest) (*QueryGetSharedEntropyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SharedEntropy not implemented")
 }
 func (UnimplementedQueryServer) mustEmbedUnimplementedQueryServer() {}
 
@@ -95,6 +112,24 @@ func _Query_Params_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_SharedEntropy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryGetSharedEntropyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).SharedEntropy(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Query_SharedEntropy_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).SharedEntropy(ctx, req.(*QueryGetSharedEntropyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Query_ServiceDesc is the grpc.ServiceDesc for Query service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -105,6 +140,10 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Params",
 			Handler:    _Query_Params_Handler,
+		},
+		{
+			MethodName: "SharedEntropy",
+			Handler:    _Query_SharedEntropy_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

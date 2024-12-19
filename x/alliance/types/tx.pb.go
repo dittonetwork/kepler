@@ -213,43 +213,313 @@ func (m *MsgAddEntropyResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgAddEntropyResponse proto.InternalMessageInfo
 
+type MsgCreateSharedEntropy struct {
+	Creator string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	Entropy uint64 `protobuf:"varint,3,opt,name=entropy,proto3" json:"entropy,omitempty"`
+}
+
+func (m *MsgCreateSharedEntropy) Reset()         { *m = MsgCreateSharedEntropy{} }
+func (m *MsgCreateSharedEntropy) String() string { return proto.CompactTextString(m) }
+func (*MsgCreateSharedEntropy) ProtoMessage()    {}
+func (*MsgCreateSharedEntropy) Descriptor() ([]byte, []int) {
+	return fileDescriptor_459bef8e9dacdaf8, []int{4}
+}
+func (m *MsgCreateSharedEntropy) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgCreateSharedEntropy) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgCreateSharedEntropy.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgCreateSharedEntropy) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgCreateSharedEntropy.Merge(m, src)
+}
+func (m *MsgCreateSharedEntropy) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgCreateSharedEntropy) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgCreateSharedEntropy.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgCreateSharedEntropy proto.InternalMessageInfo
+
+func (m *MsgCreateSharedEntropy) GetCreator() string {
+	if m != nil {
+		return m.Creator
+	}
+	return ""
+}
+
+func (m *MsgCreateSharedEntropy) GetEntropy() uint64 {
+	if m != nil {
+		return m.Entropy
+	}
+	return 0
+}
+
+type MsgCreateSharedEntropyResponse struct {
+}
+
+func (m *MsgCreateSharedEntropyResponse) Reset()         { *m = MsgCreateSharedEntropyResponse{} }
+func (m *MsgCreateSharedEntropyResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgCreateSharedEntropyResponse) ProtoMessage()    {}
+func (*MsgCreateSharedEntropyResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_459bef8e9dacdaf8, []int{5}
+}
+func (m *MsgCreateSharedEntropyResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgCreateSharedEntropyResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgCreateSharedEntropyResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgCreateSharedEntropyResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgCreateSharedEntropyResponse.Merge(m, src)
+}
+func (m *MsgCreateSharedEntropyResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgCreateSharedEntropyResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgCreateSharedEntropyResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgCreateSharedEntropyResponse proto.InternalMessageInfo
+
+type MsgUpdateSharedEntropy struct {
+	Creator string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	Entropy uint64 `protobuf:"varint,3,opt,name=entropy,proto3" json:"entropy,omitempty"`
+}
+
+func (m *MsgUpdateSharedEntropy) Reset()         { *m = MsgUpdateSharedEntropy{} }
+func (m *MsgUpdateSharedEntropy) String() string { return proto.CompactTextString(m) }
+func (*MsgUpdateSharedEntropy) ProtoMessage()    {}
+func (*MsgUpdateSharedEntropy) Descriptor() ([]byte, []int) {
+	return fileDescriptor_459bef8e9dacdaf8, []int{6}
+}
+func (m *MsgUpdateSharedEntropy) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgUpdateSharedEntropy) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgUpdateSharedEntropy.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgUpdateSharedEntropy) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgUpdateSharedEntropy.Merge(m, src)
+}
+func (m *MsgUpdateSharedEntropy) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgUpdateSharedEntropy) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgUpdateSharedEntropy.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgUpdateSharedEntropy proto.InternalMessageInfo
+
+func (m *MsgUpdateSharedEntropy) GetCreator() string {
+	if m != nil {
+		return m.Creator
+	}
+	return ""
+}
+
+func (m *MsgUpdateSharedEntropy) GetEntropy() uint64 {
+	if m != nil {
+		return m.Entropy
+	}
+	return 0
+}
+
+type MsgUpdateSharedEntropyResponse struct {
+}
+
+func (m *MsgUpdateSharedEntropyResponse) Reset()         { *m = MsgUpdateSharedEntropyResponse{} }
+func (m *MsgUpdateSharedEntropyResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgUpdateSharedEntropyResponse) ProtoMessage()    {}
+func (*MsgUpdateSharedEntropyResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_459bef8e9dacdaf8, []int{7}
+}
+func (m *MsgUpdateSharedEntropyResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgUpdateSharedEntropyResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgUpdateSharedEntropyResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgUpdateSharedEntropyResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgUpdateSharedEntropyResponse.Merge(m, src)
+}
+func (m *MsgUpdateSharedEntropyResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgUpdateSharedEntropyResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgUpdateSharedEntropyResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgUpdateSharedEntropyResponse proto.InternalMessageInfo
+
+type MsgDeleteSharedEntropy struct {
+	Creator string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+}
+
+func (m *MsgDeleteSharedEntropy) Reset()         { *m = MsgDeleteSharedEntropy{} }
+func (m *MsgDeleteSharedEntropy) String() string { return proto.CompactTextString(m) }
+func (*MsgDeleteSharedEntropy) ProtoMessage()    {}
+func (*MsgDeleteSharedEntropy) Descriptor() ([]byte, []int) {
+	return fileDescriptor_459bef8e9dacdaf8, []int{8}
+}
+func (m *MsgDeleteSharedEntropy) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgDeleteSharedEntropy) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgDeleteSharedEntropy.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgDeleteSharedEntropy) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgDeleteSharedEntropy.Merge(m, src)
+}
+func (m *MsgDeleteSharedEntropy) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgDeleteSharedEntropy) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgDeleteSharedEntropy.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgDeleteSharedEntropy proto.InternalMessageInfo
+
+func (m *MsgDeleteSharedEntropy) GetCreator() string {
+	if m != nil {
+		return m.Creator
+	}
+	return ""
+}
+
+type MsgDeleteSharedEntropyResponse struct {
+}
+
+func (m *MsgDeleteSharedEntropyResponse) Reset()         { *m = MsgDeleteSharedEntropyResponse{} }
+func (m *MsgDeleteSharedEntropyResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgDeleteSharedEntropyResponse) ProtoMessage()    {}
+func (*MsgDeleteSharedEntropyResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_459bef8e9dacdaf8, []int{9}
+}
+func (m *MsgDeleteSharedEntropyResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgDeleteSharedEntropyResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgDeleteSharedEntropyResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgDeleteSharedEntropyResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgDeleteSharedEntropyResponse.Merge(m, src)
+}
+func (m *MsgDeleteSharedEntropyResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgDeleteSharedEntropyResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgDeleteSharedEntropyResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgDeleteSharedEntropyResponse proto.InternalMessageInfo
+
 func init() {
 	proto.RegisterType((*MsgUpdateParams)(nil), "kepler.alliance.MsgUpdateParams")
 	proto.RegisterType((*MsgUpdateParamsResponse)(nil), "kepler.alliance.MsgUpdateParamsResponse")
 	proto.RegisterType((*MsgAddEntropy)(nil), "kepler.alliance.MsgAddEntropy")
 	proto.RegisterType((*MsgAddEntropyResponse)(nil), "kepler.alliance.MsgAddEntropyResponse")
+	proto.RegisterType((*MsgCreateSharedEntropy)(nil), "kepler.alliance.MsgCreateSharedEntropy")
+	proto.RegisterType((*MsgCreateSharedEntropyResponse)(nil), "kepler.alliance.MsgCreateSharedEntropyResponse")
+	proto.RegisterType((*MsgUpdateSharedEntropy)(nil), "kepler.alliance.MsgUpdateSharedEntropy")
+	proto.RegisterType((*MsgUpdateSharedEntropyResponse)(nil), "kepler.alliance.MsgUpdateSharedEntropyResponse")
+	proto.RegisterType((*MsgDeleteSharedEntropy)(nil), "kepler.alliance.MsgDeleteSharedEntropy")
+	proto.RegisterType((*MsgDeleteSharedEntropyResponse)(nil), "kepler.alliance.MsgDeleteSharedEntropyResponse")
 }
 
 func init() { proto.RegisterFile("kepler/alliance/tx.proto", fileDescriptor_459bef8e9dacdaf8) }
 
 var fileDescriptor_459bef8e9dacdaf8 = []byte{
-	// 407 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0xc8, 0x4e, 0x2d, 0xc8,
-	0x49, 0x2d, 0xd2, 0x4f, 0xcc, 0xc9, 0xc9, 0x4c, 0xcc, 0x4b, 0x4e, 0xd5, 0x2f, 0xa9, 0xd0, 0x2b,
-	0x28, 0xca, 0x2f, 0xc9, 0x17, 0xe2, 0x87, 0xc8, 0xe8, 0xc1, 0x64, 0xa4, 0x04, 0x13, 0x73, 0x33,
-	0xf3, 0xf2, 0xf5, 0xc1, 0x24, 0x44, 0x8d, 0x94, 0x78, 0x72, 0x7e, 0x71, 0x6e, 0x7e, 0xb1, 0x7e,
-	0x6e, 0x71, 0xba, 0x7e, 0x99, 0x21, 0x88, 0x82, 0x4a, 0x48, 0x42, 0x24, 0xe2, 0xc1, 0x3c, 0x7d,
-	0x08, 0x07, 0x2a, 0x25, 0x92, 0x9e, 0x9f, 0x9e, 0x0f, 0x11, 0x07, 0xb1, 0xa0, 0xa2, 0x32, 0xe8,
-	0xee, 0x28, 0x48, 0x2c, 0x4a, 0xcc, 0x85, 0xea, 0x51, 0xda, 0xcd, 0xc8, 0xc5, 0xef, 0x5b, 0x9c,
-	0x1e, 0x5a, 0x90, 0x92, 0x58, 0x92, 0x1a, 0x00, 0x96, 0x11, 0x32, 0xe3, 0xe2, 0x4c, 0x2c, 0x2d,
-	0xc9, 0xc8, 0x2f, 0xca, 0x2c, 0xa9, 0x94, 0x60, 0x54, 0x60, 0xd4, 0xe0, 0x74, 0x92, 0xb8, 0xb4,
-	0x45, 0x57, 0x04, 0x6a, 0x99, 0x63, 0x4a, 0x4a, 0x51, 0x6a, 0x71, 0x71, 0x70, 0x49, 0x51, 0x66,
-	0x5e, 0x7a, 0x10, 0x42, 0xa9, 0x90, 0x15, 0x17, 0x1b, 0xc4, 0x6c, 0x09, 0x26, 0x05, 0x46, 0x0d,
-	0x6e, 0x23, 0x71, 0x3d, 0x34, 0x8f, 0xea, 0x41, 0x2c, 0x70, 0xe2, 0x3c, 0x71, 0x4f, 0x9e, 0x61,
-	0xc5, 0xf3, 0x0d, 0x5a, 0x8c, 0x41, 0x50, 0x1d, 0x56, 0x26, 0x4d, 0xcf, 0x37, 0x68, 0x21, 0xcc,
-	0xea, 0x7a, 0xbe, 0x41, 0x4b, 0x11, 0xea, 0xf0, 0x0a, 0x84, 0xd3, 0xd1, 0x5c, 0xaa, 0x24, 0xc9,
-	0x25, 0x8e, 0x26, 0x14, 0x94, 0x5a, 0x5c, 0x90, 0x9f, 0x57, 0x9c, 0xaa, 0x14, 0xcb, 0xc5, 0xeb,
-	0x5b, 0x9c, 0xee, 0x98, 0x92, 0xe2, 0x9a, 0x57, 0x52, 0x94, 0x5f, 0x50, 0x29, 0xa4, 0xc0, 0xc5,
-	0x9d, 0x9c, 0x9f, 0x57, 0x52, 0x94, 0x99, 0x54, 0x5a, 0x92, 0x5f, 0x04, 0xf1, 0x57, 0x10, 0xb2,
-	0x90, 0x90, 0x04, 0x17, 0x7b, 0x2a, 0x44, 0x31, 0xd8, 0x03, 0x2c, 0x41, 0x30, 0xae, 0x95, 0x00,
-	0xc8, 0x75, 0xc8, 0x6a, 0x95, 0xc4, 0xb9, 0x44, 0x51, 0x8c, 0x87, 0xd9, 0x6b, 0xb4, 0x8f, 0x91,
-	0x8b, 0xd9, 0xb7, 0x38, 0x5d, 0x28, 0x8a, 0x8b, 0x07, 0x25, 0x50, 0x15, 0x30, 0x02, 0x03, 0xcd,
-	0xe5, 0x52, 0x1a, 0x84, 0x54, 0xc0, 0xec, 0x10, 0x0a, 0xe1, 0xe2, 0x42, 0xf2, 0x98, 0x1c, 0x36,
-	0x7d, 0x08, 0x79, 0x29, 0x35, 0xfc, 0xf2, 0x30, 0x53, 0xa5, 0x58, 0x1b, 0x40, 0x31, 0xe2, 0x64,
-	0x78, 0xe2, 0x91, 0x1c, 0xe3, 0x85, 0x47, 0x72, 0x8c, 0x0f, 0x1e, 0xc9, 0x31, 0x4e, 0x78, 0x2c,
-	0xc7, 0x70, 0xe1, 0xb1, 0x1c, 0xc3, 0x8d, 0xc7, 0x72, 0x0c, 0x51, 0xe2, 0x98, 0x11, 0x52, 0x52,
-	0x59, 0x90, 0x5a, 0x9c, 0xc4, 0x06, 0x4e, 0x4b, 0xc6, 0x80, 0x00, 0x00, 0x00, 0xff, 0xff, 0x55,
-	0x20, 0x8c, 0x43, 0xf3, 0x02, 0x00, 0x00,
+	// 535 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x94, 0x31, 0x6f, 0xd3, 0x40,
+	0x14, 0xc7, 0x63, 0x5a, 0x5a, 0xe5, 0xb5, 0xa8, 0x60, 0x0a, 0x76, 0x2d, 0x64, 0x8c, 0x85, 0x68,
+	0x14, 0x89, 0x58, 0x2d, 0x88, 0x21, 0x13, 0x0d, 0x30, 0x46, 0x42, 0x2e, 0x2c, 0x91, 0x50, 0x75,
+	0x8d, 0x4f, 0xae, 0x45, 0xe2, 0xb3, 0xee, 0xae, 0xa8, 0xd9, 0x10, 0x23, 0x13, 0x7c, 0x0b, 0xc6,
+	0x0c, 0x6c, 0x7c, 0x81, 0x8e, 0x15, 0x13, 0x13, 0x42, 0xc9, 0x90, 0xaf, 0x81, 0xec, 0xf3, 0x25,
+	0x8e, 0x7b, 0x84, 0x2c, 0x5d, 0x12, 0xdf, 0x7b, 0xff, 0xf7, 0x7e, 0xef, 0xbd, 0x7b, 0x3a, 0x30,
+	0xdf, 0xe3, 0xa4, 0x87, 0xa9, 0x87, 0x7a, 0xbd, 0x08, 0xc5, 0x5d, 0xec, 0xf1, 0xb3, 0x46, 0x42,
+	0x09, 0x27, 0xfa, 0x96, 0xf0, 0x34, 0xa4, 0xc7, 0xba, 0x85, 0xfa, 0x51, 0x4c, 0xbc, 0xec, 0x57,
+	0x68, 0x2c, 0xa3, 0x4b, 0x58, 0x9f, 0x30, 0xaf, 0xcf, 0x42, 0xef, 0xc3, 0x5e, 0xfa, 0x97, 0x3b,
+	0x76, 0x84, 0xe3, 0x28, 0x3b, 0x79, 0xe2, 0x90, 0xbb, 0xb6, 0x43, 0x12, 0x12, 0x61, 0x4f, 0xbf,
+	0x72, 0xeb, 0xbd, 0x72, 0x1d, 0x09, 0xa2, 0xa8, 0x2f, 0x63, 0x1e, 0x96, 0xbd, 0xec, 0x04, 0x51,
+	0x1c, 0x1c, 0xe1, 0x98, 0x53, 0x92, 0x0c, 0x84, 0xca, 0xfd, 0xa1, 0xc1, 0x56, 0x9b, 0x85, 0x6f,
+	0x93, 0x00, 0x71, 0xfc, 0x3a, 0x8b, 0xd7, 0x9f, 0x41, 0x15, 0x9d, 0xf2, 0x13, 0x42, 0x23, 0x3e,
+	0x30, 0x35, 0x47, 0xab, 0x55, 0x5b, 0xe6, 0xcf, 0xef, 0x8f, 0xb7, 0xf3, 0x92, 0x0e, 0x82, 0x80,
+	0x62, 0xc6, 0x0e, 0x39, 0x8d, 0xe2, 0xd0, 0x9f, 0x49, 0xf5, 0x26, 0xac, 0x89, 0x0a, 0xcc, 0x6b,
+	0x8e, 0x56, 0xdb, 0xd8, 0x37, 0x1a, 0xa5, 0x71, 0x34, 0x04, 0xa0, 0x55, 0x3d, 0xff, 0x7d, 0xbf,
+	0xf2, 0x6d, 0x32, 0xac, 0x6b, 0x7e, 0x1e, 0xd1, 0x7c, 0xfa, 0x69, 0x32, 0xac, 0xcf, 0x72, 0x7d,
+	0x9e, 0x0c, 0xeb, 0x0f, 0xf2, 0x06, 0xce, 0x66, 0x2d, 0x94, 0x2a, 0x75, 0x77, 0xc0, 0x28, 0x99,
+	0x7c, 0xcc, 0x12, 0x12, 0x33, 0xec, 0xbe, 0x83, 0x1b, 0x6d, 0x16, 0x1e, 0x04, 0xc1, 0x2b, 0xd1,
+	0xaf, 0xee, 0xc0, 0x46, 0x97, 0xc4, 0x9c, 0x46, 0xc7, 0xa7, 0x9c, 0x50, 0xd1, 0x97, 0x5f, 0x34,
+	0xe9, 0x26, 0xac, 0xe7, 0xc3, 0xc9, 0x1a, 0x58, 0xf5, 0xe5, 0xb1, 0x79, 0x33, 0xad, 0xae, 0xa8,
+	0x75, 0x0d, 0xb8, 0x33, 0x97, 0x7e, 0xca, 0xed, 0xc0, 0xdd, 0x36, 0x0b, 0x5f, 0x50, 0x8c, 0x38,
+	0x3e, 0xcc, 0x26, 0x2e, 0x0b, 0x30, 0x61, 0xbd, 0x9b, 0x9a, 0xa7, 0x70, 0x79, 0x2c, 0x82, 0x57,
+	0xe6, 0xc1, 0x9b, 0x29, 0x58, 0xea, 0x5c, 0x07, 0x6c, 0x75, 0xee, 0x12, 0x5d, 0x0c, 0xe4, 0x6a,
+	0xe8, 0x8a, 0xdc, 0x53, 0xfa, 0xf3, 0x8c, 0xfe, 0x12, 0xf7, 0xf0, 0xd2, 0x74, 0x25, 0x43, 0x91,
+	0x41, 0x32, 0xf6, 0xbf, 0xae, 0xc2, 0x4a, 0x9b, 0x85, 0x7a, 0x07, 0x36, 0xe7, 0x96, 0xd6, 0xb9,
+	0xb4, 0x6c, 0xa5, 0xcd, 0xb0, 0x6a, 0xff, 0x53, 0x48, 0x86, 0xfe, 0x06, 0xa0, 0xb0, 0x38, 0xb6,
+	0x2a, 0x6e, 0xe6, 0xb7, 0x1e, 0x2d, 0xf6, 0x4f, 0xb3, 0x12, 0xb8, 0xad, 0x5a, 0x8b, 0x5d, 0x55,
+	0xb8, 0x42, 0x68, 0x79, 0x4b, 0x0a, 0x8b, 0x40, 0xd5, 0x26, 0xec, 0xfe, 0x7b, 0x0e, 0x4b, 0x00,
+	0x17, 0xdc, 0x7f, 0x0a, 0x54, 0x5d, 0xbe, 0x12, 0xa8, 0x10, 0xaa, 0x81, 0x0b, 0x96, 0xc1, 0xba,
+	0xfe, 0x31, 0x7d, 0x44, 0x5a, 0x7b, 0xe7, 0x23, 0x5b, 0xbb, 0x18, 0xd9, 0xda, 0x9f, 0x91, 0xad,
+	0x7d, 0x19, 0xdb, 0x95, 0x8b, 0xb1, 0x5d, 0xf9, 0x35, 0xb6, 0x2b, 0x1d, 0xe3, 0xf2, 0x1b, 0xc2,
+	0x07, 0x09, 0x66, 0xc7, 0x6b, 0xd9, 0xf3, 0xf7, 0xe4, 0x6f, 0x00, 0x00, 0x00, 0xff, 0xff, 0xbb,
+	0xcb, 0x37, 0xd8, 0xcc, 0x05, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -268,6 +538,9 @@ type MsgClient interface {
 	// parameters. The authority defaults to the x/gov module account.
 	UpdateParams(ctx context.Context, in *MsgUpdateParams, opts ...grpc.CallOption) (*MsgUpdateParamsResponse, error)
 	AddEntropy(ctx context.Context, in *MsgAddEntropy, opts ...grpc.CallOption) (*MsgAddEntropyResponse, error)
+	CreateSharedEntropy(ctx context.Context, in *MsgCreateSharedEntropy, opts ...grpc.CallOption) (*MsgCreateSharedEntropyResponse, error)
+	UpdateSharedEntropy(ctx context.Context, in *MsgUpdateSharedEntropy, opts ...grpc.CallOption) (*MsgUpdateSharedEntropyResponse, error)
+	DeleteSharedEntropy(ctx context.Context, in *MsgDeleteSharedEntropy, opts ...grpc.CallOption) (*MsgDeleteSharedEntropyResponse, error)
 }
 
 type msgClient struct {
@@ -296,12 +569,42 @@ func (c *msgClient) AddEntropy(ctx context.Context, in *MsgAddEntropy, opts ...g
 	return out, nil
 }
 
+func (c *msgClient) CreateSharedEntropy(ctx context.Context, in *MsgCreateSharedEntropy, opts ...grpc.CallOption) (*MsgCreateSharedEntropyResponse, error) {
+	out := new(MsgCreateSharedEntropyResponse)
+	err := c.cc.Invoke(ctx, "/kepler.alliance.Msg/CreateSharedEntropy", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) UpdateSharedEntropy(ctx context.Context, in *MsgUpdateSharedEntropy, opts ...grpc.CallOption) (*MsgUpdateSharedEntropyResponse, error) {
+	out := new(MsgUpdateSharedEntropyResponse)
+	err := c.cc.Invoke(ctx, "/kepler.alliance.Msg/UpdateSharedEntropy", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) DeleteSharedEntropy(ctx context.Context, in *MsgDeleteSharedEntropy, opts ...grpc.CallOption) (*MsgDeleteSharedEntropyResponse, error) {
+	out := new(MsgDeleteSharedEntropyResponse)
+	err := c.cc.Invoke(ctx, "/kepler.alliance.Msg/DeleteSharedEntropy", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 type MsgServer interface {
 	// UpdateParams defines a (governance) operation for updating the module
 	// parameters. The authority defaults to the x/gov module account.
 	UpdateParams(context.Context, *MsgUpdateParams) (*MsgUpdateParamsResponse, error)
 	AddEntropy(context.Context, *MsgAddEntropy) (*MsgAddEntropyResponse, error)
+	CreateSharedEntropy(context.Context, *MsgCreateSharedEntropy) (*MsgCreateSharedEntropyResponse, error)
+	UpdateSharedEntropy(context.Context, *MsgUpdateSharedEntropy) (*MsgUpdateSharedEntropyResponse, error)
+	DeleteSharedEntropy(context.Context, *MsgDeleteSharedEntropy) (*MsgDeleteSharedEntropyResponse, error)
 }
 
 // UnimplementedMsgServer can be embedded to have forward compatible implementations.
@@ -313,6 +616,15 @@ func (*UnimplementedMsgServer) UpdateParams(ctx context.Context, req *MsgUpdateP
 }
 func (*UnimplementedMsgServer) AddEntropy(ctx context.Context, req *MsgAddEntropy) (*MsgAddEntropyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddEntropy not implemented")
+}
+func (*UnimplementedMsgServer) CreateSharedEntropy(ctx context.Context, req *MsgCreateSharedEntropy) (*MsgCreateSharedEntropyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateSharedEntropy not implemented")
+}
+func (*UnimplementedMsgServer) UpdateSharedEntropy(ctx context.Context, req *MsgUpdateSharedEntropy) (*MsgUpdateSharedEntropyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateSharedEntropy not implemented")
+}
+func (*UnimplementedMsgServer) DeleteSharedEntropy(ctx context.Context, req *MsgDeleteSharedEntropy) (*MsgDeleteSharedEntropyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteSharedEntropy not implemented")
 }
 
 func RegisterMsgServer(s grpc1.Server, srv MsgServer) {
@@ -355,6 +667,60 @@ func _Msg_AddEntropy_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_CreateSharedEntropy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgCreateSharedEntropy)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).CreateSharedEntropy(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/kepler.alliance.Msg/CreateSharedEntropy",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).CreateSharedEntropy(ctx, req.(*MsgCreateSharedEntropy))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_UpdateSharedEntropy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgUpdateSharedEntropy)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).UpdateSharedEntropy(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/kepler.alliance.Msg/UpdateSharedEntropy",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).UpdateSharedEntropy(ctx, req.(*MsgUpdateSharedEntropy))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_DeleteSharedEntropy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgDeleteSharedEntropy)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).DeleteSharedEntropy(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/kepler.alliance.Msg/DeleteSharedEntropy",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).DeleteSharedEntropy(ctx, req.(*MsgDeleteSharedEntropy))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var Msg_serviceDesc = _Msg_serviceDesc
 var _Msg_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "kepler.alliance.Msg",
@@ -367,6 +733,18 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AddEntropy",
 			Handler:    _Msg_AddEntropy_Handler,
+		},
+		{
+			MethodName: "CreateSharedEntropy",
+			Handler:    _Msg_CreateSharedEntropy_Handler,
+		},
+		{
+			MethodName: "UpdateSharedEntropy",
+			Handler:    _Msg_UpdateSharedEntropy_Handler,
+		},
+		{
+			MethodName: "DeleteSharedEntropy",
+			Handler:    _Msg_DeleteSharedEntropy_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -494,6 +872,175 @@ func (m *MsgAddEntropyResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *MsgCreateSharedEntropy) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgCreateSharedEntropy) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgCreateSharedEntropy) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Entropy != 0 {
+		i = encodeVarintTx(dAtA, i, uint64(m.Entropy))
+		i--
+		dAtA[i] = 0x18
+	}
+	if len(m.Creator) > 0 {
+		i -= len(m.Creator)
+		copy(dAtA[i:], m.Creator)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Creator)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgCreateSharedEntropyResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgCreateSharedEntropyResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgCreateSharedEntropyResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgUpdateSharedEntropy) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgUpdateSharedEntropy) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgUpdateSharedEntropy) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Entropy != 0 {
+		i = encodeVarintTx(dAtA, i, uint64(m.Entropy))
+		i--
+		dAtA[i] = 0x18
+	}
+	if len(m.Creator) > 0 {
+		i -= len(m.Creator)
+		copy(dAtA[i:], m.Creator)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Creator)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgUpdateSharedEntropyResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgUpdateSharedEntropyResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgUpdateSharedEntropyResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgDeleteSharedEntropy) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgDeleteSharedEntropy) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgDeleteSharedEntropy) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Creator) > 0 {
+		i -= len(m.Creator)
+		copy(dAtA[i:], m.Creator)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Creator)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgDeleteSharedEntropyResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgDeleteSharedEntropyResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgDeleteSharedEntropyResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintTx(dAtA []byte, offset int, v uint64) int {
 	offset -= sovTx(v)
 	base := offset
@@ -546,6 +1093,78 @@ func (m *MsgAddEntropy) Size() (n int) {
 }
 
 func (m *MsgAddEntropyResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *MsgCreateSharedEntropy) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Creator)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	if m.Entropy != 0 {
+		n += 1 + sovTx(uint64(m.Entropy))
+	}
+	return n
+}
+
+func (m *MsgCreateSharedEntropyResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *MsgUpdateSharedEntropy) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Creator)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	if m.Entropy != 0 {
+		n += 1 + sovTx(uint64(m.Entropy))
+	}
+	return n
+}
+
+func (m *MsgUpdateSharedEntropyResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *MsgDeleteSharedEntropy) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Creator)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgDeleteSharedEntropyResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -853,6 +1472,440 @@ func (m *MsgAddEntropyResponse) Unmarshal(dAtA []byte) error {
 		}
 		if fieldNum <= 0 {
 			return fmt.Errorf("proto: MsgAddEntropyResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgCreateSharedEntropy) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgCreateSharedEntropy: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgCreateSharedEntropy: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Creator = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Entropy", wireType)
+			}
+			m.Entropy = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Entropy |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgCreateSharedEntropyResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgCreateSharedEntropyResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgCreateSharedEntropyResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgUpdateSharedEntropy) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgUpdateSharedEntropy: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgUpdateSharedEntropy: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Creator = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Entropy", wireType)
+			}
+			m.Entropy = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Entropy |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgUpdateSharedEntropyResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgUpdateSharedEntropyResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgUpdateSharedEntropyResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgDeleteSharedEntropy) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgDeleteSharedEntropy: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgDeleteSharedEntropy: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Creator = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgDeleteSharedEntropyResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgDeleteSharedEntropyResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgDeleteSharedEntropyResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		default:

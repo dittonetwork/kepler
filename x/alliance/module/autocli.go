@@ -17,6 +17,11 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 					Use:       "params",
 					Short:     "Shows the parameters of the module",
 				},
+				{
+					RpcMethod: "SharedEntropy",
+					Use:       "show-shared-entropy",
+					Short:     "show SharedEntropy",
+				},
 				// this line is used by ignite scaffolding # autocli/query
 			},
 		},
@@ -33,6 +38,23 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 					Use:            "add-entropy [entropy]",
 					Short:          "Send a AddEntropy tx",
 					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "entropy"}},
+				},
+				{
+					RpcMethod:      "CreateSharedEntropy",
+					Use:            "create-shared-entropy [entropy]",
+					Short:          "Create SharedEntropy",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "entropy"}},
+				},
+				{
+					RpcMethod:      "UpdateSharedEntropy",
+					Use:            "update-shared-entropy [entropy]",
+					Short:          "Update SharedEntropy",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "entropy"}},
+				},
+				{
+					RpcMethod: "DeleteSharedEntropy",
+					Use:       "delete-shared-entropy",
+					Short:     "Delete SharedEntropy",
 				},
 				// this line is used by ignite scaffolding # autocli/tx
 			},

@@ -1,0 +1,9 @@
+syntax = "proto3";
+package kepler.alliance;
+
+option go_package = "kepler/x/alliance/types";
+
+message SharedEntropy {
+  uint64 entropy = 1; 
+  string creator = 2;
+}

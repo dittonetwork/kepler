@@ -27,6 +27,18 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgAddEntropy int = 100
 
+	opWeightMsgCreateSharedEntropy = "op_weight_msg_shared_entropy"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateSharedEntropy int = 100
+
+	opWeightMsgUpdateSharedEntropy = "op_weight_msg_shared_entropy"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgUpdateSharedEntropy int = 100
+
+	opWeightMsgDeleteSharedEntropy = "op_weight_msg_shared_entropy"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgDeleteSharedEntropy int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -61,6 +73,39 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 		alliancesimulation.SimulateMsgAddEntropy(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
+	var weightMsgCreateSharedEntropy int
+	simState.AppParams.GetOrGenerate(opWeightMsgCreateSharedEntropy, &weightMsgCreateSharedEntropy, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateSharedEntropy = defaultWeightMsgCreateSharedEntropy
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateSharedEntropy,
+		alliancesimulation.SimulateMsgCreateSharedEntropy(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgUpdateSharedEntropy int
+	simState.AppParams.GetOrGenerate(opWeightMsgUpdateSharedEntropy, &weightMsgUpdateSharedEntropy, nil,
+		func(_ *rand.Rand) {
+			weightMsgUpdateSharedEntropy = defaultWeightMsgUpdateSharedEntropy
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgUpdateSharedEntropy,
+		alliancesimulation.SimulateMsgUpdateSharedEntropy(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgDeleteSharedEntropy int
+	simState.AppParams.GetOrGenerate(opWeightMsgDeleteSharedEntropy, &weightMsgDeleteSharedEntropy, nil,
+		func(_ *rand.Rand) {
+			weightMsgDeleteSharedEntropy = defaultWeightMsgDeleteSharedEntropy
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgDeleteSharedEntropy,
+		alliancesimulation.SimulateMsgDeleteSharedEntropy(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
 	// this line is used by starport scaffolding # simapp/module/operation
 
 	return operations
@@ -74,6 +119,30 @@ func (am AppModule) ProposalMsgs(simState module.SimulationState) []simtypes.Wei
 			defaultWeightMsgAddEntropy,
 			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
 				alliancesimulation.SimulateMsgAddEntropy(am.accountKeeper, am.bankKeeper, am.keeper)
+				return nil
+			},
+		),
+		simulation.NewWeightedProposalMsg(
+			opWeightMsgCreateSharedEntropy,
+			defaultWeightMsgCreateSharedEntropy,
+			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
+				alliancesimulation.SimulateMsgCreateSharedEntropy(am.accountKeeper, am.bankKeeper, am.keeper)
+				return nil
+			},
+		),
+		simulation.NewWeightedProposalMsg(
+			opWeightMsgUpdateSharedEntropy,
+			defaultWeightMsgUpdateSharedEntropy,
+			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
+				alliancesimulation.SimulateMsgUpdateSharedEntropy(am.accountKeeper, am.bankKeeper, am.keeper)
+				return nil
+			},
+		),
+		simulation.NewWeightedProposalMsg(
+			opWeightMsgDeleteSharedEntropy,
+			defaultWeightMsgDeleteSharedEntropy,
+			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
+				alliancesimulation.SimulateMsgDeleteSharedEntropy(am.accountKeeper, am.bankKeeper, am.keeper)
 				return nil
 			},
 		),
