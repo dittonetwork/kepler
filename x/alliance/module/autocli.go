@@ -28,6 +28,12 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 					RpcMethod: "UpdateParams",
 					Skip:      true, // skipped because authority gated
 				},
+				{
+					RpcMethod:      "AddEntropy",
+					Use:            "add-entropy [entropy]",
+					Short:          "Send a AddEntropy tx",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "entropy"}},
+				},
 				// this line is used by ignite scaffolding # autocli/tx
 			},
 		},
