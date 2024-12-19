@@ -77,7 +77,9 @@ import (
 
 	beaconmodulekeeper "kepler/x/beacon/keeper"
 
+	alliancemodulekeeper "kepler/x/alliance/keeper"
 	symbioticmodulekeeper "kepler/x/symbiotic/keeper"
+
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 
 	"kepler/docs"
@@ -145,6 +147,7 @@ type App struct {
 
 	BeaconKeeper    beaconmodulekeeper.Keeper
 	SymbioticKeeper symbioticmodulekeeper.Keeper
+	AllianceKeeper  alliancemodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
 	// simulation manager
@@ -250,6 +253,7 @@ func New(
 		&app.CircuitBreakerKeeper,
 		&app.BeaconKeeper,
 		&app.SymbioticKeeper,
+		&app.AllianceKeeper,
 		// this line is used by starport scaffolding # stargate/app/keeperDefinition
 	); err != nil {
 		panic(err)
