@@ -22,7 +22,6 @@ const (
 
 var (
 	_ appmodule.AppModule             = (*AppModule)(nil)
-	_ appmodule.HasGenesis            = (*AppModule)(nil)
 	_ appmodule.HasConsensusVersion   = (*AppModule)(nil)
 	_ appmodule.HasRegisterInterfaces = AppModule{}
 	_ appmodule.HasBeginBlocker       = (*AppModule)(nil)
@@ -89,11 +88,11 @@ func (am AppModule) ValidateGenesis(bz json.RawMessage) error {
 }
 
 // InitGenesis performs the module's genesis initialization. It returns no validator updates.
-func (am AppModule) InitGenesis(ctx context.Context, gs json.RawMessage) error {
+func (am AppModule) InitGenesis(ctx context.Context, gs json.RawMessage) ([]appmodule.ValidatorUpdate, error) {
 	var genState types.GenesisState
 	// Initialize global index to index in genesis state
 	if err := am.cdc.UnmarshalJSON(gs, &genState); err != nil {
-		return fmt.Errorf("failed to unmarshal %s genesis state: %w", types.ModuleName, err)
+		return nil, fmt.Errorf("failed to unmarshal %s genesis state: %w", types.ModuleName, err)
 	}
 
 	return am.keeper.InitGenesis(ctx, genState)

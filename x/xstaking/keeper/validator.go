@@ -135,6 +135,17 @@ func (k Keeper) DeleteValidatorQueueTimeSlice(ctx context.Context, endTime time.
 	return k.ValidatorQueue.Remove(ctx, collections.Join3(timeBzKeySize, endTime, uint64(endHeight)))
 }
 
+// InsertUnbondingValidatorQueue inserts a given unbonding validator address into
+// the unbonding validator queue for a given height and time.
+func (k Keeper) InsertUnbondingValidatorQueue(ctx context.Context, val types.Validator) error {
+	addrs, err := k.GetUnbondingValidators(ctx, val.UnbondingTime, val.UnbondingHeight)
+	if err != nil {
+		return err
+	}
+	addrs = append(addrs, val.OperatorAddress)
+	return k.SetUnbondingValidatorsQueue(ctx, val.UnbondingTime, val.UnbondingHeight, addrs)
+}
+
 // SetUnbondingValidatorsQueue sets a given slice of validator addresses into
 // the unbonding validator queue by a given height and time.
 func (k Keeper) SetUnbondingValidatorsQueue(ctx context.Context, endTime time.Time, endHeight int64, addrs []string) error {
@@ -223,6 +234,62 @@ func (k Keeper) RemoveValidator(ctx context.Context, address sdk.ValAddress) err
 	}
 
 	return nil
+}
+
+// SetValidatorByConsAddr sets a validator by consensus address
+func (k Keeper) SetValidatorByConsAddr(ctx context.Context, validator types.Validator) error {
+	consPk, err := validator.GetConsAddr()
+	if err != nil {
+		return err
+	}
+
+	bz, err := k.validatorAddressCodec.StringToBytes(validator.GetOperator())
+	if err != nil {
+		return err
+	}
+
+	return k.ValidatorByConsensusAddress.Set(ctx, consPk, bz)
+}
+
+// IterateLastValidatorPowers iterates over last validator powers.
+func (k Keeper) IterateLastValidatorPowers(
+	ctx context.Context,
+	handler func(operator sdk.ValAddress, power int64) (stop bool),
+) error {
+	err := k.LastValidatorPower.Walk(ctx, nil, func(key []byte, value gogotypes.Int64Value) (bool, error) {
+		addr := sdk.ValAddress(key)
+
+		if handler(addr, value.GetValue()) {
+			return true, nil
+		}
+		return false, nil
+	})
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// GetAllValidators gets the set of all validators with no limits, used during genesis dump
+func (k Keeper) GetAllValidators(ctx context.Context) (validators []types.Validator, err error) {
+	store := k.KVStoreService.OpenKVStore(ctx)
+
+	iterator, err := store.Iterator(types.ValidatorsKey, storetypes.PrefixEndBytes(types.ValidatorsKey))
+	if err != nil {
+		return nil, err
+	}
+	defer iterator.Close()
+
+	for ; iterator.Valid(); iterator.Next() {
+		validator, err := types.UnmarshalValidator(k.cdc, iterator.Value())
+		if err != nil {
+			return nil, err
+		}
+		validators = append(validators, validator)
+	}
+
+	return validators, nil
 }
 
 func (k Keeper) unbondMatureValidators(

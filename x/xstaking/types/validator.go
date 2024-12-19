@@ -4,6 +4,7 @@ import (
 	"cosmossdk.io/core/appmodule"
 	"cosmossdk.io/errors"
 	"cosmossdk.io/math"
+	"github.com/cosmos/cosmos-sdk/codec"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -257,4 +258,10 @@ func (m Metadata) Validate() error {
 		}
 	}
 	return nil
+}
+
+// unmarshal a redelegation from a store value
+func UnmarshalValidator(cdc codec.BinaryCodec, value []byte) (v Validator, err error) {
+	err = cdc.Unmarshal(value, &v)
+	return v, err
 }

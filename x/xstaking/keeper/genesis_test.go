@@ -15,7 +15,7 @@ func TestGenesis(t *testing.T) {
 	}
 
 	f := initFixture(t)
-	err := f.keeper.InitGenesis(f.ctx, genesisState)
+	_, err := f.keeper.InitGenesis(f.ctx, genesisState)
 	require.NoError(t, err)
 	got, err := f.keeper.ExportGenesis(f.ctx)
 	require.NoError(t, err)
