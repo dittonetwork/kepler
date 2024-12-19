@@ -14,11 +14,8 @@ import (
 	lockupdepinject "cosmossdk.io/x/accounts/defaults/lockup/depinject"
 	multisigdepinject "cosmossdk.io/x/accounts/defaults/multisig/depinject"
 	bankkeeper "cosmossdk.io/x/bank/keeper"
-	distrkeeper "cosmossdk.io/x/distribution/keeper"
 	epochskeeper "cosmossdk.io/x/epochs/keeper"
 	_ "cosmossdk.io/x/protocolpool"
-	stakingkeeper "cosmossdk.io/x/staking/keeper"
-
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"
@@ -63,12 +60,10 @@ type App struct {
 	AccountsKeeper accounts.Keeper
 	AuthKeeper     authkeeper.AccountKeeper
 	BankKeeper     bankkeeper.Keeper
-	StakingKeeper  *stakingkeeper.Keeper
-	DistrKeeper    distrkeeper.Keeper
 	EpochsKeeper   *epochskeeper.Keeper
 
 	HorizonKeeper  horizonmodulekeeper.Keeper
-	XstakingKeeper xstakingmodulekeeper.Keeper
+	XstakingKeeper *xstakingmodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
 	// simulation manager
@@ -134,8 +129,6 @@ func New(
 		&app.AuthKeeper,
 		&app.AccountsKeeper,
 		&app.BankKeeper,
-		&app.StakingKeeper,
-		&app.DistrKeeper,
 		&app.HorizonKeeper,
 		&app.EpochsKeeper,
 		&app.XstakingKeeper,

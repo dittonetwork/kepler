@@ -60,7 +60,6 @@ require (
 	cosmossdk.io/x/authz v0.0.0-00010101000000-000000000000
 	cosmossdk.io/x/bank v0.0.0-20240226161501-23359a0b6d91
 	cosmossdk.io/x/consensus v0.0.0-00010101000000-000000000000
-	cosmossdk.io/x/distribution v0.0.0-00010101000000-000000000000
 	cosmossdk.io/x/epochs v0.0.0-20240522060652-a1ae4c3e0337
 	cosmossdk.io/x/feegrant v0.1.1
 	cosmossdk.io/x/mint v0.0.0-00010101000000-000000000000
@@ -99,6 +98,7 @@ require (
 	connectrpc.com/otelconnect v0.7.0 // indirect
 	cosmossdk.io/core/testing v0.0.0-20241108153815-606544c7be7e // indirect
 	cosmossdk.io/schema v0.4.0 // indirect
+	cosmossdk.io/x/distribution v0.0.0-00010101000000-000000000000 // indirect
 	cosmossdk.io/x/gov v0.0.0-20231113122742-912390d5fc4a // indirect
 	cosmossdk.io/x/tx v1.0.0-alpha.2 // indirect
 	filippo.io/edwards25519 v1.1.0 // indirect

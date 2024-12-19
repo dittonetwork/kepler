@@ -116,6 +116,85 @@ func (v Validator) GetTokens() math.Int {
 	return v.Tokens
 }
 
+func (v Validator) GetMoniker() string {
+	return v.Description.Moniker
+}
+
+func (v Validator) GetStatus() sdk.BondStatus {
+	switch v.Status {
+	case Unbonded:
+		return sdk.Unbonded
+	case Unbonding:
+		return sdk.Unbonding
+	case Bonded:
+		return sdk.Bonded
+	case Bonding:
+		return sdk.Unbonded
+	default:
+		return sdk.Unspecified
+	}
+}
+
+func (v Validator) GetBondedTokens() math.Int {
+	if v.IsBonded() {
+		return v.Tokens
+	}
+
+	return math.ZeroInt()
+}
+
+func (v Validator) GetConsensusPower(r math.Int) int64 {
+	return v.ConsensusPower(r)
+}
+
+// GetCommission returns the commission of the validator
+// Deprecated: use for interface compatibility with sdk.ValidatorI
+func (v Validator) GetCommission() math.LegacyDec {
+	return math.ZeroInt().ToLegacyDec()
+}
+
+// GetMinSelfDelegation returns the minimum self delegation of the validator
+// Deprecated: use for interface compatibility with sdk.ValidatorI
+func (v Validator) GetMinSelfDelegation() math.Int {
+	return math.ZeroInt()
+}
+
+// GetDelegatorShares returns the total amount of delegator shares
+// Deprecated: use for interface compatibility with sdk.ValidatorI
+func (v Validator) GetDelegatorShares() math.LegacyDec {
+	return v.Tokens.ToLegacyDec()
+}
+
+// TokensFromShares returns the amount of tokens a delegation of the given shares
+// Deprecated: use for interface compatibility with sdk.ValidatorI
+func (v Validator) TokensFromShares(shares math.LegacyDec) math.LegacyDec {
+	return shares
+}
+
+// TokensFromSharesTruncated returns the amount of tokens a delegation of the given shares
+// Deprecated: use for interface compatibility with sdk.ValidatorI
+func (v Validator) TokensFromSharesTruncated(dec math.LegacyDec) math.LegacyDec {
+	return dec
+}
+
+// TokensFromSharesRoundUp returns the amount of tokens a delegation of the given shares
+// Deprecated: use for interface compatibility with sdk.ValidatorI
+func (v Validator) TokensFromSharesRoundUp(dec math.LegacyDec) math.LegacyDec {
+	return dec
+}
+
+// SharesFromTokens returns the amount of shares a delegation of the given tokens
+// Deprecated: use for interface compatibility with sdk.ValidatorI
+func (v Validator) SharesFromTokens(tokens math.Int) (math.LegacyDec, error) {
+	return v.Tokens.ToLegacyDec(), nil
+}
+
+// SharesFromTokensTruncated returns the amount of shares a delegation of the given tokens
+// Deprecated: use for interface compatibility with sdk.ValidatorI
+func (v Validator) SharesFromTokensTruncated(tokens math.Int) (math.LegacyDec, error) {
+	return tokens.ToLegacyDec(), nil
+}
+
 func (v Validator) GetOperator() string {
 	return v.OperatorAddress
 }

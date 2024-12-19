@@ -7,11 +7,9 @@ import (
 	authmodulev1 "cosmossdk.io/api/cosmos/auth/module/v1"
 	bankmodulev1 "cosmossdk.io/api/cosmos/bank/module/v1"
 	consensusmodulev1 "cosmossdk.io/api/cosmos/consensus/module/v1"
-	distrmodulev1 "cosmossdk.io/api/cosmos/distribution/module/v1"
 	epochsmodulev1 "cosmossdk.io/api/cosmos/epochs/module/v1"
 	genutilmodulev1 "cosmossdk.io/api/cosmos/genutil/module/v1"
 	poolmodulev1 "cosmossdk.io/api/cosmos/protocolpool/module/v1"
-	stakingmodulev1 "cosmossdk.io/api/cosmos/staking/module/v1"
 	txconfigv1 "cosmossdk.io/api/cosmos/tx/config/v1"
 	"cosmossdk.io/depinject/appconfig"
 	"cosmossdk.io/x/accounts"
@@ -19,15 +17,11 @@ import (
 	banktypes "cosmossdk.io/x/bank/types"
 	_ "cosmossdk.io/x/consensus" // import for side-effects
 	consensustypes "cosmossdk.io/x/consensus/types"
-	_ "cosmossdk.io/x/distribution" // import for side-effects
-	distrtypes "cosmossdk.io/x/distribution/types"
 	_ "cosmossdk.io/x/epochs" // import for side-effects
 	epochstypes "cosmossdk.io/x/epochs/types"
 	minttypes "cosmossdk.io/x/mint/types"
 	_ "cosmossdk.io/x/protocolpool" // import for side-effects
 	pooltypes "cosmossdk.io/x/protocolpool/types"
-	_ "cosmossdk.io/x/staking" // import for side-effects
-	stakingtypes "cosmossdk.io/x/staking/types"
 
 	_ "kepler/x/horizon/module"
 	horizonmoduletypes "kepler/x/horizon/types"
@@ -46,22 +40,16 @@ import (
 var (
 	moduleAccPerms = []*authmodulev1.ModuleAccountPermission{
 		{Account: authtypes.FeeCollectorName},
-		{Account: distrtypes.ModuleName},
 		{Account: pooltypes.ModuleName},
 		{Account: pooltypes.StreamAccount},
 		{Account: pooltypes.ProtocolPoolDistrAccount},
 		{Account: minttypes.ModuleName, Permissions: []string{authtypes.Minter}},
-		{Account: stakingtypes.BondedPoolName, Permissions: []string{authtypes.Burner, stakingtypes.ModuleName}},
-		{Account: stakingtypes.NotBondedPoolName, Permissions: []string{authtypes.Burner, stakingtypes.ModuleName}},
 		// this line is used by starport scaffolding # stargate/app/maccPerms
 	}
 
 	// blocked account addresses
 	blockAccAddrs = []string{
 		authtypes.FeeCollectorName,
-		distrtypes.ModuleName,
-		stakingtypes.BondedPoolName,
-		stakingtypes.NotBondedPoolName,
 		// We allow the following module accounts to receive funds:
 		// govtypes.ModuleName
 		// pooltypes.ModuleName
@@ -83,9 +71,7 @@ var (
 					// CanWithdrawInvariant invariant.
 					// NOTE: staking module is required if HistoricalEntries param > 0
 					BeginBlockers: []string{
-						distrtypes.ModuleName,
 						pooltypes.ModuleName,
-						stakingtypes.ModuleName,
 						// chain modules
 						horizonmoduletypes.ModuleName,
 						epochstypes.ModuleName,
@@ -93,7 +79,6 @@ var (
 						// this line is used by starport scaffolding # stargate/app/beginBlockers
 					},
 					EndBlockers: []string{
-						stakingtypes.ModuleName,
 						pooltypes.ModuleName,
 						// chain modules
 						horizonmoduletypes.ModuleName,
@@ -119,8 +104,6 @@ var (
 						accounts.ModuleName,
 						authtypes.ModuleName,
 						banktypes.ModuleName,
-						distrtypes.ModuleName,
-						stakingtypes.ModuleName,
 						genutiltypes.ModuleName,
 						pooltypes.ModuleName,
 						epochstypes.ModuleName,
@@ -153,25 +136,12 @@ var (
 				}),
 			},
 			{
-				Name: stakingtypes.ModuleName,
-				Config: appconfig.WrapAny(&stakingmodulev1.Module{
-					// NOTE: specifying a prefix is only necessary when using bech32 addresses
-					// If not specfied, the auth Bech32Prefix appended with "valoper" and "valcons" is used by default
-					Bech32PrefixValidator: AccountAddressPrefix + "valoper",
-					Bech32PrefixConsensus: AccountAddressPrefix + "valcons",
-				}),
-			},
-			{
 				Name:   "tx",
 				Config: appconfig.WrapAny(&txconfigv1.Config{}),
 			},
 			{
 				Name:   genutiltypes.ModuleName,
 				Config: appconfig.WrapAny(&genutilmodulev1.Module{}),
-			},
-			{
-				Name:   distrtypes.ModuleName,
-				Config: appconfig.WrapAny(&distrmodulev1.Module{}),
 			},
 			{
 				Name:   consensustypes.ModuleName,
@@ -194,8 +164,11 @@ var (
 				Config: appconfig.WrapAny(&epochsmodulev1.Module{}),
 			},
 			{
-				Name:   xstakingmoduletypes.ModuleName,
-				Config: appconfig.WrapAny(&xstakingmoduletypes.Module{}),
+				Name: xstakingmoduletypes.ModuleName,
+				Config: appconfig.WrapAny(&xstakingmoduletypes.Module{
+					Bech32PrefixValidator: AccountAddressPrefix + "valoper",
+					Bech32PrefixConsensus: AccountAddressPrefix + "valcons",
+				}),
 			},
 			// this line is used by starport scaffolding # stargate/app/moduleConfig
 		},

@@ -30,12 +30,12 @@ var (
 // AppModule implements the AppModule interface that defines the inter-dependent methods that modules need to implement
 type AppModule struct {
 	cdc    codec.Codec
-	keeper keeper.Keeper
+	keeper *keeper.Keeper
 }
 
 func NewAppModule(
 	cdc codec.Codec,
-	keeper keeper.Keeper,
+	keeper *keeper.Keeper,
 ) AppModule {
 	return AppModule{
 		cdc:    cdc,

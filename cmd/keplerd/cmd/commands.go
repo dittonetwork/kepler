@@ -35,7 +35,6 @@ func initRootCmd(
 ) {
 	rootCmd.AddCommand(
 		genutilcli.InitCmd(moduleManager),
-		NewInPlaceTestnetCmd(),
 		NewTestnetMultiNodeCmd(moduleManager),
 		debug.Cmd(),
 		confixcmd.ConfigCommand(),

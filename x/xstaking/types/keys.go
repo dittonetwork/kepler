@@ -10,7 +10,7 @@ import (
 
 const (
 	// ModuleName defines the module name
-	ModuleName = "xstaking"
+	ModuleName = "staking"
 
 	// StoreKey defines the primary module store key
 	StoreKey = ModuleName

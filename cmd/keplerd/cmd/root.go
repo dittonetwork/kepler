@@ -6,7 +6,8 @@ import (
 	"github.com/spf13/cobra"
 
 	authv1 "cosmossdk.io/api/cosmos/auth/module/v1"
-	stakingv1 "cosmossdk.io/api/cosmos/staking/module/v1"
+	xstakingv1 "kepler/x/xstaking/types"
+
 	"cosmossdk.io/client/v2/autocli"
 	"cosmossdk.io/core/address"
 	"cosmossdk.io/core/registry"
@@ -97,7 +98,7 @@ func ProvideClientContext(
 	validatorAddressCodec address.ValidatorAddressCodec,
 	consensusAddressCodec address.ConsensusAddressCodec,
 	authConfig *authv1.Module,
-	stakingConfig *stakingv1.Module,
+	stakingConfig *xstakingv1.Module,
 ) client.Context {
 	var err error
 

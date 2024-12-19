@@ -25,7 +25,6 @@ import (
 	authzkeeper "cosmossdk.io/x/authz/keeper"
 	"cosmossdk.io/x/feegrant"
 	slashingtypes "cosmossdk.io/x/slashing/types"
-	stakingtypes "cosmossdk.io/x/staking/types"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	servertypes "github.com/cosmos/cosmos-sdk/server/types"
@@ -61,8 +60,14 @@ func TestFullAppSimulation(t *testing.T) {
 
 func setupStateFactory(app *App) simsx.SimStateFactory {
 	return simsx.SimStateFactory{
-		Codec:         app.AppCodec(),
-		AppStateFn:    simtestutil.AppStateFn(app.AppCodec(), app.AuthKeeper.AddressCodec(), app.StakingKeeper.ValidatorAddressCodec(), app.SimulationManager().Modules, app.DefaultGenesis()),
+		Codec: app.AppCodec(),
+		AppStateFn: simtestutil.AppStateFn(
+			app.AppCodec(),
+			app.AuthKeeper.AddressCodec(),
+			app.XstakingKeeper.ValidatorAddressCodec(),
+			app.SimulationManager().Modules,
+			app.DefaultGenesis(),
+		),
 		BlockedAddr:   BlockedAddresses(),
 		AccountSource: app.AuthKeeper,
 		BalanceSource: app.BankKeeper,

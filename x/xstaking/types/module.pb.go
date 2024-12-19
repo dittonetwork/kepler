@@ -27,6 +27,14 @@ const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 type Module struct {
 	// authority defines the custom module authority. If not set, defaults to the governance module.
 	Authority string `protobuf:"bytes,1,opt,name=authority,proto3" json:"authority,omitempty"`
+	// hooks_order specifies the order of staking hooks and should be a list
+	// of module names which provide a staking hooks instance. If no order is
+	// provided, then hooks will be applied in alphabetical order of module names.
+	HooksOrder []string `protobuf:"bytes,2,rep,name=hooks_order,json=hooksOrder,proto3" json:"hooks_order,omitempty"`
+	// bech32_prefix_validator is the bech32 validator prefix for the app.
+	Bech32PrefixValidator string `protobuf:"bytes,3,opt,name=bech32_prefix_validator,json=bech32PrefixValidator,proto3" json:"bech32_prefix_validator,omitempty"`
+	// bech32_prefix_consensus is the bech32 consensus node prefix for the app.
+	Bech32PrefixConsensus string `protobuf:"bytes,4,opt,name=bech32_prefix_consensus,json=bech32PrefixConsensus,proto3" json:"bech32_prefix_consensus,omitempty"`
 }
 
 func (m *Module) Reset()         { *m = Module{} }
@@ -69,6 +77,27 @@ func (m *Module) GetAuthority() string {
 	return ""
 }
 
+func (m *Module) GetHooksOrder() []string {
+	if m != nil {
+		return m.HooksOrder
+	}
+	return nil
+}
+
+func (m *Module) GetBech32PrefixValidator() string {
+	if m != nil {
+		return m.Bech32PrefixValidator
+	}
+	return ""
+}
+
+func (m *Module) GetBech32PrefixConsensus() string {
+	if m != nil {
+		return m.Bech32PrefixConsensus
+	}
+	return ""
+}
+
 func init() {
 	proto.RegisterType((*Module)(nil), "kepler.xstaking.module.v1.Module")
 }
@@ -78,19 +107,24 @@ func init() {
 }
 
 var fileDescriptor_f007507dc7fd294d = []byte{
-	// 179 bytes of a gzipped FileDescriptorProto
+	// 267 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x52, 0xcb, 0x4e, 0x2d, 0xc8,
 	0x49, 0x2d, 0xd2, 0xaf, 0x28, 0x2e, 0x49, 0xcc, 0xce, 0xcc, 0x4b, 0xd7, 0xcf, 0xcd, 0x4f, 0x29,
 	0xcd, 0x49, 0xd5, 0x2f, 0x33, 0x84, 0xb2, 0xf4, 0x0a, 0x8a, 0xf2, 0x4b, 0xf2, 0x85, 0x24, 0x21,
 	0xea, 0xf4, 0x60, 0xea, 0xf4, 0xa0, 0xb2, 0x65, 0x86, 0x52, 0x0a, 0xc9, 0xf9, 0xc5, 0xb9, 0xf9,
 	0xc5, 0xfa, 0x89, 0x05, 0x05, 0xfa, 0x65, 0x86, 0x89, 0x39, 0x05, 0x19, 0x89, 0xa8, 0x9a, 0x95,
-	0x1c, 0xb9, 0xd8, 0x7c, 0xc1, 0x7c, 0x21, 0x19, 0x2e, 0xce, 0xc4, 0xd2, 0x92, 0x8c, 0xfc, 0xa2,
-	0xcc, 0x92, 0x4a, 0x09, 0x46, 0x05, 0x46, 0x0d, 0xce, 0x20, 0x84, 0x80, 0x95, 0xe4, 0xae, 0x03,
-	0xd3, 0x6e, 0x31, 0x0a, 0x73, 0x09, 0xc2, 0x1c, 0x05, 0x77, 0x96, 0x93, 0xe1, 0x89, 0x47, 0x72,
-	0x8c, 0x17, 0x1e, 0xc9, 0x31, 0x3e, 0x78, 0x24, 0xc7, 0x38, 0xe1, 0xb1, 0x1c, 0xc3, 0x85, 0xc7,
-	0x72, 0x0c, 0x37, 0x1e, 0xcb, 0x31, 0x44, 0x89, 0x63, 0x28, 0xd6, 0x2f, 0xa9, 0x2c, 0x48, 0x2d,
-	0x4e, 0x62, 0x03, 0x5b, 0x6e, 0x0c, 0x08, 0x00, 0x00, 0xff, 0xff, 0x6b, 0xa8, 0xcc, 0x4f, 0xe3,
-	0x00, 0x00, 0x00,
+	0x2e, 0x31, 0x72, 0xb1, 0xf9, 0x82, 0x05, 0x84, 0x64, 0xb8, 0x38, 0x13, 0x4b, 0x4b, 0x32, 0xf2,
+	0x8b, 0x32, 0x4b, 0x2a, 0x25, 0x18, 0x15, 0x18, 0x35, 0x38, 0x83, 0x10, 0x02, 0x42, 0xf2, 0x5c,
+	0xdc, 0x19, 0xf9, 0xf9, 0xd9, 0xc5, 0xf1, 0xf9, 0x45, 0x29, 0xa9, 0x45, 0x12, 0x4c, 0x0a, 0xcc,
+	0x1a, 0x9c, 0x41, 0x5c, 0x60, 0x21, 0x7f, 0x90, 0x88, 0x90, 0x19, 0x97, 0x78, 0x52, 0x6a, 0x72,
+	0x86, 0xb1, 0x51, 0x7c, 0x41, 0x51, 0x6a, 0x5a, 0x66, 0x45, 0x7c, 0x59, 0x62, 0x4e, 0x66, 0x4a,
+	0x62, 0x49, 0x7e, 0x91, 0x04, 0x33, 0xd8, 0x30, 0x51, 0x88, 0x74, 0x00, 0x58, 0x36, 0x0c, 0x26,
+	0x89, 0xa9, 0x2f, 0x39, 0x3f, 0xaf, 0x38, 0x35, 0xaf, 0xb8, 0xb4, 0x58, 0x82, 0x05, 0x53, 0x9f,
+	0x33, 0x4c, 0xd2, 0x4a, 0x72, 0xd7, 0x81, 0x69, 0xb7, 0x18, 0x85, 0xb9, 0x04, 0x61, 0xc1, 0x04,
+	0x0f, 0x28, 0x27, 0xc3, 0x13, 0x8f, 0xe4, 0x18, 0x2f, 0x3c, 0x92, 0x63, 0x7c, 0xf0, 0x48, 0x8e,
+	0x71, 0xc2, 0x63, 0x39, 0x86, 0x0b, 0x8f, 0xe5, 0x18, 0x6e, 0x3c, 0x96, 0x63, 0x88, 0x12, 0xc7,
+	0x50, 0xac, 0x5f, 0x52, 0x59, 0x90, 0x5a, 0x9c, 0xc4, 0x06, 0x0e, 0x0e, 0x63, 0x40, 0x00, 0x00,
+	0x00, 0xff, 0xff, 0x4c, 0x47, 0x69, 0x4a, 0x75, 0x01, 0x00, 0x00,
 }
 
 func (m *Module) Marshal() (dAtA []byte, err error) {
@@ -113,6 +147,29 @@ func (m *Module) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if len(m.Bech32PrefixConsensus) > 0 {
+		i -= len(m.Bech32PrefixConsensus)
+		copy(dAtA[i:], m.Bech32PrefixConsensus)
+		i = encodeVarintModule(dAtA, i, uint64(len(m.Bech32PrefixConsensus)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.Bech32PrefixValidator) > 0 {
+		i -= len(m.Bech32PrefixValidator)
+		copy(dAtA[i:], m.Bech32PrefixValidator)
+		i = encodeVarintModule(dAtA, i, uint64(len(m.Bech32PrefixValidator)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.HooksOrder) > 0 {
+		for iNdEx := len(m.HooksOrder) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.HooksOrder[iNdEx])
+			copy(dAtA[i:], m.HooksOrder[iNdEx])
+			i = encodeVarintModule(dAtA, i, uint64(len(m.HooksOrder[iNdEx])))
+			i--
+			dAtA[i] = 0x12
+		}
+	}
 	if len(m.Authority) > 0 {
 		i -= len(m.Authority)
 		copy(dAtA[i:], m.Authority)
@@ -141,6 +198,20 @@ func (m *Module) Size() (n int) {
 	var l int
 	_ = l
 	l = len(m.Authority)
+	if l > 0 {
+		n += 1 + l + sovModule(uint64(l))
+	}
+	if len(m.HooksOrder) > 0 {
+		for _, s := range m.HooksOrder {
+			l = len(s)
+			n += 1 + l + sovModule(uint64(l))
+		}
+	}
+	l = len(m.Bech32PrefixValidator)
+	if l > 0 {
+		n += 1 + l + sovModule(uint64(l))
+	}
+	l = len(m.Bech32PrefixConsensus)
 	if l > 0 {
 		n += 1 + l + sovModule(uint64(l))
 	}
@@ -213,6 +284,102 @@ func (m *Module) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.Authority = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field HooksOrder", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowModule
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthModule
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthModule
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.HooksOrder = append(m.HooksOrder, string(dAtA[iNdEx:postIndex]))
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Bech32PrefixValidator", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowModule
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthModule
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthModule
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Bech32PrefixValidator = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Bech32PrefixConsensus", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowModule
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthModule
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthModule
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Bech32PrefixConsensus = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex

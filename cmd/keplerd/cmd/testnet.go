@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	stakingtypes "cosmossdk.io/x/staking/types"
 	"fmt"
 	"io"
 	"os"
@@ -9,14 +10,12 @@ import (
 	"github.com/spf13/cast"
 	"github.com/spf13/cobra"
 
-	"cosmossdk.io/collections"
 	corestore "cosmossdk.io/core/store"
 	"cosmossdk.io/log"
 	"cosmossdk.io/math"
 	storetypes "cosmossdk.io/store/types"
-	distrtypes "cosmossdk.io/x/distribution/types"
-	minttypes "cosmossdk.io/x/mint/types"
-	stakingtypes "cosmossdk.io/x/staking/types"
+
+	xstakingtypes "kepler/x/xstaking/types"
 
 	cmtproto "github.com/cometbft/cometbft/api/cometbft/types/v1"
 	"github.com/cometbft/cometbft/crypto"
@@ -26,7 +25,6 @@ import (
 	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	"github.com/cosmos/cosmos-sdk/server"
 	servertypes "github.com/cosmos/cosmos-sdk/server/types"
-	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"kepler/app"
 )
@@ -97,27 +95,18 @@ func initAppForTestnet(app *app.App, args valArgs) *app.App {
 	//
 
 	// Create Validator struct for our new validator.
-	newVal := stakingtypes.Validator{
+	newVal := xstakingtypes.Validator{
 		OperatorAddress: args.newOperatorAddress,
 		ConsensusPubkey: pubkeyAny,
 		Jailed:          false,
-		Status:          stakingtypes.Bonded,
+		Status:          xstakingtypes.Bonded,
 		Tokens:          math.NewInt(valVotingPower),
-		DelegatorShares: math.LegacyMustNewDecFromStr("10000000"),
-		Description: stakingtypes.Description{
+		Description: xstakingtypes.Description{
 			Moniker: "Testnet Validator",
 		},
-		Commission: stakingtypes.Commission{
-			CommissionRates: stakingtypes.CommissionRates{
-				Rate:          math.LegacyMustNewDecFromStr("0.05"),
-				MaxRate:       math.LegacyMustNewDecFromStr("0.1"),
-				MaxChangeRate: math.LegacyMustNewDecFromStr("0.05"),
-			},
-		},
-		MinSelfDelegation: math.OneInt(),
 	}
 
-	validator, err := app.StakingKeeper.ValidatorAddressCodec().StringToBytes(newVal.GetOperator())
+	validator, err := app.XstakingKeeper.ValidatorAddressCodec().StringToBytes(newVal.GetOperator())
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
 		os.Exit(1)
@@ -126,7 +115,7 @@ func initAppForTestnet(app *app.App, args valArgs) *app.App {
 	// Remove all validators from power store
 	stakingKey := app.GetKey(stakingtypes.ModuleName)
 	stakingStore := ctx.KVStore(stakingKey)
-	iterator, err := app.StakingKeeper.ValidatorsPowerStoreIterator(ctx)
+	iterator, err := app.XstakingKeeper.ValidatorsPowerStoreIterator(ctx)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
 		os.Exit(1)
@@ -137,7 +126,7 @@ func initAppForTestnet(app *app.App, args valArgs) *app.App {
 	iterator.Close()
 
 	// Remove all valdiators from last validators store
-	if err := app.StakingKeeper.LastValidatorPower.Clear(ctx, nil); err != nil {
+	if err := app.XstakingKeeper.LastValidatorPower.Clear(ctx, nil); err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
 		os.Exit(1)
 	}
@@ -157,59 +146,21 @@ func initAppForTestnet(app *app.App, args valArgs) *app.App {
 	iterator.Close()
 
 	// Add our validator to power and last validators store
-	_ = app.StakingKeeper.SetValidator(ctx, newVal)
-	err = app.StakingKeeper.SetValidatorByConsAddr(ctx, newVal)
+	_ = app.XstakingKeeper.SetValidator(ctx, newVal)
+	err = app.XstakingKeeper.SetValidatorByConsAddr(ctx, newVal)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
 		os.Exit(1)
 	}
-	_ = app.StakingKeeper.SetValidatorByPowerIndex(ctx, newVal)
-	_ = app.StakingKeeper.SetLastValidatorPower(ctx, validator, 0)
-	if err := app.StakingKeeper.Hooks().AfterValidatorCreated(ctx, validator); err != nil {
+	_ = app.XstakingKeeper.SetValidatorByPowerIndex(ctx, newVal)
+	_ = app.XstakingKeeper.SetLastValidatorPower(ctx, validator, 0)
+	if err := app.XstakingKeeper.Hooks().AfterValidatorCreated(ctx, validator); err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
 		os.Exit(1)
 	}
 
 	// DISTRIBUTION
 	//
-
-	// Initialize records for this validator across all distribution stores
-	_ = app.DistrKeeper.ValidatorHistoricalRewards.Set(ctx, collections.Join(sdk.ValAddress(validator), uint64(0)), distrtypes.NewValidatorHistoricalRewards(sdk.DecCoins{}, 1))
-	_ = app.DistrKeeper.ValidatorCurrentRewards.Set(ctx, validator, distrtypes.NewValidatorCurrentRewards(sdk.DecCoins{}, 1))
-	_ = app.DistrKeeper.ValidatorsAccumulatedCommission.Set(ctx, validator, distrtypes.InitialValidatorAccumulatedCommission())
-	_ = app.DistrKeeper.ValidatorOutstandingRewards.Set(ctx, validator, distrtypes.ValidatorOutstandingRewards{Rewards: sdk.DecCoins{}})
-
-	// BANK
-	//
-	bondDenom, err := app.StakingKeeper.BondDenom(ctx)
-	if err != nil {
-		fmt.Fprintln(os.Stderr, err.Error())
-		os.Exit(1)
-	}
-
-	defaultCoins := sdk.NewCoins(sdk.NewInt64Coin(bondDenom, 1000000000))
-
-	// Fund local accounts
-	// Fund local accounts
-	for _, accountStr := range args.accountsToFund {
-		err := app.BankKeeper.MintCoins(ctx, minttypes.ModuleName, defaultCoins)
-		if err != nil {
-			fmt.Fprintln(os.Stderr, err.Error())
-			os.Exit(1)
-		}
-
-		account, err := app.AuthKeeper.AddressCodec().StringToBytes(accountStr)
-		if err != nil {
-			fmt.Fprintln(os.Stderr, err.Error())
-			os.Exit(1)
-		}
-
-		err = app.BankKeeper.SendCoinsFromModuleToAccount(ctx, minttypes.ModuleName, account, defaultCoins)
-		if err != nil {
-			fmt.Fprintln(os.Stderr, err.Error())
-			os.Exit(1)
-		}
-	}
 
 	return app
 }
