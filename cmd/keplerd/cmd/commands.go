@@ -22,9 +22,9 @@ import (
 	servertypes "github.com/cosmos/cosmos-sdk/server/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	authcmd "github.com/cosmos/cosmos-sdk/x/auth/client/cli"
-	"github.com/cosmos/cosmos-sdk/x/genutil"
-	genutilcli "github.com/cosmos/cosmos-sdk/x/genutil/client/cli"
-	genutiltypes "github.com/cosmos/cosmos-sdk/x/genutil/types"
+	genutilcli "kepler/x/genutil/client/cli"
+	"kepler/x/genutil/module"
+	genutiltypes "kepler/x/genutil/types"
 
 	"kepler/app"
 )

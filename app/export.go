@@ -2,19 +2,17 @@ package app
 
 import (
 	"encoding/json"
-	xstaking "kepler/x/xstaking/module"
+	"kepler/x/staking/module"
 
 	cmtproto "github.com/cometbft/cometbft/api/cometbft/types/v1"
 
 	storetypes "cosmossdk.io/store/types"
 	stakingtypes "cosmossdk.io/x/staking/types"
-
 	servertypes "github.com/cosmos/cosmos-sdk/server/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
-// ExportAppStateAndValidators exports the state of the application for a genesis
-// file.
+// ExportAppStateAndValidators exports the state of the application for a genesis file.
 func (app *App) ExportAppStateAndValidators(forZeroHeight bool, jailAllowedAddrs, modulesToExport []string) (servertypes.ExportedApp, error) {
 	// as if they could withdraw from the start of the next block
 	ctx := app.NewContextLegacy(true, cmtproto.Header{Height: app.LastBlockHeight()})
@@ -37,7 +35,10 @@ func (app *App) ExportAppStateAndValidators(forZeroHeight bool, jailAllowedAddrs
 		return servertypes.ExportedApp{}, err
 	}
 
-	validators, err := xstaking.WriteValidators(ctx, app.XstakingKeeper)
+	validators, err := staking.WriteValidators(ctx, &app.StakingKeeper)
+	if err != nil {
+		return servertypes.ExportedApp{}, err
+	}
 
 	return servertypes.ExportedApp{
 		AppState:        appState,
@@ -48,9 +49,7 @@ func (app *App) ExportAppStateAndValidators(forZeroHeight bool, jailAllowedAddrs
 }
 
 // prepForZeroHeightGenesis prepares for fresh start at zero height
-// NOTE zero height genesis is a temporary feature which will be deprecated
-//
-//	in favor of export at a block height
+// NOTE zero height genesis is a temporary feature which will be deprecated in favor of export at a block height
 func (app *App) prepForZeroHeightGenesis(ctx sdk.Context, jailAllowedAddrs []string) {
 	applyAllowedAddrs := false
 
@@ -83,12 +82,12 @@ func (app *App) prepForZeroHeightGenesis(ctx sdk.Context, jailAllowedAddrs []str
 
 	for ; iter.Valid(); iter.Next() {
 		addr := sdk.ValAddress(stakingtypes.AddressFromValidatorsKey(iter.Key()))
-		validator, err := app.XstakingKeeper.GetValidator(ctx, addr)
+		validator, err := app.StakingKeeper.GetValidator(ctx, addr)
 		if err != nil {
 			panic("expected validator, not found")
 		}
 
-		valAddr, err := app.XstakingKeeper.ValidatorAddressCodec().BytesToString(addr)
+		valAddr, err := app.StakingKeeper.ValidatorAddressCodec().BytesToString(addr)
 		if err != nil {
 			panic(err)
 		}
@@ -98,7 +97,7 @@ func (app *App) prepForZeroHeightGenesis(ctx sdk.Context, jailAllowedAddrs []str
 			validator.Jailed = true
 		}
 
-		if err = app.XstakingKeeper.SetValidator(ctx, validator); err != nil {
+		if err = app.StakingKeeper.SetValidator(ctx, validator); err != nil {
 			panic(err)
 		}
 	}
@@ -108,7 +107,7 @@ func (app *App) prepForZeroHeightGenesis(ctx sdk.Context, jailAllowedAddrs []str
 		return
 	}
 
-	_, err := app.XstakingKeeper.ApplyAndReturnValidatorSetUpdates(ctx)
+	_, err := app.StakingKeeper.ApplyAndReturnValidatorSetUpdates(ctx)
 	if err != nil {
 		panic(err)
 	}

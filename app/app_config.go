@@ -26,15 +26,15 @@ import (
 	_ "kepler/x/horizon/module"
 	horizonmoduletypes "kepler/x/horizon/types"
 
-	_ "kepler/x/xstaking/module"
-	xstakingmoduletypes "kepler/x/xstaking/types"
+	_ "kepler/x/staking/module"
+	xstakingmoduletypes "kepler/x/staking/types"
 
 	"github.com/cosmos/cosmos-sdk/runtime"
 	_ "github.com/cosmos/cosmos-sdk/testutil/x/counter" // import for side-effects
 	_ "github.com/cosmos/cosmos-sdk/x/auth"             // import for side-effects
 	_ "github.com/cosmos/cosmos-sdk/x/auth/tx/config"   // import for side-effects
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
-	genutiltypes "github.com/cosmos/cosmos-sdk/x/genutil/types"
+	genutiltypes "kepler/x/genutil/types"
 )
 
 var (

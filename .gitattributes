@@ -2,5 +2,3 @@ proto/*.gen.* linguist-generated=true
 docs/static/openapi.yml linguist-generated=true
 x/**/**/*.pb.go linguist-generated=true
 x/**/**/*.pb.gw.go linguist-generated=true
-
-

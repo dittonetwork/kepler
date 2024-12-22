@@ -30,7 +30,7 @@ import (
 
 	"kepler/docs"
 	horizonmodulekeeper "kepler/x/horizon/keeper"
-	xstakingmodulekeeper "kepler/x/xstaking/keeper"
+	stakingmodulekeeper "kepler/x/staking/keeper"
 )
 
 const (
@@ -62,8 +62,8 @@ type App struct {
 	BankKeeper     bankkeeper.Keeper
 	EpochsKeeper   *epochskeeper.Keeper
 
-	HorizonKeeper  horizonmodulekeeper.Keeper
-	XstakingKeeper *xstakingmodulekeeper.Keeper
+	HorizonKeeper horizonmodulekeeper.Keeper
+	StakingKeeper stakingmodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
 	// simulation manager
@@ -131,7 +131,7 @@ func New(
 		&app.BankKeeper,
 		&app.HorizonKeeper,
 		&app.EpochsKeeper,
-		&app.XstakingKeeper,
+		&app.StakingKeeper,
 	); err != nil {
 		panic(err)
 	}

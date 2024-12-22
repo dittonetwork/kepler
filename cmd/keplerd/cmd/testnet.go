@@ -15,7 +15,7 @@ import (
 	"cosmossdk.io/math"
 	storetypes "cosmossdk.io/store/types"
 
-	xstakingtypes "kepler/x/xstaking/types"
+	xstakingtypes "kepler/x/staking/types"
 
 	cmtproto "github.com/cometbft/cometbft/api/cometbft/types/v1"
 	"github.com/cometbft/cometbft/crypto"
@@ -106,7 +106,7 @@ func initAppForTestnet(app *app.App, args valArgs) *app.App {
 		},
 	}
 
-	validator, err := app.XstakingKeeper.ValidatorAddressCodec().StringToBytes(newVal.GetOperator())
+	validator, err := app.StakingKeeper.ValidatorAddressCodec().StringToBytes(newVal.GetOperator())
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
 		os.Exit(1)
@@ -115,7 +115,7 @@ func initAppForTestnet(app *app.App, args valArgs) *app.App {
 	// Remove all validators from power store
 	stakingKey := app.GetKey(stakingtypes.ModuleName)
 	stakingStore := ctx.KVStore(stakingKey)
-	iterator, err := app.XstakingKeeper.ValidatorsPowerStoreIterator(ctx)
+	iterator, err := app.StakingKeeper.ValidatorsPowerStoreIterator(ctx)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
 		os.Exit(1)
@@ -126,7 +126,7 @@ func initAppForTestnet(app *app.App, args valArgs) *app.App {
 	iterator.Close()
 
 	// Remove all valdiators from last validators store
-	if err := app.XstakingKeeper.LastValidatorPower.Clear(ctx, nil); err != nil {
+	if err := app.StakingKeeper.LastValidatorPower.Clear(ctx, nil); err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
 		os.Exit(1)
 	}
@@ -146,15 +146,15 @@ func initAppForTestnet(app *app.App, args valArgs) *app.App {
 	iterator.Close()
 
 	// Add our validator to power and last validators store
-	_ = app.XstakingKeeper.SetValidator(ctx, newVal)
-	err = app.XstakingKeeper.SetValidatorByConsAddr(ctx, newVal)
+	_ = app.StakingKeeper.SetValidator(ctx, newVal)
+	err = app.StakingKeeper.SetValidatorByConsAddr(ctx, newVal)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
 		os.Exit(1)
 	}
-	_ = app.XstakingKeeper.SetValidatorByPowerIndex(ctx, newVal)
-	_ = app.XstakingKeeper.SetLastValidatorPower(ctx, validator, 0)
-	if err := app.XstakingKeeper.Hooks().AfterValidatorCreated(ctx, validator); err != nil {
+	_ = app.StakingKeeper.SetValidatorByPowerIndex(ctx, newVal)
+	_ = app.StakingKeeper.SetLastValidatorPower(ctx, validator, 0)
+	if err := app.StakingKeeper.Hooks().AfterValidatorCreated(ctx, validator); err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
 		os.Exit(1)
 	}

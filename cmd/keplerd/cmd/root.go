@@ -6,7 +6,7 @@ import (
 	"github.com/spf13/cobra"
 
 	authv1 "cosmossdk.io/api/cosmos/auth/module/v1"
-	xstakingv1 "kepler/x/xstaking/types"
+	xstakingv1 "kepler/x/staking/types"
 
 	"cosmossdk.io/client/v2/autocli"
 	"cosmossdk.io/core/address"
@@ -133,6 +133,7 @@ func ProvideClientContext(
 	if err != nil {
 		panic(err)
 	}
+
 	clientCtx = clientCtx.WithTxConfig(txConfig)
 
 	return clientCtx
