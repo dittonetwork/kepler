@@ -1,0 +1,13 @@
+syntax = "proto3";
+package kepler.genutil.module.v1;
+
+import "cosmos/app/v1alpha1/module.proto";
+
+option go_package = "kepler/x/genutil/types";
+
+// Module is the config object for the genutil module.
+message Module {
+  option (cosmos.app.v1alpha1.module) = {
+    go_import: "kepler/x/genutil/module"
+  };
+}
