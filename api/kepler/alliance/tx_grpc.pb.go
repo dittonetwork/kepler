@@ -25,6 +25,9 @@ const (
 	Msg_CreateSharedEntropy_FullMethodName = "/kepler.alliance.Msg/CreateSharedEntropy"
 	Msg_UpdateSharedEntropy_FullMethodName = "/kepler.alliance.Msg/UpdateSharedEntropy"
 	Msg_DeleteSharedEntropy_FullMethodName = "/kepler.alliance.Msg/DeleteSharedEntropy"
+	Msg_CreateQuorumParams_FullMethodName  = "/kepler.alliance.Msg/CreateQuorumParams"
+	Msg_UpdateQuorumParams_FullMethodName  = "/kepler.alliance.Msg/UpdateQuorumParams"
+	Msg_DeleteQuorumParams_FullMethodName  = "/kepler.alliance.Msg/DeleteQuorumParams"
 )
 
 // MsgClient is the client API for Msg service.
@@ -38,6 +41,9 @@ type MsgClient interface {
 	CreateSharedEntropy(ctx context.Context, in *MsgCreateSharedEntropy, opts ...grpc.CallOption) (*MsgCreateSharedEntropyResponse, error)
 	UpdateSharedEntropy(ctx context.Context, in *MsgUpdateSharedEntropy, opts ...grpc.CallOption) (*MsgUpdateSharedEntropyResponse, error)
 	DeleteSharedEntropy(ctx context.Context, in *MsgDeleteSharedEntropy, opts ...grpc.CallOption) (*MsgDeleteSharedEntropyResponse, error)
+	CreateQuorumParams(ctx context.Context, in *MsgCreateQuorumParams, opts ...grpc.CallOption) (*MsgCreateQuorumParamsResponse, error)
+	UpdateQuorumParams(ctx context.Context, in *MsgUpdateQuorumParams, opts ...grpc.CallOption) (*MsgUpdateQuorumParamsResponse, error)
+	DeleteQuorumParams(ctx context.Context, in *MsgDeleteQuorumParams, opts ...grpc.CallOption) (*MsgDeleteQuorumParamsResponse, error)
 }
 
 type msgClient struct {
@@ -93,6 +99,33 @@ func (c *msgClient) DeleteSharedEntropy(ctx context.Context, in *MsgDeleteShared
 	return out, nil
 }
 
+func (c *msgClient) CreateQuorumParams(ctx context.Context, in *MsgCreateQuorumParams, opts ...grpc.CallOption) (*MsgCreateQuorumParamsResponse, error) {
+	out := new(MsgCreateQuorumParamsResponse)
+	err := c.cc.Invoke(ctx, Msg_CreateQuorumParams_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) UpdateQuorumParams(ctx context.Context, in *MsgUpdateQuorumParams, opts ...grpc.CallOption) (*MsgUpdateQuorumParamsResponse, error) {
+	out := new(MsgUpdateQuorumParamsResponse)
+	err := c.cc.Invoke(ctx, Msg_UpdateQuorumParams_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) DeleteQuorumParams(ctx context.Context, in *MsgDeleteQuorumParams, opts ...grpc.CallOption) (*MsgDeleteQuorumParamsResponse, error) {
+	out := new(MsgDeleteQuorumParamsResponse)
+	err := c.cc.Invoke(ctx, Msg_DeleteQuorumParams_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 // All implementations must embed UnimplementedMsgServer
 // for forward compatibility
@@ -104,6 +137,9 @@ type MsgServer interface {
 	CreateSharedEntropy(context.Context, *MsgCreateSharedEntropy) (*MsgCreateSharedEntropyResponse, error)
 	UpdateSharedEntropy(context.Context, *MsgUpdateSharedEntropy) (*MsgUpdateSharedEntropyResponse, error)
 	DeleteSharedEntropy(context.Context, *MsgDeleteSharedEntropy) (*MsgDeleteSharedEntropyResponse, error)
+	CreateQuorumParams(context.Context, *MsgCreateQuorumParams) (*MsgCreateQuorumParamsResponse, error)
+	UpdateQuorumParams(context.Context, *MsgUpdateQuorumParams) (*MsgUpdateQuorumParamsResponse, error)
+	DeleteQuorumParams(context.Context, *MsgDeleteQuorumParams) (*MsgDeleteQuorumParamsResponse, error)
 	mustEmbedUnimplementedMsgServer()
 }
 
@@ -125,6 +161,15 @@ func (UnimplementedMsgServer) UpdateSharedEntropy(context.Context, *MsgUpdateSha
 }
 func (UnimplementedMsgServer) DeleteSharedEntropy(context.Context, *MsgDeleteSharedEntropy) (*MsgDeleteSharedEntropyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteSharedEntropy not implemented")
+}
+func (UnimplementedMsgServer) CreateQuorumParams(context.Context, *MsgCreateQuorumParams) (*MsgCreateQuorumParamsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateQuorumParams not implemented")
+}
+func (UnimplementedMsgServer) UpdateQuorumParams(context.Context, *MsgUpdateQuorumParams) (*MsgUpdateQuorumParamsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateQuorumParams not implemented")
+}
+func (UnimplementedMsgServer) DeleteQuorumParams(context.Context, *MsgDeleteQuorumParams) (*MsgDeleteQuorumParamsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteQuorumParams not implemented")
 }
 func (UnimplementedMsgServer) mustEmbedUnimplementedMsgServer() {}
 
@@ -229,6 +274,60 @@ func _Msg_DeleteSharedEntropy_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_CreateQuorumParams_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgCreateQuorumParams)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).CreateQuorumParams(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_CreateQuorumParams_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).CreateQuorumParams(ctx, req.(*MsgCreateQuorumParams))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_UpdateQuorumParams_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgUpdateQuorumParams)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).UpdateQuorumParams(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_UpdateQuorumParams_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).UpdateQuorumParams(ctx, req.(*MsgUpdateQuorumParams))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_DeleteQuorumParams_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgDeleteQuorumParams)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).DeleteQuorumParams(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_DeleteQuorumParams_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).DeleteQuorumParams(ctx, req.(*MsgDeleteQuorumParams))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Msg_ServiceDesc is the grpc.ServiceDesc for Msg service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -255,6 +354,18 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteSharedEntropy",
 			Handler:    _Msg_DeleteSharedEntropy_Handler,
+		},
+		{
+			MethodName: "CreateQuorumParams",
+			Handler:    _Msg_CreateQuorumParams_Handler,
+		},
+		{
+			MethodName: "UpdateQuorumParams",
+			Handler:    _Msg_UpdateQuorumParams_Handler,
+		},
+		{
+			MethodName: "DeleteQuorumParams",
+			Handler:    _Msg_DeleteQuorumParams_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

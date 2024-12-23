@@ -8,6 +8,7 @@ import "cosmos_proto/cosmos.proto";
 import "gogoproto/gogo.proto";
 import "kepler/alliance/params.proto";
 import "kepler/alliance/shared_entropy.proto";
+import "kepler/alliance/quorum_params.proto";
 
 option go_package = "kepler/x/alliance/types";
 
@@ -22,6 +23,9 @@ service Msg {
   rpc CreateSharedEntropy (MsgCreateSharedEntropy) returns (MsgCreateSharedEntropyResponse);
   rpc UpdateSharedEntropy (MsgUpdateSharedEntropy) returns (MsgUpdateSharedEntropyResponse);
   rpc DeleteSharedEntropy (MsgDeleteSharedEntropy) returns (MsgDeleteSharedEntropyResponse);
+  rpc CreateQuorumParams  (MsgCreateQuorumParams ) returns (MsgCreateQuorumParamsResponse );
+  rpc UpdateQuorumParams  (MsgUpdateQuorumParams ) returns (MsgUpdateQuorumParamsResponse );
+  rpc DeleteQuorumParams  (MsgDeleteQuorumParams ) returns (MsgDeleteQuorumParamsResponse );
 }
 // MsgUpdateParams is the Msg/UpdateParams request type.
 message MsgUpdateParams {
@@ -71,4 +75,31 @@ message MsgDeleteSharedEntropy {
 }
 
 message MsgDeleteSharedEntropyResponse {}
+
+message MsgCreateQuorumParams {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator          = 1;
+  uint64 maxParticipants  = 3;
+  uint64 thresholdPercent = 4;
+  uint64 lifetimeInBlocks = 5;
+}
+
+message MsgCreateQuorumParamsResponse {}
+
+message MsgUpdateQuorumParams {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator          = 1;
+  uint64 maxParticipants  = 3;
+  uint64 thresholdPercent = 4;
+  uint64 lifetimeInBlocks = 5;
+}
+
+message MsgUpdateQuorumParamsResponse {}
+
+message MsgDeleteQuorumParams {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1;
+}
+
+message MsgDeleteQuorumParamsResponse {}
 

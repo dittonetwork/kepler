@@ -1,0 +1,11 @@
+syntax = "proto3";
+package kepler.alliance;
+
+option go_package = "kepler/x/alliance/types";
+
+message QuorumParams {
+  uint64 maxParticipants = 1; 
+  uint64 thresholdPercent = 2; 
+  uint64 lifetimeInBlocks = 3; 
+  string creator = 4;
+}

@@ -13,6 +13,10 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 	if genState.SharedEntropy != nil {
 		k.SetSharedEntropy(ctx, *genState.SharedEntropy)
 	}
+	// Set if defined
+	if genState.QuorumParams != nil {
+		k.SetQuorumParams(ctx, *genState.QuorumParams)
+	}
 	// this line is used by starport scaffolding # genesis/module/init
 	if err := k.SetParams(ctx, genState.Params); err != nil {
 		panic(err)
@@ -28,6 +32,11 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	sharedEntropy, found := k.GetSharedEntropy(ctx)
 	if found {
 		genesis.SharedEntropy = &sharedEntropy
+	}
+	// Get all quorumParams
+	quorumParams, found := k.GetQuorumParams(ctx)
+	if found {
+		genesis.QuorumParams = &quorumParams
 	}
 	// this line is used by starport scaffolding # genesis/module/export
 

@@ -195,42 +195,128 @@ func (m *QueryGetSharedEntropyResponse) GetSharedEntropy() SharedEntropy {
 	return SharedEntropy{}
 }
 
+type QueryGetQuorumParamsRequest struct {
+}
+
+func (m *QueryGetQuorumParamsRequest) Reset()         { *m = QueryGetQuorumParamsRequest{} }
+func (m *QueryGetQuorumParamsRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryGetQuorumParamsRequest) ProtoMessage()    {}
+func (*QueryGetQuorumParamsRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_94731e962f0bb72f, []int{4}
+}
+func (m *QueryGetQuorumParamsRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryGetQuorumParamsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryGetQuorumParamsRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryGetQuorumParamsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryGetQuorumParamsRequest.Merge(m, src)
+}
+func (m *QueryGetQuorumParamsRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryGetQuorumParamsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryGetQuorumParamsRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryGetQuorumParamsRequest proto.InternalMessageInfo
+
+type QueryGetQuorumParamsResponse struct {
+	QuorumParams QuorumParams `protobuf:"bytes,1,opt,name=QuorumParams,proto3" json:"QuorumParams"`
+}
+
+func (m *QueryGetQuorumParamsResponse) Reset()         { *m = QueryGetQuorumParamsResponse{} }
+func (m *QueryGetQuorumParamsResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryGetQuorumParamsResponse) ProtoMessage()    {}
+func (*QueryGetQuorumParamsResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_94731e962f0bb72f, []int{5}
+}
+func (m *QueryGetQuorumParamsResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryGetQuorumParamsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryGetQuorumParamsResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryGetQuorumParamsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryGetQuorumParamsResponse.Merge(m, src)
+}
+func (m *QueryGetQuorumParamsResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryGetQuorumParamsResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryGetQuorumParamsResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryGetQuorumParamsResponse proto.InternalMessageInfo
+
+func (m *QueryGetQuorumParamsResponse) GetQuorumParams() QuorumParams {
+	if m != nil {
+		return m.QuorumParams
+	}
+	return QuorumParams{}
+}
+
 func init() {
 	proto.RegisterType((*QueryParamsRequest)(nil), "kepler.alliance.QueryParamsRequest")
 	proto.RegisterType((*QueryParamsResponse)(nil), "kepler.alliance.QueryParamsResponse")
 	proto.RegisterType((*QueryGetSharedEntropyRequest)(nil), "kepler.alliance.QueryGetSharedEntropyRequest")
 	proto.RegisterType((*QueryGetSharedEntropyResponse)(nil), "kepler.alliance.QueryGetSharedEntropyResponse")
+	proto.RegisterType((*QueryGetQuorumParamsRequest)(nil), "kepler.alliance.QueryGetQuorumParamsRequest")
+	proto.RegisterType((*QueryGetQuorumParamsResponse)(nil), "kepler.alliance.QueryGetQuorumParamsResponse")
 }
 
 func init() { proto.RegisterFile("kepler/alliance/query.proto", fileDescriptor_94731e962f0bb72f) }
 
 var fileDescriptor_94731e962f0bb72f = []byte{
-	// 392 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0xce, 0x4e, 0x2d, 0xc8,
-	0x49, 0x2d, 0xd2, 0x4f, 0xcc, 0xc9, 0xc9, 0x4c, 0xcc, 0x4b, 0x4e, 0xd5, 0x2f, 0x2c, 0x4d, 0x2d,
-	0xaa, 0xd4, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0xe2, 0x87, 0x48, 0xea, 0xc1, 0x24, 0xa5, 0x04,
-	0x13, 0x73, 0x33, 0xf3, 0xf2, 0xf5, 0xc1, 0x24, 0x44, 0x8d, 0x94, 0x48, 0x7a, 0x7e, 0x7a, 0x3e,
-	0x98, 0xa9, 0x0f, 0x62, 0x41, 0x45, 0x65, 0xd2, 0xf3, 0xf3, 0xd3, 0x73, 0x52, 0xf5, 0x13, 0x0b,
-	0x32, 0xf5, 0x13, 0xf3, 0xf2, 0xf2, 0x4b, 0x12, 0x4b, 0x32, 0xf3, 0xf3, 0x8a, 0xa1, 0xb2, 0x5a,
-	0xc9, 0xf9, 0xc5, 0xb9, 0xf9, 0xc5, 0xfa, 0x49, 0x89, 0xc5, 0x50, 0x0b, 0xf5, 0xcb, 0x0c, 0x93,
-	0x52, 0x4b, 0x12, 0x0d, 0xf5, 0x0b, 0x12, 0xd3, 0x33, 0xf3, 0xc0, 0x8a, 0x61, 0x26, 0xa1, 0x3b,
-	0xb0, 0x20, 0xb1, 0x28, 0x31, 0x17, 0x66, 0x92, 0x0a, 0xba, 0x6c, 0x71, 0x46, 0x62, 0x51, 0x6a,
-	0x4a, 0x7c, 0x6a, 0x5e, 0x49, 0x51, 0x7e, 0x01, 0xd4, 0x1f, 0x4a, 0x22, 0x5c, 0x42, 0x81, 0x20,
-	0x5b, 0x02, 0xc0, 0x5a, 0x83, 0x52, 0x0b, 0x4b, 0x53, 0x8b, 0x4b, 0x94, 0x02, 0xb9, 0x84, 0x51,
-	0x44, 0x8b, 0x0b, 0xf2, 0xf3, 0x8a, 0x53, 0x85, 0xac, 0xb8, 0xd8, 0x20, 0x56, 0x48, 0x30, 0x2a,
-	0x30, 0x6a, 0x70, 0x1b, 0x89, 0xeb, 0xa1, 0x85, 0x82, 0x1e, 0x44, 0x83, 0x13, 0xe7, 0x89, 0x7b,
-	0xf2, 0x0c, 0x2b, 0x9e, 0x6f, 0xd0, 0x62, 0x0c, 0x82, 0xea, 0x50, 0x92, 0xe3, 0x92, 0x01, 0x1b,
-	0xe9, 0x9e, 0x5a, 0x12, 0x0c, 0x76, 0x88, 0x2b, 0xc4, 0x1d, 0x30, 0x2b, 0xb3, 0xb9, 0x64, 0x71,
-	0xc8, 0x43, 0x2d, 0xf7, 0xe2, 0xe2, 0x45, 0x91, 0x80, 0xba, 0x41, 0x0e, 0xc3, 0x0d, 0x28, 0xaa,
-	0x9c, 0x58, 0x40, 0x4e, 0x09, 0x42, 0xd5, 0x6a, 0x34, 0x9d, 0x89, 0x8b, 0x15, 0x6c, 0x9b, 0x50,
-	0x09, 0x17, 0x1b, 0xc4, 0xcd, 0x42, 0xca, 0x18, 0x06, 0x61, 0x06, 0x8c, 0x94, 0x0a, 0x7e, 0x45,
-	0x10, 0xa7, 0x2a, 0xc9, 0x37, 0x5d, 0x7e, 0x32, 0x99, 0x49, 0x52, 0x48, 0x5c, 0x1f, 0x7b, 0x0c,
-	0x09, 0x4d, 0x67, 0x44, 0xf3, 0x8c, 0x90, 0x2e, 0x76, 0x83, 0x71, 0x84, 0x96, 0x94, 0x1e, 0xb1,
-	0xca, 0xa1, 0x2e, 0x52, 0x07, 0xbb, 0x48, 0x51, 0x48, 0x5e, 0x1f, 0x7f, 0xaa, 0x70, 0x32, 0x3c,
-	0xf1, 0x48, 0x8e, 0xf1, 0xc2, 0x23, 0x39, 0xc6, 0x07, 0x8f, 0xe4, 0x18, 0x27, 0x3c, 0x96, 0x63,
-	0xb8, 0xf0, 0x58, 0x8e, 0xe1, 0xc6, 0x63, 0x39, 0x86, 0x28, 0x71, 0xa8, 0xce, 0x0a, 0x84, 0xde,
-	0x92, 0xca, 0x82, 0xd4, 0xe2, 0x24, 0x36, 0x70, 0x4a, 0x32, 0x06, 0x04, 0x00, 0x00, 0xff, 0xff,
-	0x5c, 0x76, 0xa8, 0x6e, 0x30, 0x03, 0x00, 0x00,
+	// 464 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x93, 0x4f, 0x8b, 0xd3, 0x40,
+	0x18, 0xc6, 0x33, 0xfe, 0x29, 0x38, 0x2a, 0xe2, 0xb8, 0x50, 0xcd, 0x6e, 0xa7, 0x6b, 0x76, 0x51,
+	0x59, 0xdc, 0x0c, 0x5d, 0x6f, 0x1e, 0x0b, 0xb2, 0xe0, 0xc9, 0xd6, 0x9b, 0x97, 0x65, 0x5a, 0x87,
+	0x18, 0x9a, 0xcc, 0x4c, 0x33, 0x53, 0xb1, 0x57, 0x3f, 0x81, 0xd0, 0x83, 0x5f, 0xc1, 0x8b, 0xe0,
+	0xc7, 0xe8, 0xb1, 0xe0, 0xc5, 0x93, 0x48, 0x2b, 0xf8, 0x35, 0xa4, 0x93, 0x09, 0xed, 0xa4, 0x69,
+	0xe9, 0x25, 0x84, 0xf7, 0x79, 0x9e, 0xf7, 0xfd, 0xcd, 0x3b, 0x09, 0x3c, 0x1c, 0x30, 0x99, 0xb0,
+	0x8c, 0xd0, 0x24, 0x89, 0x29, 0xef, 0x33, 0x32, 0x1c, 0xb1, 0x6c, 0x1c, 0xca, 0x4c, 0x68, 0x81,
+	0xee, 0xe5, 0x62, 0x58, 0x88, 0xfe, 0x7d, 0x9a, 0xc6, 0x5c, 0x10, 0xf3, 0xcc, 0x3d, 0xfe, 0x41,
+	0x24, 0x22, 0x61, 0x5e, 0xc9, 0xf2, 0xcd, 0x56, 0x8f, 0x22, 0x21, 0xa2, 0x84, 0x11, 0x2a, 0x63,
+	0x42, 0x39, 0x17, 0x9a, 0xea, 0x58, 0x70, 0x65, 0xd5, 0xb3, 0xbe, 0x50, 0xa9, 0x50, 0xa4, 0x47,
+	0x95, 0x1d, 0x48, 0x3e, 0xb6, 0x7a, 0x4c, 0xd3, 0x16, 0x91, 0x34, 0x8a, 0xb9, 0x31, 0x17, 0x9d,
+	0xca, 0x80, 0x92, 0x66, 0x34, 0x2d, 0x3a, 0x9d, 0x96, 0x55, 0xf5, 0x81, 0x66, 0xec, 0xfd, 0x15,
+	0xe3, 0x3a, 0x13, 0xd2, 0x9e, 0xc3, 0x3f, 0xd9, 0x3c, 0xa4, 0xc8, 0x46, 0xe9, 0xd5, 0x7a, 0xab,
+	0xe0, 0x00, 0xa2, 0xce, 0x12, 0xe5, 0x8d, 0x29, 0x76, 0xd9, 0x70, 0xc4, 0x94, 0x0e, 0x3a, 0xf0,
+	0x81, 0x53, 0x55, 0x52, 0x70, 0xc5, 0xd0, 0x4b, 0x58, 0xcb, 0xc3, 0x0f, 0xc1, 0x31, 0x78, 0x76,
+	0xfb, 0xa2, 0x1e, 0x96, 0x56, 0x15, 0xe6, 0x81, 0xf6, 0xad, 0xe9, 0xef, 0xa6, 0xf7, 0xed, 0xdf,
+	0x8f, 0x33, 0xd0, 0xb5, 0x89, 0x00, 0xc3, 0x23, 0xd3, 0xf2, 0x92, 0xe9, 0xb7, 0x86, 0xf6, 0x55,
+	0x0e, 0x5b, 0x8c, 0x1c, 0xc0, 0xc6, 0x16, 0xdd, 0x0e, 0x7f, 0x0d, 0xef, 0x3a, 0x82, 0x65, 0xc0,
+	0x1b, 0x0c, 0x8e, 0xab, 0x7d, 0x63, 0x89, 0xd2, 0x75, 0xa3, 0x41, 0x03, 0x1e, 0x16, 0xc3, 0x3a,
+	0x66, 0x29, 0xee, 0xf1, 0xa3, 0x15, 0xab, 0x2b, 0x5b, 0x94, 0x4b, 0x78, 0x67, 0xbd, 0x6e, 0x49,
+	0x1a, 0x1b, 0x24, 0xeb, 0x26, 0x0b, 0xe2, 0x04, 0x2f, 0xbe, 0x5f, 0x87, 0x37, 0xcd, 0x24, 0xa4,
+	0x61, 0x2d, 0xaf, 0xa1, 0x93, 0x8a, 0x36, 0xe5, 0x0b, 0xf2, 0x4f, 0x77, 0x9b, 0x72, 0xce, 0xa0,
+	0xf9, 0xf9, 0xe7, 0xdf, 0xc9, 0xb5, 0x47, 0xa8, 0x4e, 0xaa, 0x3f, 0x27, 0xf4, 0x15, 0x94, 0x96,
+	0x8a, 0xce, 0xab, 0x1b, 0x6f, 0xb9, 0x35, 0x3f, 0xdc, 0xd7, 0x6e, 0x89, 0x9e, 0x1a, 0xa2, 0xc7,
+	0xa8, 0x49, 0x76, 0x7f, 0xc2, 0x68, 0x02, 0xdc, 0x1d, 0xa3, 0xe7, 0x5b, 0x27, 0x55, 0xdc, 0xa0,
+	0x7f, 0xbe, 0xa7, 0xdb, 0x62, 0x3d, 0x31, 0x58, 0xc7, 0x08, 0x93, 0x9d, 0xff, 0x4c, 0xbb, 0x35,
+	0x9d, 0x63, 0x30, 0x9b, 0x63, 0xf0, 0x67, 0x8e, 0xc1, 0x97, 0x05, 0xf6, 0x66, 0x0b, 0xec, 0xfd,
+	0x5a, 0x60, 0xef, 0x5d, 0xdd, 0x06, 0x3f, 0xad, 0xa2, 0x7a, 0x2c, 0x99, 0xea, 0xd5, 0xcc, 0x7f,
+	0xf6, 0xe2, 0x7f, 0x00, 0x00, 0x00, 0xff, 0xff, 0xb6, 0x3a, 0xa4, 0x9b, 0x73, 0x04, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -249,6 +335,8 @@ type QueryClient interface {
 	Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error)
 	// Queries a SharedEntropy by index.
 	SharedEntropy(ctx context.Context, in *QueryGetSharedEntropyRequest, opts ...grpc.CallOption) (*QueryGetSharedEntropyResponse, error)
+	// Queries a QuorumParams by index.
+	QuorumParams(ctx context.Context, in *QueryGetQuorumParamsRequest, opts ...grpc.CallOption) (*QueryGetQuorumParamsResponse, error)
 }
 
 type queryClient struct {
@@ -277,12 +365,23 @@ func (c *queryClient) SharedEntropy(ctx context.Context, in *QueryGetSharedEntro
 	return out, nil
 }
 
+func (c *queryClient) QuorumParams(ctx context.Context, in *QueryGetQuorumParamsRequest, opts ...grpc.CallOption) (*QueryGetQuorumParamsResponse, error) {
+	out := new(QueryGetQuorumParamsResponse)
+	err := c.cc.Invoke(ctx, "/kepler.alliance.Query/QuorumParams", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueryServer is the server API for Query service.
 type QueryServer interface {
 	// Parameters queries the parameters of the module.
 	Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error)
 	// Queries a SharedEntropy by index.
 	SharedEntropy(context.Context, *QueryGetSharedEntropyRequest) (*QueryGetSharedEntropyResponse, error)
+	// Queries a QuorumParams by index.
+	QuorumParams(context.Context, *QueryGetQuorumParamsRequest) (*QueryGetQuorumParamsResponse, error)
 }
 
 // UnimplementedQueryServer can be embedded to have forward compatible implementations.
@@ -294,6 +393,9 @@ func (*UnimplementedQueryServer) Params(ctx context.Context, req *QueryParamsReq
 }
 func (*UnimplementedQueryServer) SharedEntropy(ctx context.Context, req *QueryGetSharedEntropyRequest) (*QueryGetSharedEntropyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SharedEntropy not implemented")
+}
+func (*UnimplementedQueryServer) QuorumParams(ctx context.Context, req *QueryGetQuorumParamsRequest) (*QueryGetQuorumParamsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QuorumParams not implemented")
 }
 
 func RegisterQueryServer(s grpc1.Server, srv QueryServer) {
@@ -336,6 +438,24 @@ func _Query_SharedEntropy_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_QuorumParams_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryGetQuorumParamsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).QuorumParams(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/kepler.alliance.Query/QuorumParams",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).QuorumParams(ctx, req.(*QueryGetQuorumParamsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var Query_serviceDesc = _Query_serviceDesc
 var _Query_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "kepler.alliance.Query",
@@ -348,6 +468,10 @@ var _Query_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SharedEntropy",
 			Handler:    _Query_SharedEntropy_Handler,
+		},
+		{
+			MethodName: "QuorumParams",
+			Handler:    _Query_QuorumParams_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -466,6 +590,62 @@ func (m *QueryGetSharedEntropyResponse) MarshalToSizedBuffer(dAtA []byte) (int, 
 	return len(dAtA) - i, nil
 }
 
+func (m *QueryGetQuorumParamsRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryGetQuorumParamsRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryGetQuorumParamsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryGetQuorumParamsResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryGetQuorumParamsResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryGetQuorumParamsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	{
+		size, err := m.QuorumParams.MarshalToSizedBuffer(dAtA[:i])
+		if err != nil {
+			return 0, err
+		}
+		i -= size
+		i = encodeVarintQuery(dAtA, i, uint64(size))
+	}
+	i--
+	dAtA[i] = 0xa
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintQuery(dAtA []byte, offset int, v uint64) int {
 	offset -= sovQuery(v)
 	base := offset
@@ -513,6 +693,26 @@ func (m *QueryGetSharedEntropyResponse) Size() (n int) {
 	var l int
 	_ = l
 	l = m.SharedEntropy.Size()
+	n += 1 + l + sovQuery(uint64(l))
+	return n
+}
+
+func (m *QueryGetQuorumParamsRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *QueryGetQuorumParamsResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = m.QuorumParams.Size()
 	n += 1 + l + sovQuery(uint64(l))
 	return n
 }
@@ -765,6 +965,139 @@ func (m *QueryGetSharedEntropyResponse) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if err := m.SharedEntropy.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryGetQuorumParamsRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryGetQuorumParamsRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryGetQuorumParamsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryGetQuorumParamsResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryGetQuorumParamsResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryGetQuorumParamsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field QuorumParams", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if err := m.QuorumParams.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex

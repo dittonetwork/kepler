@@ -8,6 +8,7 @@ import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "kepler/alliance/params.proto";
 import "kepler/alliance/shared_entropy.proto";
+import "kepler/alliance/quorum_params.proto";
 
 option go_package = "kepler/x/alliance/types";
 
@@ -25,6 +26,12 @@ service Query {
     option (google.api.http).get = "/kepler/alliance/shared_entropy";
   
   }
+  
+  // Queries a QuorumParams by index.
+  rpc QuorumParams (QueryGetQuorumParamsRequest) returns (QueryGetQuorumParamsResponse) {
+    option (google.api.http).get = "/kepler/alliance/quorum_params";
+  
+  }
 }
 // QueryParamsRequest is request type for the Query/Params RPC method.
 message QueryParamsRequest {}
@@ -40,5 +47,11 @@ message QueryGetSharedEntropyRequest {}
 
 message QueryGetSharedEntropyResponse {
   SharedEntropy SharedEntropy = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryGetQuorumParamsRequest {}
+
+message QueryGetQuorumParamsResponse {
+  QuorumParams QuorumParams = 1 [(gogoproto.nullable) = false];
 }
 

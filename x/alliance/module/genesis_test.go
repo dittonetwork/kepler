@@ -18,6 +18,11 @@ func TestGenesis(t *testing.T) {
 		SharedEntropy: &types.SharedEntropy{
 			Entropy: 77,
 		},
+		QuorumParams: &types.QuorumParams{
+			MaxParticipants:  60,
+			ThresholdPercent: 90,
+			LifetimeInBlocks: 87,
+		},
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -30,5 +35,6 @@ func TestGenesis(t *testing.T) {
 	nullify.Fill(got)
 
 	require.Equal(t, genesisState.SharedEntropy, got.SharedEntropy)
+	require.Equal(t, genesisState.QuorumParams, got.QuorumParams)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

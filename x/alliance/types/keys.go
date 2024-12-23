@@ -22,3 +22,7 @@ func KeyPrefix(p string) []byte {
 const (
 	SharedEntropyKey = "SharedEntropy/value/"
 )
+
+const (
+	QuorumParamsKey = "QuorumParams/value/"
+)

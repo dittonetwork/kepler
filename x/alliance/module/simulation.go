@@ -39,6 +39,18 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgDeleteSharedEntropy int = 100
 
+	opWeightMsgCreateQuorumParams = "op_weight_msg_quorum_params"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateQuorumParams int = 100
+
+	opWeightMsgUpdateQuorumParams = "op_weight_msg_quorum_params"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgUpdateQuorumParams int = 100
+
+	opWeightMsgDeleteQuorumParams = "op_weight_msg_quorum_params"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgDeleteQuorumParams int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -106,6 +118,39 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 		alliancesimulation.SimulateMsgDeleteSharedEntropy(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
+	var weightMsgCreateQuorumParams int
+	simState.AppParams.GetOrGenerate(opWeightMsgCreateQuorumParams, &weightMsgCreateQuorumParams, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateQuorumParams = defaultWeightMsgCreateQuorumParams
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateQuorumParams,
+		alliancesimulation.SimulateMsgCreateQuorumParams(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgUpdateQuorumParams int
+	simState.AppParams.GetOrGenerate(opWeightMsgUpdateQuorumParams, &weightMsgUpdateQuorumParams, nil,
+		func(_ *rand.Rand) {
+			weightMsgUpdateQuorumParams = defaultWeightMsgUpdateQuorumParams
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgUpdateQuorumParams,
+		alliancesimulation.SimulateMsgUpdateQuorumParams(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgDeleteQuorumParams int
+	simState.AppParams.GetOrGenerate(opWeightMsgDeleteQuorumParams, &weightMsgDeleteQuorumParams, nil,
+		func(_ *rand.Rand) {
+			weightMsgDeleteQuorumParams = defaultWeightMsgDeleteQuorumParams
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgDeleteQuorumParams,
+		alliancesimulation.SimulateMsgDeleteQuorumParams(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
 	// this line is used by starport scaffolding # simapp/module/operation
 
 	return operations
@@ -143,6 +188,30 @@ func (am AppModule) ProposalMsgs(simState module.SimulationState) []simtypes.Wei
 			defaultWeightMsgDeleteSharedEntropy,
 			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
 				alliancesimulation.SimulateMsgDeleteSharedEntropy(am.accountKeeper, am.bankKeeper, am.keeper)
+				return nil
+			},
+		),
+		simulation.NewWeightedProposalMsg(
+			opWeightMsgCreateQuorumParams,
+			defaultWeightMsgCreateQuorumParams,
+			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
+				alliancesimulation.SimulateMsgCreateQuorumParams(am.accountKeeper, am.bankKeeper, am.keeper)
+				return nil
+			},
+		),
+		simulation.NewWeightedProposalMsg(
+			opWeightMsgUpdateQuorumParams,
+			defaultWeightMsgUpdateQuorumParams,
+			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
+				alliancesimulation.SimulateMsgUpdateQuorumParams(am.accountKeeper, am.bankKeeper, am.keeper)
+				return nil
+			},
+		),
+		simulation.NewWeightedProposalMsg(
+			opWeightMsgDeleteQuorumParams,
+			defaultWeightMsgDeleteQuorumParams,
+			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
+				alliancesimulation.SimulateMsgDeleteQuorumParams(am.accountKeeper, am.bankKeeper, am.keeper)
 				return nil
 			},
 		),

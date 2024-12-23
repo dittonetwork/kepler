@@ -469,6 +469,294 @@ func (m *MsgDeleteSharedEntropyResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgDeleteSharedEntropyResponse proto.InternalMessageInfo
 
+type MsgCreateQuorumParams struct {
+	Creator          string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	MaxParticipants  uint64 `protobuf:"varint,3,opt,name=maxParticipants,proto3" json:"maxParticipants,omitempty"`
+	ThresholdPercent uint64 `protobuf:"varint,4,opt,name=thresholdPercent,proto3" json:"thresholdPercent,omitempty"`
+	LifetimeInBlocks uint64 `protobuf:"varint,5,opt,name=lifetimeInBlocks,proto3" json:"lifetimeInBlocks,omitempty"`
+}
+
+func (m *MsgCreateQuorumParams) Reset()         { *m = MsgCreateQuorumParams{} }
+func (m *MsgCreateQuorumParams) String() string { return proto.CompactTextString(m) }
+func (*MsgCreateQuorumParams) ProtoMessage()    {}
+func (*MsgCreateQuorumParams) Descriptor() ([]byte, []int) {
+	return fileDescriptor_459bef8e9dacdaf8, []int{10}
+}
+func (m *MsgCreateQuorumParams) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgCreateQuorumParams) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgCreateQuorumParams.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgCreateQuorumParams) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgCreateQuorumParams.Merge(m, src)
+}
+func (m *MsgCreateQuorumParams) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgCreateQuorumParams) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgCreateQuorumParams.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgCreateQuorumParams proto.InternalMessageInfo
+
+func (m *MsgCreateQuorumParams) GetCreator() string {
+	if m != nil {
+		return m.Creator
+	}
+	return ""
+}
+
+func (m *MsgCreateQuorumParams) GetMaxParticipants() uint64 {
+	if m != nil {
+		return m.MaxParticipants
+	}
+	return 0
+}
+
+func (m *MsgCreateQuorumParams) GetThresholdPercent() uint64 {
+	if m != nil {
+		return m.ThresholdPercent
+	}
+	return 0
+}
+
+func (m *MsgCreateQuorumParams) GetLifetimeInBlocks() uint64 {
+	if m != nil {
+		return m.LifetimeInBlocks
+	}
+	return 0
+}
+
+type MsgCreateQuorumParamsResponse struct {
+}
+
+func (m *MsgCreateQuorumParamsResponse) Reset()         { *m = MsgCreateQuorumParamsResponse{} }
+func (m *MsgCreateQuorumParamsResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgCreateQuorumParamsResponse) ProtoMessage()    {}
+func (*MsgCreateQuorumParamsResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_459bef8e9dacdaf8, []int{11}
+}
+func (m *MsgCreateQuorumParamsResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgCreateQuorumParamsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgCreateQuorumParamsResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgCreateQuorumParamsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgCreateQuorumParamsResponse.Merge(m, src)
+}
+func (m *MsgCreateQuorumParamsResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgCreateQuorumParamsResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgCreateQuorumParamsResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgCreateQuorumParamsResponse proto.InternalMessageInfo
+
+type MsgUpdateQuorumParams struct {
+	Creator          string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	MaxParticipants  uint64 `protobuf:"varint,3,opt,name=maxParticipants,proto3" json:"maxParticipants,omitempty"`
+	ThresholdPercent uint64 `protobuf:"varint,4,opt,name=thresholdPercent,proto3" json:"thresholdPercent,omitempty"`
+	LifetimeInBlocks uint64 `protobuf:"varint,5,opt,name=lifetimeInBlocks,proto3" json:"lifetimeInBlocks,omitempty"`
+}
+
+func (m *MsgUpdateQuorumParams) Reset()         { *m = MsgUpdateQuorumParams{} }
+func (m *MsgUpdateQuorumParams) String() string { return proto.CompactTextString(m) }
+func (*MsgUpdateQuorumParams) ProtoMessage()    {}
+func (*MsgUpdateQuorumParams) Descriptor() ([]byte, []int) {
+	return fileDescriptor_459bef8e9dacdaf8, []int{12}
+}
+func (m *MsgUpdateQuorumParams) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgUpdateQuorumParams) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgUpdateQuorumParams.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgUpdateQuorumParams) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgUpdateQuorumParams.Merge(m, src)
+}
+func (m *MsgUpdateQuorumParams) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgUpdateQuorumParams) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgUpdateQuorumParams.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgUpdateQuorumParams proto.InternalMessageInfo
+
+func (m *MsgUpdateQuorumParams) GetCreator() string {
+	if m != nil {
+		return m.Creator
+	}
+	return ""
+}
+
+func (m *MsgUpdateQuorumParams) GetMaxParticipants() uint64 {
+	if m != nil {
+		return m.MaxParticipants
+	}
+	return 0
+}
+
+func (m *MsgUpdateQuorumParams) GetThresholdPercent() uint64 {
+	if m != nil {
+		return m.ThresholdPercent
+	}
+	return 0
+}
+
+func (m *MsgUpdateQuorumParams) GetLifetimeInBlocks() uint64 {
+	if m != nil {
+		return m.LifetimeInBlocks
+	}
+	return 0
+}
+
+type MsgUpdateQuorumParamsResponse struct {
+}
+
+func (m *MsgUpdateQuorumParamsResponse) Reset()         { *m = MsgUpdateQuorumParamsResponse{} }
+func (m *MsgUpdateQuorumParamsResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgUpdateQuorumParamsResponse) ProtoMessage()    {}
+func (*MsgUpdateQuorumParamsResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_459bef8e9dacdaf8, []int{13}
+}
+func (m *MsgUpdateQuorumParamsResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgUpdateQuorumParamsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgUpdateQuorumParamsResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgUpdateQuorumParamsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgUpdateQuorumParamsResponse.Merge(m, src)
+}
+func (m *MsgUpdateQuorumParamsResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgUpdateQuorumParamsResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgUpdateQuorumParamsResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgUpdateQuorumParamsResponse proto.InternalMessageInfo
+
+type MsgDeleteQuorumParams struct {
+	Creator string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+}
+
+func (m *MsgDeleteQuorumParams) Reset()         { *m = MsgDeleteQuorumParams{} }
+func (m *MsgDeleteQuorumParams) String() string { return proto.CompactTextString(m) }
+func (*MsgDeleteQuorumParams) ProtoMessage()    {}
+func (*MsgDeleteQuorumParams) Descriptor() ([]byte, []int) {
+	return fileDescriptor_459bef8e9dacdaf8, []int{14}
+}
+func (m *MsgDeleteQuorumParams) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgDeleteQuorumParams) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgDeleteQuorumParams.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgDeleteQuorumParams) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgDeleteQuorumParams.Merge(m, src)
+}
+func (m *MsgDeleteQuorumParams) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgDeleteQuorumParams) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgDeleteQuorumParams.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgDeleteQuorumParams proto.InternalMessageInfo
+
+func (m *MsgDeleteQuorumParams) GetCreator() string {
+	if m != nil {
+		return m.Creator
+	}
+	return ""
+}
+
+type MsgDeleteQuorumParamsResponse struct {
+}
+
+func (m *MsgDeleteQuorumParamsResponse) Reset()         { *m = MsgDeleteQuorumParamsResponse{} }
+func (m *MsgDeleteQuorumParamsResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgDeleteQuorumParamsResponse) ProtoMessage()    {}
+func (*MsgDeleteQuorumParamsResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_459bef8e9dacdaf8, []int{15}
+}
+func (m *MsgDeleteQuorumParamsResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgDeleteQuorumParamsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgDeleteQuorumParamsResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgDeleteQuorumParamsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgDeleteQuorumParamsResponse.Merge(m, src)
+}
+func (m *MsgDeleteQuorumParamsResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgDeleteQuorumParamsResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgDeleteQuorumParamsResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgDeleteQuorumParamsResponse proto.InternalMessageInfo
+
 func init() {
 	proto.RegisterType((*MsgUpdateParams)(nil), "kepler.alliance.MsgUpdateParams")
 	proto.RegisterType((*MsgUpdateParamsResponse)(nil), "kepler.alliance.MsgUpdateParamsResponse")
@@ -480,46 +768,62 @@ func init() {
 	proto.RegisterType((*MsgUpdateSharedEntropyResponse)(nil), "kepler.alliance.MsgUpdateSharedEntropyResponse")
 	proto.RegisterType((*MsgDeleteSharedEntropy)(nil), "kepler.alliance.MsgDeleteSharedEntropy")
 	proto.RegisterType((*MsgDeleteSharedEntropyResponse)(nil), "kepler.alliance.MsgDeleteSharedEntropyResponse")
+	proto.RegisterType((*MsgCreateQuorumParams)(nil), "kepler.alliance.MsgCreateQuorumParams")
+	proto.RegisterType((*MsgCreateQuorumParamsResponse)(nil), "kepler.alliance.MsgCreateQuorumParamsResponse")
+	proto.RegisterType((*MsgUpdateQuorumParams)(nil), "kepler.alliance.MsgUpdateQuorumParams")
+	proto.RegisterType((*MsgUpdateQuorumParamsResponse)(nil), "kepler.alliance.MsgUpdateQuorumParamsResponse")
+	proto.RegisterType((*MsgDeleteQuorumParams)(nil), "kepler.alliance.MsgDeleteQuorumParams")
+	proto.RegisterType((*MsgDeleteQuorumParamsResponse)(nil), "kepler.alliance.MsgDeleteQuorumParamsResponse")
 }
 
 func init() { proto.RegisterFile("kepler/alliance/tx.proto", fileDescriptor_459bef8e9dacdaf8) }
 
 var fileDescriptor_459bef8e9dacdaf8 = []byte{
-	// 535 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x94, 0x31, 0x6f, 0xd3, 0x40,
-	0x14, 0xc7, 0x63, 0x5a, 0x5a, 0xe5, 0xb5, 0xa8, 0x60, 0x0a, 0x76, 0x2d, 0x64, 0x8c, 0x85, 0x68,
-	0x14, 0x89, 0x58, 0x2d, 0x88, 0x21, 0x13, 0x0d, 0x30, 0x46, 0x42, 0x2e, 0x2c, 0x91, 0x50, 0x75,
-	0x8d, 0x4f, 0xae, 0x45, 0xe2, 0xb3, 0xee, 0xae, 0xa8, 0xd9, 0x10, 0x23, 0x13, 0x7c, 0x0b, 0xc6,
-	0x0c, 0x6c, 0x7c, 0x81, 0x8e, 0x15, 0x13, 0x13, 0x42, 0xc9, 0x90, 0xaf, 0x81, 0xec, 0xf3, 0x25,
-	0x8e, 0x7b, 0x84, 0x2c, 0x5d, 0x12, 0xdf, 0x7b, 0xff, 0xf7, 0x7e, 0xef, 0xbd, 0x7b, 0x3a, 0x30,
-	0xdf, 0xe3, 0xa4, 0x87, 0xa9, 0x87, 0x7a, 0xbd, 0x08, 0xc5, 0x5d, 0xec, 0xf1, 0xb3, 0x46, 0x42,
-	0x09, 0x27, 0xfa, 0x96, 0xf0, 0x34, 0xa4, 0xc7, 0xba, 0x85, 0xfa, 0x51, 0x4c, 0xbc, 0xec, 0x57,
-	0x68, 0x2c, 0xa3, 0x4b, 0x58, 0x9f, 0x30, 0xaf, 0xcf, 0x42, 0xef, 0xc3, 0x5e, 0xfa, 0x97, 0x3b,
-	0x76, 0x84, 0xe3, 0x28, 0x3b, 0x79, 0xe2, 0x90, 0xbb, 0xb6, 0x43, 0x12, 0x12, 0x61, 0x4f, 0xbf,
-	0x72, 0xeb, 0xbd, 0x72, 0x1d, 0x09, 0xa2, 0xa8, 0x2f, 0x63, 0x1e, 0x96, 0xbd, 0xec, 0x04, 0x51,
-	0x1c, 0x1c, 0xe1, 0x98, 0x53, 0x92, 0x0c, 0x84, 0xca, 0xfd, 0xa1, 0xc1, 0x56, 0x9b, 0x85, 0x6f,
-	0x93, 0x00, 0x71, 0xfc, 0x3a, 0x8b, 0xd7, 0x9f, 0x41, 0x15, 0x9d, 0xf2, 0x13, 0x42, 0x23, 0x3e,
-	0x30, 0x35, 0x47, 0xab, 0x55, 0x5b, 0xe6, 0xcf, 0xef, 0x8f, 0xb7, 0xf3, 0x92, 0x0e, 0x82, 0x80,
-	0x62, 0xc6, 0x0e, 0x39, 0x8d, 0xe2, 0xd0, 0x9f, 0x49, 0xf5, 0x26, 0xac, 0x89, 0x0a, 0xcc, 0x6b,
-	0x8e, 0x56, 0xdb, 0xd8, 0x37, 0x1a, 0xa5, 0x71, 0x34, 0x04, 0xa0, 0x55, 0x3d, 0xff, 0x7d, 0xbf,
-	0xf2, 0x6d, 0x32, 0xac, 0x6b, 0x7e, 0x1e, 0xd1, 0x7c, 0xfa, 0x69, 0x32, 0xac, 0xcf, 0x72, 0x7d,
-	0x9e, 0x0c, 0xeb, 0x0f, 0xf2, 0x06, 0xce, 0x66, 0x2d, 0x94, 0x2a, 0x75, 0x77, 0xc0, 0x28, 0x99,
-	0x7c, 0xcc, 0x12, 0x12, 0x33, 0xec, 0xbe, 0x83, 0x1b, 0x6d, 0x16, 0x1e, 0x04, 0xc1, 0x2b, 0xd1,
-	0xaf, 0xee, 0xc0, 0x46, 0x97, 0xc4, 0x9c, 0x46, 0xc7, 0xa7, 0x9c, 0x50, 0xd1, 0x97, 0x5f, 0x34,
-	0xe9, 0x26, 0xac, 0xe7, 0xc3, 0xc9, 0x1a, 0x58, 0xf5, 0xe5, 0xb1, 0x79, 0x33, 0xad, 0xae, 0xa8,
-	0x75, 0x0d, 0xb8, 0x33, 0x97, 0x7e, 0xca, 0xed, 0xc0, 0xdd, 0x36, 0x0b, 0x5f, 0x50, 0x8c, 0x38,
-	0x3e, 0xcc, 0x26, 0x2e, 0x0b, 0x30, 0x61, 0xbd, 0x9b, 0x9a, 0xa7, 0x70, 0x79, 0x2c, 0x82, 0x57,
-	0xe6, 0xc1, 0x9b, 0x29, 0x58, 0xea, 0x5c, 0x07, 0x6c, 0x75, 0xee, 0x12, 0x5d, 0x0c, 0xe4, 0x6a,
-	0xe8, 0x8a, 0xdc, 0x53, 0xfa, 0xf3, 0x8c, 0xfe, 0x12, 0xf7, 0xf0, 0xd2, 0x74, 0x25, 0x43, 0x91,
-	0x41, 0x32, 0xf6, 0xbf, 0xae, 0xc2, 0x4a, 0x9b, 0x85, 0x7a, 0x07, 0x36, 0xe7, 0x96, 0xd6, 0xb9,
-	0xb4, 0x6c, 0xa5, 0xcd, 0xb0, 0x6a, 0xff, 0x53, 0x48, 0x86, 0xfe, 0x06, 0xa0, 0xb0, 0x38, 0xb6,
-	0x2a, 0x6e, 0xe6, 0xb7, 0x1e, 0x2d, 0xf6, 0x4f, 0xb3, 0x12, 0xb8, 0xad, 0x5a, 0x8b, 0x5d, 0x55,
-	0xb8, 0x42, 0x68, 0x79, 0x4b, 0x0a, 0x8b, 0x40, 0xd5, 0x26, 0xec, 0xfe, 0x7b, 0x0e, 0x4b, 0x00,
-	0x17, 0xdc, 0x7f, 0x0a, 0x54, 0x5d, 0xbe, 0x12, 0xa8, 0x10, 0xaa, 0x81, 0x0b, 0x96, 0xc1, 0xba,
-	0xfe, 0x31, 0x7d, 0x44, 0x5a, 0x7b, 0xe7, 0x23, 0x5b, 0xbb, 0x18, 0xd9, 0xda, 0x9f, 0x91, 0xad,
-	0x7d, 0x19, 0xdb, 0x95, 0x8b, 0xb1, 0x5d, 0xf9, 0x35, 0xb6, 0x2b, 0x1d, 0xe3, 0xf2, 0x1b, 0xc2,
-	0x07, 0x09, 0x66, 0xc7, 0x6b, 0xd9, 0xf3, 0xf7, 0xe4, 0x6f, 0x00, 0x00, 0x00, 0xff, 0xff, 0xbb,
-	0xcb, 0x37, 0xd8, 0xcc, 0x05, 0x00, 0x00,
+	// 695 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xd4, 0x96, 0xbf, 0x6f, 0xd3, 0x40,
+	0x14, 0xc7, 0x63, 0xfa, 0x4b, 0xbd, 0x16, 0xb5, 0x98, 0x42, 0x5c, 0x0b, 0xdc, 0x10, 0x50, 0x1a,
+	0x45, 0x22, 0x56, 0x0b, 0x62, 0xe8, 0x02, 0x0d, 0x30, 0x30, 0x44, 0x2a, 0x29, 0x2c, 0x95, 0x50,
+	0x75, 0xb5, 0x0f, 0xc7, 0xaa, 0xed, 0x33, 0x77, 0x17, 0xd4, 0x6e, 0x88, 0x91, 0x89, 0x3f, 0x83,
+	0xb1, 0x03, 0x1b, 0x13, 0x5b, 0xc7, 0x8a, 0x09, 0x09, 0x09, 0xa1, 0x76, 0xe8, 0xbf, 0x81, 0xec,
+	0xb3, 0x1d, 0xe7, 0x72, 0x4e, 0xb2, 0x30, 0xb0, 0xb4, 0xbd, 0xf7, 0xbe, 0xf7, 0x3e, 0xf7, 0x7d,
+	0xf6, 0x3d, 0x17, 0x68, 0x87, 0x28, 0xf4, 0x10, 0x31, 0xa1, 0xe7, 0xb9, 0x30, 0xb0, 0x90, 0xc9,
+	0x8e, 0x9a, 0x21, 0xc1, 0x0c, 0xab, 0x4b, 0x3c, 0xd3, 0x4c, 0x33, 0xfa, 0x35, 0xe8, 0xbb, 0x01,
+	0x36, 0xe3, 0x9f, 0x5c, 0xa3, 0x97, 0x2d, 0x4c, 0x7d, 0x4c, 0x4d, 0x9f, 0x3a, 0xe6, 0xfb, 0x8d,
+	0xe8, 0x57, 0x92, 0x58, 0xe5, 0x89, 0xfd, 0x78, 0x65, 0xf2, 0x45, 0x92, 0x5a, 0x71, 0xb0, 0x83,
+	0x79, 0x3c, 0xfa, 0x2b, 0x89, 0xde, 0x12, 0xcf, 0x11, 0x42, 0x02, 0xfd, 0x74, 0xcf, 0x3d, 0x31,
+	0x4b, 0xbb, 0x90, 0x20, 0x7b, 0x1f, 0x05, 0x8c, 0xe0, 0xf0, 0x38, 0x51, 0xdd, 0x15, 0x55, 0xef,
+	0x7a, 0x98, 0xf4, 0xfc, 0xfd, 0x7c, 0xa9, 0xea, 0x37, 0x05, 0x2c, 0xb5, 0xa9, 0xf3, 0x3a, 0xb4,
+	0x21, 0x43, 0x3b, 0x71, 0x46, 0x7d, 0x04, 0xe6, 0x61, 0x8f, 0x75, 0x31, 0x71, 0xd9, 0xb1, 0xa6,
+	0x54, 0x94, 0xfa, 0x7c, 0x4b, 0xfb, 0xf1, 0xf5, 0xfe, 0x4a, 0x72, 0xee, 0x6d, 0xdb, 0x26, 0x88,
+	0xd2, 0x5d, 0x46, 0xdc, 0xc0, 0xe9, 0xf4, 0xa5, 0xea, 0x16, 0x98, 0xe5, 0xb5, 0xb5, 0x2b, 0x15,
+	0xa5, 0xbe, 0xb0, 0x59, 0x6e, 0x0a, 0x3d, 0x6b, 0x72, 0x40, 0x6b, 0xfe, 0xf4, 0xf7, 0x5a, 0xe9,
+	0xcb, 0xe5, 0x49, 0x43, 0xe9, 0x24, 0x3b, 0xb6, 0x1e, 0x7e, 0xbc, 0x3c, 0x69, 0xf4, 0x6b, 0x7d,
+	0xba, 0x3c, 0x69, 0xdc, 0x49, 0xce, 0x7f, 0xd4, 0x77, 0x20, 0x9c, 0xb4, 0xba, 0x0a, 0xca, 0x42,
+	0xa8, 0x83, 0x68, 0x88, 0x03, 0x8a, 0xaa, 0x6f, 0xc0, 0xd5, 0x36, 0x75, 0xb6, 0x6d, 0xfb, 0x39,
+	0x6f, 0x8a, 0x5a, 0x01, 0x0b, 0x16, 0x0e, 0x18, 0x71, 0x0f, 0x7a, 0x0c, 0x13, 0xee, 0xab, 0x93,
+	0x0f, 0xa9, 0x1a, 0x98, 0x4b, 0x3a, 0x18, 0x1b, 0x98, 0xee, 0xa4, 0xcb, 0xad, 0xe5, 0xe8, 0x74,
+	0x79, 0x6d, 0xb5, 0x0c, 0x6e, 0x0c, 0x94, 0xcf, 0xb8, 0x7b, 0xe0, 0x66, 0x9b, 0x3a, 0x4f, 0x09,
+	0x82, 0x0c, 0xed, 0xc6, 0x8f, 0x25, 0x3d, 0x80, 0x06, 0xe6, 0xac, 0x28, 0x9c, 0xc1, 0xd3, 0x65,
+	0x1e, 0x3c, 0x35, 0x08, 0x5e, 0x8c, 0xc0, 0xa9, 0xae, 0x5a, 0x01, 0x86, 0xbc, 0xb6, 0x40, 0xe7,
+	0x0d, 0xf9, 0x37, 0x74, 0x49, 0xed, 0x8c, 0xfe, 0x24, 0xa6, 0x3f, 0x43, 0x1e, 0x9a, 0x98, 0x2e,
+	0x65, 0x48, 0x2a, 0x64, 0x8c, 0xef, 0x4a, 0xdc, 0x79, 0xde, 0x84, 0x97, 0xf1, 0x1b, 0x9d, 0xbc,
+	0xb6, 0xc5, 0x0e, 0xeb, 0x60, 0xc9, 0x87, 0x47, 0x3b, 0x90, 0x30, 0xd7, 0x72, 0x43, 0x18, 0x30,
+	0x9a, 0x38, 0x15, 0xc3, 0x6a, 0x03, 0x2c, 0xb3, 0x2e, 0x41, 0xb4, 0x8b, 0x3d, 0x7b, 0x07, 0x11,
+	0x0b, 0x05, 0x4c, 0x9b, 0x8e, 0xa5, 0x43, 0xf1, 0x48, 0xeb, 0xb9, 0x6f, 0x11, 0x73, 0x7d, 0xf4,
+	0x22, 0x68, 0x79, 0xd8, 0x3a, 0xa4, 0xda, 0x0c, 0xd7, 0x8a, 0x71, 0xc1, 0xe5, 0x1a, 0xb8, 0x2d,
+	0xb5, 0x20, 0x9a, 0xe4, 0xbd, 0xfe, 0xaf, 0x4d, 0x0e, 0x5b, 0xc8, 0x4c, 0x3e, 0x8e, 0x3d, 0xf2,
+	0x67, 0x3d, 0x99, 0x47, 0x29, 0x61, 0xb8, 0x40, 0x4a, 0xd8, 0xfc, 0x35, 0x0b, 0xa6, 0xda, 0xd4,
+	0x51, 0xf7, 0xc0, 0xe2, 0xc0, 0x80, 0xab, 0x0c, 0x0d, 0x26, 0x61, 0x8a, 0xe8, 0xf5, 0x71, 0x8a,
+	0x94, 0xa1, 0xbe, 0x02, 0x20, 0x37, 0x64, 0x0c, 0xd9, 0xbe, 0x7e, 0x5e, 0xaf, 0x8d, 0xce, 0x67,
+	0x55, 0x31, 0xb8, 0x2e, 0x1b, 0x21, 0xeb, 0xb2, 0xed, 0x12, 0xa1, 0x6e, 0x4e, 0x28, 0xcc, 0x03,
+	0x65, 0x53, 0x63, 0xbd, 0xb8, 0x0f, 0x13, 0x00, 0x47, 0xcc, 0x8a, 0x08, 0x28, 0x1b, 0x14, 0x52,
+	0xa0, 0x44, 0x28, 0x07, 0x8e, 0x18, 0x1c, 0xaa, 0x07, 0x54, 0xc9, 0xd0, 0xa8, 0x15, 0x37, 0x2a,
+	0xaf, 0xd3, 0x9b, 0x93, 0xe9, 0xf2, 0x34, 0xc9, 0xed, 0xad, 0x15, 0x77, 0x69, 0x3c, 0xad, 0xf8,
+	0x2a, 0x45, 0x34, 0xc9, 0x3d, 0xaa, 0x15, 0xb7, 0x68, 0x3c, 0xad, 0xf8, 0x5a, 0xe9, 0x33, 0x1f,
+	0xa2, 0x4f, 0x77, 0x6b, 0xe3, 0xf4, 0xdc, 0x50, 0xce, 0xce, 0x0d, 0xe5, 0xcf, 0xb9, 0xa1, 0x7c,
+	0xbe, 0x30, 0x4a, 0x67, 0x17, 0x46, 0xe9, 0xe7, 0x85, 0x51, 0xda, 0x2b, 0x0f, 0x7f, 0xb9, 0xd9,
+	0x71, 0x88, 0xe8, 0xc1, 0x6c, 0xfc, 0x4f, 0xc7, 0x83, 0xbf, 0x01, 0x00, 0x00, 0xff, 0xff, 0xd3,
+	0x25, 0xd5, 0xf9, 0x67, 0x09, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -541,6 +845,9 @@ type MsgClient interface {
 	CreateSharedEntropy(ctx context.Context, in *MsgCreateSharedEntropy, opts ...grpc.CallOption) (*MsgCreateSharedEntropyResponse, error)
 	UpdateSharedEntropy(ctx context.Context, in *MsgUpdateSharedEntropy, opts ...grpc.CallOption) (*MsgUpdateSharedEntropyResponse, error)
 	DeleteSharedEntropy(ctx context.Context, in *MsgDeleteSharedEntropy, opts ...grpc.CallOption) (*MsgDeleteSharedEntropyResponse, error)
+	CreateQuorumParams(ctx context.Context, in *MsgCreateQuorumParams, opts ...grpc.CallOption) (*MsgCreateQuorumParamsResponse, error)
+	UpdateQuorumParams(ctx context.Context, in *MsgUpdateQuorumParams, opts ...grpc.CallOption) (*MsgUpdateQuorumParamsResponse, error)
+	DeleteQuorumParams(ctx context.Context, in *MsgDeleteQuorumParams, opts ...grpc.CallOption) (*MsgDeleteQuorumParamsResponse, error)
 }
 
 type msgClient struct {
@@ -596,6 +903,33 @@ func (c *msgClient) DeleteSharedEntropy(ctx context.Context, in *MsgDeleteShared
 	return out, nil
 }
 
+func (c *msgClient) CreateQuorumParams(ctx context.Context, in *MsgCreateQuorumParams, opts ...grpc.CallOption) (*MsgCreateQuorumParamsResponse, error) {
+	out := new(MsgCreateQuorumParamsResponse)
+	err := c.cc.Invoke(ctx, "/kepler.alliance.Msg/CreateQuorumParams", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) UpdateQuorumParams(ctx context.Context, in *MsgUpdateQuorumParams, opts ...grpc.CallOption) (*MsgUpdateQuorumParamsResponse, error) {
+	out := new(MsgUpdateQuorumParamsResponse)
+	err := c.cc.Invoke(ctx, "/kepler.alliance.Msg/UpdateQuorumParams", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) DeleteQuorumParams(ctx context.Context, in *MsgDeleteQuorumParams, opts ...grpc.CallOption) (*MsgDeleteQuorumParamsResponse, error) {
+	out := new(MsgDeleteQuorumParamsResponse)
+	err := c.cc.Invoke(ctx, "/kepler.alliance.Msg/DeleteQuorumParams", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 type MsgServer interface {
 	// UpdateParams defines a (governance) operation for updating the module
@@ -605,6 +939,9 @@ type MsgServer interface {
 	CreateSharedEntropy(context.Context, *MsgCreateSharedEntropy) (*MsgCreateSharedEntropyResponse, error)
 	UpdateSharedEntropy(context.Context, *MsgUpdateSharedEntropy) (*MsgUpdateSharedEntropyResponse, error)
 	DeleteSharedEntropy(context.Context, *MsgDeleteSharedEntropy) (*MsgDeleteSharedEntropyResponse, error)
+	CreateQuorumParams(context.Context, *MsgCreateQuorumParams) (*MsgCreateQuorumParamsResponse, error)
+	UpdateQuorumParams(context.Context, *MsgUpdateQuorumParams) (*MsgUpdateQuorumParamsResponse, error)
+	DeleteQuorumParams(context.Context, *MsgDeleteQuorumParams) (*MsgDeleteQuorumParamsResponse, error)
 }
 
 // UnimplementedMsgServer can be embedded to have forward compatible implementations.
@@ -625,6 +962,15 @@ func (*UnimplementedMsgServer) UpdateSharedEntropy(ctx context.Context, req *Msg
 }
 func (*UnimplementedMsgServer) DeleteSharedEntropy(ctx context.Context, req *MsgDeleteSharedEntropy) (*MsgDeleteSharedEntropyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteSharedEntropy not implemented")
+}
+func (*UnimplementedMsgServer) CreateQuorumParams(ctx context.Context, req *MsgCreateQuorumParams) (*MsgCreateQuorumParamsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateQuorumParams not implemented")
+}
+func (*UnimplementedMsgServer) UpdateQuorumParams(ctx context.Context, req *MsgUpdateQuorumParams) (*MsgUpdateQuorumParamsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateQuorumParams not implemented")
+}
+func (*UnimplementedMsgServer) DeleteQuorumParams(ctx context.Context, req *MsgDeleteQuorumParams) (*MsgDeleteQuorumParamsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteQuorumParams not implemented")
 }
 
 func RegisterMsgServer(s grpc1.Server, srv MsgServer) {
@@ -721,6 +1067,60 @@ func _Msg_DeleteSharedEntropy_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_CreateQuorumParams_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgCreateQuorumParams)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).CreateQuorumParams(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/kepler.alliance.Msg/CreateQuorumParams",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).CreateQuorumParams(ctx, req.(*MsgCreateQuorumParams))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_UpdateQuorumParams_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgUpdateQuorumParams)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).UpdateQuorumParams(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/kepler.alliance.Msg/UpdateQuorumParams",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).UpdateQuorumParams(ctx, req.(*MsgUpdateQuorumParams))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_DeleteQuorumParams_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgDeleteQuorumParams)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).DeleteQuorumParams(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/kepler.alliance.Msg/DeleteQuorumParams",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).DeleteQuorumParams(ctx, req.(*MsgDeleteQuorumParams))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var Msg_serviceDesc = _Msg_serviceDesc
 var _Msg_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "kepler.alliance.Msg",
@@ -745,6 +1145,18 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteSharedEntropy",
 			Handler:    _Msg_DeleteSharedEntropy_Handler,
+		},
+		{
+			MethodName: "CreateQuorumParams",
+			Handler:    _Msg_CreateQuorumParams_Handler,
+		},
+		{
+			MethodName: "UpdateQuorumParams",
+			Handler:    _Msg_UpdateQuorumParams_Handler,
+		},
+		{
+			MethodName: "DeleteQuorumParams",
+			Handler:    _Msg_DeleteQuorumParams_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -1041,6 +1453,195 @@ func (m *MsgDeleteSharedEntropyResponse) MarshalToSizedBuffer(dAtA []byte) (int,
 	return len(dAtA) - i, nil
 }
 
+func (m *MsgCreateQuorumParams) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgCreateQuorumParams) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgCreateQuorumParams) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.LifetimeInBlocks != 0 {
+		i = encodeVarintTx(dAtA, i, uint64(m.LifetimeInBlocks))
+		i--
+		dAtA[i] = 0x28
+	}
+	if m.ThresholdPercent != 0 {
+		i = encodeVarintTx(dAtA, i, uint64(m.ThresholdPercent))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.MaxParticipants != 0 {
+		i = encodeVarintTx(dAtA, i, uint64(m.MaxParticipants))
+		i--
+		dAtA[i] = 0x18
+	}
+	if len(m.Creator) > 0 {
+		i -= len(m.Creator)
+		copy(dAtA[i:], m.Creator)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Creator)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgCreateQuorumParamsResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgCreateQuorumParamsResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgCreateQuorumParamsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgUpdateQuorumParams) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgUpdateQuorumParams) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgUpdateQuorumParams) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.LifetimeInBlocks != 0 {
+		i = encodeVarintTx(dAtA, i, uint64(m.LifetimeInBlocks))
+		i--
+		dAtA[i] = 0x28
+	}
+	if m.ThresholdPercent != 0 {
+		i = encodeVarintTx(dAtA, i, uint64(m.ThresholdPercent))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.MaxParticipants != 0 {
+		i = encodeVarintTx(dAtA, i, uint64(m.MaxParticipants))
+		i--
+		dAtA[i] = 0x18
+	}
+	if len(m.Creator) > 0 {
+		i -= len(m.Creator)
+		copy(dAtA[i:], m.Creator)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Creator)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgUpdateQuorumParamsResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgUpdateQuorumParamsResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgUpdateQuorumParamsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgDeleteQuorumParams) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgDeleteQuorumParams) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgDeleteQuorumParams) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Creator) > 0 {
+		i -= len(m.Creator)
+		copy(dAtA[i:], m.Creator)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Creator)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgDeleteQuorumParamsResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgDeleteQuorumParamsResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgDeleteQuorumParamsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintTx(dAtA []byte, offset int, v uint64) int {
 	offset -= sovTx(v)
 	base := offset
@@ -1165,6 +1766,90 @@ func (m *MsgDeleteSharedEntropy) Size() (n int) {
 }
 
 func (m *MsgDeleteSharedEntropyResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *MsgCreateQuorumParams) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Creator)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	if m.MaxParticipants != 0 {
+		n += 1 + sovTx(uint64(m.MaxParticipants))
+	}
+	if m.ThresholdPercent != 0 {
+		n += 1 + sovTx(uint64(m.ThresholdPercent))
+	}
+	if m.LifetimeInBlocks != 0 {
+		n += 1 + sovTx(uint64(m.LifetimeInBlocks))
+	}
+	return n
+}
+
+func (m *MsgCreateQuorumParamsResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *MsgUpdateQuorumParams) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Creator)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	if m.MaxParticipants != 0 {
+		n += 1 + sovTx(uint64(m.MaxParticipants))
+	}
+	if m.ThresholdPercent != 0 {
+		n += 1 + sovTx(uint64(m.ThresholdPercent))
+	}
+	if m.LifetimeInBlocks != 0 {
+		n += 1 + sovTx(uint64(m.LifetimeInBlocks))
+	}
+	return n
+}
+
+func (m *MsgUpdateQuorumParamsResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *MsgDeleteQuorumParams) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Creator)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgDeleteQuorumParamsResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1906,6 +2591,516 @@ func (m *MsgDeleteSharedEntropyResponse) Unmarshal(dAtA []byte) error {
 		}
 		if fieldNum <= 0 {
 			return fmt.Errorf("proto: MsgDeleteSharedEntropyResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgCreateQuorumParams) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgCreateQuorumParams: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgCreateQuorumParams: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Creator = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MaxParticipants", wireType)
+			}
+			m.MaxParticipants = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.MaxParticipants |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ThresholdPercent", wireType)
+			}
+			m.ThresholdPercent = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ThresholdPercent |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field LifetimeInBlocks", wireType)
+			}
+			m.LifetimeInBlocks = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.LifetimeInBlocks |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgCreateQuorumParamsResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgCreateQuorumParamsResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgCreateQuorumParamsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgUpdateQuorumParams) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgUpdateQuorumParams: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgUpdateQuorumParams: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Creator = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MaxParticipants", wireType)
+			}
+			m.MaxParticipants = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.MaxParticipants |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ThresholdPercent", wireType)
+			}
+			m.ThresholdPercent = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ThresholdPercent |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field LifetimeInBlocks", wireType)
+			}
+			m.LifetimeInBlocks = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.LifetimeInBlocks |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgUpdateQuorumParamsResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgUpdateQuorumParamsResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgUpdateQuorumParamsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgDeleteQuorumParams) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgDeleteQuorumParams: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgDeleteQuorumParams: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Creator = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgDeleteQuorumParamsResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgDeleteQuorumParamsResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgDeleteQuorumParamsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		default:

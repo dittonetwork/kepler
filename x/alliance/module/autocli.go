@@ -22,6 +22,11 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 					Use:       "show-shared-entropy",
 					Short:     "show SharedEntropy",
 				},
+				{
+					RpcMethod: "QuorumParams",
+					Use:       "show-quorum-params",
+					Short:     "show QuorumParams",
+				},
 				// this line is used by ignite scaffolding # autocli/query
 			},
 		},
@@ -55,6 +60,23 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 					RpcMethod: "DeleteSharedEntropy",
 					Use:       "delete-shared-entropy",
 					Short:     "Delete SharedEntropy",
+				},
+				{
+					RpcMethod:      "CreateQuorumParams",
+					Use:            "create-quorum-params [maxParticipants] [thresholdPercent] [lifetimeInBlocks]",
+					Short:          "Create QuorumParams",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "maxParticipants"}, {ProtoField: "thresholdPercent"}, {ProtoField: "lifetimeInBlocks"}},
+				},
+				{
+					RpcMethod:      "UpdateQuorumParams",
+					Use:            "update-quorum-params [maxParticipants] [thresholdPercent] [lifetimeInBlocks]",
+					Short:          "Update QuorumParams",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "maxParticipants"}, {ProtoField: "thresholdPercent"}, {ProtoField: "lifetimeInBlocks"}},
+				},
+				{
+					RpcMethod: "DeleteQuorumParams",
+					Use:       "delete-quorum-params",
+					Short:     "Delete QuorumParams",
 				},
 				// this line is used by ignite scaffolding # autocli/tx
 			},

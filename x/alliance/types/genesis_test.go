@@ -26,6 +26,11 @@ func TestGenesisState_Validate(t *testing.T) {
 				SharedEntropy: &types.SharedEntropy{
 					Entropy: 32,
 				},
+				QuorumParams: &types.QuorumParams{
+					MaxParticipants:  52,
+					ThresholdPercent: 37,
+					LifetimeInBlocks: 94,
+				},
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,

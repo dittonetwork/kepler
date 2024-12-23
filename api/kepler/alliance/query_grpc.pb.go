@@ -22,6 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 const (
 	Query_Params_FullMethodName        = "/kepler.alliance.Query/Params"
 	Query_SharedEntropy_FullMethodName = "/kepler.alliance.Query/SharedEntropy"
+	Query_QuorumParams_FullMethodName  = "/kepler.alliance.Query/QuorumParams"
 )
 
 // QueryClient is the client API for Query service.
@@ -32,6 +33,8 @@ type QueryClient interface {
 	Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error)
 	// Queries a SharedEntropy by index.
 	SharedEntropy(ctx context.Context, in *QueryGetSharedEntropyRequest, opts ...grpc.CallOption) (*QueryGetSharedEntropyResponse, error)
+	// Queries a QuorumParams by index.
+	QuorumParams(ctx context.Context, in *QueryGetQuorumParamsRequest, opts ...grpc.CallOption) (*QueryGetQuorumParamsResponse, error)
 }
 
 type queryClient struct {
@@ -60,6 +63,15 @@ func (c *queryClient) SharedEntropy(ctx context.Context, in *QueryGetSharedEntro
 	return out, nil
 }
 
+func (c *queryClient) QuorumParams(ctx context.Context, in *QueryGetQuorumParamsRequest, opts ...grpc.CallOption) (*QueryGetQuorumParamsResponse, error) {
+	out := new(QueryGetQuorumParamsResponse)
+	err := c.cc.Invoke(ctx, Query_QuorumParams_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueryServer is the server API for Query service.
 // All implementations must embed UnimplementedQueryServer
 // for forward compatibility
@@ -68,6 +80,8 @@ type QueryServer interface {
 	Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error)
 	// Queries a SharedEntropy by index.
 	SharedEntropy(context.Context, *QueryGetSharedEntropyRequest) (*QueryGetSharedEntropyResponse, error)
+	// Queries a QuorumParams by index.
+	QuorumParams(context.Context, *QueryGetQuorumParamsRequest) (*QueryGetQuorumParamsResponse, error)
 	mustEmbedUnimplementedQueryServer()
 }
 
@@ -80,6 +94,9 @@ func (UnimplementedQueryServer) Params(context.Context, *QueryParamsRequest) (*Q
 }
 func (UnimplementedQueryServer) SharedEntropy(context.Context, *QueryGetSharedEntropyRequest) (*QueryGetSharedEntropyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SharedEntropy not implemented")
+}
+func (UnimplementedQueryServer) QuorumParams(context.Context, *QueryGetQuorumParamsRequest) (*QueryGetQuorumParamsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QuorumParams not implemented")
 }
 func (UnimplementedQueryServer) mustEmbedUnimplementedQueryServer() {}
 
@@ -130,6 +147,24 @@ func _Query_SharedEntropy_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_QuorumParams_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryGetQuorumParamsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).QuorumParams(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Query_QuorumParams_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).QuorumParams(ctx, req.(*QueryGetQuorumParamsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Query_ServiceDesc is the grpc.ServiceDesc for Query service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -144,6 +179,10 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SharedEntropy",
 			Handler:    _Query_SharedEntropy_Handler,
+		},
+		{
+			MethodName: "QuorumParams",
+			Handler:    _Query_QuorumParams_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
