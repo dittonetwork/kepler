@@ -3,18 +3,16 @@ package cli
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/cosmos/cosmos-sdk/client"
+	"github.com/cosmos/cosmos-sdk/client/flags"
+	"github.com/cosmos/cosmos-sdk/version"
+	"github.com/spf13/cobra"
+	v052 "kepler/x/genutil/migration/v052"
+	"kepler/x/genutil/types"
 	"maps"
 	"slices"
 	"strings"
 	"time"
-
-	"github.com/spf13/cobra"
-
-	"github.com/cosmos/cosmos-sdk/client"
-	"github.com/cosmos/cosmos-sdk/client/flags"
-	"github.com/cosmos/cosmos-sdk/version"
-	v052 "kepler/x/genutil/migration/v052"
-	"kepler/x/genutil/types"
 )
 
 const (

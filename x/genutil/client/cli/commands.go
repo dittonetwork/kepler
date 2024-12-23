@@ -1,15 +1,12 @@
 package cli
 
 import (
-	"encoding/json"
-
-	"github.com/spf13/cobra"
-
 	banktypes "cosmossdk.io/x/bank/types"
-
+	"encoding/json"
 	"github.com/cosmos/cosmos-sdk/client"
 	servertypes "github.com/cosmos/cosmos-sdk/server/types"
-	"kepler/x/genutil/module"
+	"github.com/spf13/cobra"
+	genutil "kepler/x/genutil/module"
 	genutiltypes "kepler/x/genutil/types"
 )
 
@@ -18,12 +15,12 @@ type genesisMM interface {
 	ValidateGenesis(genesisData map[string]json.RawMessage) error
 }
 
-// Commands adds core sdk's sub-commands into genesis command.
+// Commands adds core sdk`s sub-commands into genesis command.
 func Commands(genutilModule genutil.AppModule, genMM genesisMM, appExport servertypes.AppExporter) *cobra.Command {
 	return CommandsWithCustomMigrationMap(genutilModule, genMM, appExport, MigrationMap)
 }
 
-// CommandsWithCustomMigrationMap adds core sdk's sub-commands into genesis command with custom migration map.
+// CommandsWithCustomMigrationMap adds core sdk`s sub-commands into genesis command with custom migration map.
 // This custom migration map can be used by the application to add its own migration map.
 func CommandsWithCustomMigrationMap(genutilModule genutil.AppModule, genMM genesisMM, appExport servertypes.AppExporter, migrationMap genutiltypes.MigrationMap) *cobra.Command {
 	cmd := &cobra.Command{

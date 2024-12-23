@@ -1,17 +1,14 @@
 package cli
 
 import (
-	"encoding/json"
-	"path/filepath"
-
-	"github.com/spf13/cobra"
-
 	"cosmossdk.io/core/transaction"
 	"cosmossdk.io/errors"
-
+	"encoding/json"
 	"github.com/cosmos/cosmos-sdk/client"
+	"github.com/spf13/cobra"
 	"kepler/x/genutil/module"
 	"kepler/x/genutil/types"
+	"path/filepath"
 )
 
 const flagGenTxDir = "gentx-dir"

@@ -2,16 +2,16 @@ package genutil
 
 import (
 	"context"
+	"cosmossdk.io/core/appmodule"
+	appmodulev2 "cosmossdk.io/core/appmodule/v2"
 	"encoding/json"
 	"fmt"
 
-	"cosmossdk.io/core/appmodule"
-	appmodulev2 "cosmossdk.io/core/appmodule/v2"
+	"kepler/x/genutil/types"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/cosmos/cosmos-sdk/types/module"
-	"kepler/x/genutil/types"
 )
 
 var (
@@ -33,23 +33,23 @@ type AppModule struct {
 }
 
 // NewAppModule creates a new AppModule object
-func NewAppModule(
-	cdc codec.Codec,
-	accountKeeper types.AccountKeeper,
-	stakingKeeper types.StakingKeeper,
-	deliverTx TxHandler,
-	txEncodingConfig client.TxEncodingConfig,
-	genTxValidator types.MessageValidator,
-) module.AppModule {
-	return AppModule{
-		cdc:              cdc,
-		accountKeeper:    accountKeeper,
-		stakingKeeper:    stakingKeeper,
-		deliverTx:        deliverTx,
-		txEncodingConfig: txEncodingConfig,
-		genTxValidator:   genTxValidator,
-	}
-}
+//func NewAppModule(
+//	cdc codec.Codec,
+//	accountKeeper types.AccountKeeper,
+//	stakingKeeper types.StakingKeeper,
+//	deliverTx TxHandler,
+//	txEncodingConfig client.TxEncodingConfig,
+//	genTxValidator types.MessageValidator,
+//) module.AppModule {
+//	return AppModule{
+//		cdc:              cdc,
+//		accountKeeper:    accountKeeper,
+//		stakingKeeper:    stakingKeeper,
+//		deliverTx:        deliverTx,
+//		txEncodingConfig: txEncodingConfig,
+//		genTxValidator:   genTxValidator,
+//	}
+//}
 
 // IsAppModule implements the appmodule.AppModule interface.
 func (AppModule) IsAppModule() {}
@@ -105,4 +105,6 @@ func (am AppModule) GenTxValidator() types.MessageValidator {
 }
 
 // ConsensusVersion implements HasConsensusVersion
-func (AppModule) ConsensusVersion() uint64 { return 1 }
+func (AppModule) ConsensusVersion() uint64 {
+	return 1
+}

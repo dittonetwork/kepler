@@ -4,22 +4,20 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"os"
-	"path/filepath"
-	"time"
-
 	cfg "github.com/cometbft/cometbft/config"
 	cmtcrypto "github.com/cometbft/cometbft/crypto"
 	cmtbls12381 "github.com/cometbft/cometbft/crypto/bls12381"
 	tmed25519 "github.com/cometbft/cometbft/crypto/ed25519"
 	"github.com/cometbft/cometbft/p2p"
 	"github.com/cometbft/cometbft/privval"
-	"github.com/cosmos/go-bip39"
-
 	cryptocodec "github.com/cosmos/cosmos-sdk/crypto/codec"
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/cosmos/go-bip39"
 	"kepler/x/genutil/types"
+	"os"
+	"path/filepath"
+	"time"
 )
 
 // ExportGenesisFile creates and writes the genesis configuration to disk. An
@@ -101,13 +99,16 @@ func InitializeNodeValidatorFilesFromMnemonic(config *cfg.Config, mnemonic, keyT
 	} else {
 		switch keyType {
 		case "ed25519":
+
 			privKey = tmed25519.GenPrivKeyFromSecret([]byte(mnemonic))
 		case "bls12_381":
 			// TODO: need to add support for getting from mnemonic in Comet.
+
 			return "", nil, errors.New("BLS key type does not support mnemonic")
 		default:
 			privKey = tmed25519.GenPrivKeyFromSecret([]byte(mnemonic))
 		}
+
 		filePV = privval.NewFilePV(privKey, pvKeyFile, pvStateFile)
 		filePV.Save()
 	}

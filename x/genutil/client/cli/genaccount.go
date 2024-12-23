@@ -4,15 +4,13 @@ import (
 	"bufio"
 	"encoding/json"
 	"fmt"
-	"os"
-
-	"github.com/spf13/cobra"
-
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/crypto/keyring"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/spf13/cobra"
 	"kepler/x/genutil/module"
+	"os"
 )
 
 const (

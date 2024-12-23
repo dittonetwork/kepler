@@ -3,17 +3,10 @@ package cli
 import (
 	"bufio"
 	"bytes"
+	"cosmossdk.io/errors"
+	"cosmossdk.io/x/staking/client/cli"
 	"encoding/json"
 	"fmt"
-	"io"
-	"os"
-	"path/filepath"
-
-	"github.com/spf13/cobra"
-
-	"cosmossdk.io/errors"
-	"kepler/x/staking/client/cli"
-
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/client/tx"
@@ -22,8 +15,12 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/version"
 	authclient "github.com/cosmos/cosmos-sdk/x/auth/client"
+	"github.com/spf13/cobra"
+	"io"
 	"kepler/x/genutil/module"
 	"kepler/x/genutil/types"
+	"os"
+	"path/filepath"
 )
 
 // GenTxCmd builds the application's gentx command.
@@ -58,7 +55,6 @@ $ %s gentx my-key-name 1000000stake --home=/path/to/home/dir --keyring-backend=o
 			if err != nil {
 				return err
 			}
-			cdc := clientCtx.Codec
 
 			consensusKey, err := cmd.Flags().GetString(FlagConsensusKeyAlgo)
 			if err != nil {
@@ -116,21 +112,9 @@ $ %s gentx my-key-name 1000000stake --home=/path/to/home/dir --keyring-backend=o
 			}
 
 			amount := args[1]
-			coins, err := sdk.ParseCoinsNormalized(amount)
-			if err != nil {
-				return errors.Wrap(err, "failed to parse coins")
-			}
 			addr, err := key.GetAddress()
 			if err != nil {
 				return err
-			}
-			strAddr, err := clientCtx.AddressCodec.BytesToString(addr)
-			if err != nil {
-				return err
-			}
-			err = genutil.ValidateAccountInGenesis(genesisState, genBalIterator, strAddr, coins, cdc)
-			if err != nil {
-				return errors.Wrap(err, "failed to validate account in genesis")
 			}
 
 			txFactory, err := tx.NewFactoryCLI(clientCtx, cmd.Flags())

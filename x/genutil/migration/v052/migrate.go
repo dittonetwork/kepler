@@ -1,22 +1,20 @@
-package migrate
+package migrate_v052
 
 import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io"
-	"os"
-	"path/filepath"
-	"time"
-
 	cmtjson "github.com/cometbft/cometbft/libs/json"
 	cmttypes "github.com/cometbft/cometbft/types"
-
 	"github.com/cosmos/cosmos-sdk/client"
 	cryptocodec "github.com/cosmos/cosmos-sdk/crypto/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/version"
+	"io"
 	"kepler/x/genutil/types"
+	"os"
+	"path/filepath"
+	"time"
 )
 
 type legacyAppGenesis struct {
@@ -142,31 +140,7 @@ func convertValidators(cmtVals []cmttypes.GenesisValidator) ([]sdk.GenesisValida
 	return vals, nil
 }
 
-// CometBFT Genesis Handling for JSON,
-// this is necessary for json unmarshaling of legacyConsensusGenesis
-func (cs *legacyConsensusGenesis) MarshalJSON() ([]byte, error) {
-	type Alias legacyConsensusGenesis
-	return cmtjson.Marshal(&Alias{
-		Validators: cs.Validators,
-		Params:     cs.Params,
-	})
-}
-
-func (cs *legacyConsensusGenesis) UnmarshalJSON(b []byte) error {
-	type Alias legacyConsensusGenesis
-
-	result := Alias{}
-	if err := cmtjson.Unmarshal(b, &result); err != nil {
-		return err
-	}
-
-	cs.Params = result.Params
-	cs.Validators = result.Validators
-
-	return nil
-}
-
-// since we only need migrate the consensus validators content so there is no
+// Migrate since we only need migrate the consensus validators content so there is no
 // exported state migration.
 func Migrate(appState types.AppMap, _ client.Context) (types.AppMap, error) {
 	return appState, nil

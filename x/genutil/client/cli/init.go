@@ -2,35 +2,32 @@ package cli
 
 import (
 	"bufio"
+	errorsmod "cosmossdk.io/errors"
+	"cosmossdk.io/math/unsafe"
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io"
-	"os"
-	"path/filepath"
-
 	cfg "github.com/cometbft/cometbft/config"
 	cmttypes "github.com/cometbft/cometbft/types"
-	"github.com/cosmos/go-bip39"
-	"github.com/spf13/cobra"
-
-	errorsmod "cosmossdk.io/errors"
-	"cosmossdk.io/math/unsafe"
-
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/client/input"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/version"
+	"github.com/cosmos/go-bip39"
+	"github.com/spf13/cobra"
+	"io"
 	"kepler/x/genutil/module"
 	"kepler/x/genutil/types"
+	"os"
+	"path/filepath"
 )
 
 const (
 	// FlagOverwrite defines a flag to overwrite an existing genesis JSON file.
 	FlagOverwrite = "overwrite"
 
-	// FlagSeed defines a flag to initialize the private validator key from a specific seed.
+	// FlagRecover TODO: Fix doc string
 	FlagRecover = "recover"
 
 	// FlagDefaultBondDenom defines the default denom to use in the genesis file.
@@ -69,13 +66,11 @@ func displayInfo(dst io.Writer, info printInfo) error {
 	return err
 }
 
-// InitCmd returns a command that initializes all files needed for Tendermint
-// and the respective application.
 func InitCmd(mm genesisMM) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "init <moniker>",
 		Short: "Initialize private validator, p2p, genesis, and application configuration files",
-		Long:  `Initialize validators's and node's configuration files.`,
+		Long:  `Initialize validators' and node's configuration files.`,
 		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx := client.GetClientContextFromCmd(cmd)
