@@ -10,7 +10,7 @@ import (
 	math "math"
 	math_bits "math/bits"
 
-	_ "github.com/cosmos/cosmos-sdk/types/query"
+	query "github.com/cosmos/cosmos-sdk/types/query"
 	_ "github.com/cosmos/cosmos-sdk/types/tx/amino"
 	_ "github.com/cosmos/gogoproto/gogoproto"
 	grpc1 "github.com/cosmos/gogoproto/grpc"
@@ -275,6 +275,190 @@ func (m *QueryGetQuorumParamsResponse) GetQuorumParams() QuorumParams {
 	return QuorumParams{}
 }
 
+type QueryGetAlliancesTimelineRequest struct {
+	Id uint64 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+}
+
+func (m *QueryGetAlliancesTimelineRequest) Reset()         { *m = QueryGetAlliancesTimelineRequest{} }
+func (m *QueryGetAlliancesTimelineRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryGetAlliancesTimelineRequest) ProtoMessage()    {}
+func (*QueryGetAlliancesTimelineRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_94731e962f0bb72f, []int{6}
+}
+func (m *QueryGetAlliancesTimelineRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryGetAlliancesTimelineRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryGetAlliancesTimelineRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryGetAlliancesTimelineRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryGetAlliancesTimelineRequest.Merge(m, src)
+}
+func (m *QueryGetAlliancesTimelineRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryGetAlliancesTimelineRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryGetAlliancesTimelineRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryGetAlliancesTimelineRequest proto.InternalMessageInfo
+
+func (m *QueryGetAlliancesTimelineRequest) GetId() uint64 {
+	if m != nil {
+		return m.Id
+	}
+	return 0
+}
+
+type QueryGetAlliancesTimelineResponse struct {
+	AlliancesTimeline AlliancesTimeline `protobuf:"bytes,1,opt,name=AlliancesTimeline,proto3" json:"AlliancesTimeline"`
+}
+
+func (m *QueryGetAlliancesTimelineResponse) Reset()         { *m = QueryGetAlliancesTimelineResponse{} }
+func (m *QueryGetAlliancesTimelineResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryGetAlliancesTimelineResponse) ProtoMessage()    {}
+func (*QueryGetAlliancesTimelineResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_94731e962f0bb72f, []int{7}
+}
+func (m *QueryGetAlliancesTimelineResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryGetAlliancesTimelineResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryGetAlliancesTimelineResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryGetAlliancesTimelineResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryGetAlliancesTimelineResponse.Merge(m, src)
+}
+func (m *QueryGetAlliancesTimelineResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryGetAlliancesTimelineResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryGetAlliancesTimelineResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryGetAlliancesTimelineResponse proto.InternalMessageInfo
+
+func (m *QueryGetAlliancesTimelineResponse) GetAlliancesTimeline() AlliancesTimeline {
+	if m != nil {
+		return m.AlliancesTimeline
+	}
+	return AlliancesTimeline{}
+}
+
+type QueryAllAlliancesTimelineRequest struct {
+	Pagination *query.PageRequest `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
+}
+
+func (m *QueryAllAlliancesTimelineRequest) Reset()         { *m = QueryAllAlliancesTimelineRequest{} }
+func (m *QueryAllAlliancesTimelineRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryAllAlliancesTimelineRequest) ProtoMessage()    {}
+func (*QueryAllAlliancesTimelineRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_94731e962f0bb72f, []int{8}
+}
+func (m *QueryAllAlliancesTimelineRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryAllAlliancesTimelineRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryAllAlliancesTimelineRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryAllAlliancesTimelineRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryAllAlliancesTimelineRequest.Merge(m, src)
+}
+func (m *QueryAllAlliancesTimelineRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryAllAlliancesTimelineRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryAllAlliancesTimelineRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryAllAlliancesTimelineRequest proto.InternalMessageInfo
+
+func (m *QueryAllAlliancesTimelineRequest) GetPagination() *query.PageRequest {
+	if m != nil {
+		return m.Pagination
+	}
+	return nil
+}
+
+type QueryAllAlliancesTimelineResponse struct {
+	AlliancesTimeline []AlliancesTimeline `protobuf:"bytes,1,rep,name=AlliancesTimeline,proto3" json:"AlliancesTimeline"`
+	Pagination        *query.PageResponse `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+}
+
+func (m *QueryAllAlliancesTimelineResponse) Reset()         { *m = QueryAllAlliancesTimelineResponse{} }
+func (m *QueryAllAlliancesTimelineResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryAllAlliancesTimelineResponse) ProtoMessage()    {}
+func (*QueryAllAlliancesTimelineResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_94731e962f0bb72f, []int{9}
+}
+func (m *QueryAllAlliancesTimelineResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryAllAlliancesTimelineResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryAllAlliancesTimelineResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryAllAlliancesTimelineResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryAllAlliancesTimelineResponse.Merge(m, src)
+}
+func (m *QueryAllAlliancesTimelineResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryAllAlliancesTimelineResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryAllAlliancesTimelineResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryAllAlliancesTimelineResponse proto.InternalMessageInfo
+
+func (m *QueryAllAlliancesTimelineResponse) GetAlliancesTimeline() []AlliancesTimeline {
+	if m != nil {
+		return m.AlliancesTimeline
+	}
+	return nil
+}
+
+func (m *QueryAllAlliancesTimelineResponse) GetPagination() *query.PageResponse {
+	if m != nil {
+		return m.Pagination
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterType((*QueryParamsRequest)(nil), "kepler.alliance.QueryParamsRequest")
 	proto.RegisterType((*QueryParamsResponse)(nil), "kepler.alliance.QueryParamsResponse")
@@ -282,41 +466,57 @@ func init() {
 	proto.RegisterType((*QueryGetSharedEntropyResponse)(nil), "kepler.alliance.QueryGetSharedEntropyResponse")
 	proto.RegisterType((*QueryGetQuorumParamsRequest)(nil), "kepler.alliance.QueryGetQuorumParamsRequest")
 	proto.RegisterType((*QueryGetQuorumParamsResponse)(nil), "kepler.alliance.QueryGetQuorumParamsResponse")
+	proto.RegisterType((*QueryGetAlliancesTimelineRequest)(nil), "kepler.alliance.QueryGetAlliancesTimelineRequest")
+	proto.RegisterType((*QueryGetAlliancesTimelineResponse)(nil), "kepler.alliance.QueryGetAlliancesTimelineResponse")
+	proto.RegisterType((*QueryAllAlliancesTimelineRequest)(nil), "kepler.alliance.QueryAllAlliancesTimelineRequest")
+	proto.RegisterType((*QueryAllAlliancesTimelineResponse)(nil), "kepler.alliance.QueryAllAlliancesTimelineResponse")
 }
 
 func init() { proto.RegisterFile("kepler/alliance/query.proto", fileDescriptor_94731e962f0bb72f) }
 
 var fileDescriptor_94731e962f0bb72f = []byte{
-	// 464 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x93, 0x4f, 0x8b, 0xd3, 0x40,
-	0x18, 0xc6, 0x33, 0xfe, 0x29, 0x38, 0x2a, 0xe2, 0xb8, 0x50, 0xcd, 0x6e, 0xa7, 0x6b, 0x76, 0x51,
-	0x59, 0xdc, 0x0c, 0x5d, 0x6f, 0x1e, 0x0b, 0xb2, 0xe0, 0xc9, 0xd6, 0x9b, 0x97, 0x65, 0x5a, 0x87,
-	0x18, 0x9a, 0xcc, 0x4c, 0x33, 0x53, 0xb1, 0x57, 0x3f, 0x81, 0xd0, 0x83, 0x5f, 0xc1, 0x8b, 0xe0,
-	0xc7, 0xe8, 0xb1, 0xe0, 0xc5, 0x93, 0x48, 0x2b, 0xf8, 0x35, 0xa4, 0x93, 0x09, 0xed, 0xa4, 0x69,
-	0xe9, 0x25, 0x84, 0xf7, 0x79, 0x9e, 0xf7, 0xfd, 0xcd, 0x3b, 0x09, 0x3c, 0x1c, 0x30, 0x99, 0xb0,
-	0x8c, 0xd0, 0x24, 0x89, 0x29, 0xef, 0x33, 0x32, 0x1c, 0xb1, 0x6c, 0x1c, 0xca, 0x4c, 0x68, 0x81,
-	0xee, 0xe5, 0x62, 0x58, 0x88, 0xfe, 0x7d, 0x9a, 0xc6, 0x5c, 0x10, 0xf3, 0xcc, 0x3d, 0xfe, 0x41,
-	0x24, 0x22, 0x61, 0x5e, 0xc9, 0xf2, 0xcd, 0x56, 0x8f, 0x22, 0x21, 0xa2, 0x84, 0x11, 0x2a, 0x63,
-	0x42, 0x39, 0x17, 0x9a, 0xea, 0x58, 0x70, 0x65, 0xd5, 0xb3, 0xbe, 0x50, 0xa9, 0x50, 0xa4, 0x47,
-	0x95, 0x1d, 0x48, 0x3e, 0xb6, 0x7a, 0x4c, 0xd3, 0x16, 0x91, 0x34, 0x8a, 0xb9, 0x31, 0x17, 0x9d,
-	0xca, 0x80, 0x92, 0x66, 0x34, 0x2d, 0x3a, 0x9d, 0x96, 0x55, 0xf5, 0x81, 0x66, 0xec, 0xfd, 0x15,
-	0xe3, 0x3a, 0x13, 0xd2, 0x9e, 0xc3, 0x3f, 0xd9, 0x3c, 0xa4, 0xc8, 0x46, 0xe9, 0xd5, 0x7a, 0xab,
-	0xe0, 0x00, 0xa2, 0xce, 0x12, 0xe5, 0x8d, 0x29, 0x76, 0xd9, 0x70, 0xc4, 0x94, 0x0e, 0x3a, 0xf0,
-	0x81, 0x53, 0x55, 0x52, 0x70, 0xc5, 0xd0, 0x4b, 0x58, 0xcb, 0xc3, 0x0f, 0xc1, 0x31, 0x78, 0x76,
-	0xfb, 0xa2, 0x1e, 0x96, 0x56, 0x15, 0xe6, 0x81, 0xf6, 0xad, 0xe9, 0xef, 0xa6, 0xf7, 0xed, 0xdf,
-	0x8f, 0x33, 0xd0, 0xb5, 0x89, 0x00, 0xc3, 0x23, 0xd3, 0xf2, 0x92, 0xe9, 0xb7, 0x86, 0xf6, 0x55,
-	0x0e, 0x5b, 0x8c, 0x1c, 0xc0, 0xc6, 0x16, 0xdd, 0x0e, 0x7f, 0x0d, 0xef, 0x3a, 0x82, 0x65, 0xc0,
-	0x1b, 0x0c, 0x8e, 0xab, 0x7d, 0x63, 0x89, 0xd2, 0x75, 0xa3, 0x41, 0x03, 0x1e, 0x16, 0xc3, 0x3a,
-	0x66, 0x29, 0xee, 0xf1, 0xa3, 0x15, 0xab, 0x2b, 0x5b, 0x94, 0x4b, 0x78, 0x67, 0xbd, 0x6e, 0x49,
-	0x1a, 0x1b, 0x24, 0xeb, 0x26, 0x0b, 0xe2, 0x04, 0x2f, 0xbe, 0x5f, 0x87, 0x37, 0xcd, 0x24, 0xa4,
-	0x61, 0x2d, 0xaf, 0xa1, 0x93, 0x8a, 0x36, 0xe5, 0x0b, 0xf2, 0x4f, 0x77, 0x9b, 0x72, 0xce, 0xa0,
-	0xf9, 0xf9, 0xe7, 0xdf, 0xc9, 0xb5, 0x47, 0xa8, 0x4e, 0xaa, 0x3f, 0x27, 0xf4, 0x15, 0x94, 0x96,
-	0x8a, 0xce, 0xab, 0x1b, 0x6f, 0xb9, 0x35, 0x3f, 0xdc, 0xd7, 0x6e, 0x89, 0x9e, 0x1a, 0xa2, 0xc7,
-	0xa8, 0x49, 0x76, 0x7f, 0xc2, 0x68, 0x02, 0xdc, 0x1d, 0xa3, 0xe7, 0x5b, 0x27, 0x55, 0xdc, 0xa0,
-	0x7f, 0xbe, 0xa7, 0xdb, 0x62, 0x3d, 0x31, 0x58, 0xc7, 0x08, 0x93, 0x9d, 0xff, 0x4c, 0xbb, 0x35,
-	0x9d, 0x63, 0x30, 0x9b, 0x63, 0xf0, 0x67, 0x8e, 0xc1, 0x97, 0x05, 0xf6, 0x66, 0x0b, 0xec, 0xfd,
-	0x5a, 0x60, 0xef, 0x5d, 0xdd, 0x06, 0x3f, 0xad, 0xa2, 0x7a, 0x2c, 0x99, 0xea, 0xd5, 0xcc, 0x7f,
-	0xf6, 0xe2, 0x7f, 0x00, 0x00, 0x00, 0xff, 0xff, 0xb6, 0x3a, 0xa4, 0x9b, 0x73, 0x04, 0x00, 0x00,
+	// 651 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x95, 0x3d, 0x6f, 0xd3, 0x4e,
+	0x1c, 0xc7, 0xe3, 0xfc, 0xfb, 0x8f, 0xc4, 0xf1, 0xa4, 0x1e, 0x91, 0x02, 0x6e, 0xe3, 0xa4, 0x4e,
+	0x69, 0xa3, 0x40, 0x7d, 0x24, 0x6c, 0x6c, 0x89, 0x04, 0x91, 0x98, 0x9a, 0x80, 0x18, 0x58, 0xa2,
+	0x4b, 0x73, 0x32, 0xa6, 0x8e, 0xcf, 0xb5, 0x1d, 0x44, 0x55, 0xb1, 0xb0, 0xb1, 0x21, 0x75, 0xe0,
+	0x2d, 0x20, 0xc4, 0xc0, 0x8b, 0x60, 0xe8, 0x58, 0x89, 0x85, 0x09, 0xa1, 0x04, 0x89, 0xb7, 0x81,
+	0x72, 0xfe, 0x59, 0x89, 0x1f, 0x1b, 0xc4, 0x12, 0x59, 0xfe, 0x3d, 0x7c, 0x3f, 0x5f, 0xdb, 0xdf,
+	0x0b, 0xda, 0x38, 0x64, 0xb6, 0xc9, 0x1c, 0x42, 0x4d, 0xd3, 0xa0, 0xd6, 0x01, 0x23, 0x47, 0x13,
+	0xe6, 0x1c, 0x6b, 0xb6, 0xc3, 0x3d, 0x8e, 0xaf, 0xfb, 0x45, 0x2d, 0x28, 0xca, 0xeb, 0x74, 0x6c,
+	0x58, 0x9c, 0x88, 0x5f, 0xbf, 0x47, 0x2e, 0xea, 0x5c, 0xe7, 0xe2, 0x92, 0xcc, 0xaf, 0xe0, 0xee,
+	0xa6, 0xce, 0xb9, 0x6e, 0x32, 0x42, 0x6d, 0x83, 0x50, 0xcb, 0xe2, 0x1e, 0xf5, 0x0c, 0x6e, 0xb9,
+	0x50, 0x6d, 0x1c, 0x70, 0x77, 0xcc, 0x5d, 0x32, 0xa4, 0x2e, 0x08, 0x92, 0x57, 0xcd, 0x21, 0xf3,
+	0x68, 0x93, 0xd8, 0x54, 0x37, 0x2c, 0xd1, 0x1c, 0x6c, 0x8a, 0x02, 0xda, 0xd4, 0xa1, 0xe3, 0x60,
+	0xd3, 0x76, 0xb4, 0xea, 0xbe, 0xa0, 0x0e, 0x1b, 0x0d, 0x98, 0xe5, 0x39, 0xdc, 0x06, 0x1f, 0x72,
+	0x2d, 0x6e, 0x92, 0x3b, 0x93, 0xf1, 0x20, 0xb4, 0xaa, 0x1e, 0x6d, 0x0a, 0x2e, 0xdc, 0x81, 0x67,
+	0x8c, 0x99, 0x69, 0x58, 0xcc, 0xef, 0x54, 0x8b, 0x08, 0xf7, 0xe6, 0xd0, 0xfb, 0x62, 0xbc, 0xcf,
+	0x8e, 0x26, 0xcc, 0xf5, 0xd4, 0x1e, 0xba, 0x11, 0xba, 0xeb, 0xda, 0xdc, 0x72, 0x19, 0x7e, 0x80,
+	0x0a, 0xbe, 0xcc, 0x4d, 0xa9, 0x2a, 0xd5, 0x2f, 0xb7, 0x4a, 0x5a, 0xe4, 0xa1, 0x6a, 0xfe, 0x40,
+	0xe7, 0xd2, 0xd9, 0x8f, 0x4a, 0xee, 0xe3, 0xef, 0x2f, 0x0d, 0xa9, 0x0f, 0x13, 0xaa, 0x82, 0x36,
+	0xc5, 0xca, 0x2e, 0xf3, 0x9e, 0x08, 0x5f, 0x0f, 0x7d, 0x5b, 0x81, 0xe4, 0x21, 0x2a, 0xa7, 0xd4,
+	0x41, 0xfc, 0x31, 0xba, 0x1a, 0x2a, 0x00, 0x83, 0x12, 0x63, 0x08, 0x75, 0x75, 0xd6, 0xe6, 0x28,
+	0xfd, 0xf0, 0xa8, 0x5a, 0x46, 0x1b, 0x81, 0x58, 0x4f, 0x3c, 0xbe, 0xb0, 0x7d, 0x7d, 0xc1, 0x1a,
+	0x2e, 0x03, 0x4a, 0x17, 0x5d, 0x59, 0xbe, 0x0f, 0x24, 0xe5, 0x18, 0xc9, 0x72, 0x13, 0x80, 0x84,
+	0x06, 0xd5, 0x16, 0xaa, 0x06, 0x42, 0xed, 0xe0, 0x0d, 0x3d, 0x85, 0x17, 0x04, 0x30, 0xf8, 0x1a,
+	0xca, 0x1b, 0x23, 0x21, 0xb1, 0xd6, 0xcf, 0x1b, 0x23, 0xf5, 0x04, 0x6d, 0x65, 0xcc, 0x00, 0xe1,
+	0x33, 0xb4, 0x1e, 0x2b, 0x02, 0xa6, 0x1a, 0xc3, 0x8c, 0x75, 0x02, 0x6b, 0x7c, 0x85, 0xfa, 0x12,
+	0x80, 0xdb, 0xa6, 0x99, 0x0a, 0xfc, 0x08, 0xa1, 0xc5, 0x97, 0x0f, 0xa2, 0x3b, 0x9a, 0x1f, 0x13,
+	0x6d, 0x1e, 0x13, 0xcd, 0xcf, 0x25, 0xc4, 0x44, 0xdb, 0xa7, 0x7a, 0x30, 0xdb, 0x5f, 0x9a, 0x54,
+	0xbf, 0x4a, 0xe0, 0x34, 0x59, 0x2c, 0xdb, 0xe9, 0x7f, 0xff, 0xe8, 0x14, 0x77, 0x43, 0x2e, 0xf2,
+	0xc2, 0xc5, 0xee, 0x85, 0x2e, 0x7c, 0xa8, 0x65, 0x1b, 0xad, 0x77, 0x05, 0xf4, 0xbf, 0xb0, 0x81,
+	0x3d, 0x54, 0xf0, 0xdf, 0x3b, 0xae, 0x25, 0x7c, 0x2a, 0xd1, 0x10, 0xca, 0xdb, 0xd9, 0x4d, 0xbe,
+	0x94, 0x5a, 0x79, 0xfb, 0xed, 0xd7, 0x69, 0xfe, 0x16, 0x2e, 0x91, 0xe4, 0xc3, 0x05, 0x7f, 0x90,
+	0x22, 0xc1, 0xc1, 0x7b, 0xc9, 0x8b, 0x53, 0x92, 0x29, 0x6b, 0xab, 0xb6, 0x03, 0xd1, 0xae, 0x20,
+	0xda, 0xc2, 0x15, 0x92, 0x7d, 0xa0, 0xe1, 0x53, 0x29, 0x9c, 0x23, 0x7c, 0x37, 0x55, 0x29, 0x21,
+	0xa5, 0xf2, 0xde, 0x8a, 0xdd, 0x80, 0xb5, 0x23, 0xb0, 0xaa, 0x58, 0x21, 0x99, 0x27, 0x28, 0xfe,
+	0x2c, 0x25, 0x7c, 0x51, 0xb8, 0x99, 0x2a, 0x96, 0x96, 0x03, 0xb9, 0xf5, 0x37, 0x23, 0x00, 0x79,
+	0x4f, 0x40, 0x36, 0x70, 0x9d, 0x5c, 0x7c, 0x82, 0x93, 0x13, 0x63, 0xf4, 0x06, 0x7f, 0x92, 0x50,
+	0x31, 0xb6, 0xaf, 0x6d, 0x9a, 0x69, 0xc4, 0x19, 0xc9, 0x4d, 0x23, 0xce, 0xca, 0x9f, 0x7a, 0x47,
+	0x10, 0xdf, 0xc6, 0xb5, 0x15, 0x88, 0x3b, 0xcd, 0xb3, 0xa9, 0x22, 0x9d, 0x4f, 0x15, 0xe9, 0xe7,
+	0x54, 0x91, 0xde, 0xcf, 0x94, 0xdc, 0xf9, 0x4c, 0xc9, 0x7d, 0x9f, 0x29, 0xb9, 0xe7, 0x25, 0x98,
+	0x7e, 0xbd, 0x98, 0xf7, 0x8e, 0x6d, 0xe6, 0x0e, 0x0b, 0xe2, 0x7f, 0xea, 0xfe, 0x9f, 0x00, 0x00,
+	0x00, 0xff, 0xff, 0x86, 0x14, 0x07, 0xe0, 0xdd, 0x07, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -337,6 +537,9 @@ type QueryClient interface {
 	SharedEntropy(ctx context.Context, in *QueryGetSharedEntropyRequest, opts ...grpc.CallOption) (*QueryGetSharedEntropyResponse, error)
 	// Queries a QuorumParams by index.
 	QuorumParams(ctx context.Context, in *QueryGetQuorumParamsRequest, opts ...grpc.CallOption) (*QueryGetQuorumParamsResponse, error)
+	// Queries a list of AlliancesTimeline items.
+	AlliancesTimeline(ctx context.Context, in *QueryGetAlliancesTimelineRequest, opts ...grpc.CallOption) (*QueryGetAlliancesTimelineResponse, error)
+	AlliancesTimelineAll(ctx context.Context, in *QueryAllAlliancesTimelineRequest, opts ...grpc.CallOption) (*QueryAllAlliancesTimelineResponse, error)
 }
 
 type queryClient struct {
@@ -374,6 +577,24 @@ func (c *queryClient) QuorumParams(ctx context.Context, in *QueryGetQuorumParams
 	return out, nil
 }
 
+func (c *queryClient) AlliancesTimeline(ctx context.Context, in *QueryGetAlliancesTimelineRequest, opts ...grpc.CallOption) (*QueryGetAlliancesTimelineResponse, error) {
+	out := new(QueryGetAlliancesTimelineResponse)
+	err := c.cc.Invoke(ctx, "/kepler.alliance.Query/AlliancesTimeline", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) AlliancesTimelineAll(ctx context.Context, in *QueryAllAlliancesTimelineRequest, opts ...grpc.CallOption) (*QueryAllAlliancesTimelineResponse, error) {
+	out := new(QueryAllAlliancesTimelineResponse)
+	err := c.cc.Invoke(ctx, "/kepler.alliance.Query/AlliancesTimelineAll", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueryServer is the server API for Query service.
 type QueryServer interface {
 	// Parameters queries the parameters of the module.
@@ -382,6 +603,9 @@ type QueryServer interface {
 	SharedEntropy(context.Context, *QueryGetSharedEntropyRequest) (*QueryGetSharedEntropyResponse, error)
 	// Queries a QuorumParams by index.
 	QuorumParams(context.Context, *QueryGetQuorumParamsRequest) (*QueryGetQuorumParamsResponse, error)
+	// Queries a list of AlliancesTimeline items.
+	AlliancesTimeline(context.Context, *QueryGetAlliancesTimelineRequest) (*QueryGetAlliancesTimelineResponse, error)
+	AlliancesTimelineAll(context.Context, *QueryAllAlliancesTimelineRequest) (*QueryAllAlliancesTimelineResponse, error)
 }
 
 // UnimplementedQueryServer can be embedded to have forward compatible implementations.
@@ -396,6 +620,12 @@ func (*UnimplementedQueryServer) SharedEntropy(ctx context.Context, req *QueryGe
 }
 func (*UnimplementedQueryServer) QuorumParams(ctx context.Context, req *QueryGetQuorumParamsRequest) (*QueryGetQuorumParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method QuorumParams not implemented")
+}
+func (*UnimplementedQueryServer) AlliancesTimeline(ctx context.Context, req *QueryGetAlliancesTimelineRequest) (*QueryGetAlliancesTimelineResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AlliancesTimeline not implemented")
+}
+func (*UnimplementedQueryServer) AlliancesTimelineAll(ctx context.Context, req *QueryAllAlliancesTimelineRequest) (*QueryAllAlliancesTimelineResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AlliancesTimelineAll not implemented")
 }
 
 func RegisterQueryServer(s grpc1.Server, srv QueryServer) {
@@ -456,6 +686,42 @@ func _Query_QuorumParams_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_AlliancesTimeline_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryGetAlliancesTimelineRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).AlliancesTimeline(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/kepler.alliance.Query/AlliancesTimeline",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).AlliancesTimeline(ctx, req.(*QueryGetAlliancesTimelineRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_AlliancesTimelineAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryAllAlliancesTimelineRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).AlliancesTimelineAll(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/kepler.alliance.Query/AlliancesTimelineAll",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).AlliancesTimelineAll(ctx, req.(*QueryAllAlliancesTimelineRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var Query_serviceDesc = _Query_serviceDesc
 var _Query_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "kepler.alliance.Query",
@@ -472,6 +738,14 @@ var _Query_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "QuorumParams",
 			Handler:    _Query_QuorumParams_Handler,
+		},
+		{
+			MethodName: "AlliancesTimeline",
+			Handler:    _Query_AlliancesTimeline_Handler,
+		},
+		{
+			MethodName: "AlliancesTimelineAll",
+			Handler:    _Query_AlliancesTimelineAll_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -646,6 +920,151 @@ func (m *QueryGetQuorumParamsResponse) MarshalToSizedBuffer(dAtA []byte) (int, e
 	return len(dAtA) - i, nil
 }
 
+func (m *QueryGetAlliancesTimelineRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryGetAlliancesTimelineRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryGetAlliancesTimelineRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Id != 0 {
+		i = encodeVarintQuery(dAtA, i, uint64(m.Id))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryGetAlliancesTimelineResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryGetAlliancesTimelineResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryGetAlliancesTimelineResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	{
+		size, err := m.AlliancesTimeline.MarshalToSizedBuffer(dAtA[:i])
+		if err != nil {
+			return 0, err
+		}
+		i -= size
+		i = encodeVarintQuery(dAtA, i, uint64(size))
+	}
+	i--
+	dAtA[i] = 0xa
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryAllAlliancesTimelineRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryAllAlliancesTimelineRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryAllAlliancesTimelineRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Pagination != nil {
+		{
+			size, err := m.Pagination.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryAllAlliancesTimelineResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryAllAlliancesTimelineResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryAllAlliancesTimelineResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Pagination != nil {
+		{
+			size, err := m.Pagination.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.AlliancesTimeline) > 0 {
+		for iNdEx := len(m.AlliancesTimeline) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.AlliancesTimeline[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintQuery(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintQuery(dAtA []byte, offset int, v uint64) int {
 	offset -= sovQuery(v)
 	base := offset
@@ -714,6 +1133,61 @@ func (m *QueryGetQuorumParamsResponse) Size() (n int) {
 	_ = l
 	l = m.QuorumParams.Size()
 	n += 1 + l + sovQuery(uint64(l))
+	return n
+}
+
+func (m *QueryGetAlliancesTimelineRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Id != 0 {
+		n += 1 + sovQuery(uint64(m.Id))
+	}
+	return n
+}
+
+func (m *QueryGetAlliancesTimelineResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = m.AlliancesTimeline.Size()
+	n += 1 + l + sovQuery(uint64(l))
+	return n
+}
+
+func (m *QueryAllAlliancesTimelineRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Pagination != nil {
+		l = m.Pagination.Size()
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	return n
+}
+
+func (m *QueryAllAlliancesTimelineResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.AlliancesTimeline) > 0 {
+		for _, e := range m.AlliancesTimeline {
+			l = e.Size()
+			n += 1 + l + sovQuery(uint64(l))
+		}
+	}
+	if m.Pagination != nil {
+		l = m.Pagination.Size()
+		n += 1 + l + sovQuery(uint64(l))
+	}
 	return n
 }
 
@@ -1098,6 +1572,364 @@ func (m *QueryGetQuorumParamsResponse) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if err := m.QuorumParams.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryGetAlliancesTimelineRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryGetAlliancesTimelineRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryGetAlliancesTimelineRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			m.Id = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Id |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryGetAlliancesTimelineResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryGetAlliancesTimelineResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryGetAlliancesTimelineResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field AlliancesTimeline", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if err := m.AlliancesTimeline.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryAllAlliancesTimelineRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryAllAlliancesTimelineRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryAllAlliancesTimelineRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Pagination", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Pagination == nil {
+				m.Pagination = &query.PageRequest{}
+			}
+			if err := m.Pagination.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryAllAlliancesTimelineResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryAllAlliancesTimelineResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryAllAlliancesTimelineResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field AlliancesTimeline", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.AlliancesTimeline = append(m.AlliancesTimeline, AlliancesTimeline{})
+			if err := m.AlliancesTimeline[len(m.AlliancesTimeline)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Pagination", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Pagination == nil {
+				m.Pagination = &query.PageResponse{}
+			}
+			if err := m.Pagination.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex

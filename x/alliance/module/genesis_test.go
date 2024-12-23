@@ -23,6 +23,15 @@ func TestGenesis(t *testing.T) {
 			ThresholdPercent: 90,
 			LifetimeInBlocks: 87,
 		},
+		AlliancesTimelineList: []types.AlliancesTimeline{
+			{
+				Id: 0,
+			},
+			{
+				Id: 1,
+			},
+		},
+		AlliancesTimelineCount: 2,
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -36,5 +45,7 @@ func TestGenesis(t *testing.T) {
 
 	require.Equal(t, genesisState.SharedEntropy, got.SharedEntropy)
 	require.Equal(t, genesisState.QuorumParams, got.QuorumParams)
+	require.ElementsMatch(t, genesisState.AlliancesTimelineList, got.AlliancesTimelineList)
+	require.Equal(t, genesisState.AlliancesTimelineCount, got.AlliancesTimelineCount)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

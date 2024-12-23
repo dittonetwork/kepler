@@ -9,6 +9,7 @@ import "cosmos/base/query/v1beta1/pagination.proto";
 import "kepler/alliance/params.proto";
 import "kepler/alliance/shared_entropy.proto";
 import "kepler/alliance/quorum_params.proto";
+import "kepler/alliance/alliances_timeline.proto";
 
 option go_package = "kepler/x/alliance/types";
 
@@ -32,6 +33,16 @@ service Query {
     option (google.api.http).get = "/kepler/alliance/quorum_params";
   
   }
+  
+  // Queries a list of AlliancesTimeline items.
+  rpc AlliancesTimeline    (QueryGetAlliancesTimelineRequest) returns (QueryGetAlliancesTimelineResponse) {
+    option (google.api.http).get = "/kepler/alliance/alliances_timeline/{id}";
+  
+  }
+  rpc AlliancesTimelineAll (QueryAllAlliancesTimelineRequest) returns (QueryAllAlliancesTimelineResponse) {
+    option (google.api.http).get = "/kepler/alliance/alliances_timeline";
+  
+  }
 }
 // QueryParamsRequest is request type for the Query/Params RPC method.
 message QueryParamsRequest {}
@@ -53,5 +64,22 @@ message QueryGetQuorumParamsRequest {}
 
 message QueryGetQuorumParamsResponse {
   QuorumParams QuorumParams = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryGetAlliancesTimelineRequest {
+  uint64 id = 1;
+}
+
+message QueryGetAlliancesTimelineResponse {
+  AlliancesTimeline AlliancesTimeline = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllAlliancesTimelineRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllAlliancesTimelineResponse {
+  repeated AlliancesTimeline                      AlliancesTimeline = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination        = 2;
 }
 

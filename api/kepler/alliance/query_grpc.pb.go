@@ -20,9 +20,11 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Query_Params_FullMethodName        = "/kepler.alliance.Query/Params"
-	Query_SharedEntropy_FullMethodName = "/kepler.alliance.Query/SharedEntropy"
-	Query_QuorumParams_FullMethodName  = "/kepler.alliance.Query/QuorumParams"
+	Query_Params_FullMethodName               = "/kepler.alliance.Query/Params"
+	Query_SharedEntropy_FullMethodName        = "/kepler.alliance.Query/SharedEntropy"
+	Query_QuorumParams_FullMethodName         = "/kepler.alliance.Query/QuorumParams"
+	Query_AlliancesTimeline_FullMethodName    = "/kepler.alliance.Query/AlliancesTimeline"
+	Query_AlliancesTimelineAll_FullMethodName = "/kepler.alliance.Query/AlliancesTimelineAll"
 )
 
 // QueryClient is the client API for Query service.
@@ -35,6 +37,9 @@ type QueryClient interface {
 	SharedEntropy(ctx context.Context, in *QueryGetSharedEntropyRequest, opts ...grpc.CallOption) (*QueryGetSharedEntropyResponse, error)
 	// Queries a QuorumParams by index.
 	QuorumParams(ctx context.Context, in *QueryGetQuorumParamsRequest, opts ...grpc.CallOption) (*QueryGetQuorumParamsResponse, error)
+	// Queries a list of AlliancesTimeline items.
+	AlliancesTimeline(ctx context.Context, in *QueryGetAlliancesTimelineRequest, opts ...grpc.CallOption) (*QueryGetAlliancesTimelineResponse, error)
+	AlliancesTimelineAll(ctx context.Context, in *QueryAllAlliancesTimelineRequest, opts ...grpc.CallOption) (*QueryAllAlliancesTimelineResponse, error)
 }
 
 type queryClient struct {
@@ -72,6 +77,24 @@ func (c *queryClient) QuorumParams(ctx context.Context, in *QueryGetQuorumParams
 	return out, nil
 }
 
+func (c *queryClient) AlliancesTimeline(ctx context.Context, in *QueryGetAlliancesTimelineRequest, opts ...grpc.CallOption) (*QueryGetAlliancesTimelineResponse, error) {
+	out := new(QueryGetAlliancesTimelineResponse)
+	err := c.cc.Invoke(ctx, Query_AlliancesTimeline_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) AlliancesTimelineAll(ctx context.Context, in *QueryAllAlliancesTimelineRequest, opts ...grpc.CallOption) (*QueryAllAlliancesTimelineResponse, error) {
+	out := new(QueryAllAlliancesTimelineResponse)
+	err := c.cc.Invoke(ctx, Query_AlliancesTimelineAll_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueryServer is the server API for Query service.
 // All implementations must embed UnimplementedQueryServer
 // for forward compatibility
@@ -82,6 +105,9 @@ type QueryServer interface {
 	SharedEntropy(context.Context, *QueryGetSharedEntropyRequest) (*QueryGetSharedEntropyResponse, error)
 	// Queries a QuorumParams by index.
 	QuorumParams(context.Context, *QueryGetQuorumParamsRequest) (*QueryGetQuorumParamsResponse, error)
+	// Queries a list of AlliancesTimeline items.
+	AlliancesTimeline(context.Context, *QueryGetAlliancesTimelineRequest) (*QueryGetAlliancesTimelineResponse, error)
+	AlliancesTimelineAll(context.Context, *QueryAllAlliancesTimelineRequest) (*QueryAllAlliancesTimelineResponse, error)
 	mustEmbedUnimplementedQueryServer()
 }
 
@@ -97,6 +123,12 @@ func (UnimplementedQueryServer) SharedEntropy(context.Context, *QueryGetSharedEn
 }
 func (UnimplementedQueryServer) QuorumParams(context.Context, *QueryGetQuorumParamsRequest) (*QueryGetQuorumParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method QuorumParams not implemented")
+}
+func (UnimplementedQueryServer) AlliancesTimeline(context.Context, *QueryGetAlliancesTimelineRequest) (*QueryGetAlliancesTimelineResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AlliancesTimeline not implemented")
+}
+func (UnimplementedQueryServer) AlliancesTimelineAll(context.Context, *QueryAllAlliancesTimelineRequest) (*QueryAllAlliancesTimelineResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AlliancesTimelineAll not implemented")
 }
 func (UnimplementedQueryServer) mustEmbedUnimplementedQueryServer() {}
 
@@ -165,6 +197,42 @@ func _Query_QuorumParams_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_AlliancesTimeline_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryGetAlliancesTimelineRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).AlliancesTimeline(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Query_AlliancesTimeline_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).AlliancesTimeline(ctx, req.(*QueryGetAlliancesTimelineRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_AlliancesTimelineAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryAllAlliancesTimelineRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).AlliancesTimelineAll(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Query_AlliancesTimelineAll_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).AlliancesTimelineAll(ctx, req.(*QueryAllAlliancesTimelineRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Query_ServiceDesc is the grpc.ServiceDesc for Query service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -183,6 +251,14 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "QuorumParams",
 			Handler:    _Query_QuorumParams_Handler,
+		},
+		{
+			MethodName: "AlliancesTimeline",
+			Handler:    _Query_AlliancesTimeline_Handler,
+		},
+		{
+			MethodName: "AlliancesTimelineAll",
+			Handler:    _Query_AlliancesTimelineAll_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

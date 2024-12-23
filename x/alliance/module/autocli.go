@@ -27,6 +27,17 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 					Use:       "show-quorum-params",
 					Short:     "show QuorumParams",
 				},
+				{
+					RpcMethod: "AlliancesTimelineAll",
+					Use:       "list-alliances-timeline",
+					Short:     "List all AlliancesTimeline",
+				},
+				{
+					RpcMethod:      "AlliancesTimeline",
+					Use:            "show-alliances-timeline [id]",
+					Short:          "Shows a AlliancesTimeline by id",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "id"}},
+				},
 				// this line is used by ignite scaffolding # autocli/query
 			},
 		},
@@ -77,6 +88,24 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 					RpcMethod: "DeleteQuorumParams",
 					Use:       "delete-quorum-params",
 					Short:     "Delete QuorumParams",
+				},
+				{
+					RpcMethod:      "CreateAlliancesTimeline",
+					Use:            "create-alliances-timeline [participants] [startBlock] [endBlock]",
+					Short:          "Create AlliancesTimeline",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "participants"}, {ProtoField: "startBlock"}, {ProtoField: "endBlock"}},
+				},
+				{
+					RpcMethod:      "UpdateAlliancesTimeline",
+					Use:            "update-alliances-timeline [id] [participants] [startBlock] [endBlock]",
+					Short:          "Update AlliancesTimeline",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "id"}, {ProtoField: "participants"}, {ProtoField: "startBlock"}, {ProtoField: "endBlock"}},
+				},
+				{
+					RpcMethod:      "DeleteAlliancesTimeline",
+					Use:            "delete-alliances-timeline [id]",
+					Short:          "Delete AlliancesTimeline",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "id"}},
 				},
 				// this line is used by ignite scaffolding # autocli/tx
 			},

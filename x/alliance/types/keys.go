@@ -26,3 +26,8 @@ const (
 const (
 	QuorumParamsKey = "QuorumParams/value/"
 )
+
+const (
+	AlliancesTimelineKey      = "AlliancesTimeline/value/"
+	AlliancesTimelineCountKey = "AlliancesTimeline/count/"
+)

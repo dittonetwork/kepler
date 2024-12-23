@@ -20,14 +20,17 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Msg_UpdateParams_FullMethodName        = "/kepler.alliance.Msg/UpdateParams"
-	Msg_AddEntropy_FullMethodName          = "/kepler.alliance.Msg/AddEntropy"
-	Msg_CreateSharedEntropy_FullMethodName = "/kepler.alliance.Msg/CreateSharedEntropy"
-	Msg_UpdateSharedEntropy_FullMethodName = "/kepler.alliance.Msg/UpdateSharedEntropy"
-	Msg_DeleteSharedEntropy_FullMethodName = "/kepler.alliance.Msg/DeleteSharedEntropy"
-	Msg_CreateQuorumParams_FullMethodName  = "/kepler.alliance.Msg/CreateQuorumParams"
-	Msg_UpdateQuorumParams_FullMethodName  = "/kepler.alliance.Msg/UpdateQuorumParams"
-	Msg_DeleteQuorumParams_FullMethodName  = "/kepler.alliance.Msg/DeleteQuorumParams"
+	Msg_UpdateParams_FullMethodName            = "/kepler.alliance.Msg/UpdateParams"
+	Msg_AddEntropy_FullMethodName              = "/kepler.alliance.Msg/AddEntropy"
+	Msg_CreateSharedEntropy_FullMethodName     = "/kepler.alliance.Msg/CreateSharedEntropy"
+	Msg_UpdateSharedEntropy_FullMethodName     = "/kepler.alliance.Msg/UpdateSharedEntropy"
+	Msg_DeleteSharedEntropy_FullMethodName     = "/kepler.alliance.Msg/DeleteSharedEntropy"
+	Msg_CreateQuorumParams_FullMethodName      = "/kepler.alliance.Msg/CreateQuorumParams"
+	Msg_UpdateQuorumParams_FullMethodName      = "/kepler.alliance.Msg/UpdateQuorumParams"
+	Msg_DeleteQuorumParams_FullMethodName      = "/kepler.alliance.Msg/DeleteQuorumParams"
+	Msg_CreateAlliancesTimeline_FullMethodName = "/kepler.alliance.Msg/CreateAlliancesTimeline"
+	Msg_UpdateAlliancesTimeline_FullMethodName = "/kepler.alliance.Msg/UpdateAlliancesTimeline"
+	Msg_DeleteAlliancesTimeline_FullMethodName = "/kepler.alliance.Msg/DeleteAlliancesTimeline"
 )
 
 // MsgClient is the client API for Msg service.
@@ -44,6 +47,9 @@ type MsgClient interface {
 	CreateQuorumParams(ctx context.Context, in *MsgCreateQuorumParams, opts ...grpc.CallOption) (*MsgCreateQuorumParamsResponse, error)
 	UpdateQuorumParams(ctx context.Context, in *MsgUpdateQuorumParams, opts ...grpc.CallOption) (*MsgUpdateQuorumParamsResponse, error)
 	DeleteQuorumParams(ctx context.Context, in *MsgDeleteQuorumParams, opts ...grpc.CallOption) (*MsgDeleteQuorumParamsResponse, error)
+	CreateAlliancesTimeline(ctx context.Context, in *MsgCreateAlliancesTimeline, opts ...grpc.CallOption) (*MsgCreateAlliancesTimelineResponse, error)
+	UpdateAlliancesTimeline(ctx context.Context, in *MsgUpdateAlliancesTimeline, opts ...grpc.CallOption) (*MsgUpdateAlliancesTimelineResponse, error)
+	DeleteAlliancesTimeline(ctx context.Context, in *MsgDeleteAlliancesTimeline, opts ...grpc.CallOption) (*MsgDeleteAlliancesTimelineResponse, error)
 }
 
 type msgClient struct {
@@ -126,6 +132,33 @@ func (c *msgClient) DeleteQuorumParams(ctx context.Context, in *MsgDeleteQuorumP
 	return out, nil
 }
 
+func (c *msgClient) CreateAlliancesTimeline(ctx context.Context, in *MsgCreateAlliancesTimeline, opts ...grpc.CallOption) (*MsgCreateAlliancesTimelineResponse, error) {
+	out := new(MsgCreateAlliancesTimelineResponse)
+	err := c.cc.Invoke(ctx, Msg_CreateAlliancesTimeline_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) UpdateAlliancesTimeline(ctx context.Context, in *MsgUpdateAlliancesTimeline, opts ...grpc.CallOption) (*MsgUpdateAlliancesTimelineResponse, error) {
+	out := new(MsgUpdateAlliancesTimelineResponse)
+	err := c.cc.Invoke(ctx, Msg_UpdateAlliancesTimeline_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) DeleteAlliancesTimeline(ctx context.Context, in *MsgDeleteAlliancesTimeline, opts ...grpc.CallOption) (*MsgDeleteAlliancesTimelineResponse, error) {
+	out := new(MsgDeleteAlliancesTimelineResponse)
+	err := c.cc.Invoke(ctx, Msg_DeleteAlliancesTimeline_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 // All implementations must embed UnimplementedMsgServer
 // for forward compatibility
@@ -140,6 +173,9 @@ type MsgServer interface {
 	CreateQuorumParams(context.Context, *MsgCreateQuorumParams) (*MsgCreateQuorumParamsResponse, error)
 	UpdateQuorumParams(context.Context, *MsgUpdateQuorumParams) (*MsgUpdateQuorumParamsResponse, error)
 	DeleteQuorumParams(context.Context, *MsgDeleteQuorumParams) (*MsgDeleteQuorumParamsResponse, error)
+	CreateAlliancesTimeline(context.Context, *MsgCreateAlliancesTimeline) (*MsgCreateAlliancesTimelineResponse, error)
+	UpdateAlliancesTimeline(context.Context, *MsgUpdateAlliancesTimeline) (*MsgUpdateAlliancesTimelineResponse, error)
+	DeleteAlliancesTimeline(context.Context, *MsgDeleteAlliancesTimeline) (*MsgDeleteAlliancesTimelineResponse, error)
 	mustEmbedUnimplementedMsgServer()
 }
 
@@ -170,6 +206,15 @@ func (UnimplementedMsgServer) UpdateQuorumParams(context.Context, *MsgUpdateQuor
 }
 func (UnimplementedMsgServer) DeleteQuorumParams(context.Context, *MsgDeleteQuorumParams) (*MsgDeleteQuorumParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteQuorumParams not implemented")
+}
+func (UnimplementedMsgServer) CreateAlliancesTimeline(context.Context, *MsgCreateAlliancesTimeline) (*MsgCreateAlliancesTimelineResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateAlliancesTimeline not implemented")
+}
+func (UnimplementedMsgServer) UpdateAlliancesTimeline(context.Context, *MsgUpdateAlliancesTimeline) (*MsgUpdateAlliancesTimelineResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateAlliancesTimeline not implemented")
+}
+func (UnimplementedMsgServer) DeleteAlliancesTimeline(context.Context, *MsgDeleteAlliancesTimeline) (*MsgDeleteAlliancesTimelineResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteAlliancesTimeline not implemented")
 }
 func (UnimplementedMsgServer) mustEmbedUnimplementedMsgServer() {}
 
@@ -328,6 +373,60 @@ func _Msg_DeleteQuorumParams_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_CreateAlliancesTimeline_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgCreateAlliancesTimeline)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).CreateAlliancesTimeline(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_CreateAlliancesTimeline_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).CreateAlliancesTimeline(ctx, req.(*MsgCreateAlliancesTimeline))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_UpdateAlliancesTimeline_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgUpdateAlliancesTimeline)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).UpdateAlliancesTimeline(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_UpdateAlliancesTimeline_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).UpdateAlliancesTimeline(ctx, req.(*MsgUpdateAlliancesTimeline))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_DeleteAlliancesTimeline_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgDeleteAlliancesTimeline)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).DeleteAlliancesTimeline(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_DeleteAlliancesTimeline_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).DeleteAlliancesTimeline(ctx, req.(*MsgDeleteAlliancesTimeline))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Msg_ServiceDesc is the grpc.ServiceDesc for Msg service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -366,6 +465,18 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteQuorumParams",
 			Handler:    _Msg_DeleteQuorumParams_Handler,
+		},
+		{
+			MethodName: "CreateAlliancesTimeline",
+			Handler:    _Msg_CreateAlliancesTimeline_Handler,
+		},
+		{
+			MethodName: "UpdateAlliancesTimeline",
+			Handler:    _Msg_UpdateAlliancesTimeline_Handler,
+		},
+		{
+			MethodName: "DeleteAlliancesTimeline",
+			Handler:    _Msg_DeleteAlliancesTimeline_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

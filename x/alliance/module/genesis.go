@@ -17,6 +17,13 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 	if genState.QuorumParams != nil {
 		k.SetQuorumParams(ctx, *genState.QuorumParams)
 	}
+	// Set all the alliancesTimeline
+	for _, elem := range genState.AlliancesTimelineList {
+		k.SetAlliancesTimeline(ctx, elem)
+	}
+
+	// Set alliancesTimeline count
+	k.SetAlliancesTimelineCount(ctx, genState.AlliancesTimelineCount)
 	// this line is used by starport scaffolding # genesis/module/init
 	if err := k.SetParams(ctx, genState.Params); err != nil {
 		panic(err)
@@ -38,6 +45,8 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	if found {
 		genesis.QuorumParams = &quorumParams
 	}
+	genesis.AlliancesTimelineList = k.GetAllAlliancesTimeline(ctx)
+	genesis.AlliancesTimelineCount = k.GetAlliancesTimelineCount(ctx)
 	// this line is used by starport scaffolding # genesis/module/export
 
 	return genesis

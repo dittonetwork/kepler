@@ -51,6 +51,18 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgDeleteQuorumParams int = 100
 
+	opWeightMsgCreateAlliancesTimeline = "op_weight_msg_alliances_timeline"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateAlliancesTimeline int = 100
+
+	opWeightMsgUpdateAlliancesTimeline = "op_weight_msg_alliances_timeline"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgUpdateAlliancesTimeline int = 100
+
+	opWeightMsgDeleteAlliancesTimeline = "op_weight_msg_alliances_timeline"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgDeleteAlliancesTimeline int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -62,6 +74,17 @@ func (AppModule) GenerateGenesisState(simState *module.SimulationState) {
 	}
 	allianceGenesis := types.GenesisState{
 		Params: types.DefaultParams(),
+		AlliancesTimelineList: []types.AlliancesTimeline{
+			{
+				Id:      0,
+				Creator: sample.AccAddress(),
+			},
+			{
+				Id:      1,
+				Creator: sample.AccAddress(),
+			},
+		},
+		AlliancesTimelineCount: 2,
 		// this line is used by starport scaffolding # simapp/module/genesisState
 	}
 	simState.GenState[types.ModuleName] = simState.Cdc.MustMarshalJSON(&allianceGenesis)
@@ -151,6 +174,39 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 		alliancesimulation.SimulateMsgDeleteQuorumParams(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
+	var weightMsgCreateAlliancesTimeline int
+	simState.AppParams.GetOrGenerate(opWeightMsgCreateAlliancesTimeline, &weightMsgCreateAlliancesTimeline, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateAlliancesTimeline = defaultWeightMsgCreateAlliancesTimeline
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateAlliancesTimeline,
+		alliancesimulation.SimulateMsgCreateAlliancesTimeline(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgUpdateAlliancesTimeline int
+	simState.AppParams.GetOrGenerate(opWeightMsgUpdateAlliancesTimeline, &weightMsgUpdateAlliancesTimeline, nil,
+		func(_ *rand.Rand) {
+			weightMsgUpdateAlliancesTimeline = defaultWeightMsgUpdateAlliancesTimeline
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgUpdateAlliancesTimeline,
+		alliancesimulation.SimulateMsgUpdateAlliancesTimeline(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgDeleteAlliancesTimeline int
+	simState.AppParams.GetOrGenerate(opWeightMsgDeleteAlliancesTimeline, &weightMsgDeleteAlliancesTimeline, nil,
+		func(_ *rand.Rand) {
+			weightMsgDeleteAlliancesTimeline = defaultWeightMsgDeleteAlliancesTimeline
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgDeleteAlliancesTimeline,
+		alliancesimulation.SimulateMsgDeleteAlliancesTimeline(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
 	// this line is used by starport scaffolding # simapp/module/operation
 
 	return operations
@@ -212,6 +268,30 @@ func (am AppModule) ProposalMsgs(simState module.SimulationState) []simtypes.Wei
 			defaultWeightMsgDeleteQuorumParams,
 			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
 				alliancesimulation.SimulateMsgDeleteQuorumParams(am.accountKeeper, am.bankKeeper, am.keeper)
+				return nil
+			},
+		),
+		simulation.NewWeightedProposalMsg(
+			opWeightMsgCreateAlliancesTimeline,
+			defaultWeightMsgCreateAlliancesTimeline,
+			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
+				alliancesimulation.SimulateMsgCreateAlliancesTimeline(am.accountKeeper, am.bankKeeper, am.keeper)
+				return nil
+			},
+		),
+		simulation.NewWeightedProposalMsg(
+			opWeightMsgUpdateAlliancesTimeline,
+			defaultWeightMsgUpdateAlliancesTimeline,
+			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
+				alliancesimulation.SimulateMsgUpdateAlliancesTimeline(am.accountKeeper, am.bankKeeper, am.keeper)
+				return nil
+			},
+		),
+		simulation.NewWeightedProposalMsg(
+			opWeightMsgDeleteAlliancesTimeline,
+			defaultWeightMsgDeleteAlliancesTimeline,
+			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
+				alliancesimulation.SimulateMsgDeleteAlliancesTimeline(am.accountKeeper, am.bankKeeper, am.keeper)
 				return nil
 			},
 		),
