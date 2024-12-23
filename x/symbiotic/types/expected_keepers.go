@@ -8,7 +8,7 @@ import (
 )
 
 type BeaconKeeper interface {
-	// TODO Add methods imported from beacon should be defined here
+	// Add methods imported from beacon should be defined here
 	SyncNeeded(ctx context.Context) bool
 	GetFinalizedBlockInfo(ctx context.Context) (val types.FinalizedBlockInfo, found bool)
 }
