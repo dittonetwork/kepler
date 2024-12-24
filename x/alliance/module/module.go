@@ -5,17 +5,17 @@ import (
 	"encoding/json"
 	"fmt"
 
+	"cosmossdk.io/client"
+	"cosmossdk.io/codec"
+	cdctypes "cosmossdk.io/codec/types"
 	"cosmossdk.io/core/appmodule"
 	"cosmossdk.io/core/store"
 	"cosmossdk.io/depinject"
 	"cosmossdk.io/log"
-	"github.com/cosmos/cosmos-sdk/client"
-	"github.com/cosmos/cosmos-sdk/codec"
-	cdctypes "github.com/cosmos/cosmos-sdk/codec/types"
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/cosmos/cosmos-sdk/types/module"
-	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
-	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
+	sdk "cosmossdk.io/types"
+	"cosmossdk.io/types/module"
+	authtypes "cosmossdk.io/x/auth/types"
+	govtypes "cosmossdk.io/x/gov/types"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 
 	// this line is used by starport scaffolding # 1
@@ -151,7 +151,8 @@ func (am AppModule) BeginBlock(_ context.Context) error {
 
 // EndBlock contains the logic that is automatically triggered at the end of each block.
 // The end block implementation is optional.
-func (am AppModule) EndBlock(_ context.Context) error {
+func (am AppModule) EndBlock(goCtx context.Context) error {
+	am.keeper.FillAlliancesTimeline(goCtx)
 	return nil
 }
 
@@ -182,6 +183,7 @@ type ModuleInputs struct {
 
 	AccountKeeper types.AccountKeeper
 	BankKeeper    types.BankKeeper
+	StakingKeeper types.StakeKeeper
 }
 
 type ModuleOutputs struct {
@@ -202,6 +204,7 @@ func ProvideModule(in ModuleInputs) ModuleOutputs {
 		in.StoreService,
 		in.Logger,
 		authority.String(),
+		in.StakingKeeper,
 	)
 	m := NewAppModule(
 		in.Cdc,

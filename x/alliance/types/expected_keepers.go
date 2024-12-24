@@ -3,13 +3,13 @@ package types
 import (
 	"context"
 
-	corestore "cosmossdk.io/core/store"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 )
 
 type StakingKeeper interface {
 	// Add methods imported from staking should be defined here
-	ValidatorsPowerStoreIterator(ctx context.Context) (corestore.Iterator, error)
+	GetAllValidators(ctx context.Context) (validators []stakingtypes.Validator, err error)
 }
 
 // AccountKeeper defines the expected interface for the Account module.
