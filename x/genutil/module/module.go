@@ -33,23 +33,23 @@ type AppModule struct {
 }
 
 // NewAppModule creates a new AppModule object
-//func NewAppModule(
-//	cdc codec.Codec,
-//	accountKeeper types.AccountKeeper,
-//	stakingKeeper types.StakingKeeper,
-//	deliverTx TxHandler,
-//	txEncodingConfig client.TxEncodingConfig,
-//	genTxValidator types.MessageValidator,
-//) module.AppModule {
-//	return AppModule{
-//		cdc:              cdc,
-//		accountKeeper:    accountKeeper,
-//		stakingKeeper:    stakingKeeper,
-//		deliverTx:        deliverTx,
-//		txEncodingConfig: txEncodingConfig,
-//		genTxValidator:   genTxValidator,
-//	}
-//}
+func NewAppModule(
+	cdc codec.Codec,
+	accountKeeper types.AccountKeeper,
+	stakingKeeper types.StakingKeeper,
+	deliverTx TxHandler,
+	txEncodingConfig client.TxEncodingConfig,
+	genTxValidator types.MessageValidator,
+) module.AppModule {
+	return AppModule{
+		cdc:              cdc,
+		accountKeeper:    accountKeeper,
+		stakingKeeper:    stakingKeeper,
+		deliverTx:        deliverTx,
+		txEncodingConfig: txEncodingConfig,
+		genTxValidator:   genTxValidator,
+	}
+}
 
 // IsAppModule implements the appmodule.AppModule interface.
 func (AppModule) IsAppModule() {}

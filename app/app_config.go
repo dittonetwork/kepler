@@ -8,33 +8,40 @@ import (
 	bankmodulev1 "cosmossdk.io/api/cosmos/bank/module/v1"
 	consensusmodulev1 "cosmossdk.io/api/cosmos/consensus/module/v1"
 	epochsmodulev1 "cosmossdk.io/api/cosmos/epochs/module/v1"
-	genutilmodulev1 "cosmossdk.io/api/cosmos/genutil/module/v1"
 	poolmodulev1 "cosmossdk.io/api/cosmos/protocolpool/module/v1"
 	txconfigv1 "cosmossdk.io/api/cosmos/tx/config/v1"
+
 	"cosmossdk.io/depinject/appconfig"
 	"cosmossdk.io/x/accounts"
-	_ "cosmossdk.io/x/bank" // import for side-effects
+
+	_ "cosmossdk.io/x/bank"
 	banktypes "cosmossdk.io/x/bank/types"
-	_ "cosmossdk.io/x/consensus" // import for side-effects
+
+	_ "cosmossdk.io/x/consensus"
 	consensustypes "cosmossdk.io/x/consensus/types"
-	_ "cosmossdk.io/x/epochs" // import for side-effects
+
+	_ "cosmossdk.io/x/epochs"
 	epochstypes "cosmossdk.io/x/epochs/types"
+
 	minttypes "cosmossdk.io/x/mint/types"
-	_ "cosmossdk.io/x/protocolpool" // import for side-effects
+
+	_ "cosmossdk.io/x/protocolpool"
 	pooltypes "cosmossdk.io/x/protocolpool/types"
+
+	_ "kepler/x/genutil/module"
+	genutilmoduletypes "kepler/x/genutil/types"
 
 	_ "kepler/x/horizon/module"
 	horizonmoduletypes "kepler/x/horizon/types"
 
 	_ "kepler/x/staking/module"
-	xstakingmoduletypes "kepler/x/staking/types"
+	stakingmoduletypes "kepler/x/staking/types"
 
 	"github.com/cosmos/cosmos-sdk/runtime"
-	_ "github.com/cosmos/cosmos-sdk/testutil/x/counter" // import for side-effects
-	_ "github.com/cosmos/cosmos-sdk/x/auth"             // import for side-effects
-	_ "github.com/cosmos/cosmos-sdk/x/auth/tx/config"   // import for side-effects
+	_ "github.com/cosmos/cosmos-sdk/testutil/x/counter"
+	_ "github.com/cosmos/cosmos-sdk/x/auth"
+	_ "github.com/cosmos/cosmos-sdk/x/auth/tx/config"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
-	genutiltypes "kepler/x/genutil/types"
 )
 
 var (
@@ -75,14 +82,14 @@ var (
 						// chain modules
 						horizonmoduletypes.ModuleName,
 						epochstypes.ModuleName,
-						xstakingmoduletypes.ModuleName,
+						stakingmoduletypes.ModuleName,
 						// this line is used by starport scaffolding # stargate/app/beginBlockers
 					},
 					EndBlockers: []string{
 						pooltypes.ModuleName,
 						// chain modules
 						horizonmoduletypes.ModuleName,
-						xstakingmoduletypes.ModuleName,
+						stakingmoduletypes.ModuleName,
 						// this line is used by starport scaffolding # stargate/app/endBlockers
 					},
 					// The following is mostly only needed when ModuleName != StoreKey name.
@@ -104,12 +111,12 @@ var (
 						accounts.ModuleName,
 						authtypes.ModuleName,
 						banktypes.ModuleName,
-						genutiltypes.ModuleName,
 						pooltypes.ModuleName,
 						epochstypes.ModuleName,
 						// chain modules
+						genutilmoduletypes.ModuleName,
 						horizonmoduletypes.ModuleName,
-						xstakingmoduletypes.ModuleName,
+						stakingmoduletypes.ModuleName,
 						// this line is used by starport scaffolding # stargate/app/initGenesis
 					},
 					// SkipStoreKeys is an optional list of store keys to skip when constructing the
@@ -140,10 +147,6 @@ var (
 				Config: appconfig.WrapAny(&txconfigv1.Config{}),
 			},
 			{
-				Name:   genutiltypes.ModuleName,
-				Config: appconfig.WrapAny(&genutilmodulev1.Module{}),
-			},
-			{
 				Name:   consensustypes.ModuleName,
 				Config: appconfig.WrapAny(&consensusmodulev1.Module{}),
 			},
@@ -156,16 +159,20 @@ var (
 				Config: appconfig.WrapAny(&accountsmodulev1.Module{}),
 			},
 			{
-				Name:   horizonmoduletypes.ModuleName,
-				Config: appconfig.WrapAny(&horizonmoduletypes.Module{}),
-			},
-			{
 				Name:   epochstypes.ModuleName,
 				Config: appconfig.WrapAny(&epochsmodulev1.Module{}),
 			},
 			{
-				Name: xstakingmoduletypes.ModuleName,
-				Config: appconfig.WrapAny(&xstakingmoduletypes.Module{
+				Name:   genutilmoduletypes.ModuleName,
+				Config: appconfig.WrapAny(&genutilmoduletypes.Module{}),
+			},
+			{
+				Name:   horizonmoduletypes.ModuleName,
+				Config: appconfig.WrapAny(&horizonmoduletypes.Module{}),
+			},
+			{
+				Name: stakingmoduletypes.ModuleName,
+				Config: appconfig.WrapAny(&stakingmoduletypes.Module{
 					Bech32PrefixValidator: AccountAddressPrefix + "valoper",
 					Bech32PrefixConsensus: AccountAddressPrefix + "valcons",
 				}),
