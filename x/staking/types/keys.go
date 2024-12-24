@@ -6,6 +6,7 @@ import (
 	"cosmossdk.io/math"
 	"encoding/binary"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/cosmos/cosmos-sdk/types/kv"
 )
 
 const (
@@ -34,6 +35,12 @@ var (
 	// ParamsKey is the prefix to retrieve all Params
 	ParamsKey = collections.NewPrefix(81)
 )
+
+// AddressFromValidatorsKey creates the validator operator address from ValidatorsKey
+func AddressFromValidatorsKey(key []byte) []byte {
+	kv.AssertKeyAtLeastLength(key, 3)
+	return key[2:] // remove prefix bytes and address length
+}
 
 // GetValidatorsByPowerIndexKey creates the validator by power index.
 // Power index is the key used in the power-store, and represents the relative

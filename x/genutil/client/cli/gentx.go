@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"bytes"
 	"cosmossdk.io/errors"
-	"cosmossdk.io/x/staking/client/cli"
 	"encoding/json"
 	"fmt"
 	"github.com/cosmos/cosmos-sdk/client"
@@ -19,6 +18,7 @@ import (
 	"io"
 	"kepler/x/genutil/module"
 	"kepler/x/genutil/types"
+	"kepler/x/staking/client/cli"
 	"os"
 	"path/filepath"
 )

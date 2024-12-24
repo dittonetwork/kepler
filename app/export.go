@@ -7,9 +7,9 @@ import (
 	cmtproto "github.com/cometbft/cometbft/api/cometbft/types/v1"
 
 	storetypes "cosmossdk.io/store/types"
-	stakingtypes "cosmossdk.io/x/staking/types"
 	servertypes "github.com/cosmos/cosmos-sdk/server/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	stakingtypes "kepler/x/staking/types"
 )
 
 // ExportAppStateAndValidators exports the state of the application for a genesis file.

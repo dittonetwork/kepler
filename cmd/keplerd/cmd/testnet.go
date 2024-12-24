@@ -1,9 +1,9 @@
 package cmd
 
 import (
-	stakingtypes "cosmossdk.io/x/staking/types"
 	"fmt"
 	"io"
+	stakingtypes "kepler/x/staking/types"
 	"os"
 	"strings"
 
@@ -14,8 +14,6 @@ import (
 	"cosmossdk.io/log"
 	"cosmossdk.io/math"
 	storetypes "cosmossdk.io/store/types"
-
-	xstakingtypes "kepler/x/staking/types"
 
 	cmtproto "github.com/cometbft/cometbft/api/cometbft/types/v1"
 	"github.com/cometbft/cometbft/crypto"
@@ -95,13 +93,13 @@ func initAppForTestnet(app *app.App, args valArgs) *app.App {
 	//
 
 	// Create Validator struct for our new validator.
-	newVal := xstakingtypes.Validator{
+	newVal := stakingtypes.Validator{
 		OperatorAddress: args.newOperatorAddress,
 		ConsensusPubkey: pubkeyAny,
 		Jailed:          false,
-		Status:          xstakingtypes.Bonded,
+		Status:          stakingtypes.Bonded,
 		Tokens:          math.NewInt(valVotingPower),
-		Description: xstakingtypes.Description{
+		Description: stakingtypes.Description{
 			Moniker: "Testnet Validator",
 		},
 	}

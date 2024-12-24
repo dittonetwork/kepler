@@ -1,0 +1,14 @@
+syntax = "proto3";
+package kepler.staking.state;
+
+import "cosmos/orm/v1/orm.proto";
+
+option go_package = "kepler/x/staking/types/state";
+
+message Validator {
+
+}
+
+message Stake {
+
+}

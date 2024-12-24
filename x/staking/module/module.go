@@ -21,10 +21,10 @@ const (
 )
 
 var (
-// _ appmodule.AppModule             = (*AppModule)(nil)
-// _ appmodule.HasConsensusVersion   = (*AppModule)(nil)
-// _ appmodule.HasRegisterInterfaces = AppModule{}
-// _ appmodule.HasBeginBlocker       = (*AppModule)(nil)
+	_ appmodule.AppModule             = (*AppModule)(nil)
+	_ appmodule.HasConsensusVersion   = (*AppModule)(nil)
+	_ appmodule.HasRegisterInterfaces = AppModule{}
+	_ appmodule.HasBeginBlocker       = (*AppModule)(nil)
 )
 
 // AppModule implements the AppModule interface that defines the inter-dependent methods that modules need to implement

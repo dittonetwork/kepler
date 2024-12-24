@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"encoding/json"
 	"fmt"
+	"github.com/cometbft/cometbft/types"
 	"io"
 	"math/rand"
 	"os"
@@ -13,14 +14,12 @@ import (
 	"time"
 
 	cmtconfig "github.com/cometbft/cometbft/config"
-	types "github.com/cometbft/cometbft/types"
 	tmtime "github.com/cometbft/cometbft/types/time"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 
 	"cosmossdk.io/math"
 	banktypes "cosmossdk.io/x/bank/types"
-	stakingtypes "cosmossdk.io/x/staking/types"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/client/tx"
@@ -36,6 +35,7 @@ import (
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	"kepler/x/genutil/module"
 	genutiltypes "kepler/x/genutil/types"
+	stakingtypes "kepler/x/staking/types"
 )
 
 var (
@@ -269,7 +269,7 @@ func initTestnetFiles(
 			sdk.ValAddress(addr).String(),
 			valPubKeys[i],
 			valTokens,
-			stakingtypes.NewDescription(nodeDirName, "", "", "", ""),
+			stakingtypes.NewDescription(nodeDirName, "", "", "", "", nil),
 			stakingtypes.NewCommissionRates(math.LegacyOneDec(), math.LegacyOneDec(), math.LegacyOneDec()),
 			math.OneInt(),
 		)

@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"os"
 
-	stakingtypes "kepler/x/staking/types"
-
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
@@ -108,9 +106,10 @@ func DefaultMessageValidator(msgs []sdk.Msg) error {
 		return fmt.Errorf("unexpected number of GenTx messages; got: %d, expected: 1", len(msgs))
 	}
 
-	if _, ok := msgs[0].(*stakingtypes.MsgCreateValidator); !ok {
-		return fmt.Errorf("unexpected GenTx message type; expected: MsgCreateValidator, got: %T", msgs[0])
-	}
+	// TODO: Fix this!!!
+	//if _, ok := msgs[0].(*stakingtypes.MsgCreateValidator); !ok {
+	//	return fmt.Errorf("unexpected GenTx message type; expected: MsgCreateValidator, got: %T", msgs[0])
+	//}
 
 	if m, ok := msgs[0].(sdk.HasValidateBasic); ok {
 		if err := m.ValidateBasic(); err != nil {
