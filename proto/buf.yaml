@@ -7,6 +7,7 @@ version: v1
 deps:
   - buf.build/protocolbuffers/wellknowntypes
   - buf.build/cosmos/cosmos-sdk
+  - buf.build/cometbft/cometbft:4a62c99d422068a5165429b62a7eb824df46cca9 # CometBFT v0.38
   - buf.build/cosmos/cosmos-proto
   - buf.build/cosmos/gogo-proto
   - buf.build/googleapis/googleapis

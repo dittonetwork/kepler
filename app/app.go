@@ -1,10 +1,10 @@
 package app
 
 import (
+	"cosmossdk.io/core/appmodule"
 	"io"
 
 	clienthelpers "cosmossdk.io/client/v2/helpers"
-	"cosmossdk.io/core/appmodule"
 	"cosmossdk.io/core/registry"
 	corestore "cosmossdk.io/core/store"
 	"cosmossdk.io/depinject"

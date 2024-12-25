@@ -269,7 +269,7 @@ func initTestnetFiles(
 			sdk.ValAddress(addr).String(),
 			valPubKeys[i],
 			valTokens,
-			stakingtypes.NewDescription(nodeDirName, "", "", "", "", nil),
+			stakingtypes.NewDescription(nodeDirName, "", "", "", ""),
 			stakingtypes.NewCommissionRates(math.LegacyOneDec(), math.LegacyOneDec(), math.LegacyOneDec()),
 			math.OneInt(),
 		)

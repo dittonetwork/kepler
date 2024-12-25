@@ -5,38 +5,54 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"cosmossdk.io/core/appmodule"
-	"cosmossdk.io/core/registry"
-	"github.com/cosmos/cosmos-sdk/client"
-	"github.com/cosmos/cosmos-sdk/codec"
-	"github.com/grpc-ecosystem/grpc-gateway/runtime"
+	gwruntime "github.com/grpc-ecosystem/grpc-gateway/runtime"
+	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
 
+	"cosmossdk.io/collections"
+	"cosmossdk.io/core/appmodule"
+	"cosmossdk.io/core/registry"
+	"cosmossdk.io/depinject"
+	"cosmossdk.io/schema"
+
+	"github.com/cosmos/cosmos-sdk/client"
+	"github.com/cosmos/cosmos-sdk/codec"
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/cosmos/cosmos-sdk/types/module"
+
+	"kepler/x/staking/client/cli"
 	"kepler/x/staking/keeper"
 	"kepler/x/staking/types"
 )
 
 const (
-	consensusVersion uint64 = 1
+	consensusVersion uint64 = 6
 )
 
 var (
-	_ appmodule.AppModule             = (*AppModule)(nil)
-	_ appmodule.HasConsensusVersion   = (*AppModule)(nil)
+	_ module.AppModuleSimulation = AppModule{}
+	_ module.HasAminoCodec       = AppModule{}
+	_ module.HasGRPCGateway      = AppModule{}
+	_ module.HasInvariants       = AppModule{}
+	_ module.HasABCIGenesis      = AppModule{}
+	_ module.HasABCIEndBlock     = AppModule{}
+
+	_ appmodule.AppModule             = AppModule{}
+	_ appmodule.HasMigrations         = AppModule{}
 	_ appmodule.HasRegisterInterfaces = AppModule{}
-	_ appmodule.HasBeginBlocker       = (*AppModule)(nil)
+	_ schema.HasModuleCodec           = AppModule{}
+
+	_ depinject.OnePerModuleType = AppModule{}
 )
 
-// AppModule implements the AppModule interface that defines the inter-dependent methods that modules need to implement
+// AppModule implements an application module for the staking module.
 type AppModule struct {
 	cdc    codec.Codec
 	keeper *keeper.Keeper
 }
 
-func NewAppModule(
-	cdc codec.Codec,
-	keeper *keeper.Keeper,
-) AppModule {
+// NewAppModule creates a new AppModule object
+func NewAppModule(cdc codec.Codec, keeper *keeper.Keeper) AppModule {
 	return AppModule{
 		cdc:    cdc,
 		keeper: keeper,
@@ -44,83 +60,116 @@ func NewAppModule(
 }
 
 // IsAppModule implements the appmodule.AppModule interface.
-func (AppModule) IsAppModule() {}
+func (am AppModule) IsAppModule() {}
 
-// Name returns the name of the module as a string.
+// Name returns the staking module's name.
+// Deprecated: kept for legacy reasons.
 func (AppModule) Name() string {
 	return types.ModuleName
 }
 
-// RegisterGRPCGatewayRoutes registers the gRPC Gateway routes for the module.
-func (AppModule) RegisterGRPCGatewayRoutes(clientCtx client.Context, mux *runtime.ServeMux) {
+// RegisterLegacyAminoCodec registers the staking module's types on the given LegacyAmino codec.
+func (AppModule) RegisterLegacyAminoCodec(registrar registry.AminoRegistrar) {
+	types.RegisterLegacyAminoCodec(registrar)
+}
+
+// RegisterInterfaces registers the module's interface types
+func (AppModule) RegisterInterfaces(registrar registry.InterfaceRegistrar) {
+	types.RegisterInterfaces(registrar)
+}
+
+// RegisterGRPCGatewayRoutes registers the gRPC Gateway routes for the staking module.
+func (AppModule) RegisterGRPCGatewayRoutes(clientCtx client.Context, mux *gwruntime.ServeMux) {
 	if err := types.RegisterQueryHandlerClient(context.Background(), mux, types.NewQueryClient(clientCtx)); err != nil {
 		panic(err)
 	}
 }
 
-// RegisterInterfaces registers a module's interface types and their concrete implementations as proto.Message.
-func (AppModule) RegisterInterfaces(registrar registry.InterfaceRegistrar) {
-	types.RegisterInterfaces(registrar)
+// GetTxCmd returns the root tx command for the staking module.
+func (AppModule) GetTxCmd() *cobra.Command {
+	return cli.NewTxCmd()
 }
 
-// RegisterServices registers a gRPC query service to respond to the module-specific gRPC queries
+// RegisterInvariants registers the staking module invariants.
+func (am AppModule) RegisterInvariants(ir sdk.InvariantRegistry) {
+	keeper.RegisterInvariants(ir, am.keeper)
+}
+
+// RegisterServices registers module services.
 func (am AppModule) RegisterServices(registrar grpc.ServiceRegistrar) error {
 	types.RegisterMsgServer(registrar, keeper.NewMsgServerImpl(am.keeper))
-	types.RegisterQueryServer(registrar, keeper.NewQueryServerImpl(am.keeper))
+	types.RegisterQueryServer(registrar, keeper.NewQuerier(am.keeper))
 
 	return nil
 }
 
-// DefaultGenesis returns a default GenesisState for the module, marshalled to json.RawMessage.
-// The default GenesisState need to be defined by the module developer and is primarily used for testing.
-func (am AppModule) DefaultGenesis() json.RawMessage {
-	return am.cdc.MustMarshalJSON(types.DefaultGenesis())
+// RegisterMigrations registers module migrations
+func (am AppModule) RegisterMigrations(mr appmodule.MigrationRegistrar) error {
+	m := keeper.NewMigrator(am.keeper)
+	if err := mr.Register(types.ModuleName, 1, m.Migrate1to2); err != nil {
+		return fmt.Errorf("failed to migrate x/%s from version 1 to 2: %w", types.ModuleName, err)
+	}
+	if err := mr.Register(types.ModuleName, 2, m.Migrate2to3); err != nil {
+		return fmt.Errorf("failed to migrate x/%s from version 2 to 3: %w", types.ModuleName, err)
+	}
+	if err := mr.Register(types.ModuleName, 3, m.Migrate3to4); err != nil {
+		return fmt.Errorf("failed to migrate x/%s from version 3 to 4: %w", types.ModuleName, err)
+	}
+	if err := mr.Register(types.ModuleName, 4, m.Migrate4to5); err != nil {
+		return fmt.Errorf("failed to migrate x/%s from version 4 to 5: %w", types.ModuleName, err)
+	}
+	if err := mr.Register(types.ModuleName, 5, m.Migrate5to6); err != nil {
+		return fmt.Errorf("failed to migrate x/%s from version 5 to 6: %w", types.ModuleName, err)
+	}
+
+	return nil
 }
 
-// ValidateGenesis used to validate the GenesisState, given in its json.RawMessage form.
+// DefaultGenesis returns default genesis state as raw bytes for the staking module.
+func (am AppModule) DefaultGenesis() json.RawMessage {
+	return am.cdc.MustMarshalJSON(types.DefaultGenesisState())
+}
+
+// ValidateGenesis performs genesis state validation for the staking module.
 func (am AppModule) ValidateGenesis(bz json.RawMessage) error {
-	var genState types.GenesisState
-	if err := am.cdc.UnmarshalJSON(bz, &genState); err != nil {
+	var data types.GenesisState
+	if err := am.cdc.UnmarshalJSON(bz, &data); err != nil {
 		return fmt.Errorf("failed to unmarshal %s genesis state: %w", types.ModuleName, err)
 	}
 
-	return genState.Validate()
+	return ValidateGenesis(&data)
 }
 
-// InitGenesis performs the module's genesis initialization. It returns no validator updates.
-func (am AppModule) InitGenesis(ctx context.Context, gs json.RawMessage) ([]appmodule.ValidatorUpdate, error) {
-	var genState types.GenesisState
-	// Initialize global index to index in genesis state
-	if err := am.cdc.UnmarshalJSON(gs, &genState); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal %s genesis state: %w", types.ModuleName, err)
-	}
-
-	return am.keeper.InitGenesis(ctx, genState)
+// InitGenesis performs genesis initialization for the staking module.
+func (am AppModule) InitGenesis(ctx context.Context, data json.RawMessage) ([]appmodule.ValidatorUpdate, error) {
+	var genesisState types.GenesisState
+	am.cdc.MustUnmarshalJSON(data, &genesisState)
+	return am.keeper.InitGenesis(ctx, &genesisState)
 }
 
-// ExportGenesis returns the module's exported genesis state as raw JSON bytes.
+// ExportGenesis returns the exported genesis state as raw bytes for the staking module.
 func (am AppModule) ExportGenesis(ctx context.Context) (json.RawMessage, error) {
-	genState, err := am.keeper.ExportGenesis(ctx)
+	genesis, err := am.keeper.ExportGenesis(ctx)
 	if err != nil {
 		return nil, err
 	}
-
-	return am.cdc.MarshalJSON(genState)
+	marshalJSON, err := am.cdc.MarshalJSON(genesis)
+	if err != nil {
+		return nil, err
+	}
+	return marshalJSON, nil
 }
 
-// ConsensusVersion is a sequence number for state-breaking change of the module.
-// It should be incremented on each consensus-breaking change introduced by the module.
-// To avoid wrong/empty versions, the initial version should be set to 1.
+// ConsensusVersion implements HasConsensusVersion
 func (AppModule) ConsensusVersion() uint64 { return consensusVersion }
 
-// BeginBlock contains the logic that is automatically triggered at the beginning of each block.
-// The begin block implementation is optional.
-func (am AppModule) BeginBlock(_ context.Context) error {
-	return nil
-}
-
-// EndBlock contains the logic that is automatically triggered at the end of each block.
-// The end block implementation is optional.
+// EndBlock returns the end blocker for the staking module.
 func (am AppModule) EndBlock(ctx context.Context) ([]appmodule.ValidatorUpdate, error) {
 	return am.keeper.EndBlocker(ctx)
+}
+
+// ModuleCodec implements schema.HasModuleCodec.
+// It allows the indexer to decode the module's KVPairUpdate.
+func (am AppModule) ModuleCodec() (schema.ModuleCodec, error) {
+	return am.keeper.Schema.ModuleCodec(collections.IndexingOptions{})
 }

@@ -1,53 +1,45 @@
 package types
 
-import "fmt"
+import (
+	"encoding/json"
+	"github.com/cosmos/cosmos-sdk/codec"
+	gogoprotoany "github.com/cosmos/gogoproto/types/any"
+)
 
-func NewGenesisState(params Params, validators []Validator) *GenesisState {
+// NewGenesisState creates a new GenesisState instance
+func NewGenesisState(params Params, validators []Validator, delegations []Delegation) *GenesisState {
 	return &GenesisState{
-		Params:     params,
-		Validators: validators,
+		Params:      params,
+		Validators:  validators,
+		Delegations: delegations,
 	}
 }
 
-// DefaultGenesis returns the default genesis state
-func DefaultGenesis() *GenesisState {
+// DefaultGenesisState gets the raw genesis raw message for testing
+func DefaultGenesisState() *GenesisState {
 	return &GenesisState{
 		Params: DefaultParams(),
 	}
 }
 
-// Validate performs basic genesis state validation returning an error upon any
-// failure.
-func (gs GenesisState) Validate() error {
-	addrMap := make(map[string]bool, len(gs.Validators))
+// GetGenesisStateFromAppState returns x/staking GenesisState given raw application
+// genesis state.
+func GetGenesisStateFromAppState(cdc codec.JSONCodec, appState map[string]json.RawMessage) *GenesisState {
+	var genesisState GenesisState
 
-	for i := 0; i < len(gs.Validators); i++ {
-		val := gs.Validators[i]
-		consPk, err := val.ConsPubKey()
-		if err != nil {
-			return err
-		}
-
-		strKey := string(consPk.Bytes())
-
-		if _, ok := addrMap[strKey]; ok {
-			consAddr, err := val.GetConsAddr()
-			if err != nil {
-				return err
-			}
-			return fmt.Errorf("duplicate validator in genesis state: moniker %v, address %v", val.Description.Moniker, consAddr)
-		}
-
-		if val.Jailed && val.IsBonded() {
-			consAddr, err := val.GetConsAddr()
-			if err != nil {
-				return err
-			}
-			return fmt.Errorf("validator is bonded and jailed in genesis state: moniker %v, address %v", val.Description.Moniker, consAddr)
-		}
-
-		addrMap[strKey] = true
+	if appState[ModuleName] != nil {
+		cdc.MustUnmarshalJSON(appState[ModuleName], &genesisState)
 	}
 
-	return gs.Params.Validate()
+	return &genesisState
+}
+
+// UnpackInterfaces implements UnpackInterfacesMessage.UnpackInterfaces
+func (g GenesisState) UnpackInterfaces(c gogoprotoany.AnyUnpacker) error {
+	for i := range g.Validators {
+		if err := g.Validators[i].UnpackInterfaces(c); err != nil {
+			return err
+		}
+	}
+	return nil
 }

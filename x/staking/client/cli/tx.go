@@ -1,17 +1,22 @@
 package cli
 
 import (
+	"cosmossdk.io/core/address"
 	errorsmod "cosmossdk.io/errors"
 	"cosmossdk.io/math"
 	"fmt"
 	"github.com/cosmos/cosmos-sdk/client"
+	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/client/tx"
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+	"github.com/cosmos/cosmos-sdk/version"
+	"github.com/spf13/cobra"
 	flag "github.com/spf13/pflag"
 	"kepler/x/staking/types"
 	"os"
+	"strings"
 )
 
 // default values
@@ -23,6 +28,187 @@ var (
 	defaultCommissionMaxChangeRate = "0.01"
 	defaultMinSelfDelegation       = "1"
 )
+
+// NewTxCmd returns a root CLI command handler for all x/staking transaction commands.
+func NewTxCmd() *cobra.Command {
+	stakingTxCmd := &cobra.Command{
+		Use:                        types.ModuleName,
+		Short:                      "Staking transaction subcommands",
+		DisableFlagParsing:         true,
+		SuggestionsMinimumDistance: 2,
+		RunE:                       client.ValidateCmd,
+	}
+
+	stakingTxCmd.AddCommand(
+		NewCreateValidatorCmd(),
+		NewEditValidatorCmd(),
+	)
+
+	return stakingTxCmd
+}
+
+// NewCreateValidatorCmd returns a CLI command handler for creating a MsgCreateValidator transaction.
+// TODO(@julienrbrt): remove this once AutoCLI can flatten nested structs.
+func NewCreateValidatorCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "create-validator <path/to/validator.json>",
+		Short: "Create new validator initialized with a self-delegation to it",
+		Args:  cobra.ExactArgs(1),
+		Long:  `Create a new validator initialized with a self-delegation by submitting a JSON file with the new validator details.`,
+		Example: strings.TrimSpace(
+			fmt.Sprintf(`
+$ %s tx staking create-validator path/to/validator.json --from keyname
+
+Where validator.json contains:
+
+{
+	"pubkey": {"@type":"/cosmos.crypto.ed25519.PubKey","key":"oWg2ISpLF405Jcm2vXV+2v4fnjodh6aafuIdeoW+rUw="},
+	"amount": "1000000stake",
+	"moniker": "myvalidator",
+	"identity": "optional identity signature (ex. UPort or Keybase)",
+	"website": "validator's (optional) website",
+	"security": "validator's (optional) security contact email",
+	"details": "validator's (optional) details",
+	"commission-rate": "0.1",
+	"commission-max-rate": "0.2",
+	"commission-max-change-rate": "0.01",
+	"min-self-delegation": "1"
+}
+
+where we can get the pubkey using "%s tendermint show-validator"
+`, version.AppName, version.AppName)),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientTxContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			txf, err := tx.NewFactoryCLI(clientCtx, cmd.Flags())
+			if err != nil {
+				return err
+			}
+
+			validator, err := parseAndValidateValidatorJSON(clientCtx.Codec, args[0])
+			if err != nil {
+				return err
+			}
+
+			txf, msg, err := newBuildCreateValidatorMsg(clientCtx, txf, cmd.Flags(), validator, clientCtx.ValidatorAddressCodec)
+			if err != nil {
+				return err
+			}
+
+			return tx.GenerateOrBroadcastTxWithFactory(clientCtx, txf, msg)
+		},
+	}
+
+	cmd.Flags().String(FlagIP, "", fmt.Sprintf("The node's public IP. It takes effect only when used in combination with --%s", flags.FlagGenerateOnly))
+	cmd.Flags().String(FlagNodeID, "", "The node's ID")
+	flags.AddTxFlagsToCmd(cmd)
+
+	return cmd
+}
+
+// NewEditValidatorCmd returns a CLI command handler for creating a MsgEditValidator transaction.
+// TODO(@julienrbrt): remove this once AutoCLI can flatten nested structs.
+func NewEditValidatorCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "edit-validator",
+		Short: "Edit an existing validator account",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientTxContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			moniker, _ := cmd.Flags().GetString(FlagEditMoniker)
+			identity, _ := cmd.Flags().GetString(FlagIdentity)
+			website, _ := cmd.Flags().GetString(FlagWebsite)
+			security, _ := cmd.Flags().GetString(FlagSecurityContact)
+			details, _ := cmd.Flags().GetString(FlagDetails)
+			description := types.NewDescription(moniker, identity, website, security, details)
+
+			var newRate *math.LegacyDec
+
+			commissionRate, _ := cmd.Flags().GetString(FlagCommissionRate)
+			if commissionRate != "" {
+				rate, err := math.LegacyNewDecFromStr(commissionRate)
+				if err != nil {
+					return fmt.Errorf("invalid new commission rate: %w", err)
+				}
+
+				newRate = &rate
+			}
+
+			var newMinSelfDelegation *math.Int
+
+			minSelfDelegationString, _ := cmd.Flags().GetString(FlagMinSelfDelegation)
+			if minSelfDelegationString != "" {
+				msb, ok := math.NewIntFromString(minSelfDelegationString)
+				if !ok {
+					return errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "minimum self delegation must be a positive integer")
+				}
+
+				newMinSelfDelegation = &msb
+			}
+
+			valAddr, err := clientCtx.ValidatorAddressCodec.BytesToString(clientCtx.GetFromAddress())
+			if err != nil {
+				return err
+			}
+
+			msg := types.NewMsgEditValidator(valAddr, description, newRate, newMinSelfDelegation)
+
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
+		},
+	}
+
+	cmd.Flags().AddFlagSet(flagSetDescriptionEdit())
+	cmd.Flags().AddFlagSet(flagSetCommissionUpdate())
+	cmd.Flags().AddFlagSet(FlagSetMinSelfDelegation())
+	flags.AddTxFlagsToCmd(cmd)
+
+	return cmd
+}
+
+func newBuildCreateValidatorMsg(clientCtx client.Context, txf tx.Factory, fs *flag.FlagSet, val validator, valAc address.Codec) (tx.Factory, *types.MsgCreateValidator, error) {
+	valAddr := clientCtx.GetFromAddress()
+
+	description := types.NewDescription(
+		val.Moniker,
+		val.Identity,
+		val.Website,
+		val.Security,
+		val.Details,
+	)
+
+	valStr, err := valAc.BytesToString(sdk.ValAddress(valAddr))
+	if err != nil {
+		return txf, nil, err
+	}
+	msg, err := types.NewMsgCreateValidator(
+		valStr, val.PubKey, val.Amount, description, val.CommissionRates, val.MinSelfDelegation,
+	)
+	if err != nil {
+		return txf, nil, err
+	}
+	if err := msg.Validate(valAc); err != nil {
+		return txf, nil, err
+	}
+
+	genOnly, _ := fs.GetBool(flags.FlagGenerateOnly)
+	if genOnly {
+		ip, _ := fs.GetString(FlagIP)
+		p2pPort, _ := fs.GetUint(FlagP2PPort)
+		nodeID, _ := fs.GetString(FlagNodeID)
+
+		if nodeID != "" && ip != "" && p2pPort > 0 {
+			txf = txf.WithMemo(fmt.Sprintf("%s@%s:%d", nodeID, ip, p2pPort))
+		}
+	}
+
+	return txf, msg, nil
+}
 
 // CreateValidatorMsgFlagSet Returns the flagset, particular flags, and a description of defaults
 // this is anticipated to be used with the gen-tx
@@ -194,7 +380,6 @@ func BuildCreateValidatorMsg(clientCtx client.Context, config TxCreateValidatorC
 		config.Website,
 		config.SecurityContact,
 		config.Details,
-		nil,
 	)
 
 	// get the initial validator commission parameters

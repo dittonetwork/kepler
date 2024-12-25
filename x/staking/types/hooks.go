@@ -2,9 +2,13 @@ package types
 
 import (
 	"context"
-	"cosmossdk.io/math"
+	sdkmath "cosmossdk.io/math"
+	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
+
+// combine multiple staking hooks, all hook functions are run in array sequence
+var _ StakingHooks = &MultiStakingHooks{}
 
 type MultiStakingHooks []StakingHooks
 
@@ -58,9 +62,54 @@ func (h MultiStakingHooks) AfterValidatorBeginUnbonding(ctx context.Context, con
 	return nil
 }
 
-func (h MultiStakingHooks) BeforeValidatorSlashed(ctx context.Context, valAddr sdk.ValAddress, fraction math.LegacyDec) error {
+func (h MultiStakingHooks) BeforeDelegationCreated(ctx context.Context, delAddr sdk.AccAddress, valAddr sdk.ValAddress) error {
+	for i := range h {
+		if err := h[i].BeforeDelegationCreated(ctx, delAddr, valAddr); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (h MultiStakingHooks) BeforeDelegationSharesModified(ctx context.Context, delAddr sdk.AccAddress, valAddr sdk.ValAddress) error {
+	for i := range h {
+		if err := h[i].BeforeDelegationSharesModified(ctx, delAddr, valAddr); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (h MultiStakingHooks) BeforeDelegationRemoved(ctx context.Context, delAddr sdk.AccAddress, valAddr sdk.ValAddress) error {
+	for i := range h {
+		if err := h[i].BeforeDelegationRemoved(ctx, delAddr, valAddr); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (h MultiStakingHooks) AfterDelegationModified(ctx context.Context, delAddr sdk.AccAddress, valAddr sdk.ValAddress) error {
+	for i := range h {
+		if err := h[i].AfterDelegationModified(ctx, delAddr, valAddr); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (h MultiStakingHooks) BeforeValidatorSlashed(ctx context.Context, valAddr sdk.ValAddress, fraction sdkmath.LegacyDec) error {
 	for i := range h {
 		if err := h[i].BeforeValidatorSlashed(ctx, valAddr, fraction); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (h MultiStakingHooks) AfterConsensusPubKeyUpdate(ctx context.Context, oldPubKey, newPubKey cryptotypes.PubKey, rotationFee sdk.Coin) error {
+	for i := range h {
+		if err := h[i].AfterConsensusPubKeyUpdate(ctx, oldPubKey, newPubKey, rotationFee); err != nil {
 			return err
 		}
 	}
