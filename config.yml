@@ -1,4 +1,6 @@
 version: 1
+build:
+  main: ./cmd/keplerd
 validation: sovereign
 accounts: 
 - name: alice
