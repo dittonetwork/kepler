@@ -45,8 +45,6 @@ cosmossdk.io/x/accounts v0.0.0-20241202180139-76f8af9617cd h1:7LC5ui1zgCiItVuo/D
 cosmossdk.io/x/accounts v0.0.0-20241202180139-76f8af9617cd/go.mod h1:iYP+E6KsRLwrtPhhL09XBD+AoxydFE5my6Tt4Mcj2cs=
 cosmossdk.io/x/accounts/defaults/base v0.0.0-20241211115139-cef0f8497fe2 h1:QW5XHUmMBv0hy4y1fzSYQaGwOpOvftX3UC/naXCpQZU=
 cosmossdk.io/x/accounts/defaults/base v0.0.0-20241211115139-cef0f8497fe2/go.mod h1:b14TNbXem3UVgKGOcsouG+SdeN+4twSzTB3jzFv97Ag=
-cosmossdk.io/x/accounts/defaults/lockup v0.0.0-20241202180139-76f8af9617cd h1:NANUyIYlo/arF058T1OV7rToWlVUJb/p6ubYN4RzTec=
-cosmossdk.io/x/accounts/defaults/lockup v0.0.0-20241202180139-76f8af9617cd/go.mod h1:3hyKF41u974L6M+NdqcGsZCNWP5py50hmKpKeJfr6lU=
 cosmossdk.io/x/accounts/defaults/multisig v0.0.0-20241202180139-76f8af9617cd h1:7cj2fCi7kiC49JXJ+IiPwGr3yHbKYMuItgeQuqx6hEk=
 cosmossdk.io/x/accounts/defaults/multisig v0.0.0-20241202180139-76f8af9617cd/go.mod h1:qJ/W/C1TogzK5TYxeEKiwPWwnhR/Ge0tDxT53sLwwx4=
 cosmossdk.io/x/authz v0.0.0-20241202180139-76f8af9617cd h1:9PGHAGWn4dC3fkl69caIC1TWZWfTS+3CSVH0zqsXgr0=
@@ -55,8 +53,6 @@ cosmossdk.io/x/bank v0.0.0-20241202180139-76f8af9617cd h1:HhPL5mBMGxacUpcodhKF2X
 cosmossdk.io/x/bank v0.0.0-20241202180139-76f8af9617cd/go.mod h1:XvLY9R3xNhCz6pcLnTaN3lLR0fdiiWQusdng6oafNmQ=
 cosmossdk.io/x/consensus v0.0.0-20241202180139-76f8af9617cd h1:aj5bcm1LxeteaT2K4qijYFu1bOj6uW/eMgUoJBTtldc=
 cosmossdk.io/x/consensus v0.0.0-20241202180139-76f8af9617cd/go.mod h1:RxFVOJEjZBgUHwegZ3TfIB77nsZjrViIKney/+A+qQM=
-cosmossdk.io/x/distribution v0.0.0-20241202180139-76f8af9617cd h1:Dk1K+a4n1omMpGcVKEgntXoX2JshYsD5Oo/iJV2gd7Q=
-cosmossdk.io/x/distribution v0.0.0-20241202180139-76f8af9617cd/go.mod h1:TnzwSHjo/EnEeIiye0CMhIAMF0KNIzQalxw7yDCz4mY=
 cosmossdk.io/x/epochs v0.0.0-20241202180139-76f8af9617cd h1:pXnPNvhFMGjgMgv9DyAvnKvCJgI8J+yDYXFs0acqBoo=
 cosmossdk.io/x/epochs v0.0.0-20241202180139-76f8af9617cd/go.mod h1:qe2+ymf3WbXlAXd/bOpFOJFD8jQpnvg0rNvpYYk04+o=
 cosmossdk.io/x/feegrant v0.0.0-20241202180139-76f8af9617cd h1:uHQK0ted5fYwe16mDA/J/x6Hr4kk4ykKHEDRqsEMkIE=

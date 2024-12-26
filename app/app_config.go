@@ -37,11 +37,12 @@ import (
 	_ "kepler/x/staking/module"
 	stakingmoduletypes "kepler/x/staking/types"
 
-	"github.com/cosmos/cosmos-sdk/runtime"
 	_ "github.com/cosmos/cosmos-sdk/testutil/x/counter"
 	_ "github.com/cosmos/cosmos-sdk/x/auth"
 	_ "github.com/cosmos/cosmos-sdk/x/auth/tx/config"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
+
+	"github.com/cosmos/cosmos-sdk/runtime"
 )
 
 var (

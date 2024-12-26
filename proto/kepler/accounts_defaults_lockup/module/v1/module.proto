@@ -1,0 +1,13 @@
+syntax = "proto3";
+package kepler.accounts_defaults_lockup.module.v1;
+
+option go_package = "kepler/x/accounts/defaults/lockup/types";
+
+import "cosmos/app/v1alpha1/module.proto";
+
+// Module is the config object for the genutil module.
+message Module {
+  option (cosmos.app.v1alpha1.module) = {
+    go_import: "kepler/x/accounts/defaults/lockup/module"
+  };
+}

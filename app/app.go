@@ -11,7 +11,6 @@ import (
 	"cosmossdk.io/log"
 	"cosmossdk.io/x/accounts"
 	basedepinject "cosmossdk.io/x/accounts/defaults/base/depinject"
-	lockupdepinject "cosmossdk.io/x/accounts/defaults/lockup/depinject"
 	multisigdepinject "cosmossdk.io/x/accounts/defaults/multisig/depinject"
 	bankkeeper "cosmossdk.io/x/bank/keeper"
 	epochskeeper "cosmossdk.io/x/epochs/keeper"
@@ -29,6 +28,7 @@ import (
 	authkeeper "github.com/cosmos/cosmos-sdk/x/auth/keeper"
 
 	"kepler/docs"
+	lockup "kepler/x/accounts/defaults/lockup/module"
 	horizonmodulekeeper "kepler/x/horizon/keeper"
 	stakingmodulekeeper "kepler/x/staking/keeper"
 )
@@ -103,12 +103,12 @@ func New(
 		appConfig = depinject.Configs(
 			AppConfig(),
 			depinject.Supply(
-				appOpts,                                  // supply app options
-				logger,                                   // supply logger
-				basedepinject.ProvideAccount,             // supply baseapp account
-				basedepinject.ProvideSecp256K1PubKey,     // supply default base account public key format
-				multisigdepinject.ProvideAccount,         // multisig account type
-				lockupdepinject.ProvideAllLockupAccounts, // lockup account type
+				appOpts,                              // supply app options
+				logger,                               // supply logger
+				basedepinject.ProvideAccount,         // supply baseapp account
+				basedepinject.ProvideSecp256K1PubKey, // supply default base account public key format
+				multisigdepinject.ProvideAccount,     // multisig account type
+				lockup.ProvideAllLockupAccounts,      // lockup account type
 				// here alternative options can be supplied to the DI container.
 				// those options can be used f.e to override the default behavior of some modules.
 				// for instance supplying a custom address codec for not using bech32 addresses.
