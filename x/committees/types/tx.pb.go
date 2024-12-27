@@ -36,8 +36,6 @@ const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 type MsgUpdateParams struct {
 	// authority is the address that controls the module (defaults to x/gov unless overwritten).
 	Authority string `protobuf:"bytes,1,opt,name=authority,proto3" json:"authority,omitempty"`
-	// params defines the module parameters to update.
-	//
 	// NOTE: All parameters must be supplied.
 	Params Params `protobuf:"bytes,2,opt,name=params,proto3" json:"params"`
 }
@@ -127,15 +125,113 @@ func (m *MsgUpdateParamsResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgUpdateParamsResponse proto.InternalMessageInfo
 
+type MsgUpdateValidatorsStakes struct {
+	Creator    string   `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	Aaddresses []string `protobuf:"bytes,2,rep,name=aaddresses,proto3" json:"aaddresses,omitempty"`
+	Stakes     []uint64 `protobuf:"varint,3,rep,packed,name=stakes,proto3" json:"stakes,omitempty"`
+}
+
+func (m *MsgUpdateValidatorsStakes) Reset()         { *m = MsgUpdateValidatorsStakes{} }
+func (m *MsgUpdateValidatorsStakes) String() string { return proto.CompactTextString(m) }
+func (*MsgUpdateValidatorsStakes) ProtoMessage()    {}
+func (*MsgUpdateValidatorsStakes) Descriptor() ([]byte, []int) {
+	return fileDescriptor_01121c9f2fa5faff, []int{2}
+}
+func (m *MsgUpdateValidatorsStakes) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgUpdateValidatorsStakes) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgUpdateValidatorsStakes.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgUpdateValidatorsStakes) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgUpdateValidatorsStakes.Merge(m, src)
+}
+func (m *MsgUpdateValidatorsStakes) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgUpdateValidatorsStakes) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgUpdateValidatorsStakes.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgUpdateValidatorsStakes proto.InternalMessageInfo
+
+func (m *MsgUpdateValidatorsStakes) GetCreator() string {
+	if m != nil {
+		return m.Creator
+	}
+	return ""
+}
+
+func (m *MsgUpdateValidatorsStakes) GetAaddresses() []string {
+	if m != nil {
+		return m.Aaddresses
+	}
+	return nil
+}
+
+func (m *MsgUpdateValidatorsStakes) GetStakes() []uint64 {
+	if m != nil {
+		return m.Stakes
+	}
+	return nil
+}
+
+type MsgUpdateValidatorsStakesResponse struct {
+}
+
+func (m *MsgUpdateValidatorsStakesResponse) Reset()         { *m = MsgUpdateValidatorsStakesResponse{} }
+func (m *MsgUpdateValidatorsStakesResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgUpdateValidatorsStakesResponse) ProtoMessage()    {}
+func (*MsgUpdateValidatorsStakesResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_01121c9f2fa5faff, []int{3}
+}
+func (m *MsgUpdateValidatorsStakesResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgUpdateValidatorsStakesResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgUpdateValidatorsStakesResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgUpdateValidatorsStakesResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgUpdateValidatorsStakesResponse.Merge(m, src)
+}
+func (m *MsgUpdateValidatorsStakesResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgUpdateValidatorsStakesResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgUpdateValidatorsStakesResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgUpdateValidatorsStakesResponse proto.InternalMessageInfo
+
 func init() {
 	proto.RegisterType((*MsgUpdateParams)(nil), "kepler.committees.v1.MsgUpdateParams")
 	proto.RegisterType((*MsgUpdateParamsResponse)(nil), "kepler.committees.v1.MsgUpdateParamsResponse")
+	proto.RegisterType((*MsgUpdateValidatorsStakes)(nil), "kepler.committees.v1.MsgUpdateValidatorsStakes")
+	proto.RegisterType((*MsgUpdateValidatorsStakesResponse)(nil), "kepler.committees.v1.MsgUpdateValidatorsStakesResponse")
 }
 
 func init() { proto.RegisterFile("kepler/committees/v1/tx.proto", fileDescriptor_01121c9f2fa5faff) }
 
 var fileDescriptor_01121c9f2fa5faff = []byte{
-	// 331 bytes of a gzipped FileDescriptorProto
+	// 437 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0xcd, 0x4e, 0x2d, 0xc8,
 	0x49, 0x2d, 0xd2, 0x4f, 0xce, 0xcf, 0xcd, 0xcd, 0x2c, 0x29, 0x49, 0x4d, 0x2d, 0xd6, 0x2f, 0x33,
 	0xd4, 0x2f, 0xa9, 0xd0, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x12, 0x81, 0x48, 0xeb, 0x21, 0xa4,
@@ -151,12 +247,19 @@ var fileDescriptor_01121c9f2fa5faff = []byte{
 	0x10, 0x5b, 0x9c, 0x38, 0x4f, 0xdc, 0x93, 0x67, 0x58, 0xf1, 0x7c, 0x83, 0x16, 0x63, 0x10, 0x54,
 	0x9b, 0x95, 0x59, 0xd3, 0xf3, 0x0d, 0x5a, 0x08, 0x03, 0xbb, 0x9e, 0x6f, 0xd0, 0x52, 0x86, 0x7a,
 	0xa1, 0x02, 0xd9, 0x13, 0x68, 0x0e, 0x56, 0x92, 0xe4, 0x12, 0x47, 0x13, 0x0a, 0x4a, 0x2d, 0x2e,
-	0xc8, 0xcf, 0x2b, 0x4e, 0x35, 0x2a, 0xe2, 0x62, 0xf6, 0x2d, 0x4e, 0x17, 0x4a, 0xe1, 0xe2, 0x41,
-	0xf1, 0xa2, 0x2a, 0x76, 0xa7, 0xa1, 0x99, 0x22, 0xa5, 0x4b, 0x94, 0x32, 0x98, 0x65, 0x52, 0xac,
-	0x0d, 0x20, 0xef, 0x38, 0x19, 0x9f, 0x78, 0x24, 0xc7, 0x78, 0xe1, 0x91, 0x1c, 0xe3, 0x83, 0x47,
-	0x72, 0x8c, 0x13, 0x1e, 0xcb, 0x31, 0x5c, 0x78, 0x2c, 0xc7, 0x70, 0xe3, 0xb1, 0x1c, 0x43, 0x94,
-	0x24, 0x36, 0xdf, 0x94, 0x54, 0x16, 0xa4, 0x16, 0x27, 0xb1, 0x81, 0xe3, 0xc3, 0x18, 0x10, 0x00,
-	0x00, 0xff, 0xff, 0xfa, 0x9d, 0x47, 0x69, 0x46, 0x02, 0x00, 0x00,
+	0xc8, 0xcf, 0x2b, 0x4e, 0x55, 0xaa, 0xe6, 0x92, 0x84, 0x4b, 0x85, 0x25, 0xe6, 0x64, 0xa6, 0x24,
+	0x96, 0xe4, 0x17, 0x15, 0x07, 0x97, 0x24, 0x66, 0xa7, 0x16, 0x0b, 0x49, 0x70, 0xb1, 0x27, 0x17,
+	0xa5, 0x82, 0x44, 0x20, 0xde, 0x0c, 0x82, 0x71, 0x85, 0xe4, 0xb8, 0xb8, 0x12, 0x13, 0x21, 0xfe,
+	0x4c, 0x05, 0x79, 0x87, 0x59, 0x83, 0x33, 0x08, 0x49, 0x44, 0x48, 0x8c, 0x8b, 0xad, 0x18, 0x6c,
+	0x86, 0x04, 0xb3, 0x02, 0xb3, 0x06, 0x4b, 0x10, 0x94, 0x67, 0xc5, 0x03, 0xf2, 0x01, 0xcc, 0x14,
+	0x25, 0x65, 0x2e, 0x45, 0x9c, 0x96, 0xc3, 0x5c, 0x68, 0xf4, 0x9d, 0x91, 0x8b, 0xd9, 0xb7, 0x38,
+	0x5d, 0x28, 0x85, 0x8b, 0x07, 0x25, 0x16, 0x54, 0xb1, 0x87, 0x1e, 0x9a, 0x47, 0xa5, 0x74, 0x89,
+	0x52, 0x06, 0xb3, 0x4d, 0xa8, 0x89, 0x91, 0x4b, 0x0c, 0x47, 0x68, 0xe8, 0x13, 0x30, 0x09, 0x5d,
+	0x83, 0x94, 0x39, 0x89, 0x1a, 0x60, 0x8e, 0x90, 0x62, 0x6d, 0x00, 0x45, 0xbb, 0x93, 0xf1, 0x89,
+	0x47, 0x72, 0x8c, 0x17, 0x1e, 0xc9, 0x31, 0x3e, 0x78, 0x24, 0xc7, 0x38, 0xe1, 0xb1, 0x1c, 0xc3,
+	0x85, 0xc7, 0x72, 0x0c, 0x37, 0x1e, 0xcb, 0x31, 0x44, 0x49, 0x62, 0x8b, 0xf5, 0x92, 0xca, 0x82,
+	0xd4, 0xe2, 0x24, 0x36, 0x70, 0xba, 0x35, 0x06, 0x04, 0x00, 0x00, 0xff, 0xff, 0x48, 0x0a, 0xef,
+	0xe0, 0x6e, 0x03, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -174,6 +277,7 @@ type MsgClient interface {
 	// UpdateParams defines a (governance) operation for updating the module
 	// parameters. The authority defaults to the x/gov module account.
 	UpdateParams(ctx context.Context, in *MsgUpdateParams, opts ...grpc.CallOption) (*MsgUpdateParamsResponse, error)
+	UpdateValidatorsStakes(ctx context.Context, in *MsgUpdateValidatorsStakes, opts ...grpc.CallOption) (*MsgUpdateValidatorsStakesResponse, error)
 }
 
 type msgClient struct {
@@ -193,11 +297,21 @@ func (c *msgClient) UpdateParams(ctx context.Context, in *MsgUpdateParams, opts 
 	return out, nil
 }
 
+func (c *msgClient) UpdateValidatorsStakes(ctx context.Context, in *MsgUpdateValidatorsStakes, opts ...grpc.CallOption) (*MsgUpdateValidatorsStakesResponse, error) {
+	out := new(MsgUpdateValidatorsStakesResponse)
+	err := c.cc.Invoke(ctx, "/kepler.committees.v1.Msg/UpdateValidatorsStakes", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 type MsgServer interface {
 	// UpdateParams defines a (governance) operation for updating the module
 	// parameters. The authority defaults to the x/gov module account.
 	UpdateParams(context.Context, *MsgUpdateParams) (*MsgUpdateParamsResponse, error)
+	UpdateValidatorsStakes(context.Context, *MsgUpdateValidatorsStakes) (*MsgUpdateValidatorsStakesResponse, error)
 }
 
 // UnimplementedMsgServer can be embedded to have forward compatible implementations.
@@ -206,6 +320,9 @@ type UnimplementedMsgServer struct {
 
 func (*UnimplementedMsgServer) UpdateParams(ctx context.Context, req *MsgUpdateParams) (*MsgUpdateParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateParams not implemented")
+}
+func (*UnimplementedMsgServer) UpdateValidatorsStakes(ctx context.Context, req *MsgUpdateValidatorsStakes) (*MsgUpdateValidatorsStakesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateValidatorsStakes not implemented")
 }
 
 func RegisterMsgServer(s grpc1.Server, srv MsgServer) {
@@ -230,6 +347,24 @@ func _Msg_UpdateParams_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_UpdateValidatorsStakes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgUpdateValidatorsStakes)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).UpdateValidatorsStakes(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/kepler.committees.v1.Msg/UpdateValidatorsStakes",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).UpdateValidatorsStakes(ctx, req.(*MsgUpdateValidatorsStakes))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var Msg_serviceDesc = _Msg_serviceDesc
 var _Msg_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "kepler.committees.v1.Msg",
@@ -238,6 +373,10 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateParams",
 			Handler:    _Msg_UpdateParams_Handler,
+		},
+		{
+			MethodName: "UpdateValidatorsStakes",
+			Handler:    _Msg_UpdateValidatorsStakes_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -307,6 +446,86 @@ func (m *MsgUpdateParamsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	return len(dAtA) - i, nil
 }
 
+func (m *MsgUpdateValidatorsStakes) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgUpdateValidatorsStakes) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgUpdateValidatorsStakes) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Stakes) > 0 {
+		dAtA3 := make([]byte, len(m.Stakes)*10)
+		var j2 int
+		for _, num := range m.Stakes {
+			for num >= 1<<7 {
+				dAtA3[j2] = uint8(uint64(num)&0x7f | 0x80)
+				num >>= 7
+				j2++
+			}
+			dAtA3[j2] = uint8(num)
+			j2++
+		}
+		i -= j2
+		copy(dAtA[i:], dAtA3[:j2])
+		i = encodeVarintTx(dAtA, i, uint64(j2))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Aaddresses) > 0 {
+		for iNdEx := len(m.Aaddresses) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.Aaddresses[iNdEx])
+			copy(dAtA[i:], m.Aaddresses[iNdEx])
+			i = encodeVarintTx(dAtA, i, uint64(len(m.Aaddresses[iNdEx])))
+			i--
+			dAtA[i] = 0x12
+		}
+	}
+	if len(m.Creator) > 0 {
+		i -= len(m.Creator)
+		copy(dAtA[i:], m.Creator)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Creator)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgUpdateValidatorsStakesResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgUpdateValidatorsStakesResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgUpdateValidatorsStakesResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintTx(dAtA []byte, offset int, v uint64) int {
 	offset -= sovTx(v)
 	base := offset
@@ -334,6 +553,41 @@ func (m *MsgUpdateParams) Size() (n int) {
 }
 
 func (m *MsgUpdateParamsResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *MsgUpdateValidatorsStakes) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Creator)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	if len(m.Aaddresses) > 0 {
+		for _, s := range m.Aaddresses {
+			l = len(s)
+			n += 1 + l + sovTx(uint64(l))
+		}
+	}
+	if len(m.Stakes) > 0 {
+		l = 0
+		for _, e := range m.Stakes {
+			l += sovTx(uint64(e))
+		}
+		n += 1 + sovTx(uint64(l)) + l
+	}
+	return n
+}
+
+func (m *MsgUpdateValidatorsStakesResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -490,6 +744,246 @@ func (m *MsgUpdateParamsResponse) Unmarshal(dAtA []byte) error {
 		}
 		if fieldNum <= 0 {
 			return fmt.Errorf("proto: MsgUpdateParamsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgUpdateValidatorsStakes) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgUpdateValidatorsStakes: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgUpdateValidatorsStakes: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Creator = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Aaddresses", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Aaddresses = append(m.Aaddresses, string(dAtA[iNdEx:postIndex]))
+			iNdEx = postIndex
+		case 3:
+			if wireType == 0 {
+				var v uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowTx
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					v |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				m.Stakes = append(m.Stakes, v)
+			} else if wireType == 2 {
+				var packedLen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowTx
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					packedLen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if packedLen < 0 {
+					return ErrInvalidLengthTx
+				}
+				postIndex := iNdEx + packedLen
+				if postIndex < 0 {
+					return ErrInvalidLengthTx
+				}
+				if postIndex > l {
+					return io.ErrUnexpectedEOF
+				}
+				var elementCount int
+				var count int
+				for _, integer := range dAtA[iNdEx:postIndex] {
+					if integer < 128 {
+						count++
+					}
+				}
+				elementCount = count
+				if elementCount != 0 && len(m.Stakes) == 0 {
+					m.Stakes = make([]uint64, 0, elementCount)
+				}
+				for iNdEx < postIndex {
+					var v uint64
+					for shift := uint(0); ; shift += 7 {
+						if shift >= 64 {
+							return ErrIntOverflowTx
+						}
+						if iNdEx >= l {
+							return io.ErrUnexpectedEOF
+						}
+						b := dAtA[iNdEx]
+						iNdEx++
+						v |= uint64(b&0x7F) << shift
+						if b < 0x80 {
+							break
+						}
+					}
+					m.Stakes = append(m.Stakes, v)
+				}
+			} else {
+				return fmt.Errorf("proto: wrong wireType = %d for field Stakes", wireType)
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgUpdateValidatorsStakesResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgUpdateValidatorsStakesResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgUpdateValidatorsStakesResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		default:
