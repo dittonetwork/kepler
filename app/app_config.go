@@ -32,6 +32,9 @@ import (
 	_ "kepler/x/horizon/module"
 	horizonmoduletypes "kepler/x/horizon/types"
 
+	_ "kepler/x/committees/module"
+	committeesmoduletypes "kepler/x/committees/types"
+
 	"github.com/cosmos/cosmos-sdk/runtime"
 	_ "github.com/cosmos/cosmos-sdk/testutil/x/counter" // import for side-effects
 	_ "github.com/cosmos/cosmos-sdk/x/auth"             // import for side-effects
@@ -86,6 +89,7 @@ var (
 						// chain modules
 						horizonmoduletypes.ModuleName,
 						epochstypes.ModuleName,
+						committeesmoduletypes.ModuleName,
 						// this line is used by starport scaffolding # stargate/app/beginBlockers
 					},
 					EndBlockers: []string{
@@ -93,6 +97,7 @@ var (
 						pooltypes.ModuleName,
 						// chain modules
 						horizonmoduletypes.ModuleName,
+						committeesmoduletypes.ModuleName,
 						// this line is used by starport scaffolding # stargate/app/endBlockers
 					},
 					// The following is mostly only needed when ModuleName != StoreKey name.
@@ -121,6 +126,7 @@ var (
 						epochstypes.ModuleName,
 						// chain modules
 						horizonmoduletypes.ModuleName,
+						committeesmoduletypes.ModuleName,
 						// this line is used by starport scaffolding # stargate/app/initGenesis
 					},
 					// SkipStoreKeys is an optional list of store keys to skip when constructing the
@@ -186,6 +192,10 @@ var (
 			{
 				Name:   epochstypes.ModuleName,
 				Config: appconfig.WrapAny(&epochsmodulev1.Module{}),
+			},
+			{
+				Name:   committeesmoduletypes.ModuleName,
+				Config: appconfig.WrapAny(&committeesmoduletypes.Module{}),
 			},
 			// this line is used by starport scaffolding # stargate/app/moduleConfig
 		},

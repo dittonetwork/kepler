@@ -1,6 +1,8 @@
 package app
 
 import (
+	"io"
+
 	clienthelpers "cosmossdk.io/client/v2/helpers"
 	"cosmossdk.io/core/appmodule"
 	"cosmossdk.io/core/registry"
@@ -16,7 +18,6 @@ import (
 	epochskeeper "cosmossdk.io/x/epochs/keeper"
 	_ "cosmossdk.io/x/protocolpool"
 	stakingkeeper "cosmossdk.io/x/staking/keeper"
-	"io"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/client"
@@ -31,6 +32,7 @@ import (
 	authkeeper "github.com/cosmos/cosmos-sdk/x/auth/keeper"
 
 	"kepler/docs"
+	committeesmodulekeeper "kepler/x/committees/keeper"
 	horizonmodulekeeper "kepler/x/horizon/keeper"
 )
 
@@ -65,7 +67,8 @@ type App struct {
 	DistrKeeper    distrkeeper.Keeper
 	EpochsKeeper   *epochskeeper.Keeper
 
-	HorizonKeeper horizonmodulekeeper.Keeper
+	HorizonKeeper    horizonmodulekeeper.Keeper
+	CommitteesKeeper committeesmodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
 	// simulation manager
@@ -135,6 +138,7 @@ func New(
 		&app.DistrKeeper,
 		&app.HorizonKeeper,
 		&app.EpochsKeeper,
+		&app.CommitteesKeeper,
 	); err != nil {
 		panic(err)
 	}
