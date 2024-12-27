@@ -34,6 +34,8 @@ import (
 	"kepler/docs"
 	committeesmodulekeeper "kepler/x/committees/keeper"
 	horizonmodulekeeper "kepler/x/horizon/keeper"
+
+	epochstypes "cosmossdk.io/x/epochs/types"
 )
 
 const (
@@ -114,6 +116,11 @@ func New(
 				basedepinject.ProvideSecp256K1PubKey,     // supply default base account public key format
 				multisigdepinject.ProvideAccount,         // multisig account type
 				lockupdepinject.ProvideAllLockupAccounts, // lockup account type
+				map[string]epochstypes.EpochHooksWrapper{
+					"committees": epochstypes.EpochHooksWrapper{
+						EpochHooks: &app.CommitteesKeeper,
+					},
+				},
 				// here alternative options can be supplied to the DI container.
 				// those options can be used f.e to override the default behavior of some modules.
 				// for instance supplying a custom address codec for not using bech32 addresses.
