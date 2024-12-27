@@ -17,6 +17,18 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 					Use:       "params",
 					Short:     "Shows the parameters of the module",
 				},
+				{
+					RpcMethod: "ListCommittees",
+					Use:       "list-committees",
+					Short:     "List all committees",
+				},
+				{
+					RpcMethod:      "GetCommittees",
+					Use:            "get-committees [id]",
+					Short:          "Gets a committees by id",
+					Alias:          []string{"show-committees"},
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "id"}},
+				},
 				// this line is used by ignite scaffolding # autocli/query
 			},
 		},

@@ -1,4 +1,5 @@
 syntax = "proto3";
+
 package kepler.committees.v1;
 
 import "amino/amino.proto";
@@ -6,25 +7,53 @@ import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "kepler/committees/v1/params.proto";
+import "kepler/committees/v1/committees.proto";
 
 option go_package = "kepler/x/committees/types";
 
 // Query defines the gRPC querier service.
 service Query {
+  
   // Parameters queries the parameters of the module.
-  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+  rpc Params (QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/kepler/committees/v1/params";
+  
+  }
+  
+  // Queries a list of Committees items.
+  rpc GetCommittees  (QueryGetCommitteesRequest) returns (QueryGetCommitteesResponse) {
+    option (google.api.http).get = "/kepler/committees/committees/{id}";
+  
+  }
+  rpc ListCommittees (QueryAllCommitteesRequest) returns (QueryAllCommitteesResponse) {
+    option (google.api.http).get = "/kepler/committees/committees";
+  
   }
 }
-
 // QueryParamsRequest is request type for the Query/Params RPC method.
 message QueryParamsRequest {}
 
 // QueryParamsResponse is response type for the Query/Params RPC method.
 message QueryParamsResponse {
+  
   // params holds all the parameters of this module.
-  Params params = 1 [
-    (gogoproto.nullable) = false,
-    (amino.dont_omitempty) = true
-  ];
+  Params params = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
 }
+
+message QueryGetCommitteesRequest {
+  uint64 id = 1;
+}
+
+message QueryGetCommitteesResponse {
+  Committees Committees = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllCommitteesRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllCommitteesResponse {
+  repeated Committees                             Committees = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+

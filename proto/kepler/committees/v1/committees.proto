@@ -1,0 +1,10 @@
+syntax = "proto3";
+package kepler.committees.v1;
+
+option go_package = "kepler/x/committees/types";
+
+message Committees {
+  uint64 id = 1;
+  repeated string participants = 2; 
+  
+}

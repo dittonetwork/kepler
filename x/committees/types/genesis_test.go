@@ -21,9 +21,15 @@ func TestGenesisState_Validate(t *testing.T) {
 		},
 		{
 			desc:     "valid genesis state",
-			genState: &types.GenesisState{},
+			genState: &types.GenesisState{CommitteesList: []types.Committees{{Id: 0}, {Id: 1}}, CommitteesCount: 2},
 			valid:    true,
-		},
+		}, {desc: "duplicated committees",
+
+			genState: &types.GenesisState{CommitteesList: []types.Committees{{Id: 0}, {Id: 0}}}, valid: false}, {desc: "invalid committees count",
+
+			genState: &types.
+				GenesisState{CommitteesList: []types.
+				Committees{{Id: 1}}, CommitteesCount: 0}, valid: false},
 	}
 	for _, tc := range tests {
 		t.Run(tc.desc, func(t *testing.T) {

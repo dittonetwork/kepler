@@ -11,7 +11,7 @@ import (
 
 func TestGenesis(t *testing.T) {
 	genesisState := types.GenesisState{
-		Params: types.DefaultParams(),
+		Params: types.DefaultParams(), CommitteesList: []types.Committees{{Id: 0}, {Id: 1}}, CommitteesCount: 2,
 	}
 
 	f := initFixture(t)
@@ -25,4 +25,7 @@ func TestGenesis(t *testing.T) {
 	nullify.Fill(got)
 
 	require.Equal(t, genesisState.Params, got.Params)
+	require.ElementsMatch(t, genesisState.CommitteesList, got.CommitteesList)
+	require.Equal(t, genesisState.CommitteesCount, got.CommitteesCount)
+
 }

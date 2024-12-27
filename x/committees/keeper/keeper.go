@@ -25,6 +25,8 @@ type Keeper struct {
 
 	epochsKeeper  types.EpochsKeeper
 	stakingKeeper types.StakingKeeper
+	CommitteesSeq collections.Sequence
+	Committees    collections.Map[uint64, types.Committees]
 }
 
 func NewKeeper(
@@ -50,7 +52,7 @@ func NewKeeper(
 
 		epochsKeeper:  epochsKeeper,
 		stakingKeeper: stakingKeeper,
-		Params:        collections.NewItem(sb, types.ParamsKey, "params", codec.CollValue[types.Params](cdc)),
+		Params:        collections.NewItem(sb, types.ParamsKey, "params", codec.CollValue[types.Params](cdc)), CommitteesSeq: collections.NewSequence(sb, types.CommitteesCountKey, "committees_seq"), Committees: collections.NewMap(sb, types.CommitteesKey, "committees", collections.Uint64Key, codec.CollValue[types.Committees](cdc)),
 	}
 
 	schema, err := sb.Build()

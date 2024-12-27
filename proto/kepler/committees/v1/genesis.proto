@@ -1,17 +1,20 @@
 syntax = "proto3";
+
 package kepler.committees.v1;
 
 import "amino/amino.proto";
 import "gogoproto/gogo.proto";
 import "kepler/committees/v1/params.proto";
+import "kepler/committees/v1/committees.proto";
 
 option go_package = "kepler/x/committees/types";
 
 // GenesisState defines the committees module's genesis state.
 message GenesisState {
+  
   // params defines all the parameters of the module.
-  Params params = 1 [
-    (gogoproto.nullable) = false,
-    (amino.dont_omitempty) = true
-  ];
+           Params     params          = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+  repeated Committees committeesList  = 2 [(gogoproto.nullable) = false] ;
+           uint64     committeesCount = 3;
 }
+
