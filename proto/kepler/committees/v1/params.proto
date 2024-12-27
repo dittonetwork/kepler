@@ -11,5 +11,5 @@ message Params {
   option (amino.name) = "kepler/x/committees/Params";
   option (gogoproto.equal) = true;
 
-  
+  string trusted_address = 1;
 }
