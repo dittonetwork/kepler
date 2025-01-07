@@ -1,0 +1,17 @@
+syntax = "proto3";
+package kepler.dittoscheduler.v1;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "kepler/dittoscheduler/v1/params.proto";
+
+option go_package = "kepler/x/dittoscheduler/types";
+
+// GenesisState defines the dittoscheduler module's genesis state.
+message GenesisState {
+  // params defines all the parameters of the module.
+  Params params = 1 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}

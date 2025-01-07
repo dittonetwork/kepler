@@ -1,0 +1,15 @@
+syntax = "proto3";
+package kepler.symbioticadapter.v1;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+
+option go_package = "kepler/x/symbioticadapter/types";
+
+// Params defines the parameters for the module.
+message Params {
+  option (amino.name) = "kepler/x/symbioticadapter/Params";
+  option (gogoproto.equal) = true;
+
+  
+}

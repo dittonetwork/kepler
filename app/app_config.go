@@ -26,6 +26,24 @@ import (
 	_ "cosmossdk.io/x/staking" // import for side-effects
 	stakingtypes "cosmossdk.io/x/staking/types"
 
+	_ "kepler/x/dittostaking/module"
+	dittostakingmoduletypes "kepler/x/dittostaking/types"
+
+	_ "kepler/x/eigenlayeradapter/module"
+	eigenlayeradaptermoduletypes "kepler/x/eigenlayeradapter/types"
+
+	_ "kepler/x/symbioticadapter/module"
+	symbioticadaptermoduletypes "kepler/x/symbioticadapter/types"
+
+	_ "kepler/x/dittocommittee/module"
+	dittocommitteemoduletypes "kepler/x/dittocommittee/types"
+
+	_ "kepler/x/dittoslashing/module"
+	dittoslashingmoduletypes "kepler/x/dittoslashing/types"
+
+	_ "kepler/x/dittoscheduler/module"
+	dittoschedulermoduletypes "kepler/x/dittoscheduler/types"
+
 	"github.com/cosmos/cosmos-sdk/runtime"
 	_ "github.com/cosmos/cosmos-sdk/testutil/x/counter" // import for side-effects
 	_ "github.com/cosmos/cosmos-sdk/x/auth"             // import for side-effects
@@ -78,12 +96,24 @@ var (
 						pooltypes.ModuleName,
 						stakingtypes.ModuleName,
 						// chain modules
+						dittostakingmoduletypes.ModuleName,
+						eigenlayeradaptermoduletypes.ModuleName,
+						symbioticadaptermoduletypes.ModuleName,
+						dittocommitteemoduletypes.ModuleName,
+						dittoslashingmoduletypes.ModuleName,
+						dittoschedulermoduletypes.ModuleName,
 						// this line is used by starport scaffolding # stargate/app/beginBlockers
 					},
 					EndBlockers: []string{
 						stakingtypes.ModuleName,
 						pooltypes.ModuleName,
 						// chain modules
+						dittostakingmoduletypes.ModuleName,
+						eigenlayeradaptermoduletypes.ModuleName,
+						symbioticadaptermoduletypes.ModuleName,
+						dittocommitteemoduletypes.ModuleName,
+						dittoslashingmoduletypes.ModuleName,
+						dittoschedulermoduletypes.ModuleName,
 						// this line is used by starport scaffolding # stargate/app/endBlockers
 					},
 					// The following is mostly only needed when ModuleName != StoreKey name.
@@ -110,6 +140,12 @@ var (
 						genutiltypes.ModuleName,
 						pooltypes.ModuleName,
 						// chain modules
+						dittostakingmoduletypes.ModuleName,
+						eigenlayeradaptermoduletypes.ModuleName,
+						symbioticadaptermoduletypes.ModuleName,
+						dittocommitteemoduletypes.ModuleName,
+						dittoslashingmoduletypes.ModuleName,
+						dittoschedulermoduletypes.ModuleName,
 						// this line is used by starport scaffolding # stargate/app/initGenesis
 					},
 					// SkipStoreKeys is an optional list of store keys to skip when constructing the
@@ -167,6 +203,30 @@ var (
 			{
 				Name:   accounts.ModuleName,
 				Config: appconfig.WrapAny(&accountsmodulev1.Module{}),
+			},
+			{
+				Name:   dittostakingmoduletypes.ModuleName,
+				Config: appconfig.WrapAny(&dittostakingmoduletypes.Module{}),
+			},
+			{
+				Name:   eigenlayeradaptermoduletypes.ModuleName,
+				Config: appconfig.WrapAny(&eigenlayeradaptermoduletypes.Module{}),
+			},
+			{
+				Name:   symbioticadaptermoduletypes.ModuleName,
+				Config: appconfig.WrapAny(&symbioticadaptermoduletypes.Module{}),
+			},
+			{
+				Name:   dittocommitteemoduletypes.ModuleName,
+				Config: appconfig.WrapAny(&dittocommitteemoduletypes.Module{}),
+			},
+			{
+				Name:   dittoslashingmoduletypes.ModuleName,
+				Config: appconfig.WrapAny(&dittoslashingmoduletypes.Module{}),
+			},
+			{
+				Name:   dittoschedulermoduletypes.ModuleName,
+				Config: appconfig.WrapAny(&dittoschedulermoduletypes.Module{}),
 			},
 			// this line is used by starport scaffolding # stargate/app/moduleConfig
 		},
