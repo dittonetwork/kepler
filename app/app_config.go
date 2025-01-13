@@ -35,7 +35,7 @@ import (
 	genutiltypes "github.com/cosmos/cosmos-sdk/x/genutil/types"
 
 	stakingtypes "cosmossdk.io/x/staking/types"
-	_ "kepler/x/native-staking/module"
+	_ "kepler/x/staking/module"
 )
 
 var (

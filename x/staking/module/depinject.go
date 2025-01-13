@@ -1,4 +1,4 @@
-package nativestaking
+package staking
 
 import (
 	"fmt"

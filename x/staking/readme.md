@@ -1,0 +1,1 @@
+The `staking` module is a lightweight wrapper built around the *native* `staking` module of the Cosmos SDK. Its primary purpose is to provide a focused and controlled implementation of staking functionality by leveraging dependency injection to limit the enabled features.
