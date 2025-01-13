@@ -14,17 +14,15 @@ import (
 	txconfigv1 "cosmossdk.io/api/cosmos/tx/config/v1"
 	"cosmossdk.io/depinject/appconfig"
 	"cosmossdk.io/x/accounts"
-	_ "cosmossdk.io/x/bank" // import for side-effects
+	_ "cosmossdk.io/x/bank" // import for side effects
 	banktypes "cosmossdk.io/x/bank/types"
-	_ "cosmossdk.io/x/consensus" // import for side-effects
+	_ "cosmossdk.io/x/consensus" // import for side effects
 	consensustypes "cosmossdk.io/x/consensus/types"
-	_ "cosmossdk.io/x/distribution" // import for side-effects
+	_ "cosmossdk.io/x/distribution" // import for side effects
 	distrtypes "cosmossdk.io/x/distribution/types"
 	minttypes "cosmossdk.io/x/mint/types"
-	_ "cosmossdk.io/x/protocolpool" // import for side-effects
+	_ "cosmossdk.io/x/protocolpool" // import for side effects
 	pooltypes "cosmossdk.io/x/protocolpool/types"
-	_ "cosmossdk.io/x/staking" // import for side-effects
-	stakingtypes "cosmossdk.io/x/staking/types"
 
 	_ "kepler/x/dittostaking/module"
 	dittostakingmoduletypes "kepler/x/dittostaking/types"
@@ -41,15 +39,15 @@ import (
 	_ "kepler/x/dittoslashing/module"
 	dittoslashingmoduletypes "kepler/x/dittoslashing/types"
 
-	_ "kepler/x/dittoscheduler/module"
-	dittoschedulermoduletypes "kepler/x/dittoscheduler/types"
-
 	"github.com/cosmos/cosmos-sdk/runtime"
-	_ "github.com/cosmos/cosmos-sdk/testutil/x/counter" // import for side-effects
-	_ "github.com/cosmos/cosmos-sdk/x/auth"             // import for side-effects
-	_ "github.com/cosmos/cosmos-sdk/x/auth/tx/config"   // import for side-effects
+	_ "github.com/cosmos/cosmos-sdk/testutil/x/counter" // import for side effects
+	_ "github.com/cosmos/cosmos-sdk/x/auth"             // import for side effects
+	_ "github.com/cosmos/cosmos-sdk/x/auth/tx/config"   // import for side effects
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	genutiltypes "github.com/cosmos/cosmos-sdk/x/genutil/types"
+
+	stakingtypes "cosmossdk.io/x/staking/types"
+	_ "kepler/x/cosmosstaking/module"
 )
 
 var (
@@ -101,7 +99,7 @@ var (
 						symbioticadaptermoduletypes.ModuleName,
 						dittocommitteemoduletypes.ModuleName,
 						dittoslashingmoduletypes.ModuleName,
-						dittoschedulermoduletypes.ModuleName,
+						// dittoschedulermoduletypes.ModuleName,
 						// this line is used by starport scaffolding # stargate/app/beginBlockers
 					},
 					EndBlockers: []string{
@@ -113,7 +111,7 @@ var (
 						symbioticadaptermoduletypes.ModuleName,
 						dittocommitteemoduletypes.ModuleName,
 						dittoslashingmoduletypes.ModuleName,
-						dittoschedulermoduletypes.ModuleName,
+						// dittoschedulermoduletypes.ModuleName,
 						// this line is used by starport scaffolding # stargate/app/endBlockers
 					},
 					// The following is mostly only needed when ModuleName != StoreKey name.
@@ -145,7 +143,7 @@ var (
 						symbioticadaptermoduletypes.ModuleName,
 						dittocommitteemoduletypes.ModuleName,
 						dittoslashingmoduletypes.ModuleName,
-						dittoschedulermoduletypes.ModuleName,
+						// dittoschedulermoduletypes.ModuleName,
 						// this line is used by starport scaffolding # stargate/app/initGenesis
 					},
 					// SkipStoreKeys is an optional list of store keys to skip when constructing the
@@ -223,10 +221,6 @@ var (
 			{
 				Name:   dittoslashingmoduletypes.ModuleName,
 				Config: appconfig.WrapAny(&dittoslashingmoduletypes.Module{}),
-			},
-			{
-				Name:   dittoschedulermoduletypes.ModuleName,
-				Config: appconfig.WrapAny(&dittoschedulermoduletypes.Module{}),
 			},
 			// this line is used by starport scaffolding # stargate/app/moduleConfig
 		},

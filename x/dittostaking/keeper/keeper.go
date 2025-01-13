@@ -3,10 +3,13 @@ package keeper
 import (
 	"fmt"
 
-	"cosmossdk.io/collections"
-	"cosmossdk.io/core/address"
-	"cosmossdk.io/core/appmodule"
 	"github.com/cosmos/cosmos-sdk/codec"
+
+	"cosmossdk.io/collections"
+	addresscodec "cosmossdk.io/core/address"
+	"cosmossdk.io/core/appmodule"
+	bankkeeper "cosmossdk.io/x/bank/keeper"
+	stakingkeeper "cosmossdk.io/x/staking/keeper"
 
 	"kepler/x/dittostaking/types"
 )
@@ -14,11 +17,12 @@ import (
 type Keeper struct {
 	appmodule.Environment
 
-	cdc          codec.BinaryCodec
-	addressCodec address.Codec
-	// Address capable of executing a MsgUpdateParams message.
-	// Typically, this should be the x/gov module account.
-	authority []byte
+	cdc                   codec.BinaryCodec
+	bankKeeper            bankkeeper.Keeper
+	consensusKeeper       types.ConsensusKeeper
+	stakingKeeper         *stakingkeeper.Keeper
+	authority             []byte
+	validatorAddressCodec addresscodec.Codec
 
 	Schema collections.Schema
 	Params collections.Item[types.Params]
@@ -27,21 +31,27 @@ type Keeper struct {
 func NewKeeper(
 	env appmodule.Environment,
 	cdc codec.BinaryCodec,
-	addressCodec address.Codec,
+	bankKeeper bankkeeper.Keeper,
+	consensusKeeper types.ConsensusKeeper,
+	stakingKeeper *stakingkeeper.Keeper,
 	authority []byte,
+	validatorAddressCodec addresscodec.Codec,
 
 ) Keeper {
-	if _, err := addressCodec.BytesToString(authority); err != nil {
+	if _, err := validatorAddressCodec.BytesToString(authority); err != nil {
 		panic(fmt.Sprintf("invalid authority address %s: %s", authority, err))
 	}
 
 	sb := collections.NewSchemaBuilder(env.KVStoreService)
 
 	k := Keeper{
-		Environment:  env,
-		cdc:          cdc,
-		addressCodec: addressCodec,
-		authority:    authority,
+		Environment:           env,
+		cdc:                   cdc,
+		bankKeeper:            bankKeeper,
+		consensusKeeper:       consensusKeeper,
+		stakingKeeper:         stakingKeeper,
+		authority:             authority,
+		validatorAddressCodec: validatorAddressCodec,
 
 		Params: collections.NewItem(sb, types.ParamsKey, "params", codec.CollValue[types.Params](cdc)),
 	}

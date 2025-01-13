@@ -32,7 +32,6 @@ import (
 
 	"kepler/docs"
 	dittocommitteemodulekeeper "kepler/x/dittocommittee/keeper"
-	dittoschedulermodulekeeper "kepler/x/dittoscheduler/keeper"
 	dittoslashingmodulekeeper "kepler/x/dittoslashing/keeper"
 	dittostakingmodulekeeper "kepler/x/dittostaking/keeper"
 	eigenlayeradaptermodulekeeper "kepler/x/eigenlayeradapter/keeper"
@@ -69,12 +68,11 @@ type App struct {
 	StakingKeeper  *stakingkeeper.Keeper
 	DistrKeeper    distrkeeper.Keeper
 
-	DittostakingKeeper      dittostakingmodulekeeper.Keeper
-	EigenlayeradapterKeeper eigenlayeradaptermodulekeeper.Keeper
-	SymbioticadapterKeeper  symbioticadaptermodulekeeper.Keeper
-	DittocommitteeKeeper    dittocommitteemodulekeeper.Keeper
-	DittoslashingKeeper     dittoslashingmodulekeeper.Keeper
-	DittoschedulerKeeper    dittoschedulermodulekeeper.Keeper
+	DittoStakingKeeper      dittostakingmodulekeeper.Keeper
+	EigenLayerAdapterKeeper eigenlayeradaptermodulekeeper.Keeper
+	SymbioticAdapterKeeper  symbioticadaptermodulekeeper.Keeper
+	DittoCommitteeKeeper    dittocommitteemodulekeeper.Keeper
+	DittoSlashingKeeper     dittoslashingmodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
 	// simulation manager
@@ -142,12 +140,13 @@ func New(
 		&app.BankKeeper,
 		&app.StakingKeeper,
 		&app.DistrKeeper,
-		&app.DittostakingKeeper,
-		&app.EigenlayeradapterKeeper,
-		&app.SymbioticadapterKeeper,
-		&app.DittocommitteeKeeper,
-		&app.DittoslashingKeeper,
-		&app.DittoschedulerKeeper,
+		&app.DittoStakingKeeper,
+		&app.EigenLayerAdapterKeeper,
+		&app.SymbioticAdapterKeeper,
+		&app.DittoCommitteeKeeper,
+		&app.DittoSlashingKeeper,
+		// &app.DittoschedulerKeeper,
+		// &app.CosmosstakingKeeper,
 	); err != nil {
 		panic(err)
 	}
