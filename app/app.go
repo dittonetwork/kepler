@@ -31,11 +31,7 @@ import (
 	authkeeper "github.com/cosmos/cosmos-sdk/x/auth/keeper"
 
 	"kepler/docs"
-	dittocommitteemodulekeeper "kepler/x/dittocommittee/keeper"
-	dittoslashingmodulekeeper "kepler/x/dittoslashing/keeper"
-	dittostakingmodulekeeper "kepler/x/dittostaking/keeper"
-	eigenlayeradaptermodulekeeper "kepler/x/eigenlayeradapter/keeper"
-	symbioticadaptermodulekeeper "kepler/x/symbioticadapter/keeper"
+	xstakingmodulekeeper "kepler/x/xstaking/keeper"
 )
 
 const (
@@ -68,11 +64,7 @@ type App struct {
 	StakingKeeper  *stakingkeeper.Keeper
 	DistrKeeper    distrkeeper.Keeper
 
-	DittoStakingKeeper      dittostakingmodulekeeper.Keeper
-	EigenLayerAdapterKeeper eigenlayeradaptermodulekeeper.Keeper
-	SymbioticAdapterKeeper  symbioticadaptermodulekeeper.Keeper
-	DittoCommitteeKeeper    dittocommitteemodulekeeper.Keeper
-	DittoSlashingKeeper     dittoslashingmodulekeeper.Keeper
+	XStakingKeeper xstakingmodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
 	// simulation manager
@@ -140,13 +132,7 @@ func New(
 		&app.BankKeeper,
 		&app.StakingKeeper,
 		&app.DistrKeeper,
-		&app.DittoStakingKeeper,
-		&app.EigenLayerAdapterKeeper,
-		&app.SymbioticAdapterKeeper,
-		&app.DittoCommitteeKeeper,
-		&app.DittoSlashingKeeper,
-		// &app.DittoschedulerKeeper,
-		// &app.CosmosstakingKeeper,
+		&app.XStakingKeeper,
 	); err != nil {
 		panic(err)
 	}
