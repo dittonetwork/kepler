@@ -1,6 +1,8 @@
 BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 COMMIT := $(shell git log -1 --format='%H')
 APPNAME := kepler
+COVER_FILE := coverage.txt
+COVER_HTML_FILE := coverage.html
 
 # don't override user values
 ifeq (,$(VERSION))
