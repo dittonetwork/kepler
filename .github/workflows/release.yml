@@ -17,6 +17,7 @@ on: push
 jobs:
   might_release:
     runs-on: ubuntu-latest
+    if: false # temporarily disabled
     steps:
       - name: Checkout
         uses: actions/checkout@v2
