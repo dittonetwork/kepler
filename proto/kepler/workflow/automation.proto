@@ -1,0 +1,14 @@
+syntax = "proto3";
+package kepler.workflow;
+
+option go_package = "kepler/x/workflow/types";
+
+message Automation {
+  
+  string id = 1;
+  string trigger = 2; 
+  repeated string actions = 3;
+  uint64 count = 4; 
+  uint64 expireAt = 5; 
+  string status = 6; 
+}
