@@ -8,7 +8,7 @@ message Automation {
   string id = 1;
   string trigger = 2; 
   repeated string actions = 3;
-  uint64 count = 4; 
+  uint64 repeat_count = 4; 
   uint64 expireAt = 5; 
   string status = 6; 
 }
