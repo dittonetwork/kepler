@@ -853,11 +853,10 @@ func (x *fastReflection_Automation) ProtoMethods() *protoiface.Methods {
 }
 
 var (
-	md_Trigger       protoreflect.MessageDescriptor
-	fd_Trigger_price protoreflect.FieldDescriptor
-	fd_Trigger_time  protoreflect.FieldDescriptor
-	fd_Trigger_and   protoreflect.FieldDescriptor
-	fd_Trigger_or    protoreflect.FieldDescriptor
+	md_Trigger         protoreflect.MessageDescriptor
+	fd_Trigger_price   protoreflect.FieldDescriptor
+	fd_Trigger_time    protoreflect.FieldDescriptor
+	fd_Trigger_logical protoreflect.FieldDescriptor
 )
 
 func init() {
@@ -865,8 +864,7 @@ func init() {
 	md_Trigger = File_kepler_workflow_automation_proto.Messages().ByName("Trigger")
 	fd_Trigger_price = md_Trigger.Fields().ByName("price")
 	fd_Trigger_time = md_Trigger.Fields().ByName("time")
-	fd_Trigger_and = md_Trigger.Fields().ByName("and")
-	fd_Trigger_or = md_Trigger.Fields().ByName("or")
+	fd_Trigger_logical = md_Trigger.Fields().ByName("logical")
 }
 
 var _ protoreflect.Message = (*fastReflection_Trigger)(nil)
@@ -934,8 +932,8 @@ func (x *fastReflection_Trigger) Interface() protoreflect.ProtoMessage {
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
 func (x *fastReflection_Trigger) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
-	if x.Condition != nil {
-		switch o := x.Condition.(type) {
+	if x.Trigger != nil {
+		switch o := x.Trigger.(type) {
 		case *Trigger_Price:
 			v := o.Price
 			value := protoreflect.ValueOfMessage(v.ProtoReflect())
@@ -948,16 +946,10 @@ func (x *fastReflection_Trigger) Range(f func(protoreflect.FieldDescriptor, prot
 			if !f(fd_Trigger_time, value) {
 				return
 			}
-		case *Trigger_And:
-			v := o.And
+		case *Trigger_Logical:
+			v := o.Logical
 			value := protoreflect.ValueOfMessage(v.ProtoReflect())
-			if !f(fd_Trigger_and, value) {
-				return
-			}
-		case *Trigger_Or:
-			v := o.Or
-			value := protoreflect.ValueOfMessage(v.ProtoReflect())
-			if !f(fd_Trigger_or, value) {
+			if !f(fd_Trigger_logical, value) {
 				return
 			}
 		}
@@ -978,33 +970,25 @@ func (x *fastReflection_Trigger) Range(f func(protoreflect.FieldDescriptor, prot
 func (x *fastReflection_Trigger) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
 	case "kepler.workflow.Trigger.price":
-		if x.Condition == nil {
+		if x.Trigger == nil {
 			return false
-		} else if _, ok := x.Condition.(*Trigger_Price); ok {
+		} else if _, ok := x.Trigger.(*Trigger_Price); ok {
 			return true
 		} else {
 			return false
 		}
 	case "kepler.workflow.Trigger.time":
-		if x.Condition == nil {
+		if x.Trigger == nil {
 			return false
-		} else if _, ok := x.Condition.(*Trigger_Time); ok {
+		} else if _, ok := x.Trigger.(*Trigger_Time); ok {
 			return true
 		} else {
 			return false
 		}
-	case "kepler.workflow.Trigger.and":
-		if x.Condition == nil {
+	case "kepler.workflow.Trigger.logical":
+		if x.Trigger == nil {
 			return false
-		} else if _, ok := x.Condition.(*Trigger_And); ok {
-			return true
-		} else {
-			return false
-		}
-	case "kepler.workflow.Trigger.or":
-		if x.Condition == nil {
-			return false
-		} else if _, ok := x.Condition.(*Trigger_Or); ok {
+		} else if _, ok := x.Trigger.(*Trigger_Logical); ok {
 			return true
 		} else {
 			return false
@@ -1026,13 +1010,11 @@ func (x *fastReflection_Trigger) Has(fd protoreflect.FieldDescriptor) bool {
 func (x *fastReflection_Trigger) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
 	case "kepler.workflow.Trigger.price":
-		x.Condition = nil
+		x.Trigger = nil
 	case "kepler.workflow.Trigger.time":
-		x.Condition = nil
-	case "kepler.workflow.Trigger.and":
-		x.Condition = nil
-	case "kepler.workflow.Trigger.or":
-		x.Condition = nil
+		x.Trigger = nil
+	case "kepler.workflow.Trigger.logical":
+		x.Trigger = nil
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.Trigger"))
@@ -1050,34 +1032,26 @@ func (x *fastReflection_Trigger) Clear(fd protoreflect.FieldDescriptor) {
 func (x *fastReflection_Trigger) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
 	case "kepler.workflow.Trigger.price":
-		if x.Condition == nil {
+		if x.Trigger == nil {
 			return protoreflect.ValueOfMessage((*PriceTrigger)(nil).ProtoReflect())
-		} else if v, ok := x.Condition.(*Trigger_Price); ok {
+		} else if v, ok := x.Trigger.(*Trigger_Price); ok {
 			return protoreflect.ValueOfMessage(v.Price.ProtoReflect())
 		} else {
 			return protoreflect.ValueOfMessage((*PriceTrigger)(nil).ProtoReflect())
 		}
 	case "kepler.workflow.Trigger.time":
-		if x.Condition == nil {
+		if x.Trigger == nil {
 			return protoreflect.ValueOfMessage((*TimeTrigger)(nil).ProtoReflect())
-		} else if v, ok := x.Condition.(*Trigger_Time); ok {
+		} else if v, ok := x.Trigger.(*Trigger_Time); ok {
 			return protoreflect.ValueOfMessage(v.Time.ProtoReflect())
 		} else {
 			return protoreflect.ValueOfMessage((*TimeTrigger)(nil).ProtoReflect())
 		}
-	case "kepler.workflow.Trigger.and":
-		if x.Condition == nil {
+	case "kepler.workflow.Trigger.logical":
+		if x.Trigger == nil {
 			return protoreflect.ValueOfMessage((*LogicalTrigger)(nil).ProtoReflect())
-		} else if v, ok := x.Condition.(*Trigger_And); ok {
-			return protoreflect.ValueOfMessage(v.And.ProtoReflect())
-		} else {
-			return protoreflect.ValueOfMessage((*LogicalTrigger)(nil).ProtoReflect())
-		}
-	case "kepler.workflow.Trigger.or":
-		if x.Condition == nil {
-			return protoreflect.ValueOfMessage((*LogicalTrigger)(nil).ProtoReflect())
-		} else if v, ok := x.Condition.(*Trigger_Or); ok {
-			return protoreflect.ValueOfMessage(v.Or.ProtoReflect())
+		} else if v, ok := x.Trigger.(*Trigger_Logical); ok {
+			return protoreflect.ValueOfMessage(v.Logical.ProtoReflect())
 		} else {
 			return protoreflect.ValueOfMessage((*LogicalTrigger)(nil).ProtoReflect())
 		}
@@ -1103,16 +1077,13 @@ func (x *fastReflection_Trigger) Set(fd protoreflect.FieldDescriptor, value prot
 	switch fd.FullName() {
 	case "kepler.workflow.Trigger.price":
 		cv := value.Message().Interface().(*PriceTrigger)
-		x.Condition = &Trigger_Price{Price: cv}
+		x.Trigger = &Trigger_Price{Price: cv}
 	case "kepler.workflow.Trigger.time":
 		cv := value.Message().Interface().(*TimeTrigger)
-		x.Condition = &Trigger_Time{Time: cv}
-	case "kepler.workflow.Trigger.and":
+		x.Trigger = &Trigger_Time{Time: cv}
+	case "kepler.workflow.Trigger.logical":
 		cv := value.Message().Interface().(*LogicalTrigger)
-		x.Condition = &Trigger_And{And: cv}
-	case "kepler.workflow.Trigger.or":
-		cv := value.Message().Interface().(*LogicalTrigger)
-		x.Condition = &Trigger_Or{Or: cv}
+		x.Trigger = &Trigger_Logical{Logical: cv}
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.Trigger"))
@@ -1134,67 +1105,51 @@ func (x *fastReflection_Trigger) Set(fd protoreflect.FieldDescriptor, value prot
 func (x *fastReflection_Trigger) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
 	case "kepler.workflow.Trigger.price":
-		if x.Condition == nil {
+		if x.Trigger == nil {
 			value := &PriceTrigger{}
 			oneofValue := &Trigger_Price{Price: value}
-			x.Condition = oneofValue
+			x.Trigger = oneofValue
 			return protoreflect.ValueOfMessage(value.ProtoReflect())
 		}
-		switch m := x.Condition.(type) {
+		switch m := x.Trigger.(type) {
 		case *Trigger_Price:
 			return protoreflect.ValueOfMessage(m.Price.ProtoReflect())
 		default:
 			value := &PriceTrigger{}
 			oneofValue := &Trigger_Price{Price: value}
-			x.Condition = oneofValue
+			x.Trigger = oneofValue
 			return protoreflect.ValueOfMessage(value.ProtoReflect())
 		}
 	case "kepler.workflow.Trigger.time":
-		if x.Condition == nil {
+		if x.Trigger == nil {
 			value := &TimeTrigger{}
 			oneofValue := &Trigger_Time{Time: value}
-			x.Condition = oneofValue
+			x.Trigger = oneofValue
 			return protoreflect.ValueOfMessage(value.ProtoReflect())
 		}
-		switch m := x.Condition.(type) {
+		switch m := x.Trigger.(type) {
 		case *Trigger_Time:
 			return protoreflect.ValueOfMessage(m.Time.ProtoReflect())
 		default:
 			value := &TimeTrigger{}
 			oneofValue := &Trigger_Time{Time: value}
-			x.Condition = oneofValue
+			x.Trigger = oneofValue
 			return protoreflect.ValueOfMessage(value.ProtoReflect())
 		}
-	case "kepler.workflow.Trigger.and":
-		if x.Condition == nil {
+	case "kepler.workflow.Trigger.logical":
+		if x.Trigger == nil {
 			value := &LogicalTrigger{}
-			oneofValue := &Trigger_And{And: value}
-			x.Condition = oneofValue
+			oneofValue := &Trigger_Logical{Logical: value}
+			x.Trigger = oneofValue
 			return protoreflect.ValueOfMessage(value.ProtoReflect())
 		}
-		switch m := x.Condition.(type) {
-		case *Trigger_And:
-			return protoreflect.ValueOfMessage(m.And.ProtoReflect())
+		switch m := x.Trigger.(type) {
+		case *Trigger_Logical:
+			return protoreflect.ValueOfMessage(m.Logical.ProtoReflect())
 		default:
 			value := &LogicalTrigger{}
-			oneofValue := &Trigger_And{And: value}
-			x.Condition = oneofValue
-			return protoreflect.ValueOfMessage(value.ProtoReflect())
-		}
-	case "kepler.workflow.Trigger.or":
-		if x.Condition == nil {
-			value := &LogicalTrigger{}
-			oneofValue := &Trigger_Or{Or: value}
-			x.Condition = oneofValue
-			return protoreflect.ValueOfMessage(value.ProtoReflect())
-		}
-		switch m := x.Condition.(type) {
-		case *Trigger_Or:
-			return protoreflect.ValueOfMessage(m.Or.ProtoReflect())
-		default:
-			value := &LogicalTrigger{}
-			oneofValue := &Trigger_Or{Or: value}
-			x.Condition = oneofValue
+			oneofValue := &Trigger_Logical{Logical: value}
+			x.Trigger = oneofValue
 			return protoreflect.ValueOfMessage(value.ProtoReflect())
 		}
 	default:
@@ -1216,10 +1171,7 @@ func (x *fastReflection_Trigger) NewField(fd protoreflect.FieldDescriptor) proto
 	case "kepler.workflow.Trigger.time":
 		value := &TimeTrigger{}
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
-	case "kepler.workflow.Trigger.and":
-		value := &LogicalTrigger{}
-		return protoreflect.ValueOfMessage(value.ProtoReflect())
-	case "kepler.workflow.Trigger.or":
+	case "kepler.workflow.Trigger.logical":
 		value := &LogicalTrigger{}
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
 	default:
@@ -1235,19 +1187,17 @@ func (x *fastReflection_Trigger) NewField(fd protoreflect.FieldDescriptor) proto
 // It panics if the oneof descriptor does not belong to this message.
 func (x *fastReflection_Trigger) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
-	case "kepler.workflow.Trigger.condition":
-		if x.Condition == nil {
+	case "kepler.workflow.Trigger.trigger":
+		if x.Trigger == nil {
 			return nil
 		}
-		switch x.Condition.(type) {
+		switch x.Trigger.(type) {
 		case *Trigger_Price:
 			return x.Descriptor().Fields().ByName("price")
 		case *Trigger_Time:
 			return x.Descriptor().Fields().ByName("time")
-		case *Trigger_And:
-			return x.Descriptor().Fields().ByName("and")
-		case *Trigger_Or:
-			return x.Descriptor().Fields().ByName("or")
+		case *Trigger_Logical:
+			return x.Descriptor().Fields().ByName("logical")
 		}
 	default:
 		panic(fmt.Errorf("%s is not a oneof field in kepler.workflow.Trigger", d.FullName()))
@@ -1305,7 +1255,7 @@ func (x *fastReflection_Trigger) ProtoMethods() *protoiface.Methods {
 		var n int
 		var l int
 		_ = l
-		switch x := x.Condition.(type) {
+		switch x := x.Trigger.(type) {
 		case *Trigger_Price:
 			if x == nil {
 				break
@@ -1318,17 +1268,11 @@ func (x *fastReflection_Trigger) ProtoMethods() *protoiface.Methods {
 			}
 			l = options.Size(x.Time)
 			n += 1 + l + runtime.Sov(uint64(l))
-		case *Trigger_And:
+		case *Trigger_Logical:
 			if x == nil {
 				break
 			}
-			l = options.Size(x.And)
-			n += 1 + l + runtime.Sov(uint64(l))
-		case *Trigger_Or:
-			if x == nil {
-				break
-			}
-			l = options.Size(x.Or)
+			l = options.Size(x.Logical)
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
 		if x.unknownFields != nil {
@@ -1360,7 +1304,7 @@ func (x *fastReflection_Trigger) ProtoMethods() *protoiface.Methods {
 			i -= len(x.unknownFields)
 			copy(dAtA[i:], x.unknownFields)
 		}
-		switch x := x.Condition.(type) {
+		switch x := x.Trigger.(type) {
 		case *Trigger_Price:
 			encoded, err := options.Marshal(x.Price)
 			if err != nil {
@@ -1387,8 +1331,8 @@ func (x *fastReflection_Trigger) ProtoMethods() *protoiface.Methods {
 			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
 			i--
 			dAtA[i] = 0x12
-		case *Trigger_And:
-			encoded, err := options.Marshal(x.And)
+		case *Trigger_Logical:
+			encoded, err := options.Marshal(x.Logical)
 			if err != nil {
 				return protoiface.MarshalOutput{
 					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1400,19 +1344,6 @@ func (x *fastReflection_Trigger) ProtoMethods() *protoiface.Methods {
 			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
 			i--
 			dAtA[i] = 0x1a
-		case *Trigger_Or:
-			encoded, err := options.Marshal(x.Or)
-			if err != nil {
-				return protoiface.MarshalOutput{
-					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-					Buf:               input.Buf,
-				}, err
-			}
-			i -= len(encoded)
-			copy(dAtA[i:], encoded)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
-			i--
-			dAtA[i] = 0x22
 		}
 		if input.Buf != nil {
 			input.Buf = append(input.Buf, dAtA...)
@@ -1496,7 +1427,7 @@ func (x *fastReflection_Trigger) ProtoMethods() *protoiface.Methods {
 				if err := options.Unmarshal(dAtA[iNdEx:postIndex], v); err != nil {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
 				}
-				x.Condition = &Trigger_Price{v}
+				x.Trigger = &Trigger_Price{v}
 				iNdEx = postIndex
 			case 2:
 				if wireType != 2 {
@@ -1531,11 +1462,11 @@ func (x *fastReflection_Trigger) ProtoMethods() *protoiface.Methods {
 				if err := options.Unmarshal(dAtA[iNdEx:postIndex], v); err != nil {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
 				}
-				x.Condition = &Trigger_Time{v}
+				x.Trigger = &Trigger_Time{v}
 				iNdEx = postIndex
 			case 3:
 				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field And", wireType)
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Logical", wireType)
 				}
 				var msglen int
 				for shift := uint(0); ; shift += 7 {
@@ -1566,42 +1497,7 @@ func (x *fastReflection_Trigger) ProtoMethods() *protoiface.Methods {
 				if err := options.Unmarshal(dAtA[iNdEx:postIndex], v); err != nil {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
 				}
-				x.Condition = &Trigger_And{v}
-				iNdEx = postIndex
-			case 4:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Or", wireType)
-				}
-				var msglen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					msglen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				if msglen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + msglen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				v := &LogicalTrigger{}
-				if err := options.Unmarshal(dAtA[iNdEx:postIndex], v); err != nil {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
-				}
-				x.Condition = &Trigger_Or{v}
+				x.Trigger = &Trigger_Logical{v}
 				iNdEx = postIndex
 			default:
 				iNdEx = preIndex
@@ -2590,65 +2486,67 @@ func (x *fastReflection_TimeTrigger) ProtoMethods() *protoiface.Methods {
 	}
 }
 
-var _ protoreflect.List = (*_LogicalTrigger_1_list)(nil)
+var _ protoreflect.List = (*_LogicalTrigger_2_list)(nil)
 
-type _LogicalTrigger_1_list struct {
+type _LogicalTrigger_2_list struct {
 	list *[]*Trigger
 }
 
-func (x *_LogicalTrigger_1_list) Len() int {
+func (x *_LogicalTrigger_2_list) Len() int {
 	if x.list == nil {
 		return 0
 	}
 	return len(*x.list)
 }
 
-func (x *_LogicalTrigger_1_list) Get(i int) protoreflect.Value {
+func (x *_LogicalTrigger_2_list) Get(i int) protoreflect.Value {
 	return protoreflect.ValueOfMessage((*x.list)[i].ProtoReflect())
 }
 
-func (x *_LogicalTrigger_1_list) Set(i int, value protoreflect.Value) {
+func (x *_LogicalTrigger_2_list) Set(i int, value protoreflect.Value) {
 	valueUnwrapped := value.Message()
 	concreteValue := valueUnwrapped.Interface().(*Trigger)
 	(*x.list)[i] = concreteValue
 }
 
-func (x *_LogicalTrigger_1_list) Append(value protoreflect.Value) {
+func (x *_LogicalTrigger_2_list) Append(value protoreflect.Value) {
 	valueUnwrapped := value.Message()
 	concreteValue := valueUnwrapped.Interface().(*Trigger)
 	*x.list = append(*x.list, concreteValue)
 }
 
-func (x *_LogicalTrigger_1_list) AppendMutable() protoreflect.Value {
+func (x *_LogicalTrigger_2_list) AppendMutable() protoreflect.Value {
 	v := new(Trigger)
 	*x.list = append(*x.list, v)
 	return protoreflect.ValueOfMessage(v.ProtoReflect())
 }
 
-func (x *_LogicalTrigger_1_list) Truncate(n int) {
+func (x *_LogicalTrigger_2_list) Truncate(n int) {
 	for i := n; i < len(*x.list); i++ {
 		(*x.list)[i] = nil
 	}
 	*x.list = (*x.list)[:n]
 }
 
-func (x *_LogicalTrigger_1_list) NewElement() protoreflect.Value {
+func (x *_LogicalTrigger_2_list) NewElement() protoreflect.Value {
 	v := new(Trigger)
 	return protoreflect.ValueOfMessage(v.ProtoReflect())
 }
 
-func (x *_LogicalTrigger_1_list) IsValid() bool {
+func (x *_LogicalTrigger_2_list) IsValid() bool {
 	return x.list != nil
 }
 
 var (
-	md_LogicalTrigger          protoreflect.MessageDescriptor
-	fd_LogicalTrigger_triggers protoreflect.FieldDescriptor
+	md_LogicalTrigger                  protoreflect.MessageDescriptor
+	fd_LogicalTrigger_logical_operator protoreflect.FieldDescriptor
+	fd_LogicalTrigger_triggers         protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_kepler_workflow_automation_proto_init()
 	md_LogicalTrigger = File_kepler_workflow_automation_proto.Messages().ByName("LogicalTrigger")
+	fd_LogicalTrigger_logical_operator = md_LogicalTrigger.Fields().ByName("logical_operator")
 	fd_LogicalTrigger_triggers = md_LogicalTrigger.Fields().ByName("triggers")
 }
 
@@ -2717,8 +2615,14 @@ func (x *fastReflection_LogicalTrigger) Interface() protoreflect.ProtoMessage {
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
 func (x *fastReflection_LogicalTrigger) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.LogicalOperator != 0 {
+		value := protoreflect.ValueOfEnum((protoreflect.EnumNumber)(x.LogicalOperator))
+		if !f(fd_LogicalTrigger_logical_operator, value) {
+			return
+		}
+	}
 	if len(x.Triggers) != 0 {
-		value := protoreflect.ValueOfList(&_LogicalTrigger_1_list{list: &x.Triggers})
+		value := protoreflect.ValueOfList(&_LogicalTrigger_2_list{list: &x.Triggers})
 		if !f(fd_LogicalTrigger_triggers, value) {
 			return
 		}
@@ -2738,6 +2642,8 @@ func (x *fastReflection_LogicalTrigger) Range(f func(protoreflect.FieldDescripto
 // a repeated field is populated if it is non-empty.
 func (x *fastReflection_LogicalTrigger) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
+	case "kepler.workflow.LogicalTrigger.logical_operator":
+		return x.LogicalOperator != 0
 	case "kepler.workflow.LogicalTrigger.triggers":
 		return len(x.Triggers) != 0
 	default:
@@ -2756,6 +2662,8 @@ func (x *fastReflection_LogicalTrigger) Has(fd protoreflect.FieldDescriptor) boo
 // Clear is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_LogicalTrigger) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
+	case "kepler.workflow.LogicalTrigger.logical_operator":
+		x.LogicalOperator = 0
 	case "kepler.workflow.LogicalTrigger.triggers":
 		x.Triggers = nil
 	default:
@@ -2774,11 +2682,14 @@ func (x *fastReflection_LogicalTrigger) Clear(fd protoreflect.FieldDescriptor) {
 // of the value; to obtain a mutable reference, use Mutable.
 func (x *fastReflection_LogicalTrigger) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
+	case "kepler.workflow.LogicalTrigger.logical_operator":
+		value := x.LogicalOperator
+		return protoreflect.ValueOfEnum((protoreflect.EnumNumber)(value))
 	case "kepler.workflow.LogicalTrigger.triggers":
 		if len(x.Triggers) == 0 {
-			return protoreflect.ValueOfList(&_LogicalTrigger_1_list{})
+			return protoreflect.ValueOfList(&_LogicalTrigger_2_list{})
 		}
-		listValue := &_LogicalTrigger_1_list{list: &x.Triggers}
+		listValue := &_LogicalTrigger_2_list{list: &x.Triggers}
 		return protoreflect.ValueOfList(listValue)
 	default:
 		if descriptor.IsExtension() {
@@ -2800,9 +2711,11 @@ func (x *fastReflection_LogicalTrigger) Get(descriptor protoreflect.FieldDescrip
 // Set is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_LogicalTrigger) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
+	case "kepler.workflow.LogicalTrigger.logical_operator":
+		x.LogicalOperator = (LogicalOperator)(value.Enum())
 	case "kepler.workflow.LogicalTrigger.triggers":
 		lv := value.List()
-		clv := lv.(*_LogicalTrigger_1_list)
+		clv := lv.(*_LogicalTrigger_2_list)
 		x.Triggers = *clv.list
 	default:
 		if fd.IsExtension() {
@@ -2828,8 +2741,10 @@ func (x *fastReflection_LogicalTrigger) Mutable(fd protoreflect.FieldDescriptor)
 		if x.Triggers == nil {
 			x.Triggers = []*Trigger{}
 		}
-		value := &_LogicalTrigger_1_list{list: &x.Triggers}
+		value := &_LogicalTrigger_2_list{list: &x.Triggers}
 		return protoreflect.ValueOfList(value)
+	case "kepler.workflow.LogicalTrigger.logical_operator":
+		panic(fmt.Errorf("field logical_operator of message kepler.workflow.LogicalTrigger is not mutable"))
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.LogicalTrigger"))
@@ -2843,9 +2758,11 @@ func (x *fastReflection_LogicalTrigger) Mutable(fd protoreflect.FieldDescriptor)
 // For lists, maps, and messages, this returns a new, empty, mutable value.
 func (x *fastReflection_LogicalTrigger) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
+	case "kepler.workflow.LogicalTrigger.logical_operator":
+		return protoreflect.ValueOfEnum(0)
 	case "kepler.workflow.LogicalTrigger.triggers":
 		list := []*Trigger{}
-		return protoreflect.ValueOfList(&_LogicalTrigger_1_list{list: &list})
+		return protoreflect.ValueOfList(&_LogicalTrigger_2_list{list: &list})
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.LogicalTrigger"))
@@ -2915,6 +2832,9 @@ func (x *fastReflection_LogicalTrigger) ProtoMethods() *protoiface.Methods {
 		var n int
 		var l int
 		_ = l
+		if x.LogicalOperator != 0 {
+			n += 1 + runtime.Sov(uint64(x.LogicalOperator))
+		}
 		if len(x.Triggers) > 0 {
 			for _, e := range x.Triggers {
 				l = options.Size(e)
@@ -2963,8 +2883,13 @@ func (x *fastReflection_LogicalTrigger) ProtoMethods() *protoiface.Methods {
 				copy(dAtA[i:], encoded)
 				i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
 				i--
-				dAtA[i] = 0xa
+				dAtA[i] = 0x12
 			}
+		}
+		if x.LogicalOperator != 0 {
+			i = runtime.EncodeVarint(dAtA, i, uint64(x.LogicalOperator))
+			i--
+			dAtA[i] = 0x8
 		}
 		if input.Buf != nil {
 			input.Buf = append(input.Buf, dAtA...)
@@ -3016,6 +2941,25 @@ func (x *fastReflection_LogicalTrigger) ProtoMethods() *protoiface.Methods {
 			}
 			switch fieldNum {
 			case 1:
+				if wireType != 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field LogicalOperator", wireType)
+				}
+				x.LogicalOperator = 0
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					x.LogicalOperator |= LogicalOperator(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+			case 2:
 				if wireType != 2 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Triggers", wireType)
 				}
@@ -4830,6 +4774,56 @@ func (AutomationStatus) EnumDescriptor() ([]byte, []int) {
 	return file_kepler_workflow_automation_proto_rawDescGZIP(), []int{0}
 }
 
+// Enumeration for logical operator
+type LogicalOperator int32
+
+const (
+	LogicalOperator_LOGICAL_OPERATOR_UNSPECIFIED LogicalOperator = 0 // Default unknown operator
+	LogicalOperator_LOGICAL_OPERATOR_AND         LogicalOperator = 1 // Logical AND operator
+	LogicalOperator_LOGICAL_OPERATOR_OR          LogicalOperator = 2 // Logical OR operator
+)
+
+// Enum value maps for LogicalOperator.
+var (
+	LogicalOperator_name = map[int32]string{
+		0: "LOGICAL_OPERATOR_UNSPECIFIED",
+		1: "LOGICAL_OPERATOR_AND",
+		2: "LOGICAL_OPERATOR_OR",
+	}
+	LogicalOperator_value = map[string]int32{
+		"LOGICAL_OPERATOR_UNSPECIFIED": 0,
+		"LOGICAL_OPERATOR_AND":         1,
+		"LOGICAL_OPERATOR_OR":          2,
+	}
+)
+
+func (x LogicalOperator) Enum() *LogicalOperator {
+	p := new(LogicalOperator)
+	*p = x
+	return p
+}
+
+func (x LogicalOperator) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (LogicalOperator) Descriptor() protoreflect.EnumDescriptor {
+	return file_kepler_workflow_automation_proto_enumTypes[1].Descriptor()
+}
+
+func (LogicalOperator) Type() protoreflect.EnumType {
+	return &file_kepler_workflow_automation_proto_enumTypes[1]
+}
+
+func (x LogicalOperator) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use LogicalOperator.Descriptor instead.
+func (LogicalOperator) EnumDescriptor() ([]byte, []int) {
+	return file_kepler_workflow_automation_proto_rawDescGZIP(), []int{1}
+}
+
 // Automation entity
 type Automation struct {
 	state         protoimpl.MessageState
@@ -4912,13 +4906,12 @@ type Trigger struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Types that are assignable to Condition:
+	// Types that are assignable to Trigger:
 	//
 	//	*Trigger_Price
 	//	*Trigger_Time
-	//	*Trigger_And
-	//	*Trigger_Or
-	Condition isTrigger_Condition `protobuf_oneof:"condition"`
+	//	*Trigger_Logical
+	Trigger isTrigger_Trigger `protobuf_oneof:"trigger"`
 }
 
 func (x *Trigger) Reset() {
@@ -4941,43 +4934,36 @@ func (*Trigger) Descriptor() ([]byte, []int) {
 	return file_kepler_workflow_automation_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *Trigger) GetCondition() isTrigger_Condition {
+func (x *Trigger) GetTrigger() isTrigger_Trigger {
 	if x != nil {
-		return x.Condition
+		return x.Trigger
 	}
 	return nil
 }
 
 func (x *Trigger) GetPrice() *PriceTrigger {
-	if x, ok := x.GetCondition().(*Trigger_Price); ok {
+	if x, ok := x.GetTrigger().(*Trigger_Price); ok {
 		return x.Price
 	}
 	return nil
 }
 
 func (x *Trigger) GetTime() *TimeTrigger {
-	if x, ok := x.GetCondition().(*Trigger_Time); ok {
+	if x, ok := x.GetTrigger().(*Trigger_Time); ok {
 		return x.Time
 	}
 	return nil
 }
 
-func (x *Trigger) GetAnd() *LogicalTrigger {
-	if x, ok := x.GetCondition().(*Trigger_And); ok {
-		return x.And
+func (x *Trigger) GetLogical() *LogicalTrigger {
+	if x, ok := x.GetTrigger().(*Trigger_Logical); ok {
+		return x.Logical
 	}
 	return nil
 }
 
-func (x *Trigger) GetOr() *LogicalTrigger {
-	if x, ok := x.GetCondition().(*Trigger_Or); ok {
-		return x.Or
-	}
-	return nil
-}
-
-type isTrigger_Condition interface {
-	isTrigger_Condition()
+type isTrigger_Trigger interface {
+	isTrigger_Trigger()
 }
 
 type Trigger_Price struct {
@@ -4988,21 +4974,15 @@ type Trigger_Time struct {
 	Time *TimeTrigger `protobuf:"bytes,2,opt,name=time,proto3,oneof"`
 }
 
-type Trigger_And struct {
-	And *LogicalTrigger `protobuf:"bytes,3,opt,name=and,proto3,oneof"`
+type Trigger_Logical struct {
+	Logical *LogicalTrigger `protobuf:"bytes,3,opt,name=logical,proto3,oneof"`
 }
 
-type Trigger_Or struct {
-	Or *LogicalTrigger `protobuf:"bytes,4,opt,name=or,proto3,oneof"`
-}
+func (*Trigger_Price) isTrigger_Trigger() {}
 
-func (*Trigger_Price) isTrigger_Condition() {}
+func (*Trigger_Time) isTrigger_Trigger() {}
 
-func (*Trigger_Time) isTrigger_Condition() {}
-
-func (*Trigger_And) isTrigger_Condition() {}
-
-func (*Trigger_Or) isTrigger_Condition() {}
+func (*Trigger_Logical) isTrigger_Trigger() {}
 
 // Asset price trigger
 type PriceTrigger struct {
@@ -5098,7 +5078,8 @@ type LogicalTrigger struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Triggers []*Trigger `protobuf:"bytes,1,rep,name=triggers,proto3" json:"triggers,omitempty"`
+	LogicalOperator LogicalOperator `protobuf:"varint,1,opt,name=logical_operator,json=logicalOperator,proto3,enum=kepler.workflow.LogicalOperator" json:"logical_operator,omitempty"` // "AND", "OR"
+	Triggers        []*Trigger      `protobuf:"bytes,2,rep,name=triggers,proto3" json:"triggers,omitempty"`
 }
 
 func (x *LogicalTrigger) Reset() {
@@ -5119,6 +5100,13 @@ func (*LogicalTrigger) ProtoMessage() {}
 // Deprecated: Use LogicalTrigger.ProtoReflect.Descriptor instead.
 func (*LogicalTrigger) Descriptor() ([]byte, []int) {
 	return file_kepler_workflow_automation_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *LogicalTrigger) GetLogicalOperator() LogicalOperator {
+	if x != nil {
+		return x.LogicalOperator
+	}
+	return LogicalOperator_LOGICAL_OPERATOR_UNSPECIFIED
 }
 
 func (x *LogicalTrigger) GetTriggers() []*Trigger {
@@ -5323,79 +5311,88 @@ var file_kepler_workflow_automation_proto_rawDesc = []byte{
 	0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x06, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x21, 0x2e, 0x6b, 0x65,
 	0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x41, 0x75,
 	0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x06,
-	0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x22, 0xe9, 0x01, 0x0a, 0x07, 0x54, 0x72, 0x69, 0x67, 0x67,
+	0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x22, 0xbc, 0x01, 0x0a, 0x07, 0x54, 0x72, 0x69, 0x67, 0x67,
 	0x65, 0x72, 0x12, 0x35, 0x0a, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
 	0x0b, 0x32, 0x1d, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66,
 	0x6c, 0x6f, 0x77, 0x2e, 0x50, 0x72, 0x69, 0x63, 0x65, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72,
 	0x48, 0x00, 0x52, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x12, 0x32, 0x0a, 0x04, 0x74, 0x69, 0x6d,
 	0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72,
 	0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x54, 0x72,
-	0x69, 0x67, 0x67, 0x65, 0x72, 0x48, 0x00, 0x52, 0x04, 0x74, 0x69, 0x6d, 0x65, 0x12, 0x33, 0x0a,
-	0x03, 0x61, 0x6e, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1f, 0x2e, 0x6b, 0x65, 0x70,
-	0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x4c, 0x6f, 0x67,
-	0x69, 0x63, 0x61, 0x6c, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x48, 0x00, 0x52, 0x03, 0x61,
-	0x6e, 0x64, 0x12, 0x31, 0x0a, 0x02, 0x6f, 0x72, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1f,
+	0x69, 0x67, 0x67, 0x65, 0x72, 0x48, 0x00, 0x52, 0x04, 0x74, 0x69, 0x6d, 0x65, 0x12, 0x3b, 0x0a,
+	0x07, 0x6c, 0x6f, 0x67, 0x69, 0x63, 0x61, 0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1f,
 	0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77,
 	0x2e, 0x4c, 0x6f, 0x67, 0x69, 0x63, 0x61, 0x6c, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x48,
-	0x00, 0x52, 0x02, 0x6f, 0x72, 0x42, 0x0b, 0x0a, 0x09, 0x63, 0x6f, 0x6e, 0x64, 0x69, 0x74, 0x69,
-	0x6f, 0x6e, 0x22, 0x63, 0x0a, 0x0c, 0x50, 0x72, 0x69, 0x63, 0x65, 0x54, 0x72, 0x69, 0x67, 0x67,
-	0x65, 0x72, 0x12, 0x14, 0x0a, 0x05, 0x61, 0x73, 0x73, 0x65, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x05, 0x61, 0x73, 0x73, 0x65, 0x74, 0x12, 0x1a, 0x0a, 0x08, 0x6f, 0x70, 0x65, 0x72,
-	0x61, 0x74, 0x6f, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x6f, 0x70, 0x65, 0x72,
-	0x61, 0x74, 0x6f, 0x72, 0x12, 0x21, 0x0a, 0x0c, 0x74, 0x61, 0x72, 0x67, 0x65, 0x74, 0x5f, 0x70,
-	0x72, 0x69, 0x63, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x74, 0x61, 0x72, 0x67,
-	0x65, 0x74, 0x50, 0x72, 0x69, 0x63, 0x65, 0x22, 0x2b, 0x0a, 0x0b, 0x54, 0x69, 0x6d, 0x65, 0x54,
-	0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x12, 0x1c, 0x0a, 0x09, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74,
-	0x61, 0x6d, 0x70, 0x18, 0x01, 0x20, 0x01, 0x28, 0x04, 0x52, 0x09, 0x74, 0x69, 0x6d, 0x65, 0x73,
-	0x74, 0x61, 0x6d, 0x70, 0x22, 0x46, 0x0a, 0x0e, 0x4c, 0x6f, 0x67, 0x69, 0x63, 0x61, 0x6c, 0x54,
-	0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x12, 0x34, 0x0a, 0x08, 0x74, 0x72, 0x69, 0x67, 0x67, 0x65,
-	0x72, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65,
-	0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x54, 0x72, 0x69, 0x67, 0x67,
-	0x65, 0x72, 0x52, 0x08, 0x74, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x73, 0x22, 0x91, 0x01, 0x0a,
-	0x06, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x4d, 0x0a, 0x10, 0x65, 0x78, 0x65, 0x63, 0x75,
-	0x74, 0x65, 0x5f, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x61, 0x63, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x0b, 0x32, 0x20, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66,
-	0x6c, 0x6f, 0x77, 0x2e, 0x45, 0x78, 0x65, 0x63, 0x75, 0x74, 0x65, 0x43, 0x6f, 0x6e, 0x74, 0x72,
-	0x61, 0x63, 0x74, 0x48, 0x00, 0x52, 0x0f, 0x65, 0x78, 0x65, 0x63, 0x75, 0x74, 0x65, 0x43, 0x6f,
-	0x6e, 0x74, 0x72, 0x61, 0x63, 0x74, 0x12, 0x2e, 0x0a, 0x05, 0x74, 0x72, 0x61, 0x64, 0x65, 0x18,
-	0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77,
-	0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x54, 0x72, 0x61, 0x64, 0x65, 0x48, 0x00, 0x52,
-	0x05, 0x74, 0x72, 0x61, 0x64, 0x65, 0x42, 0x08, 0x0a, 0x06, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e,
-	0x22, 0x4e, 0x0a, 0x0f, 0x45, 0x78, 0x65, 0x63, 0x75, 0x74, 0x65, 0x43, 0x6f, 0x6e, 0x74, 0x72,
-	0x61, 0x63, 0x74, 0x12, 0x1f, 0x0a, 0x0b, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x61, 0x63, 0x74, 0x5f,
-	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x61,
-	0x63, 0x74, 0x49, 0x64, 0x12, 0x1a, 0x0a, 0x08, 0x66, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e,
-	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x66, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e,
-	0x22, 0x5f, 0x0a, 0x05, 0x54, 0x72, 0x61, 0x64, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x61, 0x73, 0x73,
-	0x65, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x61, 0x73, 0x73, 0x65, 0x74, 0x12,
-	0x16, 0x0a, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65,
-	0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x12, 0x12, 0x0a,
-	0x04, 0x73, 0x69, 0x64, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x73, 0x69, 0x64,
-	0x65, 0x2a, 0xd1, 0x01, 0x0a, 0x10, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e,
-	0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x28, 0x0a, 0x24, 0x41, 0x55, 0x54, 0x4f, 0x4d, 0x41,
-	0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x53, 0x54, 0x41, 0x54,
-	0x55, 0x53, 0x5f, 0x55, 0x4e, 0x53, 0x50, 0x45, 0x43, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10, 0x00,
-	0x12, 0x1c, 0x0a, 0x18, 0x41, 0x55, 0x54, 0x4f, 0x4d, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x53,
-	0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x41, 0x43, 0x54, 0x49, 0x56, 0x45, 0x10, 0x01, 0x12, 0x1d,
-	0x0a, 0x19, 0x41, 0x55, 0x54, 0x4f, 0x4d, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x53, 0x54, 0x41,
-	0x54, 0x55, 0x53, 0x5f, 0x45, 0x58, 0x50, 0x49, 0x52, 0x45, 0x44, 0x10, 0x02, 0x12, 0x1c, 0x0a,
-	0x18, 0x41, 0x55, 0x54, 0x4f, 0x4d, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x53, 0x54, 0x41, 0x54,
-	0x55, 0x53, 0x5f, 0x50, 0x41, 0x55, 0x53, 0x45, 0x44, 0x10, 0x03, 0x12, 0x1c, 0x0a, 0x18, 0x41,
-	0x55, 0x54, 0x4f, 0x4d, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53,
-	0x5f, 0x46, 0x41, 0x49, 0x4c, 0x45, 0x44, 0x10, 0x04, 0x12, 0x1a, 0x0a, 0x16, 0x41, 0x55, 0x54,
-	0x4f, 0x4d, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x44,
-	0x4f, 0x4e, 0x45, 0x10, 0x05, 0x42, 0x9f, 0x01, 0x0a, 0x13, 0x63, 0x6f, 0x6d, 0x2e, 0x6b, 0x65,
-	0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x42, 0x0f, 0x41,
-	0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01,
-	0x5a, 0x1a, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6b, 0x65, 0x70,
-	0x6c, 0x65, 0x72, 0x2f, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0xa2, 0x02, 0x03, 0x4b,
-	0x57, 0x58, 0xaa, 0x02, 0x0f, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x57, 0x6f, 0x72, 0x6b,
-	0x66, 0x6c, 0x6f, 0x77, 0xca, 0x02, 0x0f, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x5c, 0x57, 0x6f,
-	0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0xe2, 0x02, 0x1b, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x5c,
-	0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61,
-	0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x10, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x3a, 0x3a, 0x57,
-	0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x00, 0x52, 0x07, 0x6c, 0x6f, 0x67, 0x69, 0x63, 0x61, 0x6c, 0x42, 0x09, 0x0a, 0x07, 0x74, 0x72,
+	0x69, 0x67, 0x67, 0x65, 0x72, 0x22, 0x63, 0x0a, 0x0c, 0x50, 0x72, 0x69, 0x63, 0x65, 0x54, 0x72,
+	0x69, 0x67, 0x67, 0x65, 0x72, 0x12, 0x14, 0x0a, 0x05, 0x61, 0x73, 0x73, 0x65, 0x74, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x61, 0x73, 0x73, 0x65, 0x74, 0x12, 0x1a, 0x0a, 0x08, 0x6f,
+	0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x6f,
+	0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x12, 0x21, 0x0a, 0x0c, 0x74, 0x61, 0x72, 0x67, 0x65,
+	0x74, 0x5f, 0x70, 0x72, 0x69, 0x63, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x74,
+	0x61, 0x72, 0x67, 0x65, 0x74, 0x50, 0x72, 0x69, 0x63, 0x65, 0x22, 0x2b, 0x0a, 0x0b, 0x54, 0x69,
+	0x6d, 0x65, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x12, 0x1c, 0x0a, 0x09, 0x74, 0x69, 0x6d,
+	0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x01, 0x20, 0x01, 0x28, 0x04, 0x52, 0x09, 0x74, 0x69,
+	0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x22, 0x93, 0x01, 0x0a, 0x0e, 0x4c, 0x6f, 0x67, 0x69,
+	0x63, 0x61, 0x6c, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x12, 0x4b, 0x0a, 0x10, 0x6c, 0x6f,
+	0x67, 0x69, 0x63, 0x61, 0x6c, 0x5f, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x0e, 0x32, 0x20, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f,
+	0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x4c, 0x6f, 0x67, 0x69, 0x63, 0x61, 0x6c, 0x4f, 0x70,
+	0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x52, 0x0f, 0x6c, 0x6f, 0x67, 0x69, 0x63, 0x61, 0x6c, 0x4f,
+	0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x12, 0x34, 0x0a, 0x08, 0x74, 0x72, 0x69, 0x67, 0x67,
+	0x65, 0x72, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x6b, 0x65, 0x70, 0x6c,
+	0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x54, 0x72, 0x69, 0x67,
+	0x67, 0x65, 0x72, 0x52, 0x08, 0x74, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x73, 0x22, 0x91, 0x01,
+	0x0a, 0x06, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x4d, 0x0a, 0x10, 0x65, 0x78, 0x65, 0x63,
+	0x75, 0x74, 0x65, 0x5f, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x61, 0x63, 0x74, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x20, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b,
+	0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x45, 0x78, 0x65, 0x63, 0x75, 0x74, 0x65, 0x43, 0x6f, 0x6e, 0x74,
+	0x72, 0x61, 0x63, 0x74, 0x48, 0x00, 0x52, 0x0f, 0x65, 0x78, 0x65, 0x63, 0x75, 0x74, 0x65, 0x43,
+	0x6f, 0x6e, 0x74, 0x72, 0x61, 0x63, 0x74, 0x12, 0x2e, 0x0a, 0x05, 0x74, 0x72, 0x61, 0x64, 0x65,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e,
+	0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x54, 0x72, 0x61, 0x64, 0x65, 0x48, 0x00,
+	0x52, 0x05, 0x74, 0x72, 0x61, 0x64, 0x65, 0x42, 0x08, 0x0a, 0x06, 0x61, 0x63, 0x74, 0x69, 0x6f,
+	0x6e, 0x22, 0x4e, 0x0a, 0x0f, 0x45, 0x78, 0x65, 0x63, 0x75, 0x74, 0x65, 0x43, 0x6f, 0x6e, 0x74,
+	0x72, 0x61, 0x63, 0x74, 0x12, 0x1f, 0x0a, 0x0b, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x61, 0x63, 0x74,
+	0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x63, 0x6f, 0x6e, 0x74, 0x72,
+	0x61, 0x63, 0x74, 0x49, 0x64, 0x12, 0x1a, 0x0a, 0x08, 0x66, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f,
+	0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x66, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f,
+	0x6e, 0x22, 0x5f, 0x0a, 0x05, 0x54, 0x72, 0x61, 0x64, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x61, 0x73,
+	0x73, 0x65, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x61, 0x73, 0x73, 0x65, 0x74,
+	0x12, 0x16, 0x0a, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x70, 0x72, 0x69, 0x63,
+	0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x12, 0x12,
+	0x0a, 0x04, 0x73, 0x69, 0x64, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x73, 0x69,
+	0x64, 0x65, 0x2a, 0xd1, 0x01, 0x0a, 0x10, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x28, 0x0a, 0x24, 0x41, 0x55, 0x54, 0x4f, 0x4d,
+	0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x53, 0x54, 0x41,
+	0x54, 0x55, 0x53, 0x5f, 0x55, 0x4e, 0x53, 0x50, 0x45, 0x43, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10,
+	0x00, 0x12, 0x1c, 0x0a, 0x18, 0x41, 0x55, 0x54, 0x4f, 0x4d, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f,
+	0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x41, 0x43, 0x54, 0x49, 0x56, 0x45, 0x10, 0x01, 0x12,
+	0x1d, 0x0a, 0x19, 0x41, 0x55, 0x54, 0x4f, 0x4d, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x53, 0x54,
+	0x41, 0x54, 0x55, 0x53, 0x5f, 0x45, 0x58, 0x50, 0x49, 0x52, 0x45, 0x44, 0x10, 0x02, 0x12, 0x1c,
+	0x0a, 0x18, 0x41, 0x55, 0x54, 0x4f, 0x4d, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x53, 0x54, 0x41,
+	0x54, 0x55, 0x53, 0x5f, 0x50, 0x41, 0x55, 0x53, 0x45, 0x44, 0x10, 0x03, 0x12, 0x1c, 0x0a, 0x18,
+	0x41, 0x55, 0x54, 0x4f, 0x4d, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55,
+	0x53, 0x5f, 0x46, 0x41, 0x49, 0x4c, 0x45, 0x44, 0x10, 0x04, 0x12, 0x1a, 0x0a, 0x16, 0x41, 0x55,
+	0x54, 0x4f, 0x4d, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f,
+	0x44, 0x4f, 0x4e, 0x45, 0x10, 0x05, 0x2a, 0x66, 0x0a, 0x0f, 0x4c, 0x6f, 0x67, 0x69, 0x63, 0x61,
+	0x6c, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x12, 0x20, 0x0a, 0x1c, 0x4c, 0x4f, 0x47,
+	0x49, 0x43, 0x41, 0x4c, 0x5f, 0x4f, 0x50, 0x45, 0x52, 0x41, 0x54, 0x4f, 0x52, 0x5f, 0x55, 0x4e,
+	0x53, 0x50, 0x45, 0x43, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10, 0x00, 0x12, 0x18, 0x0a, 0x14, 0x4c,
+	0x4f, 0x47, 0x49, 0x43, 0x41, 0x4c, 0x5f, 0x4f, 0x50, 0x45, 0x52, 0x41, 0x54, 0x4f, 0x52, 0x5f,
+	0x41, 0x4e, 0x44, 0x10, 0x01, 0x12, 0x17, 0x0a, 0x13, 0x4c, 0x4f, 0x47, 0x49, 0x43, 0x41, 0x4c,
+	0x5f, 0x4f, 0x50, 0x45, 0x52, 0x41, 0x54, 0x4f, 0x52, 0x5f, 0x4f, 0x52, 0x10, 0x02, 0x42, 0x9f,
+	0x01, 0x0a, 0x13, 0x63, 0x6f, 0x6d, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f,
+	0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x42, 0x0f, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69,
+	0x6f, 0x6e, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x1a, 0x6b, 0x65, 0x70, 0x6c, 0x65,
+	0x72, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x77, 0x6f, 0x72,
+	0x6b, 0x66, 0x6c, 0x6f, 0x77, 0xa2, 0x02, 0x03, 0x4b, 0x57, 0x58, 0xaa, 0x02, 0x0f, 0x4b, 0x65,
+	0x70, 0x6c, 0x65, 0x72, 0x2e, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0xca, 0x02, 0x0f,
+	0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x5c, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0xe2,
+	0x02, 0x1b, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x5c, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f,
+	0x77, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x10,
+	0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x3a, 0x3a, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77,
+	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -5410,30 +5407,31 @@ func file_kepler_workflow_automation_proto_rawDescGZIP() []byte {
 	return file_kepler_workflow_automation_proto_rawDescData
 }
 
-var file_kepler_workflow_automation_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_kepler_workflow_automation_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
 var file_kepler_workflow_automation_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_kepler_workflow_automation_proto_goTypes = []interface{}{
 	(AutomationStatus)(0),   // 0: kepler.workflow.AutomationStatus
-	(*Automation)(nil),      // 1: kepler.workflow.Automation
-	(*Trigger)(nil),         // 2: kepler.workflow.Trigger
-	(*PriceTrigger)(nil),    // 3: kepler.workflow.PriceTrigger
-	(*TimeTrigger)(nil),     // 4: kepler.workflow.TimeTrigger
-	(*LogicalTrigger)(nil),  // 5: kepler.workflow.LogicalTrigger
-	(*Action)(nil),          // 6: kepler.workflow.Action
-	(*ExecuteContract)(nil), // 7: kepler.workflow.ExecuteContract
-	(*Trade)(nil),           // 8: kepler.workflow.Trade
+	(LogicalOperator)(0),    // 1: kepler.workflow.LogicalOperator
+	(*Automation)(nil),      // 2: kepler.workflow.Automation
+	(*Trigger)(nil),         // 3: kepler.workflow.Trigger
+	(*PriceTrigger)(nil),    // 4: kepler.workflow.PriceTrigger
+	(*TimeTrigger)(nil),     // 5: kepler.workflow.TimeTrigger
+	(*LogicalTrigger)(nil),  // 6: kepler.workflow.LogicalTrigger
+	(*Action)(nil),          // 7: kepler.workflow.Action
+	(*ExecuteContract)(nil), // 8: kepler.workflow.ExecuteContract
+	(*Trade)(nil),           // 9: kepler.workflow.Trade
 }
 var file_kepler_workflow_automation_proto_depIdxs = []int32{
-	2,  // 0: kepler.workflow.Automation.triggers:type_name -> kepler.workflow.Trigger
-	6,  // 1: kepler.workflow.Automation.actions:type_name -> kepler.workflow.Action
+	3,  // 0: kepler.workflow.Automation.triggers:type_name -> kepler.workflow.Trigger
+	7,  // 1: kepler.workflow.Automation.actions:type_name -> kepler.workflow.Action
 	0,  // 2: kepler.workflow.Automation.status:type_name -> kepler.workflow.AutomationStatus
-	3,  // 3: kepler.workflow.Trigger.price:type_name -> kepler.workflow.PriceTrigger
-	4,  // 4: kepler.workflow.Trigger.time:type_name -> kepler.workflow.TimeTrigger
-	5,  // 5: kepler.workflow.Trigger.and:type_name -> kepler.workflow.LogicalTrigger
-	5,  // 6: kepler.workflow.Trigger.or:type_name -> kepler.workflow.LogicalTrigger
-	2,  // 7: kepler.workflow.LogicalTrigger.triggers:type_name -> kepler.workflow.Trigger
-	7,  // 8: kepler.workflow.Action.execute_contract:type_name -> kepler.workflow.ExecuteContract
-	8,  // 9: kepler.workflow.Action.trade:type_name -> kepler.workflow.Trade
+	4,  // 3: kepler.workflow.Trigger.price:type_name -> kepler.workflow.PriceTrigger
+	5,  // 4: kepler.workflow.Trigger.time:type_name -> kepler.workflow.TimeTrigger
+	6,  // 5: kepler.workflow.Trigger.logical:type_name -> kepler.workflow.LogicalTrigger
+	1,  // 6: kepler.workflow.LogicalTrigger.logical_operator:type_name -> kepler.workflow.LogicalOperator
+	3,  // 7: kepler.workflow.LogicalTrigger.triggers:type_name -> kepler.workflow.Trigger
+	8,  // 8: kepler.workflow.Action.execute_contract:type_name -> kepler.workflow.ExecuteContract
+	9,  // 9: kepler.workflow.Action.trade:type_name -> kepler.workflow.Trade
 	10, // [10:10] is the sub-list for method output_type
 	10, // [10:10] is the sub-list for method input_type
 	10, // [10:10] is the sub-list for extension type_name
@@ -5547,8 +5545,7 @@ func file_kepler_workflow_automation_proto_init() {
 	file_kepler_workflow_automation_proto_msgTypes[1].OneofWrappers = []interface{}{
 		(*Trigger_Price)(nil),
 		(*Trigger_Time)(nil),
-		(*Trigger_And)(nil),
-		(*Trigger_Or)(nil),
+		(*Trigger_Logical)(nil),
 	}
 	file_kepler_workflow_automation_proto_msgTypes[5].OneofWrappers = []interface{}{
 		(*Action_ExecuteContract)(nil),
@@ -5559,7 +5556,7 @@ func file_kepler_workflow_automation_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_kepler_workflow_automation_proto_rawDesc,
-			NumEnums:      1,
+			NumEnums:      2,
 			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   0,

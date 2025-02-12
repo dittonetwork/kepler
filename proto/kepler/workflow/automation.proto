@@ -25,11 +25,10 @@ enum AutomationStatus {
 
 // Base trigger with type selection
 message Trigger {
-  oneof condition {
+  oneof trigger {
     PriceTrigger price = 1;
     TimeTrigger time = 2;
-    LogicalTrigger and = 3;
-    LogicalTrigger or = 4;
+    LogicalTrigger logical = 3;
   }
 }
 
@@ -47,7 +46,15 @@ message TimeTrigger {
 
 // Logical trigger
 message LogicalTrigger {
-  repeated Trigger triggers = 1;
+  LogicalOperator logical_operator = 1; // "AND", "OR"
+  repeated Trigger triggers = 2;
+}
+
+// Enumeration for logical operator
+enum LogicalOperator {
+  LOGICAL_OPERATOR_UNSPECIFIED = 0; // Default unknown operator
+  LOGICAL_OPERATOR_AND = 1; // Logical AND operator
+  LOGICAL_OPERATOR_OR = 2; // Logical OR operator
 }
 
 message Action {
