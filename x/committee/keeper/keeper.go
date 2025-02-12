@@ -1,6 +1,7 @@
 package keeper
 
 import (
+	"context"
 	"fmt"
 
 	"cosmossdk.io/core/store"
@@ -22,6 +23,16 @@ type (
 		authority string
 	}
 )
+
+// Committee implements types.QueryServer.
+func (k Keeper) Committee(context.Context, *types.QueryCommitteeRequest) (*types.QueryCommitteeResponse, error) {
+	panic("unimplemented")
+}
+
+// Committees implements types.QueryServer.
+func (k Keeper) Committees(context.Context, *types.QueryCommitteesRequest) (*types.QueryCommitteesResponse, error) {
+	panic("unimplemented")
+}
 
 func NewKeeper(
 	cdc codec.BinaryCodec,

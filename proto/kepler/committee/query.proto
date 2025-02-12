@@ -6,6 +6,7 @@ import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "kepler/committee/params.proto";
+import "kepler/committee/committee.proto";
 
 option go_package = "kepler/x/committee/types";
 
@@ -15,6 +16,13 @@ service Query {
   rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/kepler/committee/params";
   }
+
+  rpc Committee(QueryCommitteeRequest) returns (QueryCommitteeResponse) {
+    option (google.api.http).get = "/kepler/committee/{epoch_id}/{chain_id}";
+  };
+  rpc Committees(QueryCommitteesRequest) returns (QueryCommitteesResponse) {
+    option (google.api.http).get = "/kepler/committees/{epoch_id}";
+  };
 }
 
 // QueryParamsRequest is request type for the Query/Params RPC method.
@@ -27,4 +35,29 @@ message QueryParamsResponse {
     (gogoproto.nullable) = false,
     (amino.dont_omitempty) = true
   ];
+}
+
+// QueryCommitteeRequest is request type for the Query/Committee RPC method.
+// Requests the committee for a given epoch and chain id.
+message QueryCommitteeRequest {
+  uint64 epoch_id = 1;
+  uint64 chain_id = 2;
+}
+
+// QueryCommitteeResponse is response type for the Query/Committee RPC method.
+// Contains the committee for a given epoch and chain id.
+message QueryCommitteeResponse {
+  Committee committee = 1;
+} 
+
+// QueryCommitteesRequest is request type for the Query/Committees RPC method.
+// Requests all committees for a given epoch.
+message QueryCommitteesRequest {
+  uint64 epoch_id = 1;
+}
+
+// QueryCommitteesResponse is response type for the Query/Committees RPC method.
+// Contains all committees for a given epoch.
+message QueryCommitteesResponse {
+  repeated Committee committees = 1;
 }
