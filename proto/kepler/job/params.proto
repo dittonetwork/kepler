@@ -1,0 +1,15 @@
+syntax = "proto3";
+package kepler.job;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+
+option go_package = "kepler/x/job/types";
+
+// Params defines the parameters for the module.
+message Params {
+  option (amino.name) = "kepler/x/job/Params";
+  option (gogoproto.equal) = true;
+
+  
+}
