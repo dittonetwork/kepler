@@ -6,8 +6,17 @@ import (
 	sdkerrors "cosmossdk.io/errors"
 )
 
-// x/instant module sentinel errors
+const (
+	ErrCodeInvalidSigner = 1100
+	ErrCodeSample        = 1101
+)
+
+// x/instant module sentinel errors.
 var (
-	ErrInvalidSigner = sdkerrors.Register(ModuleName, 1100, "expected gov account as only signer for proposal message")
-	ErrSample        = sdkerrors.Register(ModuleName, 1101, "sample error")
+	ErrInvalidSigner = sdkerrors.Register(
+		ModuleName,
+		ErrCodeInvalidSigner,
+		"expected gov account as only signer for proposal message",
+	)
+	ErrSample = sdkerrors.Register(ModuleName, ErrCodeSample, "sample error")
 )
