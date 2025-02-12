@@ -56,7 +56,7 @@ enum LogicalOperator {
   LOGICAL_OPERATOR_UNSPECIFIED = 0; // Default unknown operator
   LOGICAL_OPERATOR_AND = 1; // Logical AND operator
   LOGICAL_OPERATOR_OR = 2; // Logical OR operator
-  LOGICAL_OPERATOR_NOT = 3; // Logical OR operator
+  LOGICAL_OPERATOR_NOT = 3; // Logical NOT operator
 }
 
 message Action {
