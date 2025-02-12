@@ -80,7 +80,7 @@ proto-gen:
 #################
 
 golangci_lint_cmd=golangci-lint
-golangci_version=v1.61.0
+golangci_version=v1.64.2
 
 lint:
 	@echo "--> Running linter"
