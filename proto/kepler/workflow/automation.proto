@@ -7,7 +7,7 @@ option go_package = "kepler/x/workflow/types";
 message Automation {
   string id = 1; // Unique identifier (UUID)
   repeated Trigger triggers = 2; // List of trigger conditions
-  repeated string actions = 3; // List of actions
+  repeated Action actions = 3; // List of actions
   uint64 repeat_count = 4; // Number of executions allowed
   uint64 expire_at = 5; // Expiration timestamp (Unix time)
   AutomationStatus status = 6; // Status of the automation (active, expired, paused, failed, done)
@@ -23,25 +23,50 @@ enum AutomationStatus {
   AUTOMATION_STATUS_DONE = 5; // Completed automation
 }
 
-// Enumeration for trigger types
-enum TriggerType {
-  TRIGGER_UNSPECIFIED = 0;  // Default unknown type
-  TRIGGER_ASSET_PRICE_ABOVE = 1;  // Asset price above N
-  TRIGGER_ASSET_PRICE_BELOW = 2;  // Asset price below N
-  TRIGGER_BLOCK_HEIGHT = 3; // Block height >= N
-  TRIGGER_TIME = 4;         // Time-based trigger (timestamp)
-  TRIGGER_AND = 5;          // Logical AND (multiple conditions)
-  TRIGGER_OR = 6;           // Logical OR (at least one condition)
+// Base trigger with type selection
+message Trigger {
+  oneof condition {
+    PriceTrigger price = 1;
+    TimeTrigger time = 2;
+    LogicalTrigger and = 3;
+    LogicalTrigger or = 4;
+  }
 }
 
-// Structure of a single trigger
-message Trigger {
-  TriggerType type = 1;
-  string account = 2;  // Wallet address (for balance-based triggers)
-  string asset = 3;    // Asset symbol (for price triggers)
-  uint64 height = 4;   // Block height (for block_height trigger)
-  uint64 timestamp = 5; // Timestamp (for time-based trigger)
-  repeated Trigger conditions = 6; // Logical conditions (AND/OR)
-  // Additional fields for numerical values
-  uint64 price = 7; // Asset price for price triggers
+// Asset price trigger
+message PriceTrigger {
+  string asset = 1;
+  string operator = 2; // ">", "<", "=="
+  string target_price = 3;
+}
+
+// Time trigger
+message TimeTrigger {
+  uint64 timestamp = 1;
+}
+
+// Logical trigger
+message LogicalTrigger {
+  repeated Trigger triggers = 1;
+}
+
+message Action {
+  oneof action {
+    ExecuteContract execute_contract = 1;
+    Trade trade = 2;
+  }
+}
+
+// Execute contract action
+message ExecuteContract {
+  string contract_id = 1;
+  string function = 2;
+}
+
+// Trade action
+message Trade {
+  string asset = 1;
+  string amount = 2;
+  string price = 3;
+  string side = 4; // "buy", "sell"
 }

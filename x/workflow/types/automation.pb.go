@@ -60,52 +60,11 @@ func (AutomationStatus) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor_e70c979264e1abb3, []int{0}
 }
 
-// Enumeration for trigger types
-type TriggerType int32
-
-const (
-	TriggerType_TRIGGER_UNSPECIFIED       TriggerType = 0
-	TriggerType_TRIGGER_ASSET_PRICE_ABOVE TriggerType = 1
-	TriggerType_TRIGGER_ASSET_PRICE_BELOW TriggerType = 2
-	TriggerType_TRIGGER_BLOCK_HEIGHT      TriggerType = 3
-	TriggerType_TRIGGER_TIME              TriggerType = 4
-	TriggerType_TRIGGER_AND               TriggerType = 5
-	TriggerType_TRIGGER_OR                TriggerType = 6
-)
-
-var TriggerType_name = map[int32]string{
-	0: "TRIGGER_UNSPECIFIED",
-	1: "TRIGGER_ASSET_PRICE_ABOVE",
-	2: "TRIGGER_ASSET_PRICE_BELOW",
-	3: "TRIGGER_BLOCK_HEIGHT",
-	4: "TRIGGER_TIME",
-	5: "TRIGGER_AND",
-	6: "TRIGGER_OR",
-}
-
-var TriggerType_value = map[string]int32{
-	"TRIGGER_UNSPECIFIED":       0,
-	"TRIGGER_ASSET_PRICE_ABOVE": 1,
-	"TRIGGER_ASSET_PRICE_BELOW": 2,
-	"TRIGGER_BLOCK_HEIGHT":      3,
-	"TRIGGER_TIME":              4,
-	"TRIGGER_AND":               5,
-	"TRIGGER_OR":                6,
-}
-
-func (x TriggerType) String() string {
-	return proto.EnumName(TriggerType_name, int32(x))
-}
-
-func (TriggerType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_e70c979264e1abb3, []int{1}
-}
-
 // Automation entity
 type Automation struct {
 	Id          string           `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	Triggers    []*Trigger       `protobuf:"bytes,2,rep,name=triggers,proto3" json:"triggers,omitempty"`
-	Actions     []string         `protobuf:"bytes,3,rep,name=actions,proto3" json:"actions,omitempty"`
+	Actions     []*Action        `protobuf:"bytes,3,rep,name=actions,proto3" json:"actions,omitempty"`
 	RepeatCount uint64           `protobuf:"varint,4,opt,name=repeat_count,json=repeatCount,proto3" json:"repeat_count,omitempty"`
 	ExpireAt    uint64           `protobuf:"varint,5,opt,name=expire_at,json=expireAt,proto3" json:"expire_at,omitempty"`
 	Status      AutomationStatus `protobuf:"varint,6,opt,name=status,proto3,enum=kepler.workflow.AutomationStatus" json:"status,omitempty"`
@@ -158,7 +117,7 @@ func (m *Automation) GetTriggers() []*Trigger {
 	return nil
 }
 
-func (m *Automation) GetActions() []string {
+func (m *Automation) GetActions() []*Action {
 	if m != nil {
 		return m.Actions
 	}
@@ -186,16 +145,15 @@ func (m *Automation) GetStatus() AutomationStatus {
 	return AutomationStatus_AUTOMATION_STATUS_STATUS_UNSPECIFIED
 }
 
-// Structure of a single trigger
+// Base trigger with type selection
 type Trigger struct {
-	Type       TriggerType `protobuf:"varint,1,opt,name=type,proto3,enum=kepler.workflow.TriggerType" json:"type,omitempty"`
-	Account    string      `protobuf:"bytes,2,opt,name=account,proto3" json:"account,omitempty"`
-	Asset      string      `protobuf:"bytes,3,opt,name=asset,proto3" json:"asset,omitempty"`
-	Height     uint64      `protobuf:"varint,4,opt,name=height,proto3" json:"height,omitempty"`
-	Timestamp  uint64      `protobuf:"varint,5,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
-	Conditions []*Trigger  `protobuf:"bytes,6,rep,name=conditions,proto3" json:"conditions,omitempty"`
-	// Additional fields for numerical values
-	Price uint64 `protobuf:"varint,7,opt,name=price,proto3" json:"price,omitempty"`
+	// Types that are valid to be assigned to Condition:
+	//
+	//	*Trigger_Price
+	//	*Trigger_Time
+	//	*Trigger_And
+	//	*Trigger_Or
+	Condition isTrigger_Condition `protobuf_oneof:"condition"`
 }
 
 func (m *Trigger) Reset()         { *m = Trigger{} }
@@ -231,101 +189,492 @@ func (m *Trigger) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_Trigger proto.InternalMessageInfo
 
-func (m *Trigger) GetType() TriggerType {
-	if m != nil {
-		return m.Type
-	}
-	return TriggerType_TRIGGER_UNSPECIFIED
+type isTrigger_Condition interface {
+	isTrigger_Condition()
+	MarshalTo([]byte) (int, error)
+	Size() int
 }
 
-func (m *Trigger) GetAccount() string {
-	if m != nil {
-		return m.Account
-	}
-	return ""
+type Trigger_Price struct {
+	Price *PriceTrigger `protobuf:"bytes,1,opt,name=price,proto3,oneof" json:"price,omitempty"`
+}
+type Trigger_Time struct {
+	Time *TimeTrigger `protobuf:"bytes,2,opt,name=time,proto3,oneof" json:"time,omitempty"`
+}
+type Trigger_And struct {
+	And *LogicalTrigger `protobuf:"bytes,3,opt,name=and,proto3,oneof" json:"and,omitempty"`
+}
+type Trigger_Or struct {
+	Or *LogicalTrigger `protobuf:"bytes,4,opt,name=or,proto3,oneof" json:"or,omitempty"`
 }
 
-func (m *Trigger) GetAsset() string {
+func (*Trigger_Price) isTrigger_Condition() {}
+func (*Trigger_Time) isTrigger_Condition()  {}
+func (*Trigger_And) isTrigger_Condition()   {}
+func (*Trigger_Or) isTrigger_Condition()    {}
+
+func (m *Trigger) GetCondition() isTrigger_Condition {
+	if m != nil {
+		return m.Condition
+	}
+	return nil
+}
+
+func (m *Trigger) GetPrice() *PriceTrigger {
+	if x, ok := m.GetCondition().(*Trigger_Price); ok {
+		return x.Price
+	}
+	return nil
+}
+
+func (m *Trigger) GetTime() *TimeTrigger {
+	if x, ok := m.GetCondition().(*Trigger_Time); ok {
+		return x.Time
+	}
+	return nil
+}
+
+func (m *Trigger) GetAnd() *LogicalTrigger {
+	if x, ok := m.GetCondition().(*Trigger_And); ok {
+		return x.And
+	}
+	return nil
+}
+
+func (m *Trigger) GetOr() *LogicalTrigger {
+	if x, ok := m.GetCondition().(*Trigger_Or); ok {
+		return x.Or
+	}
+	return nil
+}
+
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*Trigger) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
+		(*Trigger_Price)(nil),
+		(*Trigger_Time)(nil),
+		(*Trigger_And)(nil),
+		(*Trigger_Or)(nil),
+	}
+}
+
+// Asset price trigger
+type PriceTrigger struct {
+	Asset       string `protobuf:"bytes,1,opt,name=asset,proto3" json:"asset,omitempty"`
+	Operator    string `protobuf:"bytes,2,opt,name=operator,proto3" json:"operator,omitempty"`
+	TargetPrice string `protobuf:"bytes,3,opt,name=target_price,json=targetPrice,proto3" json:"target_price,omitempty"`
+}
+
+func (m *PriceTrigger) Reset()         { *m = PriceTrigger{} }
+func (m *PriceTrigger) String() string { return proto.CompactTextString(m) }
+func (*PriceTrigger) ProtoMessage()    {}
+func (*PriceTrigger) Descriptor() ([]byte, []int) {
+	return fileDescriptor_e70c979264e1abb3, []int{2}
+}
+func (m *PriceTrigger) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *PriceTrigger) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_PriceTrigger.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *PriceTrigger) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PriceTrigger.Merge(m, src)
+}
+func (m *PriceTrigger) XXX_Size() int {
+	return m.Size()
+}
+func (m *PriceTrigger) XXX_DiscardUnknown() {
+	xxx_messageInfo_PriceTrigger.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PriceTrigger proto.InternalMessageInfo
+
+func (m *PriceTrigger) GetAsset() string {
 	if m != nil {
 		return m.Asset
 	}
 	return ""
 }
 
-func (m *Trigger) GetHeight() uint64 {
+func (m *PriceTrigger) GetOperator() string {
 	if m != nil {
-		return m.Height
+		return m.Operator
 	}
-	return 0
+	return ""
 }
 
-func (m *Trigger) GetTimestamp() uint64 {
+func (m *PriceTrigger) GetTargetPrice() string {
+	if m != nil {
+		return m.TargetPrice
+	}
+	return ""
+}
+
+// Time trigger
+type TimeTrigger struct {
+	Timestamp uint64 `protobuf:"varint,1,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+}
+
+func (m *TimeTrigger) Reset()         { *m = TimeTrigger{} }
+func (m *TimeTrigger) String() string { return proto.CompactTextString(m) }
+func (*TimeTrigger) ProtoMessage()    {}
+func (*TimeTrigger) Descriptor() ([]byte, []int) {
+	return fileDescriptor_e70c979264e1abb3, []int{3}
+}
+func (m *TimeTrigger) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *TimeTrigger) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_TimeTrigger.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *TimeTrigger) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TimeTrigger.Merge(m, src)
+}
+func (m *TimeTrigger) XXX_Size() int {
+	return m.Size()
+}
+func (m *TimeTrigger) XXX_DiscardUnknown() {
+	xxx_messageInfo_TimeTrigger.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_TimeTrigger proto.InternalMessageInfo
+
+func (m *TimeTrigger) GetTimestamp() uint64 {
 	if m != nil {
 		return m.Timestamp
 	}
 	return 0
 }
 
-func (m *Trigger) GetConditions() []*Trigger {
+// Logical trigger
+type LogicalTrigger struct {
+	Triggers []*Trigger `protobuf:"bytes,1,rep,name=triggers,proto3" json:"triggers,omitempty"`
+}
+
+func (m *LogicalTrigger) Reset()         { *m = LogicalTrigger{} }
+func (m *LogicalTrigger) String() string { return proto.CompactTextString(m) }
+func (*LogicalTrigger) ProtoMessage()    {}
+func (*LogicalTrigger) Descriptor() ([]byte, []int) {
+	return fileDescriptor_e70c979264e1abb3, []int{4}
+}
+func (m *LogicalTrigger) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *LogicalTrigger) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_LogicalTrigger.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *LogicalTrigger) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LogicalTrigger.Merge(m, src)
+}
+func (m *LogicalTrigger) XXX_Size() int {
+	return m.Size()
+}
+func (m *LogicalTrigger) XXX_DiscardUnknown() {
+	xxx_messageInfo_LogicalTrigger.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_LogicalTrigger proto.InternalMessageInfo
+
+func (m *LogicalTrigger) GetTriggers() []*Trigger {
 	if m != nil {
-		return m.Conditions
+		return m.Triggers
 	}
 	return nil
 }
 
-func (m *Trigger) GetPrice() uint64 {
+type Action struct {
+	// Types that are valid to be assigned to Action:
+	//
+	//	*Action_ExecuteContract
+	//	*Action_Trade
+	Action isAction_Action `protobuf_oneof:"action"`
+}
+
+func (m *Action) Reset()         { *m = Action{} }
+func (m *Action) String() string { return proto.CompactTextString(m) }
+func (*Action) ProtoMessage()    {}
+func (*Action) Descriptor() ([]byte, []int) {
+	return fileDescriptor_e70c979264e1abb3, []int{5}
+}
+func (m *Action) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Action) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Action.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *Action) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Action.Merge(m, src)
+}
+func (m *Action) XXX_Size() int {
+	return m.Size()
+}
+func (m *Action) XXX_DiscardUnknown() {
+	xxx_messageInfo_Action.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Action proto.InternalMessageInfo
+
+type isAction_Action interface {
+	isAction_Action()
+	MarshalTo([]byte) (int, error)
+	Size() int
+}
+
+type Action_ExecuteContract struct {
+	ExecuteContract *ExecuteContract `protobuf:"bytes,1,opt,name=execute_contract,json=executeContract,proto3,oneof" json:"execute_contract,omitempty"`
+}
+type Action_Trade struct {
+	Trade *Trade `protobuf:"bytes,2,opt,name=trade,proto3,oneof" json:"trade,omitempty"`
+}
+
+func (*Action_ExecuteContract) isAction_Action() {}
+func (*Action_Trade) isAction_Action()           {}
+
+func (m *Action) GetAction() isAction_Action {
+	if m != nil {
+		return m.Action
+	}
+	return nil
+}
+
+func (m *Action) GetExecuteContract() *ExecuteContract {
+	if x, ok := m.GetAction().(*Action_ExecuteContract); ok {
+		return x.ExecuteContract
+	}
+	return nil
+}
+
+func (m *Action) GetTrade() *Trade {
+	if x, ok := m.GetAction().(*Action_Trade); ok {
+		return x.Trade
+	}
+	return nil
+}
+
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*Action) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
+		(*Action_ExecuteContract)(nil),
+		(*Action_Trade)(nil),
+	}
+}
+
+// Execute contract action
+type ExecuteContract struct {
+	ContractId string `protobuf:"bytes,1,opt,name=contract_id,json=contractId,proto3" json:"contract_id,omitempty"`
+	Function   string `protobuf:"bytes,2,opt,name=function,proto3" json:"function,omitempty"`
+}
+
+func (m *ExecuteContract) Reset()         { *m = ExecuteContract{} }
+func (m *ExecuteContract) String() string { return proto.CompactTextString(m) }
+func (*ExecuteContract) ProtoMessage()    {}
+func (*ExecuteContract) Descriptor() ([]byte, []int) {
+	return fileDescriptor_e70c979264e1abb3, []int{6}
+}
+func (m *ExecuteContract) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ExecuteContract) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ExecuteContract.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ExecuteContract) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ExecuteContract.Merge(m, src)
+}
+func (m *ExecuteContract) XXX_Size() int {
+	return m.Size()
+}
+func (m *ExecuteContract) XXX_DiscardUnknown() {
+	xxx_messageInfo_ExecuteContract.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ExecuteContract proto.InternalMessageInfo
+
+func (m *ExecuteContract) GetContractId() string {
+	if m != nil {
+		return m.ContractId
+	}
+	return ""
+}
+
+func (m *ExecuteContract) GetFunction() string {
+	if m != nil {
+		return m.Function
+	}
+	return ""
+}
+
+// Trade action
+type Trade struct {
+	Asset  string `protobuf:"bytes,1,opt,name=asset,proto3" json:"asset,omitempty"`
+	Amount string `protobuf:"bytes,2,opt,name=amount,proto3" json:"amount,omitempty"`
+	Price  string `protobuf:"bytes,3,opt,name=price,proto3" json:"price,omitempty"`
+	Side   string `protobuf:"bytes,4,opt,name=side,proto3" json:"side,omitempty"`
+}
+
+func (m *Trade) Reset()         { *m = Trade{} }
+func (m *Trade) String() string { return proto.CompactTextString(m) }
+func (*Trade) ProtoMessage()    {}
+func (*Trade) Descriptor() ([]byte, []int) {
+	return fileDescriptor_e70c979264e1abb3, []int{7}
+}
+func (m *Trade) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Trade) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Trade.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *Trade) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Trade.Merge(m, src)
+}
+func (m *Trade) XXX_Size() int {
+	return m.Size()
+}
+func (m *Trade) XXX_DiscardUnknown() {
+	xxx_messageInfo_Trade.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Trade proto.InternalMessageInfo
+
+func (m *Trade) GetAsset() string {
+	if m != nil {
+		return m.Asset
+	}
+	return ""
+}
+
+func (m *Trade) GetAmount() string {
+	if m != nil {
+		return m.Amount
+	}
+	return ""
+}
+
+func (m *Trade) GetPrice() string {
 	if m != nil {
 		return m.Price
 	}
-	return 0
+	return ""
+}
+
+func (m *Trade) GetSide() string {
+	if m != nil {
+		return m.Side
+	}
+	return ""
 }
 
 func init() {
 	proto.RegisterEnum("kepler.workflow.AutomationStatus", AutomationStatus_name, AutomationStatus_value)
-	proto.RegisterEnum("kepler.workflow.TriggerType", TriggerType_name, TriggerType_value)
 	proto.RegisterType((*Automation)(nil), "kepler.workflow.Automation")
 	proto.RegisterType((*Trigger)(nil), "kepler.workflow.Trigger")
+	proto.RegisterType((*PriceTrigger)(nil), "kepler.workflow.PriceTrigger")
+	proto.RegisterType((*TimeTrigger)(nil), "kepler.workflow.TimeTrigger")
+	proto.RegisterType((*LogicalTrigger)(nil), "kepler.workflow.LogicalTrigger")
+	proto.RegisterType((*Action)(nil), "kepler.workflow.Action")
+	proto.RegisterType((*ExecuteContract)(nil), "kepler.workflow.ExecuteContract")
+	proto.RegisterType((*Trade)(nil), "kepler.workflow.Trade")
 }
 
 func init() { proto.RegisterFile("kepler/workflow/automation.proto", fileDescriptor_e70c979264e1abb3) }
 
 var fileDescriptor_e70c979264e1abb3 = []byte{
-	// 551 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x53, 0xcb, 0x4e, 0xdb, 0x40,
-	0x14, 0xcd, 0xd8, 0x89, 0x21, 0x37, 0x28, 0x8c, 0xa6, 0x08, 0x86, 0x16, 0x2c, 0x83, 0xba, 0xb0,
-	0x58, 0x84, 0x96, 0x76, 0xd1, 0x2e, 0x9d, 0x78, 0x00, 0xab, 0x10, 0x47, 0xb6, 0xd3, 0x56, 0xdd,
-	0x58, 0x6e, 0x98, 0x82, 0xc5, 0xc3, 0x96, 0x3d, 0x11, 0xf0, 0x17, 0xfd, 0x95, 0xfe, 0x45, 0x97,
-	0x74, 0xd7, 0x65, 0x95, 0x2c, 0xba, 0xee, 0x1f, 0x54, 0xb1, 0xe3, 0x04, 0x25, 0xa9, 0xba, 0x8a,
-	0xce, 0x63, 0xae, 0xce, 0xb9, 0xf1, 0x05, 0xed, 0x92, 0xc7, 0x57, 0x3c, 0xd9, 0xbf, 0x8d, 0x92,
-	0xcb, 0x2f, 0x57, 0xd1, 0xed, 0x7e, 0xd0, 0x17, 0xd1, 0x75, 0x20, 0xc2, 0xe8, 0xa6, 0x11, 0x27,
-	0x91, 0x88, 0xc8, 0x6a, 0xee, 0x68, 0x14, 0x8e, 0xdd, 0xdf, 0x08, 0xc0, 0x98, 0xb8, 0x48, 0x1d,
-	0xa4, 0xf0, 0x8c, 0x22, 0x0d, 0xe9, 0x55, 0x47, 0x0a, 0xcf, 0xc8, 0x6b, 0x58, 0x16, 0x49, 0x78,
-	0x7e, 0xce, 0x93, 0x94, 0x4a, 0x9a, 0xac, 0xd7, 0x0e, 0x68, 0x63, 0x66, 0x44, 0xc3, 0xcb, 0x0d,
-	0xce, 0xc4, 0x49, 0x28, 0x2c, 0x05, 0xbd, 0xd1, 0xbc, 0x94, 0xca, 0x9a, 0xac, 0x57, 0x9d, 0x02,
-	0x92, 0x1d, 0x58, 0x49, 0x78, 0xcc, 0x03, 0xe1, 0xf7, 0xa2, 0xfe, 0x8d, 0xa0, 0x65, 0x0d, 0xe9,
-	0x65, 0xa7, 0x96, 0x73, 0xad, 0x11, 0x45, 0x9e, 0x41, 0x95, 0xdf, 0xc5, 0x61, 0xc2, 0xfd, 0x40,
-	0xd0, 0x4a, 0xa6, 0x2f, 0xe7, 0x84, 0x21, 0xc8, 0x5b, 0x50, 0x52, 0x11, 0x88, 0x7e, 0x4a, 0x15,
-	0x0d, 0xe9, 0xf5, 0x83, 0x9d, 0xb9, 0x34, 0xd3, 0x32, 0x6e, 0x66, 0x74, 0xc6, 0x0f, 0x76, 0xff,
-	0x20, 0x58, 0x1a, 0x47, 0x25, 0x2f, 0xa0, 0x2c, 0xee, 0x63, 0x9e, 0x15, 0xad, 0x1f, 0x6c, 0xfd,
-	0xab, 0x92, 0x77, 0x1f, 0x73, 0x27, 0x73, 0xe6, 0x95, 0xf2, 0xcc, 0x52, 0xb6, 0x9d, 0x02, 0x92,
-	0x35, 0xa8, 0x04, 0x69, 0xca, 0x05, 0x95, 0x33, 0x3e, 0x07, 0x64, 0x1d, 0x94, 0x0b, 0x1e, 0x9e,
-	0x5f, 0x14, 0x15, 0xc7, 0x88, 0x6c, 0x41, 0x55, 0x84, 0xd7, 0x3c, 0x15, 0xc1, 0x75, 0x3c, 0x6e,
-	0x37, 0x25, 0xc8, 0x1b, 0x80, 0x5e, 0x74, 0x73, 0x16, 0xe6, 0xbb, 0x53, 0xfe, 0xb3, 0xf0, 0x47,
-	0xde, 0x51, 0x8a, 0x38, 0x09, 0x7b, 0x9c, 0x2e, 0x65, 0x33, 0x73, 0xb0, 0xf7, 0x03, 0x01, 0x9e,
-	0x5d, 0x08, 0xd1, 0xe1, 0xb9, 0xd1, 0xf5, 0xec, 0x53, 0xc3, 0xb3, 0xec, 0xb6, 0xef, 0x7a, 0x86,
-	0xd7, 0x75, 0x8b, 0x9f, 0x6e, 0xdb, 0xed, 0xb0, 0x96, 0x75, 0x68, 0x31, 0x13, 0x97, 0xc8, 0x16,
-	0xd0, 0x79, 0xa7, 0xd1, 0xf2, 0xac, 0xf7, 0x0c, 0x23, 0xb2, 0x0d, 0x9b, 0xf3, 0x2a, 0xfb, 0xd8,
-	0xb1, 0x1c, 0x66, 0x62, 0x69, 0xf1, 0xe3, 0x8e, 0xd1, 0x75, 0x99, 0x89, 0xe5, 0xc5, 0xea, 0xa1,
-	0x61, 0x9d, 0x30, 0x13, 0x97, 0xc9, 0x53, 0x58, 0x9f, 0x57, 0x4d, 0xbb, 0xcd, 0x70, 0x65, 0xef,
-	0x1b, 0x82, 0xda, 0xa3, 0xff, 0x87, 0x6c, 0xc0, 0x13, 0xcf, 0xb1, 0x8e, 0x8e, 0x98, 0x33, 0x93,
-	0x7e, 0x1b, 0x36, 0x0b, 0xc1, 0x70, 0x5d, 0xe6, 0xf9, 0x1d, 0xc7, 0x6a, 0x31, 0xdf, 0x68, 0xda,
-	0x45, 0xfc, 0x45, 0x72, 0x93, 0x9d, 0xd8, 0x1f, 0xb0, 0x44, 0x28, 0xac, 0x15, 0x72, 0xf3, 0xc4,
-	0x6e, 0xbd, 0xf3, 0x8f, 0x99, 0x75, 0x74, 0xec, 0x61, 0x99, 0x60, 0x58, 0x29, 0x14, 0xcf, 0x3a,
-	0x65, 0xb8, 0x4c, 0x56, 0xa1, 0x36, 0x19, 0xd5, 0x36, 0x71, 0x85, 0xd4, 0x01, 0x0a, 0xc2, 0x76,
-	0xb0, 0xd2, 0x7c, 0xf9, 0x7d, 0xa0, 0xa2, 0x87, 0x81, 0x8a, 0x7e, 0x0d, 0x54, 0xf4, 0x75, 0xa8,
-	0x96, 0x1e, 0x86, 0x6a, 0xe9, 0xe7, 0x50, 0x2d, 0x7d, 0xda, 0x18, 0x9f, 0xec, 0xdd, 0xf4, 0x68,
-	0x47, 0xdf, 0x5b, 0xfa, 0x59, 0xc9, 0x0e, 0xf6, 0xd5, 0xdf, 0x00, 0x00, 0x00, 0xff, 0xff, 0x91,
-	0x29, 0x30, 0xce, 0xd4, 0x03, 0x00, 0x00,
+	// 662 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x94, 0xcf, 0x4f, 0xdb, 0x30,
+	0x14, 0xc7, 0x9b, 0xf4, 0x07, 0xed, 0x0b, 0x82, 0xc8, 0x9a, 0x20, 0x63, 0x50, 0x4a, 0xb4, 0x43,
+	0xb5, 0x49, 0x45, 0x94, 0xed, 0xb0, 0x63, 0x68, 0x83, 0x88, 0x04, 0xa5, 0x4a, 0xdb, 0x69, 0xda,
+	0x25, 0xf2, 0x12, 0x53, 0x45, 0xd0, 0x3a, 0x72, 0x5c, 0xc1, 0x6e, 0xfb, 0x13, 0xb6, 0xff, 0x6a,
+	0x47, 0x76, 0xdb, 0x71, 0x82, 0xd3, 0xfe, 0x8b, 0x29, 0x76, 0x52, 0x0a, 0xe9, 0x24, 0x4e, 0x89,
+	0xdf, 0xfb, 0x7c, 0x9f, 0xfd, 0x7e, 0xd8, 0xd0, 0xb8, 0x24, 0xd1, 0x15, 0x61, 0xfb, 0xd7, 0x94,
+	0x5d, 0x5e, 0x5c, 0xd1, 0xeb, 0x7d, 0x3c, 0xe3, 0x74, 0x82, 0x79, 0x48, 0xa7, 0xad, 0x88, 0x51,
+	0x4e, 0xd1, 0xba, 0x24, 0x5a, 0x19, 0x61, 0x7e, 0x53, 0x01, 0xac, 0x39, 0x85, 0xd6, 0x40, 0x0d,
+	0x03, 0x43, 0x69, 0x28, 0xcd, 0x9a, 0xab, 0x86, 0x01, 0x7a, 0x07, 0x55, 0xce, 0xc2, 0xf1, 0x98,
+	0xb0, 0xd8, 0x50, 0x1b, 0xc5, 0xa6, 0xd6, 0x36, 0x5a, 0x4f, 0x42, 0xb4, 0x86, 0x12, 0x70, 0xe7,
+	0x24, 0x3a, 0x80, 0x15, 0xec, 0x27, 0xf1, 0x62, 0xa3, 0x28, 0x44, 0x9b, 0x39, 0x91, 0x25, 0xfc,
+	0x6e, 0xc6, 0xa1, 0x3d, 0x58, 0x65, 0x24, 0x22, 0x98, 0x7b, 0x3e, 0x9d, 0x4d, 0xb9, 0x51, 0x6a,
+	0x28, 0xcd, 0x92, 0xab, 0x49, 0x5b, 0x27, 0x31, 0xa1, 0x57, 0x50, 0x23, 0x37, 0x51, 0xc8, 0x88,
+	0x87, 0xb9, 0x51, 0x16, 0xfe, 0xaa, 0x34, 0x58, 0x1c, 0x7d, 0x80, 0x4a, 0xcc, 0x31, 0x9f, 0xc5,
+	0x46, 0xa5, 0xa1, 0x34, 0xd7, 0xda, 0x7b, 0xf9, 0x1d, 0xe7, 0x59, 0x0e, 0x04, 0xe8, 0xa6, 0x02,
+	0xf3, 0xaf, 0x02, 0x2b, 0x69, 0x0e, 0xe8, 0x3d, 0x94, 0x23, 0x16, 0xfa, 0x44, 0x94, 0x40, 0x6b,
+	0xef, 0xe4, 0xa2, 0xf4, 0x13, 0x6f, 0x4a, 0x9f, 0x14, 0x5c, 0x49, 0xa3, 0x36, 0x94, 0x78, 0x38,
+	0x21, 0x86, 0x2a, 0x54, 0xdb, 0xf9, 0x12, 0x85, 0x93, 0x05, 0x91, 0x60, 0xd1, 0x21, 0x14, 0xf1,
+	0x34, 0x30, 0x8a, 0x42, 0xb2, 0x9b, 0x93, 0x9c, 0xd2, 0x71, 0xe8, 0xe3, 0xab, 0x07, 0x55, 0x42,
+	0xa3, 0x03, 0x50, 0x29, 0x13, 0xc5, 0x79, 0x96, 0x46, 0xa5, 0xec, 0x48, 0x83, 0x9a, 0x4f, 0xa7,
+	0x41, 0x98, 0x64, 0x6e, 0xfa, 0xb0, 0xba, 0x98, 0x01, 0x7a, 0x01, 0x65, 0x1c, 0xc7, 0x84, 0xa7,
+	0x2d, 0x97, 0x0b, 0xb4, 0x05, 0x55, 0x1a, 0x11, 0x86, 0x39, 0x65, 0x22, 0xa5, 0x9a, 0x3b, 0x5f,
+	0x27, 0x8d, 0xe2, 0x98, 0x8d, 0x09, 0xf7, 0x64, 0xa1, 0x8a, 0xc2, 0xaf, 0x49, 0x9b, 0x88, 0x6d,
+	0xbe, 0x05, 0x6d, 0x21, 0x61, 0xb4, 0x0d, 0xb5, 0x24, 0xe1, 0x98, 0xe3, 0x49, 0x24, 0xf6, 0x29,
+	0xb9, 0x0f, 0x06, 0xf3, 0x18, 0xd6, 0x1e, 0x1f, 0xfb, 0xd1, 0xcc, 0x29, 0xcf, 0x9d, 0x39, 0xf3,
+	0x87, 0x02, 0x15, 0x39, 0x54, 0xe8, 0x0c, 0x74, 0x72, 0x43, 0xfc, 0x19, 0x27, 0x9e, 0x4f, 0xa7,
+	0x9c, 0x61, 0x9f, 0xa7, 0xfd, 0x6c, 0xe4, 0x02, 0xd9, 0x12, 0xec, 0xa4, 0xdc, 0x49, 0xc1, 0x5d,
+	0x27, 0x8f, 0x4d, 0xa8, 0x05, 0x65, 0xce, 0x70, 0x90, 0x75, 0x77, 0x63, 0xc9, 0x61, 0x70, 0x40,
+	0x92, 0x61, 0x10, 0xd8, 0x51, 0x15, 0x2a, 0x72, 0xaa, 0xcd, 0x1e, 0xac, 0x3f, 0x89, 0x8f, 0x76,
+	0x41, 0xcb, 0xce, 0xe4, 0xcd, 0x6f, 0x1a, 0x64, 0x26, 0x27, 0x48, 0x6a, 0x7f, 0x31, 0x9b, 0x0a,
+	0x7d, 0x56, 0xfb, 0x6c, 0x6d, 0x7a, 0x50, 0x16, 0x7b, 0xfd, 0xa7, 0x6d, 0x1b, 0x50, 0xc1, 0x13,
+	0x71, 0x7b, 0xa4, 0x30, 0x5d, 0x25, 0xf4, 0x62, 0xaf, 0xd2, 0x99, 0x45, 0x50, 0x8a, 0xc3, 0x80,
+	0x88, 0x61, 0xaa, 0xb9, 0xe2, 0xff, 0xcd, 0x2f, 0x05, 0xf4, 0xa7, 0xf7, 0x04, 0x35, 0xe1, 0xb5,
+	0x35, 0x1a, 0x9e, 0x9f, 0x59, 0x43, 0xe7, 0xbc, 0xe7, 0x0d, 0x86, 0xd6, 0x70, 0x34, 0xc8, 0x3e,
+	0xa3, 0xde, 0xa0, 0x6f, 0x77, 0x9c, 0x63, 0xc7, 0xee, 0xea, 0x05, 0xb4, 0x0d, 0x46, 0x9e, 0xb4,
+	0x3a, 0x43, 0xe7, 0xa3, 0xad, 0x2b, 0x68, 0x07, 0x5e, 0xe6, 0xbd, 0xf6, 0xa7, 0xbe, 0xe3, 0xda,
+	0x5d, 0x5d, 0x5d, 0x2e, 0xee, 0x5b, 0xa3, 0x81, 0xdd, 0xd5, 0x8b, 0xcb, 0xbd, 0xc7, 0x96, 0x73,
+	0x6a, 0x77, 0xf5, 0x12, 0xda, 0x82, 0x8d, 0xbc, 0xb7, 0x7b, 0xde, 0xb3, 0xf5, 0xf2, 0xd1, 0xc1,
+	0xcf, 0xbb, 0xba, 0x72, 0x7b, 0x57, 0x57, 0xfe, 0xdc, 0xd5, 0x95, 0xef, 0xf7, 0xf5, 0xc2, 0xed,
+	0x7d, 0xbd, 0xf0, 0xfb, 0xbe, 0x5e, 0xf8, 0xbc, 0x99, 0x3e, 0x97, 0x37, 0x0f, 0x0f, 0x26, 0xff,
+	0x1a, 0x91, 0xf8, 0x4b, 0x45, 0x3c, 0x96, 0x87, 0xff, 0x02, 0x00, 0x00, 0xff, 0xff, 0x3b, 0xc5,
+	0xb0, 0x66, 0x50, 0x05, 0x00, 0x00,
 }
 
 func (m *Automation) Marshal() (dAtA []byte, err error) {
@@ -365,9 +714,14 @@ func (m *Automation) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	}
 	if len(m.Actions) > 0 {
 		for iNdEx := len(m.Actions) - 1; iNdEx >= 0; iNdEx-- {
-			i -= len(m.Actions[iNdEx])
-			copy(dAtA[i:], m.Actions[iNdEx])
-			i = encodeVarintAutomation(dAtA, i, uint64(len(m.Actions[iNdEx])))
+			{
+				size, err := m.Actions[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintAutomation(dAtA, i, uint64(size))
+			}
 			i--
 			dAtA[i] = 0x1a
 		}
@@ -416,15 +770,198 @@ func (m *Trigger) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.Price != 0 {
-		i = encodeVarintAutomation(dAtA, i, uint64(m.Price))
-		i--
-		dAtA[i] = 0x38
+	if m.Condition != nil {
+		{
+			size := m.Condition.Size()
+			i -= size
+			if _, err := m.Condition.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
+		}
 	}
-	if len(m.Conditions) > 0 {
-		for iNdEx := len(m.Conditions) - 1; iNdEx >= 0; iNdEx-- {
+	return len(dAtA) - i, nil
+}
+
+func (m *Trigger_Price) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Trigger_Price) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	if m.Price != nil {
+		{
+			size, err := m.Price.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintAutomation(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+func (m *Trigger_Time) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Trigger_Time) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	if m.Time != nil {
+		{
+			size, err := m.Time.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintAutomation(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	return len(dAtA) - i, nil
+}
+func (m *Trigger_And) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Trigger_And) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	if m.And != nil {
+		{
+			size, err := m.And.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintAutomation(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x1a
+	}
+	return len(dAtA) - i, nil
+}
+func (m *Trigger_Or) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Trigger_Or) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	if m.Or != nil {
+		{
+			size, err := m.Or.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintAutomation(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x22
+	}
+	return len(dAtA) - i, nil
+}
+func (m *PriceTrigger) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *PriceTrigger) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *PriceTrigger) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.TargetPrice) > 0 {
+		i -= len(m.TargetPrice)
+		copy(dAtA[i:], m.TargetPrice)
+		i = encodeVarintAutomation(dAtA, i, uint64(len(m.TargetPrice)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Operator) > 0 {
+		i -= len(m.Operator)
+		copy(dAtA[i:], m.Operator)
+		i = encodeVarintAutomation(dAtA, i, uint64(len(m.Operator)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Asset) > 0 {
+		i -= len(m.Asset)
+		copy(dAtA[i:], m.Asset)
+		i = encodeVarintAutomation(dAtA, i, uint64(len(m.Asset)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *TimeTrigger) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *TimeTrigger) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *TimeTrigger) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Timestamp != 0 {
+		i = encodeVarintAutomation(dAtA, i, uint64(m.Timestamp))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *LogicalTrigger) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *LogicalTrigger) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *LogicalTrigger) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Triggers) > 0 {
+		for iNdEx := len(m.Triggers) - 1; iNdEx >= 0; iNdEx-- {
 			{
-				size, err := m.Conditions[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				size, err := m.Triggers[iNdEx].MarshalToSizedBuffer(dAtA[:i])
 				if err != nil {
 					return 0, err
 				}
@@ -432,37 +969,170 @@ func (m *Trigger) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 				i = encodeVarintAutomation(dAtA, i, uint64(size))
 			}
 			i--
-			dAtA[i] = 0x32
+			dAtA[i] = 0xa
 		}
 	}
-	if m.Timestamp != 0 {
-		i = encodeVarintAutomation(dAtA, i, uint64(m.Timestamp))
-		i--
-		dAtA[i] = 0x28
+	return len(dAtA) - i, nil
+}
+
+func (m *Action) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
 	}
-	if m.Height != 0 {
-		i = encodeVarintAutomation(dAtA, i, uint64(m.Height))
+	return dAtA[:n], nil
+}
+
+func (m *Action) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Action) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Action != nil {
+		{
+			size := m.Action.Size()
+			i -= size
+			if _, err := m.Action.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *Action_ExecuteContract) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Action_ExecuteContract) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	if m.ExecuteContract != nil {
+		{
+			size, err := m.ExecuteContract.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintAutomation(dAtA, i, uint64(size))
+		}
 		i--
-		dAtA[i] = 0x20
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+func (m *Action_Trade) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Action_Trade) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	if m.Trade != nil {
+		{
+			size, err := m.Trade.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintAutomation(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	return len(dAtA) - i, nil
+}
+func (m *ExecuteContract) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ExecuteContract) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ExecuteContract) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Function) > 0 {
+		i -= len(m.Function)
+		copy(dAtA[i:], m.Function)
+		i = encodeVarintAutomation(dAtA, i, uint64(len(m.Function)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.ContractId) > 0 {
+		i -= len(m.ContractId)
+		copy(dAtA[i:], m.ContractId)
+		i = encodeVarintAutomation(dAtA, i, uint64(len(m.ContractId)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *Trade) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Trade) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Trade) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Side) > 0 {
+		i -= len(m.Side)
+		copy(dAtA[i:], m.Side)
+		i = encodeVarintAutomation(dAtA, i, uint64(len(m.Side)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.Price) > 0 {
+		i -= len(m.Price)
+		copy(dAtA[i:], m.Price)
+		i = encodeVarintAutomation(dAtA, i, uint64(len(m.Price)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Amount) > 0 {
+		i -= len(m.Amount)
+		copy(dAtA[i:], m.Amount)
+		i = encodeVarintAutomation(dAtA, i, uint64(len(m.Amount)))
+		i--
+		dAtA[i] = 0x12
 	}
 	if len(m.Asset) > 0 {
 		i -= len(m.Asset)
 		copy(dAtA[i:], m.Asset)
 		i = encodeVarintAutomation(dAtA, i, uint64(len(m.Asset)))
 		i--
-		dAtA[i] = 0x1a
-	}
-	if len(m.Account) > 0 {
-		i -= len(m.Account)
-		copy(dAtA[i:], m.Account)
-		i = encodeVarintAutomation(dAtA, i, uint64(len(m.Account)))
-		i--
-		dAtA[i] = 0x12
-	}
-	if m.Type != 0 {
-		i = encodeVarintAutomation(dAtA, i, uint64(m.Type))
-		i--
-		dAtA[i] = 0x8
+		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
@@ -495,8 +1165,8 @@ func (m *Automation) Size() (n int) {
 		}
 	}
 	if len(m.Actions) > 0 {
-		for _, s := range m.Actions {
-			l = len(s)
+		for _, e := range m.Actions {
+			l = e.Size()
 			n += 1 + l + sovAutomation(uint64(l))
 		}
 	}
@@ -518,31 +1188,182 @@ func (m *Trigger) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.Type != 0 {
-		n += 1 + sovAutomation(uint64(m.Type))
+	if m.Condition != nil {
+		n += m.Condition.Size()
 	}
-	l = len(m.Account)
-	if l > 0 {
+	return n
+}
+
+func (m *Trigger_Price) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Price != nil {
+		l = m.Price.Size()
 		n += 1 + l + sovAutomation(uint64(l))
 	}
+	return n
+}
+func (m *Trigger_Time) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Time != nil {
+		l = m.Time.Size()
+		n += 1 + l + sovAutomation(uint64(l))
+	}
+	return n
+}
+func (m *Trigger_And) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.And != nil {
+		l = m.And.Size()
+		n += 1 + l + sovAutomation(uint64(l))
+	}
+	return n
+}
+func (m *Trigger_Or) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Or != nil {
+		l = m.Or.Size()
+		n += 1 + l + sovAutomation(uint64(l))
+	}
+	return n
+}
+func (m *PriceTrigger) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
 	l = len(m.Asset)
 	if l > 0 {
 		n += 1 + l + sovAutomation(uint64(l))
 	}
-	if m.Height != 0 {
-		n += 1 + sovAutomation(uint64(m.Height))
+	l = len(m.Operator)
+	if l > 0 {
+		n += 1 + l + sovAutomation(uint64(l))
 	}
+	l = len(m.TargetPrice)
+	if l > 0 {
+		n += 1 + l + sovAutomation(uint64(l))
+	}
+	return n
+}
+
+func (m *TimeTrigger) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
 	if m.Timestamp != 0 {
 		n += 1 + sovAutomation(uint64(m.Timestamp))
 	}
-	if len(m.Conditions) > 0 {
-		for _, e := range m.Conditions {
+	return n
+}
+
+func (m *LogicalTrigger) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.Triggers) > 0 {
+		for _, e := range m.Triggers {
 			l = e.Size()
 			n += 1 + l + sovAutomation(uint64(l))
 		}
 	}
-	if m.Price != 0 {
-		n += 1 + sovAutomation(uint64(m.Price))
+	return n
+}
+
+func (m *Action) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Action != nil {
+		n += m.Action.Size()
+	}
+	return n
+}
+
+func (m *Action_ExecuteContract) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.ExecuteContract != nil {
+		l = m.ExecuteContract.Size()
+		n += 1 + l + sovAutomation(uint64(l))
+	}
+	return n
+}
+func (m *Action_Trade) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Trade != nil {
+		l = m.Trade.Size()
+		n += 1 + l + sovAutomation(uint64(l))
+	}
+	return n
+}
+func (m *ExecuteContract) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.ContractId)
+	if l > 0 {
+		n += 1 + l + sovAutomation(uint64(l))
+	}
+	l = len(m.Function)
+	if l > 0 {
+		n += 1 + l + sovAutomation(uint64(l))
+	}
+	return n
+}
+
+func (m *Trade) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Asset)
+	if l > 0 {
+		n += 1 + l + sovAutomation(uint64(l))
+	}
+	l = len(m.Amount)
+	if l > 0 {
+		n += 1 + l + sovAutomation(uint64(l))
+	}
+	l = len(m.Price)
+	if l > 0 {
+		n += 1 + l + sovAutomation(uint64(l))
+	}
+	l = len(m.Side)
+	if l > 0 {
+		n += 1 + l + sovAutomation(uint64(l))
 	}
 	return n
 }
@@ -652,7 +1473,7 @@ func (m *Automation) Unmarshal(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Actions", wireType)
 			}
-			var stringLen uint64
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowAutomation
@@ -662,23 +1483,25 @@ func (m *Automation) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if msglen < 0 {
 				return ErrInvalidLengthAutomation
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + msglen
 			if postIndex < 0 {
 				return ErrInvalidLengthAutomation
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Actions = append(m.Actions, string(dAtA[iNdEx:postIndex]))
+			m.Actions = append(m.Actions, &Action{})
+			if err := m.Actions[len(m.Actions)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		case 4:
 			if wireType != 0 {
@@ -788,29 +1611,10 @@ func (m *Trigger) Unmarshal(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Type", wireType)
-			}
-			m.Type = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowAutomation
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.Type |= TriggerType(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Account", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Price", wireType)
 			}
-			var stringLen uint64
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowAutomation
@@ -820,25 +1624,183 @@ func (m *Trigger) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if msglen < 0 {
 				return ErrInvalidLengthAutomation
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + msglen
 			if postIndex < 0 {
 				return ErrInvalidLengthAutomation
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Account = string(dAtA[iNdEx:postIndex])
+			v := &PriceTrigger{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Condition = &Trigger_Price{v}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Time", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAutomation
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &TimeTrigger{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Condition = &Trigger_Time{v}
 			iNdEx = postIndex
 		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field And", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAutomation
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &LogicalTrigger{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Condition = &Trigger_And{v}
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Or", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAutomation
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &LogicalTrigger{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Condition = &Trigger_Or{v}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipAutomation(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *PriceTrigger) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowAutomation
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: PriceTrigger: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: PriceTrigger: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Asset", wireType)
 			}
@@ -870,11 +1832,11 @@ func (m *Trigger) Unmarshal(dAtA []byte) error {
 			}
 			m.Asset = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 4:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Height", wireType)
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Operator", wireType)
 			}
-			m.Height = 0
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowAutomation
@@ -884,12 +1846,107 @@ func (m *Trigger) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Height |= uint64(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-		case 5:
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Operator = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TargetPrice", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAutomation
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TargetPrice = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipAutomation(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *TimeTrigger) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowAutomation
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: TimeTrigger: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: TimeTrigger: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Timestamp", wireType)
 			}
@@ -908,9 +1965,59 @@ func (m *Trigger) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-		case 6:
+		default:
+			iNdEx = preIndex
+			skippy, err := skipAutomation(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *LogicalTrigger) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowAutomation
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: LogicalTrigger: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: LogicalTrigger: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Conditions", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Triggers", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
@@ -937,16 +2044,66 @@ func (m *Trigger) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Conditions = append(m.Conditions, &Trigger{})
-			if err := m.Conditions[len(m.Conditions)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			m.Triggers = append(m.Triggers, &Trigger{})
+			if err := m.Triggers[len(m.Triggers)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
-		case 7:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Price", wireType)
+		default:
+			iNdEx = preIndex
+			skippy, err := skipAutomation(dAtA[iNdEx:])
+			if err != nil {
+				return err
 			}
-			m.Price = 0
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Action) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowAutomation
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Action: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Action: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ExecuteContract", wireType)
+			}
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowAutomation
@@ -956,11 +2113,354 @@ func (m *Trigger) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Price |= uint64(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			if msglen < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &ExecuteContract{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Action = &Action_ExecuteContract{v}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Trade", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAutomation
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &Trade{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Action = &Action_Trade{v}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipAutomation(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ExecuteContract) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowAutomation
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ExecuteContract: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ExecuteContract: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ContractId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAutomation
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ContractId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Function", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAutomation
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Function = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipAutomation(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Trade) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowAutomation
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Trade: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Trade: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Asset", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAutomation
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Asset = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAutomation
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Amount = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Price", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAutomation
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Price = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Side", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAutomation
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Side = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipAutomation(dAtA[iNdEx:])
