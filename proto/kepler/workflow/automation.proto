@@ -74,8 +74,9 @@ message ExecuteContract {
 
 // Trade action
 message Trade {
-  string asset = 1;
-  string amount = 2;
-  string price = 3;
-  string side = 4; // "buy", "sell"
+  string base_asset = 1;
+  string quote_asset = 2;
+  string amount = 3;
+  string price = 4;
+  string side = 5; // "buy", "sell"
 }
