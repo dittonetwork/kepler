@@ -4817,7 +4817,7 @@ type Automation struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id          uint64           `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`                                               // Unique identifier (UUID)
+	Id          uint64           `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`                                               // Incremental ID for blockchain consistency
 	Triggers    []*Trigger       `protobuf:"bytes,2,rep,name=triggers,proto3" json:"triggers,omitempty"`                                    // List of trigger conditions
 	Actions     []*Action        `protobuf:"bytes,3,rep,name=actions,proto3" json:"actions,omitempty"`                                      // List of actions
 	RepeatCount uint64           `protobuf:"varint,4,opt,name=repeat_count,json=repeatCount,proto3" json:"repeat_count,omitempty"`          // Number of executions allowed

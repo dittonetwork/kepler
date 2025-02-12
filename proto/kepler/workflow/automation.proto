@@ -5,8 +5,8 @@ option go_package = "kepler/x/workflow/types";
 
 // Automation entity
 message Automation {
-  uint64 id = 1; // Unique identifier (UUID)
-  repeated Trigger triggers = 2; // List of trigger conditions
+  uint64 id = 1; // Incremental ID for blockchain consistency
+  Trigger trigger = 2; // List of trigger conditions
   repeated Action actions = 3; // List of actions
   uint64 repeat_count = 4; // Number of executions allowed
   uint64 expire_at = 5; // Expiration timestamp (Unix time)
@@ -44,7 +44,7 @@ message TimeTrigger {
   uint64 timestamp = 1;
 }
 
-// Logical trigger
+// Logical trigger for trigger chains
 message LogicalTrigger {
   LogicalOperator logical_operator = 1; // "AND", "OR"
   repeated Trigger triggers = 2;
