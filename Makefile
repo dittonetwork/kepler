@@ -85,13 +85,12 @@ golangci_version=v1.64.2
 lint:
 	@echo "--> Running linter"
 	@go install github.com/golangci/golangci-lint/cmd/golangci-lint@$(golangci_version)
-.PHONY: lint
-	@$(golangci_lint_cmd) run ./... --new --new-from-rev=origin/master --timeout 15m
+	@$(golangci_lint_cmd) run ./... --timeout 15m
 
 lint-fix:
 	@echo "--> Running linter and fixing issues"
 	@go install github.com/golangci/golangci-lint/cmd/golangci-lint@$(golangci_version)
-	@$(golangci_lint_cmd) run ./... --new --new-from-rev=origin/master --fix --timeout 15m
+	@$(golangci_lint_cmd) run ./... --fix --timeout 15m
 
 .PHONY: lint lint-fix
 
