@@ -200,8 +200,8 @@ func (x *fastReflection_Automation) Interface() protoreflect.ProtoMessage {
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
 func (x *fastReflection_Automation) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
-	if x.Id != "" {
-		value := protoreflect.ValueOfString(x.Id)
+	if x.Id != uint64(0) {
+		value := protoreflect.ValueOfUint64(x.Id)
 		if !f(fd_Automation_id, value) {
 			return
 		}
@@ -252,7 +252,7 @@ func (x *fastReflection_Automation) Range(f func(protoreflect.FieldDescriptor, p
 func (x *fastReflection_Automation) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
 	case "kepler.workflow.Automation.id":
-		return x.Id != ""
+		return x.Id != uint64(0)
 	case "kepler.workflow.Automation.triggers":
 		return len(x.Triggers) != 0
 	case "kepler.workflow.Automation.actions":
@@ -280,7 +280,7 @@ func (x *fastReflection_Automation) Has(fd protoreflect.FieldDescriptor) bool {
 func (x *fastReflection_Automation) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
 	case "kepler.workflow.Automation.id":
-		x.Id = ""
+		x.Id = uint64(0)
 	case "kepler.workflow.Automation.triggers":
 		x.Triggers = nil
 	case "kepler.workflow.Automation.actions":
@@ -309,7 +309,7 @@ func (x *fastReflection_Automation) Get(descriptor protoreflect.FieldDescriptor)
 	switch descriptor.FullName() {
 	case "kepler.workflow.Automation.id":
 		value := x.Id
-		return protoreflect.ValueOfString(value)
+		return protoreflect.ValueOfUint64(value)
 	case "kepler.workflow.Automation.triggers":
 		if len(x.Triggers) == 0 {
 			return protoreflect.ValueOfList(&_Automation_2_list{})
@@ -352,7 +352,7 @@ func (x *fastReflection_Automation) Get(descriptor protoreflect.FieldDescriptor)
 func (x *fastReflection_Automation) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
 	case "kepler.workflow.Automation.id":
-		x.Id = value.Interface().(string)
+		x.Id = value.Uint()
 	case "kepler.workflow.Automation.triggers":
 		lv := value.List()
 		clv := lv.(*_Automation_2_list)
@@ -421,7 +421,7 @@ func (x *fastReflection_Automation) Mutable(fd protoreflect.FieldDescriptor) pro
 func (x *fastReflection_Automation) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
 	case "kepler.workflow.Automation.id":
-		return protoreflect.ValueOfString("")
+		return protoreflect.ValueOfUint64(uint64(0))
 	case "kepler.workflow.Automation.triggers":
 		list := []*Trigger{}
 		return protoreflect.ValueOfList(&_Automation_2_list{list: &list})
@@ -503,9 +503,8 @@ func (x *fastReflection_Automation) ProtoMethods() *protoiface.Methods {
 		var n int
 		var l int
 		_ = l
-		l = len(x.Id)
-		if l > 0 {
-			n += 1 + l + runtime.Sov(uint64(l))
+		if x.Id != 0 {
+			n += 1 + runtime.Sov(uint64(x.Id))
 		}
 		if len(x.Triggers) > 0 {
 			for _, e := range x.Triggers {
@@ -604,12 +603,10 @@ func (x *fastReflection_Automation) ProtoMethods() *protoiface.Methods {
 				dAtA[i] = 0x12
 			}
 		}
-		if len(x.Id) > 0 {
-			i -= len(x.Id)
-			copy(dAtA[i:], x.Id)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Id)))
+		if x.Id != 0 {
+			i = runtime.EncodeVarint(dAtA, i, uint64(x.Id))
 			i--
-			dAtA[i] = 0xa
+			dAtA[i] = 0x8
 		}
 		if input.Buf != nil {
 			input.Buf = append(input.Buf, dAtA...)
@@ -661,10 +658,10 @@ func (x *fastReflection_Automation) ProtoMethods() *protoiface.Methods {
 			}
 			switch fieldNum {
 			case 1:
-				if wireType != 2 {
+				if wireType != 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
 				}
-				var stringLen uint64
+				x.Id = 0
 				for shift := uint(0); ; shift += 7 {
 					if shift >= 64 {
 						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
@@ -674,24 +671,11 @@ func (x *fastReflection_Automation) ProtoMethods() *protoiface.Methods {
 					}
 					b := dAtA[iNdEx]
 					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
+					x.Id |= uint64(b&0x7F) << shift
 					if b < 0x80 {
 						break
 					}
 				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + intStringLen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				x.Id = string(dAtA[iNdEx:postIndex])
-				iNdEx = postIndex
 			case 2:
 				if wireType != 2 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Triggers", wireType)
@@ -4833,7 +4817,7 @@ type Automation struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id          string           `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                                                // Unique identifier (UUID)
+	Id          uint64           `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`                                               // Unique identifier (UUID)
 	Triggers    []*Trigger       `protobuf:"bytes,2,rep,name=triggers,proto3" json:"triggers,omitempty"`                                    // List of trigger conditions
 	Actions     []*Action        `protobuf:"bytes,3,rep,name=actions,proto3" json:"actions,omitempty"`                                      // List of actions
 	RepeatCount uint64           `protobuf:"varint,4,opt,name=repeat_count,json=repeatCount,proto3" json:"repeat_count,omitempty"`          // Number of executions allowed
@@ -4861,11 +4845,11 @@ func (*Automation) Descriptor() ([]byte, []int) {
 	return file_kepler_workflow_automation_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *Automation) GetId() string {
+func (x *Automation) GetId() uint64 {
 	if x != nil {
 		return x.Id
 	}
-	return ""
+	return 0
 }
 
 func (x *Automation) GetTriggers() []*Trigger {
@@ -5299,7 +5283,7 @@ var file_kepler_workflow_automation_proto_rawDesc = []byte{
 	0x77, 0x2f, 0x61, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x70, 0x72, 0x6f,
 	0x74, 0x6f, 0x12, 0x0f, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66,
 	0x6c, 0x6f, 0x77, 0x22, 0x80, 0x02, 0x0a, 0x0a, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69,
-	0x6f, 0x6e, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02,
+	0x6f, 0x6e, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x04, 0x52, 0x02,
 	0x69, 0x64, 0x12, 0x34, 0x0a, 0x08, 0x74, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x73, 0x18, 0x02,
 	0x20, 0x03, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f,
 	0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x52, 0x08,

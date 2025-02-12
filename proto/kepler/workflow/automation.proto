@@ -5,7 +5,7 @@ option go_package = "kepler/x/workflow/types";
 
 // Automation entity
 message Automation {
-  string id = 1; // Unique identifier (UUID)
+  uint64 id = 1; // Unique identifier (UUID)
   repeated Trigger triggers = 2; // List of trigger conditions
   repeated Action actions = 3; // List of actions
   uint64 repeat_count = 4; // Number of executions allowed
