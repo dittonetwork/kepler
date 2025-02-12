@@ -35,6 +35,12 @@ import (
 	stakingkeeper "github.com/cosmos/cosmos-sdk/x/staking/keeper"
 
 	epochskeeper "kepler/x/epochs/keeper"
+	workflowmodulekeeper "kepler/x/workflow/keeper"
+
+	committeemodulekeeper "kepler/x/committee/keeper"
+	jobmodulekeeper "kepler/x/job/keeper"
+
+	instantmodulekeeper "kepler/x/instant/keeper"
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 
 	"kepler/docs"
@@ -72,7 +78,11 @@ type App struct {
 	DistrKeeper           distrkeeper.Keeper
 	ConsensusParamsKeeper consensuskeeper.Keeper
 
-	EpochsKeeper epochskeeper.Keeper
+	EpochsKeeper    epochskeeper.Keeper
+	WorkflowKeeper  workflowmodulekeeper.Keeper
+	CommitteeKeeper committeemodulekeeper.Keeper
+	JobKeeper       jobmodulekeeper.Keeper
+	InstantKeeper   instantmodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
 	// simulation manager
@@ -145,6 +155,10 @@ func New(
 		&app.DistrKeeper,
 		&app.ConsensusParamsKeeper,
 		&app.EpochsKeeper,
+		&app.WorkflowKeeper,
+		&app.CommitteeKeeper,
+		&app.JobKeeper,
+		&app.InstantKeeper,
 		// this line is used by starport scaffolding # stargate/app/keeperDefinition
 	); err != nil {
 		panic(err)
