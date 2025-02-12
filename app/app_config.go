@@ -17,6 +17,10 @@ import (
 	_ "kepler/x/job/module" // import for side-effects
 	jobmoduletypes "kepler/x/job/types"
 
+	instantmodulev1 "kepler/api/kepler/instant/module"
+	_ "kepler/x/instant/module" // import for side-effects
+	instantmoduletypes "kepler/x/instant/types"
+
 	runtimev1alpha1 "cosmossdk.io/api/cosmos/app/runtime/v1alpha1"
 	appv1alpha1 "cosmossdk.io/api/cosmos/app/v1alpha1"
 	authmodulev1 "cosmossdk.io/api/cosmos/auth/module/v1"
@@ -59,6 +63,7 @@ var (
 		workflowmoduletypes.ModuleName,
 		committeemoduletypes.ModuleName,
 		jobmoduletypes.ModuleName,
+		instantmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/initGenesis
 	}
 
@@ -75,6 +80,7 @@ var (
 		workflowmoduletypes.ModuleName,
 		committeemoduletypes.ModuleName,
 		jobmoduletypes.ModuleName,
+		instantmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/beginBlockers
 	}
 
@@ -86,6 +92,7 @@ var (
 		workflowmoduletypes.ModuleName,
 		committeemoduletypes.ModuleName,
 		jobmoduletypes.ModuleName,
+		instantmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/endBlockers
 	}
 
@@ -192,6 +199,10 @@ var (
 			{
 				Name:   jobmoduletypes.ModuleName,
 				Config: appconfig.WrapAny(&jobmodulev1.Module{}),
+			},
+			{
+				Name:   instantmoduletypes.ModuleName,
+				Config: appconfig.WrapAny(&instantmodulev1.Module{}),
 			},
 			// this line is used by starport scaffolding # stargate/app/moduleConfig
 		},

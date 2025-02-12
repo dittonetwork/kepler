@@ -40,6 +40,7 @@ import (
 	committeemodulekeeper "kepler/x/committee/keeper"
 	jobmodulekeeper "kepler/x/job/keeper"
 
+	instantmodulekeeper "kepler/x/instant/keeper"
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 
 	"kepler/docs"
@@ -81,6 +82,7 @@ type App struct {
 	WorkflowKeeper  workflowmodulekeeper.Keeper
 	CommitteeKeeper committeemodulekeeper.Keeper
 	JobKeeper       jobmodulekeeper.Keeper
+	InstantKeeper   instantmodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
 	// simulation manager
@@ -156,6 +158,7 @@ func New(
 		&app.WorkflowKeeper,
 		&app.CommitteeKeeper,
 		&app.JobKeeper,
+		&app.InstantKeeper,
 		// this line is used by starport scaffolding # stargate/app/keeperDefinition
 	); err != nil {
 		panic(err)
