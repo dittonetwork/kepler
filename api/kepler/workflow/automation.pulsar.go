@@ -64,25 +64,25 @@ func (x *_Automation_3_list) IsValid() bool {
 }
 
 var (
-	md_Automation                 protoreflect.MessageDescriptor
-	fd_Automation_id              protoreflect.FieldDescriptor
-	fd_Automation_trigger         protoreflect.FieldDescriptor
-	fd_Automation_actions         protoreflect.FieldDescriptor
-	fd_Automation_repeat_count    protoreflect.FieldDescriptor
-	fd_Automation_repeat_interval protoreflect.FieldDescriptor
-	fd_Automation_expire_at       protoreflect.FieldDescriptor
-	fd_Automation_status          protoreflect.FieldDescriptor
+	md_Automation                  protoreflect.MessageDescriptor
+	fd_Automation_id               protoreflect.FieldDescriptor
+	fd_Automation_triggers         protoreflect.FieldDescriptor
+	fd_Automation_actions          protoreflect.FieldDescriptor
+	fd_Automation_expire_at        protoreflect.FieldDescriptor
+	fd_Automation_executed_times   protoreflect.FieldDescriptor
+	fd_Automation_last_executed_at protoreflect.FieldDescriptor
+	fd_Automation_status           protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_kepler_workflow_automation_proto_init()
 	md_Automation = File_kepler_workflow_automation_proto.Messages().ByName("Automation")
 	fd_Automation_id = md_Automation.Fields().ByName("id")
-	fd_Automation_trigger = md_Automation.Fields().ByName("trigger")
+	fd_Automation_triggers = md_Automation.Fields().ByName("triggers")
 	fd_Automation_actions = md_Automation.Fields().ByName("actions")
-	fd_Automation_repeat_count = md_Automation.Fields().ByName("repeat_count")
-	fd_Automation_repeat_interval = md_Automation.Fields().ByName("repeat_interval")
 	fd_Automation_expire_at = md_Automation.Fields().ByName("expire_at")
+	fd_Automation_executed_times = md_Automation.Fields().ByName("executed_times")
+	fd_Automation_last_executed_at = md_Automation.Fields().ByName("last_executed_at")
 	fd_Automation_status = md_Automation.Fields().ByName("status")
 }
 
@@ -157,9 +157,9 @@ func (x *fastReflection_Automation) Range(f func(protoreflect.FieldDescriptor, p
 			return
 		}
 	}
-	if x.Trigger != nil {
-		value := protoreflect.ValueOfMessage(x.Trigger.ProtoReflect())
-		if !f(fd_Automation_trigger, value) {
+	if x.Triggers != nil {
+		value := protoreflect.ValueOfMessage(x.Triggers.ProtoReflect())
+		if !f(fd_Automation_triggers, value) {
 			return
 		}
 	}
@@ -169,21 +169,21 @@ func (x *fastReflection_Automation) Range(f func(protoreflect.FieldDescriptor, p
 			return
 		}
 	}
-	if x.RepeatCount != uint64(0) {
-		value := protoreflect.ValueOfUint64(x.RepeatCount)
-		if !f(fd_Automation_repeat_count, value) {
-			return
-		}
-	}
-	if x.RepeatInterval != uint64(0) {
-		value := protoreflect.ValueOfUint64(x.RepeatInterval)
-		if !f(fd_Automation_repeat_interval, value) {
-			return
-		}
-	}
 	if x.ExpireAt != uint64(0) {
 		value := protoreflect.ValueOfUint64(x.ExpireAt)
 		if !f(fd_Automation_expire_at, value) {
+			return
+		}
+	}
+	if x.ExecutedTimes != uint64(0) {
+		value := protoreflect.ValueOfUint64(x.ExecutedTimes)
+		if !f(fd_Automation_executed_times, value) {
+			return
+		}
+	}
+	if x.LastExecutedAt != uint64(0) {
+		value := protoreflect.ValueOfUint64(x.LastExecutedAt)
+		if !f(fd_Automation_last_executed_at, value) {
 			return
 		}
 	}
@@ -210,16 +210,16 @@ func (x *fastReflection_Automation) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
 	case "kepler.workflow.Automation.id":
 		return x.Id != uint64(0)
-	case "kepler.workflow.Automation.trigger":
-		return x.Trigger != nil
+	case "kepler.workflow.Automation.triggers":
+		return x.Triggers != nil
 	case "kepler.workflow.Automation.actions":
 		return len(x.Actions) != 0
-	case "kepler.workflow.Automation.repeat_count":
-		return x.RepeatCount != uint64(0)
-	case "kepler.workflow.Automation.repeat_interval":
-		return x.RepeatInterval != uint64(0)
 	case "kepler.workflow.Automation.expire_at":
 		return x.ExpireAt != uint64(0)
+	case "kepler.workflow.Automation.executed_times":
+		return x.ExecutedTimes != uint64(0)
+	case "kepler.workflow.Automation.last_executed_at":
+		return x.LastExecutedAt != uint64(0)
 	case "kepler.workflow.Automation.status":
 		return x.Status != 0
 	default:
@@ -240,16 +240,16 @@ func (x *fastReflection_Automation) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
 	case "kepler.workflow.Automation.id":
 		x.Id = uint64(0)
-	case "kepler.workflow.Automation.trigger":
-		x.Trigger = nil
+	case "kepler.workflow.Automation.triggers":
+		x.Triggers = nil
 	case "kepler.workflow.Automation.actions":
 		x.Actions = nil
-	case "kepler.workflow.Automation.repeat_count":
-		x.RepeatCount = uint64(0)
-	case "kepler.workflow.Automation.repeat_interval":
-		x.RepeatInterval = uint64(0)
 	case "kepler.workflow.Automation.expire_at":
 		x.ExpireAt = uint64(0)
+	case "kepler.workflow.Automation.executed_times":
+		x.ExecutedTimes = uint64(0)
+	case "kepler.workflow.Automation.last_executed_at":
+		x.LastExecutedAt = uint64(0)
 	case "kepler.workflow.Automation.status":
 		x.Status = 0
 	default:
@@ -271,8 +271,8 @@ func (x *fastReflection_Automation) Get(descriptor protoreflect.FieldDescriptor)
 	case "kepler.workflow.Automation.id":
 		value := x.Id
 		return protoreflect.ValueOfUint64(value)
-	case "kepler.workflow.Automation.trigger":
-		value := x.Trigger
+	case "kepler.workflow.Automation.triggers":
+		value := x.Triggers
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
 	case "kepler.workflow.Automation.actions":
 		if len(x.Actions) == 0 {
@@ -280,14 +280,14 @@ func (x *fastReflection_Automation) Get(descriptor protoreflect.FieldDescriptor)
 		}
 		listValue := &_Automation_3_list{list: &x.Actions}
 		return protoreflect.ValueOfList(listValue)
-	case "kepler.workflow.Automation.repeat_count":
-		value := x.RepeatCount
-		return protoreflect.ValueOfUint64(value)
-	case "kepler.workflow.Automation.repeat_interval":
-		value := x.RepeatInterval
-		return protoreflect.ValueOfUint64(value)
 	case "kepler.workflow.Automation.expire_at":
 		value := x.ExpireAt
+		return protoreflect.ValueOfUint64(value)
+	case "kepler.workflow.Automation.executed_times":
+		value := x.ExecutedTimes
+		return protoreflect.ValueOfUint64(value)
+	case "kepler.workflow.Automation.last_executed_at":
+		value := x.LastExecutedAt
 		return protoreflect.ValueOfUint64(value)
 	case "kepler.workflow.Automation.status":
 		value := x.Status
@@ -314,18 +314,18 @@ func (x *fastReflection_Automation) Set(fd protoreflect.FieldDescriptor, value p
 	switch fd.FullName() {
 	case "kepler.workflow.Automation.id":
 		x.Id = value.Uint()
-	case "kepler.workflow.Automation.trigger":
-		x.Trigger = value.Message().Interface().(*Trigger)
+	case "kepler.workflow.Automation.triggers":
+		x.Triggers = value.Message().Interface().(*Trigger)
 	case "kepler.workflow.Automation.actions":
 		lv := value.List()
 		clv := lv.(*_Automation_3_list)
 		x.Actions = *clv.list
-	case "kepler.workflow.Automation.repeat_count":
-		x.RepeatCount = value.Uint()
-	case "kepler.workflow.Automation.repeat_interval":
-		x.RepeatInterval = value.Uint()
 	case "kepler.workflow.Automation.expire_at":
 		x.ExpireAt = value.Uint()
+	case "kepler.workflow.Automation.executed_times":
+		x.ExecutedTimes = value.Uint()
+	case "kepler.workflow.Automation.last_executed_at":
+		x.LastExecutedAt = value.Uint()
 	case "kepler.workflow.Automation.status":
 		x.Status = (AutomationStatus)(value.Enum())
 	default:
@@ -348,11 +348,11 @@ func (x *fastReflection_Automation) Set(fd protoreflect.FieldDescriptor, value p
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_Automation) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "kepler.workflow.Automation.trigger":
-		if x.Trigger == nil {
-			x.Trigger = new(Trigger)
+	case "kepler.workflow.Automation.triggers":
+		if x.Triggers == nil {
+			x.Triggers = new(Trigger)
 		}
-		return protoreflect.ValueOfMessage(x.Trigger.ProtoReflect())
+		return protoreflect.ValueOfMessage(x.Triggers.ProtoReflect())
 	case "kepler.workflow.Automation.actions":
 		if x.Actions == nil {
 			x.Actions = []*Action{}
@@ -361,12 +361,12 @@ func (x *fastReflection_Automation) Mutable(fd protoreflect.FieldDescriptor) pro
 		return protoreflect.ValueOfList(value)
 	case "kepler.workflow.Automation.id":
 		panic(fmt.Errorf("field id of message kepler.workflow.Automation is not mutable"))
-	case "kepler.workflow.Automation.repeat_count":
-		panic(fmt.Errorf("field repeat_count of message kepler.workflow.Automation is not mutable"))
-	case "kepler.workflow.Automation.repeat_interval":
-		panic(fmt.Errorf("field repeat_interval of message kepler.workflow.Automation is not mutable"))
 	case "kepler.workflow.Automation.expire_at":
 		panic(fmt.Errorf("field expire_at of message kepler.workflow.Automation is not mutable"))
+	case "kepler.workflow.Automation.executed_times":
+		panic(fmt.Errorf("field executed_times of message kepler.workflow.Automation is not mutable"))
+	case "kepler.workflow.Automation.last_executed_at":
+		panic(fmt.Errorf("field last_executed_at of message kepler.workflow.Automation is not mutable"))
 	case "kepler.workflow.Automation.status":
 		panic(fmt.Errorf("field status of message kepler.workflow.Automation is not mutable"))
 	default:
@@ -384,17 +384,17 @@ func (x *fastReflection_Automation) NewField(fd protoreflect.FieldDescriptor) pr
 	switch fd.FullName() {
 	case "kepler.workflow.Automation.id":
 		return protoreflect.ValueOfUint64(uint64(0))
-	case "kepler.workflow.Automation.trigger":
+	case "kepler.workflow.Automation.triggers":
 		m := new(Trigger)
 		return protoreflect.ValueOfMessage(m.ProtoReflect())
 	case "kepler.workflow.Automation.actions":
 		list := []*Action{}
 		return protoreflect.ValueOfList(&_Automation_3_list{list: &list})
-	case "kepler.workflow.Automation.repeat_count":
-		return protoreflect.ValueOfUint64(uint64(0))
-	case "kepler.workflow.Automation.repeat_interval":
-		return protoreflect.ValueOfUint64(uint64(0))
 	case "kepler.workflow.Automation.expire_at":
+		return protoreflect.ValueOfUint64(uint64(0))
+	case "kepler.workflow.Automation.executed_times":
+		return protoreflect.ValueOfUint64(uint64(0))
+	case "kepler.workflow.Automation.last_executed_at":
 		return protoreflect.ValueOfUint64(uint64(0))
 	case "kepler.workflow.Automation.status":
 		return protoreflect.ValueOfEnum(0)
@@ -470,8 +470,8 @@ func (x *fastReflection_Automation) ProtoMethods() *protoiface.Methods {
 		if x.Id != 0 {
 			n += 1 + runtime.Sov(uint64(x.Id))
 		}
-		if x.Trigger != nil {
-			l = options.Size(x.Trigger)
+		if x.Triggers != nil {
+			l = options.Size(x.Triggers)
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
 		if len(x.Actions) > 0 {
@@ -480,14 +480,14 @@ func (x *fastReflection_Automation) ProtoMethods() *protoiface.Methods {
 				n += 1 + l + runtime.Sov(uint64(l))
 			}
 		}
-		if x.RepeatCount != 0 {
-			n += 1 + runtime.Sov(uint64(x.RepeatCount))
-		}
-		if x.RepeatInterval != 0 {
-			n += 1 + runtime.Sov(uint64(x.RepeatInterval))
-		}
 		if x.ExpireAt != 0 {
 			n += 1 + runtime.Sov(uint64(x.ExpireAt))
+		}
+		if x.ExecutedTimes != 0 {
+			n += 1 + runtime.Sov(uint64(x.ExecutedTimes))
+		}
+		if x.LastExecutedAt != 0 {
+			n += 1 + runtime.Sov(uint64(x.LastExecutedAt))
 		}
 		if x.Status != 0 {
 			n += 1 + runtime.Sov(uint64(x.Status))
@@ -526,18 +526,18 @@ func (x *fastReflection_Automation) ProtoMethods() *protoiface.Methods {
 			i--
 			dAtA[i] = 0x38
 		}
-		if x.ExpireAt != 0 {
-			i = runtime.EncodeVarint(dAtA, i, uint64(x.ExpireAt))
+		if x.LastExecutedAt != 0 {
+			i = runtime.EncodeVarint(dAtA, i, uint64(x.LastExecutedAt))
 			i--
 			dAtA[i] = 0x30
 		}
-		if x.RepeatInterval != 0 {
-			i = runtime.EncodeVarint(dAtA, i, uint64(x.RepeatInterval))
+		if x.ExecutedTimes != 0 {
+			i = runtime.EncodeVarint(dAtA, i, uint64(x.ExecutedTimes))
 			i--
 			dAtA[i] = 0x28
 		}
-		if x.RepeatCount != 0 {
-			i = runtime.EncodeVarint(dAtA, i, uint64(x.RepeatCount))
+		if x.ExpireAt != 0 {
+			i = runtime.EncodeVarint(dAtA, i, uint64(x.ExpireAt))
 			i--
 			dAtA[i] = 0x20
 		}
@@ -557,8 +557,8 @@ func (x *fastReflection_Automation) ProtoMethods() *protoiface.Methods {
 				dAtA[i] = 0x1a
 			}
 		}
-		if x.Trigger != nil {
-			encoded, err := options.Marshal(x.Trigger)
+		if x.Triggers != nil {
+			encoded, err := options.Marshal(x.Triggers)
 			if err != nil {
 				return protoiface.MarshalOutput{
 					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -646,7 +646,7 @@ func (x *fastReflection_Automation) ProtoMethods() *protoiface.Methods {
 				}
 			case 2:
 				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Trigger", wireType)
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Triggers", wireType)
 				}
 				var msglen int
 				for shift := uint(0); ; shift += 7 {
@@ -673,10 +673,10 @@ func (x *fastReflection_Automation) ProtoMethods() *protoiface.Methods {
 				if postIndex > l {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
-				if x.Trigger == nil {
-					x.Trigger = &Trigger{}
+				if x.Triggers == nil {
+					x.Triggers = &Trigger{}
 				}
-				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.Trigger); err != nil {
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.Triggers); err != nil {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
 				}
 				iNdEx = postIndex
@@ -716,44 +716,6 @@ func (x *fastReflection_Automation) ProtoMethods() *protoiface.Methods {
 				iNdEx = postIndex
 			case 4:
 				if wireType != 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field RepeatCount", wireType)
-				}
-				x.RepeatCount = 0
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					x.RepeatCount |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-			case 5:
-				if wireType != 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field RepeatInterval", wireType)
-				}
-				x.RepeatInterval = 0
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					x.RepeatInterval |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-			case 6:
-				if wireType != 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ExpireAt", wireType)
 				}
 				x.ExpireAt = 0
@@ -767,6 +729,44 @@ func (x *fastReflection_Automation) ProtoMethods() *protoiface.Methods {
 					b := dAtA[iNdEx]
 					iNdEx++
 					x.ExpireAt |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+			case 5:
+				if wireType != 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ExecutedTimes", wireType)
+				}
+				x.ExecutedTimes = 0
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					x.ExecutedTimes |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+			case 6:
+				if wireType != 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field LastExecutedAt", wireType)
+				}
+				x.LastExecutedAt = 0
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					x.LastExecutedAt |= uint64(b&0x7F) << shift
 					if b < 0x80 {
 						break
 					}
@@ -826,10 +826,11 @@ func (x *fastReflection_Automation) ProtoMethods() *protoiface.Methods {
 }
 
 var (
-	md_Trigger         protoreflect.MessageDescriptor
-	fd_Trigger_price   protoreflect.FieldDescriptor
-	fd_Trigger_time    protoreflect.FieldDescriptor
-	fd_Trigger_logical protoreflect.FieldDescriptor
+	md_Trigger            protoreflect.MessageDescriptor
+	fd_Trigger_price      protoreflect.FieldDescriptor
+	fd_Trigger_time       protoreflect.FieldDescriptor
+	fd_Trigger_logical    protoreflect.FieldDescriptor
+	fd_Trigger_repeatable protoreflect.FieldDescriptor
 )
 
 func init() {
@@ -838,6 +839,7 @@ func init() {
 	fd_Trigger_price = md_Trigger.Fields().ByName("price")
 	fd_Trigger_time = md_Trigger.Fields().ByName("time")
 	fd_Trigger_logical = md_Trigger.Fields().ByName("logical")
+	fd_Trigger_repeatable = md_Trigger.Fields().ByName("repeatable")
 }
 
 var _ protoreflect.Message = (*fastReflection_Trigger)(nil)
@@ -925,6 +927,12 @@ func (x *fastReflection_Trigger) Range(f func(protoreflect.FieldDescriptor, prot
 			if !f(fd_Trigger_logical, value) {
 				return
 			}
+		case *Trigger_Repeatable:
+			v := o.Repeatable
+			value := protoreflect.ValueOfMessage(v.ProtoReflect())
+			if !f(fd_Trigger_repeatable, value) {
+				return
+			}
 		}
 	}
 }
@@ -966,6 +974,14 @@ func (x *fastReflection_Trigger) Has(fd protoreflect.FieldDescriptor) bool {
 		} else {
 			return false
 		}
+	case "kepler.workflow.Trigger.repeatable":
+		if x.Trigger == nil {
+			return false
+		} else if _, ok := x.Trigger.(*Trigger_Repeatable); ok {
+			return true
+		} else {
+			return false
+		}
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.Trigger"))
@@ -987,6 +1003,8 @@ func (x *fastReflection_Trigger) Clear(fd protoreflect.FieldDescriptor) {
 	case "kepler.workflow.Trigger.time":
 		x.Trigger = nil
 	case "kepler.workflow.Trigger.logical":
+		x.Trigger = nil
+	case "kepler.workflow.Trigger.repeatable":
 		x.Trigger = nil
 	default:
 		if fd.IsExtension() {
@@ -1028,6 +1046,14 @@ func (x *fastReflection_Trigger) Get(descriptor protoreflect.FieldDescriptor) pr
 		} else {
 			return protoreflect.ValueOfMessage((*LogicalTrigger)(nil).ProtoReflect())
 		}
+	case "kepler.workflow.Trigger.repeatable":
+		if x.Trigger == nil {
+			return protoreflect.ValueOfMessage((*CountTrigger)(nil).ProtoReflect())
+		} else if v, ok := x.Trigger.(*Trigger_Repeatable); ok {
+			return protoreflect.ValueOfMessage(v.Repeatable.ProtoReflect())
+		} else {
+			return protoreflect.ValueOfMessage((*CountTrigger)(nil).ProtoReflect())
+		}
 	default:
 		if descriptor.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.Trigger"))
@@ -1057,6 +1083,9 @@ func (x *fastReflection_Trigger) Set(fd protoreflect.FieldDescriptor, value prot
 	case "kepler.workflow.Trigger.logical":
 		cv := value.Message().Interface().(*LogicalTrigger)
 		x.Trigger = &Trigger_Logical{Logical: cv}
+	case "kepler.workflow.Trigger.repeatable":
+		cv := value.Message().Interface().(*CountTrigger)
+		x.Trigger = &Trigger_Repeatable{Repeatable: cv}
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.Trigger"))
@@ -1125,6 +1154,22 @@ func (x *fastReflection_Trigger) Mutable(fd protoreflect.FieldDescriptor) protor
 			x.Trigger = oneofValue
 			return protoreflect.ValueOfMessage(value.ProtoReflect())
 		}
+	case "kepler.workflow.Trigger.repeatable":
+		if x.Trigger == nil {
+			value := &CountTrigger{}
+			oneofValue := &Trigger_Repeatable{Repeatable: value}
+			x.Trigger = oneofValue
+			return protoreflect.ValueOfMessage(value.ProtoReflect())
+		}
+		switch m := x.Trigger.(type) {
+		case *Trigger_Repeatable:
+			return protoreflect.ValueOfMessage(m.Repeatable.ProtoReflect())
+		default:
+			value := &CountTrigger{}
+			oneofValue := &Trigger_Repeatable{Repeatable: value}
+			x.Trigger = oneofValue
+			return protoreflect.ValueOfMessage(value.ProtoReflect())
+		}
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.Trigger"))
@@ -1146,6 +1191,9 @@ func (x *fastReflection_Trigger) NewField(fd protoreflect.FieldDescriptor) proto
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
 	case "kepler.workflow.Trigger.logical":
 		value := &LogicalTrigger{}
+		return protoreflect.ValueOfMessage(value.ProtoReflect())
+	case "kepler.workflow.Trigger.repeatable":
+		value := &CountTrigger{}
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
 	default:
 		if fd.IsExtension() {
@@ -1171,6 +1219,8 @@ func (x *fastReflection_Trigger) WhichOneof(d protoreflect.OneofDescriptor) prot
 			return x.Descriptor().Fields().ByName("time")
 		case *Trigger_Logical:
 			return x.Descriptor().Fields().ByName("logical")
+		case *Trigger_Repeatable:
+			return x.Descriptor().Fields().ByName("repeatable")
 		}
 	default:
 		panic(fmt.Errorf("%s is not a oneof field in kepler.workflow.Trigger", d.FullName()))
@@ -1247,6 +1297,12 @@ func (x *fastReflection_Trigger) ProtoMethods() *protoiface.Methods {
 			}
 			l = options.Size(x.Logical)
 			n += 1 + l + runtime.Sov(uint64(l))
+		case *Trigger_Repeatable:
+			if x == nil {
+				break
+			}
+			l = options.Size(x.Repeatable)
+			n += 1 + l + runtime.Sov(uint64(l))
 		}
 		if x.unknownFields != nil {
 			n += len(x.unknownFields)
@@ -1317,6 +1373,19 @@ func (x *fastReflection_Trigger) ProtoMethods() *protoiface.Methods {
 			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
 			i--
 			dAtA[i] = 0x1a
+		case *Trigger_Repeatable:
+			encoded, err := options.Marshal(x.Repeatable)
+			if err != nil {
+				return protoiface.MarshalOutput{
+					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+					Buf:               input.Buf,
+				}, err
+			}
+			i -= len(encoded)
+			copy(dAtA[i:], encoded)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+			i--
+			dAtA[i] = 0x22
 		}
 		if input.Buf != nil {
 			input.Buf = append(input.Buf, dAtA...)
@@ -1471,6 +1540,41 @@ func (x *fastReflection_Trigger) ProtoMethods() *protoiface.Methods {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
 				}
 				x.Trigger = &Trigger_Logical{v}
+				iNdEx = postIndex
+			case 4:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Repeatable", wireType)
+				}
+				var msglen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					msglen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if msglen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + msglen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				v := &CountTrigger{}
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], v); err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				x.Trigger = &Trigger_Repeatable{v}
 				iNdEx = postIndex
 			default:
 				iNdEx = preIndex
@@ -3001,17 +3105,605 @@ func (x *fastReflection_LogicalTrigger) ProtoMethods() *protoiface.Methods {
 	}
 }
 
+var _ protoreflect.List = (*_CountTrigger_5_list)(nil)
+
+type _CountTrigger_5_list struct {
+	list *[]*Trigger
+}
+
+func (x *_CountTrigger_5_list) Len() int {
+	if x.list == nil {
+		return 0
+	}
+	return len(*x.list)
+}
+
+func (x *_CountTrigger_5_list) Get(i int) protoreflect.Value {
+	return protoreflect.ValueOfMessage((*x.list)[i].ProtoReflect())
+}
+
+func (x *_CountTrigger_5_list) Set(i int, value protoreflect.Value) {
+	valueUnwrapped := value.Message()
+	concreteValue := valueUnwrapped.Interface().(*Trigger)
+	(*x.list)[i] = concreteValue
+}
+
+func (x *_CountTrigger_5_list) Append(value protoreflect.Value) {
+	valueUnwrapped := value.Message()
+	concreteValue := valueUnwrapped.Interface().(*Trigger)
+	*x.list = append(*x.list, concreteValue)
+}
+
+func (x *_CountTrigger_5_list) AppendMutable() protoreflect.Value {
+	v := new(Trigger)
+	*x.list = append(*x.list, v)
+	return protoreflect.ValueOfMessage(v.ProtoReflect())
+}
+
+func (x *_CountTrigger_5_list) Truncate(n int) {
+	for i := n; i < len(*x.list); i++ {
+		(*x.list)[i] = nil
+	}
+	*x.list = (*x.list)[:n]
+}
+
+func (x *_CountTrigger_5_list) NewElement() protoreflect.Value {
+	v := new(Trigger)
+	return protoreflect.ValueOfMessage(v.ProtoReflect())
+}
+
+func (x *_CountTrigger_5_list) IsValid() bool {
+	return x.list != nil
+}
+
 var (
-	md_Action                  protoreflect.MessageDescriptor
-	fd_Action_execute_contract protoreflect.FieldDescriptor
-	fd_Action_trade            protoreflect.FieldDescriptor
+	md_CountTrigger                 protoreflect.MessageDescriptor
+	fd_CountTrigger_repeat_count    protoreflect.FieldDescriptor
+	fd_CountTrigger_repeat_interval protoreflect.FieldDescriptor
+	fd_CountTrigger_triggers        protoreflect.FieldDescriptor
+)
+
+func init() {
+	file_kepler_workflow_automation_proto_init()
+	md_CountTrigger = File_kepler_workflow_automation_proto.Messages().ByName("CountTrigger")
+	fd_CountTrigger_repeat_count = md_CountTrigger.Fields().ByName("repeat_count")
+	fd_CountTrigger_repeat_interval = md_CountTrigger.Fields().ByName("repeat_interval")
+	fd_CountTrigger_triggers = md_CountTrigger.Fields().ByName("triggers")
+}
+
+var _ protoreflect.Message = (*fastReflection_CountTrigger)(nil)
+
+type fastReflection_CountTrigger CountTrigger
+
+func (x *CountTrigger) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_CountTrigger)(x)
+}
+
+func (x *CountTrigger) slowProtoReflect() protoreflect.Message {
+	mi := &file_kepler_workflow_automation_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_CountTrigger_messageType fastReflection_CountTrigger_messageType
+var _ protoreflect.MessageType = fastReflection_CountTrigger_messageType{}
+
+type fastReflection_CountTrigger_messageType struct{}
+
+func (x fastReflection_CountTrigger_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_CountTrigger)(nil)
+}
+func (x fastReflection_CountTrigger_messageType) New() protoreflect.Message {
+	return new(fastReflection_CountTrigger)
+}
+func (x fastReflection_CountTrigger_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_CountTrigger
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_CountTrigger) Descriptor() protoreflect.MessageDescriptor {
+	return md_CountTrigger
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_CountTrigger) Type() protoreflect.MessageType {
+	return _fastReflection_CountTrigger_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_CountTrigger) New() protoreflect.Message {
+	return new(fastReflection_CountTrigger)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_CountTrigger) Interface() protoreflect.ProtoMessage {
+	return (*CountTrigger)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_CountTrigger) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.RepeatCount != uint64(0) {
+		value := protoreflect.ValueOfUint64(x.RepeatCount)
+		if !f(fd_CountTrigger_repeat_count, value) {
+			return
+		}
+	}
+	if x.RepeatInterval != uint64(0) {
+		value := protoreflect.ValueOfUint64(x.RepeatInterval)
+		if !f(fd_CountTrigger_repeat_interval, value) {
+			return
+		}
+	}
+	if len(x.Triggers) != 0 {
+		value := protoreflect.ValueOfList(&_CountTrigger_5_list{list: &x.Triggers})
+		if !f(fd_CountTrigger_triggers, value) {
+			return
+		}
+	}
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_CountTrigger) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	case "kepler.workflow.CountTrigger.repeat_count":
+		return x.RepeatCount != uint64(0)
+	case "kepler.workflow.CountTrigger.repeat_interval":
+		return x.RepeatInterval != uint64(0)
+	case "kepler.workflow.CountTrigger.triggers":
+		return len(x.Triggers) != 0
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.CountTrigger"))
+		}
+		panic(fmt.Errorf("message kepler.workflow.CountTrigger does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_CountTrigger) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	case "kepler.workflow.CountTrigger.repeat_count":
+		x.RepeatCount = uint64(0)
+	case "kepler.workflow.CountTrigger.repeat_interval":
+		x.RepeatInterval = uint64(0)
+	case "kepler.workflow.CountTrigger.triggers":
+		x.Triggers = nil
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.CountTrigger"))
+		}
+		panic(fmt.Errorf("message kepler.workflow.CountTrigger does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_CountTrigger) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	case "kepler.workflow.CountTrigger.repeat_count":
+		value := x.RepeatCount
+		return protoreflect.ValueOfUint64(value)
+	case "kepler.workflow.CountTrigger.repeat_interval":
+		value := x.RepeatInterval
+		return protoreflect.ValueOfUint64(value)
+	case "kepler.workflow.CountTrigger.triggers":
+		if len(x.Triggers) == 0 {
+			return protoreflect.ValueOfList(&_CountTrigger_5_list{})
+		}
+		listValue := &_CountTrigger_5_list{list: &x.Triggers}
+		return protoreflect.ValueOfList(listValue)
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.CountTrigger"))
+		}
+		panic(fmt.Errorf("message kepler.workflow.CountTrigger does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_CountTrigger) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	case "kepler.workflow.CountTrigger.repeat_count":
+		x.RepeatCount = value.Uint()
+	case "kepler.workflow.CountTrigger.repeat_interval":
+		x.RepeatInterval = value.Uint()
+	case "kepler.workflow.CountTrigger.triggers":
+		lv := value.List()
+		clv := lv.(*_CountTrigger_5_list)
+		x.Triggers = *clv.list
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.CountTrigger"))
+		}
+		panic(fmt.Errorf("message kepler.workflow.CountTrigger does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_CountTrigger) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "kepler.workflow.CountTrigger.triggers":
+		if x.Triggers == nil {
+			x.Triggers = []*Trigger{}
+		}
+		value := &_CountTrigger_5_list{list: &x.Triggers}
+		return protoreflect.ValueOfList(value)
+	case "kepler.workflow.CountTrigger.repeat_count":
+		panic(fmt.Errorf("field repeat_count of message kepler.workflow.CountTrigger is not mutable"))
+	case "kepler.workflow.CountTrigger.repeat_interval":
+		panic(fmt.Errorf("field repeat_interval of message kepler.workflow.CountTrigger is not mutable"))
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.CountTrigger"))
+		}
+		panic(fmt.Errorf("message kepler.workflow.CountTrigger does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_CountTrigger) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "kepler.workflow.CountTrigger.repeat_count":
+		return protoreflect.ValueOfUint64(uint64(0))
+	case "kepler.workflow.CountTrigger.repeat_interval":
+		return protoreflect.ValueOfUint64(uint64(0))
+	case "kepler.workflow.CountTrigger.triggers":
+		list := []*Trigger{}
+		return protoreflect.ValueOfList(&_CountTrigger_5_list{list: &list})
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.CountTrigger"))
+		}
+		panic(fmt.Errorf("message kepler.workflow.CountTrigger does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_CountTrigger) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in kepler.workflow.CountTrigger", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_CountTrigger) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_CountTrigger) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_CountTrigger) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_CountTrigger) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*CountTrigger)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		if x.RepeatCount != 0 {
+			n += 1 + runtime.Sov(uint64(x.RepeatCount))
+		}
+		if x.RepeatInterval != 0 {
+			n += 1 + runtime.Sov(uint64(x.RepeatInterval))
+		}
+		if len(x.Triggers) > 0 {
+			for _, e := range x.Triggers {
+				l = options.Size(e)
+				n += 1 + l + runtime.Sov(uint64(l))
+			}
+		}
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*CountTrigger)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if len(x.Triggers) > 0 {
+			for iNdEx := len(x.Triggers) - 1; iNdEx >= 0; iNdEx-- {
+				encoded, err := options.Marshal(x.Triggers[iNdEx])
+				if err != nil {
+					return protoiface.MarshalOutput{
+						NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+						Buf:               input.Buf,
+					}, err
+				}
+				i -= len(encoded)
+				copy(dAtA[i:], encoded)
+				i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+				i--
+				dAtA[i] = 0x2a
+			}
+		}
+		if x.RepeatInterval != 0 {
+			i = runtime.EncodeVarint(dAtA, i, uint64(x.RepeatInterval))
+			i--
+			dAtA[i] = 0x18
+		}
+		if x.RepeatCount != 0 {
+			i = runtime.EncodeVarint(dAtA, i, uint64(x.RepeatCount))
+			i--
+			dAtA[i] = 0x8
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*CountTrigger)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: CountTrigger: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: CountTrigger: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			case 1:
+				if wireType != 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field RepeatCount", wireType)
+				}
+				x.RepeatCount = 0
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					x.RepeatCount |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+			case 3:
+				if wireType != 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field RepeatInterval", wireType)
+				}
+				x.RepeatInterval = 0
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					x.RepeatInterval |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+			case 5:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Triggers", wireType)
+				}
+				var msglen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					msglen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if msglen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + msglen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.Triggers = append(x.Triggers, &Trigger{})
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.Triggers[len(x.Triggers)-1]); err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				iNdEx = postIndex
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
+var (
+	md_Action              protoreflect.MessageDescriptor
+	fd_Action_tx_call_data protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_kepler_workflow_automation_proto_init()
 	md_Action = File_kepler_workflow_automation_proto.Messages().ByName("Action")
-	fd_Action_execute_contract = md_Action.Fields().ByName("execute_contract")
-	fd_Action_trade = md_Action.Fields().ByName("trade")
+	fd_Action_tx_call_data = md_Action.Fields().ByName("tx_call_data")
 }
 
 var _ protoreflect.Message = (*fastReflection_Action)(nil)
@@ -3023,7 +3715,7 @@ func (x *Action) ProtoReflect() protoreflect.Message {
 }
 
 func (x *Action) slowProtoReflect() protoreflect.Message {
-	mi := &file_kepler_workflow_automation_proto_msgTypes[5]
+	mi := &file_kepler_workflow_automation_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3079,20 +3771,10 @@ func (x *fastReflection_Action) Interface() protoreflect.ProtoMessage {
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
 func (x *fastReflection_Action) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
-	if x.Action != nil {
-		switch o := x.Action.(type) {
-		case *Action_ExecuteContract:
-			v := o.ExecuteContract
-			value := protoreflect.ValueOfMessage(v.ProtoReflect())
-			if !f(fd_Action_execute_contract, value) {
-				return
-			}
-		case *Action_Trade:
-			v := o.Trade
-			value := protoreflect.ValueOfMessage(v.ProtoReflect())
-			if !f(fd_Action_trade, value) {
-				return
-			}
+	if len(x.TxCallData) != 0 {
+		value := protoreflect.ValueOfBytes(x.TxCallData)
+		if !f(fd_Action_tx_call_data, value) {
+			return
 		}
 	}
 }
@@ -3110,22 +3792,8 @@ func (x *fastReflection_Action) Range(f func(protoreflect.FieldDescriptor, proto
 // a repeated field is populated if it is non-empty.
 func (x *fastReflection_Action) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "kepler.workflow.Action.execute_contract":
-		if x.Action == nil {
-			return false
-		} else if _, ok := x.Action.(*Action_ExecuteContract); ok {
-			return true
-		} else {
-			return false
-		}
-	case "kepler.workflow.Action.trade":
-		if x.Action == nil {
-			return false
-		} else if _, ok := x.Action.(*Action_Trade); ok {
-			return true
-		} else {
-			return false
-		}
+	case "kepler.workflow.Action.tx_call_data":
+		return len(x.TxCallData) != 0
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.Action"))
@@ -3142,10 +3810,8 @@ func (x *fastReflection_Action) Has(fd protoreflect.FieldDescriptor) bool {
 // Clear is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_Action) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "kepler.workflow.Action.execute_contract":
-		x.Action = nil
-	case "kepler.workflow.Action.trade":
-		x.Action = nil
+	case "kepler.workflow.Action.tx_call_data":
+		x.TxCallData = nil
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.Action"))
@@ -3162,22 +3828,9 @@ func (x *fastReflection_Action) Clear(fd protoreflect.FieldDescriptor) {
 // of the value; to obtain a mutable reference, use Mutable.
 func (x *fastReflection_Action) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "kepler.workflow.Action.execute_contract":
-		if x.Action == nil {
-			return protoreflect.ValueOfMessage((*ExecuteContract)(nil).ProtoReflect())
-		} else if v, ok := x.Action.(*Action_ExecuteContract); ok {
-			return protoreflect.ValueOfMessage(v.ExecuteContract.ProtoReflect())
-		} else {
-			return protoreflect.ValueOfMessage((*ExecuteContract)(nil).ProtoReflect())
-		}
-	case "kepler.workflow.Action.trade":
-		if x.Action == nil {
-			return protoreflect.ValueOfMessage((*Trade)(nil).ProtoReflect())
-		} else if v, ok := x.Action.(*Action_Trade); ok {
-			return protoreflect.ValueOfMessage(v.Trade.ProtoReflect())
-		} else {
-			return protoreflect.ValueOfMessage((*Trade)(nil).ProtoReflect())
-		}
+	case "kepler.workflow.Action.tx_call_data":
+		value := x.TxCallData
+		return protoreflect.ValueOfBytes(value)
 	default:
 		if descriptor.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.Action"))
@@ -3198,12 +3851,8 @@ func (x *fastReflection_Action) Get(descriptor protoreflect.FieldDescriptor) pro
 // Set is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_Action) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "kepler.workflow.Action.execute_contract":
-		cv := value.Message().Interface().(*ExecuteContract)
-		x.Action = &Action_ExecuteContract{ExecuteContract: cv}
-	case "kepler.workflow.Action.trade":
-		cv := value.Message().Interface().(*Trade)
-		x.Action = &Action_Trade{Trade: cv}
+	case "kepler.workflow.Action.tx_call_data":
+		x.TxCallData = value.Bytes()
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.Action"))
@@ -3224,38 +3873,8 @@ func (x *fastReflection_Action) Set(fd protoreflect.FieldDescriptor, value proto
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_Action) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "kepler.workflow.Action.execute_contract":
-		if x.Action == nil {
-			value := &ExecuteContract{}
-			oneofValue := &Action_ExecuteContract{ExecuteContract: value}
-			x.Action = oneofValue
-			return protoreflect.ValueOfMessage(value.ProtoReflect())
-		}
-		switch m := x.Action.(type) {
-		case *Action_ExecuteContract:
-			return protoreflect.ValueOfMessage(m.ExecuteContract.ProtoReflect())
-		default:
-			value := &ExecuteContract{}
-			oneofValue := &Action_ExecuteContract{ExecuteContract: value}
-			x.Action = oneofValue
-			return protoreflect.ValueOfMessage(value.ProtoReflect())
-		}
-	case "kepler.workflow.Action.trade":
-		if x.Action == nil {
-			value := &Trade{}
-			oneofValue := &Action_Trade{Trade: value}
-			x.Action = oneofValue
-			return protoreflect.ValueOfMessage(value.ProtoReflect())
-		}
-		switch m := x.Action.(type) {
-		case *Action_Trade:
-			return protoreflect.ValueOfMessage(m.Trade.ProtoReflect())
-		default:
-			value := &Trade{}
-			oneofValue := &Action_Trade{Trade: value}
-			x.Action = oneofValue
-			return protoreflect.ValueOfMessage(value.ProtoReflect())
-		}
+	case "kepler.workflow.Action.tx_call_data":
+		panic(fmt.Errorf("field tx_call_data of message kepler.workflow.Action is not mutable"))
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.Action"))
@@ -3269,12 +3888,8 @@ func (x *fastReflection_Action) Mutable(fd protoreflect.FieldDescriptor) protore
 // For lists, maps, and messages, this returns a new, empty, mutable value.
 func (x *fastReflection_Action) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "kepler.workflow.Action.execute_contract":
-		value := &ExecuteContract{}
-		return protoreflect.ValueOfMessage(value.ProtoReflect())
-	case "kepler.workflow.Action.trade":
-		value := &Trade{}
-		return protoreflect.ValueOfMessage(value.ProtoReflect())
+	case "kepler.workflow.Action.tx_call_data":
+		return protoreflect.ValueOfBytes(nil)
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.Action"))
@@ -3288,16 +3903,6 @@ func (x *fastReflection_Action) NewField(fd protoreflect.FieldDescriptor) protor
 // It panics if the oneof descriptor does not belong to this message.
 func (x *fastReflection_Action) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
-	case "kepler.workflow.Action.action":
-		if x.Action == nil {
-			return nil
-		}
-		switch x.Action.(type) {
-		case *Action_ExecuteContract:
-			return x.Descriptor().Fields().ByName("execute_contract")
-		case *Action_Trade:
-			return x.Descriptor().Fields().ByName("trade")
-		}
 	default:
 		panic(fmt.Errorf("%s is not a oneof field in kepler.workflow.Action", d.FullName()))
 	}
@@ -3354,18 +3959,8 @@ func (x *fastReflection_Action) ProtoMethods() *protoiface.Methods {
 		var n int
 		var l int
 		_ = l
-		switch x := x.Action.(type) {
-		case *Action_ExecuteContract:
-			if x == nil {
-				break
-			}
-			l = options.Size(x.ExecuteContract)
-			n += 1 + l + runtime.Sov(uint64(l))
-		case *Action_Trade:
-			if x == nil {
-				break
-			}
-			l = options.Size(x.Trade)
+		l = len(x.TxCallData)
+		if l > 0 {
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
 		if x.unknownFields != nil {
@@ -3397,33 +3992,12 @@ func (x *fastReflection_Action) ProtoMethods() *protoiface.Methods {
 			i -= len(x.unknownFields)
 			copy(dAtA[i:], x.unknownFields)
 		}
-		switch x := x.Action.(type) {
-		case *Action_ExecuteContract:
-			encoded, err := options.Marshal(x.ExecuteContract)
-			if err != nil {
-				return protoiface.MarshalOutput{
-					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-					Buf:               input.Buf,
-				}, err
-			}
-			i -= len(encoded)
-			copy(dAtA[i:], encoded)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+		if len(x.TxCallData) > 0 {
+			i -= len(x.TxCallData)
+			copy(dAtA[i:], x.TxCallData)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.TxCallData)))
 			i--
 			dAtA[i] = 0xa
-		case *Action_Trade:
-			encoded, err := options.Marshal(x.Trade)
-			if err != nil {
-				return protoiface.MarshalOutput{
-					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-					Buf:               input.Buf,
-				}, err
-			}
-			i -= len(encoded)
-			copy(dAtA[i:], encoded)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
-			i--
-			dAtA[i] = 0x12
 		}
 		if input.Buf != nil {
 			input.Buf = append(input.Buf, dAtA...)
@@ -3476,9 +4050,9 @@ func (x *fastReflection_Action) ProtoMethods() *protoiface.Methods {
 			switch fieldNum {
 			case 1:
 				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ExecuteContract", wireType)
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field TxCallData", wireType)
 				}
-				var msglen int
+				var byteLen int
 				for shift := uint(0); ; shift += 7 {
 					if shift >= 64 {
 						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
@@ -3488,1221 +4062,25 @@ func (x *fastReflection_Action) ProtoMethods() *protoiface.Methods {
 					}
 					b := dAtA[iNdEx]
 					iNdEx++
-					msglen |= int(b&0x7F) << shift
+					byteLen |= int(b&0x7F) << shift
 					if b < 0x80 {
 						break
 					}
 				}
-				if msglen < 0 {
+				if byteLen < 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
 				}
-				postIndex := iNdEx + msglen
+				postIndex := iNdEx + byteLen
 				if postIndex < 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
 				}
 				if postIndex > l {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
-				v := &ExecuteContract{}
-				if err := options.Unmarshal(dAtA[iNdEx:postIndex], v); err != nil {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				x.TxCallData = append(x.TxCallData[:0], dAtA[iNdEx:postIndex]...)
+				if x.TxCallData == nil {
+					x.TxCallData = []byte{}
 				}
-				x.Action = &Action_ExecuteContract{v}
-				iNdEx = postIndex
-			case 2:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Trade", wireType)
-				}
-				var msglen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					msglen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				if msglen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + msglen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				v := &Trade{}
-				if err := options.Unmarshal(dAtA[iNdEx:postIndex], v); err != nil {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
-				}
-				x.Action = &Action_Trade{v}
-				iNdEx = postIndex
-			default:
-				iNdEx = preIndex
-				skippy, err := runtime.Skip(dAtA[iNdEx:])
-				if err != nil {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
-				}
-				if (skippy < 0) || (iNdEx+skippy) < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if (iNdEx + skippy) > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				if !options.DiscardUnknown {
-					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
-				}
-				iNdEx += skippy
-			}
-		}
-
-		if iNdEx > l {
-			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-		}
-		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
-	}
-	return &protoiface.Methods{
-		NoUnkeyedLiterals: struct{}{},
-		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
-		Size:              size,
-		Marshal:           marshal,
-		Unmarshal:         unmarshal,
-		Merge:             nil,
-		CheckInitialized:  nil,
-	}
-}
-
-var (
-	md_ExecuteContract             protoreflect.MessageDescriptor
-	fd_ExecuteContract_contract_id protoreflect.FieldDescriptor
-	fd_ExecuteContract_function    protoreflect.FieldDescriptor
-)
-
-func init() {
-	file_kepler_workflow_automation_proto_init()
-	md_ExecuteContract = File_kepler_workflow_automation_proto.Messages().ByName("ExecuteContract")
-	fd_ExecuteContract_contract_id = md_ExecuteContract.Fields().ByName("contract_id")
-	fd_ExecuteContract_function = md_ExecuteContract.Fields().ByName("function")
-}
-
-var _ protoreflect.Message = (*fastReflection_ExecuteContract)(nil)
-
-type fastReflection_ExecuteContract ExecuteContract
-
-func (x *ExecuteContract) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_ExecuteContract)(x)
-}
-
-func (x *ExecuteContract) slowProtoReflect() protoreflect.Message {
-	mi := &file_kepler_workflow_automation_proto_msgTypes[6]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-var _fastReflection_ExecuteContract_messageType fastReflection_ExecuteContract_messageType
-var _ protoreflect.MessageType = fastReflection_ExecuteContract_messageType{}
-
-type fastReflection_ExecuteContract_messageType struct{}
-
-func (x fastReflection_ExecuteContract_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_ExecuteContract)(nil)
-}
-func (x fastReflection_ExecuteContract_messageType) New() protoreflect.Message {
-	return new(fastReflection_ExecuteContract)
-}
-func (x fastReflection_ExecuteContract_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_ExecuteContract
-}
-
-// Descriptor returns message descriptor, which contains only the protobuf
-// type information for the message.
-func (x *fastReflection_ExecuteContract) Descriptor() protoreflect.MessageDescriptor {
-	return md_ExecuteContract
-}
-
-// Type returns the message type, which encapsulates both Go and protobuf
-// type information. If the Go type information is not needed,
-// it is recommended that the message descriptor be used instead.
-func (x *fastReflection_ExecuteContract) Type() protoreflect.MessageType {
-	return _fastReflection_ExecuteContract_messageType
-}
-
-// New returns a newly allocated and mutable empty message.
-func (x *fastReflection_ExecuteContract) New() protoreflect.Message {
-	return new(fastReflection_ExecuteContract)
-}
-
-// Interface unwraps the message reflection interface and
-// returns the underlying ProtoMessage interface.
-func (x *fastReflection_ExecuteContract) Interface() protoreflect.ProtoMessage {
-	return (*ExecuteContract)(x)
-}
-
-// Range iterates over every populated field in an undefined order,
-// calling f for each field descriptor and value encountered.
-// Range returns immediately if f returns false.
-// While iterating, mutating operations may only be performed
-// on the current field descriptor.
-func (x *fastReflection_ExecuteContract) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
-	if x.ContractId != "" {
-		value := protoreflect.ValueOfString(x.ContractId)
-		if !f(fd_ExecuteContract_contract_id, value) {
-			return
-		}
-	}
-	if x.Function != "" {
-		value := protoreflect.ValueOfString(x.Function)
-		if !f(fd_ExecuteContract_function, value) {
-			return
-		}
-	}
-}
-
-// Has reports whether a field is populated.
-//
-// Some fields have the property of nullability where it is possible to
-// distinguish between the default value of a field and whether the field
-// was explicitly populated with the default value. Singular message fields,
-// member fields of a oneof, and proto2 scalar fields are nullable. Such
-// fields are populated only if explicitly set.
-//
-// In other cases (aside from the nullable cases above),
-// a proto3 scalar field is populated if it contains a non-zero value, and
-// a repeated field is populated if it is non-empty.
-func (x *fastReflection_ExecuteContract) Has(fd protoreflect.FieldDescriptor) bool {
-	switch fd.FullName() {
-	case "kepler.workflow.ExecuteContract.contract_id":
-		return x.ContractId != ""
-	case "kepler.workflow.ExecuteContract.function":
-		return x.Function != ""
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.ExecuteContract"))
-		}
-		panic(fmt.Errorf("message kepler.workflow.ExecuteContract does not contain field %s", fd.FullName()))
-	}
-}
-
-// Clear clears the field such that a subsequent Has call reports false.
-//
-// Clearing an extension field clears both the extension type and value
-// associated with the given field number.
-//
-// Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_ExecuteContract) Clear(fd protoreflect.FieldDescriptor) {
-	switch fd.FullName() {
-	case "kepler.workflow.ExecuteContract.contract_id":
-		x.ContractId = ""
-	case "kepler.workflow.ExecuteContract.function":
-		x.Function = ""
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.ExecuteContract"))
-		}
-		panic(fmt.Errorf("message kepler.workflow.ExecuteContract does not contain field %s", fd.FullName()))
-	}
-}
-
-// Get retrieves the value for a field.
-//
-// For unpopulated scalars, it returns the default value, where
-// the default value of a bytes scalar is guaranteed to be a copy.
-// For unpopulated composite types, it returns an empty, read-only view
-// of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_ExecuteContract) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
-	switch descriptor.FullName() {
-	case "kepler.workflow.ExecuteContract.contract_id":
-		value := x.ContractId
-		return protoreflect.ValueOfString(value)
-	case "kepler.workflow.ExecuteContract.function":
-		value := x.Function
-		return protoreflect.ValueOfString(value)
-	default:
-		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.ExecuteContract"))
-		}
-		panic(fmt.Errorf("message kepler.workflow.ExecuteContract does not contain field %s", descriptor.FullName()))
-	}
-}
-
-// Set stores the value for a field.
-//
-// For a field belonging to a oneof, it implicitly clears any other field
-// that may be currently set within the same oneof.
-// For extension fields, it implicitly stores the provided ExtensionType.
-// When setting a composite type, it is unspecified whether the stored value
-// aliases the source's memory in any way. If the composite value is an
-// empty, read-only value, then it panics.
-//
-// Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_ExecuteContract) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
-	switch fd.FullName() {
-	case "kepler.workflow.ExecuteContract.contract_id":
-		x.ContractId = value.Interface().(string)
-	case "kepler.workflow.ExecuteContract.function":
-		x.Function = value.Interface().(string)
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.ExecuteContract"))
-		}
-		panic(fmt.Errorf("message kepler.workflow.ExecuteContract does not contain field %s", fd.FullName()))
-	}
-}
-
-// Mutable returns a mutable reference to a composite type.
-//
-// If the field is unpopulated, it may allocate a composite value.
-// For a field belonging to a oneof, it implicitly clears any other field
-// that may be currently set within the same oneof.
-// For extension fields, it implicitly stores the provided ExtensionType
-// if not already stored.
-// It panics if the field does not contain a composite type.
-//
-// Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_ExecuteContract) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
-	switch fd.FullName() {
-	case "kepler.workflow.ExecuteContract.contract_id":
-		panic(fmt.Errorf("field contract_id of message kepler.workflow.ExecuteContract is not mutable"))
-	case "kepler.workflow.ExecuteContract.function":
-		panic(fmt.Errorf("field function of message kepler.workflow.ExecuteContract is not mutable"))
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.ExecuteContract"))
-		}
-		panic(fmt.Errorf("message kepler.workflow.ExecuteContract does not contain field %s", fd.FullName()))
-	}
-}
-
-// NewField returns a new value that is assignable to the field
-// for the given descriptor. For scalars, this returns the default value.
-// For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_ExecuteContract) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
-	switch fd.FullName() {
-	case "kepler.workflow.ExecuteContract.contract_id":
-		return protoreflect.ValueOfString("")
-	case "kepler.workflow.ExecuteContract.function":
-		return protoreflect.ValueOfString("")
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.ExecuteContract"))
-		}
-		panic(fmt.Errorf("message kepler.workflow.ExecuteContract does not contain field %s", fd.FullName()))
-	}
-}
-
-// WhichOneof reports which field within the oneof is populated,
-// returning nil if none are populated.
-// It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_ExecuteContract) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
-	switch d.FullName() {
-	default:
-		panic(fmt.Errorf("%s is not a oneof field in kepler.workflow.ExecuteContract", d.FullName()))
-	}
-	panic("unreachable")
-}
-
-// GetUnknown retrieves the entire list of unknown fields.
-// The caller may only mutate the contents of the RawFields
-// if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_ExecuteContract) GetUnknown() protoreflect.RawFields {
-	return x.unknownFields
-}
-
-// SetUnknown stores an entire list of unknown fields.
-// The raw fields must be syntactically valid according to the wire format.
-// An implementation may panic if this is not the case.
-// Once stored, the caller must not mutate the content of the RawFields.
-// An empty RawFields may be passed to clear the fields.
-//
-// SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_ExecuteContract) SetUnknown(fields protoreflect.RawFields) {
-	x.unknownFields = fields
-}
-
-// IsValid reports whether the message is valid.
-//
-// An invalid message is an empty, read-only value.
-//
-// An invalid message often corresponds to a nil pointer of the concrete
-// message type, but the details are implementation dependent.
-// Validity is not part of the protobuf data model, and may not
-// be preserved in marshaling or other operations.
-func (x *fastReflection_ExecuteContract) IsValid() bool {
-	return x != nil
-}
-
-// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
-// This method may return nil.
-//
-// The returned methods type is identical to
-// "google.golang.org/protobuf/runtime/protoiface".Methods.
-// Consult the protoiface package documentation for details.
-func (x *fastReflection_ExecuteContract) ProtoMethods() *protoiface.Methods {
-	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*ExecuteContract)
-		if x == nil {
-			return protoiface.SizeOutput{
-				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-				Size:              0,
-			}
-		}
-		options := runtime.SizeInputToOptions(input)
-		_ = options
-		var n int
-		var l int
-		_ = l
-		l = len(x.ContractId)
-		if l > 0 {
-			n += 1 + l + runtime.Sov(uint64(l))
-		}
-		l = len(x.Function)
-		if l > 0 {
-			n += 1 + l + runtime.Sov(uint64(l))
-		}
-		if x.unknownFields != nil {
-			n += len(x.unknownFields)
-		}
-		return protoiface.SizeOutput{
-			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-			Size:              n,
-		}
-	}
-
-	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*ExecuteContract)
-		if x == nil {
-			return protoiface.MarshalOutput{
-				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-				Buf:               input.Buf,
-			}, nil
-		}
-		options := runtime.MarshalInputToOptions(input)
-		_ = options
-		size := options.Size(x)
-		dAtA := make([]byte, size)
-		i := len(dAtA)
-		_ = i
-		var l int
-		_ = l
-		if x.unknownFields != nil {
-			i -= len(x.unknownFields)
-			copy(dAtA[i:], x.unknownFields)
-		}
-		if len(x.Function) > 0 {
-			i -= len(x.Function)
-			copy(dAtA[i:], x.Function)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Function)))
-			i--
-			dAtA[i] = 0x12
-		}
-		if len(x.ContractId) > 0 {
-			i -= len(x.ContractId)
-			copy(dAtA[i:], x.ContractId)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ContractId)))
-			i--
-			dAtA[i] = 0xa
-		}
-		if input.Buf != nil {
-			input.Buf = append(input.Buf, dAtA...)
-		} else {
-			input.Buf = dAtA
-		}
-		return protoiface.MarshalOutput{
-			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-			Buf:               input.Buf,
-		}, nil
-	}
-	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*ExecuteContract)
-		if x == nil {
-			return protoiface.UnmarshalOutput{
-				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-				Flags:             input.Flags,
-			}, nil
-		}
-		options := runtime.UnmarshalInputToOptions(input)
-		_ = options
-		dAtA := input.Buf
-		l := len(dAtA)
-		iNdEx := 0
-		for iNdEx < l {
-			preIndex := iNdEx
-			var wire uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				wire |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			fieldNum := int32(wire >> 3)
-			wireType := int(wire & 0x7)
-			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: ExecuteContract: wiretype end group for non-group")
-			}
-			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: ExecuteContract: illegal tag %d (wire type %d)", fieldNum, wire)
-			}
-			switch fieldNum {
-			case 1:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ContractId", wireType)
-				}
-				var stringLen uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + intStringLen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				x.ContractId = string(dAtA[iNdEx:postIndex])
-				iNdEx = postIndex
-			case 2:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Function", wireType)
-				}
-				var stringLen uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + intStringLen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				x.Function = string(dAtA[iNdEx:postIndex])
-				iNdEx = postIndex
-			default:
-				iNdEx = preIndex
-				skippy, err := runtime.Skip(dAtA[iNdEx:])
-				if err != nil {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
-				}
-				if (skippy < 0) || (iNdEx+skippy) < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if (iNdEx + skippy) > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				if !options.DiscardUnknown {
-					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
-				}
-				iNdEx += skippy
-			}
-		}
-
-		if iNdEx > l {
-			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-		}
-		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
-	}
-	return &protoiface.Methods{
-		NoUnkeyedLiterals: struct{}{},
-		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
-		Size:              size,
-		Marshal:           marshal,
-		Unmarshal:         unmarshal,
-		Merge:             nil,
-		CheckInitialized:  nil,
-	}
-}
-
-var (
-	md_Trade             protoreflect.MessageDescriptor
-	fd_Trade_base_asset  protoreflect.FieldDescriptor
-	fd_Trade_quote_asset protoreflect.FieldDescriptor
-	fd_Trade_amount      protoreflect.FieldDescriptor
-	fd_Trade_price       protoreflect.FieldDescriptor
-	fd_Trade_side        protoreflect.FieldDescriptor
-)
-
-func init() {
-	file_kepler_workflow_automation_proto_init()
-	md_Trade = File_kepler_workflow_automation_proto.Messages().ByName("Trade")
-	fd_Trade_base_asset = md_Trade.Fields().ByName("base_asset")
-	fd_Trade_quote_asset = md_Trade.Fields().ByName("quote_asset")
-	fd_Trade_amount = md_Trade.Fields().ByName("amount")
-	fd_Trade_price = md_Trade.Fields().ByName("price")
-	fd_Trade_side = md_Trade.Fields().ByName("side")
-}
-
-var _ protoreflect.Message = (*fastReflection_Trade)(nil)
-
-type fastReflection_Trade Trade
-
-func (x *Trade) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_Trade)(x)
-}
-
-func (x *Trade) slowProtoReflect() protoreflect.Message {
-	mi := &file_kepler_workflow_automation_proto_msgTypes[7]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-var _fastReflection_Trade_messageType fastReflection_Trade_messageType
-var _ protoreflect.MessageType = fastReflection_Trade_messageType{}
-
-type fastReflection_Trade_messageType struct{}
-
-func (x fastReflection_Trade_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_Trade)(nil)
-}
-func (x fastReflection_Trade_messageType) New() protoreflect.Message {
-	return new(fastReflection_Trade)
-}
-func (x fastReflection_Trade_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_Trade
-}
-
-// Descriptor returns message descriptor, which contains only the protobuf
-// type information for the message.
-func (x *fastReflection_Trade) Descriptor() protoreflect.MessageDescriptor {
-	return md_Trade
-}
-
-// Type returns the message type, which encapsulates both Go and protobuf
-// type information. If the Go type information is not needed,
-// it is recommended that the message descriptor be used instead.
-func (x *fastReflection_Trade) Type() protoreflect.MessageType {
-	return _fastReflection_Trade_messageType
-}
-
-// New returns a newly allocated and mutable empty message.
-func (x *fastReflection_Trade) New() protoreflect.Message {
-	return new(fastReflection_Trade)
-}
-
-// Interface unwraps the message reflection interface and
-// returns the underlying ProtoMessage interface.
-func (x *fastReflection_Trade) Interface() protoreflect.ProtoMessage {
-	return (*Trade)(x)
-}
-
-// Range iterates over every populated field in an undefined order,
-// calling f for each field descriptor and value encountered.
-// Range returns immediately if f returns false.
-// While iterating, mutating operations may only be performed
-// on the current field descriptor.
-func (x *fastReflection_Trade) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
-	if x.BaseAsset != "" {
-		value := protoreflect.ValueOfString(x.BaseAsset)
-		if !f(fd_Trade_base_asset, value) {
-			return
-		}
-	}
-	if x.QuoteAsset != "" {
-		value := protoreflect.ValueOfString(x.QuoteAsset)
-		if !f(fd_Trade_quote_asset, value) {
-			return
-		}
-	}
-	if x.Amount != "" {
-		value := protoreflect.ValueOfString(x.Amount)
-		if !f(fd_Trade_amount, value) {
-			return
-		}
-	}
-	if x.Price != "" {
-		value := protoreflect.ValueOfString(x.Price)
-		if !f(fd_Trade_price, value) {
-			return
-		}
-	}
-	if x.Side != "" {
-		value := protoreflect.ValueOfString(x.Side)
-		if !f(fd_Trade_side, value) {
-			return
-		}
-	}
-}
-
-// Has reports whether a field is populated.
-//
-// Some fields have the property of nullability where it is possible to
-// distinguish between the default value of a field and whether the field
-// was explicitly populated with the default value. Singular message fields,
-// member fields of a oneof, and proto2 scalar fields are nullable. Such
-// fields are populated only if explicitly set.
-//
-// In other cases (aside from the nullable cases above),
-// a proto3 scalar field is populated if it contains a non-zero value, and
-// a repeated field is populated if it is non-empty.
-func (x *fastReflection_Trade) Has(fd protoreflect.FieldDescriptor) bool {
-	switch fd.FullName() {
-	case "kepler.workflow.Trade.base_asset":
-		return x.BaseAsset != ""
-	case "kepler.workflow.Trade.quote_asset":
-		return x.QuoteAsset != ""
-	case "kepler.workflow.Trade.amount":
-		return x.Amount != ""
-	case "kepler.workflow.Trade.price":
-		return x.Price != ""
-	case "kepler.workflow.Trade.side":
-		return x.Side != ""
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.Trade"))
-		}
-		panic(fmt.Errorf("message kepler.workflow.Trade does not contain field %s", fd.FullName()))
-	}
-}
-
-// Clear clears the field such that a subsequent Has call reports false.
-//
-// Clearing an extension field clears both the extension type and value
-// associated with the given field number.
-//
-// Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_Trade) Clear(fd protoreflect.FieldDescriptor) {
-	switch fd.FullName() {
-	case "kepler.workflow.Trade.base_asset":
-		x.BaseAsset = ""
-	case "kepler.workflow.Trade.quote_asset":
-		x.QuoteAsset = ""
-	case "kepler.workflow.Trade.amount":
-		x.Amount = ""
-	case "kepler.workflow.Trade.price":
-		x.Price = ""
-	case "kepler.workflow.Trade.side":
-		x.Side = ""
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.Trade"))
-		}
-		panic(fmt.Errorf("message kepler.workflow.Trade does not contain field %s", fd.FullName()))
-	}
-}
-
-// Get retrieves the value for a field.
-//
-// For unpopulated scalars, it returns the default value, where
-// the default value of a bytes scalar is guaranteed to be a copy.
-// For unpopulated composite types, it returns an empty, read-only view
-// of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_Trade) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
-	switch descriptor.FullName() {
-	case "kepler.workflow.Trade.base_asset":
-		value := x.BaseAsset
-		return protoreflect.ValueOfString(value)
-	case "kepler.workflow.Trade.quote_asset":
-		value := x.QuoteAsset
-		return protoreflect.ValueOfString(value)
-	case "kepler.workflow.Trade.amount":
-		value := x.Amount
-		return protoreflect.ValueOfString(value)
-	case "kepler.workflow.Trade.price":
-		value := x.Price
-		return protoreflect.ValueOfString(value)
-	case "kepler.workflow.Trade.side":
-		value := x.Side
-		return protoreflect.ValueOfString(value)
-	default:
-		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.Trade"))
-		}
-		panic(fmt.Errorf("message kepler.workflow.Trade does not contain field %s", descriptor.FullName()))
-	}
-}
-
-// Set stores the value for a field.
-//
-// For a field belonging to a oneof, it implicitly clears any other field
-// that may be currently set within the same oneof.
-// For extension fields, it implicitly stores the provided ExtensionType.
-// When setting a composite type, it is unspecified whether the stored value
-// aliases the source's memory in any way. If the composite value is an
-// empty, read-only value, then it panics.
-//
-// Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_Trade) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
-	switch fd.FullName() {
-	case "kepler.workflow.Trade.base_asset":
-		x.BaseAsset = value.Interface().(string)
-	case "kepler.workflow.Trade.quote_asset":
-		x.QuoteAsset = value.Interface().(string)
-	case "kepler.workflow.Trade.amount":
-		x.Amount = value.Interface().(string)
-	case "kepler.workflow.Trade.price":
-		x.Price = value.Interface().(string)
-	case "kepler.workflow.Trade.side":
-		x.Side = value.Interface().(string)
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.Trade"))
-		}
-		panic(fmt.Errorf("message kepler.workflow.Trade does not contain field %s", fd.FullName()))
-	}
-}
-
-// Mutable returns a mutable reference to a composite type.
-//
-// If the field is unpopulated, it may allocate a composite value.
-// For a field belonging to a oneof, it implicitly clears any other field
-// that may be currently set within the same oneof.
-// For extension fields, it implicitly stores the provided ExtensionType
-// if not already stored.
-// It panics if the field does not contain a composite type.
-//
-// Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_Trade) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
-	switch fd.FullName() {
-	case "kepler.workflow.Trade.base_asset":
-		panic(fmt.Errorf("field base_asset of message kepler.workflow.Trade is not mutable"))
-	case "kepler.workflow.Trade.quote_asset":
-		panic(fmt.Errorf("field quote_asset of message kepler.workflow.Trade is not mutable"))
-	case "kepler.workflow.Trade.amount":
-		panic(fmt.Errorf("field amount of message kepler.workflow.Trade is not mutable"))
-	case "kepler.workflow.Trade.price":
-		panic(fmt.Errorf("field price of message kepler.workflow.Trade is not mutable"))
-	case "kepler.workflow.Trade.side":
-		panic(fmt.Errorf("field side of message kepler.workflow.Trade is not mutable"))
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.Trade"))
-		}
-		panic(fmt.Errorf("message kepler.workflow.Trade does not contain field %s", fd.FullName()))
-	}
-}
-
-// NewField returns a new value that is assignable to the field
-// for the given descriptor. For scalars, this returns the default value.
-// For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_Trade) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
-	switch fd.FullName() {
-	case "kepler.workflow.Trade.base_asset":
-		return protoreflect.ValueOfString("")
-	case "kepler.workflow.Trade.quote_asset":
-		return protoreflect.ValueOfString("")
-	case "kepler.workflow.Trade.amount":
-		return protoreflect.ValueOfString("")
-	case "kepler.workflow.Trade.price":
-		return protoreflect.ValueOfString("")
-	case "kepler.workflow.Trade.side":
-		return protoreflect.ValueOfString("")
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.Trade"))
-		}
-		panic(fmt.Errorf("message kepler.workflow.Trade does not contain field %s", fd.FullName()))
-	}
-}
-
-// WhichOneof reports which field within the oneof is populated,
-// returning nil if none are populated.
-// It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_Trade) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
-	switch d.FullName() {
-	default:
-		panic(fmt.Errorf("%s is not a oneof field in kepler.workflow.Trade", d.FullName()))
-	}
-	panic("unreachable")
-}
-
-// GetUnknown retrieves the entire list of unknown fields.
-// The caller may only mutate the contents of the RawFields
-// if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_Trade) GetUnknown() protoreflect.RawFields {
-	return x.unknownFields
-}
-
-// SetUnknown stores an entire list of unknown fields.
-// The raw fields must be syntactically valid according to the wire format.
-// An implementation may panic if this is not the case.
-// Once stored, the caller must not mutate the content of the RawFields.
-// An empty RawFields may be passed to clear the fields.
-//
-// SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_Trade) SetUnknown(fields protoreflect.RawFields) {
-	x.unknownFields = fields
-}
-
-// IsValid reports whether the message is valid.
-//
-// An invalid message is an empty, read-only value.
-//
-// An invalid message often corresponds to a nil pointer of the concrete
-// message type, but the details are implementation dependent.
-// Validity is not part of the protobuf data model, and may not
-// be preserved in marshaling or other operations.
-func (x *fastReflection_Trade) IsValid() bool {
-	return x != nil
-}
-
-// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
-// This method may return nil.
-//
-// The returned methods type is identical to
-// "google.golang.org/protobuf/runtime/protoiface".Methods.
-// Consult the protoiface package documentation for details.
-func (x *fastReflection_Trade) ProtoMethods() *protoiface.Methods {
-	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*Trade)
-		if x == nil {
-			return protoiface.SizeOutput{
-				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-				Size:              0,
-			}
-		}
-		options := runtime.SizeInputToOptions(input)
-		_ = options
-		var n int
-		var l int
-		_ = l
-		l = len(x.BaseAsset)
-		if l > 0 {
-			n += 1 + l + runtime.Sov(uint64(l))
-		}
-		l = len(x.QuoteAsset)
-		if l > 0 {
-			n += 1 + l + runtime.Sov(uint64(l))
-		}
-		l = len(x.Amount)
-		if l > 0 {
-			n += 1 + l + runtime.Sov(uint64(l))
-		}
-		l = len(x.Price)
-		if l > 0 {
-			n += 1 + l + runtime.Sov(uint64(l))
-		}
-		l = len(x.Side)
-		if l > 0 {
-			n += 1 + l + runtime.Sov(uint64(l))
-		}
-		if x.unknownFields != nil {
-			n += len(x.unknownFields)
-		}
-		return protoiface.SizeOutput{
-			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-			Size:              n,
-		}
-	}
-
-	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*Trade)
-		if x == nil {
-			return protoiface.MarshalOutput{
-				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-				Buf:               input.Buf,
-			}, nil
-		}
-		options := runtime.MarshalInputToOptions(input)
-		_ = options
-		size := options.Size(x)
-		dAtA := make([]byte, size)
-		i := len(dAtA)
-		_ = i
-		var l int
-		_ = l
-		if x.unknownFields != nil {
-			i -= len(x.unknownFields)
-			copy(dAtA[i:], x.unknownFields)
-		}
-		if len(x.Side) > 0 {
-			i -= len(x.Side)
-			copy(dAtA[i:], x.Side)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Side)))
-			i--
-			dAtA[i] = 0x2a
-		}
-		if len(x.Price) > 0 {
-			i -= len(x.Price)
-			copy(dAtA[i:], x.Price)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Price)))
-			i--
-			dAtA[i] = 0x22
-		}
-		if len(x.Amount) > 0 {
-			i -= len(x.Amount)
-			copy(dAtA[i:], x.Amount)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Amount)))
-			i--
-			dAtA[i] = 0x1a
-		}
-		if len(x.QuoteAsset) > 0 {
-			i -= len(x.QuoteAsset)
-			copy(dAtA[i:], x.QuoteAsset)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.QuoteAsset)))
-			i--
-			dAtA[i] = 0x12
-		}
-		if len(x.BaseAsset) > 0 {
-			i -= len(x.BaseAsset)
-			copy(dAtA[i:], x.BaseAsset)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.BaseAsset)))
-			i--
-			dAtA[i] = 0xa
-		}
-		if input.Buf != nil {
-			input.Buf = append(input.Buf, dAtA...)
-		} else {
-			input.Buf = dAtA
-		}
-		return protoiface.MarshalOutput{
-			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-			Buf:               input.Buf,
-		}, nil
-	}
-	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*Trade)
-		if x == nil {
-			return protoiface.UnmarshalOutput{
-				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-				Flags:             input.Flags,
-			}, nil
-		}
-		options := runtime.UnmarshalInputToOptions(input)
-		_ = options
-		dAtA := input.Buf
-		l := len(dAtA)
-		iNdEx := 0
-		for iNdEx < l {
-			preIndex := iNdEx
-			var wire uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				wire |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			fieldNum := int32(wire >> 3)
-			wireType := int(wire & 0x7)
-			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: Trade: wiretype end group for non-group")
-			}
-			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: Trade: illegal tag %d (wire type %d)", fieldNum, wire)
-			}
-			switch fieldNum {
-			case 1:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field BaseAsset", wireType)
-				}
-				var stringLen uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + intStringLen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				x.BaseAsset = string(dAtA[iNdEx:postIndex])
-				iNdEx = postIndex
-			case 2:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field QuoteAsset", wireType)
-				}
-				var stringLen uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + intStringLen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				x.QuoteAsset = string(dAtA[iNdEx:postIndex])
-				iNdEx = postIndex
-			case 3:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
-				}
-				var stringLen uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + intStringLen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				x.Amount = string(dAtA[iNdEx:postIndex])
-				iNdEx = postIndex
-			case 4:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Price", wireType)
-				}
-				var stringLen uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + intStringLen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				x.Price = string(dAtA[iNdEx:postIndex])
-				iNdEx = postIndex
-			case 5:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Side", wireType)
-				}
-				var stringLen uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + intStringLen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				x.Side = string(dAtA[iNdEx:postIndex])
 				iNdEx = postIndex
 			default:
 				iNdEx = preIndex
@@ -4870,13 +4248,13 @@ type Automation struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id             uint64           `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`                                               // Incremental ID for blockchain consistency
-	Trigger        *Trigger         `protobuf:"bytes,2,opt,name=trigger,proto3" json:"trigger,omitempty"`                                      // List of trigger conditions
-	Actions        []*Action        `protobuf:"bytes,3,rep,name=actions,proto3" json:"actions,omitempty"`                                      // List of actions
-	RepeatCount    uint64           `protobuf:"varint,4,opt,name=repeat_count,json=repeatCount,proto3" json:"repeat_count,omitempty"`          // Number of executions allowed
-	RepeatInterval uint64           `protobuf:"varint,5,opt,name=repeat_interval,json=repeatInterval,proto3" json:"repeat_interval,omitempty"` // Interval between repeated executions allowed
-	ExpireAt       uint64           `protobuf:"varint,6,opt,name=expire_at,json=expireAt,proto3" json:"expire_at,omitempty"`                   // Expiration timestamp (Unix time)
-	Status         AutomationStatus `protobuf:"varint,7,opt,name=status,proto3,enum=kepler.workflow.AutomationStatus" json:"status,omitempty"` // Status of the automation (active, expired, paused, failed, done)
+	Id             uint64           `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`                                                 // Incremental ID for blockchain consistency
+	Triggers       *Trigger         `protobuf:"bytes,2,opt,name=triggers,proto3" json:"triggers,omitempty"`                                      // Trigger object, which can be chained by logical operators in itself
+	Actions        []*Action        `protobuf:"bytes,3,rep,name=actions,proto3" json:"actions,omitempty"`                                        // List of actions
+	ExpireAt       uint64           `protobuf:"varint,4,opt,name=expire_at,json=expireAt,proto3" json:"expire_at,omitempty"`                     // Expiration timestamp (Unix time)
+	ExecutedTimes  uint64           `protobuf:"varint,5,opt,name=executed_times,json=executedTimes,proto3" json:"executed_times,omitempty"`      // Number of executions done
+	LastExecutedAt uint64           `protobuf:"varint,6,opt,name=last_executed_at,json=lastExecutedAt,proto3" json:"last_executed_at,omitempty"` // Last execution timestamp (Unix time)
+	Status         AutomationStatus `protobuf:"varint,7,opt,name=status,proto3,enum=kepler.workflow.AutomationStatus" json:"status,omitempty"`   // Status of the automation (active, expired, paused, failed, done)
 }
 
 func (x *Automation) Reset() {
@@ -4906,9 +4284,9 @@ func (x *Automation) GetId() uint64 {
 	return 0
 }
 
-func (x *Automation) GetTrigger() *Trigger {
+func (x *Automation) GetTriggers() *Trigger {
 	if x != nil {
-		return x.Trigger
+		return x.Triggers
 	}
 	return nil
 }
@@ -4920,23 +4298,23 @@ func (x *Automation) GetActions() []*Action {
 	return nil
 }
 
-func (x *Automation) GetRepeatCount() uint64 {
-	if x != nil {
-		return x.RepeatCount
-	}
-	return 0
-}
-
-func (x *Automation) GetRepeatInterval() uint64 {
-	if x != nil {
-		return x.RepeatInterval
-	}
-	return 0
-}
-
 func (x *Automation) GetExpireAt() uint64 {
 	if x != nil {
 		return x.ExpireAt
+	}
+	return 0
+}
+
+func (x *Automation) GetExecutedTimes() uint64 {
+	if x != nil {
+		return x.ExecutedTimes
+	}
+	return 0
+}
+
+func (x *Automation) GetLastExecutedAt() uint64 {
+	if x != nil {
+		return x.LastExecutedAt
 	}
 	return 0
 }
@@ -4959,6 +4337,7 @@ type Trigger struct {
 	//	*Trigger_Price
 	//	*Trigger_Time
 	//	*Trigger_Logical
+	//	*Trigger_Repeatable
 	Trigger isTrigger_Trigger `protobuf_oneof:"trigger"`
 }
 
@@ -5010,6 +4389,13 @@ func (x *Trigger) GetLogical() *LogicalTrigger {
 	return nil
 }
 
+func (x *Trigger) GetRepeatable() *CountTrigger {
+	if x, ok := x.GetTrigger().(*Trigger_Repeatable); ok {
+		return x.Repeatable
+	}
+	return nil
+}
+
 type isTrigger_Trigger interface {
 	isTrigger_Trigger()
 }
@@ -5026,11 +4412,17 @@ type Trigger_Logical struct {
 	Logical *LogicalTrigger `protobuf:"bytes,3,opt,name=logical,proto3,oneof"`
 }
 
+type Trigger_Repeatable struct {
+	Repeatable *CountTrigger `protobuf:"bytes,4,opt,name=repeatable,proto3,oneof"`
+}
+
 func (*Trigger_Price) isTrigger_Trigger() {}
 
 func (*Trigger_Time) isTrigger_Trigger() {}
 
 func (*Trigger_Logical) isTrigger_Trigger() {}
+
+func (*Trigger_Repeatable) isTrigger_Trigger() {}
 
 // Asset price trigger
 type PriceTrigger struct {
@@ -5127,7 +4519,7 @@ type LogicalTrigger struct {
 	unknownFields protoimpl.UnknownFields
 
 	LogicalOperator LogicalOperator `protobuf:"varint,1,opt,name=logical_operator,json=logicalOperator,proto3,enum=kepler.workflow.LogicalOperator" json:"logical_operator,omitempty"` // "AND", "OR"
-	Triggers        []*Trigger      `protobuf:"bytes,2,rep,name=triggers,proto3" json:"triggers,omitempty"`
+	Triggers        []*Trigger      `protobuf:"bytes,2,rep,name=triggers,proto3" json:"triggers,omitempty"`                                                                            // List of triggers
 }
 
 func (x *LogicalTrigger) Reset() {
@@ -5164,22 +4556,69 @@ func (x *LogicalTrigger) GetTriggers() []*Trigger {
 	return nil
 }
 
+type CountTrigger struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	RepeatCount    uint64     `protobuf:"varint,1,opt,name=repeat_count,json=repeatCount,proto3" json:"repeat_count,omitempty"`          // Number of executions allowed
+	RepeatInterval uint64     `protobuf:"varint,3,opt,name=repeat_interval,json=repeatInterval,proto3" json:"repeat_interval,omitempty"` // Interval between repeated executions allowed in seconds
+	Triggers       []*Trigger `protobuf:"bytes,5,rep,name=triggers,proto3" json:"triggers,omitempty"`                                    // List of triggers
+}
+
+func (x *CountTrigger) Reset() {
+	*x = CountTrigger{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_kepler_workflow_automation_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CountTrigger) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CountTrigger) ProtoMessage() {}
+
+// Deprecated: Use CountTrigger.ProtoReflect.Descriptor instead.
+func (*CountTrigger) Descriptor() ([]byte, []int) {
+	return file_kepler_workflow_automation_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *CountTrigger) GetRepeatCount() uint64 {
+	if x != nil {
+		return x.RepeatCount
+	}
+	return 0
+}
+
+func (x *CountTrigger) GetRepeatInterval() uint64 {
+	if x != nil {
+		return x.RepeatInterval
+	}
+	return 0
+}
+
+func (x *CountTrigger) GetTriggers() []*Trigger {
+	if x != nil {
+		return x.Triggers
+	}
+	return nil
+}
+
 type Action struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Types that are assignable to Action:
-	//
-	//	*Action_ExecuteContract
-	//	*Action_Trade
-	Action isAction_Action `protobuf_oneof:"action"`
+	TxCallData []byte `protobuf:"bytes,1,opt,name=tx_call_data,json=txCallData,proto3" json:"tx_call_data,omitempty"`
 }
 
 func (x *Action) Reset() {
 	*x = Action{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_kepler_workflow_automation_proto_msgTypes[5]
+		mi := &file_kepler_workflow_automation_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5193,156 +4632,14 @@ func (*Action) ProtoMessage() {}
 
 // Deprecated: Use Action.ProtoReflect.Descriptor instead.
 func (*Action) Descriptor() ([]byte, []int) {
-	return file_kepler_workflow_automation_proto_rawDescGZIP(), []int{5}
-}
-
-func (x *Action) GetAction() isAction_Action {
-	if x != nil {
-		return x.Action
-	}
-	return nil
-}
-
-func (x *Action) GetExecuteContract() *ExecuteContract {
-	if x, ok := x.GetAction().(*Action_ExecuteContract); ok {
-		return x.ExecuteContract
-	}
-	return nil
-}
-
-func (x *Action) GetTrade() *Trade {
-	if x, ok := x.GetAction().(*Action_Trade); ok {
-		return x.Trade
-	}
-	return nil
-}
-
-type isAction_Action interface {
-	isAction_Action()
-}
-
-type Action_ExecuteContract struct {
-	ExecuteContract *ExecuteContract `protobuf:"bytes,1,opt,name=execute_contract,json=executeContract,proto3,oneof"`
-}
-
-type Action_Trade struct {
-	Trade *Trade `protobuf:"bytes,2,opt,name=trade,proto3,oneof"`
-}
-
-func (*Action_ExecuteContract) isAction_Action() {}
-
-func (*Action_Trade) isAction_Action() {}
-
-// Execute contract action
-type ExecuteContract struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	ContractId string `protobuf:"bytes,1,opt,name=contract_id,json=contractId,proto3" json:"contract_id,omitempty"`
-	Function   string `protobuf:"bytes,2,opt,name=function,proto3" json:"function,omitempty"`
-}
-
-func (x *ExecuteContract) Reset() {
-	*x = ExecuteContract{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_kepler_workflow_automation_proto_msgTypes[6]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *ExecuteContract) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ExecuteContract) ProtoMessage() {}
-
-// Deprecated: Use ExecuteContract.ProtoReflect.Descriptor instead.
-func (*ExecuteContract) Descriptor() ([]byte, []int) {
 	return file_kepler_workflow_automation_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *ExecuteContract) GetContractId() string {
+func (x *Action) GetTxCallData() []byte {
 	if x != nil {
-		return x.ContractId
+		return x.TxCallData
 	}
-	return ""
-}
-
-func (x *ExecuteContract) GetFunction() string {
-	if x != nil {
-		return x.Function
-	}
-	return ""
-}
-
-// Trade action
-type Trade struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	BaseAsset  string `protobuf:"bytes,1,opt,name=base_asset,json=baseAsset,proto3" json:"base_asset,omitempty"`
-	QuoteAsset string `protobuf:"bytes,2,opt,name=quote_asset,json=quoteAsset,proto3" json:"quote_asset,omitempty"`
-	Amount     string `protobuf:"bytes,3,opt,name=amount,proto3" json:"amount,omitempty"`
-	Price      string `protobuf:"bytes,4,opt,name=price,proto3" json:"price,omitempty"`
-	Side       string `protobuf:"bytes,5,opt,name=side,proto3" json:"side,omitempty"` // "buy", "sell"
-}
-
-func (x *Trade) Reset() {
-	*x = Trade{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_kepler_workflow_automation_proto_msgTypes[7]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *Trade) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*Trade) ProtoMessage() {}
-
-// Deprecated: Use Trade.ProtoReflect.Descriptor instead.
-func (*Trade) Descriptor() ([]byte, []int) {
-	return file_kepler_workflow_automation_proto_rawDescGZIP(), []int{7}
-}
-
-func (x *Trade) GetBaseAsset() string {
-	if x != nil {
-		return x.BaseAsset
-	}
-	return ""
-}
-
-func (x *Trade) GetQuoteAsset() string {
-	if x != nil {
-		return x.QuoteAsset
-	}
-	return ""
-}
-
-func (x *Trade) GetAmount() string {
-	if x != nil {
-		return x.Amount
-	}
-	return ""
-}
-
-func (x *Trade) GetPrice() string {
-	if x != nil {
-		return x.Price
-	}
-	return ""
-}
-
-func (x *Trade) GetSide() string {
-	if x != nil {
-		return x.Side
-	}
-	return ""
+	return nil
 }
 
 var File_kepler_workflow_automation_proto protoreflect.FileDescriptor
@@ -5351,111 +4648,104 @@ var file_kepler_workflow_automation_proto_rawDesc = []byte{
 	0x0a, 0x20, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f,
 	0x77, 0x2f, 0x61, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x70, 0x72, 0x6f,
 	0x74, 0x6f, 0x12, 0x0f, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66,
-	0x6c, 0x6f, 0x77, 0x22, 0xa7, 0x02, 0x0a, 0x0a, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69,
+	0x6c, 0x6f, 0x77, 0x22, 0xae, 0x02, 0x0a, 0x0a, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69,
 	0x6f, 0x6e, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x04, 0x52, 0x02,
-	0x69, 0x64, 0x12, 0x32, 0x0a, 0x07, 0x74, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72,
-	0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x52, 0x07, 0x74,
-	0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x12, 0x31, 0x0a, 0x07, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e,
-	0x73, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x17, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72,
-	0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e,
-	0x52, 0x07, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x12, 0x21, 0x0a, 0x0c, 0x72, 0x65, 0x70,
-	0x65, 0x61, 0x74, 0x5f, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x04, 0x20, 0x01, 0x28, 0x04, 0x52,
-	0x0b, 0x72, 0x65, 0x70, 0x65, 0x61, 0x74, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x27, 0x0a, 0x0f,
-	0x72, 0x65, 0x70, 0x65, 0x61, 0x74, 0x5f, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x18,
-	0x05, 0x20, 0x01, 0x28, 0x04, 0x52, 0x0e, 0x72, 0x65, 0x70, 0x65, 0x61, 0x74, 0x49, 0x6e, 0x74,
-	0x65, 0x72, 0x76, 0x61, 0x6c, 0x12, 0x1b, 0x0a, 0x09, 0x65, 0x78, 0x70, 0x69, 0x72, 0x65, 0x5f,
-	0x61, 0x74, 0x18, 0x06, 0x20, 0x01, 0x28, 0x04, 0x52, 0x08, 0x65, 0x78, 0x70, 0x69, 0x72, 0x65,
-	0x41, 0x74, 0x12, 0x39, 0x0a, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x07, 0x20, 0x01,
-	0x28, 0x0e, 0x32, 0x21, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b,
-	0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53,
-	0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x22, 0xbc, 0x01,
-	0x0a, 0x07, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x12, 0x35, 0x0a, 0x05, 0x70, 0x72, 0x69,
-	0x63, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65,
-	0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x50, 0x72, 0x69, 0x63, 0x65,
-	0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x48, 0x00, 0x52, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65,
-	0x12, 0x32, 0x0a, 0x04, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1c,
-	0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77,
-	0x2e, 0x54, 0x69, 0x6d, 0x65, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x48, 0x00, 0x52, 0x04,
-	0x74, 0x69, 0x6d, 0x65, 0x12, 0x3b, 0x0a, 0x07, 0x6c, 0x6f, 0x67, 0x69, 0x63, 0x61, 0x6c, 0x18,
-	0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1f, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77,
-	0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x4c, 0x6f, 0x67, 0x69, 0x63, 0x61, 0x6c, 0x54,
-	0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x48, 0x00, 0x52, 0x07, 0x6c, 0x6f, 0x67, 0x69, 0x63, 0x61,
-	0x6c, 0x42, 0x09, 0x0a, 0x07, 0x74, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x22, 0x63, 0x0a, 0x0c,
-	0x50, 0x72, 0x69, 0x63, 0x65, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x12, 0x14, 0x0a, 0x05,
-	0x61, 0x73, 0x73, 0x65, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x61, 0x73, 0x73,
-	0x65, 0x74, 0x12, 0x1a, 0x0a, 0x08, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x18, 0x02,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x12, 0x21,
-	0x0a, 0x0c, 0x74, 0x61, 0x72, 0x67, 0x65, 0x74, 0x5f, 0x70, 0x72, 0x69, 0x63, 0x65, 0x18, 0x03,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x74, 0x61, 0x72, 0x67, 0x65, 0x74, 0x50, 0x72, 0x69, 0x63,
-	0x65, 0x22, 0x2b, 0x0a, 0x0b, 0x54, 0x69, 0x6d, 0x65, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72,
-	0x12, 0x1c, 0x0a, 0x09, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x04, 0x52, 0x09, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x22, 0x93,
-	0x01, 0x0a, 0x0e, 0x4c, 0x6f, 0x67, 0x69, 0x63, 0x61, 0x6c, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65,
-	0x72, 0x12, 0x4b, 0x0a, 0x10, 0x6c, 0x6f, 0x67, 0x69, 0x63, 0x61, 0x6c, 0x5f, 0x6f, 0x70, 0x65,
-	0x72, 0x61, 0x74, 0x6f, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x20, 0x2e, 0x6b, 0x65,
-	0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x4c, 0x6f,
-	0x67, 0x69, 0x63, 0x61, 0x6c, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x52, 0x0f, 0x6c,
-	0x6f, 0x67, 0x69, 0x63, 0x61, 0x6c, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x12, 0x34,
-	0x0a, 0x08, 0x74, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b,
-	0x32, 0x18, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c,
-	0x6f, 0x77, 0x2e, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x52, 0x08, 0x74, 0x72, 0x69, 0x67,
-	0x67, 0x65, 0x72, 0x73, 0x22, 0x91, 0x01, 0x0a, 0x06, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x12,
-	0x4d, 0x0a, 0x10, 0x65, 0x78, 0x65, 0x63, 0x75, 0x74, 0x65, 0x5f, 0x63, 0x6f, 0x6e, 0x74, 0x72,
-	0x61, 0x63, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x20, 0x2e, 0x6b, 0x65, 0x70, 0x6c,
-	0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x45, 0x78, 0x65, 0x63,
-	0x75, 0x74, 0x65, 0x43, 0x6f, 0x6e, 0x74, 0x72, 0x61, 0x63, 0x74, 0x48, 0x00, 0x52, 0x0f, 0x65,
-	0x78, 0x65, 0x63, 0x75, 0x74, 0x65, 0x43, 0x6f, 0x6e, 0x74, 0x72, 0x61, 0x63, 0x74, 0x12, 0x2e,
-	0x0a, 0x05, 0x74, 0x72, 0x61, 0x64, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x16, 0x2e,
-	0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e,
-	0x54, 0x72, 0x61, 0x64, 0x65, 0x48, 0x00, 0x52, 0x05, 0x74, 0x72, 0x61, 0x64, 0x65, 0x42, 0x08,
-	0x0a, 0x06, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0x4e, 0x0a, 0x0f, 0x45, 0x78, 0x65, 0x63,
-	0x75, 0x74, 0x65, 0x43, 0x6f, 0x6e, 0x74, 0x72, 0x61, 0x63, 0x74, 0x12, 0x1f, 0x0a, 0x0b, 0x63,
-	0x6f, 0x6e, 0x74, 0x72, 0x61, 0x63, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x0a, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x61, 0x63, 0x74, 0x49, 0x64, 0x12, 0x1a, 0x0a, 0x08,
-	0x66, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08,
-	0x66, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0x89, 0x01, 0x0a, 0x05, 0x54, 0x72, 0x61,
-	0x64, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x62, 0x61, 0x73, 0x65, 0x5f, 0x61, 0x73, 0x73, 0x65, 0x74,
-	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x62, 0x61, 0x73, 0x65, 0x41, 0x73, 0x73, 0x65,
-	0x74, 0x12, 0x1f, 0x0a, 0x0b, 0x71, 0x75, 0x6f, 0x74, 0x65, 0x5f, 0x61, 0x73, 0x73, 0x65, 0x74,
-	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x71, 0x75, 0x6f, 0x74, 0x65, 0x41, 0x73, 0x73,
-	0x65, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x03, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x70, 0x72,
-	0x69, 0x63, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65,
-	0x12, 0x12, 0x0a, 0x04, 0x73, 0x69, 0x64, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04,
-	0x73, 0x69, 0x64, 0x65, 0x2a, 0xd1, 0x01, 0x0a, 0x10, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74,
-	0x69, 0x6f, 0x6e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x28, 0x0a, 0x24, 0x41, 0x55, 0x54,
-	0x4f, 0x4d, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x53,
-	0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x55, 0x4e, 0x53, 0x50, 0x45, 0x43, 0x49, 0x46, 0x49, 0x45,
-	0x44, 0x10, 0x00, 0x12, 0x1c, 0x0a, 0x18, 0x41, 0x55, 0x54, 0x4f, 0x4d, 0x41, 0x54, 0x49, 0x4f,
-	0x4e, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x41, 0x43, 0x54, 0x49, 0x56, 0x45, 0x10,
-	0x01, 0x12, 0x1d, 0x0a, 0x19, 0x41, 0x55, 0x54, 0x4f, 0x4d, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f,
-	0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x45, 0x58, 0x50, 0x49, 0x52, 0x45, 0x44, 0x10, 0x02,
-	0x12, 0x1c, 0x0a, 0x18, 0x41, 0x55, 0x54, 0x4f, 0x4d, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x53,
-	0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x50, 0x41, 0x55, 0x53, 0x45, 0x44, 0x10, 0x03, 0x12, 0x1c,
-	0x0a, 0x18, 0x41, 0x55, 0x54, 0x4f, 0x4d, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x53, 0x54, 0x41,
-	0x54, 0x55, 0x53, 0x5f, 0x46, 0x41, 0x49, 0x4c, 0x45, 0x44, 0x10, 0x04, 0x12, 0x1a, 0x0a, 0x16,
-	0x41, 0x55, 0x54, 0x4f, 0x4d, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55,
-	0x53, 0x5f, 0x44, 0x4f, 0x4e, 0x45, 0x10, 0x05, 0x2a, 0x80, 0x01, 0x0a, 0x0f, 0x4c, 0x6f, 0x67,
-	0x69, 0x63, 0x61, 0x6c, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x12, 0x20, 0x0a, 0x1c,
-	0x4c, 0x4f, 0x47, 0x49, 0x43, 0x41, 0x4c, 0x5f, 0x4f, 0x50, 0x45, 0x52, 0x41, 0x54, 0x4f, 0x52,
-	0x5f, 0x55, 0x4e, 0x53, 0x50, 0x45, 0x43, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10, 0x00, 0x12, 0x18,
-	0x0a, 0x14, 0x4c, 0x4f, 0x47, 0x49, 0x43, 0x41, 0x4c, 0x5f, 0x4f, 0x50, 0x45, 0x52, 0x41, 0x54,
-	0x4f, 0x52, 0x5f, 0x41, 0x4e, 0x44, 0x10, 0x01, 0x12, 0x17, 0x0a, 0x13, 0x4c, 0x4f, 0x47, 0x49,
-	0x43, 0x41, 0x4c, 0x5f, 0x4f, 0x50, 0x45, 0x52, 0x41, 0x54, 0x4f, 0x52, 0x5f, 0x4f, 0x52, 0x10,
-	0x02, 0x12, 0x18, 0x0a, 0x14, 0x4c, 0x4f, 0x47, 0x49, 0x43, 0x41, 0x4c, 0x5f, 0x4f, 0x50, 0x45,
-	0x52, 0x41, 0x54, 0x4f, 0x52, 0x5f, 0x4e, 0x4f, 0x54, 0x10, 0x03, 0x42, 0x9f, 0x01, 0x0a, 0x13,
-	0x63, 0x6f, 0x6d, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66,
-	0x6c, 0x6f, 0x77, 0x42, 0x0f, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x50,
-	0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x1a, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x61,
-	0x70, 0x69, 0x2f, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c,
-	0x6f, 0x77, 0xa2, 0x02, 0x03, 0x4b, 0x57, 0x58, 0xaa, 0x02, 0x0f, 0x4b, 0x65, 0x70, 0x6c, 0x65,
-	0x72, 0x2e, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0xca, 0x02, 0x0f, 0x4b, 0x65, 0x70,
-	0x6c, 0x65, 0x72, 0x5c, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0xe2, 0x02, 0x1b, 0x4b,
-	0x65, 0x70, 0x6c, 0x65, 0x72, 0x5c, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x5c, 0x47,
-	0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x10, 0x4b, 0x65, 0x70,
-	0x6c, 0x65, 0x72, 0x3a, 0x3a, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x62, 0x06, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x69, 0x64, 0x12, 0x34, 0x0a, 0x08, 0x74, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x73, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f,
+	0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x52, 0x08,
+	0x74, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x73, 0x12, 0x31, 0x0a, 0x07, 0x61, 0x63, 0x74, 0x69,
+	0x6f, 0x6e, 0x73, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x17, 0x2e, 0x6b, 0x65, 0x70, 0x6c,
+	0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x41, 0x63, 0x74, 0x69,
+	0x6f, 0x6e, 0x52, 0x07, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x12, 0x1b, 0x0a, 0x09, 0x65,
+	0x78, 0x70, 0x69, 0x72, 0x65, 0x5f, 0x61, 0x74, 0x18, 0x04, 0x20, 0x01, 0x28, 0x04, 0x52, 0x08,
+	0x65, 0x78, 0x70, 0x69, 0x72, 0x65, 0x41, 0x74, 0x12, 0x25, 0x0a, 0x0e, 0x65, 0x78, 0x65, 0x63,
+	0x75, 0x74, 0x65, 0x64, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x18, 0x05, 0x20, 0x01, 0x28, 0x04,
+	0x52, 0x0d, 0x65, 0x78, 0x65, 0x63, 0x75, 0x74, 0x65, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x12,
+	0x28, 0x0a, 0x10, 0x6c, 0x61, 0x73, 0x74, 0x5f, 0x65, 0x78, 0x65, 0x63, 0x75, 0x74, 0x65, 0x64,
+	0x5f, 0x61, 0x74, 0x18, 0x06, 0x20, 0x01, 0x28, 0x04, 0x52, 0x0e, 0x6c, 0x61, 0x73, 0x74, 0x45,
+	0x78, 0x65, 0x63, 0x75, 0x74, 0x65, 0x64, 0x41, 0x74, 0x12, 0x39, 0x0a, 0x06, 0x73, 0x74, 0x61,
+	0x74, 0x75, 0x73, 0x18, 0x07, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x21, 0x2e, 0x6b, 0x65, 0x70, 0x6c,
+	0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x41, 0x75, 0x74, 0x6f,
+	0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x06, 0x73, 0x74,
+	0x61, 0x74, 0x75, 0x73, 0x22, 0xfd, 0x01, 0x0a, 0x07, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72,
+	0x12, 0x35, 0x0a, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x1d, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f,
+	0x77, 0x2e, 0x50, 0x72, 0x69, 0x63, 0x65, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x48, 0x00,
+	0x52, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x12, 0x32, 0x0a, 0x04, 0x74, 0x69, 0x6d, 0x65, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77,
+	0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x54, 0x72, 0x69, 0x67,
+	0x67, 0x65, 0x72, 0x48, 0x00, 0x52, 0x04, 0x74, 0x69, 0x6d, 0x65, 0x12, 0x3b, 0x0a, 0x07, 0x6c,
+	0x6f, 0x67, 0x69, 0x63, 0x61, 0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1f, 0x2e, 0x6b,
+	0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x4c,
+	0x6f, 0x67, 0x69, 0x63, 0x61, 0x6c, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x48, 0x00, 0x52,
+	0x07, 0x6c, 0x6f, 0x67, 0x69, 0x63, 0x61, 0x6c, 0x12, 0x3f, 0x0a, 0x0a, 0x72, 0x65, 0x70, 0x65,
+	0x61, 0x74, 0x61, 0x62, 0x6c, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x6b,
+	0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x43,
+	0x6f, 0x75, 0x6e, 0x74, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x48, 0x00, 0x52, 0x0a, 0x72,
+	0x65, 0x70, 0x65, 0x61, 0x74, 0x61, 0x62, 0x6c, 0x65, 0x42, 0x09, 0x0a, 0x07, 0x74, 0x72, 0x69,
+	0x67, 0x67, 0x65, 0x72, 0x22, 0x63, 0x0a, 0x0c, 0x50, 0x72, 0x69, 0x63, 0x65, 0x54, 0x72, 0x69,
+	0x67, 0x67, 0x65, 0x72, 0x12, 0x14, 0x0a, 0x05, 0x61, 0x73, 0x73, 0x65, 0x74, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x05, 0x61, 0x73, 0x73, 0x65, 0x74, 0x12, 0x1a, 0x0a, 0x08, 0x6f, 0x70,
+	0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x6f, 0x70,
+	0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x12, 0x21, 0x0a, 0x0c, 0x74, 0x61, 0x72, 0x67, 0x65, 0x74,
+	0x5f, 0x70, 0x72, 0x69, 0x63, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x74, 0x61,
+	0x72, 0x67, 0x65, 0x74, 0x50, 0x72, 0x69, 0x63, 0x65, 0x22, 0x2b, 0x0a, 0x0b, 0x54, 0x69, 0x6d,
+	0x65, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x12, 0x1c, 0x0a, 0x09, 0x74, 0x69, 0x6d, 0x65,
+	0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x01, 0x20, 0x01, 0x28, 0x04, 0x52, 0x09, 0x74, 0x69, 0x6d,
+	0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x22, 0x93, 0x01, 0x0a, 0x0e, 0x4c, 0x6f, 0x67, 0x69, 0x63,
+	0x61, 0x6c, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x12, 0x4b, 0x0a, 0x10, 0x6c, 0x6f, 0x67,
+	0x69, 0x63, 0x61, 0x6c, 0x5f, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x0e, 0x32, 0x20, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72,
+	0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x4c, 0x6f, 0x67, 0x69, 0x63, 0x61, 0x6c, 0x4f, 0x70, 0x65,
+	0x72, 0x61, 0x74, 0x6f, 0x72, 0x52, 0x0f, 0x6c, 0x6f, 0x67, 0x69, 0x63, 0x61, 0x6c, 0x4f, 0x70,
+	0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x12, 0x34, 0x0a, 0x08, 0x74, 0x72, 0x69, 0x67, 0x67, 0x65,
+	0x72, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65,
+	0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x54, 0x72, 0x69, 0x67, 0x67,
+	0x65, 0x72, 0x52, 0x08, 0x74, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x73, 0x22, 0x90, 0x01, 0x0a,
+	0x0c, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x12, 0x21, 0x0a,
+	0x0c, 0x72, 0x65, 0x70, 0x65, 0x61, 0x74, 0x5f, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x04, 0x52, 0x0b, 0x72, 0x65, 0x70, 0x65, 0x61, 0x74, 0x43, 0x6f, 0x75, 0x6e, 0x74,
+	0x12, 0x27, 0x0a, 0x0f, 0x72, 0x65, 0x70, 0x65, 0x61, 0x74, 0x5f, 0x69, 0x6e, 0x74, 0x65, 0x72,
+	0x76, 0x61, 0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x04, 0x52, 0x0e, 0x72, 0x65, 0x70, 0x65, 0x61,
+	0x74, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x12, 0x34, 0x0a, 0x08, 0x74, 0x72, 0x69,
+	0x67, 0x67, 0x65, 0x72, 0x73, 0x18, 0x05, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x6b, 0x65,
+	0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x54, 0x72,
+	0x69, 0x67, 0x67, 0x65, 0x72, 0x52, 0x08, 0x74, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x73, 0x22,
+	0x2a, 0x0a, 0x06, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x20, 0x0a, 0x0c, 0x74, 0x78, 0x5f,
+	0x63, 0x61, 0x6c, 0x6c, 0x5f, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0c, 0x52,
+	0x0a, 0x74, 0x78, 0x43, 0x61, 0x6c, 0x6c, 0x44, 0x61, 0x74, 0x61, 0x2a, 0xd1, 0x01, 0x0a, 0x10,
+	0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73,
+	0x12, 0x28, 0x0a, 0x24, 0x41, 0x55, 0x54, 0x4f, 0x4d, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x53,
+	0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x55, 0x4e, 0x53,
+	0x50, 0x45, 0x43, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10, 0x00, 0x12, 0x1c, 0x0a, 0x18, 0x41, 0x55,
+	0x54, 0x4f, 0x4d, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f,
+	0x41, 0x43, 0x54, 0x49, 0x56, 0x45, 0x10, 0x01, 0x12, 0x1d, 0x0a, 0x19, 0x41, 0x55, 0x54, 0x4f,
+	0x4d, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x45, 0x58,
+	0x50, 0x49, 0x52, 0x45, 0x44, 0x10, 0x02, 0x12, 0x1c, 0x0a, 0x18, 0x41, 0x55, 0x54, 0x4f, 0x4d,
+	0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x50, 0x41, 0x55,
+	0x53, 0x45, 0x44, 0x10, 0x03, 0x12, 0x1c, 0x0a, 0x18, 0x41, 0x55, 0x54, 0x4f, 0x4d, 0x41, 0x54,
+	0x49, 0x4f, 0x4e, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x46, 0x41, 0x49, 0x4c, 0x45,
+	0x44, 0x10, 0x04, 0x12, 0x1a, 0x0a, 0x16, 0x41, 0x55, 0x54, 0x4f, 0x4d, 0x41, 0x54, 0x49, 0x4f,
+	0x4e, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x44, 0x4f, 0x4e, 0x45, 0x10, 0x05, 0x2a,
+	0x80, 0x01, 0x0a, 0x0f, 0x4c, 0x6f, 0x67, 0x69, 0x63, 0x61, 0x6c, 0x4f, 0x70, 0x65, 0x72, 0x61,
+	0x74, 0x6f, 0x72, 0x12, 0x20, 0x0a, 0x1c, 0x4c, 0x4f, 0x47, 0x49, 0x43, 0x41, 0x4c, 0x5f, 0x4f,
+	0x50, 0x45, 0x52, 0x41, 0x54, 0x4f, 0x52, 0x5f, 0x55, 0x4e, 0x53, 0x50, 0x45, 0x43, 0x49, 0x46,
+	0x49, 0x45, 0x44, 0x10, 0x00, 0x12, 0x18, 0x0a, 0x14, 0x4c, 0x4f, 0x47, 0x49, 0x43, 0x41, 0x4c,
+	0x5f, 0x4f, 0x50, 0x45, 0x52, 0x41, 0x54, 0x4f, 0x52, 0x5f, 0x41, 0x4e, 0x44, 0x10, 0x01, 0x12,
+	0x17, 0x0a, 0x13, 0x4c, 0x4f, 0x47, 0x49, 0x43, 0x41, 0x4c, 0x5f, 0x4f, 0x50, 0x45, 0x52, 0x41,
+	0x54, 0x4f, 0x52, 0x5f, 0x4f, 0x52, 0x10, 0x02, 0x12, 0x18, 0x0a, 0x14, 0x4c, 0x4f, 0x47, 0x49,
+	0x43, 0x41, 0x4c, 0x5f, 0x4f, 0x50, 0x45, 0x52, 0x41, 0x54, 0x4f, 0x52, 0x5f, 0x4e, 0x4f, 0x54,
+	0x10, 0x03, 0x42, 0x9f, 0x01, 0x0a, 0x13, 0x63, 0x6f, 0x6d, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65,
+	0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x42, 0x0f, 0x41, 0x75, 0x74, 0x6f,
+	0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x1a, 0x6b,
+	0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72,
+	0x2f, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0xa2, 0x02, 0x03, 0x4b, 0x57, 0x58, 0xaa,
+	0x02, 0x0f, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f,
+	0x77, 0xca, 0x02, 0x0f, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x5c, 0x57, 0x6f, 0x72, 0x6b, 0x66,
+	0x6c, 0x6f, 0x77, 0xe2, 0x02, 0x1b, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x5c, 0x57, 0x6f, 0x72,
+	0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74,
+	0x61, 0xea, 0x02, 0x10, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x3a, 0x3a, 0x57, 0x6f, 0x72, 0x6b,
+	0x66, 0x6c, 0x6f, 0x77, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -5471,30 +4761,29 @@ func file_kepler_workflow_automation_proto_rawDescGZIP() []byte {
 }
 
 var file_kepler_workflow_automation_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_kepler_workflow_automation_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_kepler_workflow_automation_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_kepler_workflow_automation_proto_goTypes = []interface{}{
-	(AutomationStatus)(0),   // 0: kepler.workflow.AutomationStatus
-	(LogicalOperator)(0),    // 1: kepler.workflow.LogicalOperator
-	(*Automation)(nil),      // 2: kepler.workflow.Automation
-	(*Trigger)(nil),         // 3: kepler.workflow.Trigger
-	(*PriceTrigger)(nil),    // 4: kepler.workflow.PriceTrigger
-	(*TimeTrigger)(nil),     // 5: kepler.workflow.TimeTrigger
-	(*LogicalTrigger)(nil),  // 6: kepler.workflow.LogicalTrigger
-	(*Action)(nil),          // 7: kepler.workflow.Action
-	(*ExecuteContract)(nil), // 8: kepler.workflow.ExecuteContract
-	(*Trade)(nil),           // 9: kepler.workflow.Trade
+	(AutomationStatus)(0),  // 0: kepler.workflow.AutomationStatus
+	(LogicalOperator)(0),   // 1: kepler.workflow.LogicalOperator
+	(*Automation)(nil),     // 2: kepler.workflow.Automation
+	(*Trigger)(nil),        // 3: kepler.workflow.Trigger
+	(*PriceTrigger)(nil),   // 4: kepler.workflow.PriceTrigger
+	(*TimeTrigger)(nil),    // 5: kepler.workflow.TimeTrigger
+	(*LogicalTrigger)(nil), // 6: kepler.workflow.LogicalTrigger
+	(*CountTrigger)(nil),   // 7: kepler.workflow.CountTrigger
+	(*Action)(nil),         // 8: kepler.workflow.Action
 }
 var file_kepler_workflow_automation_proto_depIdxs = []int32{
-	3,  // 0: kepler.workflow.Automation.trigger:type_name -> kepler.workflow.Trigger
-	7,  // 1: kepler.workflow.Automation.actions:type_name -> kepler.workflow.Action
+	3,  // 0: kepler.workflow.Automation.triggers:type_name -> kepler.workflow.Trigger
+	8,  // 1: kepler.workflow.Automation.actions:type_name -> kepler.workflow.Action
 	0,  // 2: kepler.workflow.Automation.status:type_name -> kepler.workflow.AutomationStatus
 	4,  // 3: kepler.workflow.Trigger.price:type_name -> kepler.workflow.PriceTrigger
 	5,  // 4: kepler.workflow.Trigger.time:type_name -> kepler.workflow.TimeTrigger
 	6,  // 5: kepler.workflow.Trigger.logical:type_name -> kepler.workflow.LogicalTrigger
-	1,  // 6: kepler.workflow.LogicalTrigger.logical_operator:type_name -> kepler.workflow.LogicalOperator
-	3,  // 7: kepler.workflow.LogicalTrigger.triggers:type_name -> kepler.workflow.Trigger
-	8,  // 8: kepler.workflow.Action.execute_contract:type_name -> kepler.workflow.ExecuteContract
-	9,  // 9: kepler.workflow.Action.trade:type_name -> kepler.workflow.Trade
+	7,  // 6: kepler.workflow.Trigger.repeatable:type_name -> kepler.workflow.CountTrigger
+	1,  // 7: kepler.workflow.LogicalTrigger.logical_operator:type_name -> kepler.workflow.LogicalOperator
+	3,  // 8: kepler.workflow.LogicalTrigger.triggers:type_name -> kepler.workflow.Trigger
+	3,  // 9: kepler.workflow.CountTrigger.triggers:type_name -> kepler.workflow.Trigger
 	10, // [10:10] is the sub-list for method output_type
 	10, // [10:10] is the sub-list for method input_type
 	10, // [10:10] is the sub-list for extension type_name
@@ -5569,7 +4858,7 @@ func file_kepler_workflow_automation_proto_init() {
 			}
 		}
 		file_kepler_workflow_automation_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Action); i {
+			switch v := v.(*CountTrigger); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5581,19 +4870,7 @@ func file_kepler_workflow_automation_proto_init() {
 			}
 		}
 		file_kepler_workflow_automation_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ExecuteContract); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_kepler_workflow_automation_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Trade); i {
+			switch v := v.(*Action); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5609,10 +4886,7 @@ func file_kepler_workflow_automation_proto_init() {
 		(*Trigger_Price)(nil),
 		(*Trigger_Time)(nil),
 		(*Trigger_Logical)(nil),
-	}
-	file_kepler_workflow_automation_proto_msgTypes[5].OneofWrappers = []interface{}{
-		(*Action_ExecuteContract)(nil),
-		(*Action_Trade)(nil),
+		(*Trigger_Repeatable)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -5620,7 +4894,7 @@ func file_kepler_workflow_automation_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_kepler_workflow_automation_proto_rawDesc,
 			NumEnums:      2,
-			NumMessages:   8,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

@@ -6,11 +6,11 @@ option go_package = "kepler/x/workflow/types";
 // Automation entity
 message Automation {
   uint64 id = 1; // Incremental ID for blockchain consistency
-  Trigger trigger = 2; // List of trigger conditions
+  Trigger triggers = 2; // Trigger object, which can be chained by logical operators in itself
   repeated Action actions = 3; // List of actions
-  uint64 repeat_count = 4; // Number of executions allowed
-  uint64 repeat_interval = 5; // Interval between repeated executions allowed
-  uint64 expire_at = 6; // Expiration timestamp (Unix time)
+  uint64 expire_at = 4; // Expiration timestamp (Unix time)
+  uint64 executed_times = 5; // Number of executions done
+  uint64 last_executed_at = 6; // Last execution timestamp (Unix time)
   AutomationStatus status = 7; // Status of the automation (active, expired, paused, failed, done)
 }
 
@@ -30,6 +30,7 @@ message Trigger {
     PriceTrigger price = 1;
     TimeTrigger time = 2;
     LogicalTrigger logical = 3;
+    CountTrigger repeatable = 4;
   }
 }
 
@@ -48,7 +49,13 @@ message TimeTrigger {
 // Logical trigger for trigger chains
 message LogicalTrigger {
   LogicalOperator logical_operator = 1; // "AND", "OR"
-  repeated Trigger triggers = 2;
+  repeated Trigger triggers = 2; // List of triggers
+}
+
+message CountTrigger {
+  uint64 repeat_count = 1; // Number of executions allowed
+  uint64 repeat_interval = 3; // Interval between repeated executions allowed in seconds
+  repeated Trigger triggers = 5; // List of triggers
 }
 
 // Enumeration for logical operator
@@ -60,23 +67,5 @@ enum LogicalOperator {
 }
 
 message Action {
-  oneof action {
-    ExecuteContract execute_contract = 1;
-    Trade trade = 2;
-  }
-}
-
-// Execute contract action
-message ExecuteContract {
-  string contract_id = 1;
-  string function = 2;
-}
-
-// Trade action
-message Trade {
-  string base_asset = 1;
-  string quote_asset = 2;
-  string amount = 3;
-  string price = 4;
-  string side = 5; // "buy", "sell"
+  bytes tx_call_data = 1;
 }
