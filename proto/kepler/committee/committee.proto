@@ -1,30 +1,30 @@
 syntax = "proto3";
 package kepler.committee;
 
-import "amino/amino.proto";
 import "gogoproto/gogo.proto";
+import "cosmos_proto/cosmos.proto";
+import "google/protobuf/any.proto";
 
 option go_package = "kepler/x/committee/types";
 
 // Committee defines the structure of a validator committee
 message Committee {
-  option (amino.name) = "kepler/x/committee/Committee";
   option (gogoproto.equal) = true;
 
   uint64 epoch_id = 1; // unique epoch identifier
-  uint32 chain_id = 2; // identifier of the network for which the committee is formed
+  string chain_id = 2; // identifier of the network for which the committee is formed
   repeated Validator validators = 3 [(gogoproto.nullable) = false];
   bytes randao_seed = 4;  // random value used for formation
   uint64 start_block = 5; // block at which the committee starts operating
-  uint64 end_block = 6;   // block at which the committee stops operating
+  uint64 end_block = 6; // the last block in which the committee operates
 }
 
 // Validator defines a validator's address and voting power
 message Validator {
-  option (amino.name) = "kepler/x/committee/Validator";
   option (gogoproto.equal) = true;
 
-  bytes address = 1; 
-  bytes pub_key = 2;
+  string address = 1 [(cosmos_proto.scalar) = "cosmos.ValidatorAddressString"]; 
+  // pub_key represents a public key in any format
+  google.protobuf.Any pub_key = 2;
   uint64 power = 3;  
 }
