@@ -1,0 +1,17 @@
+syntax = "proto3";
+package kepler.epochs;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "kepler/epochs/params.proto";
+
+option go_package = "kepler/x/epochs/types";
+
+// GenesisState defines the epochs module's genesis state.
+message GenesisState {
+  // params defines all the parameters of the module.
+  Params params = 1 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}
