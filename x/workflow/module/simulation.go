@@ -43,8 +43,6 @@ func (AppModule) GenerateGenesisState(simState *module.SimulationState) {
 func (am AppModule) RegisterStoreDecoder(_ simtypes.StoreDecoderRegistry) {}
 
 // WeightedOperations returns the all the gov module operations with their respective weights.
-//
-//nolint:revive // allow unused code
 func (am AppModule) WeightedOperations(simState module.SimulationState) []simtypes.WeightedOperation {
 	operations := make([]simtypes.WeightedOperation, 0)
 
@@ -54,8 +52,6 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 }
 
 // ProposalMsgs returns msgs used for governance proposals for simulations.
-//
-//nolint:revive // allow unused code
 func (am AppModule) ProposalMsgs(simState module.SimulationState) []simtypes.WeightedProposalMsg {
 	return []simtypes.WeightedProposalMsg{
 		// this line is used by starport scaffolding # simapp/module/OpMsg

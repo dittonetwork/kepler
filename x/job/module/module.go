@@ -58,8 +58,6 @@ func (AppModuleBasic) Name() string {
 
 // RegisterLegacyAminoCodec registers the amino codec for the module, which is used
 // to marshal and unmarshal structs to/from []byte in order to persist them in the module's KVStore.
-//
-//nolint:revive // allow unused code
 func (AppModuleBasic) RegisterLegacyAminoCodec(cdc *codec.LegacyAmino) {}
 
 // RegisterInterfaces registers a module's interface types and their concrete implementations as proto.Message.
@@ -74,8 +72,6 @@ func (AppModuleBasic) DefaultGenesis(cdc codec.JSONCodec) json.RawMessage {
 }
 
 // ValidateGenesis used to validate the GenesisState, given in its json.RawMessage form.
-//
-//nolint:revive // allow unused code
 func (AppModuleBasic) ValidateGenesis(cdc codec.JSONCodec, config client.TxEncodingConfig, bz json.RawMessage) error {
 	var genState types.GenesisState
 	if err := cdc.UnmarshalJSON(bz, &genState); err != nil {
