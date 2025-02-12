@@ -5,6 +5,10 @@ import (
 	_ "kepler/x/epochs/module" // import for side effects
 	epochstypes "kepler/x/epochs/types"
 
+	workflowmodulev1 "kepler/api/kepler/workflow/module"
+	_ "kepler/x/workflow/module" // import for side-effects
+	workflowmoduletypes "kepler/x/workflow/types"
+
 	runtimev1alpha1 "cosmossdk.io/api/cosmos/app/runtime/v1alpha1"
 	appv1alpha1 "cosmossdk.io/api/cosmos/app/v1alpha1"
 	authmodulev1 "cosmossdk.io/api/cosmos/auth/module/v1"
@@ -44,6 +48,7 @@ var (
 		genutiltypes.ModuleName,
 		// chain modules
 		epochstypes.ModuleName,
+		workflowmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/initGenesis
 	}
 
@@ -57,6 +62,7 @@ var (
 		stakingtypes.ModuleName,
 		// chain modules
 		epochstypes.ModuleName,
+		workflowmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/beginBlockers
 	}
 
@@ -65,6 +71,7 @@ var (
 		stakingtypes.ModuleName,
 		// chain modules
 		epochstypes.ModuleName,
+		workflowmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/endBlockers
 	}
 
@@ -159,6 +166,10 @@ var (
 			{
 				Name:   epochstypes.ModuleName,
 				Config: appconfig.WrapAny(&epochsmodulev1.Module{}),
+			},
+			{
+				Name:   workflowmoduletypes.ModuleName,
+				Config: appconfig.WrapAny(&workflowmodulev1.Module{}),
 			},
 			// this line is used by starport scaffolding # stargate/app/moduleConfig
 		},
