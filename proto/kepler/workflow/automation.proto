@@ -9,8 +9,9 @@ message Automation {
   Trigger trigger = 2; // List of trigger conditions
   repeated Action actions = 3; // List of actions
   uint64 repeat_count = 4; // Number of executions allowed
-  uint64 expire_at = 5; // Expiration timestamp (Unix time)
-  AutomationStatus status = 6; // Status of the automation (active, expired, paused, failed, done)
+  uint64 repeat_interval = 5; // Interval between repeated executions allowed
+  uint64 expire_at = 6; // Expiration timestamp (Unix time)
+  AutomationStatus status = 7; // Status of the automation (active, expired, paused, failed, done)
 }
 
 // Enumeration for automation status
