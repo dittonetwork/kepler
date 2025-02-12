@@ -9,8 +9,6 @@ message Automation {
   Trigger triggers = 2; // Trigger object, which can be chained by logical operators in itself
   repeated Action actions = 3; // List of actions
   uint64 expire_at = 4; // Expiration timestamp (Unix time)
-  uint64 executed_times = 5; // Number of executions done
-  uint64 last_executed_at = 6; // Last execution timestamp (Unix time)
   AutomationStatus status = 7; // Status of the automation (active, expired, paused, failed, done)
 }
 
@@ -30,7 +28,7 @@ message Trigger {
     PriceTrigger price = 1;
     TimeTrigger time = 2;
     LogicalTrigger logical = 3;
-    CountTrigger repeatable = 4;
+    CountTrigger count = 4;
   }
 }
 
