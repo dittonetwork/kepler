@@ -3,12 +3,45 @@ package kepler.workflow;
 
 option go_package = "kepler/x/workflow/types";
 
+// Automation entity
 message Automation {
-  
-  string id = 1;
-  string trigger = 2; 
-  repeated string actions = 3;
-  uint64 repeat_count = 4; 
-  uint64 expireAt = 5; 
-  string status = 6; 
+  string id = 1; // Unique identifier (UUID)
+  repeated Trigger triggers = 2; // List of trigger conditions
+  repeated string actions = 3; // List of actions
+  uint64 repeat_count = 4; // Number of executions allowed
+  uint64 expire_at = 5; // Expiration timestamp (Unix time)
+  AutomationStatus status = 6; // Status of the automation (active, expired, paused, failed, done)
+}
+
+// Enumeration for automation status
+enum AutomationStatus {
+  AUTOMATION_STATUS_STATUS_UNSPECIFIED = 0; // Default unknown status
+  AUTOMATION_STATUS_ACTIVE = 1; // Active automation
+  AUTOMATION_STATUS_EXPIRED = 2; // Expired automation
+  AUTOMATION_STATUS_PAUSED = 3; // Paused automation
+  AUTOMATION_STATUS_FAILED = 4; // Failed automation
+  AUTOMATION_STATUS_DONE = 5; // Completed automation
+}
+
+// Enumeration for trigger types
+enum TriggerType {
+  TRIGGER_UNSPECIFIED = 0;  // Default unknown type
+  TRIGGER_ASSET_PRICE_ABOVE = 1;  // Asset price above N
+  TRIGGER_ASSET_PRICE_BELOW = 2;  // Asset price below N
+  TRIGGER_BLOCK_HEIGHT = 3; // Block height >= N
+  TRIGGER_TIME = 4;         // Time-based trigger (timestamp)
+  TRIGGER_AND = 5;          // Logical AND (multiple conditions)
+  TRIGGER_OR = 6;           // Logical OR (at least one condition)
+}
+
+// Structure of a single trigger
+message Trigger {
+  TriggerType type = 1;
+  string account = 2;  // Wallet address (for balance-based triggers)
+  string asset = 3;    // Asset symbol (for price triggers)
+  uint64 height = 4;   // Block height (for block_height trigger)
+  uint64 timestamp = 5; // Timestamp (for time-based trigger)
+  repeated Trigger conditions = 6; // Logical conditions (AND/OR)
+  // Additional fields for numerical values
+  uint64 price = 7; // Asset price for price triggers
 }

@@ -22,13 +22,93 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
+// Enumeration for automation status
+type AutomationStatus int32
+
+const (
+	AutomationStatus_AUTOMATION_STATUS_STATUS_UNSPECIFIED AutomationStatus = 0
+	AutomationStatus_AUTOMATION_STATUS_ACTIVE             AutomationStatus = 1
+	AutomationStatus_AUTOMATION_STATUS_EXPIRED            AutomationStatus = 2
+	AutomationStatus_AUTOMATION_STATUS_PAUSED             AutomationStatus = 3
+	AutomationStatus_AUTOMATION_STATUS_FAILED             AutomationStatus = 4
+	AutomationStatus_AUTOMATION_STATUS_DONE               AutomationStatus = 5
+)
+
+var AutomationStatus_name = map[int32]string{
+	0: "AUTOMATION_STATUS_STATUS_UNSPECIFIED",
+	1: "AUTOMATION_STATUS_ACTIVE",
+	2: "AUTOMATION_STATUS_EXPIRED",
+	3: "AUTOMATION_STATUS_PAUSED",
+	4: "AUTOMATION_STATUS_FAILED",
+	5: "AUTOMATION_STATUS_DONE",
+}
+
+var AutomationStatus_value = map[string]int32{
+	"AUTOMATION_STATUS_STATUS_UNSPECIFIED": 0,
+	"AUTOMATION_STATUS_ACTIVE":             1,
+	"AUTOMATION_STATUS_EXPIRED":            2,
+	"AUTOMATION_STATUS_PAUSED":             3,
+	"AUTOMATION_STATUS_FAILED":             4,
+	"AUTOMATION_STATUS_DONE":               5,
+}
+
+func (x AutomationStatus) String() string {
+	return proto.EnumName(AutomationStatus_name, int32(x))
+}
+
+func (AutomationStatus) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_e70c979264e1abb3, []int{0}
+}
+
+// Enumeration for trigger types
+type TriggerType int32
+
+const (
+	TriggerType_TRIGGER_UNSPECIFIED       TriggerType = 0
+	TriggerType_TRIGGER_ASSET_PRICE_ABOVE TriggerType = 1
+	TriggerType_TRIGGER_ASSET_PRICE_BELOW TriggerType = 2
+	TriggerType_TRIGGER_BLOCK_HEIGHT      TriggerType = 3
+	TriggerType_TRIGGER_TIME              TriggerType = 4
+	TriggerType_TRIGGER_AND               TriggerType = 5
+	TriggerType_TRIGGER_OR                TriggerType = 6
+)
+
+var TriggerType_name = map[int32]string{
+	0: "TRIGGER_UNSPECIFIED",
+	1: "TRIGGER_ASSET_PRICE_ABOVE",
+	2: "TRIGGER_ASSET_PRICE_BELOW",
+	3: "TRIGGER_BLOCK_HEIGHT",
+	4: "TRIGGER_TIME",
+	5: "TRIGGER_AND",
+	6: "TRIGGER_OR",
+}
+
+var TriggerType_value = map[string]int32{
+	"TRIGGER_UNSPECIFIED":       0,
+	"TRIGGER_ASSET_PRICE_ABOVE": 1,
+	"TRIGGER_ASSET_PRICE_BELOW": 2,
+	"TRIGGER_BLOCK_HEIGHT":      3,
+	"TRIGGER_TIME":              4,
+	"TRIGGER_AND":               5,
+	"TRIGGER_OR":                6,
+}
+
+func (x TriggerType) String() string {
+	return proto.EnumName(TriggerType_name, int32(x))
+}
+
+func (TriggerType) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_e70c979264e1abb3, []int{1}
+}
+
+// Automation entity
 type Automation struct {
-	Id       string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Trigger  string   `protobuf:"bytes,2,opt,name=trigger,proto3" json:"trigger,omitempty"`
-	Actions  []string `protobuf:"bytes,3,rep,name=actions,proto3" json:"actions,omitempty"`
-	Count    uint64   `protobuf:"varint,4,opt,name=count,proto3" json:"count,omitempty"`
-	ExpireAt uint64   `protobuf:"varint,5,opt,name=expireAt,proto3" json:"expireAt,omitempty"`
-	Status   string   `protobuf:"bytes,6,opt,name=status,proto3" json:"status,omitempty"`
+	Id          string           `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Triggers    []*Trigger       `protobuf:"bytes,2,rep,name=triggers,proto3" json:"triggers,omitempty"`
+	Actions     []string         `protobuf:"bytes,3,rep,name=actions,proto3" json:"actions,omitempty"`
+	RepeatCount uint64           `protobuf:"varint,4,opt,name=repeat_count,json=repeatCount,proto3" json:"repeat_count,omitempty"`
+	ExpireAt    uint64           `protobuf:"varint,5,opt,name=expire_at,json=expireAt,proto3" json:"expire_at,omitempty"`
+	Status      AutomationStatus `protobuf:"varint,6,opt,name=status,proto3,enum=kepler.workflow.AutomationStatus" json:"status,omitempty"`
 }
 
 func (m *Automation) Reset()         { *m = Automation{} }
@@ -71,11 +151,11 @@ func (m *Automation) GetId() string {
 	return ""
 }
 
-func (m *Automation) GetTrigger() string {
+func (m *Automation) GetTriggers() []*Trigger {
 	if m != nil {
-		return m.Trigger
+		return m.Triggers
 	}
-	return ""
+	return nil
 }
 
 func (m *Automation) GetActions() []string {
@@ -85,9 +165,9 @@ func (m *Automation) GetActions() []string {
 	return nil
 }
 
-func (m *Automation) GetCount() uint64 {
+func (m *Automation) GetRepeatCount() uint64 {
 	if m != nil {
-		return m.Count
+		return m.RepeatCount
 	}
 	return 0
 }
@@ -99,35 +179,153 @@ func (m *Automation) GetExpireAt() uint64 {
 	return 0
 }
 
-func (m *Automation) GetStatus() string {
+func (m *Automation) GetStatus() AutomationStatus {
 	if m != nil {
 		return m.Status
+	}
+	return AutomationStatus_AUTOMATION_STATUS_STATUS_UNSPECIFIED
+}
+
+// Structure of a single trigger
+type Trigger struct {
+	Type       TriggerType `protobuf:"varint,1,opt,name=type,proto3,enum=kepler.workflow.TriggerType" json:"type,omitempty"`
+	Account    string      `protobuf:"bytes,2,opt,name=account,proto3" json:"account,omitempty"`
+	Asset      string      `protobuf:"bytes,3,opt,name=asset,proto3" json:"asset,omitempty"`
+	Height     uint64      `protobuf:"varint,4,opt,name=height,proto3" json:"height,omitempty"`
+	Timestamp  uint64      `protobuf:"varint,5,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	Conditions []*Trigger  `protobuf:"bytes,6,rep,name=conditions,proto3" json:"conditions,omitempty"`
+	// Additional fields for numerical values
+	Price uint64 `protobuf:"varint,7,opt,name=price,proto3" json:"price,omitempty"`
+}
+
+func (m *Trigger) Reset()         { *m = Trigger{} }
+func (m *Trigger) String() string { return proto.CompactTextString(m) }
+func (*Trigger) ProtoMessage()    {}
+func (*Trigger) Descriptor() ([]byte, []int) {
+	return fileDescriptor_e70c979264e1abb3, []int{1}
+}
+func (m *Trigger) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Trigger) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Trigger.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *Trigger) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Trigger.Merge(m, src)
+}
+func (m *Trigger) XXX_Size() int {
+	return m.Size()
+}
+func (m *Trigger) XXX_DiscardUnknown() {
+	xxx_messageInfo_Trigger.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Trigger proto.InternalMessageInfo
+
+func (m *Trigger) GetType() TriggerType {
+	if m != nil {
+		return m.Type
+	}
+	return TriggerType_TRIGGER_UNSPECIFIED
+}
+
+func (m *Trigger) GetAccount() string {
+	if m != nil {
+		return m.Account
 	}
 	return ""
 }
 
+func (m *Trigger) GetAsset() string {
+	if m != nil {
+		return m.Asset
+	}
+	return ""
+}
+
+func (m *Trigger) GetHeight() uint64 {
+	if m != nil {
+		return m.Height
+	}
+	return 0
+}
+
+func (m *Trigger) GetTimestamp() uint64 {
+	if m != nil {
+		return m.Timestamp
+	}
+	return 0
+}
+
+func (m *Trigger) GetConditions() []*Trigger {
+	if m != nil {
+		return m.Conditions
+	}
+	return nil
+}
+
+func (m *Trigger) GetPrice() uint64 {
+	if m != nil {
+		return m.Price
+	}
+	return 0
+}
+
 func init() {
+	proto.RegisterEnum("kepler.workflow.AutomationStatus", AutomationStatus_name, AutomationStatus_value)
+	proto.RegisterEnum("kepler.workflow.TriggerType", TriggerType_name, TriggerType_value)
 	proto.RegisterType((*Automation)(nil), "kepler.workflow.Automation")
+	proto.RegisterType((*Trigger)(nil), "kepler.workflow.Trigger")
 }
 
 func init() { proto.RegisterFile("kepler/workflow/automation.proto", fileDescriptor_e70c979264e1abb3) }
 
 var fileDescriptor_e70c979264e1abb3 = []byte{
-	// 217 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x52, 0xc8, 0x4e, 0x2d, 0xc8,
-	0x49, 0x2d, 0xd2, 0x2f, 0xcf, 0x2f, 0xca, 0x4e, 0xcb, 0xc9, 0x2f, 0xd7, 0x4f, 0x2c, 0x2d, 0xc9,
-	0xcf, 0x4d, 0x2c, 0xc9, 0xcc, 0xcf, 0xd3, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0xe2, 0x87, 0xa8,
-	0xd0, 0x83, 0xa9, 0x50, 0x9a, 0xc5, 0xc8, 0xc5, 0xe5, 0x08, 0x57, 0x25, 0xc4, 0xc7, 0xc5, 0x94,
-	0x99, 0x22, 0xc1, 0xa8, 0xc0, 0xa8, 0xc1, 0x19, 0xc4, 0x94, 0x99, 0x22, 0x24, 0xc1, 0xc5, 0x5e,
-	0x52, 0x94, 0x99, 0x9e, 0x9e, 0x5a, 0x24, 0xc1, 0x04, 0x16, 0x84, 0x71, 0x41, 0x32, 0x89, 0xc9,
-	0x20, 0x3d, 0xc5, 0x12, 0xcc, 0x0a, 0xcc, 0x20, 0x19, 0x28, 0x57, 0x48, 0x84, 0x8b, 0x35, 0x39,
-	0xbf, 0x34, 0xaf, 0x44, 0x82, 0x45, 0x81, 0x51, 0x83, 0x25, 0x08, 0xc2, 0x11, 0x92, 0xe2, 0xe2,
-	0x48, 0xad, 0x28, 0xc8, 0x2c, 0x4a, 0x75, 0x2c, 0x91, 0x60, 0x05, 0x4b, 0xc0, 0xf9, 0x42, 0x62,
-	0x5c, 0x6c, 0xc5, 0x25, 0x89, 0x25, 0xa5, 0xc5, 0x12, 0x6c, 0x60, 0x4b, 0xa0, 0x3c, 0x27, 0xc3,
-	0x13, 0x8f, 0xe4, 0x18, 0x2f, 0x3c, 0x92, 0x63, 0x7c, 0xf0, 0x48, 0x8e, 0x71, 0xc2, 0x63, 0x39,
-	0x86, 0x0b, 0x8f, 0xe5, 0x18, 0x6e, 0x3c, 0x96, 0x63, 0x88, 0x12, 0x87, 0xfa, 0xb4, 0x02, 0xe1,
-	0xd7, 0x92, 0xca, 0x82, 0xd4, 0xe2, 0x24, 0x36, 0xb0, 0x3f, 0x8d, 0x01, 0x01, 0x00, 0x00, 0xff,
-	0xff, 0xbb, 0xf3, 0x11, 0xf4, 0x0b, 0x01, 0x00, 0x00,
+	// 551 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x53, 0xcb, 0x4e, 0xdb, 0x40,
+	0x14, 0xcd, 0xd8, 0x89, 0x21, 0x37, 0x28, 0x8c, 0xa6, 0x08, 0x86, 0x16, 0x2c, 0x83, 0xba, 0xb0,
+	0x58, 0x84, 0x96, 0x76, 0xd1, 0x2e, 0x9d, 0x78, 0x00, 0xab, 0x10, 0x47, 0xb6, 0xd3, 0x56, 0xdd,
+	0x58, 0x6e, 0x98, 0x82, 0xc5, 0xc3, 0x96, 0x3d, 0x11, 0xf0, 0x17, 0xfd, 0x95, 0xfe, 0x45, 0x97,
+	0x74, 0xd7, 0x65, 0x95, 0x2c, 0xba, 0xee, 0x1f, 0x54, 0xb1, 0xe3, 0x04, 0x25, 0xa9, 0xba, 0x8a,
+	0xce, 0x63, 0xae, 0xce, 0xb9, 0xf1, 0x05, 0xed, 0x92, 0xc7, 0x57, 0x3c, 0xd9, 0xbf, 0x8d, 0x92,
+	0xcb, 0x2f, 0x57, 0xd1, 0xed, 0x7e, 0xd0, 0x17, 0xd1, 0x75, 0x20, 0xc2, 0xe8, 0xa6, 0x11, 0x27,
+	0x91, 0x88, 0xc8, 0x6a, 0xee, 0x68, 0x14, 0x8e, 0xdd, 0xdf, 0x08, 0xc0, 0x98, 0xb8, 0x48, 0x1d,
+	0xa4, 0xf0, 0x8c, 0x22, 0x0d, 0xe9, 0x55, 0x47, 0x0a, 0xcf, 0xc8, 0x6b, 0x58, 0x16, 0x49, 0x78,
+	0x7e, 0xce, 0x93, 0x94, 0x4a, 0x9a, 0xac, 0xd7, 0x0e, 0x68, 0x63, 0x66, 0x44, 0xc3, 0xcb, 0x0d,
+	0xce, 0xc4, 0x49, 0x28, 0x2c, 0x05, 0xbd, 0xd1, 0xbc, 0x94, 0xca, 0x9a, 0xac, 0x57, 0x9d, 0x02,
+	0x92, 0x1d, 0x58, 0x49, 0x78, 0xcc, 0x03, 0xe1, 0xf7, 0xa2, 0xfe, 0x8d, 0xa0, 0x65, 0x0d, 0xe9,
+	0x65, 0xa7, 0x96, 0x73, 0xad, 0x11, 0x45, 0x9e, 0x41, 0x95, 0xdf, 0xc5, 0x61, 0xc2, 0xfd, 0x40,
+	0xd0, 0x4a, 0xa6, 0x2f, 0xe7, 0x84, 0x21, 0xc8, 0x5b, 0x50, 0x52, 0x11, 0x88, 0x7e, 0x4a, 0x15,
+	0x0d, 0xe9, 0xf5, 0x83, 0x9d, 0xb9, 0x34, 0xd3, 0x32, 0x6e, 0x66, 0x74, 0xc6, 0x0f, 0x76, 0xff,
+	0x20, 0x58, 0x1a, 0x47, 0x25, 0x2f, 0xa0, 0x2c, 0xee, 0x63, 0x9e, 0x15, 0xad, 0x1f, 0x6c, 0xfd,
+	0xab, 0x92, 0x77, 0x1f, 0x73, 0x27, 0x73, 0xe6, 0x95, 0xf2, 0xcc, 0x52, 0xb6, 0x9d, 0x02, 0x92,
+	0x35, 0xa8, 0x04, 0x69, 0xca, 0x05, 0x95, 0x33, 0x3e, 0x07, 0x64, 0x1d, 0x94, 0x0b, 0x1e, 0x9e,
+	0x5f, 0x14, 0x15, 0xc7, 0x88, 0x6c, 0x41, 0x55, 0x84, 0xd7, 0x3c, 0x15, 0xc1, 0x75, 0x3c, 0x6e,
+	0x37, 0x25, 0xc8, 0x1b, 0x80, 0x5e, 0x74, 0x73, 0x16, 0xe6, 0xbb, 0x53, 0xfe, 0xb3, 0xf0, 0x47,
+	0xde, 0x51, 0x8a, 0x38, 0x09, 0x7b, 0x9c, 0x2e, 0x65, 0x33, 0x73, 0xb0, 0xf7, 0x03, 0x01, 0x9e,
+	0x5d, 0x08, 0xd1, 0xe1, 0xb9, 0xd1, 0xf5, 0xec, 0x53, 0xc3, 0xb3, 0xec, 0xb6, 0xef, 0x7a, 0x86,
+	0xd7, 0x75, 0x8b, 0x9f, 0x6e, 0xdb, 0xed, 0xb0, 0x96, 0x75, 0x68, 0x31, 0x13, 0x97, 0xc8, 0x16,
+	0xd0, 0x79, 0xa7, 0xd1, 0xf2, 0xac, 0xf7, 0x0c, 0x23, 0xb2, 0x0d, 0x9b, 0xf3, 0x2a, 0xfb, 0xd8,
+	0xb1, 0x1c, 0x66, 0x62, 0x69, 0xf1, 0xe3, 0x8e, 0xd1, 0x75, 0x99, 0x89, 0xe5, 0xc5, 0xea, 0xa1,
+	0x61, 0x9d, 0x30, 0x13, 0x97, 0xc9, 0x53, 0x58, 0x9f, 0x57, 0x4d, 0xbb, 0xcd, 0x70, 0x65, 0xef,
+	0x1b, 0x82, 0xda, 0xa3, 0xff, 0x87, 0x6c, 0xc0, 0x13, 0xcf, 0xb1, 0x8e, 0x8e, 0x98, 0x33, 0x93,
+	0x7e, 0x1b, 0x36, 0x0b, 0xc1, 0x70, 0x5d, 0xe6, 0xf9, 0x1d, 0xc7, 0x6a, 0x31, 0xdf, 0x68, 0xda,
+	0x45, 0xfc, 0x45, 0x72, 0x93, 0x9d, 0xd8, 0x1f, 0xb0, 0x44, 0x28, 0xac, 0x15, 0x72, 0xf3, 0xc4,
+	0x6e, 0xbd, 0xf3, 0x8f, 0x99, 0x75, 0x74, 0xec, 0x61, 0x99, 0x60, 0x58, 0x29, 0x14, 0xcf, 0x3a,
+	0x65, 0xb8, 0x4c, 0x56, 0xa1, 0x36, 0x19, 0xd5, 0x36, 0x71, 0x85, 0xd4, 0x01, 0x0a, 0xc2, 0x76,
+	0xb0, 0xd2, 0x7c, 0xf9, 0x7d, 0xa0, 0xa2, 0x87, 0x81, 0x8a, 0x7e, 0x0d, 0x54, 0xf4, 0x75, 0xa8,
+	0x96, 0x1e, 0x86, 0x6a, 0xe9, 0xe7, 0x50, 0x2d, 0x7d, 0xda, 0x18, 0x9f, 0xec, 0xdd, 0xf4, 0x68,
+	0x47, 0xdf, 0x5b, 0xfa, 0x59, 0xc9, 0x0e, 0xf6, 0xd5, 0xdf, 0x00, 0x00, 0x00, 0xff, 0xff, 0x91,
+	0x29, 0x30, 0xce, 0xd4, 0x03, 0x00, 0x00,
 }
 
 func (m *Automation) Marshal() (dAtA []byte, err error) {
@@ -150,20 +348,18 @@ func (m *Automation) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if len(m.Status) > 0 {
-		i -= len(m.Status)
-		copy(dAtA[i:], m.Status)
-		i = encodeVarintAutomation(dAtA, i, uint64(len(m.Status)))
+	if m.Status != 0 {
+		i = encodeVarintAutomation(dAtA, i, uint64(m.Status))
 		i--
-		dAtA[i] = 0x32
+		dAtA[i] = 0x30
 	}
 	if m.ExpireAt != 0 {
 		i = encodeVarintAutomation(dAtA, i, uint64(m.ExpireAt))
 		i--
 		dAtA[i] = 0x28
 	}
-	if m.Count != 0 {
-		i = encodeVarintAutomation(dAtA, i, uint64(m.Count))
+	if m.RepeatCount != 0 {
+		i = encodeVarintAutomation(dAtA, i, uint64(m.RepeatCount))
 		i--
 		dAtA[i] = 0x20
 	}
@@ -176,12 +372,19 @@ func (m *Automation) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0x1a
 		}
 	}
-	if len(m.Trigger) > 0 {
-		i -= len(m.Trigger)
-		copy(dAtA[i:], m.Trigger)
-		i = encodeVarintAutomation(dAtA, i, uint64(len(m.Trigger)))
-		i--
-		dAtA[i] = 0x12
+	if len(m.Triggers) > 0 {
+		for iNdEx := len(m.Triggers) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Triggers[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintAutomation(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x12
+		}
 	}
 	if len(m.Id) > 0 {
 		i -= len(m.Id)
@@ -189,6 +392,77 @@ func (m *Automation) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i = encodeVarintAutomation(dAtA, i, uint64(len(m.Id)))
 		i--
 		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *Trigger) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Trigger) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Trigger) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Price != 0 {
+		i = encodeVarintAutomation(dAtA, i, uint64(m.Price))
+		i--
+		dAtA[i] = 0x38
+	}
+	if len(m.Conditions) > 0 {
+		for iNdEx := len(m.Conditions) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Conditions[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintAutomation(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x32
+		}
+	}
+	if m.Timestamp != 0 {
+		i = encodeVarintAutomation(dAtA, i, uint64(m.Timestamp))
+		i--
+		dAtA[i] = 0x28
+	}
+	if m.Height != 0 {
+		i = encodeVarintAutomation(dAtA, i, uint64(m.Height))
+		i--
+		dAtA[i] = 0x20
+	}
+	if len(m.Asset) > 0 {
+		i -= len(m.Asset)
+		copy(dAtA[i:], m.Asset)
+		i = encodeVarintAutomation(dAtA, i, uint64(len(m.Asset)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Account) > 0 {
+		i -= len(m.Account)
+		copy(dAtA[i:], m.Account)
+		i = encodeVarintAutomation(dAtA, i, uint64(len(m.Account)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Type != 0 {
+		i = encodeVarintAutomation(dAtA, i, uint64(m.Type))
+		i--
+		dAtA[i] = 0x8
 	}
 	return len(dAtA) - i, nil
 }
@@ -214,9 +488,11 @@ func (m *Automation) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovAutomation(uint64(l))
 	}
-	l = len(m.Trigger)
-	if l > 0 {
-		n += 1 + l + sovAutomation(uint64(l))
+	if len(m.Triggers) > 0 {
+		for _, e := range m.Triggers {
+			l = e.Size()
+			n += 1 + l + sovAutomation(uint64(l))
+		}
 	}
 	if len(m.Actions) > 0 {
 		for _, s := range m.Actions {
@@ -224,15 +500,49 @@ func (m *Automation) Size() (n int) {
 			n += 1 + l + sovAutomation(uint64(l))
 		}
 	}
-	if m.Count != 0 {
-		n += 1 + sovAutomation(uint64(m.Count))
+	if m.RepeatCount != 0 {
+		n += 1 + sovAutomation(uint64(m.RepeatCount))
 	}
 	if m.ExpireAt != 0 {
 		n += 1 + sovAutomation(uint64(m.ExpireAt))
 	}
-	l = len(m.Status)
+	if m.Status != 0 {
+		n += 1 + sovAutomation(uint64(m.Status))
+	}
+	return n
+}
+
+func (m *Trigger) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Type != 0 {
+		n += 1 + sovAutomation(uint64(m.Type))
+	}
+	l = len(m.Account)
 	if l > 0 {
 		n += 1 + l + sovAutomation(uint64(l))
+	}
+	l = len(m.Asset)
+	if l > 0 {
+		n += 1 + l + sovAutomation(uint64(l))
+	}
+	if m.Height != 0 {
+		n += 1 + sovAutomation(uint64(m.Height))
+	}
+	if m.Timestamp != 0 {
+		n += 1 + sovAutomation(uint64(m.Timestamp))
+	}
+	if len(m.Conditions) > 0 {
+		for _, e := range m.Conditions {
+			l = e.Size()
+			n += 1 + l + sovAutomation(uint64(l))
+		}
+	}
+	if m.Price != 0 {
+		n += 1 + sovAutomation(uint64(m.Price))
 	}
 	return n
 }
@@ -306,9 +616,9 @@ func (m *Automation) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Trigger", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Triggers", wireType)
 			}
-			var stringLen uint64
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowAutomation
@@ -318,23 +628,25 @@ func (m *Automation) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if msglen < 0 {
 				return ErrInvalidLengthAutomation
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + msglen
 			if postIndex < 0 {
 				return ErrInvalidLengthAutomation
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Trigger = string(dAtA[iNdEx:postIndex])
+			m.Triggers = append(m.Triggers, &Trigger{})
+			if err := m.Triggers[len(m.Triggers)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -370,9 +682,9 @@ func (m *Automation) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 4:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Count", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field RepeatCount", wireType)
 			}
-			m.Count = 0
+			m.RepeatCount = 0
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowAutomation
@@ -382,7 +694,7 @@ func (m *Automation) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Count |= uint64(b&0x7F) << shift
+				m.RepeatCount |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -407,8 +719,96 @@ func (m *Automation) Unmarshal(dAtA []byte) error {
 				}
 			}
 		case 6:
-			if wireType != 2 {
+			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
+			}
+			m.Status = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAutomation
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Status |= AutomationStatus(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipAutomation(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Trigger) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowAutomation
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Trigger: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Trigger: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Type", wireType)
+			}
+			m.Type = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAutomation
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Type |= TriggerType(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Account", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -436,8 +836,131 @@ func (m *Automation) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Status = string(dAtA[iNdEx:postIndex])
+			m.Account = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Asset", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAutomation
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Asset = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Height", wireType)
+			}
+			m.Height = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAutomation
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Height |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Timestamp", wireType)
+			}
+			m.Timestamp = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAutomation
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Timestamp |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Conditions", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAutomation
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Conditions = append(m.Conditions, &Trigger{})
+			if err := m.Conditions[len(m.Conditions)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 7:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Price", wireType)
+			}
+			m.Price = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAutomation
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Price |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipAutomation(dAtA[iNdEx:])
