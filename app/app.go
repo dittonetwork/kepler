@@ -37,6 +37,7 @@ import (
 	epochskeeper "kepler/x/epochs/keeper"
 	workflowmodulekeeper "kepler/x/workflow/keeper"
 
+	committeemodulekeeper "kepler/x/committee/keeper"
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 
 	"kepler/docs"
@@ -74,8 +75,9 @@ type App struct {
 	DistrKeeper           distrkeeper.Keeper
 	ConsensusParamsKeeper consensuskeeper.Keeper
 
-	EpochsKeeper   epochskeeper.Keeper
-	WorkflowKeeper workflowmodulekeeper.Keeper
+	EpochsKeeper    epochskeeper.Keeper
+	WorkflowKeeper  workflowmodulekeeper.Keeper
+	CommitteeKeeper committeemodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
 	// simulation manager
@@ -149,6 +151,7 @@ func New(
 		&app.ConsensusParamsKeeper,
 		&app.EpochsKeeper,
 		&app.WorkflowKeeper,
+		&app.CommitteeKeeper,
 		// this line is used by starport scaffolding # stargate/app/keeperDefinition
 	); err != nil {
 		panic(err)
