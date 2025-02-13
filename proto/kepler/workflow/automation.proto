@@ -33,6 +33,13 @@ message Trigger {
   }
 }
 
+// Base action with type selection
+message Action {
+  oneof action {
+    OnChainAction on_chain = 1;
+  }
+}
+
 // On chain trigger
 message OnChainTrigger {
   bytes contract_address = 1; // Contract address
@@ -51,11 +58,13 @@ message LogicalTrigger {
   repeated Trigger triggers = 2; // List of triggers
 }
 
+// Count trigger
 message CountTrigger {
   uint64 repeat_count = 1; // Number of executions allowed
   repeated Trigger triggers = 3; // List of triggers
 }
 
+// Block interval trigger
 message BlockIntervalTrigger {
   uint64 block_interval = 1; // Block interval in blocks
 }
@@ -68,7 +77,8 @@ enum LogicalOperator {
   LOGICAL_OPERATOR_NOT = 3; // Logical NOT operator
 }
 
-message Action {
+// On chain action
+message OnChainAction {
   bytes contract_address = 1; // Contract address
   string chain_id = 2; // Chain ID
   bytes tx_call_data = 3;
