@@ -1,5 +1,7 @@
 package types
 
+import "cosmossdk.io/collections"
+
 const (
 	// ModuleName defines the module name.
 	ModuleName = "job"
@@ -13,6 +15,8 @@ const (
 
 var (
 	ParamsKey = []byte("p_job")
+
+	JobsPrefix = collections.NewPrefix(0)
 )
 
 func KeyPrefix(p string) []byte {
