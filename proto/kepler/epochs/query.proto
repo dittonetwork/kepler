@@ -5,26 +5,30 @@ import "amino/amino.proto";
 import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
-import "kepler/epochs/params.proto";
+import "kepler/epochs/genesis.proto";
 
 option go_package = "kepler/x/epochs/types";
 
 // Query defines the gRPC querier service.
 service Query {
-  // Parameters queries the parameters of the module.
-  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
-    option (google.api.http).get = "/kepler/epochs/params";
+  // EpochInfos provide running epochInfos
+  rpc EpochInfos(QueryEpochsInfoRequest) returns (QueryEpochsInfoResponse) {
+    option (google.api.http).get = "/cosmos/epochs/v1beta1/epochs";
+  }
+  // CurrentEpoch provide current epoch of specified identifier
+  rpc CurrentEpoch(QueryCurrentEpochRequest) returns (QueryCurrentEpochResponse) {
+    option (google.api.http).get = "/cosmos/epochs/v1beta1/current_epoch";
   }
 }
 
-// QueryParamsRequest is request type for the Query/Params RPC method.
-message QueryParamsRequest {}
+message QueryEpochsInfoRequest {}
+message QueryEpochsInfoResponse {
+  repeated EpochInfo epochs = 1 [(gogoproto.nullable) = false];
+}
 
-// QueryParamsResponse is response type for the Query/Params RPC method.
-message QueryParamsResponse {
-  // params holds all the parameters of this module.
-  Params params = 1 [
-    (gogoproto.nullable) = false,
-    (amino.dont_omitempty) = true
-  ];
+message QueryCurrentEpochRequest {
+  string identifier = 1;
+}
+message QueryCurrentEpochResponse {
+  int64 current_epoch = 1;
 }
