@@ -173,10 +173,11 @@ func (m *Automation) GetStatus() AutomationStatus {
 type Trigger struct {
 	// Types that are valid to be assigned to Trigger:
 	//
-	//	*Trigger_Price
+	//	*Trigger_OnChain
 	//	*Trigger_Time
 	//	*Trigger_Logical
 	//	*Trigger_Count
+	//	*Trigger_BlockInterval
 	Trigger isTrigger_Trigger `protobuf_oneof:"trigger"`
 }
 
@@ -219,8 +220,8 @@ type isTrigger_Trigger interface {
 	Size() int
 }
 
-type Trigger_Price struct {
-	Price *PriceTrigger `protobuf:"bytes,1,opt,name=price,proto3,oneof" json:"price,omitempty"`
+type Trigger_OnChain struct {
+	OnChain *OnChainTrigger `protobuf:"bytes,1,opt,name=on_chain,json=onChain,proto3,oneof" json:"on_chain,omitempty"`
 }
 type Trigger_Time struct {
 	Time *TimeTrigger `protobuf:"bytes,2,opt,name=time,proto3,oneof" json:"time,omitempty"`
@@ -231,11 +232,15 @@ type Trigger_Logical struct {
 type Trigger_Count struct {
 	Count *CountTrigger `protobuf:"bytes,4,opt,name=count,proto3,oneof" json:"count,omitempty"`
 }
+type Trigger_BlockInterval struct {
+	BlockInterval *BlockIntervalTrigger `protobuf:"bytes,5,opt,name=block_interval,json=blockInterval,proto3,oneof" json:"block_interval,omitempty"`
+}
 
-func (*Trigger_Price) isTrigger_Trigger()   {}
-func (*Trigger_Time) isTrigger_Trigger()    {}
-func (*Trigger_Logical) isTrigger_Trigger() {}
-func (*Trigger_Count) isTrigger_Trigger()   {}
+func (*Trigger_OnChain) isTrigger_Trigger()       {}
+func (*Trigger_Time) isTrigger_Trigger()          {}
+func (*Trigger_Logical) isTrigger_Trigger()       {}
+func (*Trigger_Count) isTrigger_Trigger()         {}
+func (*Trigger_BlockInterval) isTrigger_Trigger() {}
 
 func (m *Trigger) GetTrigger() isTrigger_Trigger {
 	if m != nil {
@@ -244,9 +249,9 @@ func (m *Trigger) GetTrigger() isTrigger_Trigger {
 	return nil
 }
 
-func (m *Trigger) GetPrice() *PriceTrigger {
-	if x, ok := m.GetTrigger().(*Trigger_Price); ok {
-		return x.Price
+func (m *Trigger) GetOnChain() *OnChainTrigger {
+	if x, ok := m.GetTrigger().(*Trigger_OnChain); ok {
+		return x.OnChain
 	}
 	return nil
 }
@@ -272,36 +277,43 @@ func (m *Trigger) GetCount() *CountTrigger {
 	return nil
 }
 
+func (m *Trigger) GetBlockInterval() *BlockIntervalTrigger {
+	if x, ok := m.GetTrigger().(*Trigger_BlockInterval); ok {
+		return x.BlockInterval
+	}
+	return nil
+}
+
 // XXX_OneofWrappers is for the internal use of the proto package.
 func (*Trigger) XXX_OneofWrappers() []interface{} {
 	return []interface{}{
-		(*Trigger_Price)(nil),
+		(*Trigger_OnChain)(nil),
 		(*Trigger_Time)(nil),
 		(*Trigger_Logical)(nil),
 		(*Trigger_Count)(nil),
+		(*Trigger_BlockInterval)(nil),
 	}
 }
 
-// Asset price trigger
-type PriceTrigger struct {
-	BaseAsset   string `protobuf:"bytes,1,opt,name=base_asset,json=baseAsset,proto3" json:"base_asset,omitempty"`
-	QuoteAsset  string `protobuf:"bytes,2,opt,name=quote_asset,json=quoteAsset,proto3" json:"quote_asset,omitempty"`
-	Operator    string `protobuf:"bytes,3,opt,name=operator,proto3" json:"operator,omitempty"`
-	TargetPrice string `protobuf:"bytes,4,opt,name=target_price,json=targetPrice,proto3" json:"target_price,omitempty"`
+// On chain trigger
+type OnChainTrigger struct {
+	ContractAddress []byte `protobuf:"bytes,1,opt,name=contract_address,json=contractAddress,proto3" json:"contract_address,omitempty"`
+	ChainId         string `protobuf:"bytes,2,opt,name=chain_id,json=chainId,proto3" json:"chain_id,omitempty"`
+	TxCallData      []byte `protobuf:"bytes,3,opt,name=tx_call_data,json=txCallData,proto3" json:"tx_call_data,omitempty"`
 }
 
-func (m *PriceTrigger) Reset()         { *m = PriceTrigger{} }
-func (m *PriceTrigger) String() string { return proto.CompactTextString(m) }
-func (*PriceTrigger) ProtoMessage()    {}
-func (*PriceTrigger) Descriptor() ([]byte, []int) {
+func (m *OnChainTrigger) Reset()         { *m = OnChainTrigger{} }
+func (m *OnChainTrigger) String() string { return proto.CompactTextString(m) }
+func (*OnChainTrigger) ProtoMessage()    {}
+func (*OnChainTrigger) Descriptor() ([]byte, []int) {
 	return fileDescriptor_e70c979264e1abb3, []int{2}
 }
-func (m *PriceTrigger) XXX_Unmarshal(b []byte) error {
+func (m *OnChainTrigger) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *PriceTrigger) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *OnChainTrigger) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_PriceTrigger.Marshal(b, m, deterministic)
+		return xxx_messageInfo_OnChainTrigger.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -311,44 +323,37 @@ func (m *PriceTrigger) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)
 		return b[:n], nil
 	}
 }
-func (m *PriceTrigger) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PriceTrigger.Merge(m, src)
+func (m *OnChainTrigger) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_OnChainTrigger.Merge(m, src)
 }
-func (m *PriceTrigger) XXX_Size() int {
+func (m *OnChainTrigger) XXX_Size() int {
 	return m.Size()
 }
-func (m *PriceTrigger) XXX_DiscardUnknown() {
-	xxx_messageInfo_PriceTrigger.DiscardUnknown(m)
+func (m *OnChainTrigger) XXX_DiscardUnknown() {
+	xxx_messageInfo_OnChainTrigger.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_PriceTrigger proto.InternalMessageInfo
+var xxx_messageInfo_OnChainTrigger proto.InternalMessageInfo
 
-func (m *PriceTrigger) GetBaseAsset() string {
+func (m *OnChainTrigger) GetContractAddress() []byte {
 	if m != nil {
-		return m.BaseAsset
+		return m.ContractAddress
+	}
+	return nil
+}
+
+func (m *OnChainTrigger) GetChainId() string {
+	if m != nil {
+		return m.ChainId
 	}
 	return ""
 }
 
-func (m *PriceTrigger) GetQuoteAsset() string {
+func (m *OnChainTrigger) GetTxCallData() []byte {
 	if m != nil {
-		return m.QuoteAsset
+		return m.TxCallData
 	}
-	return ""
-}
-
-func (m *PriceTrigger) GetOperator() string {
-	if m != nil {
-		return m.Operator
-	}
-	return ""
-}
-
-func (m *PriceTrigger) GetTargetPrice() string {
-	if m != nil {
-		return m.TargetPrice
-	}
-	return ""
+	return nil
 }
 
 // Time trigger
@@ -450,9 +455,8 @@ func (m *LogicalTrigger) GetTriggers() []*Trigger {
 }
 
 type CountTrigger struct {
-	RepeatCount    uint64     `protobuf:"varint,1,opt,name=repeat_count,json=repeatCount,proto3" json:"repeat_count,omitempty"`
-	RepeatInterval uint64     `protobuf:"varint,3,opt,name=repeat_interval,json=repeatInterval,proto3" json:"repeat_interval,omitempty"`
-	Triggers       []*Trigger `protobuf:"bytes,5,rep,name=triggers,proto3" json:"triggers,omitempty"`
+	RepeatCount uint64     `protobuf:"varint,1,opt,name=repeat_count,json=repeatCount,proto3" json:"repeat_count,omitempty"`
+	Triggers    []*Trigger `protobuf:"bytes,3,rep,name=triggers,proto3" json:"triggers,omitempty"`
 }
 
 func (m *CountTrigger) Reset()         { *m = CountTrigger{} }
@@ -495,13 +499,6 @@ func (m *CountTrigger) GetRepeatCount() uint64 {
 	return 0
 }
 
-func (m *CountTrigger) GetRepeatInterval() uint64 {
-	if m != nil {
-		return m.RepeatInterval
-	}
-	return 0
-}
-
 func (m *CountTrigger) GetTriggers() []*Trigger {
 	if m != nil {
 		return m.Triggers
@@ -509,15 +506,61 @@ func (m *CountTrigger) GetTriggers() []*Trigger {
 	return nil
 }
 
+type BlockIntervalTrigger struct {
+	BlockInterval uint64 `protobuf:"varint,1,opt,name=block_interval,json=blockInterval,proto3" json:"block_interval,omitempty"`
+}
+
+func (m *BlockIntervalTrigger) Reset()         { *m = BlockIntervalTrigger{} }
+func (m *BlockIntervalTrigger) String() string { return proto.CompactTextString(m) }
+func (*BlockIntervalTrigger) ProtoMessage()    {}
+func (*BlockIntervalTrigger) Descriptor() ([]byte, []int) {
+	return fileDescriptor_e70c979264e1abb3, []int{6}
+}
+func (m *BlockIntervalTrigger) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *BlockIntervalTrigger) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_BlockIntervalTrigger.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *BlockIntervalTrigger) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_BlockIntervalTrigger.Merge(m, src)
+}
+func (m *BlockIntervalTrigger) XXX_Size() int {
+	return m.Size()
+}
+func (m *BlockIntervalTrigger) XXX_DiscardUnknown() {
+	xxx_messageInfo_BlockIntervalTrigger.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_BlockIntervalTrigger proto.InternalMessageInfo
+
+func (m *BlockIntervalTrigger) GetBlockInterval() uint64 {
+	if m != nil {
+		return m.BlockInterval
+	}
+	return 0
+}
+
 type Action struct {
-	TxCallData []byte `protobuf:"bytes,1,opt,name=tx_call_data,json=txCallData,proto3" json:"tx_call_data,omitempty"`
+	ContractAddress []byte `protobuf:"bytes,1,opt,name=contract_address,json=contractAddress,proto3" json:"contract_address,omitempty"`
+	ChainId         string `protobuf:"bytes,2,opt,name=chain_id,json=chainId,proto3" json:"chain_id,omitempty"`
+	TxCallData      []byte `protobuf:"bytes,3,opt,name=tx_call_data,json=txCallData,proto3" json:"tx_call_data,omitempty"`
 }
 
 func (m *Action) Reset()         { *m = Action{} }
 func (m *Action) String() string { return proto.CompactTextString(m) }
 func (*Action) ProtoMessage()    {}
 func (*Action) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e70c979264e1abb3, []int{6}
+	return fileDescriptor_e70c979264e1abb3, []int{7}
 }
 func (m *Action) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -546,6 +589,20 @@ func (m *Action) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_Action proto.InternalMessageInfo
 
+func (m *Action) GetContractAddress() []byte {
+	if m != nil {
+		return m.ContractAddress
+	}
+	return nil
+}
+
+func (m *Action) GetChainId() string {
+	if m != nil {
+		return m.ChainId
+	}
+	return ""
+}
+
 func (m *Action) GetTxCallData() []byte {
 	if m != nil {
 		return m.TxCallData
@@ -558,61 +615,63 @@ func init() {
 	proto.RegisterEnum("kepler.workflow.LogicalOperator", LogicalOperator_name, LogicalOperator_value)
 	proto.RegisterType((*Automation)(nil), "kepler.workflow.Automation")
 	proto.RegisterType((*Trigger)(nil), "kepler.workflow.Trigger")
-	proto.RegisterType((*PriceTrigger)(nil), "kepler.workflow.PriceTrigger")
+	proto.RegisterType((*OnChainTrigger)(nil), "kepler.workflow.OnChainTrigger")
 	proto.RegisterType((*TimeTrigger)(nil), "kepler.workflow.TimeTrigger")
 	proto.RegisterType((*LogicalTrigger)(nil), "kepler.workflow.LogicalTrigger")
 	proto.RegisterType((*CountTrigger)(nil), "kepler.workflow.CountTrigger")
+	proto.RegisterType((*BlockIntervalTrigger)(nil), "kepler.workflow.BlockIntervalTrigger")
 	proto.RegisterType((*Action)(nil), "kepler.workflow.Action")
 }
 
 func init() { proto.RegisterFile("kepler/workflow/automation.proto", fileDescriptor_e70c979264e1abb3) }
 
 var fileDescriptor_e70c979264e1abb3 = []byte{
-	// 699 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x54, 0xcd, 0x6e, 0xda, 0x4a,
-	0x14, 0x66, 0x80, 0x84, 0x70, 0xe0, 0x82, 0x35, 0xf7, 0xea, 0xc6, 0x37, 0x37, 0x21, 0x0e, 0xad,
-	0x54, 0x94, 0x05, 0x51, 0x68, 0xbb, 0xa8, 0xba, 0x72, 0xc0, 0x69, 0xad, 0x52, 0x8c, 0x06, 0x53,
-	0x55, 0xdd, 0x58, 0x13, 0x32, 0x41, 0x56, 0x9c, 0x98, 0xda, 0x43, 0x43, 0x77, 0x7d, 0x81, 0x4a,
-	0x91, 0xfa, 0x52, 0x5d, 0xa6, 0xbb, 0x6e, 0x2a, 0x55, 0xc9, 0x23, 0xf4, 0x05, 0x2a, 0xcf, 0x18,
-	0x42, 0x30, 0x95, 0xb2, 0x42, 0x7c, 0x3f, 0xe3, 0xef, 0x3b, 0x3e, 0x1e, 0xd0, 0x4e, 0xd9, 0xc8,
-	0x63, 0xc1, 0xde, 0x85, 0x1f, 0x9c, 0x9e, 0x78, 0xfe, 0xc5, 0x1e, 0x1d, 0x73, 0xff, 0x8c, 0x72,
-	0xd7, 0x3f, 0xaf, 0x8f, 0x02, 0x9f, 0xfb, 0xb8, 0x2c, 0x15, 0xf5, 0xa9, 0xa2, 0xfa, 0x03, 0x01,
-	0xe8, 0x33, 0x15, 0x2e, 0x41, 0xda, 0x3d, 0x56, 0x91, 0x86, 0x6a, 0x59, 0x92, 0x76, 0x8f, 0xf1,
-	0x13, 0x58, 0xe3, 0x81, 0x3b, 0x1c, 0xb2, 0x20, 0x54, 0xd3, 0x1a, 0xaa, 0x15, 0x1a, 0x6a, 0x7d,
-	0xe1, 0x88, 0xba, 0x2d, 0x05, 0x64, 0xa6, 0xc4, 0xfb, 0x90, 0xa3, 0x83, 0xe8, 0xbc, 0x50, 0xcd,
-	0x68, 0x99, 0x5a, 0xa1, 0xb1, 0x9e, 0x30, 0xe9, 0x82, 0x27, 0x53, 0x1d, 0xfe, 0x1f, 0xf2, 0x6c,
-	0x32, 0x72, 0x03, 0xe6, 0x50, 0xae, 0x66, 0xc5, 0xf3, 0xd7, 0x24, 0xa0, 0x73, 0xfc, 0x0c, 0x56,
-	0x43, 0x4e, 0xf9, 0x38, 0x54, 0x73, 0x1a, 0xaa, 0x95, 0x1a, 0x3b, 0xc9, 0xe3, 0x66, 0x15, 0x7a,
-	0x42, 0x48, 0x62, 0x43, 0xf5, 0x17, 0x82, 0x5c, 0x1c, 0x10, 0x3f, 0x85, 0x95, 0x51, 0xe0, 0x0e,
-	0x98, 0xe8, 0x57, 0x68, 0x6c, 0x25, 0x4e, 0xe9, 0x46, 0x6c, 0xac, 0x7e, 0x99, 0x22, 0x52, 0x8d,
-	0x1b, 0x90, 0xe5, 0xee, 0x19, 0x8b, 0xfb, 0x6f, 0x26, 0xfb, 0xbb, 0x67, 0x73, 0x26, 0xa1, 0xc5,
-	0xcf, 0x21, 0xe7, 0xf9, 0x43, 0x77, 0x40, 0x3d, 0x35, 0x23, 0x6c, 0xdb, 0x09, 0x5b, 0x5b, 0xf2,
-	0xb7, 0xce, 0xa9, 0x23, 0xca, 0x39, 0xf0, 0xc7, 0xe7, 0x72, 0x0e, 0xcb, 0x72, 0x36, 0x23, 0x76,
-	0x2e, 0xa7, 0x50, 0x1f, 0xe4, 0x21, 0x17, 0xbf, 0x81, 0xea, 0x67, 0x04, 0xc5, 0xf9, 0x32, 0x78,
-	0x0b, 0xe0, 0x88, 0x86, 0xcc, 0xa1, 0x61, 0xc8, 0xb8, 0xe8, 0x9f, 0x27, 0xf9, 0x08, 0xd1, 0x23,
-	0x00, 0x6f, 0x43, 0xe1, 0xfd, 0xd8, 0xe7, 0x53, 0x3e, 0x2d, 0x78, 0x10, 0x90, 0x14, 0x6c, 0xc0,
-	0x9a, 0x3f, 0x62, 0x01, 0xe5, 0x7e, 0x20, 0x0a, 0xe5, 0xc9, 0xec, 0x3f, 0xde, 0x81, 0x22, 0xa7,
-	0xc1, 0x90, 0x71, 0x47, 0x4e, 0x37, 0x2b, 0xf8, 0x82, 0xc4, 0x44, 0x8a, 0x6a, 0x03, 0x0a, 0x73,
-	0x53, 0xc2, 0x0f, 0xe0, 0x2f, 0x36, 0x61, 0x83, 0x71, 0xf4, 0xc0, 0x13, 0xce, 0x82, 0x78, 0xe1,
-	0x8a, 0x31, 0xa8, 0x47, 0x58, 0xf5, 0x0b, 0x82, 0xd2, 0xdd, 0x19, 0xe1, 0x57, 0xa0, 0xc4, 0x33,
-	0x72, 0x66, 0x69, 0x90, 0xd8, 0x08, 0xed, 0x4f, 0xe3, 0xb5, 0x62, 0x1d, 0x29, 0x7b, 0x77, 0x81,
-	0x85, 0xd5, 0xce, 0xdc, 0x6f, 0xb5, 0xab, 0x97, 0x08, 0x8a, 0xf3, 0xe3, 0x8f, 0xda, 0x07, 0x6c,
-	0xc4, 0x28, 0x77, 0xe4, 0x3b, 0x93, 0x55, 0x0a, 0x12, 0x13, 0x4a, 0xfc, 0x08, 0xca, 0xb1, 0xc4,
-	0x3d, 0xe7, 0x2c, 0xf8, 0x10, 0x2f, 0x45, 0x96, 0x94, 0x24, 0x6c, 0xc6, 0xe8, 0x9d, 0x48, 0x2b,
-	0xf7, 0x8e, 0xb4, 0x0b, 0xab, 0xf2, 0x6b, 0xc2, 0x1a, 0x14, 0xf9, 0xc4, 0x19, 0x50, 0xcf, 0x73,
-	0x8e, 0x29, 0xa7, 0x22, 0x4b, 0x91, 0x00, 0x9f, 0x34, 0xa9, 0xe7, 0xb5, 0x28, 0xa7, 0xbb, 0xdf,
-	0x10, 0x28, 0x8b, 0xdf, 0x0a, 0xae, 0xc1, 0x43, 0xbd, 0x6f, 0x5b, 0xaf, 0x75, 0xdb, 0xb4, 0x3a,
-	0x4e, 0xcf, 0xd6, 0xed, 0x7e, 0x6f, 0xfa, 0xd3, 0xef, 0xf4, 0xba, 0x46, 0xd3, 0x3c, 0x34, 0x8d,
-	0x96, 0x92, 0xc2, 0x9b, 0xa0, 0x26, 0x95, 0x7a, 0xd3, 0x36, 0xdf, 0x18, 0x0a, 0xc2, 0x5b, 0xf0,
-	0x5f, 0x92, 0x35, 0xde, 0x76, 0x4d, 0x62, 0xb4, 0x94, 0xf4, 0x72, 0x73, 0x57, 0xef, 0xf7, 0x8c,
-	0x96, 0x92, 0x59, 0xce, 0x1e, 0xea, 0x66, 0xdb, 0x68, 0x29, 0x59, 0xbc, 0x01, 0xff, 0x26, 0xd9,
-	0x96, 0xd5, 0x31, 0x94, 0x95, 0xdd, 0x4f, 0x08, 0xca, 0x0b, 0x6f, 0x1b, 0x6b, 0xb0, 0xd9, 0xb6,
-	0x5e, 0x98, 0x4d, 0xbd, 0xed, 0x58, 0x5d, 0x83, 0xe8, 0xb6, 0x45, 0x16, 0xaa, 0xa8, 0xf0, 0x4f,
-	0x42, 0xa1, 0x77, 0x5a, 0x0a, 0xc2, 0xeb, 0xf0, 0x77, 0x82, 0xb1, 0x88, 0x92, 0x5e, 0x6a, 0xe9,
-	0x58, 0xb6, 0x92, 0x39, 0xd8, 0xff, 0x7a, 0x5d, 0x41, 0x57, 0xd7, 0x15, 0xf4, 0xf3, 0xba, 0x82,
-	0x2e, 0x6f, 0x2a, 0xa9, 0xab, 0x9b, 0x4a, 0xea, 0xfb, 0x4d, 0x25, 0xf5, 0x6e, 0x3d, 0xbe, 0x92,
-	0x27, 0xb7, 0x97, 0x32, 0xff, 0x38, 0x62, 0xe1, 0xd1, 0xaa, 0xb8, 0x90, 0x1f, 0xff, 0x0e, 0x00,
-	0x00, 0xff, 0xff, 0x37, 0x6d, 0x01, 0xd5, 0xb4, 0x05, 0x00, 0x00,
+	// 718 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x55, 0xcd, 0x6e, 0xda, 0x4a,
+	0x14, 0xc6, 0x40, 0x02, 0x39, 0x10, 0xb0, 0xe6, 0x46, 0x37, 0xce, 0xbd, 0x09, 0x75, 0x68, 0x23,
+	0xd1, 0x2c, 0x88, 0xe2, 0xb6, 0x8b, 0xaa, 0xed, 0xc2, 0x01, 0xa7, 0xb5, 0x4a, 0x31, 0x32, 0xa6,
+	0xaa, 0xba, 0xb1, 0x26, 0x66, 0x42, 0xad, 0x38, 0x0c, 0xb2, 0x87, 0x86, 0xee, 0xfa, 0x08, 0x95,
+	0xfa, 0x52, 0x55, 0x57, 0xe9, 0xae, 0x9b, 0x4a, 0x55, 0xf2, 0x22, 0x15, 0x1e, 0x13, 0x7e, 0x4c,
+	0xa4, 0xac, 0xba, 0x42, 0x7c, 0x3f, 0xe7, 0x78, 0xbe, 0x33, 0x47, 0x03, 0xf2, 0x19, 0x19, 0x78,
+	0xc4, 0x3f, 0xb8, 0xa0, 0xfe, 0xd9, 0xa9, 0x47, 0x2f, 0x0e, 0xf0, 0x90, 0xd1, 0x73, 0xcc, 0x5c,
+	0xda, 0xaf, 0x0e, 0x7c, 0xca, 0x28, 0x2a, 0x72, 0x45, 0x75, 0xa2, 0x28, 0xff, 0x12, 0x00, 0xd4,
+	0x1b, 0x15, 0x2a, 0x40, 0xd2, 0xed, 0x4a, 0x82, 0x2c, 0x54, 0xd2, 0x66, 0xd2, 0xed, 0xa2, 0xc7,
+	0x90, 0x65, 0xbe, 0xdb, 0xeb, 0x11, 0x3f, 0x90, 0x92, 0xb2, 0x50, 0xc9, 0x29, 0x52, 0x75, 0xa1,
+	0x44, 0xd5, 0xe2, 0x02, 0xf3, 0x46, 0x89, 0x0e, 0x21, 0x83, 0x9d, 0x71, 0xbd, 0x40, 0x4a, 0xc9,
+	0xa9, 0x4a, 0x4e, 0xd9, 0x8c, 0x99, 0xd4, 0x90, 0x37, 0x27, 0x3a, 0xf4, 0x3f, 0xac, 0x91, 0xd1,
+	0xc0, 0xf5, 0x89, 0x8d, 0x99, 0x94, 0x0e, 0xfb, 0x67, 0x39, 0xa0, 0x32, 0xf4, 0x14, 0x56, 0x03,
+	0x86, 0xd9, 0x30, 0x90, 0x32, 0xb2, 0x50, 0x29, 0x28, 0xbb, 0xf1, 0x72, 0x37, 0x47, 0x68, 0x87,
+	0x42, 0x33, 0x32, 0x94, 0xbf, 0x27, 0x21, 0x13, 0x7d, 0x20, 0x7a, 0x0e, 0x59, 0xda, 0xb7, 0x9d,
+	0x0f, 0xd8, 0xed, 0x87, 0x47, 0xcc, 0x29, 0xf7, 0x62, 0x85, 0x8c, 0x7e, 0x6d, 0xcc, 0x47, 0x96,
+	0x57, 0x09, 0x33, 0x43, 0x39, 0x82, 0x14, 0x48, 0x33, 0xf7, 0x9c, 0x44, 0x31, 0x6c, 0xc7, 0x63,
+	0x70, 0xcf, 0xc9, 0xd4, 0x16, 0x6a, 0xd1, 0x33, 0xc8, 0x78, 0xb4, 0xe7, 0x3a, 0xd8, 0x93, 0x52,
+	0xb7, 0x34, 0x6c, 0x70, 0x7e, 0xa6, 0x61, 0xe4, 0x40, 0x4f, 0x60, 0xc5, 0xa1, 0xc3, 0x3e, 0x8f,
+	0x23, 0xa7, 0xec, 0xc4, 0xac, 0xb5, 0x31, 0x3b, 0x35, 0x72, 0x35, 0x6a, 0x42, 0xe1, 0xc4, 0xa3,
+	0xce, 0x99, 0xed, 0xf6, 0x19, 0xf1, 0x3f, 0x62, 0x4f, 0x5a, 0x09, 0xfd, 0x7b, 0x31, 0xff, 0xd1,
+	0x58, 0xa6, 0x47, 0xaa, 0x69, 0x9d, 0xf5, 0x93, 0x59, 0xfc, 0x68, 0x0d, 0x32, 0xd1, 0x60, 0xcb,
+	0x23, 0x28, 0xcc, 0xe7, 0x83, 0x1e, 0x82, 0xe8, 0xd0, 0x3e, 0xf3, 0xb1, 0xc3, 0x6c, 0xdc, 0xed,
+	0xfa, 0x24, 0x08, 0xc2, 0x68, 0xf3, 0x66, 0x71, 0x82, 0xab, 0x1c, 0x46, 0x5b, 0x90, 0x0d, 0xa3,
+	0xb7, 0xdd, 0x6e, 0x98, 0xe1, 0x9a, 0x99, 0x09, 0xff, 0xeb, 0x5d, 0x24, 0x43, 0x9e, 0x8d, 0x6c,
+	0x07, 0x7b, 0x9e, 0xdd, 0xc5, 0x0c, 0x87, 0x59, 0xe5, 0x4d, 0x60, 0xa3, 0x1a, 0xf6, 0xbc, 0x3a,
+	0x66, 0xb8, 0xac, 0x40, 0x6e, 0x26, 0x5f, 0x74, 0x1f, 0xd6, 0xc9, 0x88, 0x38, 0x43, 0x46, 0x6c,
+	0x7c, 0xca, 0x88, 0x1f, 0xdd, 0xd8, 0x7c, 0x04, 0xaa, 0x63, 0xac, 0xfc, 0x55, 0x80, 0xc2, 0x7c,
+	0xba, 0xe8, 0x35, 0x88, 0x51, 0xba, 0x36, 0x1d, 0x10, 0x1f, 0x33, 0xca, 0xad, 0x05, 0x45, 0xbe,
+	0x6d, 0x30, 0x46, 0xa4, 0x33, 0x8b, 0xde, 0x3c, 0xb0, 0xb0, 0x1b, 0xa9, 0xbb, 0xed, 0x46, 0xb9,
+	0x07, 0xf9, 0xd9, 0xb9, 0xa1, 0x5d, 0xc8, 0xfb, 0x64, 0x40, 0x30, 0xb3, 0xf9, 0xb0, 0xf9, 0x49,
+	0x72, 0x1c, 0x0b, 0x95, 0x73, 0x8d, 0x52, 0x77, 0x6e, 0xf4, 0x02, 0x36, 0x96, 0x0d, 0x18, 0xed,
+	0xc5, 0xee, 0x07, 0x6f, 0x39, 0x3f, 0xf6, 0xf2, 0x00, 0x56, 0xf9, 0x8e, 0xfe, 0xad, 0x19, 0xef,
+	0xff, 0x10, 0x40, 0x5c, 0xdc, 0x63, 0x54, 0x81, 0x07, 0x6a, 0xc7, 0x32, 0xde, 0xa8, 0x96, 0x6e,
+	0x34, 0xed, 0xb6, 0xa5, 0x5a, 0x9d, 0xf6, 0xe4, 0xa7, 0xd3, 0x6c, 0xb7, 0xb4, 0x9a, 0x7e, 0xac,
+	0x6b, 0x75, 0x31, 0x81, 0xb6, 0x41, 0x8a, 0x2b, 0xd5, 0x9a, 0xa5, 0xbf, 0xd5, 0x44, 0x01, 0xed,
+	0xc0, 0x56, 0x9c, 0xd5, 0xde, 0xb5, 0x74, 0x53, 0xab, 0x8b, 0xc9, 0xe5, 0xe6, 0x96, 0xda, 0x69,
+	0x6b, 0x75, 0x31, 0xb5, 0x9c, 0x3d, 0x56, 0xf5, 0x86, 0x56, 0x17, 0xd3, 0xe8, 0x3f, 0xf8, 0x37,
+	0xce, 0xd6, 0x8d, 0xa6, 0x26, 0xae, 0xec, 0x7f, 0x16, 0xa0, 0xb8, 0x70, 0x91, 0x90, 0x0c, 0xdb,
+	0x0d, 0xe3, 0xa5, 0x5e, 0x53, 0x1b, 0xb6, 0xd1, 0xd2, 0x4c, 0xd5, 0x32, 0xcc, 0x85, 0xa3, 0x48,
+	0xb0, 0x11, 0x53, 0xa8, 0xcd, 0xba, 0x28, 0xa0, 0x4d, 0xf8, 0x27, 0xc6, 0x18, 0xa6, 0x98, 0x5c,
+	0x6a, 0x69, 0x1a, 0x96, 0x98, 0x3a, 0x3a, 0xfc, 0x76, 0x55, 0x12, 0x2e, 0xaf, 0x4a, 0xc2, 0xef,
+	0xab, 0x92, 0xf0, 0xe5, 0xba, 0x94, 0xb8, 0xbc, 0x2e, 0x25, 0x7e, 0x5e, 0x97, 0x12, 0xef, 0x37,
+	0xa3, 0xe7, 0x62, 0x34, 0x7d, 0x30, 0xd8, 0xa7, 0x01, 0x09, 0x4e, 0x56, 0xc3, 0xc7, 0xe2, 0xd1,
+	0x9f, 0x00, 0x00, 0x00, 0xff, 0xff, 0xa9, 0xa4, 0x25, 0xf3, 0x50, 0x06, 0x00, 0x00,
 }
 
 func (m *Automation) Marshal() (dAtA []byte, err error) {
@@ -711,16 +770,16 @@ func (m *Trigger) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *Trigger_Price) MarshalTo(dAtA []byte) (int, error) {
+func (m *Trigger_OnChain) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *Trigger_Price) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *Trigger_OnChain) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
-	if m.Price != nil {
+	if m.OnChain != nil {
 		{
-			size, err := m.Price.MarshalToSizedBuffer(dAtA[:i])
+			size, err := m.OnChain.MarshalToSizedBuffer(dAtA[:i])
 			if err != nil {
 				return 0, err
 			}
@@ -795,7 +854,28 @@ func (m *Trigger_Count) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	}
 	return len(dAtA) - i, nil
 }
-func (m *PriceTrigger) Marshal() (dAtA []byte, err error) {
+func (m *Trigger_BlockInterval) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Trigger_BlockInterval) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	if m.BlockInterval != nil {
+		{
+			size, err := m.BlockInterval.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintAutomation(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x2a
+	}
+	return len(dAtA) - i, nil
+}
+func (m *OnChainTrigger) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -805,41 +885,34 @@ func (m *PriceTrigger) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *PriceTrigger) MarshalTo(dAtA []byte) (int, error) {
+func (m *OnChainTrigger) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *PriceTrigger) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *OnChainTrigger) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.TargetPrice) > 0 {
-		i -= len(m.TargetPrice)
-		copy(dAtA[i:], m.TargetPrice)
-		i = encodeVarintAutomation(dAtA, i, uint64(len(m.TargetPrice)))
-		i--
-		dAtA[i] = 0x22
-	}
-	if len(m.Operator) > 0 {
-		i -= len(m.Operator)
-		copy(dAtA[i:], m.Operator)
-		i = encodeVarintAutomation(dAtA, i, uint64(len(m.Operator)))
+	if len(m.TxCallData) > 0 {
+		i -= len(m.TxCallData)
+		copy(dAtA[i:], m.TxCallData)
+		i = encodeVarintAutomation(dAtA, i, uint64(len(m.TxCallData)))
 		i--
 		dAtA[i] = 0x1a
 	}
-	if len(m.QuoteAsset) > 0 {
-		i -= len(m.QuoteAsset)
-		copy(dAtA[i:], m.QuoteAsset)
-		i = encodeVarintAutomation(dAtA, i, uint64(len(m.QuoteAsset)))
+	if len(m.ChainId) > 0 {
+		i -= len(m.ChainId)
+		copy(dAtA[i:], m.ChainId)
+		i = encodeVarintAutomation(dAtA, i, uint64(len(m.ChainId)))
 		i--
 		dAtA[i] = 0x12
 	}
-	if len(m.BaseAsset) > 0 {
-		i -= len(m.BaseAsset)
-		copy(dAtA[i:], m.BaseAsset)
-		i = encodeVarintAutomation(dAtA, i, uint64(len(m.BaseAsset)))
+	if len(m.ContractAddress) > 0 {
+		i -= len(m.ContractAddress)
+		copy(dAtA[i:], m.ContractAddress)
+		i = encodeVarintAutomation(dAtA, i, uint64(len(m.ContractAddress)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -947,16 +1020,39 @@ func (m *CountTrigger) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 				i = encodeVarintAutomation(dAtA, i, uint64(size))
 			}
 			i--
-			dAtA[i] = 0x2a
+			dAtA[i] = 0x1a
 		}
-	}
-	if m.RepeatInterval != 0 {
-		i = encodeVarintAutomation(dAtA, i, uint64(m.RepeatInterval))
-		i--
-		dAtA[i] = 0x18
 	}
 	if m.RepeatCount != 0 {
 		i = encodeVarintAutomation(dAtA, i, uint64(m.RepeatCount))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *BlockIntervalTrigger) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *BlockIntervalTrigger) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *BlockIntervalTrigger) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.BlockInterval != 0 {
+		i = encodeVarintAutomation(dAtA, i, uint64(m.BlockInterval))
 		i--
 		dAtA[i] = 0x8
 	}
@@ -987,6 +1083,20 @@ func (m *Action) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.TxCallData)
 		copy(dAtA[i:], m.TxCallData)
 		i = encodeVarintAutomation(dAtA, i, uint64(len(m.TxCallData)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.ChainId) > 0 {
+		i -= len(m.ChainId)
+		copy(dAtA[i:], m.ChainId)
+		i = encodeVarintAutomation(dAtA, i, uint64(len(m.ChainId)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.ContractAddress) > 0 {
+		i -= len(m.ContractAddress)
+		copy(dAtA[i:], m.ContractAddress)
+		i = encodeVarintAutomation(dAtA, i, uint64(len(m.ContractAddress)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -1044,14 +1154,14 @@ func (m *Trigger) Size() (n int) {
 	return n
 }
 
-func (m *Trigger_Price) Size() (n int) {
+func (m *Trigger_OnChain) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	if m.Price != nil {
-		l = m.Price.Size()
+	if m.OnChain != nil {
+		l = m.OnChain.Size()
 		n += 1 + l + sovAutomation(uint64(l))
 	}
 	return n
@@ -1092,25 +1202,33 @@ func (m *Trigger_Count) Size() (n int) {
 	}
 	return n
 }
-func (m *PriceTrigger) Size() (n int) {
+func (m *Trigger_BlockInterval) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	l = len(m.BaseAsset)
+	if m.BlockInterval != nil {
+		l = m.BlockInterval.Size()
+		n += 1 + l + sovAutomation(uint64(l))
+	}
+	return n
+}
+func (m *OnChainTrigger) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.ContractAddress)
 	if l > 0 {
 		n += 1 + l + sovAutomation(uint64(l))
 	}
-	l = len(m.QuoteAsset)
+	l = len(m.ChainId)
 	if l > 0 {
 		n += 1 + l + sovAutomation(uint64(l))
 	}
-	l = len(m.Operator)
-	if l > 0 {
-		n += 1 + l + sovAutomation(uint64(l))
-	}
-	l = len(m.TargetPrice)
+	l = len(m.TxCallData)
 	if l > 0 {
 		n += 1 + l + sovAutomation(uint64(l))
 	}
@@ -1156,14 +1274,23 @@ func (m *CountTrigger) Size() (n int) {
 	if m.RepeatCount != 0 {
 		n += 1 + sovAutomation(uint64(m.RepeatCount))
 	}
-	if m.RepeatInterval != 0 {
-		n += 1 + sovAutomation(uint64(m.RepeatInterval))
-	}
 	if len(m.Triggers) > 0 {
 		for _, e := range m.Triggers {
 			l = e.Size()
 			n += 1 + l + sovAutomation(uint64(l))
 		}
+	}
+	return n
+}
+
+func (m *BlockIntervalTrigger) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.BlockInterval != 0 {
+		n += 1 + sovAutomation(uint64(m.BlockInterval))
 	}
 	return n
 }
@@ -1174,6 +1301,14 @@ func (m *Action) Size() (n int) {
 	}
 	var l int
 	_ = l
+	l = len(m.ContractAddress)
+	if l > 0 {
+		n += 1 + l + sovAutomation(uint64(l))
+	}
+	l = len(m.ChainId)
+	if l > 0 {
+		n += 1 + l + sovAutomation(uint64(l))
+	}
 	l = len(m.TxCallData)
 	if l > 0 {
 		n += 1 + l + sovAutomation(uint64(l))
@@ -1395,7 +1530,7 @@ func (m *Trigger) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Price", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field OnChain", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
@@ -1422,11 +1557,11 @@ func (m *Trigger) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			v := &PriceTrigger{}
+			v := &OnChainTrigger{}
 			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
-			m.Trigger = &Trigger_Price{v}
+			m.Trigger = &Trigger_OnChain{v}
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -1533,6 +1668,41 @@ func (m *Trigger) Unmarshal(dAtA []byte) error {
 			}
 			m.Trigger = &Trigger_Count{v}
 			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field BlockInterval", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAutomation
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &BlockIntervalTrigger{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Trigger = &Trigger_BlockInterval{v}
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipAutomation(dAtA[iNdEx:])
@@ -1554,7 +1724,7 @@ func (m *Trigger) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *PriceTrigger) Unmarshal(dAtA []byte) error {
+func (m *OnChainTrigger) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1577,17 +1747,17 @@ func (m *PriceTrigger) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: PriceTrigger: wiretype end group for non-group")
+			return fmt.Errorf("proto: OnChainTrigger: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: PriceTrigger: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: OnChainTrigger: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field BaseAsset", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ContractAddress", wireType)
 			}
-			var stringLen uint64
+			var byteLen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowAutomation
@@ -1597,27 +1767,29 @@ func (m *PriceTrigger) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if byteLen < 0 {
 				return ErrInvalidLengthAutomation
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + byteLen
 			if postIndex < 0 {
 				return ErrInvalidLengthAutomation
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.BaseAsset = string(dAtA[iNdEx:postIndex])
+			m.ContractAddress = append(m.ContractAddress[:0], dAtA[iNdEx:postIndex]...)
+			if m.ContractAddress == nil {
+				m.ContractAddress = []byte{}
+			}
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field QuoteAsset", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ChainId", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -1645,13 +1817,13 @@ func (m *PriceTrigger) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.QuoteAsset = string(dAtA[iNdEx:postIndex])
+			m.ChainId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Operator", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field TxCallData", wireType)
 			}
-			var stringLen uint64
+			var byteLen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowAutomation
@@ -1661,55 +1833,25 @@ func (m *PriceTrigger) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if byteLen < 0 {
 				return ErrInvalidLengthAutomation
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + byteLen
 			if postIndex < 0 {
 				return ErrInvalidLengthAutomation
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Operator = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 4:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TargetPrice", wireType)
+			m.TxCallData = append(m.TxCallData[:0], dAtA[iNdEx:postIndex]...)
+			if m.TxCallData == nil {
+				m.TxCallData = []byte{}
 			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowAutomation
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthAutomation
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthAutomation
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.TargetPrice = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -1953,25 +2095,6 @@ func (m *CountTrigger) Unmarshal(dAtA []byte) error {
 				}
 			}
 		case 3:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RepeatInterval", wireType)
-			}
-			m.RepeatInterval = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowAutomation
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.RepeatInterval |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		case 5:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Triggers", wireType)
 			}
@@ -2026,6 +2149,75 @@ func (m *CountTrigger) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *BlockIntervalTrigger) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowAutomation
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: BlockIntervalTrigger: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: BlockIntervalTrigger: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field BlockInterval", wireType)
+			}
+			m.BlockInterval = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAutomation
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.BlockInterval |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipAutomation(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *Action) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -2056,6 +2248,72 @@ func (m *Action) Unmarshal(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ContractAddress", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAutomation
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ContractAddress = append(m.ContractAddress[:0], dAtA[iNdEx:postIndex]...)
+			if m.ContractAddress == nil {
+				m.ContractAddress = []byte{}
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ChainId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAutomation
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthAutomation
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ChainId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field TxCallData", wireType)
 			}

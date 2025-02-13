@@ -25,19 +25,19 @@ enum AutomationStatus {
 // Base trigger with type selection
 message Trigger {
   oneof trigger {
-    PriceTrigger price = 1;
+    OnChainTrigger on_chain = 1;
     TimeTrigger time = 2;
     LogicalTrigger logical = 3;
     CountTrigger count = 4;
+    BlockIntervalTrigger block_interval = 5;
   }
 }
 
-// Asset price trigger
-message PriceTrigger {
-  string base_asset = 1; // The asset being evaluated (e.g., "ETH")
-  string quote_asset = 2; // The asset used for price comparison (e.g., "USDT")
-  string operator = 3; // ">", "<", "=="
-  string target_price = 4;
+// On chain trigger
+message OnChainTrigger {
+  bytes contract_address = 1; // Contract address
+  string chain_id = 2; // Chain ID
+  bytes tx_call_data = 3;
 }
 
 // Time trigger
@@ -47,14 +47,17 @@ message TimeTrigger {
 
 // Logical trigger for trigger chains
 message LogicalTrigger {
-  LogicalOperator logical_operator = 1; // "AND", "OR"
+  LogicalOperator logical_operator = 1; // "AND", "OR", "NOT"
   repeated Trigger triggers = 2; // List of triggers
 }
 
 message CountTrigger {
   uint64 repeat_count = 1; // Number of executions allowed
-  uint64 repeat_interval = 3; // Interval between repeated executions allowed in blocks
-  repeated Trigger triggers = 5; // List of triggers
+  repeated Trigger triggers = 3; // List of triggers
+}
+
+message BlockIntervalTrigger {
+  uint64 block_interval = 1; // Block interval in blocks
 }
 
 // Enumeration for logical operator
@@ -66,5 +69,7 @@ enum LogicalOperator {
 }
 
 message Action {
-  bytes tx_call_data = 1;
+  bytes contract_address = 1; // Contract address
+  string chain_id = 2; // Chain ID
+  bytes tx_call_data = 3;
 }
