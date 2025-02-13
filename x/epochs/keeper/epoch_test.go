@@ -87,8 +87,8 @@ func (s *KeeperTestSuite) TestEpochLifeCycle() {
 	s.Require().NoError(err)
 	// setup expected epoch info
 	expectedEpochInfo := epochInfo
-	expectedEpochInfo.StartTime = s.Ctx.BlockTime()
-	expectedEpochInfo.CurrentEpochStartHeight = s.Ctx.BlockHeight()
+	expectedEpochInfo.StartTime = s.Ctx.HeaderInfo().Time
+	expectedEpochInfo.CurrentEpochStartHeight = s.Ctx.HeaderInfo().Height
 	s.Require().Equal(expectedEpochInfo, epochInfoSaved)
 
 	allEpochs, err := s.EpochsKeeper.AllEpochInfos(s.Ctx)
