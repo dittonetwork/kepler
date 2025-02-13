@@ -34,9 +34,10 @@ message Trigger {
 
 // Asset price trigger
 message PriceTrigger {
-  string asset = 1;
-  string operator = 2; // ">", "<", "=="
-  string target_price = 3;
+  string base_asset = 1; // The asset being evaluated (e.g., "ETH")
+  string quote_asset = 2; // The asset used for price comparison (e.g., "USDT")
+  string operator = 3; // ">", "<", "=="
+  string target_price = 4;
 }
 
 // Time trigger
@@ -52,7 +53,7 @@ message LogicalTrigger {
 
 message CountTrigger {
   uint64 repeat_count = 1; // Number of executions allowed
-  uint64 repeat_interval = 3; // Interval between repeated executions allowed in seconds
+  uint64 repeat_interval = 3; // Interval between repeated executions allowed in blocks
   repeated Trigger triggers = 5; // List of triggers
 }
 
