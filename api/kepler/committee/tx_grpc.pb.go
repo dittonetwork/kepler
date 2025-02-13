@@ -20,6 +20,8 @@ const _ = grpc.SupportPackageIsVersion7
 
 const (
 	Msg_UpdateParams_FullMethodName = "/kepler.committee.Msg/UpdateParams"
+	Msg_CommitRandao_FullMethodName = "/kepler.committee.Msg/CommitRandao"
+	Msg_RevealRandao_FullMethodName = "/kepler.committee.Msg/RevealRandao"
 )
 
 // MsgClient is the client API for Msg service.
@@ -29,6 +31,8 @@ type MsgClient interface {
 	// UpdateParams defines a (governance) operation for updating the module
 	// parameters. The authority defaults to the x/gov module account.
 	UpdateParams(ctx context.Context, in *MsgUpdateParams, opts ...grpc.CallOption) (*MsgUpdateParamsResponse, error)
+	CommitRandao(ctx context.Context, in *MsgCommitRandao, opts ...grpc.CallOption) (*MsgCommitRandaoResponse, error)
+	RevealRandao(ctx context.Context, in *MsgRevealRandao, opts ...grpc.CallOption) (*MsgRevealRandaoResponse, error)
 }
 
 type msgClient struct {
@@ -48,6 +52,24 @@ func (c *msgClient) UpdateParams(ctx context.Context, in *MsgUpdateParams, opts 
 	return out, nil
 }
 
+func (c *msgClient) CommitRandao(ctx context.Context, in *MsgCommitRandao, opts ...grpc.CallOption) (*MsgCommitRandaoResponse, error) {
+	out := new(MsgCommitRandaoResponse)
+	err := c.cc.Invoke(ctx, Msg_CommitRandao_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) RevealRandao(ctx context.Context, in *MsgRevealRandao, opts ...grpc.CallOption) (*MsgRevealRandaoResponse, error) {
+	out := new(MsgRevealRandaoResponse)
+	err := c.cc.Invoke(ctx, Msg_RevealRandao_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 // All implementations must embed UnimplementedMsgServer
 // for forward compatibility
@@ -55,6 +77,8 @@ type MsgServer interface {
 	// UpdateParams defines a (governance) operation for updating the module
 	// parameters. The authority defaults to the x/gov module account.
 	UpdateParams(context.Context, *MsgUpdateParams) (*MsgUpdateParamsResponse, error)
+	CommitRandao(context.Context, *MsgCommitRandao) (*MsgCommitRandaoResponse, error)
+	RevealRandao(context.Context, *MsgRevealRandao) (*MsgRevealRandaoResponse, error)
 	mustEmbedUnimplementedMsgServer()
 }
 
@@ -64,6 +88,12 @@ type UnimplementedMsgServer struct {
 
 func (UnimplementedMsgServer) UpdateParams(context.Context, *MsgUpdateParams) (*MsgUpdateParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateParams not implemented")
+}
+func (UnimplementedMsgServer) CommitRandao(context.Context, *MsgCommitRandao) (*MsgCommitRandaoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CommitRandao not implemented")
+}
+func (UnimplementedMsgServer) RevealRandao(context.Context, *MsgRevealRandao) (*MsgRevealRandaoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RevealRandao not implemented")
 }
 func (UnimplementedMsgServer) mustEmbedUnimplementedMsgServer() {}
 
@@ -96,6 +126,42 @@ func _Msg_UpdateParams_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_CommitRandao_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgCommitRandao)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).CommitRandao(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_CommitRandao_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).CommitRandao(ctx, req.(*MsgCommitRandao))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_RevealRandao_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgRevealRandao)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).RevealRandao(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_RevealRandao_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).RevealRandao(ctx, req.(*MsgRevealRandao))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Msg_ServiceDesc is the grpc.ServiceDesc for Msg service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -106,6 +172,14 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateParams",
 			Handler:    _Msg_UpdateParams_Handler,
+		},
+		{
+			MethodName: "CommitRandao",
+			Handler:    _Msg_CommitRandao_Handler,
+		},
+		{
+			MethodName: "RevealRandao",
+			Handler:    _Msg_RevealRandao_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

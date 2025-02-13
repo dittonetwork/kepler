@@ -1,0 +1,22 @@
+syntax = "proto3";
+package kepler.committee;
+
+import "cosmos/msg/v1/msg.proto";
+import "cosmos_proto/cosmos.proto";
+import "gogoproto/gogo.proto";
+import "kepler/committee/params.proto";
+
+option go_package = "kepler/x/committee/types";
+
+message CommitRandao {
+  option (gogoproto.equal) = false;
+
+  bytes commitment_hash = 1;
+}
+
+message RevealRandao {
+  option (gogoproto.equal) = false;
+
+  bytes random_seed = 1; // Original secret
+}
+

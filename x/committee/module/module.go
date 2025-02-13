@@ -16,7 +16,9 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/module"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
-	"github.com/grpc-ecosystem/grpc-gateway/runtime"
+	grpcruntime "github.com/grpc-ecosystem/grpc-gateway/runtime"
+
+	"github.com/cosmos/cosmos-sdk/runtime"
 
 	// this line is used by starport scaffolding # 1.
 
@@ -72,7 +74,11 @@ func (AppModuleBasic) DefaultGenesis(cdc codec.JSONCodec) json.RawMessage {
 }
 
 // ValidateGenesis used to validate the GenesisState, given in its json.RawMessage form.
-func (AppModuleBasic) ValidateGenesis(cdc codec.JSONCodec, _ client.TxEncodingConfig, bz json.RawMessage) error {
+func (AppModuleBasic) ValidateGenesis(
+	cdc codec.JSONCodec,
+	_ client.TxEncodingConfig,
+	bz json.RawMessage,
+) error {
 	var genState types.GenesisState
 	if err := cdc.UnmarshalJSON(bz, &genState); err != nil {
 		return fmt.Errorf("failed to unmarshal %s genesis state: %w", types.ModuleName, err)
@@ -81,7 +87,10 @@ func (AppModuleBasic) ValidateGenesis(cdc codec.JSONCodec, _ client.TxEncodingCo
 }
 
 // RegisterGRPCGatewayRoutes registers the gRPC Gateway routes for the module.
-func (AppModuleBasic) RegisterGRPCGatewayRoutes(clientCtx client.Context, mux *runtime.ServeMux) {
+func (AppModuleBasic) RegisterGRPCGatewayRoutes(
+	clientCtx client.Context,
+	mux *grpcruntime.ServeMux,
+) {
 	if err := types.RegisterQueryHandlerClient(context.Background(), mux, types.NewQueryClient(clientCtx)); err != nil {
 		panic(err)
 	}
@@ -177,13 +186,15 @@ func init() {
 type ModuleInputs struct {
 	depinject.In
 
-	StoreService store.KVStoreService
-	Cdc          codec.Codec
-	Config       *modulev1.Module
-	Logger       log.Logger
+	StoreService          store.KVStoreService
+	Cdc                   codec.Codec
+	Config                *modulev1.Module
+	ValidatorAddressCodec runtime.ValidatorAddressCodec
+	Logger                log.Logger
 
 	AccountKeeper types.AccountKeeper
 	BankKeeper    types.BankKeeper
+	EpocsKeeper   types.EpochsKeeper
 }
 
 type ModuleOutputs struct {
@@ -204,6 +215,8 @@ func ProvideModule(in ModuleInputs) ModuleOutputs {
 		in.StoreService,
 		in.Logger,
 		authority.String(),
+		in.ValidatorAddressCodec,
+		in.EpocsKeeper,
 	)
 	m := NewAppModule(
 		in.Cdc,

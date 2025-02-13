@@ -2,6 +2,7 @@ package types
 
 import (
 	"context"
+	"kepler/x/epochs/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
@@ -16,6 +17,10 @@ type AccountKeeper interface {
 type BankKeeper interface {
 	SpendableCoins(context.Context, sdk.AccAddress) sdk.Coins
 	// Methods imported from bank should be defined here
+}
+
+type EpochsKeeper interface {
+	GetEpochInfo(ctx context.Context, id string) (types.EpochInfo, error)
 }
 
 // ParamSubspace defines the expected Subspace interface for parameters.

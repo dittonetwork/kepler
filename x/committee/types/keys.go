@@ -1,5 +1,7 @@
 package types
 
+import "cosmossdk.io/collections"
+
 const (
 	// ModuleName defines the module name.
 	ModuleName = "committee"
@@ -12,6 +14,9 @@ const (
 )
 
 var (
+	RandaoCommitmentsKey = collections.NewPrefix(0)
+	RandaoRevealsKey     = collections.NewPrefix(1)
+
 	ParamsKey = []byte("p_committee")
 )
 
