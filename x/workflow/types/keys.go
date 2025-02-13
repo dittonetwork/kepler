@@ -9,6 +9,9 @@ const (
 
 	// MemStoreKey defines the in-memory store key.
 	MemStoreKey = "mem_workflow"
+
+	KeyPrefixAutomation  = "automation:"
+	KeyActiveAutomations = "active_automations"
 )
 
 var (
