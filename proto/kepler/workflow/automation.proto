@@ -41,7 +41,7 @@ message PriceTrigger {
 
 // Time trigger
 message TimeTrigger {
-  uint64 timestamp = 1;
+  uint64 execute_after = 1; // Unix timestamp
 }
 
 // Logical trigger for trigger chains
