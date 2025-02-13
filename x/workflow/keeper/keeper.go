@@ -3,12 +3,19 @@ package keeper
 import (
 	"fmt"
 
+	"cosmossdk.io/collections"
+
 	"cosmossdk.io/core/store"
 	"cosmossdk.io/log"
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"kepler/x/workflow/types"
+)
+
+const (
+	collectionNameAutomations       = "automations"
+	collectionNameActiveAutomations = "active_automations"
 )
 
 type (
@@ -20,6 +27,13 @@ type (
 		// the address capable of executing a MsgUpdateParams message. Typically, this
 		// should be the x/gov module account.
 		authority string
+
+		// Automations key: automationID | value: automation
+		// This is used to store automations
+		Automations collections.Map[uint64, types.Automation]
+		// ActiveAutomations key set of automation ids
+		// This is used to store active automation ids
+		ActiveAutomations collections.KeySet[uint64]
 	}
 )
 
@@ -34,11 +48,25 @@ func NewKeeper(
 		panic(fmt.Sprintf("invalid authority address: %s", authority))
 	}
 
+	sb := collections.NewSchemaBuilder(storeService)
 	return Keeper{
 		cdc:          cdc,
 		storeService: storeService,
 		authority:    authority,
 		logger:       logger,
+		Automations: collections.NewMap(
+			sb,
+			types.KeyPrefixAutomation,
+			collectionNameAutomations,
+			collections.Uint64Key,
+			codec.CollValue[types.Automation](cdc),
+		),
+		ActiveAutomations: collections.NewKeySet(
+			sb,
+			types.KeyPrefixActiveAutomations,
+			collectionNameActiveAutomations,
+			collections.Uint64Key,
+		),
 	}
 }
 
@@ -52,136 +80,81 @@ func (k Keeper) Logger() log.Logger {
 	return k.logger.With("module", fmt.Sprintf("x/%s", types.ModuleName))
 }
 
-// AddAutomation stores an automation in KVStore
+// AddAutomation stores an automation in KVStore.
 func (k Keeper) AddAutomation(ctx sdk.Context, automation types.Automation) error {
-	s := k.storeService.OpenKVStore(ctx)
-	key := []byte(types.KeyPrefixAutomation + fmt.Sprint(automation.Id)) // Key format: "automation:1"
-
-	bz, err := k.cdc.Marshal(&automation)
+	has, err := k.Automations.Has(ctx, automation.Id)
 	if err != nil {
-		k.Logger().Error("failed to marshal automation", "error", err)
-		return err
+		return fmt.Errorf("failed to check if automation exists: %w", err)
+	}
+	if has {
+		return fmt.Errorf("automation with id %d already exists", automation.Id)
 	}
 
-	err = s.Set(key, bz)
+	err = k.Automations.Set(ctx, automation.Id, automation)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to set automation: %w", err)
 	}
 
 	return nil
 }
 
-// SetAutomationStatus sets the status of an automation in KVStore
+// SetAutomationStatus sets the status of an automation in KVStore.
 func (k Keeper) SetAutomationStatus(ctx sdk.Context, id uint64, status types.AutomationStatus) error {
-	s := k.storeService.OpenKVStore(ctx)
-	key := []byte(types.KeyPrefixAutomation + fmt.Sprint(id))
-
-	bz, err := s.Get(key)
+	automation, err := k.GetAutomation(ctx, id)
 	if err != nil {
-		k.Logger().Error("failed to get automation", "error", err)
-		return err
-	}
-
-	var automation types.Automation
-	err = k.cdc.Unmarshal(bz, &automation)
-	if err != nil {
-		k.Logger().Error("failed to unmarshal automation", "error", err)
 		return err
 	}
 
 	automation.Status = status
-
-	bz, err = k.cdc.Marshal(&automation)
+	err = k.Automations.Set(ctx, id, automation)
 	if err != nil {
-		k.Logger().Error("failed to marshal automation", "error", err)
-		return err
-	}
-
-	err = s.Set(key, bz)
-	if err != nil {
-		return err
+		return fmt.Errorf("failed to set automation status: %w", err)
 	}
 
 	return nil
 }
 
-// GetAutomation get an automation by ID
+// GetAutomation get an automation by ID.
 func (k Keeper) GetAutomation(ctx sdk.Context, id uint64) (types.Automation, error) {
-	s := k.storeService.OpenKVStore(ctx)
-	key := []byte(types.KeyPrefixAutomation + fmt.Sprint(id))
-
-	bz, err := s.Get(key)
+	automation, err := k.Automations.Get(ctx, id)
 	if err != nil {
-		k.Logger().Error("failed to get automation", "error", err)
-		return types.Automation{}, err
-	}
-
-	var automation types.Automation
-	err = k.cdc.Unmarshal(bz, &automation)
-	if err != nil {
-		k.Logger().Error("failed to unmarshal automation", "error", err)
-		return types.Automation{}, err
+		return types.Automation{}, fmt.Errorf("failed to get automation: %w", err)
 	}
 
 	return automation, nil
 }
 
-// PutActiveAutomation stores an active automation ID in KVStore
+// PutActiveAutomation stores an active automation ID in KVStore.
 func (k Keeper) PutActiveAutomation(ctx sdk.Context, id uint64) error {
-	s := k.storeService.OpenKVStore(ctx)
-	key := []byte(types.KeyActiveAutomations)
-
-	bz, err := s.Get(key)
+	err := k.ActiveAutomations.Set(ctx, id)
 	if err != nil {
-		k.Logger().Error("failed to get active automations", "error", err)
-		return err
-	}
-
-	err = s.Set(key, append(bz, sdk.Uint64ToBigEndian(id)...))
-	if err != nil {
-		k.Logger().Error("failed to put an active automation", "error", err)
-		return err
+		return fmt.Errorf("failed to set active automation: %w", err)
 	}
 
 	return nil
 }
 
-// RemoveActiveAutomation removes an active automation ID from KVStore
+// RemoveActiveAutomation removes an active automation ID from KVStore.
 func (k Keeper) RemoveActiveAutomation(ctx sdk.Context, id uint64) error {
-	s := k.storeService.OpenKVStore(ctx)
-	key := []byte(types.KeyActiveAutomations)
-
-	bz, err := s.Get(key)
+	err := k.ActiveAutomations.Remove(ctx, id)
 	if err != nil {
-		k.Logger().Error("failed to get active automations", "error", err)
-		return err
-	}
-	if bz == nil {
-		return nil
-	}
-
-	var (
-		updatedBytes []byte
-		removed      bool
-	)
-	for i := 0; i < len(bz); i += 8 {
-		currentID := sdk.BigEndianToUint64(bz[i : i+8])
-		if currentID != id {
-			updatedBytes = append(updatedBytes, bz[i:i+8]...)
-		} else {
-			removed = true
-		}
-	}
-
-	if !removed {
-		return nil
-	}
-
-	err = s.Set(key, updatedBytes)
-	if err != nil {
-		k.Logger().Error("failed to update active automations", "error", err)
-		return err
+		return fmt.Errorf("failed to remove active automation: %w", err)
 	}
 
 	return nil
+}
+
+// GetActiveAutomations returns all active automation IDs.
+func (k Keeper) GetActiveAutomations(ctx sdk.Context) ([]uint64, error) {
+	idsIter, err := k.ActiveAutomations.Iterate(ctx, nil)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get active automations: %w", err)
+	}
+
+	ids, err := idsIter.Keys()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get active automation keys: %w", err)
+	}
+
+	return ids, nil
 }

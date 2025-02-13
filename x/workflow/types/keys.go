@@ -1,5 +1,7 @@
 package types
 
+import "cosmossdk.io/collections"
+
 const (
 	// ModuleName defines the module name.
 	ModuleName = "workflow"
@@ -9,13 +11,12 @@ const (
 
 	// MemStoreKey defines the in-memory store key.
 	MemStoreKey = "mem_workflow"
-
-	KeyPrefixAutomation  = "automation:"
-	KeyActiveAutomations = "active_automations"
 )
 
 var (
-	ParamsKey = []byte("p_workflow")
+	ParamsKey                                     = []byte("p_workflow")
+	KeyPrefixAutomation        collections.Prefix = collections.NewPrefix("automation")
+	KeyPrefixActiveAutomations                    = collections.NewPrefix("active_automations")
 )
 
 func KeyPrefix(p string) []byte {
