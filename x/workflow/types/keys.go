@@ -15,8 +15,8 @@ const (
 
 var (
 	ParamsKey                                     = []byte("p_workflow")
-	KeyPrefixAutomation        collections.Prefix = collections.NewPrefix("automation")
-	KeyPrefixActiveAutomations                    = collections.NewPrefix("active_automations")
+	KeyPrefixAutomation        collections.Prefix = collections.NewPrefix(CollectionNameAutomations)
+	KeyPrefixActiveAutomations                    = collections.NewPrefix(CollectionNameActiveAutomations)
 )
 
 func KeyPrefix(p string) []byte {

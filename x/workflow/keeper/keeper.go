@@ -13,11 +13,6 @@ import (
 	"kepler/x/workflow/types"
 )
 
-const (
-	collectionNameAutomations       = "automations"
-	collectionNameActiveAutomations = "active_automations"
-)
-
 type (
 	Keeper struct {
 		cdc          codec.BinaryCodec
@@ -31,9 +26,9 @@ type (
 		// Automations key: automationID | value: automation
 		// This is used to store automations
 		Automations collections.Map[uint64, types.Automation]
-		// ActiveAutomations key set of automation ids
+		// AutomationQueue: key set of automation ids
 		// This is used to store active automation ids
-		ActiveAutomations collections.KeySet[uint64]
+		AutomationQueue collections.KeySet[uint64]
 	}
 )
 
@@ -57,14 +52,14 @@ func NewKeeper(
 		Automations: collections.NewMap(
 			sb,
 			types.KeyPrefixAutomation,
-			collectionNameAutomations,
+			types.CollectionNameAutomations,
 			collections.Uint64Key,
 			codec.CollValue[types.Automation](cdc),
 		),
-		ActiveAutomations: collections.NewKeySet(
+		AutomationQueue: collections.NewKeySet(
 			sb,
 			types.KeyPrefixActiveAutomations,
-			collectionNameActiveAutomations,
+			types.CollectionNameActiveAutomations,
 			collections.Uint64Key,
 		),
 	}
@@ -124,9 +119,9 @@ func (k Keeper) GetAutomation(ctx sdk.Context, id uint64) (types.Automation, err
 	return automation, nil
 }
 
-// PutActiveAutomation stores an active automation ID in KVStore.
-func (k Keeper) PutActiveAutomation(ctx sdk.Context, id uint64) error {
-	err := k.ActiveAutomations.Set(ctx, id)
+// SetActiveAutomation stores an active automation ID in KVStore.
+func (k Keeper) SetActiveAutomation(ctx sdk.Context, id uint64) error {
+	err := k.AutomationQueue.Set(ctx, id)
 	if err != nil {
 		return fmt.Errorf("failed to set active automation: %w", err)
 	}
@@ -136,7 +131,7 @@ func (k Keeper) PutActiveAutomation(ctx sdk.Context, id uint64) error {
 
 // RemoveActiveAutomation removes an active automation ID from KVStore.
 func (k Keeper) RemoveActiveAutomation(ctx sdk.Context, id uint64) error {
-	err := k.ActiveAutomations.Remove(ctx, id)
+	err := k.AutomationQueue.Remove(ctx, id)
 	if err != nil {
 		return fmt.Errorf("failed to remove active automation: %w", err)
 	}
@@ -146,7 +141,7 @@ func (k Keeper) RemoveActiveAutomation(ctx sdk.Context, id uint64) error {
 
 // GetActiveAutomations returns all active automation IDs.
 func (k Keeper) GetActiveAutomationIDs(ctx sdk.Context) ([]uint64, error) {
-	idsIter, err := k.ActiveAutomations.Iterate(ctx, nil)
+	idsIter, err := k.AutomationQueue.Iterate(ctx, nil)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get active automations: %w", err)
 	}
