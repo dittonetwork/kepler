@@ -1,0 +1,34 @@
+actions:
+  - '.github/workflows/**'
+
+tools:
+  - 'tools/**'
+  - 'testutil/**'
+  - 'utils/**'
+
+
+core:
+  - 'cmd/**'
+  - 'app/**'
+
+
+docs:
+  - 'docs/**'
+
+module:
+  - 'x/**'
+
+x/epochs:
+  - 'x/epochs/**'
+
+x/committee:
+  - 'x/committee/**'
+
+x/instant:
+  - 'x/instant/**'
+
+x/job:
+  - 'x/job/**'
+
+x/workflow:
+  - 'x/workflow/**'
