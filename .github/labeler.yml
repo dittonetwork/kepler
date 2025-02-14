@@ -4,6 +4,7 @@ actions:
 tools:
   - 'tools/**'
   - 'testutil/**'
+  - 'utils/**'
 
 
 core:
