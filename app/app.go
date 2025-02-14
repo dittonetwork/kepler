@@ -52,7 +52,7 @@ const (
 )
 
 var (
-	// DefaultNodeHome default home directories for the application daemon
+	// DefaultNodeHome default home directories for the application daemon.
 	DefaultNodeHome string
 )
 
@@ -89,6 +89,7 @@ type App struct {
 	sm *module.SimulationManager
 }
 
+//nolint:gochecknoinits
 func init() {
 	var err error
 	clienthelpers.EnvPrefix = Name
@@ -177,12 +178,16 @@ func New(
 	}
 
 	// create the simulation manager and define the order of the modules for deterministic simulations
-	app.sm = module.NewSimulationManagerFromAppModules(app.ModuleManager.Modules, make(map[string]module.AppModuleSimulation))
+	app.sm = module.NewSimulationManagerFromAppModules(
+		app.ModuleManager.Modules,
+		make(map[string]module.AppModuleSimulation),
+	)
 	app.sm.RegisterStoreDecoders()
 
 	// A custom InitChainer can be set if extra pre-init-genesis logic is required.
 	// By default, when using app wiring enabled module, this is not required.
-	// For instance, the upgrade module will set automatically the module version map in its init genesis thanks to app wiring.
+	// For instance, the upgrade module will set automatically the module version map
+	// in its init genesis thanks to app wiring.
 	// However, when registering a module manually (i.e. that does not support app wiring), the module version map
 	// must be set manually as follow. The upgrade module will de-duplicate the module version map.
 	//
