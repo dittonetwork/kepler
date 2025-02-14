@@ -9,7 +9,7 @@ import (
 )
 
 // GetParams get all parameters as types.Params.
-func (k Keeper) GetParams(ctx context.Context) types.Params {
+func (k BaseKeeper) GetParams(ctx context.Context) types.Params {
 	params := types.DefaultParams()
 	store := runtime.KVStoreAdapter(k.storeService.OpenKVStore(ctx))
 	bz := store.Get(types.ParamsKey)
@@ -22,7 +22,7 @@ func (k Keeper) GetParams(ctx context.Context) types.Params {
 }
 
 // SetParams set the params.
-func (k Keeper) SetParams(ctx context.Context, params types.Params) error {
+func (k BaseKeeper) SetParams(ctx context.Context, params types.Params) error {
 	store := runtime.KVStoreAdapter(k.storeService.OpenKVStore(ctx))
 	bz, err := k.cdc.Marshal(&params)
 	if err != nil {

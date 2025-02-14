@@ -23,7 +23,12 @@ var (
 )
 
 const (
-// this line is used by starport scaffolding # simapp/module/const
+	//nolint:gosec // TODO: Determine the operation weight value.
+	opWeightMsgAddAutomation = "op_weight_msg_add_automation"
+	// TODO: Determine the simulation weight value.
+	defaultWeightMsgAddAutomation int = 100
+
+	// this line is used by starport scaffolding # simapp/module/const.
 )
 
 // GenerateGenesisState creates a randomized GenState of the module.
@@ -43,8 +48,19 @@ func (AppModule) GenerateGenesisState(simState *module.SimulationState) {
 func (am AppModule) RegisterStoreDecoder(_ simtypes.StoreDecoderRegistry) {}
 
 // WeightedOperations returns the all the gov module operations with their respective weights.
-func (am AppModule) WeightedOperations(_ module.SimulationState) []simtypes.WeightedOperation {
+func (am AppModule) WeightedOperations(simState module.SimulationState) []simtypes.WeightedOperation {
 	operations := make([]simtypes.WeightedOperation, 0)
+
+	var weightMsgAddAutomation int
+	simState.AppParams.GetOrGenerate(opWeightMsgAddAutomation, &weightMsgAddAutomation, nil,
+		func(_ *rand.Rand) {
+			weightMsgAddAutomation = defaultWeightMsgAddAutomation
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgAddAutomation,
+		workflowsimulation.SimulateMsgAddAutomation(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
 
 	// this line is used by starport scaffolding # simapp/module/operation
 
@@ -54,6 +70,14 @@ func (am AppModule) WeightedOperations(_ module.SimulationState) []simtypes.Weig
 // ProposalMsgs returns msgs used for governance proposals for simulations.
 func (am AppModule) ProposalMsgs(_ module.SimulationState) []simtypes.WeightedProposalMsg {
 	return []simtypes.WeightedProposalMsg{
+		simulation.NewWeightedProposalMsg(
+			opWeightMsgAddAutomation,
+			defaultWeightMsgAddAutomation,
+			func(_ *rand.Rand, _ sdk.Context, _ []simtypes.Account) sdk.Msg {
+				workflowsimulation.SimulateMsgAddAutomation(am.accountKeeper, am.bankKeeper, am.keeper)
+				return nil
+			},
+		),
 		// this line is used by starport scaffolding # simapp/module/OpMsg
 	}
 }

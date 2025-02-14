@@ -6,9 +6,9 @@ option go_package = "kepler/x/workflow/types";
 // Automation entity
 message Automation {
   uint64 id = 1; // Incremental ID for blockchain consistency
-  Trigger triggers = 2; // Trigger object, which can be chained by logical operators in itself
+  repeated Trigger triggers = 2; // Trigger object, which can be chained by logical operators in itself
   repeated Action actions = 3; // List of actions
-  uint64 expire_at = 4; // Expiration timestamp (Unix time)
+  int64 expire_at = 4; // Expiration timestamp (Unix time)
   AutomationStatus status = 7; // Status of the automation (active, expired, paused, failed, done)
 }
 
@@ -27,7 +27,6 @@ message Trigger {
   oneof trigger {
     OnChainTrigger on_chain = 1;
     TimeTrigger time = 2;
-    LogicalTrigger logical = 3;
     CountTrigger count = 4;
     BlockIntervalTrigger block_interval = 5;
   }
@@ -49,32 +48,17 @@ message OnChainTrigger {
 
 // Time trigger
 message TimeTrigger {
-  uint64 execute_after = 1; // Unix timestamp
-}
-
-// Logical trigger for trigger chains
-message LogicalTrigger {
-  LogicalOperator logical_operator = 1; // "AND", "OR", "NOT"
-  repeated Trigger triggers = 2; // List of triggers
+  int64 execute_after = 1; // Unix timestamp
 }
 
 // Count trigger
 message CountTrigger {
   uint64 repeat_count = 1; // Number of executions allowed
-  repeated Trigger triggers = 3; // List of triggers
 }
 
 // Block interval trigger
 message BlockIntervalTrigger {
   uint64 block_interval = 1; // Block interval in blocks
-}
-
-// Enumeration for logical operator
-enum LogicalOperator {
-  LOGICAL_OPERATOR_UNSPECIFIED = 0; // Default unknown operator
-  LOGICAL_OPERATOR_AND = 1; // Logical AND operator
-  LOGICAL_OPERATOR_OR = 2; // Logical OR operator
-  LOGICAL_OPERATOR_NOT = 3; // Logical NOT operator
 }
 
 // On chain action

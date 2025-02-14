@@ -21,7 +21,7 @@ import (
 	"kepler/x/workflow/types"
 )
 
-func WorkflowKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {
+func WorkflowKeeper(t testing.TB) (keeper.BaseKeeper, sdk.Context) {
 	storeKey := storetypes.NewKVStoreKey(types.StoreKey)
 
 	db := dbm.NewMemDB()
