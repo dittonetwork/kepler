@@ -41,22 +41,24 @@ docker-compose ps
 
 ### 3. Steps to Import Dashboard
 
-1. **Access Grafana**:
-   - Open your browser and go to [http://localhost:3000](http://localhost:3000).
+1. **Access Grafana**
 
-2. **Import Dashboard**:
-   - In Grafana's left sidebar:
-     1. Click 🟌 **Dashboards**.
-     2. Click on **Create dashboard** → **Import a dashboard**.
-     3. Choose **Upload JSON file**.
-     4. Navigate to the following path:
-        ```
-        /path/to/kepler-repo/monitor/grafana/dashboard.json
-        ```
-        Replace `/path/to/kepler-repo` with your actual repository path:
+   Open your browser and go to [http://localhost:3000](http://localhost:3000).
 
-3. **Configure Data Source**:
-   - In the import screen:
+2. **Import Dashboard**
+   1. In Grafana's left sidebar click 🟌 **Dashboards**.
+   2. Click on **Create dashboard** → **Import a dashboard**.
+   3. Choose **Upload JSON file**.
+   4. Navigate to the following path
+
+      ```
+      /path/to/kepler-repo/monitor/grafana/dashboard.json
+      ```
+      Replace `/path/to/kepler-repo` with your actual repository path:
+
+3. **Configure Data Source**
+   
+   In the import screen:
      1. Under the **Prometheus** dropdown, select your Prometheus data source.
      2. Click **Import**.
      3. A dashboard named "Ditto" should appear.
