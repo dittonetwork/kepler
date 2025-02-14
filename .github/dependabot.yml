@@ -1,0 +1,14 @@
+version: 2
+updates:
+  - package-ecosystem: "gomod" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "daily"
+      time: "05:00" # 12:00 Asia/Bangkok, 08:00 MSK
+      timezone: "Etc/UTC"
+    open-pull-requests-limit: 5
+    pull-request-branch-name:
+      separator: "-"
+    ignore:
+      - dependency-name: "*"
+        update-types: [ "version-update:semver-patch" ]
