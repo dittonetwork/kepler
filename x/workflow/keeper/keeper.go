@@ -145,7 +145,7 @@ func (k Keeper) RemoveActiveAutomation(ctx sdk.Context, id uint64) error {
 }
 
 // GetActiveAutomations returns all active automation IDs.
-func (k Keeper) GetActiveAutomations(ctx sdk.Context) ([]uint64, error) {
+func (k Keeper) GetActiveAutomationIDs(ctx sdk.Context) ([]uint64, error) {
 	idsIter, err := k.ActiveAutomations.Iterate(ctx, nil)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get active automations: %w", err)
