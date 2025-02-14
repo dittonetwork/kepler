@@ -33,8 +33,8 @@ message Job {
   bytes metadata = 7;
   // address of executor
   string executor_address = 8;
-  // epoch when job was created
-  uint64 epoch_id = 9;
+  // job executors committee id
+  string committee_id = 9;
   // signs of committee participants
   repeated bytes signs = 10;
   // unix seconds time when created

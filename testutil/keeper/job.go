@@ -1,6 +1,8 @@
 package keeper
 
 import (
+	"go.uber.org/mock/gomock"
+	"kepler/x/job/types/mock"
 	"testing"
 
 	"cosmossdk.io/log"
@@ -13,8 +15,6 @@ import (
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	"github.com/cosmos/cosmos-sdk/runtime"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
-	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 	"github.com/stretchr/testify/require"
 
 	"kepler/x/job/keeper"
@@ -31,21 +31,18 @@ func JobKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {
 
 	registry := codectypes.NewInterfaceRegistry()
 	cdc := codec.NewProtoCodec(registry)
-	authority := authtypes.NewModuleAddress(govtypes.ModuleName)
+
+	ctrl := gomock.NewController(t)
+	ck := mock.NewMockCommitteeKeeper(ctrl)
 
 	k := keeper.NewKeeper(
 		cdc,
 		runtime.NewKVStoreService(storeKey),
 		log.NewNopLogger(),
-		authority.String(),
+		ck,
 	)
 
 	ctx := sdk.NewContext(stateStore, cmtproto.Header{}, false, log.NewNopLogger())
-
-	// Initialize params
-	if err := k.SetParams(ctx, types.DefaultParams()); err != nil {
-		panic(err)
-	}
 
 	return k, ctx
 }

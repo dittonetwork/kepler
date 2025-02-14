@@ -9,7 +9,6 @@ const DefaultIndex uint64 = 1
 func DefaultGenesis() *GenesisState {
 	return &GenesisState{
 		// this line is used by starport scaffolding # genesis/types/default
-		Params: DefaultParams(),
 	}
 }
 
@@ -18,5 +17,5 @@ func DefaultGenesis() *GenesisState {
 func (gs GenesisState) Validate() error {
 	// this line is used by starport scaffolding # genesis/types/validate
 
-	return gs.Params.Validate()
+	return nil
 }

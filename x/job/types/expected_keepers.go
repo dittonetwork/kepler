@@ -6,6 +6,11 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
+type CommitteeKeeper interface {
+	IsCommitteeExists(ctx sdk.Context, committeeID string) (bool, error)
+	CanBeSigned(ctx sdk.Context, chainID string, committeeID string, signatures [][]byte) (bool, error)
+}
+
 // AccountKeeper defines the expected interface for the Account module.
 type AccountKeeper interface {
 	GetAccount(context.Context, sdk.AccAddress) sdk.AccountI // only used for simulation
