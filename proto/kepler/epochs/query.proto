@@ -6,6 +6,7 @@ import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "kepler/epochs/genesis.proto";
+import "kepler/epochs/params.proto";
 
 option go_package = "kepler/x/epochs/types";
 
@@ -19,6 +20,20 @@ service Query {
   rpc CurrentEpoch(QueryCurrentEpochRequest) returns (QueryCurrentEpochResponse) {
     option (google.api.http).get = "/cosmos/epochs/v1beta1/current_epoch";
   }
+
+  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/cosmos/epochs/v1beta1/params";
+  }
+}
+
+message QueryParamsRequest {}
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  // params holds all the parameters of this module.
+  Params params = 1 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
 }
 
 message QueryEpochsInfoRequest {}

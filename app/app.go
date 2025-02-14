@@ -78,7 +78,7 @@ type App struct {
 	DistrKeeper           distrkeeper.Keeper
 	ConsensusParamsKeeper consensuskeeper.Keeper
 
-	EpochsKeeper    epochskeeper.Keeper
+	EpochsKeeper    *epochskeeper.Keeper
 	WorkflowKeeper  workflowmodulekeeper.Keeper
 	CommitteeKeeper committeemodulekeeper.Keeper
 	JobKeeper       jobmodulekeeper.Keeper

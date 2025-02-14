@@ -14,7 +14,7 @@ const (
 )
 
 func NewGenesisState(epochs []EpochInfo) *GenesisState {
-	return &GenesisState{Epochs: epochs}
+	return &GenesisState{Epochs: epochs, Params: Params{}}
 }
 
 // DefaultGenesis returns the default genesis state.
