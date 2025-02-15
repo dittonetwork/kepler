@@ -1,8 +1,11 @@
 package keeper
 
 import (
+	"context"
 	"fmt"
 
+	"cosmossdk.io/collections"
+	"cosmossdk.io/collections/indexes"
 	"cosmossdk.io/core/store"
 	"cosmossdk.io/log"
 	"github.com/cosmos/cosmos-sdk/codec"
@@ -11,26 +14,67 @@ import (
 	"kepler/x/committee/types"
 )
 
-type (
-	Keeper struct {
-		cdc          codec.BinaryCodec
-		storeService store.KVStoreService
-		logger       log.Logger
+type CommitteeKeeper interface {
+	// IsCommitteeExists returns true if the committee exists
+	IsCommitteeExists(ctx sdk.Context, committeeID string) (bool, error)
 
-		// the address capable of executing a MsgUpdateParams message. Typically, this
-		// should be the x/gov module account.
-		authority string
-	}
-)
+	// GetAuthority returns the module's authority.
+	GetAuthority() string
 
-func (k Keeper) IsCommitteeExists(_ sdk.Context, _ string) (bool, error) {
-	// TODO implement me
-	panic("implement me")
+	// SetParams updates the committee module's parameters.
+	SetParams(ctx context.Context, params types.Params) error
 }
 
-func (k Keeper) CanBeSigned(_ sdk.Context, _ string, _ string, _ [][]byte) (bool, error) {
-	// TODO implement me
-	panic("implement me")
+type committeeIndexes struct {
+	// Key: ChainID | Value: CommitteeID | Type: MultiKey
+	ChainID *indexes.Multi[string, string, types.Committee]
+
+	// Key: ChainID | Value: CommitteeID | Type: Unique
+	Active *indexes.Unique[string, string, types.Committee]
+}
+
+func (i committeeIndexes) IndexesList() []collections.Index[string, types.Committee] {
+	return []collections.Index[string, types.Committee]{
+		i.ChainID,
+		i.Active,
+	}
+}
+
+func newCommitteeIndexes(sb *collections.SchemaBuilder) committeeIndexes {
+	return committeeIndexes{
+		ChainID: indexes.NewMulti(
+			sb,
+			types.ChainIDStoreKeyPrefix,
+			"committee_by_chain_id",
+			collections.StringKey,
+			collections.StringKey,
+			func(_ string, value types.Committee) (string, error) {
+				return value.ChainId, nil
+			},
+		),
+		Active: indexes.NewUnique(
+			sb,
+			types.ActiveCommitteeStoreKeyPrefix,
+			"active_committee",
+			collections.StringKey,
+			collections.StringKey,
+			func(_ string, value types.Committee) (string, error) {
+				return value.ChainId, nil
+			},
+		),
+	}
+}
+
+type Keeper struct {
+	cdc    codec.BinaryCodec
+	logger log.Logger
+
+	Schema     collections.Schema
+	Committees *collections.IndexedMap[string, types.Committee, committeeIndexes]
+
+	// the address capable of executing a MsgUpdateParams message. Typically, this
+	// should be the x/gov module account.
+	authority string
 }
 
 func NewKeeper(
@@ -44,12 +88,31 @@ func NewKeeper(
 		panic(fmt.Sprintf("invalid authority address: %s", authority))
 	}
 
-	return Keeper{
-		cdc:          cdc,
-		storeService: storeService,
-		authority:    authority,
-		logger:       logger,
+	sb := collections.NewSchemaBuilder(storeService)
+
+	k := Keeper{
+		cdc:       cdc,
+		authority: authority,
+		logger:    logger,
+
+		Committees: collections.NewIndexedMap(
+			sb,
+			types.CommitteeStoreKeyPrefix,
+			"committees",
+			collections.StringKey,
+			codec.CollValue[types.Committee](cdc),
+			newCommitteeIndexes(sb),
+		),
 	}
+
+	schema, err := sb.Build()
+	if err != nil {
+		panic(err)
+	}
+
+	k.Schema = schema
+
+	return k
 }
 
 // GetAuthority returns the module's authority.
