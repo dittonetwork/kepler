@@ -1,10 +1,11 @@
 package keeper
 
 import (
-	"cosmossdk.io/collections"
-	"cosmossdk.io/collections/indexes"
 	"fmt"
 	"kepler/x/workflow/types"
+
+	"cosmossdk.io/collections"
+	"cosmossdk.io/collections/indexes"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
@@ -22,7 +23,7 @@ func NewAutomationIndexes(sb *collections.SchemaBuilder) Idx {
 			types.CollectionIndexAutomationByStatus,
 			collections.StringKey,
 			collections.Uint64Key,
-			func(pk uint64, val types.Automation) (string, error) {
+			func(_ uint64, val types.Automation) (string, error) {
 				return val.GetStatus().String(), nil
 			}),
 	}
@@ -95,9 +96,9 @@ func (k BaseKeeper) FindActiveAutomations(ctx sdk.Context) ([]*types.Automation,
 
 	automations := make([]*types.Automation, len(pks))
 	for i, pk := range pks {
-		automation, err := k.GetAutomation(ctx, pk)
-		if err != nil {
-			return nil, fmt.Errorf("failed to get automation: %w", err)
+		automation, inErr := k.GetAutomation(ctx, pk)
+		if inErr != nil {
+			return nil, fmt.Errorf("failed to get automation: %w", inErr)
 		}
 		automations[i] = &automation
 	}

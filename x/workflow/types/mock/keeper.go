@@ -58,6 +58,21 @@ func (mr *MockKeeperMockRecorder) FindActiveAutomations(ctx any) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindActiveAutomations", reflect.TypeOf((*MockKeeper)(nil).FindActiveAutomations), ctx)
 }
 
+// GetActiveAutomations mocks base method.
+func (m *MockKeeper) GetActiveAutomations(goCtx context.Context, req *types0.QueryGetActiveAutomationsRequest) (*types0.QueryGetActiveAutomationsResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetActiveAutomations", goCtx, req)
+	ret0, _ := ret[0].(*types0.QueryGetActiveAutomationsResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetActiveAutomations indicates an expected call of GetActiveAutomations.
+func (mr *MockKeeperMockRecorder) GetActiveAutomations(goCtx, req any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetActiveAutomations", reflect.TypeOf((*MockKeeper)(nil).GetActiveAutomations), goCtx, req)
+}
+
 // GetAuthority mocks base method.
 func (m *MockKeeper) GetAuthority() string {
 	m.ctrl.T.Helper()

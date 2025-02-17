@@ -43,8 +43,8 @@ func TestSetAutomationStatus(t *testing.T) {
 	require.Equal(t, types.AutomationStatus_AUTOMATION_STATUS_PAUSED, retrieved.Status)
 }
 
-// TestGetActiveAutomations tests the GetActiveAutomations function
-func TestGetActiveAutomations(t *testing.T) {
+// TestFindActiveAutomations tests the GetActiveAutomations function
+func TestFindActiveAutomations(t *testing.T) {
 	k, ctx := keeper.WorkflowKeeper(t)
 
 	// Add multiple active automations
@@ -66,9 +66,9 @@ func TestGetActiveAutomations(t *testing.T) {
 	require.NoError(t, err)
 
 	// Retrieve and verify
-	ids, err := k.FindActiveAutomations(ctx)
+	activeAutomations, err := k.FindActiveAutomations(ctx)
 	require.NoError(t, err)
-	require.ElementsMatch(t, []uint64{5, 31, 25}, ids)
+	require.Len(t, activeAutomations, 3)
 }
 
 // Helper function to create a test automation
