@@ -19,18 +19,22 @@ type (
 		GetAuthority() string
 		Logger() log.Logger
 
+		// collections methods
 		InsertAutomation(ctx sdk.Context, automation types.Automation) error
 		SetAutomationStatus(ctx sdk.Context, id uint64, status types.AutomationStatus) error
 		GetAutomation(ctx sdk.Context, id uint64) (types.Automation, error)
-		SetActiveAutomation(ctx sdk.Context, id uint64) error
-		RemoveActiveAutomation(ctx sdk.Context, id uint64) error
-		GetActiveAutomationIDs(ctx sdk.Context) ([]uint64, error)
+		FindActiveAutomations(ctx sdk.Context) ([]*types.Automation, error)
 		GetNextAutomationID(ctx sdk.Context) (uint64, error)
 
 		GetParams(ctx context.Context) types.Params
 		SetParams(ctx context.Context, params types.Params) error
 		Params(goCtx context.Context, req *types.QueryParamsRequest) (*types.QueryParamsResponse, error)
+		GetActiveAutomations(
+			goCtx context.Context,
+			req *types.QueryGetActiveAutomationsRequest,
+		) (*types.QueryGetActiveAutomationsResponse, error)
 	}
+
 	BaseKeeper struct {
 		cdc          codec.BinaryCodec
 		storeService store.KVStoreService
@@ -42,10 +46,7 @@ type (
 
 		// Automations key: automationID | value: automation
 		// This is used to store automations
-		Automations collections.Map[uint64, types.Automation]
-		// AutomationQueue: key set of automation ids
-		// This is used to store active automation ids
-		AutomationQueue collections.KeySet[uint64]
+		Automations *collections.IndexedMap[uint64, types.Automation, Idx]
 		// AutomationID: sequence for monotonically increasing automation IDs
 		AutomationID collections.Sequence
 	}
@@ -68,18 +69,13 @@ func NewKeeper(
 		storeService: storeService,
 		authority:    authority,
 		logger:       logger,
-		Automations: collections.NewMap(
+		Automations: collections.NewIndexedMap(
 			sb,
 			types.KeyPrefixAutomation,
 			types.CollectionNameAutomations,
 			collections.Uint64Key,
 			codec.CollValue[types.Automation](cdc),
-		),
-		AutomationQueue: collections.NewKeySet(
-			sb,
-			types.KeyPrefixActiveAutomations,
-			types.CollectionNameActiveAutomations,
-			collections.Uint64Key,
+			NewAutomationIndexes(sb),
 		),
 	}
 }

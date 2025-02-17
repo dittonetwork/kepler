@@ -4,6 +4,7 @@ import (
 	"kepler/testutil/keeper"
 	"kepler/x/workflow/types"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/require"
 )
@@ -42,61 +43,32 @@ func TestSetAutomationStatus(t *testing.T) {
 	require.Equal(t, types.AutomationStatus_AUTOMATION_STATUS_PAUSED, retrieved.Status)
 }
 
-// TestSetActiveAutomation tests the SetActiveAutomation function
-func TestSetActiveAutomation(t *testing.T) {
-	k, ctx := keeper.WorkflowKeeper(t)
-
-	// Add an active automation
-	err := k.SetActiveAutomation(ctx, 5)
-	require.NoError(t, err)
-
-	// Retrieve and verify
-	ids, err := k.GetActiveAutomationIDs(ctx)
-	require.NoError(t, err)
-	require.ElementsMatch(t, []uint64{5}, ids)
-}
-
 // TestGetActiveAutomations tests the GetActiveAutomations function
 func TestGetActiveAutomations(t *testing.T) {
 	k, ctx := keeper.WorkflowKeeper(t)
 
 	// Add multiple active automations
-	err := k.SetActiveAutomation(ctx, 5)
+	automation := newTestAutomation(5, types.AutomationStatus_AUTOMATION_STATUS_ACTIVE)
+	err := k.InsertAutomation(ctx, automation)
 	require.NoError(t, err)
-	err = k.SetActiveAutomation(ctx, 31)
+
+	automation = newTestAutomation(7, types.AutomationStatus_AUTOMATION_STATUS_ACTIVE)
+	err = k.InsertAutomation(ctx, automation)
 	require.NoError(t, err)
-	err = k.SetActiveAutomation(ctx, 25)
+
+	automation = newTestAutomation(9, types.AutomationStatus_AUTOMATION_STATUS_ACTIVE)
+	err = k.InsertAutomation(ctx, automation)
 	require.NoError(t, err)
+
+	// one of em will be paused
+	automation = newTestAutomation(11, types.AutomationStatus_AUTOMATION_STATUS_PAUSED)
+	err = k.InsertAutomation(ctx, automation)
+	require.NoError(t, err)
+
 	// Retrieve and verify
-	ids, err := k.GetActiveAutomationIDs(ctx)
+	ids, err := k.FindActiveAutomations(ctx)
 	require.NoError(t, err)
 	require.ElementsMatch(t, []uint64{5, 31, 25}, ids)
-}
-
-// TestRemoveActiveAutomation tests the RemoveActiveAutomation function
-func TestRemoveActiveAutomation(t *testing.T) {
-	k, ctx := keeper.WorkflowKeeper(t)
-
-	// Add an active automation
-	err := k.SetActiveAutomation(ctx, 5)
-	require.NoError(t, err)
-	// Add an active automation that we will remove
-	err = k.SetActiveAutomation(ctx, 7)
-	require.NoError(t, err)
-
-	// Retrieve and verify
-	ids, err := k.GetActiveAutomationIDs(ctx)
-	require.NoError(t, err)
-	require.ElementsMatch(t, []uint64{5, 7}, ids)
-
-	// Remove the active automation
-	err = k.RemoveActiveAutomation(ctx, 7)
-	require.NoError(t, err)
-
-	// Retrieve and verify
-	ids, err = k.GetActiveAutomationIDs(ctx)
-	require.NoError(t, err)
-	require.ElementsMatch(t, []uint64{5}, ids)
 }
 
 // Helper function to create a test automation
@@ -104,5 +76,34 @@ func newTestAutomation(id uint64, status types.AutomationStatus) types.Automatio
 	return types.Automation{
 		Id:     id,
 		Status: status,
+	}
+}
+
+func newValidAutomation() types.Automation {
+	triggers := []*types.Trigger{
+		{
+			Trigger: &types.Trigger_Count{Count: &types.CountTrigger{
+				RepeatCount: 1,
+			}},
+		},
+	}
+	actions := []*types.Action{
+		{
+			&types.Action_OnChain{OnChain: &types.OnChainAction{
+				ContractAddress: []byte("0x1234"),
+				ChainId:         "1",
+				TxCallData:      []byte("tx_call_data"),
+			}},
+		},
+	}
+
+	expireAt := time.Now().Add(time.Hour).Unix()
+
+	return types.Automation{
+		Id:       1,
+		Triggers: triggers,
+		Actions:  actions,
+		Status:   types.AutomationStatus_AUTOMATION_STATUS_ACTIVE,
+		ExpireAt: expireAt,
 	}
 }

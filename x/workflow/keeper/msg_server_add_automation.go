@@ -3,6 +3,8 @@ package keeper
 import (
 	"context"
 	"fmt"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 	"kepler/x/workflow/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -16,7 +18,7 @@ func (k msgServer) AddAutomation(
 
 	id, err := k.GetNextAutomationID(ctx)
 	if err != nil {
-		return nil, fmt.Errorf("failed to get next automation ID: %w", err)
+		return nil, status.Error(codes.Internal, fmt.Sprintf("failed to get next automation ID: %s", err))
 	}
 
 	automation := &types.Automation{
@@ -29,7 +31,7 @@ func (k msgServer) AddAutomation(
 
 	err = k.InsertAutomation(ctx, *automation)
 	if err != nil {
-		return nil, fmt.Errorf("failed to set automation: %w", err)
+		return nil, status.Error(codes.Internal, fmt.Sprintf("failed to set automation: %s", err))
 	}
 
 	return &types.MsgAddAutomationResponse{

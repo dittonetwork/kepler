@@ -1,11 +1,38 @@
 package keeper
 
 import (
+	"cosmossdk.io/collections"
+	"cosmossdk.io/collections/indexes"
 	"fmt"
 	"kepler/x/workflow/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
+
+type Idx struct {
+	// AutomationStatus index by status of automation
+	AutomationStatus *indexes.Multi[string, uint64, types.Automation]
+}
+
+func NewAutomationIndexes(sb *collections.SchemaBuilder) Idx {
+	return Idx{
+		AutomationStatus: indexes.NewMulti(
+			sb,
+			types.KeyPrefixAutomation,
+			types.CollectionIndexAutomationByStatus,
+			collections.StringKey,
+			collections.Uint64Key,
+			func(pk uint64, val types.Automation) (string, error) {
+				return val.GetStatus().String(), nil
+			}),
+	}
+}
+
+func (a Idx) IndexesList() []collections.Index[uint64, types.Automation] {
+	return []collections.Index[uint64, types.Automation]{
+		a.AutomationStatus,
+	}
+}
 
 // InsertAutomation stores an automation in KVStore.
 func (k BaseKeeper) InsertAutomation(ctx sdk.Context, automation types.Automation) error {
@@ -51,39 +78,31 @@ func (k BaseKeeper) GetAutomation(ctx sdk.Context, id uint64) (types.Automation,
 	return automation, nil
 }
 
-// SetActiveAutomation stores an active automation ID in KVStore.
-func (k BaseKeeper) SetActiveAutomation(ctx sdk.Context, id uint64) error {
-	err := k.AutomationQueue.Set(ctx, id)
-	if err != nil {
-		return fmt.Errorf("failed to set active automation: %w", err)
-	}
-
-	return nil
-}
-
-// RemoveActiveAutomation removes an active automation ID from KVStore.
-func (k BaseKeeper) RemoveActiveAutomation(ctx sdk.Context, id uint64) error {
-	err := k.AutomationQueue.Remove(ctx, id)
-	if err != nil {
-		return fmt.Errorf("failed to remove active automation: %w", err)
-	}
-
-	return nil
-}
-
-// GetActiveAutomationIDs returns all active automation IDs.
-func (k BaseKeeper) GetActiveAutomationIDs(ctx sdk.Context) ([]uint64, error) {
-	idsIter, err := k.AutomationQueue.Iterate(ctx, nil)
+// FindActiveAutomations returns all active automation IDs.
+func (k BaseKeeper) FindActiveAutomations(ctx sdk.Context) ([]*types.Automation, error) {
+	iter, err := k.Automations.Indexes.AutomationStatus.MatchExact(
+		ctx,
+		types.AutomationStatus_AUTOMATION_STATUS_ACTIVE.String(),
+	)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get active automations: %w", err)
 	}
 
-	ids, err := idsIter.Keys()
+	pks, err := iter.PrimaryKeys()
 	if err != nil {
-		return nil, fmt.Errorf("failed to get active automation keys: %w", err)
+		return nil, fmt.Errorf("failed to get primary keys: %w", err)
 	}
 
-	return ids, nil
+	automations := make([]*types.Automation, len(pks))
+	for i, pk := range pks {
+		automation, err := k.GetAutomation(ctx, pk)
+		if err != nil {
+			return nil, fmt.Errorf("failed to get automation: %w", err)
+		}
+		automations[i] = &automation
+	}
+
+	return automations, nil
 }
 
 // GetNextAutomationID returns the next automation ID.
