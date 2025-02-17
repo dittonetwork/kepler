@@ -138,3 +138,34 @@ func TestCancelAutomationFail(t *testing.T) {
 	err = k.CancelAutomation(ctx, 5)
 	require.Error(t, err)
 }
+
+func TestActivateAutomation(t *testing.T) {
+	k, ctx := keeper.WorkflowKeeper(t)
+
+	// Add an automation
+	automation := newTestAutomation(5, types.AutomationStatus_AUTOMATION_STATUS_PAUSED)
+	err := k.InsertAutomation(ctx, automation)
+	require.NoError(t, err)
+
+	// Activate Active automation
+	err = k.ActivateAutomation(ctx, 5)
+	require.NoError(t, err)
+
+	// Retrieve and verify
+	automation, err = k.GetAutomation(ctx, 5)
+	require.NoError(t, err)
+	require.Equal(t, types.AutomationStatus_AUTOMATION_STATUS_ACTIVE, automation.Status)
+}
+
+func TestActivateAutomationFail(t *testing.T) {
+	k, ctx := keeper.WorkflowKeeper(t)
+
+	// Add an automation
+	automation := newTestAutomation(5, types.AutomationStatus_AUTOMATION_STATUS_DONE)
+	err := k.InsertAutomation(ctx, automation)
+	require.NoError(t, err)
+
+	// Activate Active automation
+	err = k.ActivateAutomation(ctx, 5)
+	require.Error(t, err)
+}

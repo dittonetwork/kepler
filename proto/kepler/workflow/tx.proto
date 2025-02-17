@@ -20,6 +20,7 @@ service Msg {
   rpc UpdateParams  (MsgUpdateParams ) returns (MsgUpdateParamsResponse );
   rpc AddAutomation (MsgAddAutomation) returns (MsgAddAutomationResponse);
   rpc CancelAutomation (MsgCancelAutomation) returns (MsgCancelAutomationResponse);
+  rpc ActivateAutomation (MsgActivateAutomation) returns (MsgActivateAutomationResponse);
 }
 // MsgUpdateParams is the Msg/UpdateParams request type.
 message MsgUpdateParams {
@@ -56,3 +57,9 @@ message MsgCancelAutomation {
 }
 
 message MsgCancelAutomationResponse {}
+
+message MsgActivateAutomation {
+  uint64 id = 1;
+}
+
+message MsgActivateAutomationResponse {}

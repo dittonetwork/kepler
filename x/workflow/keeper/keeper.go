@@ -26,6 +26,7 @@ type (
 		FindActiveAutomations(ctx sdk.Context) ([]*types.Automation, error)
 		GetNextAutomationID(ctx sdk.Context) (uint64, error)
 		CancelAutomation(ctx sdk.Context, id uint64) error
+		ActivateAutomation(ctx sdk.Context, id uint64) error
 
 		GetParams(ctx context.Context) types.Params
 		SetParams(ctx context.Context, params types.Params) error

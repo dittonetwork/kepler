@@ -53,6 +53,14 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 						{ProtoField: "id"},
 					},
 				},
+				{
+					RpcMethod: "ActivateAutomation",
+					Use:       "activate-automation [id]",
+					Short:     "Send a ActivateAutomation tx",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{
+						{ProtoField: "id"},
+					},
+				},
 				// this line is used by ignite scaffolding # autocli/tx
 			},
 		},

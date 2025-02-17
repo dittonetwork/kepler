@@ -153,3 +153,21 @@ func (k BaseKeeper) CancelAutomation(ctx sdk.Context, id uint64) error {
 
 	return nil
 }
+
+func (k BaseKeeper) ActivateAutomation(ctx sdk.Context, id uint64) error {
+	automation, err := k.GetAutomation(ctx, id)
+	if err != nil {
+		return fmt.Errorf("failed to get automation: %w", err)
+	}
+
+	if automation.Status != types.AutomationStatus_AUTOMATION_STATUS_PAUSED {
+		return fmt.Errorf("automation cant be activated, status: %s", automation.Status)
+	}
+
+	err = k.SetAutomationStatus(ctx, id, types.AutomationStatus_AUTOMATION_STATUS_ACTIVE)
+	if err != nil {
+		return fmt.Errorf("failed to set automation status: %w", err)
+	}
+
+	return nil
+}
