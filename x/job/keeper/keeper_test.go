@@ -1,11 +1,12 @@
 package keeper_test
 
 import (
-	"go.uber.org/mock/gomock"
 	"kepler/x/job/keeper"
 	"kepler/x/job/types"
 	"kepler/x/job/types/mock"
 	"testing"
+
+	"go.uber.org/mock/gomock"
 
 	"cosmossdk.io/log"
 	storetypes "cosmossdk.io/store/types"
@@ -166,6 +167,46 @@ func (s *KeeperTestSuite) Test_CreateJob() {
 			} else {
 				s.Require().NoError(err)
 			}
+		})
+	}
+}
+
+func (s *KeeperTestSuite) Test_GetJob() {
+	cases := map[string]struct {
+		preRun func() (uint64, error)
+		found  bool
+	}{
+		"found": {
+			preRun: func() (uint64, error) {
+				s.committee.EXPECT().IsCommitteeExists(s.ctx, "1").Return(true, nil)
+				s.committee.EXPECT().CanBeSigned(s.ctx, "1", "1", [][]byte{
+					[]byte("sign1"),
+					[]byte("sign2"),
+					[]byte("sign3"),
+				}).Return(true, nil)
+				err := s.keeper.CreateJob(s.ctx, types.Job{Id: 111, CommitteeId: "1", ChainId: "1", Signs: [][]byte{
+					[]byte("sign1"),
+					[]byte("sign2"),
+					[]byte("sign3"),
+				}})
+				return uint64(111), err
+			},
+			found: true,
+		},
+		"not found": {
+			preRun: func() (uint64, error) {
+				return uint64(0), nil
+			},
+			found: false,
+		},
+	}
+	for testName, tc := range cases {
+		s.Run(testName, func() {
+			id, err := tc.preRun()
+			s.Require().NoError(err)
+			_, found, err := s.keeper.GetJobByID(s.ctx, id)
+			s.Require().NoError(err)
+			s.Require().Equal(tc.found, found)
 		})
 	}
 }

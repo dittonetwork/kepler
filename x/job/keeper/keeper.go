@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"kepler/x/job/types"
 
+	"github.com/pkg/errors"
+
 	"cosmossdk.io/collections"
 	"cosmossdk.io/core/store"
 	"cosmossdk.io/log"
@@ -89,4 +91,15 @@ func (k Keeper) CreateJob(ctx sdk.Context, job types.Job) error {
 	}
 
 	return nil
+}
+
+func (k Keeper) GetJobByID(ctx sdk.Context, jobID uint64) (types.Job, bool, error) {
+	job, err := k.Jobs.Get(ctx, jobID)
+	if err != nil {
+		if errors.Is(err, collections.ErrNotFound) {
+			return job, false, nil
+		}
+		return job, false, err
+	}
+	return job, true, nil
 }
