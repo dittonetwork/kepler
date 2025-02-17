@@ -45,6 +45,14 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 						{ProtoField: "expire_at"},
 					},
 				},
+				{
+					RpcMethod: "CancelAutomation",
+					Use:       "cancel-automation [id]",
+					Short:     "Send a CancelAutomation tx",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{
+						{ProtoField: "id"},
+					},
+				},
 				// this line is used by ignite scaffolding # autocli/tx
 			},
 		},

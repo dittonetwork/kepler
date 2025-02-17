@@ -20,6 +20,7 @@ enum AutomationStatus {
   AUTOMATION_STATUS_PAUSED = 3; // Paused automation
   AUTOMATION_STATUS_FAILED = 4; // Failed automation
   AUTOMATION_STATUS_DONE = 5; // Completed automation
+  AUTOMATION_STATUS_CANCELED = 6; // Canceled automation
 }
 
 // Base trigger with type selection

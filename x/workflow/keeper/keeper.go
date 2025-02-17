@@ -25,14 +25,18 @@ type (
 		GetAutomation(ctx sdk.Context, id uint64) (types.Automation, error)
 		FindActiveAutomations(ctx sdk.Context) ([]*types.Automation, error)
 		GetNextAutomationID(ctx sdk.Context) (uint64, error)
+		CancelAutomation(ctx sdk.Context, id uint64) error
 
 		GetParams(ctx context.Context) types.Params
 		SetParams(ctx context.Context, params types.Params) error
-		Params(goCtx context.Context, req *types.QueryParamsRequest) (*types.QueryParamsResponse, error)
 		GetActiveAutomations(
 			goCtx context.Context,
 			req *types.QueryGetActiveAutomationsRequest,
 		) (*types.QueryGetActiveAutomationsResponse, error)
+		Params(
+			goCtx context.Context,
+			req *types.QueryParamsRequest,
+		) (*types.QueryParamsResponse, error)
 	}
 
 	BaseKeeper struct {

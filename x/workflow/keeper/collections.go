@@ -1,6 +1,7 @@
 package keeper
 
 import (
+	"errors"
 	"fmt"
 	"kepler/x/workflow/types"
 
@@ -54,7 +55,11 @@ func (k BaseKeeper) InsertAutomation(ctx sdk.Context, automation types.Automatio
 }
 
 // SetAutomationStatus sets the status of an automation in KVStore.
-func (k BaseKeeper) SetAutomationStatus(ctx sdk.Context, id uint64, status types.AutomationStatus) error {
+func (k BaseKeeper) SetAutomationStatus(
+	ctx sdk.Context,
+	id uint64,
+	status types.AutomationStatus,
+) error {
 	automation, err := k.GetAutomation(ctx, id)
 	if err != nil {
 		return err
@@ -114,4 +119,37 @@ func (k BaseKeeper) GetNextAutomationID(ctx sdk.Context) (uint64, error) {
 	}
 
 	return id, nil
+}
+
+func contains[T comparable](s []T, e T) bool {
+	for _, a := range s {
+		if a == e {
+			return true
+		}
+	}
+	return false
+}
+
+func (k BaseKeeper) CancelAutomation(ctx sdk.Context, id uint64) error {
+	automation, err := k.GetAutomation(ctx, id)
+	if err != nil {
+		return fmt.Errorf("failed to get automation: %w", err)
+	}
+
+	cancelAllowedWhitelist := []types.AutomationStatus{
+		types.AutomationStatus_AUTOMATION_STATUS_ACTIVE,
+		types.AutomationStatus_AUTOMATION_STATUS_PAUSED,
+		types.AutomationStatus_AUTOMATION_STATUS_STATUS_UNSPECIFIED,
+	}
+
+	if !contains(cancelAllowedWhitelist, automation.Status) {
+		return errors.New("cancel impossible: automation in the final state")
+	}
+
+	err = k.SetAutomationStatus(ctx, id, types.AutomationStatus_AUTOMATION_STATUS_CANCELED)
+	if err != nil {
+		return fmt.Errorf("failed to set automation status: %w", err)
+	}
+
+	return nil
 }

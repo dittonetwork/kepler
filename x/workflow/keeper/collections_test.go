@@ -107,3 +107,34 @@ func newValidAutomation() types.Automation {
 		ExpireAt: expireAt,
 	}
 }
+
+func TestCancelAutomation(t *testing.T) {
+	k, ctx := keeper.WorkflowKeeper(t)
+
+	// Add an automation
+	automation := newTestAutomation(5, types.AutomationStatus_AUTOMATION_STATUS_ACTIVE)
+	err := k.InsertAutomation(ctx, automation)
+	require.NoError(t, err)
+
+	// Cancel Active automation
+	err = k.CancelAutomation(ctx, 5)
+	require.NoError(t, err)
+
+	// Retrieve and verify
+	automation, err = k.GetAutomation(ctx, 5)
+	require.NoError(t, err)
+	require.Equal(t, types.AutomationStatus_AUTOMATION_STATUS_CANCELED, automation.Status)
+}
+
+func TestCancelAutomationFail(t *testing.T) {
+	k, ctx := keeper.WorkflowKeeper(t)
+
+	// Add an automation
+	automation := newTestAutomation(5, types.AutomationStatus_AUTOMATION_STATUS_DONE)
+	err := k.InsertAutomation(ctx, automation)
+	require.NoError(t, err)
+
+	// Cancel Active automation
+	err = k.CancelAutomation(ctx, 5)
+	require.Error(t, err)
+}

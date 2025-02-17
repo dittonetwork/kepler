@@ -19,8 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Msg_UpdateParams_FullMethodName  = "/kepler.workflow.Msg/UpdateParams"
-	Msg_AddAutomation_FullMethodName = "/kepler.workflow.Msg/AddAutomation"
+	Msg_UpdateParams_FullMethodName     = "/kepler.workflow.Msg/UpdateParams"
+	Msg_AddAutomation_FullMethodName    = "/kepler.workflow.Msg/AddAutomation"
+	Msg_CancelAutomation_FullMethodName = "/kepler.workflow.Msg/CancelAutomation"
 )
 
 // MsgClient is the client API for Msg service.
@@ -31,6 +32,7 @@ type MsgClient interface {
 	// parameters. The authority defaults to the x/gov module account.
 	UpdateParams(ctx context.Context, in *MsgUpdateParams, opts ...grpc.CallOption) (*MsgUpdateParamsResponse, error)
 	AddAutomation(ctx context.Context, in *MsgAddAutomation, opts ...grpc.CallOption) (*MsgAddAutomationResponse, error)
+	CancelAutomation(ctx context.Context, in *MsgCancelAutomation, opts ...grpc.CallOption) (*MsgCancelAutomationResponse, error)
 }
 
 type msgClient struct {
@@ -59,6 +61,15 @@ func (c *msgClient) AddAutomation(ctx context.Context, in *MsgAddAutomation, opt
 	return out, nil
 }
 
+func (c *msgClient) CancelAutomation(ctx context.Context, in *MsgCancelAutomation, opts ...grpc.CallOption) (*MsgCancelAutomationResponse, error) {
+	out := new(MsgCancelAutomationResponse)
+	err := c.cc.Invoke(ctx, Msg_CancelAutomation_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 // All implementations must embed UnimplementedMsgServer
 // for forward compatibility
@@ -67,6 +78,7 @@ type MsgServer interface {
 	// parameters. The authority defaults to the x/gov module account.
 	UpdateParams(context.Context, *MsgUpdateParams) (*MsgUpdateParamsResponse, error)
 	AddAutomation(context.Context, *MsgAddAutomation) (*MsgAddAutomationResponse, error)
+	CancelAutomation(context.Context, *MsgCancelAutomation) (*MsgCancelAutomationResponse, error)
 	mustEmbedUnimplementedMsgServer()
 }
 
@@ -79,6 +91,9 @@ func (UnimplementedMsgServer) UpdateParams(context.Context, *MsgUpdateParams) (*
 }
 func (UnimplementedMsgServer) AddAutomation(context.Context, *MsgAddAutomation) (*MsgAddAutomationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddAutomation not implemented")
+}
+func (UnimplementedMsgServer) CancelAutomation(context.Context, *MsgCancelAutomation) (*MsgCancelAutomationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CancelAutomation not implemented")
 }
 func (UnimplementedMsgServer) mustEmbedUnimplementedMsgServer() {}
 
@@ -129,6 +144,24 @@ func _Msg_AddAutomation_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_CancelAutomation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgCancelAutomation)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).CancelAutomation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_CancelAutomation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).CancelAutomation(ctx, req.(*MsgCancelAutomation))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Msg_ServiceDesc is the grpc.ServiceDesc for Msg service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -143,6 +176,10 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AddAutomation",
 			Handler:    _Msg_AddAutomation_Handler,
+		},
+		{
+			MethodName: "CancelAutomation",
+			Handler:    _Msg_CancelAutomation_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

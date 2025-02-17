@@ -19,6 +19,7 @@ service Msg {
   // parameters. The authority defaults to the x/gov module account.
   rpc UpdateParams  (MsgUpdateParams ) returns (MsgUpdateParamsResponse );
   rpc AddAutomation (MsgAddAutomation) returns (MsgAddAutomationResponse);
+  rpc CancelAutomation (MsgCancelAutomation) returns (MsgCancelAutomationResponse);
 }
 // MsgUpdateParams is the Msg/UpdateParams request type.
 message MsgUpdateParams {
@@ -50,3 +51,8 @@ message MsgAddAutomationResponse {
   uint64 id = 1;
 }
 
+message MsgCancelAutomation {
+  uint64 id = 1;
+}
+
+message MsgCancelAutomationResponse {}
