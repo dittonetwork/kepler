@@ -39,11 +39,6 @@ linters-settings:
     # Default false
     ignore-comments: true
 
-  forbidigo:
-    packages:
-      - "github.com/golang/mock"
-    message: "Usage of the 'github.com/golang/mock' package is forbidden; please use uber version"
-
   gocognit:
     # Minimal code complexity to report.
     min-complexity: 20
