@@ -29,10 +29,14 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 					Skip:      true, // skipped because authority gated
 				},
 				{
-					RpcMethod:      "AddAutomation",
-					Use:            "add-automation [automation]",
-					Short:          "Send a AddAutomation tx",
-					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "automation"}},
+					RpcMethod: "AddAutomation",
+					Use:       "add-automation [automation]",
+					Short:     "Send a AddAutomation tx",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{
+						{ProtoField: "triggers"},
+						{ProtoField: "actions"},
+						{ProtoField: "expire_at"},
+					},
 				},
 				// this line is used by ignite scaffolding # autocli/tx
 			},
