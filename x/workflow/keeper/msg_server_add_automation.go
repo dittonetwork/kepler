@@ -28,6 +28,7 @@ func (k msgServer) AddAutomation(
 		Actions:  msg.GetActions(),
 		ExpireAt: msg.GetExpireAt(),
 		Status:   types.AutomationStatus_AUTOMATION_STATUS_ACTIVE,
+		Creator:  msg.Creator,
 	}
 
 	err = k.InsertAutomation(ctx, *automation)

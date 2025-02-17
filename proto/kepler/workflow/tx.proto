@@ -52,14 +52,31 @@ message MsgAddAutomationResponse {
   uint64 id = 1;
 }
 
+message CancelByCommittee {
+  // job executors committee id
+  string committee_id = 1;
+  string chain_id = 2;
+  // signs of committee participants
+  repeated bytes signs = 3;
+}
+
 message MsgCancelAutomation {
+  option (cosmos.msg.v1.signer) = "creator";
   uint64 id = 1;
+  // cancel by creator (user) of the automation
+  // can be empty if tx created by committee
+  string creator = 2;
+  // cancel by committee
+  CancelByCommittee committee = 3;
 }
 
 message MsgCancelAutomationResponse {}
 
 message MsgActivateAutomation {
+  option (cosmos.msg.v1.signer) = "creator";
   uint64 id = 1;
+  // creator of the automation
+  string creator = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 }
 
 message MsgActivateAutomationResponse {}

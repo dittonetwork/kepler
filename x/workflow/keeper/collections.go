@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"kepler/x/workflow/types"
+	"slices"
 
 	"cosmossdk.io/collections"
 	"cosmossdk.io/collections/indexes"
@@ -121,13 +122,20 @@ func (k BaseKeeper) GetNextAutomationID(ctx sdk.Context) (uint64, error) {
 	return id, nil
 }
 
-func contains[T comparable](s []T, e T) bool {
-	for _, a := range s {
-		if a == e {
-			return true
-		}
-	}
-	return false
+var cancelAllowedWhitelist = []types.AutomationStatus{
+	types.AutomationStatus_AUTOMATION_STATUS_ACTIVE,
+	types.AutomationStatus_AUTOMATION_STATUS_PAUSED,
+	types.AutomationStatus_AUTOMATION_STATUS_STATUS_UNSPECIFIED,
+}
+
+// canCancel returns true if automation can be canceled (if it not in the final state).
+func canCancel(status types.AutomationStatus) bool {
+	return slices.Contains(cancelAllowedWhitelist, status)
+}
+
+// canActivate returns true if automation can be activated (if it previously was paused).
+func canActivate(status types.AutomationStatus) bool {
+	return status == types.AutomationStatus_AUTOMATION_STATUS_PAUSED
 }
 
 func (k BaseKeeper) CancelAutomation(ctx sdk.Context, id uint64) error {
@@ -136,13 +144,7 @@ func (k BaseKeeper) CancelAutomation(ctx sdk.Context, id uint64) error {
 		return fmt.Errorf("failed to get automation: %w", err)
 	}
 
-	cancelAllowedWhitelist := []types.AutomationStatus{
-		types.AutomationStatus_AUTOMATION_STATUS_ACTIVE,
-		types.AutomationStatus_AUTOMATION_STATUS_PAUSED,
-		types.AutomationStatus_AUTOMATION_STATUS_STATUS_UNSPECIFIED,
-	}
-
-	if !contains(cancelAllowedWhitelist, automation.Status) {
+	if !canCancel(automation.Status) {
 		return errors.New("cancel impossible: automation in the final state")
 	}
 
@@ -160,7 +162,7 @@ func (k BaseKeeper) ActivateAutomation(ctx sdk.Context, id uint64) error {
 		return fmt.Errorf("failed to get automation: %w", err)
 	}
 
-	if automation.Status != types.AutomationStatus_AUTOMATION_STATUS_PAUSED {
+	if !canActivate(automation.Status) {
 		return fmt.Errorf("automation cant be activated, status: %s", automation.Status)
 	}
 

@@ -41,9 +41,10 @@ type (
 	}
 
 	BaseKeeper struct {
-		cdc          codec.BinaryCodec
-		storeService store.KVStoreService
-		logger       log.Logger
+		cdc             codec.BinaryCodec
+		storeService    store.KVStoreService
+		logger          log.Logger
+		commetteeKeeper types.CommitteeKeeper
 
 		// the address capable of executing a MsgUpdateParams message. Typically, this
 		// should be the x/gov module account.
@@ -62,7 +63,7 @@ func NewKeeper(
 	storeService store.KVStoreService,
 	logger log.Logger,
 	authority string,
-
+	committeeKeeper types.CommitteeKeeper,
 ) BaseKeeper {
 	if _, err := sdk.AccAddressFromBech32(authority); err != nil {
 		panic(fmt.Sprintf("invalid authority address: %s", authority))
@@ -70,10 +71,11 @@ func NewKeeper(
 
 	sb := collections.NewSchemaBuilder(storeService)
 	return BaseKeeper{
-		cdc:          cdc,
-		storeService: storeService,
-		authority:    authority,
-		logger:       logger,
+		cdc:             cdc,
+		storeService:    storeService,
+		authority:       authority,
+		logger:          logger,
+		commetteeKeeper: committeeKeeper,
 		Automations: collections.NewIndexedMap(
 			sb,
 			types.KeyPrefixAutomation,

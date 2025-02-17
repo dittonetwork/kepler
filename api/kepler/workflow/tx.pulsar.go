@@ -2019,15 +2019,627 @@ func (x *fastReflection_MsgAddAutomationResponse) ProtoMethods() *protoiface.Met
 	}
 }
 
+var _ protoreflect.List = (*_CancelByCommittee_3_list)(nil)
+
+type _CancelByCommittee_3_list struct {
+	list *[][]byte
+}
+
+func (x *_CancelByCommittee_3_list) Len() int {
+	if x.list == nil {
+		return 0
+	}
+	return len(*x.list)
+}
+
+func (x *_CancelByCommittee_3_list) Get(i int) protoreflect.Value {
+	return protoreflect.ValueOfBytes((*x.list)[i])
+}
+
+func (x *_CancelByCommittee_3_list) Set(i int, value protoreflect.Value) {
+	valueUnwrapped := value.Bytes()
+	concreteValue := valueUnwrapped
+	(*x.list)[i] = concreteValue
+}
+
+func (x *_CancelByCommittee_3_list) Append(value protoreflect.Value) {
+	valueUnwrapped := value.Bytes()
+	concreteValue := valueUnwrapped
+	*x.list = append(*x.list, concreteValue)
+}
+
+func (x *_CancelByCommittee_3_list) AppendMutable() protoreflect.Value {
+	panic(fmt.Errorf("AppendMutable can not be called on message CancelByCommittee at list field Signs as it is not of Message kind"))
+}
+
+func (x *_CancelByCommittee_3_list) Truncate(n int) {
+	*x.list = (*x.list)[:n]
+}
+
+func (x *_CancelByCommittee_3_list) NewElement() protoreflect.Value {
+	var v []byte
+	return protoreflect.ValueOfBytes(v)
+}
+
+func (x *_CancelByCommittee_3_list) IsValid() bool {
+	return x.list != nil
+}
+
 var (
-	md_MsgCancelAutomation    protoreflect.MessageDescriptor
-	fd_MsgCancelAutomation_id protoreflect.FieldDescriptor
+	md_CancelByCommittee              protoreflect.MessageDescriptor
+	fd_CancelByCommittee_committee_id protoreflect.FieldDescriptor
+	fd_CancelByCommittee_chain_id     protoreflect.FieldDescriptor
+	fd_CancelByCommittee_signs        protoreflect.FieldDescriptor
+)
+
+func init() {
+	file_kepler_workflow_tx_proto_init()
+	md_CancelByCommittee = File_kepler_workflow_tx_proto.Messages().ByName("CancelByCommittee")
+	fd_CancelByCommittee_committee_id = md_CancelByCommittee.Fields().ByName("committee_id")
+	fd_CancelByCommittee_chain_id = md_CancelByCommittee.Fields().ByName("chain_id")
+	fd_CancelByCommittee_signs = md_CancelByCommittee.Fields().ByName("signs")
+}
+
+var _ protoreflect.Message = (*fastReflection_CancelByCommittee)(nil)
+
+type fastReflection_CancelByCommittee CancelByCommittee
+
+func (x *CancelByCommittee) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_CancelByCommittee)(x)
+}
+
+func (x *CancelByCommittee) slowProtoReflect() protoreflect.Message {
+	mi := &file_kepler_workflow_tx_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_CancelByCommittee_messageType fastReflection_CancelByCommittee_messageType
+var _ protoreflect.MessageType = fastReflection_CancelByCommittee_messageType{}
+
+type fastReflection_CancelByCommittee_messageType struct{}
+
+func (x fastReflection_CancelByCommittee_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_CancelByCommittee)(nil)
+}
+func (x fastReflection_CancelByCommittee_messageType) New() protoreflect.Message {
+	return new(fastReflection_CancelByCommittee)
+}
+func (x fastReflection_CancelByCommittee_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_CancelByCommittee
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_CancelByCommittee) Descriptor() protoreflect.MessageDescriptor {
+	return md_CancelByCommittee
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_CancelByCommittee) Type() protoreflect.MessageType {
+	return _fastReflection_CancelByCommittee_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_CancelByCommittee) New() protoreflect.Message {
+	return new(fastReflection_CancelByCommittee)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_CancelByCommittee) Interface() protoreflect.ProtoMessage {
+	return (*CancelByCommittee)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_CancelByCommittee) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.CommitteeId != "" {
+		value := protoreflect.ValueOfString(x.CommitteeId)
+		if !f(fd_CancelByCommittee_committee_id, value) {
+			return
+		}
+	}
+	if x.ChainId != "" {
+		value := protoreflect.ValueOfString(x.ChainId)
+		if !f(fd_CancelByCommittee_chain_id, value) {
+			return
+		}
+	}
+	if len(x.Signs) != 0 {
+		value := protoreflect.ValueOfList(&_CancelByCommittee_3_list{list: &x.Signs})
+		if !f(fd_CancelByCommittee_signs, value) {
+			return
+		}
+	}
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_CancelByCommittee) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	case "kepler.workflow.CancelByCommittee.committee_id":
+		return x.CommitteeId != ""
+	case "kepler.workflow.CancelByCommittee.chain_id":
+		return x.ChainId != ""
+	case "kepler.workflow.CancelByCommittee.signs":
+		return len(x.Signs) != 0
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.CancelByCommittee"))
+		}
+		panic(fmt.Errorf("message kepler.workflow.CancelByCommittee does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_CancelByCommittee) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	case "kepler.workflow.CancelByCommittee.committee_id":
+		x.CommitteeId = ""
+	case "kepler.workflow.CancelByCommittee.chain_id":
+		x.ChainId = ""
+	case "kepler.workflow.CancelByCommittee.signs":
+		x.Signs = nil
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.CancelByCommittee"))
+		}
+		panic(fmt.Errorf("message kepler.workflow.CancelByCommittee does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_CancelByCommittee) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	case "kepler.workflow.CancelByCommittee.committee_id":
+		value := x.CommitteeId
+		return protoreflect.ValueOfString(value)
+	case "kepler.workflow.CancelByCommittee.chain_id":
+		value := x.ChainId
+		return protoreflect.ValueOfString(value)
+	case "kepler.workflow.CancelByCommittee.signs":
+		if len(x.Signs) == 0 {
+			return protoreflect.ValueOfList(&_CancelByCommittee_3_list{})
+		}
+		listValue := &_CancelByCommittee_3_list{list: &x.Signs}
+		return protoreflect.ValueOfList(listValue)
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.CancelByCommittee"))
+		}
+		panic(fmt.Errorf("message kepler.workflow.CancelByCommittee does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_CancelByCommittee) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	case "kepler.workflow.CancelByCommittee.committee_id":
+		x.CommitteeId = value.Interface().(string)
+	case "kepler.workflow.CancelByCommittee.chain_id":
+		x.ChainId = value.Interface().(string)
+	case "kepler.workflow.CancelByCommittee.signs":
+		lv := value.List()
+		clv := lv.(*_CancelByCommittee_3_list)
+		x.Signs = *clv.list
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.CancelByCommittee"))
+		}
+		panic(fmt.Errorf("message kepler.workflow.CancelByCommittee does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_CancelByCommittee) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "kepler.workflow.CancelByCommittee.signs":
+		if x.Signs == nil {
+			x.Signs = [][]byte{}
+		}
+		value := &_CancelByCommittee_3_list{list: &x.Signs}
+		return protoreflect.ValueOfList(value)
+	case "kepler.workflow.CancelByCommittee.committee_id":
+		panic(fmt.Errorf("field committee_id of message kepler.workflow.CancelByCommittee is not mutable"))
+	case "kepler.workflow.CancelByCommittee.chain_id":
+		panic(fmt.Errorf("field chain_id of message kepler.workflow.CancelByCommittee is not mutable"))
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.CancelByCommittee"))
+		}
+		panic(fmt.Errorf("message kepler.workflow.CancelByCommittee does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_CancelByCommittee) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "kepler.workflow.CancelByCommittee.committee_id":
+		return protoreflect.ValueOfString("")
+	case "kepler.workflow.CancelByCommittee.chain_id":
+		return protoreflect.ValueOfString("")
+	case "kepler.workflow.CancelByCommittee.signs":
+		list := [][]byte{}
+		return protoreflect.ValueOfList(&_CancelByCommittee_3_list{list: &list})
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.CancelByCommittee"))
+		}
+		panic(fmt.Errorf("message kepler.workflow.CancelByCommittee does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_CancelByCommittee) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in kepler.workflow.CancelByCommittee", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_CancelByCommittee) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_CancelByCommittee) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_CancelByCommittee) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_CancelByCommittee) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*CancelByCommittee)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		l = len(x.CommitteeId)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.ChainId)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if len(x.Signs) > 0 {
+			for _, b := range x.Signs {
+				l = len(b)
+				n += 1 + l + runtime.Sov(uint64(l))
+			}
+		}
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*CancelByCommittee)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if len(x.Signs) > 0 {
+			for iNdEx := len(x.Signs) - 1; iNdEx >= 0; iNdEx-- {
+				i -= len(x.Signs[iNdEx])
+				copy(dAtA[i:], x.Signs[iNdEx])
+				i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Signs[iNdEx])))
+				i--
+				dAtA[i] = 0x1a
+			}
+		}
+		if len(x.ChainId) > 0 {
+			i -= len(x.ChainId)
+			copy(dAtA[i:], x.ChainId)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ChainId)))
+			i--
+			dAtA[i] = 0x12
+		}
+		if len(x.CommitteeId) > 0 {
+			i -= len(x.CommitteeId)
+			copy(dAtA[i:], x.CommitteeId)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.CommitteeId)))
+			i--
+			dAtA[i] = 0xa
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*CancelByCommittee)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: CancelByCommittee: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: CancelByCommittee: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			case 1:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field CommitteeId", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.CommitteeId = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 2:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ChainId", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.ChainId = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 3:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Signs", wireType)
+				}
+				var byteLen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					byteLen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if byteLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + byteLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.Signs = append(x.Signs, make([]byte, postIndex-iNdEx))
+				copy(x.Signs[len(x.Signs)-1], dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
+var (
+	md_MsgCancelAutomation           protoreflect.MessageDescriptor
+	fd_MsgCancelAutomation_id        protoreflect.FieldDescriptor
+	fd_MsgCancelAutomation_creator   protoreflect.FieldDescriptor
+	fd_MsgCancelAutomation_committee protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_kepler_workflow_tx_proto_init()
 	md_MsgCancelAutomation = File_kepler_workflow_tx_proto.Messages().ByName("MsgCancelAutomation")
 	fd_MsgCancelAutomation_id = md_MsgCancelAutomation.Fields().ByName("id")
+	fd_MsgCancelAutomation_creator = md_MsgCancelAutomation.Fields().ByName("creator")
+	fd_MsgCancelAutomation_committee = md_MsgCancelAutomation.Fields().ByName("committee")
 }
 
 var _ protoreflect.Message = (*fastReflection_MsgCancelAutomation)(nil)
@@ -2039,7 +2651,7 @@ func (x *MsgCancelAutomation) ProtoReflect() protoreflect.Message {
 }
 
 func (x *MsgCancelAutomation) slowProtoReflect() protoreflect.Message {
-	mi := &file_kepler_workflow_tx_proto_msgTypes[4]
+	mi := &file_kepler_workflow_tx_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2101,6 +2713,18 @@ func (x *fastReflection_MsgCancelAutomation) Range(f func(protoreflect.FieldDesc
 			return
 		}
 	}
+	if x.Creator != "" {
+		value := protoreflect.ValueOfString(x.Creator)
+		if !f(fd_MsgCancelAutomation_creator, value) {
+			return
+		}
+	}
+	if x.Committee != nil {
+		value := protoreflect.ValueOfMessage(x.Committee.ProtoReflect())
+		if !f(fd_MsgCancelAutomation_committee, value) {
+			return
+		}
+	}
 }
 
 // Has reports whether a field is populated.
@@ -2118,6 +2742,10 @@ func (x *fastReflection_MsgCancelAutomation) Has(fd protoreflect.FieldDescriptor
 	switch fd.FullName() {
 	case "kepler.workflow.MsgCancelAutomation.id":
 		return x.Id != uint64(0)
+	case "kepler.workflow.MsgCancelAutomation.creator":
+		return x.Creator != ""
+	case "kepler.workflow.MsgCancelAutomation.committee":
+		return x.Committee != nil
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.MsgCancelAutomation"))
@@ -2136,6 +2764,10 @@ func (x *fastReflection_MsgCancelAutomation) Clear(fd protoreflect.FieldDescript
 	switch fd.FullName() {
 	case "kepler.workflow.MsgCancelAutomation.id":
 		x.Id = uint64(0)
+	case "kepler.workflow.MsgCancelAutomation.creator":
+		x.Creator = ""
+	case "kepler.workflow.MsgCancelAutomation.committee":
+		x.Committee = nil
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.MsgCancelAutomation"))
@@ -2155,6 +2787,12 @@ func (x *fastReflection_MsgCancelAutomation) Get(descriptor protoreflect.FieldDe
 	case "kepler.workflow.MsgCancelAutomation.id":
 		value := x.Id
 		return protoreflect.ValueOfUint64(value)
+	case "kepler.workflow.MsgCancelAutomation.creator":
+		value := x.Creator
+		return protoreflect.ValueOfString(value)
+	case "kepler.workflow.MsgCancelAutomation.committee":
+		value := x.Committee
+		return protoreflect.ValueOfMessage(value.ProtoReflect())
 	default:
 		if descriptor.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.MsgCancelAutomation"))
@@ -2177,6 +2815,10 @@ func (x *fastReflection_MsgCancelAutomation) Set(fd protoreflect.FieldDescriptor
 	switch fd.FullName() {
 	case "kepler.workflow.MsgCancelAutomation.id":
 		x.Id = value.Uint()
+	case "kepler.workflow.MsgCancelAutomation.creator":
+		x.Creator = value.Interface().(string)
+	case "kepler.workflow.MsgCancelAutomation.committee":
+		x.Committee = value.Message().Interface().(*CancelByCommittee)
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.MsgCancelAutomation"))
@@ -2197,8 +2839,15 @@ func (x *fastReflection_MsgCancelAutomation) Set(fd protoreflect.FieldDescriptor
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgCancelAutomation) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
+	case "kepler.workflow.MsgCancelAutomation.committee":
+		if x.Committee == nil {
+			x.Committee = new(CancelByCommittee)
+		}
+		return protoreflect.ValueOfMessage(x.Committee.ProtoReflect())
 	case "kepler.workflow.MsgCancelAutomation.id":
 		panic(fmt.Errorf("field id of message kepler.workflow.MsgCancelAutomation is not mutable"))
+	case "kepler.workflow.MsgCancelAutomation.creator":
+		panic(fmt.Errorf("field creator of message kepler.workflow.MsgCancelAutomation is not mutable"))
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.MsgCancelAutomation"))
@@ -2214,6 +2863,11 @@ func (x *fastReflection_MsgCancelAutomation) NewField(fd protoreflect.FieldDescr
 	switch fd.FullName() {
 	case "kepler.workflow.MsgCancelAutomation.id":
 		return protoreflect.ValueOfUint64(uint64(0))
+	case "kepler.workflow.MsgCancelAutomation.creator":
+		return protoreflect.ValueOfString("")
+	case "kepler.workflow.MsgCancelAutomation.committee":
+		m := new(CancelByCommittee)
+		return protoreflect.ValueOfMessage(m.ProtoReflect())
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.MsgCancelAutomation"))
@@ -2286,6 +2940,14 @@ func (x *fastReflection_MsgCancelAutomation) ProtoMethods() *protoiface.Methods 
 		if x.Id != 0 {
 			n += 1 + runtime.Sov(uint64(x.Id))
 		}
+		l = len(x.Creator)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.Committee != nil {
+			l = options.Size(x.Committee)
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
 		if x.unknownFields != nil {
 			n += len(x.unknownFields)
 		}
@@ -2314,6 +2976,27 @@ func (x *fastReflection_MsgCancelAutomation) ProtoMethods() *protoiface.Methods 
 		if x.unknownFields != nil {
 			i -= len(x.unknownFields)
 			copy(dAtA[i:], x.unknownFields)
+		}
+		if x.Committee != nil {
+			encoded, err := options.Marshal(x.Committee)
+			if err != nil {
+				return protoiface.MarshalOutput{
+					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+					Buf:               input.Buf,
+				}, err
+			}
+			i -= len(encoded)
+			copy(dAtA[i:], encoded)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+			i--
+			dAtA[i] = 0x1a
+		}
+		if len(x.Creator) > 0 {
+			i -= len(x.Creator)
+			copy(dAtA[i:], x.Creator)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Creator)))
+			i--
+			dAtA[i] = 0x12
 		}
 		if x.Id != 0 {
 			i = runtime.EncodeVarint(dAtA, i, uint64(x.Id))
@@ -2388,6 +3071,74 @@ func (x *fastReflection_MsgCancelAutomation) ProtoMethods() *protoiface.Methods 
 						break
 					}
 				}
+			case 2:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.Creator = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 3:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Committee", wireType)
+				}
+				var msglen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					msglen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if msglen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + msglen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if x.Committee == nil {
+					x.Committee = &CancelByCommittee{}
+				}
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.Committee); err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				iNdEx = postIndex
 			default:
 				iNdEx = preIndex
 				skippy, err := runtime.Skip(dAtA[iNdEx:])
@@ -2441,7 +3192,7 @@ func (x *MsgCancelAutomationResponse) ProtoReflect() protoreflect.Message {
 }
 
 func (x *MsgCancelAutomationResponse) slowProtoReflect() protoreflect.Message {
-	mi := &file_kepler_workflow_tx_proto_msgTypes[5]
+	mi := &file_kepler_workflow_tx_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2780,14 +3531,16 @@ func (x *fastReflection_MsgCancelAutomationResponse) ProtoMethods() *protoiface.
 }
 
 var (
-	md_MsgActivateAutomation    protoreflect.MessageDescriptor
-	fd_MsgActivateAutomation_id protoreflect.FieldDescriptor
+	md_MsgActivateAutomation         protoreflect.MessageDescriptor
+	fd_MsgActivateAutomation_id      protoreflect.FieldDescriptor
+	fd_MsgActivateAutomation_creator protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_kepler_workflow_tx_proto_init()
 	md_MsgActivateAutomation = File_kepler_workflow_tx_proto.Messages().ByName("MsgActivateAutomation")
 	fd_MsgActivateAutomation_id = md_MsgActivateAutomation.Fields().ByName("id")
+	fd_MsgActivateAutomation_creator = md_MsgActivateAutomation.Fields().ByName("creator")
 }
 
 var _ protoreflect.Message = (*fastReflection_MsgActivateAutomation)(nil)
@@ -2799,7 +3552,7 @@ func (x *MsgActivateAutomation) ProtoReflect() protoreflect.Message {
 }
 
 func (x *MsgActivateAutomation) slowProtoReflect() protoreflect.Message {
-	mi := &file_kepler_workflow_tx_proto_msgTypes[6]
+	mi := &file_kepler_workflow_tx_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2861,6 +3614,12 @@ func (x *fastReflection_MsgActivateAutomation) Range(f func(protoreflect.FieldDe
 			return
 		}
 	}
+	if x.Creator != "" {
+		value := protoreflect.ValueOfString(x.Creator)
+		if !f(fd_MsgActivateAutomation_creator, value) {
+			return
+		}
+	}
 }
 
 // Has reports whether a field is populated.
@@ -2878,6 +3637,8 @@ func (x *fastReflection_MsgActivateAutomation) Has(fd protoreflect.FieldDescript
 	switch fd.FullName() {
 	case "kepler.workflow.MsgActivateAutomation.id":
 		return x.Id != uint64(0)
+	case "kepler.workflow.MsgActivateAutomation.creator":
+		return x.Creator != ""
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.MsgActivateAutomation"))
@@ -2896,6 +3657,8 @@ func (x *fastReflection_MsgActivateAutomation) Clear(fd protoreflect.FieldDescri
 	switch fd.FullName() {
 	case "kepler.workflow.MsgActivateAutomation.id":
 		x.Id = uint64(0)
+	case "kepler.workflow.MsgActivateAutomation.creator":
+		x.Creator = ""
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.MsgActivateAutomation"))
@@ -2915,6 +3678,9 @@ func (x *fastReflection_MsgActivateAutomation) Get(descriptor protoreflect.Field
 	case "kepler.workflow.MsgActivateAutomation.id":
 		value := x.Id
 		return protoreflect.ValueOfUint64(value)
+	case "kepler.workflow.MsgActivateAutomation.creator":
+		value := x.Creator
+		return protoreflect.ValueOfString(value)
 	default:
 		if descriptor.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.MsgActivateAutomation"))
@@ -2937,6 +3703,8 @@ func (x *fastReflection_MsgActivateAutomation) Set(fd protoreflect.FieldDescript
 	switch fd.FullName() {
 	case "kepler.workflow.MsgActivateAutomation.id":
 		x.Id = value.Uint()
+	case "kepler.workflow.MsgActivateAutomation.creator":
+		x.Creator = value.Interface().(string)
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.MsgActivateAutomation"))
@@ -2959,6 +3727,8 @@ func (x *fastReflection_MsgActivateAutomation) Mutable(fd protoreflect.FieldDesc
 	switch fd.FullName() {
 	case "kepler.workflow.MsgActivateAutomation.id":
 		panic(fmt.Errorf("field id of message kepler.workflow.MsgActivateAutomation is not mutable"))
+	case "kepler.workflow.MsgActivateAutomation.creator":
+		panic(fmt.Errorf("field creator of message kepler.workflow.MsgActivateAutomation is not mutable"))
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.MsgActivateAutomation"))
@@ -2974,6 +3744,8 @@ func (x *fastReflection_MsgActivateAutomation) NewField(fd protoreflect.FieldDes
 	switch fd.FullName() {
 	case "kepler.workflow.MsgActivateAutomation.id":
 		return protoreflect.ValueOfUint64(uint64(0))
+	case "kepler.workflow.MsgActivateAutomation.creator":
+		return protoreflect.ValueOfString("")
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.MsgActivateAutomation"))
@@ -3046,6 +3818,10 @@ func (x *fastReflection_MsgActivateAutomation) ProtoMethods() *protoiface.Method
 		if x.Id != 0 {
 			n += 1 + runtime.Sov(uint64(x.Id))
 		}
+		l = len(x.Creator)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
 		if x.unknownFields != nil {
 			n += len(x.unknownFields)
 		}
@@ -3074,6 +3850,13 @@ func (x *fastReflection_MsgActivateAutomation) ProtoMethods() *protoiface.Method
 		if x.unknownFields != nil {
 			i -= len(x.unknownFields)
 			copy(dAtA[i:], x.unknownFields)
+		}
+		if len(x.Creator) > 0 {
+			i -= len(x.Creator)
+			copy(dAtA[i:], x.Creator)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Creator)))
+			i--
+			dAtA[i] = 0x12
 		}
 		if x.Id != 0 {
 			i = runtime.EncodeVarint(dAtA, i, uint64(x.Id))
@@ -3148,6 +3931,38 @@ func (x *fastReflection_MsgActivateAutomation) ProtoMethods() *protoiface.Method
 						break
 					}
 				}
+			case 2:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.Creator = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
 			default:
 				iNdEx = preIndex
 				skippy, err := runtime.Skip(dAtA[iNdEx:])
@@ -3201,7 +4016,7 @@ func (x *MsgActivateAutomationResponse) ProtoReflect() protoreflect.Message {
 }
 
 func (x *MsgActivateAutomationResponse) slowProtoReflect() protoreflect.Message {
-	mi := &file_kepler_workflow_tx_proto_msgTypes[7]
+	mi := &file_kepler_workflow_tx_proto_msgTypes[8]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3720,18 +4535,76 @@ func (x *MsgAddAutomationResponse) GetId() uint64 {
 	return 0
 }
 
+type CancelByCommittee struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// job executors committee id
+	CommitteeId string `protobuf:"bytes,1,opt,name=committee_id,json=committeeId,proto3" json:"committee_id,omitempty"`
+	ChainId     string `protobuf:"bytes,2,opt,name=chain_id,json=chainId,proto3" json:"chain_id,omitempty"`
+	// signs of committee participants
+	Signs [][]byte `protobuf:"bytes,3,rep,name=signs,proto3" json:"signs,omitempty"`
+}
+
+func (x *CancelByCommittee) Reset() {
+	*x = CancelByCommittee{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_kepler_workflow_tx_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CancelByCommittee) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CancelByCommittee) ProtoMessage() {}
+
+// Deprecated: Use CancelByCommittee.ProtoReflect.Descriptor instead.
+func (*CancelByCommittee) Descriptor() ([]byte, []int) {
+	return file_kepler_workflow_tx_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *CancelByCommittee) GetCommitteeId() string {
+	if x != nil {
+		return x.CommitteeId
+	}
+	return ""
+}
+
+func (x *CancelByCommittee) GetChainId() string {
+	if x != nil {
+		return x.ChainId
+	}
+	return ""
+}
+
+func (x *CancelByCommittee) GetSigns() [][]byte {
+	if x != nil {
+		return x.Signs
+	}
+	return nil
+}
+
 type MsgCancelAutomation struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
 	Id uint64 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	// cancel by creator (user) of the automation
+	// can be empty if tx created by committee
+	Creator string `protobuf:"bytes,2,opt,name=creator,proto3" json:"creator,omitempty"`
+	// cancel by committee
+	Committee *CancelByCommittee `protobuf:"bytes,3,opt,name=committee,proto3" json:"committee,omitempty"`
 }
 
 func (x *MsgCancelAutomation) Reset() {
 	*x = MsgCancelAutomation{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_kepler_workflow_tx_proto_msgTypes[4]
+		mi := &file_kepler_workflow_tx_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3745,7 +4618,7 @@ func (*MsgCancelAutomation) ProtoMessage() {}
 
 // Deprecated: Use MsgCancelAutomation.ProtoReflect.Descriptor instead.
 func (*MsgCancelAutomation) Descriptor() ([]byte, []int) {
-	return file_kepler_workflow_tx_proto_rawDescGZIP(), []int{4}
+	return file_kepler_workflow_tx_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *MsgCancelAutomation) GetId() uint64 {
@@ -3753,6 +4626,20 @@ func (x *MsgCancelAutomation) GetId() uint64 {
 		return x.Id
 	}
 	return 0
+}
+
+func (x *MsgCancelAutomation) GetCreator() string {
+	if x != nil {
+		return x.Creator
+	}
+	return ""
+}
+
+func (x *MsgCancelAutomation) GetCommittee() *CancelByCommittee {
+	if x != nil {
+		return x.Committee
+	}
+	return nil
 }
 
 type MsgCancelAutomationResponse struct {
@@ -3764,7 +4651,7 @@ type MsgCancelAutomationResponse struct {
 func (x *MsgCancelAutomationResponse) Reset() {
 	*x = MsgCancelAutomationResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_kepler_workflow_tx_proto_msgTypes[5]
+		mi := &file_kepler_workflow_tx_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3778,7 +4665,7 @@ func (*MsgCancelAutomationResponse) ProtoMessage() {}
 
 // Deprecated: Use MsgCancelAutomationResponse.ProtoReflect.Descriptor instead.
 func (*MsgCancelAutomationResponse) Descriptor() ([]byte, []int) {
-	return file_kepler_workflow_tx_proto_rawDescGZIP(), []int{5}
+	return file_kepler_workflow_tx_proto_rawDescGZIP(), []int{6}
 }
 
 type MsgActivateAutomation struct {
@@ -3787,12 +4674,14 @@ type MsgActivateAutomation struct {
 	unknownFields protoimpl.UnknownFields
 
 	Id uint64 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	// creator of the automation
+	Creator string `protobuf:"bytes,2,opt,name=creator,proto3" json:"creator,omitempty"`
 }
 
 func (x *MsgActivateAutomation) Reset() {
 	*x = MsgActivateAutomation{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_kepler_workflow_tx_proto_msgTypes[6]
+		mi := &file_kepler_workflow_tx_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3806,7 +4695,7 @@ func (*MsgActivateAutomation) ProtoMessage() {}
 
 // Deprecated: Use MsgActivateAutomation.ProtoReflect.Descriptor instead.
 func (*MsgActivateAutomation) Descriptor() ([]byte, []int) {
-	return file_kepler_workflow_tx_proto_rawDescGZIP(), []int{6}
+	return file_kepler_workflow_tx_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *MsgActivateAutomation) GetId() uint64 {
@@ -3814,6 +4703,13 @@ func (x *MsgActivateAutomation) GetId() uint64 {
 		return x.Id
 	}
 	return 0
+}
+
+func (x *MsgActivateAutomation) GetCreator() string {
+	if x != nil {
+		return x.Creator
+	}
+	return ""
 }
 
 type MsgActivateAutomationResponse struct {
@@ -3825,7 +4721,7 @@ type MsgActivateAutomationResponse struct {
 func (x *MsgActivateAutomationResponse) Reset() {
 	*x = MsgActivateAutomationResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_kepler_workflow_tx_proto_msgTypes[7]
+		mi := &file_kepler_workflow_tx_proto_msgTypes[8]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3839,7 +4735,7 @@ func (*MsgActivateAutomationResponse) ProtoMessage() {}
 
 // Deprecated: Use MsgActivateAutomationResponse.ProtoReflect.Descriptor instead.
 func (*MsgActivateAutomationResponse) Descriptor() ([]byte, []int) {
-	return file_kepler_workflow_tx_proto_rawDescGZIP(), []int{7}
+	return file_kepler_workflow_tx_proto_rawDescGZIP(), []int{8}
 }
 
 var File_kepler_workflow_tx_proto protoreflect.FileDescriptor
@@ -3886,52 +4782,69 @@ var file_kepler_workflow_tx_proto_rawDesc = []byte{
 	0x61, 0x74, 0x6f, 0x72, 0x22, 0x2a, 0x0a, 0x18, 0x4d, 0x73, 0x67, 0x41, 0x64, 0x64, 0x41, 0x75,
 	0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
 	0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x04, 0x52, 0x02, 0x69, 0x64,
-	0x22, 0x25, 0x0a, 0x13, 0x4d, 0x73, 0x67, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x41, 0x75, 0x74,
-	0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x04, 0x52, 0x02, 0x69, 0x64, 0x22, 0x1d, 0x0a, 0x1b, 0x4d, 0x73, 0x67, 0x43, 0x61,
-	0x6e, 0x63, 0x65, 0x6c, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x27, 0x0a, 0x15, 0x4d, 0x73, 0x67, 0x41, 0x63, 0x74,
-	0x69, 0x76, 0x61, 0x74, 0x65, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12,
-	0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x04, 0x52, 0x02, 0x69, 0x64, 0x22,
-	0x1f, 0x0a, 0x1d, 0x4d, 0x73, 0x67, 0x41, 0x63, 0x74, 0x69, 0x76, 0x61, 0x74, 0x65, 0x41, 0x75,
-	0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
-	0x32, 0x9d, 0x03, 0x0a, 0x03, 0x4d, 0x73, 0x67, 0x12, 0x5a, 0x0a, 0x0c, 0x55, 0x70, 0x64, 0x61,
-	0x74, 0x65, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x12, 0x20, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65,
-	0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x4d, 0x73, 0x67, 0x55, 0x70,
-	0x64, 0x61, 0x74, 0x65, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x1a, 0x28, 0x2e, 0x6b, 0x65, 0x70,
-	0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x4d, 0x73, 0x67,
-	0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x5d, 0x0a, 0x0d, 0x41, 0x64, 0x64, 0x41, 0x75, 0x74, 0x6f, 0x6d,
-	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x21, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77,
-	0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x4d, 0x73, 0x67, 0x41, 0x64, 0x64, 0x41, 0x75,
-	0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x1a, 0x29, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65,
-	0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x4d, 0x73, 0x67, 0x41, 0x64,
-	0x64, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x12, 0x66, 0x0a, 0x10, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x41, 0x75, 0x74,
-	0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x24, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72,
-	0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x4d, 0x73, 0x67, 0x43, 0x61, 0x6e,
-	0x63, 0x65, 0x6c, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x1a, 0x2c, 0x2e,
+	0x22, 0x67, 0x0a, 0x11, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x42, 0x79, 0x43, 0x6f, 0x6d, 0x6d,
+	0x69, 0x74, 0x74, 0x65, 0x65, 0x12, 0x21, 0x0a, 0x0c, 0x63, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74,
+	0x65, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x63, 0x6f, 0x6d,
+	0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x49, 0x64, 0x12, 0x19, 0x0a, 0x08, 0x63, 0x68, 0x61, 0x69,
+	0x6e, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x63, 0x68, 0x61, 0x69,
+	0x6e, 0x49, 0x64, 0x12, 0x14, 0x0a, 0x05, 0x73, 0x69, 0x67, 0x6e, 0x73, 0x18, 0x03, 0x20, 0x03,
+	0x28, 0x0c, 0x52, 0x05, 0x73, 0x69, 0x67, 0x6e, 0x73, 0x22, 0x8f, 0x01, 0x0a, 0x13, 0x4d, 0x73,
+	0x67, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x04, 0x52, 0x02, 0x69,
+	0x64, 0x12, 0x18, 0x0a, 0x07, 0x63, 0x72, 0x65, 0x61, 0x74, 0x6f, 0x72, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x07, 0x63, 0x72, 0x65, 0x61, 0x74, 0x6f, 0x72, 0x12, 0x40, 0x0a, 0x09, 0x63,
+	0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x22,
+	0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77,
+	0x2e, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x42, 0x79, 0x43, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74,
+	0x65, 0x65, 0x52, 0x09, 0x63, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x3a, 0x0c, 0x82,
+	0xe7, 0xb0, 0x2a, 0x07, 0x63, 0x72, 0x65, 0x61, 0x74, 0x6f, 0x72, 0x22, 0x1d, 0x0a, 0x1b, 0x4d,
+	0x73, 0x67, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69,
+	0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x69, 0x0a, 0x15, 0x4d, 0x73,
+	0x67, 0x41, 0x63, 0x74, 0x69, 0x76, 0x61, 0x74, 0x65, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74,
+	0x69, 0x6f, 0x6e, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x04, 0x52,
+	0x02, 0x69, 0x64, 0x12, 0x32, 0x0a, 0x07, 0x63, 0x72, 0x65, 0x61, 0x74, 0x6f, 0x72, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x42, 0x18, 0xd2, 0xb4, 0x2d, 0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73,
+	0x2e, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x52, 0x07,
+	0x63, 0x72, 0x65, 0x61, 0x74, 0x6f, 0x72, 0x3a, 0x0c, 0x82, 0xe7, 0xb0, 0x2a, 0x07, 0x63, 0x72,
+	0x65, 0x61, 0x74, 0x6f, 0x72, 0x22, 0x1f, 0x0a, 0x1d, 0x4d, 0x73, 0x67, 0x41, 0x63, 0x74, 0x69,
+	0x76, 0x61, 0x74, 0x65, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x32, 0x9d, 0x03, 0x0a, 0x03, 0x4d, 0x73, 0x67, 0x12, 0x5a,
+	0x0a, 0x0c, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x12, 0x20,
+	0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77,
+	0x2e, 0x4d, 0x73, 0x67, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73,
+	0x1a, 0x28, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c,
+	0x6f, 0x77, 0x2e, 0x4d, 0x73, 0x67, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x61, 0x72, 0x61,
+	0x6d, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x5d, 0x0a, 0x0d, 0x41, 0x64,
+	0x64, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x21, 0x2e, 0x6b, 0x65,
+	0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x4d, 0x73,
+	0x67, 0x41, 0x64, 0x64, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x1a, 0x29,
+	0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77,
+	0x2e, 0x4d, 0x73, 0x67, 0x41, 0x64, 0x64, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x66, 0x0a, 0x10, 0x43, 0x61, 0x6e,
+	0x63, 0x65, 0x6c, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x24, 0x2e,
 	0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e,
 	0x4d, 0x73, 0x67, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74,
-	0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x6c, 0x0a, 0x12, 0x41,
-	0x63, 0x74, 0x69, 0x76, 0x61, 0x74, 0x65, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f,
-	0x6e, 0x12, 0x26, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66,
-	0x6c, 0x6f, 0x77, 0x2e, 0x4d, 0x73, 0x67, 0x41, 0x63, 0x74, 0x69, 0x76, 0x61, 0x74, 0x65, 0x41,
-	0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x1a, 0x2e, 0x2e, 0x6b, 0x65, 0x70, 0x6c,
-	0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x4d, 0x73, 0x67, 0x41,
-	0x63, 0x74, 0x69, 0x76, 0x61, 0x74, 0x65, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f,
-	0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x1a, 0x05, 0x80, 0xe7, 0xb0, 0x2a, 0x01,
-	0x42, 0x97, 0x01, 0x0a, 0x13, 0x63, 0x6f, 0x6d, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e,
-	0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x42, 0x07, 0x54, 0x78, 0x50, 0x72, 0x6f, 0x74,
-	0x6f, 0x50, 0x01, 0x5a, 0x1a, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x61, 0x70, 0x69, 0x2f,
-	0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0xa2,
-	0x02, 0x03, 0x4b, 0x57, 0x58, 0xaa, 0x02, 0x0f, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x57,
-	0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0xca, 0x02, 0x0f, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72,
-	0x5c, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0xe2, 0x02, 0x1b, 0x4b, 0x65, 0x70, 0x6c,
-	0x65, 0x72, 0x5c, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x5c, 0x47, 0x50, 0x42, 0x4d,
-	0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x10, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72,
-	0x3a, 0x3a, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x33,
+	0x69, 0x6f, 0x6e, 0x1a, 0x2c, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72,
+	0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x4d, 0x73, 0x67, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x41,
+	0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x12, 0x6c, 0x0a, 0x12, 0x41, 0x63, 0x74, 0x69, 0x76, 0x61, 0x74, 0x65, 0x41, 0x75, 0x74,
+	0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x26, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72,
+	0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x4d, 0x73, 0x67, 0x41, 0x63, 0x74,
+	0x69, 0x76, 0x61, 0x74, 0x65, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x1a,
+	0x2e, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f,
+	0x77, 0x2e, 0x4d, 0x73, 0x67, 0x41, 0x63, 0x74, 0x69, 0x76, 0x61, 0x74, 0x65, 0x41, 0x75, 0x74,
+	0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x1a,
+	0x05, 0x80, 0xe7, 0xb0, 0x2a, 0x01, 0x42, 0x97, 0x01, 0x0a, 0x13, 0x63, 0x6f, 0x6d, 0x2e, 0x6b,
+	0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x42, 0x07,
+	0x54, 0x78, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x1a, 0x6b, 0x65, 0x70, 0x6c, 0x65,
+	0x72, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x77, 0x6f, 0x72,
+	0x6b, 0x66, 0x6c, 0x6f, 0x77, 0xa2, 0x02, 0x03, 0x4b, 0x57, 0x58, 0xaa, 0x02, 0x0f, 0x4b, 0x65,
+	0x70, 0x6c, 0x65, 0x72, 0x2e, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0xca, 0x02, 0x0f,
+	0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x5c, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0xe2,
+	0x02, 0x1b, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x5c, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f,
+	0x77, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x10,
+	0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x3a, 0x3a, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77,
+	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -3946,37 +4859,39 @@ func file_kepler_workflow_tx_proto_rawDescGZIP() []byte {
 	return file_kepler_workflow_tx_proto_rawDescData
 }
 
-var file_kepler_workflow_tx_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_kepler_workflow_tx_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_kepler_workflow_tx_proto_goTypes = []interface{}{
 	(*MsgUpdateParams)(nil),               // 0: kepler.workflow.MsgUpdateParams
 	(*MsgUpdateParamsResponse)(nil),       // 1: kepler.workflow.MsgUpdateParamsResponse
 	(*MsgAddAutomation)(nil),              // 2: kepler.workflow.MsgAddAutomation
 	(*MsgAddAutomationResponse)(nil),      // 3: kepler.workflow.MsgAddAutomationResponse
-	(*MsgCancelAutomation)(nil),           // 4: kepler.workflow.MsgCancelAutomation
-	(*MsgCancelAutomationResponse)(nil),   // 5: kepler.workflow.MsgCancelAutomationResponse
-	(*MsgActivateAutomation)(nil),         // 6: kepler.workflow.MsgActivateAutomation
-	(*MsgActivateAutomationResponse)(nil), // 7: kepler.workflow.MsgActivateAutomationResponse
-	(*Params)(nil),                        // 8: kepler.workflow.Params
-	(*Trigger)(nil),                       // 9: kepler.workflow.Trigger
-	(*Action)(nil),                        // 10: kepler.workflow.Action
+	(*CancelByCommittee)(nil),             // 4: kepler.workflow.CancelByCommittee
+	(*MsgCancelAutomation)(nil),           // 5: kepler.workflow.MsgCancelAutomation
+	(*MsgCancelAutomationResponse)(nil),   // 6: kepler.workflow.MsgCancelAutomationResponse
+	(*MsgActivateAutomation)(nil),         // 7: kepler.workflow.MsgActivateAutomation
+	(*MsgActivateAutomationResponse)(nil), // 8: kepler.workflow.MsgActivateAutomationResponse
+	(*Params)(nil),                        // 9: kepler.workflow.Params
+	(*Trigger)(nil),                       // 10: kepler.workflow.Trigger
+	(*Action)(nil),                        // 11: kepler.workflow.Action
 }
 var file_kepler_workflow_tx_proto_depIdxs = []int32{
-	8,  // 0: kepler.workflow.MsgUpdateParams.params:type_name -> kepler.workflow.Params
-	9,  // 1: kepler.workflow.MsgAddAutomation.triggers:type_name -> kepler.workflow.Trigger
-	10, // 2: kepler.workflow.MsgAddAutomation.actions:type_name -> kepler.workflow.Action
-	0,  // 3: kepler.workflow.Msg.UpdateParams:input_type -> kepler.workflow.MsgUpdateParams
-	2,  // 4: kepler.workflow.Msg.AddAutomation:input_type -> kepler.workflow.MsgAddAutomation
-	4,  // 5: kepler.workflow.Msg.CancelAutomation:input_type -> kepler.workflow.MsgCancelAutomation
-	6,  // 6: kepler.workflow.Msg.ActivateAutomation:input_type -> kepler.workflow.MsgActivateAutomation
-	1,  // 7: kepler.workflow.Msg.UpdateParams:output_type -> kepler.workflow.MsgUpdateParamsResponse
-	3,  // 8: kepler.workflow.Msg.AddAutomation:output_type -> kepler.workflow.MsgAddAutomationResponse
-	5,  // 9: kepler.workflow.Msg.CancelAutomation:output_type -> kepler.workflow.MsgCancelAutomationResponse
-	7,  // 10: kepler.workflow.Msg.ActivateAutomation:output_type -> kepler.workflow.MsgActivateAutomationResponse
-	7,  // [7:11] is the sub-list for method output_type
-	3,  // [3:7] is the sub-list for method input_type
-	3,  // [3:3] is the sub-list for extension type_name
-	3,  // [3:3] is the sub-list for extension extendee
-	0,  // [0:3] is the sub-list for field type_name
+	9,  // 0: kepler.workflow.MsgUpdateParams.params:type_name -> kepler.workflow.Params
+	10, // 1: kepler.workflow.MsgAddAutomation.triggers:type_name -> kepler.workflow.Trigger
+	11, // 2: kepler.workflow.MsgAddAutomation.actions:type_name -> kepler.workflow.Action
+	4,  // 3: kepler.workflow.MsgCancelAutomation.committee:type_name -> kepler.workflow.CancelByCommittee
+	0,  // 4: kepler.workflow.Msg.UpdateParams:input_type -> kepler.workflow.MsgUpdateParams
+	2,  // 5: kepler.workflow.Msg.AddAutomation:input_type -> kepler.workflow.MsgAddAutomation
+	5,  // 6: kepler.workflow.Msg.CancelAutomation:input_type -> kepler.workflow.MsgCancelAutomation
+	7,  // 7: kepler.workflow.Msg.ActivateAutomation:input_type -> kepler.workflow.MsgActivateAutomation
+	1,  // 8: kepler.workflow.Msg.UpdateParams:output_type -> kepler.workflow.MsgUpdateParamsResponse
+	3,  // 9: kepler.workflow.Msg.AddAutomation:output_type -> kepler.workflow.MsgAddAutomationResponse
+	6,  // 10: kepler.workflow.Msg.CancelAutomation:output_type -> kepler.workflow.MsgCancelAutomationResponse
+	8,  // 11: kepler.workflow.Msg.ActivateAutomation:output_type -> kepler.workflow.MsgActivateAutomationResponse
+	8,  // [8:12] is the sub-list for method output_type
+	4,  // [4:8] is the sub-list for method input_type
+	4,  // [4:4] is the sub-list for extension type_name
+	4,  // [4:4] is the sub-list for extension extendee
+	0,  // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_kepler_workflow_tx_proto_init() }
@@ -4036,7 +4951,7 @@ func file_kepler_workflow_tx_proto_init() {
 			}
 		}
 		file_kepler_workflow_tx_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*MsgCancelAutomation); i {
+			switch v := v.(*CancelByCommittee); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4048,7 +4963,7 @@ func file_kepler_workflow_tx_proto_init() {
 			}
 		}
 		file_kepler_workflow_tx_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*MsgCancelAutomationResponse); i {
+			switch v := v.(*MsgCancelAutomation); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4060,7 +4975,7 @@ func file_kepler_workflow_tx_proto_init() {
 			}
 		}
 		file_kepler_workflow_tx_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*MsgActivateAutomation); i {
+			switch v := v.(*MsgCancelAutomationResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4072,6 +4987,18 @@ func file_kepler_workflow_tx_proto_init() {
 			}
 		}
 		file_kepler_workflow_tx_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MsgActivateAutomation); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_kepler_workflow_tx_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MsgActivateAutomationResponse); i {
 			case 0:
 				return &v.state
@@ -4090,7 +5017,7 @@ func file_kepler_workflow_tx_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_kepler_workflow_tx_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   8,
+			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

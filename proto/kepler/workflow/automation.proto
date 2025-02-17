@@ -1,6 +1,8 @@
 syntax = "proto3";
 package kepler.workflow;
 
+import "cosmos_proto/cosmos.proto";
+
 option go_package = "kepler/x/workflow/types";
 
 // Automation entity
@@ -10,6 +12,7 @@ message Automation {
   repeated Action actions = 3; // List of actions
   int64 expire_at = 4; // Expiration timestamp (Unix time)
   AutomationStatus status = 7; // Status of the automation (active, expired, paused, failed, done)
+  string creator = 8 [(cosmos_proto.scalar) = "cosmos.AddressString"]; // Creator address
 }
 
 // Enumeration for automation status

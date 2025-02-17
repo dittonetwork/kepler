@@ -6,6 +6,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/mock/gomock"
 
+	keepertest "kepler/testutil/keeper"
 	"kepler/x/workflow/keeper"
 	"kepler/x/workflow/types"
 	"kepler/x/workflow/types/mock"
@@ -30,7 +31,8 @@ func TestAddAutomationSuccess(t *testing.T) {
 	mockKeeper.EXPECT().InsertAutomation(ctx, automation).Return(nil)
 
 	// Create a new message server
-	msgServer := keeper.NewMsgServerImpl(mockKeeper)
+	cmtKeeper, _ := keepertest.CommitteeKeeper(t)
+	msgServer := keeper.NewMsgServerImpl(mockKeeper, cmtKeeper)
 
 	// Create a new message
 	msg := &types.MsgAddAutomation{
