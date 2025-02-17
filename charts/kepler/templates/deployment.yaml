@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "app.fullname" . }}
+  name: {{ include "kepler.fullname" . }}
   labels:
-    app: {{ include "app.name" . }}
+    app: {{ include "kepler.name" . }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ include "app.name" . }}
+      app: {{ include "kepler.name" . }}
   template:
     metadata:
       labels:
-        app: {{ include "app.name" . }}
+        app: {{ include "kepler.name" . }}
     spec:
       initContainers:
         - name: copy-config
@@ -52,7 +52,7 @@ spec:
             - name: secret-volume
               mountPath: /root/app_config/keyring-test
       containers:
-        - name: app
+        - name: kepler
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           ports:
             - containerPort: {{ .Values.service.ports.api }}
@@ -60,7 +60,7 @@ spec:
             - containerPort: {{ .Values.service.ports.rpc }}
               name: rpc
           command:
-            - "/root/appd"
+            - "/root/keplerd"
           args:
             - "start"
             - "--home"
@@ -92,30 +92,30 @@ spec:
       volumes:
         - name: config-volume
           configMap:
-            name: {{ include "app.fullname" . }}-appconfig
+            name: {{ include "kepler.fullname" . }}-appconfig
         - name: writable-config
           emptyDir: {}
         - name: secret-volume
           secret:
-            secretName: {{ include "app.fullname" . }}-secrets
+            secretName: {{ include "kepler.fullname" . }}-secrets
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "app.fullname" . }}-client
+  name: {{ include "kepler.fullname" . }}-client
   labels:
-    app: {{ include "app.name" . }}
+    app: {{ include "kepler.name" . }}
     role: client
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ include "app.name" . }}
+      app: {{ include "kepler.name" . }}
       role: client
   template:
     metadata:
       labels:
-        app: {{ include "app.name" . }}
+        app: {{ include "kepler.name" . }}
         role: client
     spec:
       initContainers:
@@ -153,9 +153,9 @@ spec:
       volumes:
         - name: config-volume
           configMap:
-            name: {{ include "app.fullname" . }}-appconfig
+            name: {{ include "kepler.fullname" . }}-appconfig
         - name: writable-config
           emptyDir: {}
         - name: secret-volume
           secret:
-            secretName: {{ include "app.fullname" . }}-secrets
+            secretName: {{ include "kepler.fullname" . }}-secrets

@@ -2,10 +2,10 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ include "app.fullname" . }}
+  name: {{ include "kepler.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "app.labels" . | nindent 4 }}
+    {{- include "kepler.labels" . | nindent 4 }}
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
     kubernetes.io/ingress.class: nginx
@@ -21,14 +21,14 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: {{ include "app.fullname" . }}
+            name: {{ include "kepler.fullname" . }}
             port:
               number: {{ .Values.service.ports.api }}
       - path: /rpc
         pathType: Prefix
         backend:
           service:
-            name: {{ include "app.fullname" . }}
+            name: {{ include "kepler.fullname" . }}
             port:
               number: {{ .Values.service.ports.rpc }}
 {{- end }}

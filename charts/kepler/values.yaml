@@ -1,4 +1,4 @@
-# Default values for app.
+# Default values for kepler.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -7,7 +7,7 @@ replicaCount: 1
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
-  repository: 847647377987.dkr.ecr.ap-southeast-1.amazonaws.com/new-app
+  repository: 847647377987.dkr.ecr.ap-southeast-1.amazonaws.com/kepler
   # This sets the pull policy for images.
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
@@ -108,19 +108,19 @@ autoscaling:
 
 # Additional volumes on the output Deployment definition.
 volumes:
-  - name: appd-volume
+  - name: keplerd-volume
     persistentVolumeClaim:
-      claimName: app-pvc
+      claimName: kepler-pvc
   # - name: config
   #   configMap:
-  #     name: app-config
+  #     name: kepler-config
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts:
-  - name: appd-volume
+  - name: keplerd-volume
     mountPath: /root/app_config
   # - name: config
-  #   mountPath: /root/.appd/config
+  #   mountPath: /root/.keplerd/config
 
 nodeSelector: {}
 

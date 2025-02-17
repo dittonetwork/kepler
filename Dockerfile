@@ -4,8 +4,8 @@ RUN apk --no-cache add ca-certificates
 
 WORKDIR /root
 
-COPY appd .
+COPY keplerd .
 
 EXPOSE 1317 26657
 
-CMD ["./appd", "start", "--home", "/root/app_config"]
+CMD ["./keplerd", "start", "--home", "/root/app_config"]
