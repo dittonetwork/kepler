@@ -1,20 +1,38 @@
 syntax = "proto3";
+
 package kepler.job;
 
 import "google/api/annotations.proto";
+import "kepler/job/job.proto";
 
 option go_package = "kepler/x/job/types";
 
 // Query defines the gRPC querier service.
 service Query {
+  
   // Parameters queries the parameters of the module.
-  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+  rpc Params (QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/kepler/job/params";
+  
+  }
+  
+  // Queries a list of GetJob items.
+  rpc GetJob (QueryGetJobRequest) returns (QueryGetJobResponse) {
+    option (google.api.http).get = "/kepler/job/get_job/{id}";
+  
   }
 }
-
 // QueryParamsRequest is request type for the Query/Params RPC method.
 message QueryParamsRequest {}
 
 // QueryParamsResponse is response type for the Query/Params RPC method.
 message QueryParamsResponse {}
+
+message QueryGetJobRequest {
+  uint64 id = 1;
+}
+
+message QueryGetJobResponse {
+  Job job = 1;
+}
+

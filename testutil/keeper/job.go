@@ -1,9 +1,10 @@
 package keeper
 
 import (
-	"go.uber.org/mock/gomock"
 	"kepler/x/job/types/mock"
 	"testing"
+
+	"go.uber.org/mock/gomock"
 
 	"cosmossdk.io/log"
 	"cosmossdk.io/store"

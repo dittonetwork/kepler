@@ -1,10 +1,11 @@
 package keeper_test
 
 import (
-	"github.com/stretchr/testify/require"
 	"kepler/testutil/keeper"
 	"kepler/x/workflow/types"
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
 
 // Helper function to create a test automation
