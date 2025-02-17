@@ -4,4 +4,4 @@ import (
 	"kepler/x/workflow/types"
 )
 
-var _ types.QueryServer = Keeper{}
+var _ types.QueryServer = BaseKeeper{}

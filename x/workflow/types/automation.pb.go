@@ -60,44 +60,12 @@ func (AutomationStatus) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor_e70c979264e1abb3, []int{0}
 }
 
-// Enumeration for logical operator
-type LogicalOperator int32
-
-const (
-	LogicalOperator_LOGICAL_OPERATOR_UNSPECIFIED LogicalOperator = 0
-	LogicalOperator_LOGICAL_OPERATOR_AND         LogicalOperator = 1
-	LogicalOperator_LOGICAL_OPERATOR_OR          LogicalOperator = 2
-	LogicalOperator_LOGICAL_OPERATOR_NOT         LogicalOperator = 3
-)
-
-var LogicalOperator_name = map[int32]string{
-	0: "LOGICAL_OPERATOR_UNSPECIFIED",
-	1: "LOGICAL_OPERATOR_AND",
-	2: "LOGICAL_OPERATOR_OR",
-	3: "LOGICAL_OPERATOR_NOT",
-}
-
-var LogicalOperator_value = map[string]int32{
-	"LOGICAL_OPERATOR_UNSPECIFIED": 0,
-	"LOGICAL_OPERATOR_AND":         1,
-	"LOGICAL_OPERATOR_OR":          2,
-	"LOGICAL_OPERATOR_NOT":         3,
-}
-
-func (x LogicalOperator) String() string {
-	return proto.EnumName(LogicalOperator_name, int32(x))
-}
-
-func (LogicalOperator) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_e70c979264e1abb3, []int{1}
-}
-
 // Automation entity
 type Automation struct {
 	Id       uint64           `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	Triggers *Trigger         `protobuf:"bytes,2,opt,name=triggers,proto3" json:"triggers,omitempty"`
+	Triggers []*Trigger       `protobuf:"bytes,2,rep,name=triggers,proto3" json:"triggers,omitempty"`
 	Actions  []*Action        `protobuf:"bytes,3,rep,name=actions,proto3" json:"actions,omitempty"`
-	ExpireAt uint64           `protobuf:"varint,4,opt,name=expire_at,json=expireAt,proto3" json:"expire_at,omitempty"`
+	ExpireAt int64            `protobuf:"varint,4,opt,name=expire_at,json=expireAt,proto3" json:"expire_at,omitempty"`
 	Status   AutomationStatus `protobuf:"varint,7,opt,name=status,proto3,enum=kepler.workflow.AutomationStatus" json:"status,omitempty"`
 }
 
@@ -141,7 +109,7 @@ func (m *Automation) GetId() uint64 {
 	return 0
 }
 
-func (m *Automation) GetTriggers() *Trigger {
+func (m *Automation) GetTriggers() []*Trigger {
 	if m != nil {
 		return m.Triggers
 	}
@@ -155,7 +123,7 @@ func (m *Automation) GetActions() []*Action {
 	return nil
 }
 
-func (m *Automation) GetExpireAt() uint64 {
+func (m *Automation) GetExpireAt() int64 {
 	if m != nil {
 		return m.ExpireAt
 	}
@@ -175,7 +143,6 @@ type Trigger struct {
 	//
 	//	*Trigger_OnChain
 	//	*Trigger_Time
-	//	*Trigger_Logical
 	//	*Trigger_Count
 	//	*Trigger_BlockInterval
 	Trigger isTrigger_Trigger `protobuf_oneof:"trigger"`
@@ -226,9 +193,6 @@ type Trigger_OnChain struct {
 type Trigger_Time struct {
 	Time *TimeTrigger `protobuf:"bytes,2,opt,name=time,proto3,oneof" json:"time,omitempty"`
 }
-type Trigger_Logical struct {
-	Logical *LogicalTrigger `protobuf:"bytes,3,opt,name=logical,proto3,oneof" json:"logical,omitempty"`
-}
 type Trigger_Count struct {
 	Count *CountTrigger `protobuf:"bytes,4,opt,name=count,proto3,oneof" json:"count,omitempty"`
 }
@@ -238,7 +202,6 @@ type Trigger_BlockInterval struct {
 
 func (*Trigger_OnChain) isTrigger_Trigger()       {}
 func (*Trigger_Time) isTrigger_Trigger()          {}
-func (*Trigger_Logical) isTrigger_Trigger()       {}
 func (*Trigger_Count) isTrigger_Trigger()         {}
 func (*Trigger_BlockInterval) isTrigger_Trigger() {}
 
@@ -263,13 +226,6 @@ func (m *Trigger) GetTime() *TimeTrigger {
 	return nil
 }
 
-func (m *Trigger) GetLogical() *LogicalTrigger {
-	if x, ok := m.GetTrigger().(*Trigger_Logical); ok {
-		return x.Logical
-	}
-	return nil
-}
-
 func (m *Trigger) GetCount() *CountTrigger {
 	if x, ok := m.GetTrigger().(*Trigger_Count); ok {
 		return x.Count
@@ -289,7 +245,6 @@ func (*Trigger) XXX_OneofWrappers() []interface{} {
 	return []interface{}{
 		(*Trigger_OnChain)(nil),
 		(*Trigger_Time)(nil),
-		(*Trigger_Logical)(nil),
 		(*Trigger_Count)(nil),
 		(*Trigger_BlockInterval)(nil),
 	}
@@ -432,7 +387,7 @@ func (m *OnChainTrigger) GetTxCallData() []byte {
 
 // Time trigger
 type TimeTrigger struct {
-	ExecuteAfter uint64 `protobuf:"varint,1,opt,name=execute_after,json=executeAfter,proto3" json:"execute_after,omitempty"`
+	ExecuteAfter int64 `protobuf:"varint,1,opt,name=execute_after,json=executeAfter,proto3" json:"execute_after,omitempty"`
 }
 
 func (m *TimeTrigger) Reset()         { *m = TimeTrigger{} }
@@ -468,77 +423,23 @@ func (m *TimeTrigger) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_TimeTrigger proto.InternalMessageInfo
 
-func (m *TimeTrigger) GetExecuteAfter() uint64 {
+func (m *TimeTrigger) GetExecuteAfter() int64 {
 	if m != nil {
 		return m.ExecuteAfter
 	}
 	return 0
 }
 
-// Logical trigger for trigger chains
-type LogicalTrigger struct {
-	LogicalOperator LogicalOperator `protobuf:"varint,1,opt,name=logical_operator,json=logicalOperator,proto3,enum=kepler.workflow.LogicalOperator" json:"logical_operator,omitempty"`
-	Triggers        []*Trigger      `protobuf:"bytes,2,rep,name=triggers,proto3" json:"triggers,omitempty"`
-}
-
-func (m *LogicalTrigger) Reset()         { *m = LogicalTrigger{} }
-func (m *LogicalTrigger) String() string { return proto.CompactTextString(m) }
-func (*LogicalTrigger) ProtoMessage()    {}
-func (*LogicalTrigger) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e70c979264e1abb3, []int{5}
-}
-func (m *LogicalTrigger) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *LogicalTrigger) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_LogicalTrigger.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *LogicalTrigger) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_LogicalTrigger.Merge(m, src)
-}
-func (m *LogicalTrigger) XXX_Size() int {
-	return m.Size()
-}
-func (m *LogicalTrigger) XXX_DiscardUnknown() {
-	xxx_messageInfo_LogicalTrigger.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_LogicalTrigger proto.InternalMessageInfo
-
-func (m *LogicalTrigger) GetLogicalOperator() LogicalOperator {
-	if m != nil {
-		return m.LogicalOperator
-	}
-	return LogicalOperator_LOGICAL_OPERATOR_UNSPECIFIED
-}
-
-func (m *LogicalTrigger) GetTriggers() []*Trigger {
-	if m != nil {
-		return m.Triggers
-	}
-	return nil
-}
-
 // Count trigger
 type CountTrigger struct {
-	RepeatCount uint64     `protobuf:"varint,1,opt,name=repeat_count,json=repeatCount,proto3" json:"repeat_count,omitempty"`
-	Triggers    []*Trigger `protobuf:"bytes,3,rep,name=triggers,proto3" json:"triggers,omitempty"`
+	RepeatCount uint64 `protobuf:"varint,1,opt,name=repeat_count,json=repeatCount,proto3" json:"repeat_count,omitempty"`
 }
 
 func (m *CountTrigger) Reset()         { *m = CountTrigger{} }
 func (m *CountTrigger) String() string { return proto.CompactTextString(m) }
 func (*CountTrigger) ProtoMessage()    {}
 func (*CountTrigger) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e70c979264e1abb3, []int{6}
+	return fileDescriptor_e70c979264e1abb3, []int{5}
 }
 func (m *CountTrigger) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -574,13 +475,6 @@ func (m *CountTrigger) GetRepeatCount() uint64 {
 	return 0
 }
 
-func (m *CountTrigger) GetTriggers() []*Trigger {
-	if m != nil {
-		return m.Triggers
-	}
-	return nil
-}
-
 // Block interval trigger
 type BlockIntervalTrigger struct {
 	BlockInterval uint64 `protobuf:"varint,1,opt,name=block_interval,json=blockInterval,proto3" json:"block_interval,omitempty"`
@@ -590,7 +484,7 @@ func (m *BlockIntervalTrigger) Reset()         { *m = BlockIntervalTrigger{} }
 func (m *BlockIntervalTrigger) String() string { return proto.CompactTextString(m) }
 func (*BlockIntervalTrigger) ProtoMessage()    {}
 func (*BlockIntervalTrigger) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e70c979264e1abb3, []int{7}
+	return fileDescriptor_e70c979264e1abb3, []int{6}
 }
 func (m *BlockIntervalTrigger) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -637,7 +531,7 @@ func (m *OnChainAction) Reset()         { *m = OnChainAction{} }
 func (m *OnChainAction) String() string { return proto.CompactTextString(m) }
 func (*OnChainAction) ProtoMessage()    {}
 func (*OnChainAction) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e70c979264e1abb3, []int{8}
+	return fileDescriptor_e70c979264e1abb3, []int{7}
 }
 func (m *OnChainAction) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -689,13 +583,11 @@ func (m *OnChainAction) GetTxCallData() []byte {
 
 func init() {
 	proto.RegisterEnum("kepler.workflow.AutomationStatus", AutomationStatus_name, AutomationStatus_value)
-	proto.RegisterEnum("kepler.workflow.LogicalOperator", LogicalOperator_name, LogicalOperator_value)
 	proto.RegisterType((*Automation)(nil), "kepler.workflow.Automation")
 	proto.RegisterType((*Trigger)(nil), "kepler.workflow.Trigger")
 	proto.RegisterType((*Action)(nil), "kepler.workflow.Action")
 	proto.RegisterType((*OnChainTrigger)(nil), "kepler.workflow.OnChainTrigger")
 	proto.RegisterType((*TimeTrigger)(nil), "kepler.workflow.TimeTrigger")
-	proto.RegisterType((*LogicalTrigger)(nil), "kepler.workflow.LogicalTrigger")
 	proto.RegisterType((*CountTrigger)(nil), "kepler.workflow.CountTrigger")
 	proto.RegisterType((*BlockIntervalTrigger)(nil), "kepler.workflow.BlockIntervalTrigger")
 	proto.RegisterType((*OnChainAction)(nil), "kepler.workflow.OnChainAction")
@@ -704,54 +596,47 @@ func init() {
 func init() { proto.RegisterFile("kepler/workflow/automation.proto", fileDescriptor_e70c979264e1abb3) }
 
 var fileDescriptor_e70c979264e1abb3 = []byte{
-	// 743 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x55, 0x4d, 0x6f, 0xda, 0x4a,
-	0x14, 0xc5, 0x40, 0x80, 0x5c, 0x08, 0x58, 0xf3, 0xa2, 0x17, 0xe7, 0xbd, 0x84, 0xe7, 0xf8, 0x35,
-	0x12, 0xcd, 0x82, 0x28, 0x6e, 0xbb, 0xa8, 0xd2, 0x2e, 0x0c, 0x38, 0xad, 0x55, 0x8a, 0x91, 0x31,
-	0x55, 0xd5, 0x8d, 0x35, 0x31, 0x13, 0x6a, 0xc5, 0xc1, 0xc8, 0x1e, 0x1a, 0xba, 0xeb, 0x4f, 0xa8,
-	0xd4, 0x3f, 0x55, 0x75, 0x95, 0xee, 0xba, 0xa9, 0x54, 0x25, 0x7f, 0xa4, 0xc2, 0x63, 0xc2, 0x87,
-	0x89, 0x94, 0x55, 0x57, 0x88, 0x73, 0xcf, 0xb9, 0x77, 0xee, 0x3d, 0x77, 0x3c, 0x20, 0x9e, 0x93,
-	0xa1, 0x4b, 0xfc, 0xc3, 0x4b, 0xcf, 0x3f, 0x3f, 0x73, 0xbd, 0xcb, 0x43, 0x3c, 0xa2, 0xde, 0x05,
-	0xa6, 0x8e, 0x37, 0xa8, 0x0e, 0x7d, 0x8f, 0x7a, 0xa8, 0xc4, 0x18, 0xd5, 0x29, 0x43, 0xfa, 0xc9,
-	0x01, 0x28, 0xb7, 0x2c, 0x54, 0x84, 0xa4, 0xd3, 0x13, 0x38, 0x91, 0xab, 0xa4, 0x8d, 0xa4, 0xd3,
-	0x43, 0x8f, 0x21, 0x47, 0x7d, 0xa7, 0xdf, 0x27, 0x7e, 0x20, 0x24, 0x45, 0xae, 0x92, 0x97, 0x85,
-	0xea, 0x52, 0x8a, 0xaa, 0xc9, 0x08, 0xc6, 0x2d, 0x13, 0x1d, 0x41, 0x16, 0xdb, 0x93, 0x7c, 0x81,
-	0x90, 0x12, 0x53, 0x95, 0xbc, 0xbc, 0x15, 0x13, 0x29, 0x61, 0xdc, 0x98, 0xf2, 0xd0, 0xbf, 0xb0,
-	0x4e, 0xc6, 0x43, 0xc7, 0x27, 0x16, 0xa6, 0x42, 0x3a, 0xac, 0x9f, 0x63, 0x80, 0x42, 0xd1, 0x53,
-	0xc8, 0x04, 0x14, 0xd3, 0x51, 0x20, 0x64, 0x45, 0xae, 0x52, 0x94, 0xf7, 0xe2, 0xe9, 0x6e, 0x5b,
-	0xe8, 0x84, 0x44, 0x23, 0x12, 0x48, 0xdf, 0x92, 0x90, 0x8d, 0x0e, 0x88, 0x9e, 0x41, 0xce, 0x1b,
-	0x58, 0xf6, 0x7b, 0xec, 0x0c, 0xc2, 0x16, 0xf3, 0xf2, 0x7f, 0xb1, 0x44, 0xfa, 0xa0, 0x3e, 0x89,
-	0x47, 0x92, 0x97, 0x09, 0x23, 0xeb, 0x31, 0x04, 0xc9, 0x90, 0xa6, 0xce, 0x05, 0x89, 0xc6, 0xb0,
-	0x13, 0x1f, 0x83, 0x73, 0x41, 0x66, 0xb2, 0x90, 0x8b, 0x8e, 0x21, 0xeb, 0x7a, 0x7d, 0xc7, 0xc6,
-	0xae, 0x90, 0xba, 0xa3, 0x60, 0x93, 0xc5, 0xe7, 0x0a, 0x46, 0x0a, 0xf4, 0x04, 0xd6, 0x6c, 0x6f,
-	0x34, 0x60, 0xe3, 0xc8, 0xcb, 0xbb, 0x31, 0x69, 0x7d, 0x12, 0x9d, 0x09, 0x19, 0x1b, 0xb5, 0xa0,
-	0x78, 0xea, 0x7a, 0xf6, 0xb9, 0xe5, 0x0c, 0x28, 0xf1, 0x3f, 0x60, 0x57, 0x58, 0x0b, 0xf5, 0xfb,
-	0x31, 0x7d, 0x6d, 0x42, 0xd3, 0x22, 0xd6, 0x2c, 0xcf, 0xc6, 0xe9, 0x3c, 0x5e, 0x5b, 0x87, 0x6c,
-	0x64, 0xac, 0xa4, 0x43, 0x86, 0xf9, 0x86, 0x8e, 0x63, 0xa3, 0x2c, 0xdf, 0x35, 0x4a, 0xa6, 0x98,
-	0x9b, 0x64, 0x2d, 0x07, 0x19, 0x66, 0xbb, 0x34, 0x86, 0xe2, 0xe2, 0xc0, 0xd1, 0x43, 0xe0, 0x6d,
-	0x6f, 0x40, 0x7d, 0x6c, 0x53, 0x0b, 0xf7, 0x7a, 0x3e, 0x09, 0x82, 0xb0, 0x40, 0xc1, 0x28, 0x4d,
-	0x71, 0x85, 0xc1, 0x68, 0x1b, 0x72, 0xe1, 0x01, 0x2c, 0xa7, 0x17, 0x9a, 0xb2, 0x6e, 0x64, 0xc3,
-	0xff, 0x5a, 0x0f, 0x89, 0x50, 0xa0, 0x63, 0xcb, 0xc6, 0xae, 0x6b, 0xf5, 0x30, 0xc5, 0xe1, 0xf0,
-	0x0b, 0x06, 0xd0, 0x71, 0x1d, 0xbb, 0x6e, 0x03, 0x53, 0x2c, 0xc9, 0x90, 0x9f, 0x33, 0x0c, 0xfd,
-	0x0f, 0x1b, 0x64, 0x4c, 0xec, 0x11, 0x25, 0x16, 0x3e, 0xa3, 0xc4, 0x8f, 0xae, 0x40, 0x21, 0x02,
-	0x95, 0x09, 0x26, 0x7d, 0xe1, 0xa0, 0xb8, 0x68, 0x17, 0x7a, 0x05, 0x7c, 0x64, 0x97, 0xe5, 0x0d,
-	0x89, 0x8f, 0xa9, 0xc7, 0xa4, 0x45, 0x59, 0xbc, 0xcb, 0x69, 0x3d, 0xe2, 0x19, 0x25, 0x77, 0x11,
-	0x58, 0xba, 0x6c, 0xa9, 0xfb, 0x5d, 0x36, 0xa9, 0x0f, 0x85, 0xf9, 0x45, 0x40, 0x7b, 0x50, 0xf0,
-	0xc9, 0x90, 0x60, 0x6a, 0xb1, 0xed, 0x61, 0x9d, 0xe4, 0x19, 0x16, 0x32, 0x17, 0x0a, 0xa5, 0xee,
-	0x5d, 0xe8, 0x39, 0x6c, 0xae, 0xda, 0x18, 0xb4, 0x1f, 0x5b, 0x38, 0x56, 0x72, 0x71, 0x8f, 0xa4,
-	0x4b, 0xd8, 0x58, 0xd8, 0x88, 0x3f, 0x65, 0xf5, 0xc1, 0x77, 0x0e, 0xf8, 0xe5, 0xef, 0x03, 0xaa,
-	0xc0, 0x03, 0xa5, 0x6b, 0xea, 0xaf, 0x15, 0x53, 0xd3, 0x5b, 0x56, 0xc7, 0x54, 0xcc, 0x6e, 0x67,
-	0xfa, 0xd3, 0x6d, 0x75, 0xda, 0x6a, 0x5d, 0x3b, 0xd1, 0xd4, 0x06, 0x9f, 0x40, 0x3b, 0x20, 0xc4,
-	0x99, 0x4a, 0xdd, 0xd4, 0xde, 0xa8, 0x3c, 0x87, 0x76, 0x61, 0x3b, 0x1e, 0x55, 0xdf, 0xb6, 0x35,
-	0x43, 0x6d, 0xf0, 0xc9, 0xd5, 0xe2, 0xb6, 0xd2, 0xed, 0xa8, 0x0d, 0x3e, 0xb5, 0x3a, 0x7a, 0xa2,
-	0x68, 0x4d, 0xb5, 0xc1, 0xa7, 0xd1, 0x3f, 0xf0, 0x77, 0x3c, 0xda, 0xd0, 0x5b, 0x2a, 0xbf, 0x76,
-	0xf0, 0x89, 0x83, 0xd2, 0xd2, 0x3e, 0x21, 0x11, 0x76, 0x9a, 0xfa, 0x0b, 0xad, 0xae, 0x34, 0x2d,
-	0xbd, 0xad, 0x1a, 0x8a, 0xa9, 0x1b, 0x4b, 0xad, 0x08, 0xb0, 0x19, 0x63, 0x28, 0xad, 0x06, 0xcf,
-	0xa1, 0x2d, 0xf8, 0x2b, 0x16, 0xd1, 0x0d, 0x3e, 0xb9, 0x52, 0xd2, 0xd2, 0x4d, 0x3e, 0x55, 0x3b,
-	0xfa, 0x7a, 0x5d, 0xe6, 0xae, 0xae, 0xcb, 0xdc, 0xaf, 0xeb, 0x32, 0xf7, 0xf9, 0xa6, 0x9c, 0xb8,
-	0xba, 0x29, 0x27, 0x7e, 0xdc, 0x94, 0x13, 0xef, 0xb6, 0xa2, 0x67, 0x68, 0x3c, 0x7b, 0x88, 0xe8,
-	0xc7, 0x21, 0x09, 0x4e, 0x33, 0xe1, 0x23, 0xf4, 0xe8, 0x77, 0x00, 0x00, 0x00, 0xff, 0xff, 0x7a,
-	0x35, 0xcc, 0x3f, 0xa8, 0x06, 0x00, 0x00,
+	// 628 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x94, 0xc1, 0x6e, 0xd3, 0x4c,
+	0x14, 0x85, 0xe3, 0x24, 0x4d, 0xd2, 0x9b, 0x34, 0xb5, 0x46, 0xbf, 0xfe, 0xba, 0xd0, 0x1a, 0xd7,
+	0x50, 0x29, 0xb0, 0x48, 0x55, 0x03, 0x0b, 0x04, 0x2c, 0x9c, 0xd8, 0x15, 0x96, 0x20, 0xa9, 0x1c,
+	0x07, 0x21, 0x36, 0xd6, 0xd4, 0x9e, 0x16, 0xab, 0xae, 0x1d, 0xd9, 0x13, 0x6a, 0x1e, 0x02, 0x89,
+	0xc7, 0x62, 0x59, 0x76, 0x6c, 0x90, 0x50, 0xfb, 0x22, 0x28, 0x33, 0x4e, 0x93, 0xd6, 0x65, 0xcb,
+	0xca, 0xf2, 0xb9, 0xe7, 0xdc, 0x99, 0xf9, 0xae, 0x3d, 0xa0, 0x9c, 0x92, 0x49, 0x48, 0x92, 0xbd,
+	0xf3, 0x38, 0x39, 0x3d, 0x0e, 0xe3, 0xf3, 0x3d, 0x3c, 0xa5, 0xf1, 0x19, 0xa6, 0x41, 0x1c, 0x75,
+	0x27, 0x49, 0x4c, 0x63, 0xb4, 0xce, 0x1d, 0xdd, 0xb9, 0x43, 0xfd, 0x25, 0x00, 0xe8, 0xd7, 0x2e,
+	0xd4, 0x86, 0x72, 0xe0, 0x4b, 0x82, 0x22, 0x74, 0xaa, 0x76, 0x39, 0xf0, 0xd1, 0x33, 0x68, 0xd0,
+	0x24, 0x38, 0x39, 0x21, 0x49, 0x2a, 0x95, 0x95, 0x4a, 0xa7, 0xa9, 0x49, 0xdd, 0x5b, 0x2d, 0xba,
+	0x0e, 0x37, 0xd8, 0xd7, 0x4e, 0xb4, 0x0f, 0x75, 0xec, 0xcd, 0xfa, 0xa5, 0x52, 0x85, 0x85, 0x36,
+	0x0a, 0x21, 0x9d, 0xd5, 0xed, 0xb9, 0x0f, 0xdd, 0x87, 0x55, 0x92, 0x4d, 0x82, 0x84, 0xb8, 0x98,
+	0x4a, 0x55, 0x45, 0xe8, 0x54, 0xec, 0x06, 0x17, 0x74, 0x8a, 0x5e, 0x40, 0x2d, 0xa5, 0x98, 0x4e,
+	0x53, 0xa9, 0xae, 0x08, 0x9d, 0xb6, 0xb6, 0x53, 0x6c, 0x77, 0x7d, 0x84, 0x11, 0x33, 0xda, 0x79,
+	0x40, 0xfd, 0x5a, 0x86, 0x7a, 0xbe, 0x41, 0xf4, 0x0a, 0x1a, 0x71, 0xe4, 0x7a, 0x9f, 0x70, 0x10,
+	0xb1, 0x23, 0x36, 0xb5, 0x07, 0x85, 0x46, 0xc3, 0xa8, 0x3f, 0xab, 0xe7, 0x91, 0x37, 0x25, 0xbb,
+	0x1e, 0x73, 0x05, 0x69, 0x50, 0xa5, 0xc1, 0x19, 0x91, 0xca, 0x2c, 0xb9, 0x55, 0xc4, 0x10, 0x9c,
+	0x91, 0x45, 0x8c, 0x79, 0xd1, 0x73, 0x58, 0xf1, 0xe2, 0x69, 0xc4, 0x4f, 0xd4, 0xd4, 0xb6, 0x0b,
+	0xa1, 0xfe, 0xac, 0xba, 0x48, 0x71, 0x37, 0x1a, 0x40, 0xfb, 0x28, 0x8c, 0xbd, 0x53, 0x37, 0x88,
+	0x28, 0x49, 0x3e, 0xe3, 0x50, 0x5a, 0x61, 0xf9, 0xdd, 0x42, 0xbe, 0x37, 0xb3, 0x59, 0xb9, 0x6b,
+	0xd1, 0x67, 0xed, 0x68, 0x59, 0xef, 0xad, 0x42, 0x3d, 0x9f, 0x8d, 0x3a, 0x84, 0x1a, 0x47, 0x8f,
+	0x5e, 0x16, 0x68, 0xc8, 0x7f, 0xa3, 0xc1, 0x13, 0x4b, 0x30, 0x7a, 0x0d, 0xa8, 0xf1, 0xc9, 0xa9,
+	0x19, 0xb4, 0x6f, 0x32, 0x43, 0x8f, 0x41, 0xf4, 0xe2, 0x88, 0x26, 0xd8, 0xa3, 0x2e, 0xf6, 0xfd,
+	0x84, 0xa4, 0x29, 0x5b, 0xa0, 0x65, 0xaf, 0xcf, 0x75, 0x9d, 0xcb, 0x68, 0x13, 0x1a, 0x6c, 0x03,
+	0x6e, 0xe0, 0x33, 0xae, 0xab, 0x76, 0x9d, 0xbd, 0x5b, 0x3e, 0x52, 0xa0, 0x45, 0x33, 0xd7, 0xc3,
+	0x61, 0xe8, 0xfa, 0x98, 0x62, 0xa9, 0xc2, 0x3a, 0x00, 0xcd, 0xfa, 0x38, 0x0c, 0x0d, 0x4c, 0xb1,
+	0xaa, 0x41, 0x73, 0x89, 0x39, 0x7a, 0x08, 0x6b, 0x24, 0x23, 0xde, 0x94, 0x12, 0x17, 0x1f, 0x53,
+	0x92, 0xb0, 0x35, 0x2b, 0x76, 0x2b, 0x17, 0xf5, 0x99, 0xa6, 0xee, 0x43, 0x6b, 0x19, 0x39, 0xda,
+	0x81, 0x56, 0x42, 0x26, 0x04, 0x53, 0x97, 0xcf, 0x89, 0x7f, 0xf9, 0x4d, 0xae, 0x31, 0xa7, 0xfa,
+	0x1a, 0xfe, 0xbb, 0x8b, 0x32, 0xda, 0x2d, 0x0c, 0x89, 0x87, 0x6f, 0xb2, 0x57, 0xcf, 0x61, 0xed,
+	0x06, 0xc5, 0x7f, 0x85, 0xe7, 0xc9, 0x0f, 0x01, 0xc4, 0xdb, 0xbf, 0x05, 0xea, 0xc0, 0x23, 0x7d,
+	0xec, 0x0c, 0xdf, 0xe9, 0x8e, 0x35, 0x1c, 0xb8, 0x23, 0x47, 0x77, 0xc6, 0xa3, 0xf9, 0x63, 0x3c,
+	0x18, 0x1d, 0x9a, 0x7d, 0xeb, 0xc0, 0x32, 0x0d, 0xb1, 0x84, 0xb6, 0x40, 0x2a, 0x3a, 0xf5, 0xbe,
+	0x63, 0xbd, 0x37, 0x45, 0x01, 0x6d, 0xc3, 0x66, 0xb1, 0x6a, 0x7e, 0x38, 0xb4, 0x6c, 0xd3, 0x10,
+	0xcb, 0x77, 0x87, 0x0f, 0xf5, 0xf1, 0xc8, 0x34, 0xc4, 0xca, 0xdd, 0xd5, 0x03, 0xdd, 0x7a, 0x6b,
+	0x1a, 0x62, 0x15, 0xdd, 0x83, 0xff, 0x8b, 0x55, 0x63, 0x38, 0x30, 0xc5, 0x95, 0xde, 0xfe, 0xf7,
+	0x4b, 0x59, 0xb8, 0xb8, 0x94, 0x85, 0xdf, 0x97, 0xb2, 0xf0, 0xed, 0x4a, 0x2e, 0x5d, 0x5c, 0xc9,
+	0xa5, 0x9f, 0x57, 0x72, 0xe9, 0xe3, 0x46, 0x7e, 0xf5, 0x65, 0x8b, 0xcb, 0x8f, 0x7e, 0x99, 0x90,
+	0xf4, 0xa8, 0xc6, 0x2e, 0xbe, 0xa7, 0x7f, 0x02, 0x00, 0x00, 0xff, 0xff, 0xb3, 0x0c, 0x54, 0x85,
+	0x1c, 0x05, 0x00, 0x00,
 }
 
 func (m *Automation) Marshal() (dAtA []byte, err error) {
@@ -798,17 +683,19 @@ func (m *Automation) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0x1a
 		}
 	}
-	if m.Triggers != nil {
-		{
-			size, err := m.Triggers.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
+	if len(m.Triggers) > 0 {
+		for iNdEx := len(m.Triggers) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Triggers[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintAutomation(dAtA, i, uint64(size))
 			}
-			i -= size
-			i = encodeVarintAutomation(dAtA, i, uint64(size))
+			i--
+			dAtA[i] = 0x12
 		}
-		i--
-		dAtA[i] = 0x12
 	}
 	if m.Id != 0 {
 		i = encodeVarintAutomation(dAtA, i, uint64(m.Id))
@@ -889,27 +776,6 @@ func (m *Trigger_Time) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		}
 		i--
 		dAtA[i] = 0x12
-	}
-	return len(dAtA) - i, nil
-}
-func (m *Trigger_Logical) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *Trigger_Logical) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	if m.Logical != nil {
-		{
-			size, err := m.Logical.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintAutomation(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x1a
 	}
 	return len(dAtA) - i, nil
 }
@@ -1080,48 +946,6 @@ func (m *TimeTrigger) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *LogicalTrigger) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *LogicalTrigger) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *LogicalTrigger) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if len(m.Triggers) > 0 {
-		for iNdEx := len(m.Triggers) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.Triggers[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintAutomation(dAtA, i, uint64(size))
-			}
-			i--
-			dAtA[i] = 0x12
-		}
-	}
-	if m.LogicalOperator != 0 {
-		i = encodeVarintAutomation(dAtA, i, uint64(m.LogicalOperator))
-		i--
-		dAtA[i] = 0x8
-	}
-	return len(dAtA) - i, nil
-}
-
 func (m *CountTrigger) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -1142,20 +966,6 @@ func (m *CountTrigger) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if len(m.Triggers) > 0 {
-		for iNdEx := len(m.Triggers) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.Triggers[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintAutomation(dAtA, i, uint64(size))
-			}
-			i--
-			dAtA[i] = 0x1a
-		}
-	}
 	if m.RepeatCount != 0 {
 		i = encodeVarintAutomation(dAtA, i, uint64(m.RepeatCount))
 		i--
@@ -1256,9 +1066,11 @@ func (m *Automation) Size() (n int) {
 	if m.Id != 0 {
 		n += 1 + sovAutomation(uint64(m.Id))
 	}
-	if m.Triggers != nil {
-		l = m.Triggers.Size()
-		n += 1 + l + sovAutomation(uint64(l))
+	if len(m.Triggers) > 0 {
+		for _, e := range m.Triggers {
+			l = e.Size()
+			n += 1 + l + sovAutomation(uint64(l))
+		}
 	}
 	if len(m.Actions) > 0 {
 		for _, e := range m.Actions {
@@ -1307,18 +1119,6 @@ func (m *Trigger_Time) Size() (n int) {
 	_ = l
 	if m.Time != nil {
 		l = m.Time.Size()
-		n += 1 + l + sovAutomation(uint64(l))
-	}
-	return n
-}
-func (m *Trigger_Logical) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.Logical != nil {
-		l = m.Logical.Size()
 		n += 1 + l + sovAutomation(uint64(l))
 	}
 	return n
@@ -1404,24 +1204,6 @@ func (m *TimeTrigger) Size() (n int) {
 	return n
 }
 
-func (m *LogicalTrigger) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.LogicalOperator != 0 {
-		n += 1 + sovAutomation(uint64(m.LogicalOperator))
-	}
-	if len(m.Triggers) > 0 {
-		for _, e := range m.Triggers {
-			l = e.Size()
-			n += 1 + l + sovAutomation(uint64(l))
-		}
-	}
-	return n
-}
-
 func (m *CountTrigger) Size() (n int) {
 	if m == nil {
 		return 0
@@ -1430,12 +1212,6 @@ func (m *CountTrigger) Size() (n int) {
 	_ = l
 	if m.RepeatCount != 0 {
 		n += 1 + sovAutomation(uint64(m.RepeatCount))
-	}
-	if len(m.Triggers) > 0 {
-		for _, e := range m.Triggers {
-			l = e.Size()
-			n += 1 + l + sovAutomation(uint64(l))
-		}
 	}
 	return n
 }
@@ -1556,10 +1332,8 @@ func (m *Automation) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.Triggers == nil {
-				m.Triggers = &Trigger{}
-			}
-			if err := m.Triggers.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			m.Triggers = append(m.Triggers, &Trigger{})
+			if err := m.Triggers[len(m.Triggers)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -1611,7 +1385,7 @@ func (m *Automation) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ExpireAt |= uint64(b&0x7F) << shift
+				m.ExpireAt |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1754,41 +1528,6 @@ func (m *Trigger) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			m.Trigger = &Trigger_Time{v}
-			iNdEx = postIndex
-		case 3:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Logical", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowAutomation
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthAutomation
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthAutomation
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &LogicalTrigger{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Trigger = &Trigger_Logical{v}
 			iNdEx = postIndex
 		case 4:
 			if wireType != 2 {
@@ -2159,114 +1898,11 @@ func (m *TimeTrigger) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ExecuteAfter |= uint64(b&0x7F) << shift
+				m.ExecuteAfter |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-		default:
-			iNdEx = preIndex
-			skippy, err := skipAutomation(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthAutomation
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *LogicalTrigger) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowAutomation
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: LogicalTrigger: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: LogicalTrigger: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field LogicalOperator", wireType)
-			}
-			m.LogicalOperator = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowAutomation
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.LogicalOperator |= LogicalOperator(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Triggers", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowAutomation
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthAutomation
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthAutomation
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Triggers = append(m.Triggers, &Trigger{})
-			if err := m.Triggers[len(m.Triggers)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipAutomation(dAtA[iNdEx:])
@@ -2336,40 +1972,6 @@ func (m *CountTrigger) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-		case 3:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Triggers", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowAutomation
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthAutomation
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthAutomation
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Triggers = append(m.Triggers, &Trigger{})
-			if err := m.Triggers[len(m.Triggers)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipAutomation(dAtA[iNdEx:])

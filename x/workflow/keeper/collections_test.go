@@ -8,21 +8,13 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// Helper function to create a test automation
-func newTestAutomation(id uint64, status types.AutomationStatus) types.Automation {
-	return types.Automation{
-		Id:     id,
-		Status: status,
-	}
-}
-
-// TestAddAutomation tests the AddAutomation function
-func TestAddAutomation(t *testing.T) {
+// TestInsertAutomation tests the InsertAutomation function
+func TestInsertAutomation(t *testing.T) {
 	k, ctx := keeper.WorkflowKeeper(t)
 
 	// Add an automation
 	automation := newTestAutomation(5, types.AutomationStatus_AUTOMATION_STATUS_ACTIVE)
-	err := k.AddAutomation(ctx, automation)
+	err := k.InsertAutomation(ctx, automation)
 	require.NoError(t, err)
 
 	// Retrieve and verify
@@ -37,7 +29,7 @@ func TestSetAutomationStatus(t *testing.T) {
 
 	// Add an automation
 	automation := newTestAutomation(5, types.AutomationStatus_AUTOMATION_STATUS_ACTIVE)
-	err := k.AddAutomation(ctx, automation)
+	err := k.InsertAutomation(ctx, automation)
 	require.NoError(t, err)
 
 	// Set the status
@@ -105,4 +97,12 @@ func TestRemoveActiveAutomation(t *testing.T) {
 	ids, err = k.GetActiveAutomationIDs(ctx)
 	require.NoError(t, err)
 	require.ElementsMatch(t, []uint64{5}, ids)
+}
+
+// Helper function to create a test automation
+func newTestAutomation(id uint64, status types.AutomationStatus) types.Automation {
+	return types.Automation{
+		Id:     id,
+		Status: status,
+	}
 }
