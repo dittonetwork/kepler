@@ -9,7 +9,6 @@ import (
 	"kepler/x/workflow/types"
 	"kepler/x/workflow/types/mock"
 	"testing"
-	"time"
 )
 
 // TestAddAutomation tests the InsertAutomation function
@@ -22,31 +21,7 @@ func TestAddAutomationSuccess(t *testing.T) {
 		storetypes.NewTransientStoreKey("transient_"+types.StoreKey),
 	)
 
-	triggers := []*types.Trigger{
-		{
-			Trigger: &types.Trigger_Count{Count: &types.CountTrigger{
-				RepeatCount: 1,
-			}},
-		},
-	}
-	actions := []*types.Action{
-		{
-			&types.Action_OnChain{OnChain: &types.OnChainAction{
-				ContractAddress: []byte("0x1234"),
-				ChainId:         "1",
-				TxCallData:      []byte("tx_call_data"),
-			}},
-		},
-	}
-
-	expireAt := time.Now().Add(time.Hour).Unix()
-	automation := types.Automation{
-		Id:       1,
-		Triggers: triggers,
-		Actions:  actions,
-		Status:   types.AutomationStatus_AUTOMATION_STATUS_ACTIVE,
-		ExpireAt: expireAt,
-	}
+	automation := newValidAutomation()
 
 	// Create a mock keeper
 	mockKeeper := mock.NewMockKeeper(ctrl)
@@ -58,9 +33,9 @@ func TestAddAutomationSuccess(t *testing.T) {
 
 	// Create a new message
 	msg := &types.MsgAddAutomation{
-		Triggers: triggers,
-		Actions:  actions,
-		ExpireAt: expireAt,
+		Triggers: automation.Triggers,
+		Actions:  automation.Actions,
+		ExpireAt: automation.ExpireAt,
 	}
 
 	// Call the AddAutomation function

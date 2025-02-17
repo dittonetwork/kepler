@@ -1,6 +1,6 @@
 package types
 
 const (
-	CollectionNameAutomations       = "automations"
-	CollectionNameActiveAutomations = "active_automations"
+	CollectionNameAutomations         = "automations"
+	CollectionIndexAutomationByStatus = "automations_by_status"
 )
