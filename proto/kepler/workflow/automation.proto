@@ -27,6 +27,7 @@ message Trigger {
   oneof trigger {
     OnChainTrigger on_chain = 1;
     TimeTrigger time = 2;
+    GasPriceTrigger gas_price = 3;
     CountTrigger count = 4;
     BlockIntervalTrigger block_interval = 5;
   }
@@ -59,6 +60,12 @@ message CountTrigger {
 // Block interval trigger
 message BlockIntervalTrigger {
   uint64 block_interval = 1; // Block interval in blocks
+}
+
+// GasPriceTrigger activates when the chain's gas price ≤ threshold
+message GasPriceTrigger {
+  string chain_id = 1; // EVM chain ID (e.g., "1" for Ethereum)
+  string threshold = 2; // Threshold gas price (in wei, as string to handle large values)
 }
 
 // On chain action
