@@ -22,6 +22,8 @@ services:
     restart: unless-stopped
     volumes:
       - ./grafana/datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml:ro
+      - ./grafana/dashboard.yaml:/etc/grafana/provisioning/dashboards/dashboard.yaml:ro
+      - ./grafana/dashboards:/var/dashboards
       - grafana-storage:/var/lib/grafana
     environment:
       - GF_SERVER_HTTP_PORT=3000
