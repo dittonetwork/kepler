@@ -13,7 +13,10 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (k Keeper) CanBeSigned(goCtx context.Context, req *types.QueryCanBeSignedRequest) (*types.QueryCanBeSignedResponse, error) {
+func (k Keeper) CanBeSigned(
+	goCtx context.Context,
+	req *types.QueryCanBeSignedRequest,
+) (*types.QueryCanBeSignedResponse, error) {
 	if req == nil {
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}
@@ -29,12 +32,12 @@ func (k Keeper) CanBeSigned(goCtx context.Context, req *types.QueryCanBeSignedRe
 		addresses = append(addresses, address)
 	}
 
-	commId, err := k.Committees.Indexes.Active.MatchExact(ctx, req.ChainId)
+	commID, err := k.Committees.Indexes.Active.MatchExact(ctx, req.ChainId)
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
-	committee, err := k.Committees.Get(ctx, commId)
+	committee, err := k.Committees.Get(ctx, commID)
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}
@@ -74,6 +77,7 @@ func isSuperMajority(totalVotes, votesFor int) bool {
 		return false
 	}
 
+	//nolint:mnd // just a formula
 	requiredVotes := math.Ceil(float64(totalVotes) * 2 / 3)
 	return votesFor >= int(requiredVotes)
 }
