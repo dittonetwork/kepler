@@ -1,0 +1,5 @@
+broadcast-mode = "sync"
+chain-id = "kepler"
+keyring-backend = "test"
+node = "http://acb923ef9dba043d78e05bd3ca3f02ef-1305626282.eu-central-1.elb.amazonaws.com/rpc"
+output = "text"

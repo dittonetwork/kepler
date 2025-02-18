@@ -8,5 +8,4 @@ release/
 *.log
 *.ign
 appd
-charts/kepler/app_config
 keplerd
