@@ -1,8 +1,10 @@
 package keeper
 
 import (
+	"errors"
 	"fmt"
 	"kepler/x/workflow/types"
+	"slices"
 
 	"cosmossdk.io/collections"
 	"cosmossdk.io/collections/indexes"
@@ -54,7 +56,11 @@ func (k BaseKeeper) InsertAutomation(ctx sdk.Context, automation types.Automatio
 }
 
 // SetAutomationStatus sets the status of an automation in KVStore.
-func (k BaseKeeper) SetAutomationStatus(ctx sdk.Context, id uint64, status types.AutomationStatus) error {
+func (k BaseKeeper) SetAutomationStatus(
+	ctx sdk.Context,
+	id uint64,
+	status types.AutomationStatus,
+) error {
 	automation, err := k.GetAutomation(ctx, id)
 	if err != nil {
 		return err
@@ -114,4 +120,56 @@ func (k BaseKeeper) GetNextAutomationID(ctx sdk.Context) (uint64, error) {
 	}
 
 	return id, nil
+}
+
+var cancelAllowedWhitelist = []types.AutomationStatus{
+	types.AutomationStatus_AUTOMATION_STATUS_ACTIVE,
+	types.AutomationStatus_AUTOMATION_STATUS_PAUSED,
+	types.AutomationStatus_AUTOMATION_STATUS_STATUS_UNSPECIFIED,
+}
+
+// canCancel returns true if automation can be canceled (if it not in the final state).
+func canCancel(status types.AutomationStatus) bool {
+	return slices.Contains(cancelAllowedWhitelist, status)
+}
+
+// canActivate returns true if automation can be activated (if it previously was paused).
+func canActivate(status types.AutomationStatus) bool {
+	return status == types.AutomationStatus_AUTOMATION_STATUS_PAUSED
+}
+
+func (k BaseKeeper) CancelAutomation(ctx sdk.Context, id uint64) error {
+	automation, err := k.GetAutomation(ctx, id)
+	if err != nil {
+		return fmt.Errorf("failed to get automation: %w", err)
+	}
+
+	if !canCancel(automation.Status) {
+		return errors.New("cancel impossible: automation in the final state")
+	}
+
+	err = k.SetAutomationStatus(ctx, id, types.AutomationStatus_AUTOMATION_STATUS_CANCELED)
+	if err != nil {
+		return fmt.Errorf("failed to set automation status: %w", err)
+	}
+
+	return nil
+}
+
+func (k BaseKeeper) ActivateAutomation(ctx sdk.Context, id uint64) error {
+	automation, err := k.GetAutomation(ctx, id)
+	if err != nil {
+		return fmt.Errorf("failed to get automation: %w", err)
+	}
+
+	if !canActivate(automation.Status) {
+		return fmt.Errorf("automation cant be activated, status: %s", automation.Status)
+	}
+
+	err = k.SetAutomationStatus(ctx, id, types.AutomationStatus_AUTOMATION_STATUS_ACTIVE)
+	if err != nil {
+		return fmt.Errorf("failed to set automation status: %w", err)
+	}
+
+	return nil
 }

@@ -23,3 +23,13 @@ type ParamSubspace interface {
 	Get(context.Context, []byte, interface{})
 	Set(context.Context, []byte, interface{})
 }
+
+type CommitteeKeeper interface {
+	IsCommitteeExists(ctx sdk.Context, committeeID string) (bool, error)
+	CanBeSigned(
+		ctx sdk.Context,
+		chainID string,
+		committeeID string,
+		signatures [][]byte,
+	) (bool, error)
+}
