@@ -27,9 +27,9 @@ type ParamSubspace interface {
 type CommitteeKeeper interface {
 	IsCommitteeExists(ctx sdk.Context, committeeID string) (bool, error)
 	CanBeSigned(
-		ctx sdk.Context,
+		ctx context.Context,
 		chainID string,
-		committeeID string,
 		signatures [][]byte,
+		jobPayload []byte,
 	) (bool, error)
 }
