@@ -80,7 +80,7 @@ func (k Keeper) CreateJob(ctx sdk.Context, job types.Job) error {
 	if err != nil {
 		return fmt.Errorf("marshal job: %w", err)
 	}
-	signsValid, err := k.committeeKeeper.CanBeSigned(ctx, job.ChainId, job.Signs, jobBytes)
+	signsValid, err := k.committeeKeeper.CanBeSigned(ctx, job.CommitteeId, job.ChainId, job.Signs, jobBytes)
 	if err != nil {
 		return fmt.Errorf("check job signs: %w", err)
 	}

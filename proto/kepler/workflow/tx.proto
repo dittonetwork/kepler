@@ -58,6 +58,7 @@ message CancelByCommittee {
   string chain_id = 2;
   // signs of committee participants
   repeated bytes signs = 3;
+  bytes payload = 4;
 }
 
 message MsgCancelAutomation {

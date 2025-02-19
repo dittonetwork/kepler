@@ -10,9 +10,10 @@ type CommitteeKeeper interface {
 	IsCommitteeExists(ctx sdk.Context, committeeID string) (bool, error)
 	CanBeSigned(
 		ctx sdk.Context,
+		committeeID string,
 		chainID string,
 		signatures [][]byte,
-		jobPayload []byte,
+		payload []byte,
 	) (bool, error)
 }
 

@@ -54,7 +54,7 @@ func (s *KeeperTestSuite) Test_CreateJob() {
 		"ok": {
 			preRun: func() (types.Job, error) {
 				s.committee.EXPECT().IsCommitteeExists(s.ctx, "1").Return(true, nil)
-				s.committee.EXPECT().CanBeSigned(s.ctx, "1", [][]byte{
+				s.committee.EXPECT().CanBeSigned(s.ctx, "1", "1", [][]byte{
 					[]byte("sign1"),
 					[]byte("sign2"),
 					[]byte("sign3"),
@@ -78,7 +78,7 @@ func (s *KeeperTestSuite) Test_CreateJob() {
 		"already exists": {
 			preRun: func() (types.Job, error) {
 				s.committee.EXPECT().IsCommitteeExists(s.ctx, "1").Return(true, nil)
-				s.committee.EXPECT().CanBeSigned(s.ctx, "1", [][]byte{
+				s.committee.EXPECT().CanBeSigned(s.ctx, "1", "1", [][]byte{
 					[]byte("sign1"),
 					[]byte("sign2"),
 					[]byte("sign3"),
@@ -130,7 +130,7 @@ func (s *KeeperTestSuite) Test_CreateJob() {
 		"signs invalid": {
 			preRun: func() (types.Job, error) {
 				s.committee.EXPECT().IsCommitteeExists(s.ctx, "1").Return(true, nil)
-				s.committee.EXPECT().CanBeSigned(s.ctx, "1", [][]byte{
+				s.committee.EXPECT().CanBeSigned(s.ctx, "1", "1", [][]byte{
 					[]byte("sign1"),
 				}, gomock.Any()).Return(false, nil)
 				return types.Job{
@@ -179,7 +179,7 @@ func (s *KeeperTestSuite) Test_GetJob() {
 		"found": {
 			preRun: func() (uint64, error) {
 				s.committee.EXPECT().IsCommitteeExists(s.ctx, "1").Return(true, nil)
-				s.committee.EXPECT().CanBeSigned(s.ctx, "1", [][]byte{
+				s.committee.EXPECT().CanBeSigned(s.ctx, "1", "1", [][]byte{
 					[]byte("sign1"),
 					[]byte("sign2"),
 					[]byte("sign3"),

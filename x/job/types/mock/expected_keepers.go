@@ -42,18 +42,18 @@ func (m *MockCommitteeKeeper) EXPECT() *MockCommitteeKeeperMockRecorder {
 }
 
 // CanBeSigned mocks base method.
-func (m *MockCommitteeKeeper) CanBeSigned(ctx types.Context, chainID string, signatures [][]byte, jobPayload []byte) (bool, error) {
+func (m *MockCommitteeKeeper) CanBeSigned(ctx types.Context, committeeID, chainID string, signatures [][]byte, payload []byte) (bool, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CanBeSigned", ctx, chainID, signatures, jobPayload)
+	ret := m.ctrl.Call(m, "CanBeSigned", ctx, committeeID, chainID, signatures, payload)
 	ret0, _ := ret[0].(bool)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // CanBeSigned indicates an expected call of CanBeSigned.
-func (mr *MockCommitteeKeeperMockRecorder) CanBeSigned(ctx, chainID, signatures, jobPayload any) *gomock.Call {
+func (mr *MockCommitteeKeeperMockRecorder) CanBeSigned(ctx, committeeID, chainID, signatures, payload any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CanBeSigned", reflect.TypeOf((*MockCommitteeKeeper)(nil).CanBeSigned), ctx, chainID, signatures, jobPayload)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CanBeSigned", reflect.TypeOf((*MockCommitteeKeeper)(nil).CanBeSigned), ctx, committeeID, chainID, signatures, payload)
 }
 
 // IsCommitteeExists mocks base method.

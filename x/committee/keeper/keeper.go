@@ -121,14 +121,15 @@ func NewKeeper(
 
 func (k Keeper) CanBeSigned(
 	goCtx context.Context,
+	committeeID string,
 	chainID string,
 	signatures [][]byte,
-	jobPayload []byte,
+	payload []byte,
 ) (bool, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 	addresses := make([]string, 0, len(signatures))
 	for _, signature := range signatures {
-		address, err := getAddressFromSignature(jobPayload, signature)
+		address, err := getAddressFromSignature(payload, signature)
 		if err != nil {
 			return false, err
 		}
@@ -141,13 +142,17 @@ func (k Keeper) CanBeSigned(
 		return false, err
 	}
 
-	committee, err := k.Committees.Get(ctx, commID)
+	activeCommittee, err := k.Committees.Get(ctx, commID)
 	if err != nil {
 		return false, err
 	}
 
+	if activeCommittee.Id != committeeID {
+		return false, errors.New("committee ID does not match the active committee")
+	}
+
 	membersAddresses := make(map[string]struct{})
-	for _, member := range committee.Members {
+	for _, member := range activeCommittee.Members {
 		membersAddresses[member.Address] = struct{}{}
 	}
 
@@ -157,7 +162,7 @@ func (k Keeper) CanBeSigned(
 		}
 	}
 
-	if !isSuperMajority(len(committee.Members), len(addresses)) {
+	if !isSuperMajority(len(activeCommittee.Members), len(addresses)) {
 		return false, errors.New("not enough votes")
 	}
 
