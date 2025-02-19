@@ -120,7 +120,7 @@ func NewKeeper(
 }
 
 func (k Keeper) CanBeSigned(
-	goCtx context.Context,
+	goCtx sdk.Context,
 	committeeID string,
 	chainID string,
 	signatures [][]byte,
