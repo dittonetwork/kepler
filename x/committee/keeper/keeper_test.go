@@ -56,16 +56,11 @@ func TestKeeper_CanBeSigned_Success(t *testing.T) {
 		signatures = append(signatures, sig)
 	}
 
-	req := &types.QueryCanBeSignedRequest{
-		ChainId:    chainID,
-		JobPayload: prefixedMsg,
-		Signatures: signatures,
-	}
-
-	res, err := k.CanBeSigned(ctx, req)
+	res, err := k.CanBeSigned(ctx, chainID, signatures, prefixedMsg)
 	require.NoError(t, err)
-	require.True(t, res.CanBeSigned, "expected CanBeSigned to return true with valid signatures")
+	require.True(t, res, "expected CanBeSigned to return true with valid signatures")
 }
+
 func TestKeeper_CanBeSigned_NoCommitteeForChain(t *testing.T) {
 	k, ctx := keeper.CommitteeKeeper(t)
 
@@ -112,15 +107,10 @@ func TestKeeper_CanBeSigned_NoCommitteeForChain(t *testing.T) {
 		signatures = append(signatures, sig)
 	}
 
-	req := &types.QueryCanBeSignedRequest{
-		ChainId:    reqChainID,
-		JobPayload: prefixedMsg,
-		Signatures: signatures,
-	}
-
-	_, err = k.CanBeSigned(ctx, req)
+	_, err = k.CanBeSigned(ctx, reqChainID, signatures, prefixedMsg)
 	require.Error(t, err)
 }
+
 func TestKeeper_CanBeSigned_SignerNotInCommittee(t *testing.T) {
 	k, ctx := keeper.CommitteeKeeper(t)
 
@@ -173,15 +163,10 @@ func TestKeeper_CanBeSigned_SignerNotInCommittee(t *testing.T) {
 	require.NoError(t, err)
 	signatures = append(signatures, sig)
 
-	req := &types.QueryCanBeSignedRequest{
-		ChainId:    chainID,
-		JobPayload: prefixedMsg,
-		Signatures: signatures,
-	}
-
-	_, err = k.CanBeSigned(ctx, req)
+	_, err = k.CanBeSigned(ctx, chainID, signatures, prefixedMsg)
 	require.Error(t, err)
 }
+
 func TestKeeper_CanBeSigned_NoSuperMajority(t *testing.T) {
 	k, ctx := keeper.CommitteeKeeper(t)
 
@@ -227,15 +212,10 @@ func TestKeeper_CanBeSigned_NoSuperMajority(t *testing.T) {
 		signatures = append(signatures, sig)
 	}
 
-	req := &types.QueryCanBeSignedRequest{
-		ChainId:    chainID,
-		JobPayload: prefixedMsg,
-		Signatures: signatures,
-	}
-
-	_, err = k.CanBeSigned(ctx, req)
+	_, err = k.CanBeSigned(ctx, chainID, signatures, prefixedMsg)
 	require.Error(t, err)
 }
+
 func TestKeeper_CanBeSigned_InvalidAddressFromSig(t *testing.T) {
 	k, ctx := keeper.CommitteeKeeper(t)
 
@@ -285,13 +265,7 @@ func TestKeeper_CanBeSigned_InvalidAddressFromSig(t *testing.T) {
 		signatures = append(signatures, sig)
 	}
 
-	req := &types.QueryCanBeSignedRequest{
-		ChainId:    chainID,
-		JobPayload: prefixedMsg,
-		Signatures: signatures,
-	}
-
-	_, err = k.CanBeSigned(ctx, req)
+	_, err = k.CanBeSigned(ctx, chainID, signatures, prefixedMsg)
 	require.Error(t, err)
 }
 

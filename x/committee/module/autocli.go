@@ -17,19 +17,6 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 					Use:       "params",
 					Short:     "Shows the parameters of the module",
 				},
-				{
-					RpcMethod: "CanBeSigned",
-					Use:       "can-be-signed [chain-id] [epoch-id] [signatures] [job_payload]",
-					Short:     "Query CanBeSigned",
-					PositionalArgs: []*autocliv1.PositionalArgDescriptor{
-						{ProtoField: "chainId"},
-						{ProtoField: "epochId"},
-						{ProtoField: "signatures"},
-						{ProtoField: "jobPayload"},
-					},
-				},
-
-				// this line is used by ignite scaffolding # autocli/query
 			},
 		},
 		Tx: &autocliv1.ServiceCommandDescriptor{

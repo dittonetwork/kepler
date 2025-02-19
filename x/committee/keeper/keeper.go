@@ -2,7 +2,11 @@ package keeper
 
 import (
 	"context"
+	"errors"
 	"fmt"
+	"math"
+
+	"github.com/ethereum/go-ethereum/crypto"
 
 	"cosmossdk.io/collections"
 	"cosmossdk.io/collections/indexes"
@@ -115,6 +119,51 @@ func NewKeeper(
 	return k
 }
 
+func (k Keeper) CanBeSigned(
+	goCtx context.Context,
+	chainID string,
+	signatures [][]byte,
+	jobPayload []byte,
+) (bool, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+	addresses := make([]string, 0, len(signatures))
+	for _, signature := range signatures {
+		address, err := getAddressFromSignature(jobPayload, signature)
+		if err != nil {
+			return false, err
+		}
+
+		addresses = append(addresses, address)
+	}
+
+	commID, err := k.Committees.Indexes.Active.MatchExact(ctx, chainID)
+	if err != nil {
+		return false, err
+	}
+
+	committee, err := k.Committees.Get(ctx, commID)
+	if err != nil {
+		return false, err
+	}
+
+	membersAddresses := make(map[string]struct{})
+	for _, member := range committee.Members {
+		membersAddresses[member.Address] = struct{}{}
+	}
+
+	for _, address := range addresses {
+		if _, ok := membersAddresses[address]; !ok {
+			return false, errors.New("address is not a member of the committee")
+		}
+	}
+
+	if !isSuperMajority(len(committee.Members), len(addresses)) {
+		return false, errors.New("not enough votes")
+	}
+
+	return true, nil
+}
+
 // GetAuthority returns the module's authority.
 func (k Keeper) GetAuthority() string {
 	return k.authority
@@ -123,4 +172,24 @@ func (k Keeper) GetAuthority() string {
 // Logger returns a module-specific logger.
 func (k Keeper) Logger() log.Logger {
 	return k.logger.With("module", fmt.Sprintf("x/%s", types.ModuleName))
+}
+
+func getAddressFromSignature(jobMsg []byte, signature []byte) (string, error) {
+	hsh := crypto.Keccak256(jobMsg)
+	pubKey, err := crypto.SigToPub(hsh, signature)
+	if err != nil {
+		return "", fmt.Errorf("failed to recover public key from signature: %w", err)
+	}
+
+	return crypto.PubkeyToAddress(*pubKey).Hex(), nil
+}
+
+func isSuperMajority(totalVotes, votesFor int) bool {
+	if votesFor > totalVotes || totalVotes == 0 {
+		return false
+	}
+
+	//nolint:mnd // just a formula
+	requiredVotes := math.Ceil(float64(totalVotes) * 2 / 3)
+	return votesFor >= int(requiredVotes)
 }

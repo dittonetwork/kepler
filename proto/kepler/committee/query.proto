@@ -25,12 +25,6 @@ service Query {
     option (google.api.http).get = "/kepler/committee/params";
   
   }
-  
-  // Queries a list of CanBeSigned items.
-  rpc CanBeSigned (QueryCanBeSignedRequest) returns (QueryCanBeSignedResponse) {
-    option (google.api.http).get = "/kepler/committee/can_be_signed/{chainId}/{epochId}";
-  
-  }
 }
 // QueryCommitteeRequest is response type for the Query/Committee RPC method.
 message QueryGetCommitteeRequest {
@@ -55,15 +49,3 @@ message QueryParamsResponse {
   // params holds all the parameters of this module.
   Params params = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
 }
-
-message QueryCanBeSignedRequest {
-  string chainId = 1;
-  string epochId = 2;
-  repeated bytes signatures = 3;
-  bytes job_payload = 4;
-}
-
-message QueryCanBeSignedResponse {
-  bool can_be_signed = 1;
-}
-
