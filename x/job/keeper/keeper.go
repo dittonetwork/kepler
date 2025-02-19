@@ -76,7 +76,11 @@ func (k Keeper) CreateJob(ctx sdk.Context, job types.Job) error {
 
 	// TODO: need to check validity of signs and passed payload
 
-	signsValid, err := k.committeeKeeper.CanBeSigned(ctx, job.ChainId, job.CommitteeId, job.Signs)
+	jobBytes, err := job.Marshal()
+	if err != nil {
+		return fmt.Errorf("marshal job: %w", err)
+	}
+	signsValid, err := k.committeeKeeper.CanBeSigned(ctx, job.CommitteeId, job.ChainId, job.Signs, jobBytes)
 	if err != nil {
 		return fmt.Errorf("check job signs: %w", err)
 	}

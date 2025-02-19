@@ -8,7 +8,13 @@ import (
 
 type CommitteeKeeper interface {
 	IsCommitteeExists(ctx sdk.Context, committeeID string) (bool, error)
-	CanBeSigned(ctx sdk.Context, chainID string, committeeID string, signatures [][]byte) (bool, error)
+	CanBeSigned(
+		ctx sdk.Context,
+		committeeID string,
+		chainID string,
+		signatures [][]byte,
+		payload []byte,
+	) (bool, error)
 }
 
 // AccountKeeper defines the expected interface for the Account module.

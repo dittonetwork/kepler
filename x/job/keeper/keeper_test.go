@@ -58,7 +58,7 @@ func (s *KeeperTestSuite) Test_CreateJob() {
 					[]byte("sign1"),
 					[]byte("sign2"),
 					[]byte("sign3"),
-				}).Return(true, nil)
+				}, gomock.Any()).Return(true, nil)
 				return types.Job{
 					Id:              123,
 					Status:          types.Job_STATUS_EXECUTED,
@@ -82,7 +82,7 @@ func (s *KeeperTestSuite) Test_CreateJob() {
 					[]byte("sign1"),
 					[]byte("sign2"),
 					[]byte("sign3"),
-				}).Return(true, nil)
+				}, gomock.Any()).Return(true, nil)
 				err := s.keeper.CreateJob(s.ctx, types.Job{Id: 111, CommitteeId: "1", ChainId: "1", Signs: [][]byte{
 					[]byte("sign1"),
 					[]byte("sign2"),
@@ -132,7 +132,7 @@ func (s *KeeperTestSuite) Test_CreateJob() {
 				s.committee.EXPECT().IsCommitteeExists(s.ctx, "1").Return(true, nil)
 				s.committee.EXPECT().CanBeSigned(s.ctx, "1", "1", [][]byte{
 					[]byte("sign1"),
-				}).Return(false, nil)
+				}, gomock.Any()).Return(false, nil)
 				return types.Job{
 					Id:              125,
 					Status:          types.Job_STATUS_EXECUTED,
@@ -183,7 +183,7 @@ func (s *KeeperTestSuite) Test_GetJob() {
 					[]byte("sign1"),
 					[]byte("sign2"),
 					[]byte("sign3"),
-				}).Return(true, nil)
+				}, gomock.Any()).Return(true, nil)
 				err := s.keeper.CreateJob(s.ctx, types.Job{Id: 111, CommitteeId: "1", ChainId: "1", Signs: [][]byte{
 					[]byte("sign1"),
 					[]byte("sign2"),

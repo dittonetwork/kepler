@@ -23,11 +23,13 @@ func (k msgServer) CancelAutomation(
 	switch {
 	case msg.Committee != nil:
 		var signValid bool
+
 		signValid, err = k.CommitteeKeeper.CanBeSigned(
 			ctx,
-			msg.Committee.ChainId,
 			msg.Committee.CommitteeId,
+			msg.Committee.ChainId,
 			msg.Committee.Signs,
+			msg.Committee.Payload,
 		)
 		if err != nil {
 			return nil, fmt.Errorf("failed to check committee signs: %w", err)
