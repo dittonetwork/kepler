@@ -62,10 +62,23 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 					},
 				},
 				{
-					RpcMethod:      "SubmitJobResult",
-					Use:            "submit-job-result [status] [committee-id] [chain-id] [automation-id] [tx-hash] [executor-address] [created-at] [executed-at] [signed-at] [signs] [payload]",
-					Short:          "Send a SubmitJobResult tx",
-					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "status"}, {ProtoField: "committeeId"}, {ProtoField: "chainId"}, {ProtoField: "automationId"}, {ProtoField: "txHash"}, {ProtoField: "executorAddress"}, {ProtoField: "createdAt"}, {ProtoField: "executedAt"}, {ProtoField: "signedAt"}, {ProtoField: "signs"}, {ProtoField: "payload"}},
+					RpcMethod: "SubmitJobResult",
+					Use: "submit-job-result [status] [committee-id] [chain-id] [automation-id] " +
+						"[tx-hash] [executor-address] [created-at] [executed-at] [signed-at] [signs] [payload]",
+					Short: "Send a SubmitJobResult tx",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{
+						{ProtoField: "status"},
+						{ProtoField: "committeeId"},
+						{ProtoField: "chainId"},
+						{ProtoField: "automationId"},
+						{ProtoField: "txHash"},
+						{ProtoField: "executorAddress"},
+						{ProtoField: "createdAt"},
+						{ProtoField: "executedAt"},
+						{ProtoField: "signedAt"},
+						{ProtoField: "signs"},
+						{ProtoField: "payload"},
+					},
 				},
 				// this line is used by ignite scaffolding # autocli/tx
 			},

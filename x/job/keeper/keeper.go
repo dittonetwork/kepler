@@ -2,8 +2,9 @@ package keeper
 
 import (
 	"fmt"
-	"github.com/pkg/errors"
 	"kepler/x/job/types"
+
+	"github.com/pkg/errors"
 
 	"cosmossdk.io/collections"
 	"cosmossdk.io/core/store"
