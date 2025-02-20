@@ -25,22 +25,20 @@ message Job {
   string chain_id = 3;
   // presented if job was created by automation workflow
   uint64 automation_id = 4;
-  // presented if job was created by instant module
-  uint64 instant_job_id = 5;
   // presented if job was successful
-  string tx_hash = 6;
+  string tx_hash = 5;
   // additional info about reason of failure etc
-  bytes metadata = 7;
+  bytes metadata = 6;
   // address of executor
-  string executor_address = 8;
+  string executor_address = 7;
   // job executors committee id
-  string committee_id = 9;
+  string committee_id = 8;
   // signs of committee participants
-  repeated bytes signs = 10;
+  repeated bytes signs = 9;
   // unix seconds time when created
-  uint64 created_at = 11;
+  uint64 created_at = 10;
   // unix seconds time when executed or failed
-  uint64 executed_at = 12;
+  uint64 executed_at = 11;
   // unix seconds time when signed
-  uint64 signed_at = 13;
+  uint64 signed_at = 12;
 }

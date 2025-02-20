@@ -84,6 +84,7 @@ func NewKeeper(
 			codec.CollValue[types.Automation](cdc),
 			NewAutomationIndexes(sb),
 		),
+		AutomationID: collections.NewSequence(sb, types.KeyPrefixAutomation, types.CollectionNameAutomationID),
 	}
 }
 
