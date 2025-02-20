@@ -17,10 +17,11 @@ service Msg {
   
   // UpdateParams defines a (governance) operation for updating the module
   // parameters. The authority defaults to the x/gov module account.
-  rpc UpdateParams  (MsgUpdateParams ) returns (MsgUpdateParamsResponse );
-  rpc AddAutomation (MsgAddAutomation) returns (MsgAddAutomationResponse);
-  rpc CancelAutomation (MsgCancelAutomation) returns (MsgCancelAutomationResponse);
+  rpc UpdateParams       (MsgUpdateParams      ) returns (MsgUpdateParamsResponse      );
+  rpc AddAutomation      (MsgAddAutomation     ) returns (MsgAddAutomationResponse     );
+  rpc CancelAutomation   (MsgCancelAutomation  ) returns (MsgCancelAutomationResponse  );
   rpc ActivateAutomation (MsgActivateAutomation) returns (MsgActivateAutomationResponse);
+  rpc SubmitJobResult    (MsgSubmitJobResult   ) returns (MsgSubmitJobResultResponse   );
 }
 // MsgUpdateParams is the Msg/UpdateParams request type.
 message MsgUpdateParams {
@@ -42,10 +43,10 @@ message MsgUpdateParamsResponse {}
 
 message MsgAddAutomation {
   option (cosmos.msg.v1.signer) = "creator";
-  string     creator    = 1;
-  repeated Trigger triggers = 2; // Trigger object, which can be chained by logical operators in itself
-  repeated Action actions = 3; // List of actions
-  int64 expire_at = 4; // Expiration timestamp (Unix time)
+           string  creator   = 1;
+  repeated Trigger triggers  = 2; // Trigger object, which can be chained by logical operators in itself
+  repeated Action  actions   = 3; // List of actions
+           int64   expire_at = 4; // Expiration timestamp (Unix time)
 }
 
 message MsgAddAutomationResponse {
@@ -53,20 +54,24 @@ message MsgAddAutomationResponse {
 }
 
 message CancelByCommittee {
+  
   // job executors committee id
   string committee_id = 1;
-  string chain_id = 2;
+  string chain_id     = 2;
+  
   // signs of committee participants
-  repeated bytes signs = 3;
-  bytes payload = 4;
+  repeated bytes signs   = 3;
+           bytes payload = 4;
 }
 
 message MsgCancelAutomation {
   option (cosmos.msg.v1.signer) = "creator";
   uint64 id = 1;
+  
   // cancel by creator (user) of the automation
   // can be empty if tx created by committee
   string creator = 2;
+  
   // cancel by committee
   CancelByCommittee committee = 3;
 }
@@ -76,8 +81,28 @@ message MsgCancelAutomationResponse {}
 message MsgActivateAutomation {
   option (cosmos.msg.v1.signer) = "creator";
   uint64 id = 1;
+  
   // creator of the automation
   string creator = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 }
 
 message MsgActivateAutomationResponse {}
+
+message MsgSubmitJobResult {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator         =  1;
+  string status          =  2;
+  string committeeId     =  3;
+  string chainId         =  4;
+  int32  automationId    =  5;
+  string txHash          =  6;
+  string executorAddress =  7;
+  int32  createdAt       =  8;
+  int32  executedAt      =  9;
+  int32  signedAt        = 10;
+  string signs           = 11;
+  string payload         = 12;
+}
+
+message MsgSubmitJobResultResponse {}
+
