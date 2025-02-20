@@ -8,20 +8,31 @@ import (
 
 var _ sdk.Msg = &MsgSubmitJobResult{}
 
-func NewMsgSubmitJobResult(creator string, status string, committeeId string, chainId string, automationId int32, txHash string, executorAddress string, createdAt int32, executedAt int32, signedAt int32, signs string, payload string) *MsgSubmitJobResult {
+func NewMsgSubmitJobResult(
+	creator string,
+	status string,
+	committeeId string,
+	chainId string,
+	automationId uint64,
+	txHash string,
+	createdAt uint64,
+	executedAt uint64,
+	signedAt uint64,
+	signs [][]byte,
+	payload []byte,
+) *MsgSubmitJobResult {
 	return &MsgSubmitJobResult{
-		Creator:         creator,
-		Status:          status,
-		CommitteeId:     committeeId,
-		ChainId:         chainId,
-		AutomationId:    automationId,
-		TxHash:          txHash,
-		ExecutorAddress: executorAddress,
-		CreatedAt:       createdAt,
-		ExecutedAt:      executedAt,
-		SignedAt:        signedAt,
-		Signs:           signs,
-		Payload:         payload,
+		Creator:      creator,
+		Status:       status,
+		CommitteeId:  committeeId,
+		ChainId:      chainId,
+		AutomationId: automationId,
+		TxHash:       txHash,
+		CreatedAt:    createdAt,
+		ExecutedAt:   executedAt,
+		SignedAt:     signedAt,
+		Signs:        signs,
+		Payload:      payload,
 	}
 }
 

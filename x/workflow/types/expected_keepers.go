@@ -2,6 +2,7 @@ package types
 
 import (
 	"context"
+	"kepler/x/job/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
@@ -33,4 +34,21 @@ type CommitteeKeeper interface {
 		signatures [][]byte,
 		payload []byte,
 	) (bool, error)
+}
+
+type JobKeeper interface {
+	CreateJob(
+		ctx sdk.Context,
+		status types.Job_Status,
+		committeeID string,
+		chainID string,
+		automationID uint64,
+		txHash string,
+		executorAddress string,
+		createdAt uint64,
+		executedAt uint64,
+		signedAt uint64,
+		signs [][]byte,
+		payload []byte,
+	) error
 }

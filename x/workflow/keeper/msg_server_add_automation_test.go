@@ -32,7 +32,7 @@ func TestAddAutomationSuccess(t *testing.T) {
 
 	// Create a new message server
 	cmtKeeper, _ := keepertest.CommitteeKeeper(t)
-	msgServer := keeper.NewMsgServerImpl(mockKeeper, cmtKeeper)
+	msgServer := keeper.NewMsgServerImpl(mockKeeper, cmtKeeper, nil)
 
 	// Create a new message
 	msg := &types.MsgAddAutomation{

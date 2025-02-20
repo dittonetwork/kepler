@@ -94,14 +94,13 @@ message MsgSubmitJobResult {
   string status          =  2;
   string committeeId     =  3;
   string chainId         =  4;
-  int32  automationId    =  5;
+  uint64  automationId    =  5;
   string txHash          =  6;
-  string executorAddress =  7;
-  int32  createdAt       =  8;
-  int32  executedAt      =  9;
-  int32  signedAt        = 10;
-  string signs           = 11;
-  string payload         = 12;
+  uint64  createdAt       =  7;
+  uint64  executedAt      =  8;
+  uint64  signedAt        = 9;
+  repeated bytes signs           = 10;
+  bytes payload         = 11;
 }
 
 message MsgSubmitJobResultResponse {}
