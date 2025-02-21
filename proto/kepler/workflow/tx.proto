@@ -90,17 +90,17 @@ message MsgActivateAutomationResponse {}
 
 message MsgSubmitJobResult {
   option (cosmos.msg.v1.signer) = "creator";
-  string creator         =  1;
-  string status          =  2;
-  string committeeId     =  3;
-  string chainId         =  4;
-  uint64  automationId    =  5;
-  string txHash          =  6;
-  uint64  createdAt       =  7;
-  uint64  executedAt      =  8;
-  uint64  signedAt        = 9;
-  repeated bytes signs           = 10;
-  bytes payload         = 11;
+  string creator         = 1;
+  string status          = 2;
+  string committeeId     = 3;
+  string chainId         = 4;
+  uint64  automationId   = 5;
+  string txHash          = 6;
+  uint64  createdAt      = 7;
+  uint64  executedAt     = 8;
+  uint64  signedAt       = 9;
+  repeated bytes signs   = 10;
+  bytes payload          = 11;
 }
 
 message MsgSubmitJobResultResponse {}
