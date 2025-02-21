@@ -39,11 +39,6 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 					RpcMethod: "AddAutomation",
 					Use:       "add-automation [automation]",
 					Short:     "Send a AddAutomation tx",
-					PositionalArgs: []*autocliv1.PositionalArgDescriptor{
-						{ProtoField: "triggers"},
-						{ProtoField: "actions"},
-						{ProtoField: "expire_at"},
-					},
 				},
 				{
 					RpcMethod: "CancelAutomation",
@@ -72,7 +67,6 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 						{ProtoField: "chainId"},
 						{ProtoField: "automationId"},
 						{ProtoField: "txHash"},
-						{ProtoField: "executorAddress"},
 						{ProtoField: "createdAt"},
 						{ProtoField: "executedAt"},
 						{ProtoField: "signedAt"},
