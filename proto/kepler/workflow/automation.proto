@@ -2,6 +2,7 @@ syntax = "proto3";
 package kepler.workflow;
 
 import "cosmos_proto/cosmos.proto";
+import "amino/amino.proto";
 
 option go_package = "kepler/x/workflow/types";
 
@@ -29,18 +30,18 @@ enum AutomationStatus {
 // Base trigger with type selection
 message Trigger {
   oneof trigger {
-    OnChainTrigger on_chain = 1;
-    TimeTrigger time = 2;
-    GasPriceTrigger gas_price = 3;
-    CountTrigger count = 4;
-    BlockIntervalTrigger block_interval = 5;
+    OnChainTrigger on_chain =1 [(amino.oneof_name) = "on_chain"];
+    TimeTrigger time = 2 [(amino.oneof_name) = "time"];
+    GasPriceTrigger gas_price = 3 [(amino.oneof_name) = "gas_price"];
+    CountTrigger count = 4 [(amino.oneof_name) = "count"];
+    BlockIntervalTrigger block_interval = 5 [(amino.oneof_name) = "block_interval"];
   }
 }
 
 // Base action with type selection
 message Action {
   oneof action {
-    OnChainAction on_chain = 1;
+    OnChainAction on_chain = 1 [(amino.oneof_name) = "on_chain"];
   }
 }
 

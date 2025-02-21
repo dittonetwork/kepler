@@ -4420,6 +4420,1420 @@ func (x *fastReflection_MsgActivateAutomationResponse) ProtoMethods() *protoifac
 	}
 }
 
+var _ protoreflect.List = (*_MsgSubmitJobResult_10_list)(nil)
+
+type _MsgSubmitJobResult_10_list struct {
+	list *[][]byte
+}
+
+func (x *_MsgSubmitJobResult_10_list) Len() int {
+	if x.list == nil {
+		return 0
+	}
+	return len(*x.list)
+}
+
+func (x *_MsgSubmitJobResult_10_list) Get(i int) protoreflect.Value {
+	return protoreflect.ValueOfBytes((*x.list)[i])
+}
+
+func (x *_MsgSubmitJobResult_10_list) Set(i int, value protoreflect.Value) {
+	valueUnwrapped := value.Bytes()
+	concreteValue := valueUnwrapped
+	(*x.list)[i] = concreteValue
+}
+
+func (x *_MsgSubmitJobResult_10_list) Append(value protoreflect.Value) {
+	valueUnwrapped := value.Bytes()
+	concreteValue := valueUnwrapped
+	*x.list = append(*x.list, concreteValue)
+}
+
+func (x *_MsgSubmitJobResult_10_list) AppendMutable() protoreflect.Value {
+	panic(fmt.Errorf("AppendMutable can not be called on message MsgSubmitJobResult at list field Signs as it is not of Message kind"))
+}
+
+func (x *_MsgSubmitJobResult_10_list) Truncate(n int) {
+	*x.list = (*x.list)[:n]
+}
+
+func (x *_MsgSubmitJobResult_10_list) NewElement() protoreflect.Value {
+	var v []byte
+	return protoreflect.ValueOfBytes(v)
+}
+
+func (x *_MsgSubmitJobResult_10_list) IsValid() bool {
+	return x.list != nil
+}
+
+var (
+	md_MsgSubmitJobResult              protoreflect.MessageDescriptor
+	fd_MsgSubmitJobResult_creator      protoreflect.FieldDescriptor
+	fd_MsgSubmitJobResult_status       protoreflect.FieldDescriptor
+	fd_MsgSubmitJobResult_committeeId  protoreflect.FieldDescriptor
+	fd_MsgSubmitJobResult_chainId      protoreflect.FieldDescriptor
+	fd_MsgSubmitJobResult_automationId protoreflect.FieldDescriptor
+	fd_MsgSubmitJobResult_txHash       protoreflect.FieldDescriptor
+	fd_MsgSubmitJobResult_createdAt    protoreflect.FieldDescriptor
+	fd_MsgSubmitJobResult_executedAt   protoreflect.FieldDescriptor
+	fd_MsgSubmitJobResult_signedAt     protoreflect.FieldDescriptor
+	fd_MsgSubmitJobResult_signs        protoreflect.FieldDescriptor
+	fd_MsgSubmitJobResult_payload      protoreflect.FieldDescriptor
+)
+
+func init() {
+	file_kepler_workflow_tx_proto_init()
+	md_MsgSubmitJobResult = File_kepler_workflow_tx_proto.Messages().ByName("MsgSubmitJobResult")
+	fd_MsgSubmitJobResult_creator = md_MsgSubmitJobResult.Fields().ByName("creator")
+	fd_MsgSubmitJobResult_status = md_MsgSubmitJobResult.Fields().ByName("status")
+	fd_MsgSubmitJobResult_committeeId = md_MsgSubmitJobResult.Fields().ByName("committeeId")
+	fd_MsgSubmitJobResult_chainId = md_MsgSubmitJobResult.Fields().ByName("chainId")
+	fd_MsgSubmitJobResult_automationId = md_MsgSubmitJobResult.Fields().ByName("automationId")
+	fd_MsgSubmitJobResult_txHash = md_MsgSubmitJobResult.Fields().ByName("txHash")
+	fd_MsgSubmitJobResult_createdAt = md_MsgSubmitJobResult.Fields().ByName("createdAt")
+	fd_MsgSubmitJobResult_executedAt = md_MsgSubmitJobResult.Fields().ByName("executedAt")
+	fd_MsgSubmitJobResult_signedAt = md_MsgSubmitJobResult.Fields().ByName("signedAt")
+	fd_MsgSubmitJobResult_signs = md_MsgSubmitJobResult.Fields().ByName("signs")
+	fd_MsgSubmitJobResult_payload = md_MsgSubmitJobResult.Fields().ByName("payload")
+}
+
+var _ protoreflect.Message = (*fastReflection_MsgSubmitJobResult)(nil)
+
+type fastReflection_MsgSubmitJobResult MsgSubmitJobResult
+
+func (x *MsgSubmitJobResult) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_MsgSubmitJobResult)(x)
+}
+
+func (x *MsgSubmitJobResult) slowProtoReflect() protoreflect.Message {
+	mi := &file_kepler_workflow_tx_proto_msgTypes[9]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_MsgSubmitJobResult_messageType fastReflection_MsgSubmitJobResult_messageType
+var _ protoreflect.MessageType = fastReflection_MsgSubmitJobResult_messageType{}
+
+type fastReflection_MsgSubmitJobResult_messageType struct{}
+
+func (x fastReflection_MsgSubmitJobResult_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_MsgSubmitJobResult)(nil)
+}
+func (x fastReflection_MsgSubmitJobResult_messageType) New() protoreflect.Message {
+	return new(fastReflection_MsgSubmitJobResult)
+}
+func (x fastReflection_MsgSubmitJobResult_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgSubmitJobResult
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_MsgSubmitJobResult) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgSubmitJobResult
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_MsgSubmitJobResult) Type() protoreflect.MessageType {
+	return _fastReflection_MsgSubmitJobResult_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_MsgSubmitJobResult) New() protoreflect.Message {
+	return new(fastReflection_MsgSubmitJobResult)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_MsgSubmitJobResult) Interface() protoreflect.ProtoMessage {
+	return (*MsgSubmitJobResult)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_MsgSubmitJobResult) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.Creator != "" {
+		value := protoreflect.ValueOfString(x.Creator)
+		if !f(fd_MsgSubmitJobResult_creator, value) {
+			return
+		}
+	}
+	if x.Status != "" {
+		value := protoreflect.ValueOfString(x.Status)
+		if !f(fd_MsgSubmitJobResult_status, value) {
+			return
+		}
+	}
+	if x.CommitteeId != "" {
+		value := protoreflect.ValueOfString(x.CommitteeId)
+		if !f(fd_MsgSubmitJobResult_committeeId, value) {
+			return
+		}
+	}
+	if x.ChainId != "" {
+		value := protoreflect.ValueOfString(x.ChainId)
+		if !f(fd_MsgSubmitJobResult_chainId, value) {
+			return
+		}
+	}
+	if x.AutomationId != uint64(0) {
+		value := protoreflect.ValueOfUint64(x.AutomationId)
+		if !f(fd_MsgSubmitJobResult_automationId, value) {
+			return
+		}
+	}
+	if x.TxHash != "" {
+		value := protoreflect.ValueOfString(x.TxHash)
+		if !f(fd_MsgSubmitJobResult_txHash, value) {
+			return
+		}
+	}
+	if x.CreatedAt != uint64(0) {
+		value := protoreflect.ValueOfUint64(x.CreatedAt)
+		if !f(fd_MsgSubmitJobResult_createdAt, value) {
+			return
+		}
+	}
+	if x.ExecutedAt != uint64(0) {
+		value := protoreflect.ValueOfUint64(x.ExecutedAt)
+		if !f(fd_MsgSubmitJobResult_executedAt, value) {
+			return
+		}
+	}
+	if x.SignedAt != uint64(0) {
+		value := protoreflect.ValueOfUint64(x.SignedAt)
+		if !f(fd_MsgSubmitJobResult_signedAt, value) {
+			return
+		}
+	}
+	if len(x.Signs) != 0 {
+		value := protoreflect.ValueOfList(&_MsgSubmitJobResult_10_list{list: &x.Signs})
+		if !f(fd_MsgSubmitJobResult_signs, value) {
+			return
+		}
+	}
+	if len(x.Payload) != 0 {
+		value := protoreflect.ValueOfBytes(x.Payload)
+		if !f(fd_MsgSubmitJobResult_payload, value) {
+			return
+		}
+	}
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_MsgSubmitJobResult) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	case "kepler.workflow.MsgSubmitJobResult.creator":
+		return x.Creator != ""
+	case "kepler.workflow.MsgSubmitJobResult.status":
+		return x.Status != ""
+	case "kepler.workflow.MsgSubmitJobResult.committeeId":
+		return x.CommitteeId != ""
+	case "kepler.workflow.MsgSubmitJobResult.chainId":
+		return x.ChainId != ""
+	case "kepler.workflow.MsgSubmitJobResult.automationId":
+		return x.AutomationId != uint64(0)
+	case "kepler.workflow.MsgSubmitJobResult.txHash":
+		return x.TxHash != ""
+	case "kepler.workflow.MsgSubmitJobResult.createdAt":
+		return x.CreatedAt != uint64(0)
+	case "kepler.workflow.MsgSubmitJobResult.executedAt":
+		return x.ExecutedAt != uint64(0)
+	case "kepler.workflow.MsgSubmitJobResult.signedAt":
+		return x.SignedAt != uint64(0)
+	case "kepler.workflow.MsgSubmitJobResult.signs":
+		return len(x.Signs) != 0
+	case "kepler.workflow.MsgSubmitJobResult.payload":
+		return len(x.Payload) != 0
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.MsgSubmitJobResult"))
+		}
+		panic(fmt.Errorf("message kepler.workflow.MsgSubmitJobResult does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgSubmitJobResult) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	case "kepler.workflow.MsgSubmitJobResult.creator":
+		x.Creator = ""
+	case "kepler.workflow.MsgSubmitJobResult.status":
+		x.Status = ""
+	case "kepler.workflow.MsgSubmitJobResult.committeeId":
+		x.CommitteeId = ""
+	case "kepler.workflow.MsgSubmitJobResult.chainId":
+		x.ChainId = ""
+	case "kepler.workflow.MsgSubmitJobResult.automationId":
+		x.AutomationId = uint64(0)
+	case "kepler.workflow.MsgSubmitJobResult.txHash":
+		x.TxHash = ""
+	case "kepler.workflow.MsgSubmitJobResult.createdAt":
+		x.CreatedAt = uint64(0)
+	case "kepler.workflow.MsgSubmitJobResult.executedAt":
+		x.ExecutedAt = uint64(0)
+	case "kepler.workflow.MsgSubmitJobResult.signedAt":
+		x.SignedAt = uint64(0)
+	case "kepler.workflow.MsgSubmitJobResult.signs":
+		x.Signs = nil
+	case "kepler.workflow.MsgSubmitJobResult.payload":
+		x.Payload = nil
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.MsgSubmitJobResult"))
+		}
+		panic(fmt.Errorf("message kepler.workflow.MsgSubmitJobResult does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_MsgSubmitJobResult) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	case "kepler.workflow.MsgSubmitJobResult.creator":
+		value := x.Creator
+		return protoreflect.ValueOfString(value)
+	case "kepler.workflow.MsgSubmitJobResult.status":
+		value := x.Status
+		return protoreflect.ValueOfString(value)
+	case "kepler.workflow.MsgSubmitJobResult.committeeId":
+		value := x.CommitteeId
+		return protoreflect.ValueOfString(value)
+	case "kepler.workflow.MsgSubmitJobResult.chainId":
+		value := x.ChainId
+		return protoreflect.ValueOfString(value)
+	case "kepler.workflow.MsgSubmitJobResult.automationId":
+		value := x.AutomationId
+		return protoreflect.ValueOfUint64(value)
+	case "kepler.workflow.MsgSubmitJobResult.txHash":
+		value := x.TxHash
+		return protoreflect.ValueOfString(value)
+	case "kepler.workflow.MsgSubmitJobResult.createdAt":
+		value := x.CreatedAt
+		return protoreflect.ValueOfUint64(value)
+	case "kepler.workflow.MsgSubmitJobResult.executedAt":
+		value := x.ExecutedAt
+		return protoreflect.ValueOfUint64(value)
+	case "kepler.workflow.MsgSubmitJobResult.signedAt":
+		value := x.SignedAt
+		return protoreflect.ValueOfUint64(value)
+	case "kepler.workflow.MsgSubmitJobResult.signs":
+		if len(x.Signs) == 0 {
+			return protoreflect.ValueOfList(&_MsgSubmitJobResult_10_list{})
+		}
+		listValue := &_MsgSubmitJobResult_10_list{list: &x.Signs}
+		return protoreflect.ValueOfList(listValue)
+	case "kepler.workflow.MsgSubmitJobResult.payload":
+		value := x.Payload
+		return protoreflect.ValueOfBytes(value)
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.MsgSubmitJobResult"))
+		}
+		panic(fmt.Errorf("message kepler.workflow.MsgSubmitJobResult does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgSubmitJobResult) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	case "kepler.workflow.MsgSubmitJobResult.creator":
+		x.Creator = value.Interface().(string)
+	case "kepler.workflow.MsgSubmitJobResult.status":
+		x.Status = value.Interface().(string)
+	case "kepler.workflow.MsgSubmitJobResult.committeeId":
+		x.CommitteeId = value.Interface().(string)
+	case "kepler.workflow.MsgSubmitJobResult.chainId":
+		x.ChainId = value.Interface().(string)
+	case "kepler.workflow.MsgSubmitJobResult.automationId":
+		x.AutomationId = value.Uint()
+	case "kepler.workflow.MsgSubmitJobResult.txHash":
+		x.TxHash = value.Interface().(string)
+	case "kepler.workflow.MsgSubmitJobResult.createdAt":
+		x.CreatedAt = value.Uint()
+	case "kepler.workflow.MsgSubmitJobResult.executedAt":
+		x.ExecutedAt = value.Uint()
+	case "kepler.workflow.MsgSubmitJobResult.signedAt":
+		x.SignedAt = value.Uint()
+	case "kepler.workflow.MsgSubmitJobResult.signs":
+		lv := value.List()
+		clv := lv.(*_MsgSubmitJobResult_10_list)
+		x.Signs = *clv.list
+	case "kepler.workflow.MsgSubmitJobResult.payload":
+		x.Payload = value.Bytes()
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.MsgSubmitJobResult"))
+		}
+		panic(fmt.Errorf("message kepler.workflow.MsgSubmitJobResult does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgSubmitJobResult) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "kepler.workflow.MsgSubmitJobResult.signs":
+		if x.Signs == nil {
+			x.Signs = [][]byte{}
+		}
+		value := &_MsgSubmitJobResult_10_list{list: &x.Signs}
+		return protoreflect.ValueOfList(value)
+	case "kepler.workflow.MsgSubmitJobResult.creator":
+		panic(fmt.Errorf("field creator of message kepler.workflow.MsgSubmitJobResult is not mutable"))
+	case "kepler.workflow.MsgSubmitJobResult.status":
+		panic(fmt.Errorf("field status of message kepler.workflow.MsgSubmitJobResult is not mutable"))
+	case "kepler.workflow.MsgSubmitJobResult.committeeId":
+		panic(fmt.Errorf("field committeeId of message kepler.workflow.MsgSubmitJobResult is not mutable"))
+	case "kepler.workflow.MsgSubmitJobResult.chainId":
+		panic(fmt.Errorf("field chainId of message kepler.workflow.MsgSubmitJobResult is not mutable"))
+	case "kepler.workflow.MsgSubmitJobResult.automationId":
+		panic(fmt.Errorf("field automationId of message kepler.workflow.MsgSubmitJobResult is not mutable"))
+	case "kepler.workflow.MsgSubmitJobResult.txHash":
+		panic(fmt.Errorf("field txHash of message kepler.workflow.MsgSubmitJobResult is not mutable"))
+	case "kepler.workflow.MsgSubmitJobResult.createdAt":
+		panic(fmt.Errorf("field createdAt of message kepler.workflow.MsgSubmitJobResult is not mutable"))
+	case "kepler.workflow.MsgSubmitJobResult.executedAt":
+		panic(fmt.Errorf("field executedAt of message kepler.workflow.MsgSubmitJobResult is not mutable"))
+	case "kepler.workflow.MsgSubmitJobResult.signedAt":
+		panic(fmt.Errorf("field signedAt of message kepler.workflow.MsgSubmitJobResult is not mutable"))
+	case "kepler.workflow.MsgSubmitJobResult.payload":
+		panic(fmt.Errorf("field payload of message kepler.workflow.MsgSubmitJobResult is not mutable"))
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.MsgSubmitJobResult"))
+		}
+		panic(fmt.Errorf("message kepler.workflow.MsgSubmitJobResult does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_MsgSubmitJobResult) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "kepler.workflow.MsgSubmitJobResult.creator":
+		return protoreflect.ValueOfString("")
+	case "kepler.workflow.MsgSubmitJobResult.status":
+		return protoreflect.ValueOfString("")
+	case "kepler.workflow.MsgSubmitJobResult.committeeId":
+		return protoreflect.ValueOfString("")
+	case "kepler.workflow.MsgSubmitJobResult.chainId":
+		return protoreflect.ValueOfString("")
+	case "kepler.workflow.MsgSubmitJobResult.automationId":
+		return protoreflect.ValueOfUint64(uint64(0))
+	case "kepler.workflow.MsgSubmitJobResult.txHash":
+		return protoreflect.ValueOfString("")
+	case "kepler.workflow.MsgSubmitJobResult.createdAt":
+		return protoreflect.ValueOfUint64(uint64(0))
+	case "kepler.workflow.MsgSubmitJobResult.executedAt":
+		return protoreflect.ValueOfUint64(uint64(0))
+	case "kepler.workflow.MsgSubmitJobResult.signedAt":
+		return protoreflect.ValueOfUint64(uint64(0))
+	case "kepler.workflow.MsgSubmitJobResult.signs":
+		list := [][]byte{}
+		return protoreflect.ValueOfList(&_MsgSubmitJobResult_10_list{list: &list})
+	case "kepler.workflow.MsgSubmitJobResult.payload":
+		return protoreflect.ValueOfBytes(nil)
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.MsgSubmitJobResult"))
+		}
+		panic(fmt.Errorf("message kepler.workflow.MsgSubmitJobResult does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_MsgSubmitJobResult) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in kepler.workflow.MsgSubmitJobResult", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_MsgSubmitJobResult) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgSubmitJobResult) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_MsgSubmitJobResult) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_MsgSubmitJobResult) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*MsgSubmitJobResult)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		l = len(x.Creator)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.Status)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.CommitteeId)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.ChainId)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.AutomationId != 0 {
+			n += 1 + runtime.Sov(uint64(x.AutomationId))
+		}
+		l = len(x.TxHash)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.CreatedAt != 0 {
+			n += 1 + runtime.Sov(uint64(x.CreatedAt))
+		}
+		if x.ExecutedAt != 0 {
+			n += 1 + runtime.Sov(uint64(x.ExecutedAt))
+		}
+		if x.SignedAt != 0 {
+			n += 1 + runtime.Sov(uint64(x.SignedAt))
+		}
+		if len(x.Signs) > 0 {
+			for _, b := range x.Signs {
+				l = len(b)
+				n += 1 + l + runtime.Sov(uint64(l))
+			}
+		}
+		l = len(x.Payload)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*MsgSubmitJobResult)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if len(x.Payload) > 0 {
+			i -= len(x.Payload)
+			copy(dAtA[i:], x.Payload)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Payload)))
+			i--
+			dAtA[i] = 0x5a
+		}
+		if len(x.Signs) > 0 {
+			for iNdEx := len(x.Signs) - 1; iNdEx >= 0; iNdEx-- {
+				i -= len(x.Signs[iNdEx])
+				copy(dAtA[i:], x.Signs[iNdEx])
+				i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Signs[iNdEx])))
+				i--
+				dAtA[i] = 0x52
+			}
+		}
+		if x.SignedAt != 0 {
+			i = runtime.EncodeVarint(dAtA, i, uint64(x.SignedAt))
+			i--
+			dAtA[i] = 0x48
+		}
+		if x.ExecutedAt != 0 {
+			i = runtime.EncodeVarint(dAtA, i, uint64(x.ExecutedAt))
+			i--
+			dAtA[i] = 0x40
+		}
+		if x.CreatedAt != 0 {
+			i = runtime.EncodeVarint(dAtA, i, uint64(x.CreatedAt))
+			i--
+			dAtA[i] = 0x38
+		}
+		if len(x.TxHash) > 0 {
+			i -= len(x.TxHash)
+			copy(dAtA[i:], x.TxHash)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.TxHash)))
+			i--
+			dAtA[i] = 0x32
+		}
+		if x.AutomationId != 0 {
+			i = runtime.EncodeVarint(dAtA, i, uint64(x.AutomationId))
+			i--
+			dAtA[i] = 0x28
+		}
+		if len(x.ChainId) > 0 {
+			i -= len(x.ChainId)
+			copy(dAtA[i:], x.ChainId)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ChainId)))
+			i--
+			dAtA[i] = 0x22
+		}
+		if len(x.CommitteeId) > 0 {
+			i -= len(x.CommitteeId)
+			copy(dAtA[i:], x.CommitteeId)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.CommitteeId)))
+			i--
+			dAtA[i] = 0x1a
+		}
+		if len(x.Status) > 0 {
+			i -= len(x.Status)
+			copy(dAtA[i:], x.Status)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Status)))
+			i--
+			dAtA[i] = 0x12
+		}
+		if len(x.Creator) > 0 {
+			i -= len(x.Creator)
+			copy(dAtA[i:], x.Creator)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Creator)))
+			i--
+			dAtA[i] = 0xa
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*MsgSubmitJobResult)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgSubmitJobResult: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgSubmitJobResult: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			case 1:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.Creator = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 2:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.Status = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 3:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field CommitteeId", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.CommitteeId = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 4:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ChainId", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.ChainId = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 5:
+				if wireType != 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field AutomationId", wireType)
+				}
+				x.AutomationId = 0
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					x.AutomationId |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+			case 6:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field TxHash", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.TxHash = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 7:
+				if wireType != 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field CreatedAt", wireType)
+				}
+				x.CreatedAt = 0
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					x.CreatedAt |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+			case 8:
+				if wireType != 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ExecutedAt", wireType)
+				}
+				x.ExecutedAt = 0
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					x.ExecutedAt |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+			case 9:
+				if wireType != 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field SignedAt", wireType)
+				}
+				x.SignedAt = 0
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					x.SignedAt |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+			case 10:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Signs", wireType)
+				}
+				var byteLen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					byteLen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if byteLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + byteLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.Signs = append(x.Signs, make([]byte, postIndex-iNdEx))
+				copy(x.Signs[len(x.Signs)-1], dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 11:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Payload", wireType)
+				}
+				var byteLen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					byteLen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if byteLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + byteLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.Payload = append(x.Payload[:0], dAtA[iNdEx:postIndex]...)
+				if x.Payload == nil {
+					x.Payload = []byte{}
+				}
+				iNdEx = postIndex
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
+var (
+	md_MsgSubmitJobResultResponse protoreflect.MessageDescriptor
+)
+
+func init() {
+	file_kepler_workflow_tx_proto_init()
+	md_MsgSubmitJobResultResponse = File_kepler_workflow_tx_proto.Messages().ByName("MsgSubmitJobResultResponse")
+}
+
+var _ protoreflect.Message = (*fastReflection_MsgSubmitJobResultResponse)(nil)
+
+type fastReflection_MsgSubmitJobResultResponse MsgSubmitJobResultResponse
+
+func (x *MsgSubmitJobResultResponse) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_MsgSubmitJobResultResponse)(x)
+}
+
+func (x *MsgSubmitJobResultResponse) slowProtoReflect() protoreflect.Message {
+	mi := &file_kepler_workflow_tx_proto_msgTypes[10]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_MsgSubmitJobResultResponse_messageType fastReflection_MsgSubmitJobResultResponse_messageType
+var _ protoreflect.MessageType = fastReflection_MsgSubmitJobResultResponse_messageType{}
+
+type fastReflection_MsgSubmitJobResultResponse_messageType struct{}
+
+func (x fastReflection_MsgSubmitJobResultResponse_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_MsgSubmitJobResultResponse)(nil)
+}
+func (x fastReflection_MsgSubmitJobResultResponse_messageType) New() protoreflect.Message {
+	return new(fastReflection_MsgSubmitJobResultResponse)
+}
+func (x fastReflection_MsgSubmitJobResultResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgSubmitJobResultResponse
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_MsgSubmitJobResultResponse) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgSubmitJobResultResponse
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_MsgSubmitJobResultResponse) Type() protoreflect.MessageType {
+	return _fastReflection_MsgSubmitJobResultResponse_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_MsgSubmitJobResultResponse) New() protoreflect.Message {
+	return new(fastReflection_MsgSubmitJobResultResponse)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_MsgSubmitJobResultResponse) Interface() protoreflect.ProtoMessage {
+	return (*MsgSubmitJobResultResponse)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_MsgSubmitJobResultResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_MsgSubmitJobResultResponse) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.MsgSubmitJobResultResponse"))
+		}
+		panic(fmt.Errorf("message kepler.workflow.MsgSubmitJobResultResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgSubmitJobResultResponse) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.MsgSubmitJobResultResponse"))
+		}
+		panic(fmt.Errorf("message kepler.workflow.MsgSubmitJobResultResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_MsgSubmitJobResultResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.MsgSubmitJobResultResponse"))
+		}
+		panic(fmt.Errorf("message kepler.workflow.MsgSubmitJobResultResponse does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgSubmitJobResultResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.MsgSubmitJobResultResponse"))
+		}
+		panic(fmt.Errorf("message kepler.workflow.MsgSubmitJobResultResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgSubmitJobResultResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.MsgSubmitJobResultResponse"))
+		}
+		panic(fmt.Errorf("message kepler.workflow.MsgSubmitJobResultResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_MsgSubmitJobResultResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.MsgSubmitJobResultResponse"))
+		}
+		panic(fmt.Errorf("message kepler.workflow.MsgSubmitJobResultResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_MsgSubmitJobResultResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in kepler.workflow.MsgSubmitJobResultResponse", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_MsgSubmitJobResultResponse) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgSubmitJobResultResponse) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_MsgSubmitJobResultResponse) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_MsgSubmitJobResultResponse) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*MsgSubmitJobResultResponse)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*MsgSubmitJobResultResponse)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*MsgSubmitJobResultResponse)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgSubmitJobResultResponse: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgSubmitJobResultResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
 // Code generated by protoc-gen-go. DO NOT EDIT.
 // versions:
 // 	protoc-gen-go v1.27.0
@@ -4812,6 +6226,147 @@ func (*MsgActivateAutomationResponse) Descriptor() ([]byte, []int) {
 	return file_kepler_workflow_tx_proto_rawDescGZIP(), []int{8}
 }
 
+type MsgSubmitJobResult struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Creator      string   `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	Status       string   `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
+	CommitteeId  string   `protobuf:"bytes,3,opt,name=committeeId,proto3" json:"committeeId,omitempty"`
+	ChainId      string   `protobuf:"bytes,4,opt,name=chainId,proto3" json:"chainId,omitempty"`
+	AutomationId uint64   `protobuf:"varint,5,opt,name=automationId,proto3" json:"automationId,omitempty"`
+	TxHash       string   `protobuf:"bytes,6,opt,name=txHash,proto3" json:"txHash,omitempty"`
+	CreatedAt    uint64   `protobuf:"varint,7,opt,name=createdAt,proto3" json:"createdAt,omitempty"`
+	ExecutedAt   uint64   `protobuf:"varint,8,opt,name=executedAt,proto3" json:"executedAt,omitempty"`
+	SignedAt     uint64   `protobuf:"varint,9,opt,name=signedAt,proto3" json:"signedAt,omitempty"`
+	Signs        [][]byte `protobuf:"bytes,10,rep,name=signs,proto3" json:"signs,omitempty"`
+	Payload      []byte   `protobuf:"bytes,11,opt,name=payload,proto3" json:"payload,omitempty"`
+}
+
+func (x *MsgSubmitJobResult) Reset() {
+	*x = MsgSubmitJobResult{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_kepler_workflow_tx_proto_msgTypes[9]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MsgSubmitJobResult) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MsgSubmitJobResult) ProtoMessage() {}
+
+// Deprecated: Use MsgSubmitJobResult.ProtoReflect.Descriptor instead.
+func (*MsgSubmitJobResult) Descriptor() ([]byte, []int) {
+	return file_kepler_workflow_tx_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *MsgSubmitJobResult) GetCreator() string {
+	if x != nil {
+		return x.Creator
+	}
+	return ""
+}
+
+func (x *MsgSubmitJobResult) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
+func (x *MsgSubmitJobResult) GetCommitteeId() string {
+	if x != nil {
+		return x.CommitteeId
+	}
+	return ""
+}
+
+func (x *MsgSubmitJobResult) GetChainId() string {
+	if x != nil {
+		return x.ChainId
+	}
+	return ""
+}
+
+func (x *MsgSubmitJobResult) GetAutomationId() uint64 {
+	if x != nil {
+		return x.AutomationId
+	}
+	return 0
+}
+
+func (x *MsgSubmitJobResult) GetTxHash() string {
+	if x != nil {
+		return x.TxHash
+	}
+	return ""
+}
+
+func (x *MsgSubmitJobResult) GetCreatedAt() uint64 {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return 0
+}
+
+func (x *MsgSubmitJobResult) GetExecutedAt() uint64 {
+	if x != nil {
+		return x.ExecutedAt
+	}
+	return 0
+}
+
+func (x *MsgSubmitJobResult) GetSignedAt() uint64 {
+	if x != nil {
+		return x.SignedAt
+	}
+	return 0
+}
+
+func (x *MsgSubmitJobResult) GetSigns() [][]byte {
+	if x != nil {
+		return x.Signs
+	}
+	return nil
+}
+
+func (x *MsgSubmitJobResult) GetPayload() []byte {
+	if x != nil {
+		return x.Payload
+	}
+	return nil
+}
+
+type MsgSubmitJobResultResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *MsgSubmitJobResultResponse) Reset() {
+	*x = MsgSubmitJobResultResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_kepler_workflow_tx_proto_msgTypes[10]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MsgSubmitJobResultResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MsgSubmitJobResultResponse) ProtoMessage() {}
+
+// Deprecated: Use MsgSubmitJobResultResponse.ProtoReflect.Descriptor instead.
+func (*MsgSubmitJobResultResponse) Descriptor() ([]byte, []int) {
+	return file_kepler_workflow_tx_proto_rawDescGZIP(), []int{10}
+}
+
 var File_kepler_workflow_tx_proto protoreflect.FileDescriptor
 
 var file_kepler_workflow_tx_proto_rawDesc = []byte{
@@ -4884,43 +6439,72 @@ var file_kepler_workflow_tx_proto_rawDesc = []byte{
 	0x6f, 0x72, 0x3a, 0x0c, 0x82, 0xe7, 0xb0, 0x2a, 0x07, 0x63, 0x72, 0x65, 0x61, 0x74, 0x6f, 0x72,
 	0x22, 0x1f, 0x0a, 0x1d, 0x4d, 0x73, 0x67, 0x41, 0x63, 0x74, 0x69, 0x76, 0x61, 0x74, 0x65, 0x41,
 	0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
-	0x65, 0x32, 0x9d, 0x03, 0x0a, 0x03, 0x4d, 0x73, 0x67, 0x12, 0x5a, 0x0a, 0x0c, 0x55, 0x70, 0x64,
-	0x61, 0x74, 0x65, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x12, 0x20, 0x2e, 0x6b, 0x65, 0x70, 0x6c,
-	0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x4d, 0x73, 0x67, 0x55,
-	0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x1a, 0x28, 0x2e, 0x6b, 0x65,
-	0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x4d, 0x73,
-	0x67, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x73,
-	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x5d, 0x0a, 0x0d, 0x41, 0x64, 0x64, 0x41, 0x75, 0x74, 0x6f,
-	0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x21, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e,
-	0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x4d, 0x73, 0x67, 0x41, 0x64, 0x64, 0x41,
-	0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x1a, 0x29, 0x2e, 0x6b, 0x65, 0x70, 0x6c,
+	0x65, 0x22, 0xd6, 0x02, 0x0a, 0x12, 0x4d, 0x73, 0x67, 0x53, 0x75, 0x62, 0x6d, 0x69, 0x74, 0x4a,
+	0x6f, 0x62, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x63, 0x72, 0x65, 0x61,
+	0x74, 0x6f, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x63, 0x72, 0x65, 0x61, 0x74,
+	0x6f, 0x72, 0x12, 0x16, 0x0a, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x20, 0x0a, 0x0b, 0x63, 0x6f,
+	0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x49, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x0b, 0x63, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x49, 0x64, 0x12, 0x18, 0x0a, 0x07,
+	0x63, 0x68, 0x61, 0x69, 0x6e, 0x49, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x63,
+	0x68, 0x61, 0x69, 0x6e, 0x49, 0x64, 0x12, 0x22, 0x0a, 0x0c, 0x61, 0x75, 0x74, 0x6f, 0x6d, 0x61,
+	0x74, 0x69, 0x6f, 0x6e, 0x49, 0x64, 0x18, 0x05, 0x20, 0x01, 0x28, 0x04, 0x52, 0x0c, 0x61, 0x75,
+	0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x64, 0x12, 0x16, 0x0a, 0x06, 0x74, 0x78,
+	0x48, 0x61, 0x73, 0x68, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x74, 0x78, 0x48, 0x61,
+	0x73, 0x68, 0x12, 0x1c, 0x0a, 0x09, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x64, 0x41, 0x74, 0x18,
+	0x07, 0x20, 0x01, 0x28, 0x04, 0x52, 0x09, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x64, 0x41, 0x74,
+	0x12, 0x1e, 0x0a, 0x0a, 0x65, 0x78, 0x65, 0x63, 0x75, 0x74, 0x65, 0x64, 0x41, 0x74, 0x18, 0x08,
+	0x20, 0x01, 0x28, 0x04, 0x52, 0x0a, 0x65, 0x78, 0x65, 0x63, 0x75, 0x74, 0x65, 0x64, 0x41, 0x74,
+	0x12, 0x1a, 0x0a, 0x08, 0x73, 0x69, 0x67, 0x6e, 0x65, 0x64, 0x41, 0x74, 0x18, 0x09, 0x20, 0x01,
+	0x28, 0x04, 0x52, 0x08, 0x73, 0x69, 0x67, 0x6e, 0x65, 0x64, 0x41, 0x74, 0x12, 0x14, 0x0a, 0x05,
+	0x73, 0x69, 0x67, 0x6e, 0x73, 0x18, 0x0a, 0x20, 0x03, 0x28, 0x0c, 0x52, 0x05, 0x73, 0x69, 0x67,
+	0x6e, 0x73, 0x12, 0x18, 0x0a, 0x07, 0x70, 0x61, 0x79, 0x6c, 0x6f, 0x61, 0x64, 0x18, 0x0b, 0x20,
+	0x01, 0x28, 0x0c, 0x52, 0x07, 0x70, 0x61, 0x79, 0x6c, 0x6f, 0x61, 0x64, 0x3a, 0x0c, 0x82, 0xe7,
+	0xb0, 0x2a, 0x07, 0x63, 0x72, 0x65, 0x61, 0x74, 0x6f, 0x72, 0x22, 0x1c, 0x0a, 0x1a, 0x4d, 0x73,
+	0x67, 0x53, 0x75, 0x62, 0x6d, 0x69, 0x74, 0x4a, 0x6f, 0x62, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x32, 0x82, 0x04, 0x0a, 0x03, 0x4d, 0x73, 0x67,
+	0x12, 0x5a, 0x0a, 0x0c, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73,
+	0x12, 0x20, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c,
+	0x6f, 0x77, 0x2e, 0x4d, 0x73, 0x67, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x61, 0x72, 0x61,
+	0x6d, 0x73, 0x1a, 0x28, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b,
+	0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x4d, 0x73, 0x67, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x61,
+	0x72, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x5d, 0x0a, 0x0d,
+	0x41, 0x64, 0x64, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x21, 0x2e,
+	0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e,
+	0x4d, 0x73, 0x67, 0x41, 0x64, 0x64, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x1a, 0x29, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c,
+	0x6f, 0x77, 0x2e, 0x4d, 0x73, 0x67, 0x41, 0x64, 0x64, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74,
+	0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x66, 0x0a, 0x10, 0x43,
+	0x61, 0x6e, 0x63, 0x65, 0x6c, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12,
+	0x24, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f,
+	0x77, 0x2e, 0x4d, 0x73, 0x67, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x41, 0x75, 0x74, 0x6f, 0x6d,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x1a, 0x2c, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77,
+	0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x4d, 0x73, 0x67, 0x43, 0x61, 0x6e, 0x63, 0x65,
+	0x6c, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x12, 0x6c, 0x0a, 0x12, 0x41, 0x63, 0x74, 0x69, 0x76, 0x61, 0x74, 0x65, 0x41,
+	0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x26, 0x2e, 0x6b, 0x65, 0x70, 0x6c,
 	0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x4d, 0x73, 0x67, 0x41,
-	0x64, 0x64, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x66, 0x0a, 0x10, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x41, 0x75,
-	0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x24, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65,
-	0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x4d, 0x73, 0x67, 0x43, 0x61,
-	0x6e, 0x63, 0x65, 0x6c, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x1a, 0x2c,
-	0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77,
-	0x2e, 0x4d, 0x73, 0x67, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61,
-	0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x6c, 0x0a, 0x12,
-	0x41, 0x63, 0x74, 0x69, 0x76, 0x61, 0x74, 0x65, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69,
-	0x6f, 0x6e, 0x12, 0x26, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b,
-	0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x4d, 0x73, 0x67, 0x41, 0x63, 0x74, 0x69, 0x76, 0x61, 0x74, 0x65,
-	0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x1a, 0x2e, 0x2e, 0x6b, 0x65, 0x70,
-	0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x4d, 0x73, 0x67,
-	0x41, 0x63, 0x74, 0x69, 0x76, 0x61, 0x74, 0x65, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69,
-	0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x1a, 0x05, 0x80, 0xe7, 0xb0, 0x2a,
-	0x01, 0x42, 0x97, 0x01, 0x0a, 0x13, 0x63, 0x6f, 0x6d, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72,
-	0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x42, 0x07, 0x54, 0x78, 0x50, 0x72, 0x6f,
-	0x74, 0x6f, 0x50, 0x01, 0x5a, 0x1a, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x61, 0x70, 0x69,
-	0x2f, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77,
-	0xa2, 0x02, 0x03, 0x4b, 0x57, 0x58, 0xaa, 0x02, 0x0f, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e,
-	0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0xca, 0x02, 0x0f, 0x4b, 0x65, 0x70, 0x6c, 0x65,
-	0x72, 0x5c, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0xe2, 0x02, 0x1b, 0x4b, 0x65, 0x70,
-	0x6c, 0x65, 0x72, 0x5c, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x5c, 0x47, 0x50, 0x42,
-	0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x10, 0x4b, 0x65, 0x70, 0x6c, 0x65,
-	0x72, 0x3a, 0x3a, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x62, 0x06, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x33,
+	0x63, 0x74, 0x69, 0x76, 0x61, 0x74, 0x65, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x1a, 0x2e, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66,
+	0x6c, 0x6f, 0x77, 0x2e, 0x4d, 0x73, 0x67, 0x41, 0x63, 0x74, 0x69, 0x76, 0x61, 0x74, 0x65, 0x41,
+	0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x12, 0x63, 0x0a, 0x0f, 0x53, 0x75, 0x62, 0x6d, 0x69, 0x74, 0x4a, 0x6f, 0x62, 0x52, 0x65,
+	0x73, 0x75, 0x6c, 0x74, 0x12, 0x23, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f,
+	0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x4d, 0x73, 0x67, 0x53, 0x75, 0x62, 0x6d, 0x69, 0x74,
+	0x4a, 0x6f, 0x62, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x1a, 0x2b, 0x2e, 0x6b, 0x65, 0x70, 0x6c,
+	0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x4d, 0x73, 0x67, 0x53,
+	0x75, 0x62, 0x6d, 0x69, 0x74, 0x4a, 0x6f, 0x62, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x1a, 0x05, 0x80, 0xe7, 0xb0, 0x2a, 0x01, 0x42, 0x97, 0x01,
+	0x0a, 0x13, 0x63, 0x6f, 0x6d, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72,
+	0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x42, 0x07, 0x54, 0x78, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01,
+	0x5a, 0x1a, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6b, 0x65, 0x70,
+	0x6c, 0x65, 0x72, 0x2f, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0xa2, 0x02, 0x03, 0x4b,
+	0x57, 0x58, 0xaa, 0x02, 0x0f, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x57, 0x6f, 0x72, 0x6b,
+	0x66, 0x6c, 0x6f, 0x77, 0xca, 0x02, 0x0f, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x5c, 0x57, 0x6f,
+	0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0xe2, 0x02, 0x1b, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x5c,
+	0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61,
+	0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x10, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x3a, 0x3a, 0x57,
+	0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -4935,7 +6519,7 @@ func file_kepler_workflow_tx_proto_rawDescGZIP() []byte {
 	return file_kepler_workflow_tx_proto_rawDescData
 }
 
-var file_kepler_workflow_tx_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_kepler_workflow_tx_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_kepler_workflow_tx_proto_goTypes = []interface{}{
 	(*MsgUpdateParams)(nil),               // 0: kepler.workflow.MsgUpdateParams
 	(*MsgUpdateParamsResponse)(nil),       // 1: kepler.workflow.MsgUpdateParamsResponse
@@ -4946,25 +6530,29 @@ var file_kepler_workflow_tx_proto_goTypes = []interface{}{
 	(*MsgCancelAutomationResponse)(nil),   // 6: kepler.workflow.MsgCancelAutomationResponse
 	(*MsgActivateAutomation)(nil),         // 7: kepler.workflow.MsgActivateAutomation
 	(*MsgActivateAutomationResponse)(nil), // 8: kepler.workflow.MsgActivateAutomationResponse
-	(*Params)(nil),                        // 9: kepler.workflow.Params
-	(*Trigger)(nil),                       // 10: kepler.workflow.Trigger
-	(*Action)(nil),                        // 11: kepler.workflow.Action
+	(*MsgSubmitJobResult)(nil),            // 9: kepler.workflow.MsgSubmitJobResult
+	(*MsgSubmitJobResultResponse)(nil),    // 10: kepler.workflow.MsgSubmitJobResultResponse
+	(*Params)(nil),                        // 11: kepler.workflow.Params
+	(*Trigger)(nil),                       // 12: kepler.workflow.Trigger
+	(*Action)(nil),                        // 13: kepler.workflow.Action
 }
 var file_kepler_workflow_tx_proto_depIdxs = []int32{
-	9,  // 0: kepler.workflow.MsgUpdateParams.params:type_name -> kepler.workflow.Params
-	10, // 1: kepler.workflow.MsgAddAutomation.triggers:type_name -> kepler.workflow.Trigger
-	11, // 2: kepler.workflow.MsgAddAutomation.actions:type_name -> kepler.workflow.Action
+	11, // 0: kepler.workflow.MsgUpdateParams.params:type_name -> kepler.workflow.Params
+	12, // 1: kepler.workflow.MsgAddAutomation.triggers:type_name -> kepler.workflow.Trigger
+	13, // 2: kepler.workflow.MsgAddAutomation.actions:type_name -> kepler.workflow.Action
 	4,  // 3: kepler.workflow.MsgCancelAutomation.committee:type_name -> kepler.workflow.CancelByCommittee
 	0,  // 4: kepler.workflow.Msg.UpdateParams:input_type -> kepler.workflow.MsgUpdateParams
 	2,  // 5: kepler.workflow.Msg.AddAutomation:input_type -> kepler.workflow.MsgAddAutomation
 	5,  // 6: kepler.workflow.Msg.CancelAutomation:input_type -> kepler.workflow.MsgCancelAutomation
 	7,  // 7: kepler.workflow.Msg.ActivateAutomation:input_type -> kepler.workflow.MsgActivateAutomation
-	1,  // 8: kepler.workflow.Msg.UpdateParams:output_type -> kepler.workflow.MsgUpdateParamsResponse
-	3,  // 9: kepler.workflow.Msg.AddAutomation:output_type -> kepler.workflow.MsgAddAutomationResponse
-	6,  // 10: kepler.workflow.Msg.CancelAutomation:output_type -> kepler.workflow.MsgCancelAutomationResponse
-	8,  // 11: kepler.workflow.Msg.ActivateAutomation:output_type -> kepler.workflow.MsgActivateAutomationResponse
-	8,  // [8:12] is the sub-list for method output_type
-	4,  // [4:8] is the sub-list for method input_type
+	9,  // 8: kepler.workflow.Msg.SubmitJobResult:input_type -> kepler.workflow.MsgSubmitJobResult
+	1,  // 9: kepler.workflow.Msg.UpdateParams:output_type -> kepler.workflow.MsgUpdateParamsResponse
+	3,  // 10: kepler.workflow.Msg.AddAutomation:output_type -> kepler.workflow.MsgAddAutomationResponse
+	6,  // 11: kepler.workflow.Msg.CancelAutomation:output_type -> kepler.workflow.MsgCancelAutomationResponse
+	8,  // 12: kepler.workflow.Msg.ActivateAutomation:output_type -> kepler.workflow.MsgActivateAutomationResponse
+	10, // 13: kepler.workflow.Msg.SubmitJobResult:output_type -> kepler.workflow.MsgSubmitJobResultResponse
+	9,  // [9:14] is the sub-list for method output_type
+	4,  // [4:9] is the sub-list for method input_type
 	4,  // [4:4] is the sub-list for extension type_name
 	4,  // [4:4] is the sub-list for extension extendee
 	0,  // [0:4] is the sub-list for field type_name
@@ -5086,6 +6674,30 @@ func file_kepler_workflow_tx_proto_init() {
 				return nil
 			}
 		}
+		file_kepler_workflow_tx_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MsgSubmitJobResult); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_kepler_workflow_tx_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MsgSubmitJobResultResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -5093,7 +6705,7 @@ func file_kepler_workflow_tx_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_kepler_workflow_tx_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   9,
+			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

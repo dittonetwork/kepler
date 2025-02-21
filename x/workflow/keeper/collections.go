@@ -79,6 +79,9 @@ func (k BaseKeeper) SetAutomationStatus(
 func (k BaseKeeper) GetAutomation(ctx sdk.Context, id uint64) (types.Automation, error) {
 	automation, err := k.Automations.Get(ctx, id)
 	if err != nil {
+		if errors.Is(err, collections.ErrNotFound) {
+			return types.Automation{}, types.ErrAutomationAlreadyExists
+		}
 		return types.Automation{}, fmt.Errorf("failed to get automation: %w", err)
 	}
 

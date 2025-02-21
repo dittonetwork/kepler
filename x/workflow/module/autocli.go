@@ -39,11 +39,6 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 					RpcMethod: "AddAutomation",
 					Use:       "add-automation [automation]",
 					Short:     "Send a AddAutomation tx",
-					PositionalArgs: []*autocliv1.PositionalArgDescriptor{
-						{ProtoField: "triggers"},
-						{ProtoField: "actions"},
-						{ProtoField: "expire_at"},
-					},
 				},
 				{
 					RpcMethod: "CancelAutomation",
@@ -59,6 +54,24 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 					Short:     "Send a ActivateAutomation tx",
 					PositionalArgs: []*autocliv1.PositionalArgDescriptor{
 						{ProtoField: "id"},
+					},
+				},
+				{
+					RpcMethod: "SubmitJobResult",
+					Use: "submit-job-result [status] [committee-id] [chain-id] [automation-id] " +
+						"[tx-hash] [executor-address] [created-at] [executed-at] [signed-at] [signs] [payload]",
+					Short: "Send a SubmitJobResult tx",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{
+						{ProtoField: "status"},
+						{ProtoField: "committeeId"},
+						{ProtoField: "chainId"},
+						{ProtoField: "automationId"},
+						{ProtoField: "txHash"},
+						{ProtoField: "createdAt"},
+						{ProtoField: "executedAt"},
+						{ProtoField: "signedAt"},
+						{ProtoField: "signs"},
+						{ProtoField: "payload"},
 					},
 				},
 				// this line is used by ignite scaffolding # autocli/tx

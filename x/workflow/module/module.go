@@ -103,6 +103,7 @@ type AppModule struct {
 	accountKeeper   types.AccountKeeper
 	bankKeeper      types.BankKeeper
 	committeeKeeper types.CommitteeKeeper
+	jobKeeper       types.JobKeeper
 }
 
 func NewAppModule(
@@ -111,6 +112,7 @@ func NewAppModule(
 	accountKeeper types.AccountKeeper,
 	bankKeeper types.BankKeeper,
 	committeeKeeper types.CommitteeKeeper,
+	jobKeeper types.JobKeeper,
 ) AppModule {
 	return AppModule{
 		AppModuleBasic:  NewAppModuleBasic(cdc),
@@ -118,12 +120,13 @@ func NewAppModule(
 		accountKeeper:   accountKeeper,
 		bankKeeper:      bankKeeper,
 		committeeKeeper: committeeKeeper,
+		jobKeeper:       jobKeeper,
 	}
 }
 
 // RegisterServices registers a gRPC query service to respond to the module-specific gRPC queries.
 func (am AppModule) RegisterServices(cfg module.Configurator) {
-	types.RegisterMsgServer(cfg.MsgServer(), keeper.NewMsgServerImpl(am.keeper, am.committeeKeeper))
+	types.RegisterMsgServer(cfg.MsgServer(), keeper.NewMsgServerImpl(am.keeper, am.committeeKeeper, am.jobKeeper))
 	types.RegisterQueryServer(cfg.QueryServer(), am.keeper)
 }
 
@@ -192,6 +195,7 @@ type ModuleInputs struct {
 	AccountKeeper   types.AccountKeeper
 	BankKeeper      types.BankKeeper
 	CommitteeKeeper types.CommitteeKeeper
+	JobKeeper       types.JobKeeper
 }
 
 type ModuleOutputs struct {
@@ -221,6 +225,7 @@ func ProvideModule(in ModuleInputs) ModuleOutputs {
 		in.AccountKeeper,
 		in.BankKeeper,
 		in.CommitteeKeeper,
+		in.JobKeeper,
 	)
 
 	return ModuleOutputs{WorkflowKeeper: k, Module: m}

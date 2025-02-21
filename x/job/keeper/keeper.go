@@ -14,7 +14,8 @@ import (
 )
 
 const (
-	collectionNameJob = "job"
+	collectionNameJob   = "job"
+	collectionNameJobID = "job_id"
 )
 
 type (
@@ -27,7 +28,8 @@ type (
 
 		// Jobs key: jobID | value: job
 		// This is used to store jobs
-		Jobs collections.Map[uint64, types.Job]
+		Jobs  collections.Map[uint64, types.Job]
+		JobID collections.Sequence
 	}
 )
 
@@ -46,6 +48,7 @@ func NewKeeper(
 		committeeKeeper: committeeKeeper,
 		Jobs: collections.NewMap(sb, types.JobsPrefix, collectionNameJob, collections.Uint64Key,
 			codec.CollValue[types.Job](cdc)),
+		JobID: collections.NewSequence(sb, types.JobsPrefix, collectionNameJobID),
 	}
 }
 
@@ -54,42 +57,60 @@ func (k Keeper) Logger() log.Logger {
 	return k.logger.With("module", fmt.Sprintf("x/%s", types.ModuleName))
 }
 
-func (k Keeper) CreateJob(ctx sdk.Context, job types.Job) error {
-	if len(job.Signs) == 0 {
+func (k Keeper) CreateJob(
+	ctx sdk.Context,
+	status types.Job_Status,
+	committeeID string,
+	chainID string,
+	automationID uint64,
+	txHash string,
+	executorAddress string,
+	createdAt uint64,
+	executedAt uint64,
+	signedAt uint64,
+	signs [][]byte,
+	payload []byte,
+) error {
+	if len(signs) == 0 {
 		return types.ErrJobSignsIsNil
 	}
-	has, err := k.Jobs.Has(ctx, job.Id)
+
+	jobID, err := k.JobID.Next(ctx)
 	if err != nil {
-		return fmt.Errorf("check job exists: %w", err)
-	}
-	if has {
-		return fmt.Errorf("job with id %d already exists: %w", job.Id, types.ErrJobAlreadyExists)
+		return fmt.Errorf("get next job id: %w", err)
 	}
 
-	committeeExists, err := k.committeeKeeper.IsCommitteeExists(ctx, job.CommitteeId)
+	committeeExists, err := k.committeeKeeper.IsCommitteeExists(ctx, committeeID)
 	if err != nil {
 		return fmt.Errorf("check job committee exists: %w", err)
 	}
 	if !committeeExists {
-		return fmt.Errorf("committee_id: %s, %w ", job.CommitteeId, types.ErrCommitteeDoesntExists)
+		return fmt.Errorf("committee_id: %s, %w ", committeeID, types.ErrCommitteeDoesntExists)
 	}
 
-	// TODO: need to check validity of signs and passed payload
-
-	jobBytes, err := job.Marshal()
-	if err != nil {
-		return fmt.Errorf("marshal job: %w", err)
-	}
-	signsValid, err := k.committeeKeeper.CanBeSigned(ctx, job.CommitteeId, job.ChainId, job.Signs, jobBytes)
+	signsValid, err := k.committeeKeeper.CanBeSigned(ctx, committeeID, chainID, signs, payload)
 	if err != nil {
 		return fmt.Errorf("check job signs: %w", err)
 	}
 
+	newJobStatus := status
 	if !signsValid {
-		job.Status = types.Job_STATUS_INVALID
+		newJobStatus = types.Job_STATUS_INVALID
 	}
 
-	err = k.Jobs.Set(ctx, job.Id, job)
+	err = k.Jobs.Set(ctx, jobID, types.Job{
+		Id:              jobID,
+		Status:          newJobStatus,
+		CommitteeId:     committeeID,
+		ChainId:         chainID,
+		AutomationId:    automationID,
+		TxHash:          txHash,
+		ExecutorAddress: executorAddress,
+		CreatedAt:       createdAt,
+		ExecutedAt:      executedAt,
+		SignedAt:        signedAt,
+		Signs:           signs,
+	})
 	if err != nil {
 		return fmt.Errorf("set job: %w", err)
 	}
