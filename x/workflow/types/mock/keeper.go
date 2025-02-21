@@ -43,6 +43,34 @@ func (m *MockKeeper) EXPECT() *MockKeeperMockRecorder {
 	return m.recorder
 }
 
+// ActivateAutomation mocks base method.
+func (m *MockKeeper) ActivateAutomation(ctx types.Context, id uint64) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ActivateAutomation", ctx, id)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// ActivateAutomation indicates an expected call of ActivateAutomation.
+func (mr *MockKeeperMockRecorder) ActivateAutomation(ctx, id any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ActivateAutomation", reflect.TypeOf((*MockKeeper)(nil).ActivateAutomation), ctx, id)
+}
+
+// CancelAutomation mocks base method.
+func (m *MockKeeper) CancelAutomation(ctx types.Context, id uint64) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CancelAutomation", ctx, id)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// CancelAutomation indicates an expected call of CancelAutomation.
+func (mr *MockKeeperMockRecorder) CancelAutomation(ctx, id any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CancelAutomation", reflect.TypeOf((*MockKeeper)(nil).CancelAutomation), ctx, id)
+}
+
 // FindActiveAutomations mocks base method.
 func (m *MockKeeper) FindActiveAutomations(ctx types.Context) ([]*types0.Automation, error) {
 	m.ctrl.T.Helper()

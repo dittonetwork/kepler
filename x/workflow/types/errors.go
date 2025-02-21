@@ -10,6 +10,7 @@ const (
 	ErrCodeInvalidSigner = 1100
 	ErrCodeSample        = 1101
 	ErrCodeAlreadyExists = 1102
+	ErrCodeNotFound      = 1103
 )
 
 // x/workflow module sentinel errors.
@@ -25,4 +26,5 @@ var (
 		ErrCodeAlreadyExists,
 		"automation already exists",
 	)
+	ErrAutomationNotFound = sdkerrors.Register(ModuleName, ErrCodeNotFound, "automation not found")
 )

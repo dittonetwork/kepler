@@ -2,6 +2,7 @@ package types
 
 import (
 	"context"
+	"kepler/x/job/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
@@ -22,4 +23,32 @@ type BankKeeper interface {
 type ParamSubspace interface {
 	Get(context.Context, []byte, interface{})
 	Set(context.Context, []byte, interface{})
+}
+
+type CommitteeKeeper interface {
+	IsCommitteeExists(ctx sdk.Context, committeeID string) (bool, error)
+	CanBeSigned(
+		ctx sdk.Context,
+		committeeID string,
+		chainID string,
+		signatures [][]byte,
+		payload []byte,
+	) (bool, error)
+}
+
+type JobKeeper interface {
+	CreateJob(
+		ctx sdk.Context,
+		status types.Job_Status,
+		committeeID string,
+		chainID string,
+		automationID uint64,
+		txHash string,
+		executorAddress string,
+		createdAt uint64,
+		executedAt uint64,
+		signedAt uint64,
+		signs [][]byte,
+		payload []byte,
+	) error
 }

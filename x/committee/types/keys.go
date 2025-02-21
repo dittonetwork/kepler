@@ -1,5 +1,9 @@
 package types
 
+import (
+	"cosmossdk.io/collections"
+)
+
 const (
 	// ModuleName defines the module name.
 	ModuleName = "committee"
@@ -12,9 +16,12 @@ const (
 )
 
 var (
-	ParamsKey = []byte("p_committee")
-)
+	// CommitteeStoreKeyPrefix is the prefix for the committee store key.
+	CommitteeStoreKeyPrefix = collections.NewPrefix(1)
 
-func KeyPrefix(p string) []byte {
-	return []byte(p)
-}
+	// ChainIDStoreKeyPrefix is the prefix for the chain id store key.
+	ChainIDStoreKeyPrefix = collections.NewPrefix("chain_id")
+
+	// ActiveCommitteeStoreKeyPrefix is the prefix for the active committee store key.
+	ActiveCommitteeStoreKeyPrefix = collections.NewPrefix("active_committee")
+)

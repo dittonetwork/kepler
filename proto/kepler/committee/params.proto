@@ -10,6 +10,4 @@ option go_package = "kepler/x/committee/types";
 message Params {
   option (amino.name) = "kepler/x/committee/Params";
   option (gogoproto.equal) = true;
-
-  
 }

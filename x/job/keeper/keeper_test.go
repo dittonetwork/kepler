@@ -1,6 +1,7 @@
 package keeper_test
 
 import (
+	"github.com/stretchr/testify/require"
 	"kepler/x/job/keeper"
 	"kepler/x/job/types"
 	"kepler/x/job/types/mock"
@@ -58,7 +59,7 @@ func (s *KeeperTestSuite) Test_CreateJob() {
 					[]byte("sign1"),
 					[]byte("sign2"),
 					[]byte("sign3"),
-				}).Return(true, nil)
+				}, gomock.Any()).Return(true, nil)
 				return types.Job{
 					Id:              123,
 					Status:          types.Job_STATUS_EXECUTED,
@@ -74,40 +75,6 @@ func (s *KeeperTestSuite) Test_CreateJob() {
 					},
 				}, nil
 			},
-		},
-		"already exists": {
-			preRun: func() (types.Job, error) {
-				s.committee.EXPECT().IsCommitteeExists(s.ctx, "1").Return(true, nil)
-				s.committee.EXPECT().CanBeSigned(s.ctx, "1", "1", [][]byte{
-					[]byte("sign1"),
-					[]byte("sign2"),
-					[]byte("sign3"),
-				}).Return(true, nil)
-				err := s.keeper.CreateJob(s.ctx, types.Job{Id: 111, CommitteeId: "1", ChainId: "1", Signs: [][]byte{
-					[]byte("sign1"),
-					[]byte("sign2"),
-					[]byte("sign3"),
-				}})
-				if err != nil {
-					return types.Job{}, err
-				}
-				return types.Job{
-					Id:              111,
-					Status:          types.Job_STATUS_EXECUTED,
-					ChainId:         "1",
-					AutomationId:    1,
-					TxHash:          "0x",
-					ExecutorAddress: address,
-					CommitteeId:     "1",
-					Signs: [][]byte{
-						[]byte("sign1"),
-						[]byte("sign2"),
-						[]byte("sign3"),
-					},
-				}, nil
-			},
-			expErr:    true,
-			expErrMsg: "job with id 111 already exists: job already exists",
 		},
 		"committee doesn't exists": {
 			preRun: func() (types.Job, error) {
@@ -132,7 +99,7 @@ func (s *KeeperTestSuite) Test_CreateJob() {
 				s.committee.EXPECT().IsCommitteeExists(s.ctx, "1").Return(true, nil)
 				s.committee.EXPECT().CanBeSigned(s.ctx, "1", "1", [][]byte{
 					[]byte("sign1"),
-				}).Return(false, nil)
+				}, gomock.Any()).Return(false, nil)
 				return types.Job{
 					Id:              125,
 					Status:          types.Job_STATUS_EXECUTED,
@@ -159,8 +126,23 @@ func (s *KeeperTestSuite) Test_CreateJob() {
 	for testName, tc := range cases {
 		s.Run(testName, func() {
 			msg, err := tc.preRun()
+			payload, err := msg.Marshal()
+			require.NoError(s.T(), err)
 			s.Require().NoError(err)
-			err = s.keeper.CreateJob(s.ctx, msg)
+			err = s.keeper.CreateJob(
+				s.ctx,
+				msg.Status,
+				msg.CommitteeId,
+				msg.ChainId,
+				msg.AutomationId,
+				msg.TxHash,
+				msg.ExecutorAddress,
+				msg.CreatedAt,
+				msg.ExecutedAt,
+				msg.SignedAt,
+				msg.Signs,
+				payload,
+			)
 			if tc.expErr {
 				s.Require().Error(err)
 				s.Require().Contains(err.Error(), tc.expErrMsg)
@@ -178,17 +160,15 @@ func (s *KeeperTestSuite) Test_GetJob() {
 	}{
 		"found": {
 			preRun: func() (uint64, error) {
-				s.committee.EXPECT().IsCommitteeExists(s.ctx, "1").Return(true, nil)
-				s.committee.EXPECT().CanBeSigned(s.ctx, "1", "1", [][]byte{
-					[]byte("sign1"),
-					[]byte("sign2"),
-					[]byte("sign3"),
-				}).Return(true, nil)
-				err := s.keeper.CreateJob(s.ctx, types.Job{Id: 111, CommitteeId: "1", ChainId: "1", Signs: [][]byte{
-					[]byte("sign1"),
-					[]byte("sign2"),
-					[]byte("sign3"),
-				}})
+				err := s.keeper.Jobs.Set(
+					s.ctx,
+					111,
+					types.Job{Id: 111, CommitteeId: "1", ChainId: "1", Signs: [][]byte{
+						[]byte("sign1"),
+						[]byte("sign2"),
+						[]byte("sign3"),
+					}},
+				)
 				return uint64(111), err
 			},
 			found: true,

@@ -7,10 +7,43 @@ import "kepler/committee/params.proto";
 
 option go_package = "kepler/x/committee/types";
 
+// Committee defines the committee object.
+message Committee {
+  // id is the unique identifier of the committee. Example: "{chain_id}-committee-{epoch_counter}".
+  string id = 1;
+
+  // chain_id is the chain identifier of the committee.
+  string chain_id = 2;
+
+  // epoch_counter is the epoch counter of the committee.
+  int64 epoch_counter = 3;
+
+  // active is the status of the committee.
+  bool active = 4;
+
+  // seed is the seed of the committee. Needed for randomness.
+  bytes seed = 5;
+
+  // members is the list of validators in the committee.
+  repeated Member members = 6;
+}
+
+// Validator defines the validator object.
+message Member {
+  // address is the address of the validator.
+  string address = 1;
+
+  // power is the power of the validator.
+  int64 power = 2;
+}
+
 // GenesisState defines the committee module's genesis state.
 message GenesisState {
+  // committees is the list of committees.
+  repeated Committee committees = 1 [(gogoproto.nullable) = false];
+
   // params defines all the parameters of the module.
-  Params params = 1 [
+  Params params = 2 [
     (gogoproto.nullable) = false,
     (amino.dont_omitempty) = true
   ];

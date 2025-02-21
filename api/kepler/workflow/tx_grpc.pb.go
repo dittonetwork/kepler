@@ -19,8 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Msg_UpdateParams_FullMethodName  = "/kepler.workflow.Msg/UpdateParams"
-	Msg_AddAutomation_FullMethodName = "/kepler.workflow.Msg/AddAutomation"
+	Msg_UpdateParams_FullMethodName       = "/kepler.workflow.Msg/UpdateParams"
+	Msg_AddAutomation_FullMethodName      = "/kepler.workflow.Msg/AddAutomation"
+	Msg_CancelAutomation_FullMethodName   = "/kepler.workflow.Msg/CancelAutomation"
+	Msg_ActivateAutomation_FullMethodName = "/kepler.workflow.Msg/ActivateAutomation"
+	Msg_SubmitJobResult_FullMethodName    = "/kepler.workflow.Msg/SubmitJobResult"
 )
 
 // MsgClient is the client API for Msg service.
@@ -31,6 +34,9 @@ type MsgClient interface {
 	// parameters. The authority defaults to the x/gov module account.
 	UpdateParams(ctx context.Context, in *MsgUpdateParams, opts ...grpc.CallOption) (*MsgUpdateParamsResponse, error)
 	AddAutomation(ctx context.Context, in *MsgAddAutomation, opts ...grpc.CallOption) (*MsgAddAutomationResponse, error)
+	CancelAutomation(ctx context.Context, in *MsgCancelAutomation, opts ...grpc.CallOption) (*MsgCancelAutomationResponse, error)
+	ActivateAutomation(ctx context.Context, in *MsgActivateAutomation, opts ...grpc.CallOption) (*MsgActivateAutomationResponse, error)
+	SubmitJobResult(ctx context.Context, in *MsgSubmitJobResult, opts ...grpc.CallOption) (*MsgSubmitJobResultResponse, error)
 }
 
 type msgClient struct {
@@ -59,6 +65,33 @@ func (c *msgClient) AddAutomation(ctx context.Context, in *MsgAddAutomation, opt
 	return out, nil
 }
 
+func (c *msgClient) CancelAutomation(ctx context.Context, in *MsgCancelAutomation, opts ...grpc.CallOption) (*MsgCancelAutomationResponse, error) {
+	out := new(MsgCancelAutomationResponse)
+	err := c.cc.Invoke(ctx, Msg_CancelAutomation_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) ActivateAutomation(ctx context.Context, in *MsgActivateAutomation, opts ...grpc.CallOption) (*MsgActivateAutomationResponse, error) {
+	out := new(MsgActivateAutomationResponse)
+	err := c.cc.Invoke(ctx, Msg_ActivateAutomation_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) SubmitJobResult(ctx context.Context, in *MsgSubmitJobResult, opts ...grpc.CallOption) (*MsgSubmitJobResultResponse, error) {
+	out := new(MsgSubmitJobResultResponse)
+	err := c.cc.Invoke(ctx, Msg_SubmitJobResult_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 // All implementations must embed UnimplementedMsgServer
 // for forward compatibility
@@ -67,6 +100,9 @@ type MsgServer interface {
 	// parameters. The authority defaults to the x/gov module account.
 	UpdateParams(context.Context, *MsgUpdateParams) (*MsgUpdateParamsResponse, error)
 	AddAutomation(context.Context, *MsgAddAutomation) (*MsgAddAutomationResponse, error)
+	CancelAutomation(context.Context, *MsgCancelAutomation) (*MsgCancelAutomationResponse, error)
+	ActivateAutomation(context.Context, *MsgActivateAutomation) (*MsgActivateAutomationResponse, error)
+	SubmitJobResult(context.Context, *MsgSubmitJobResult) (*MsgSubmitJobResultResponse, error)
 	mustEmbedUnimplementedMsgServer()
 }
 
@@ -79,6 +115,15 @@ func (UnimplementedMsgServer) UpdateParams(context.Context, *MsgUpdateParams) (*
 }
 func (UnimplementedMsgServer) AddAutomation(context.Context, *MsgAddAutomation) (*MsgAddAutomationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddAutomation not implemented")
+}
+func (UnimplementedMsgServer) CancelAutomation(context.Context, *MsgCancelAutomation) (*MsgCancelAutomationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CancelAutomation not implemented")
+}
+func (UnimplementedMsgServer) ActivateAutomation(context.Context, *MsgActivateAutomation) (*MsgActivateAutomationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ActivateAutomation not implemented")
+}
+func (UnimplementedMsgServer) SubmitJobResult(context.Context, *MsgSubmitJobResult) (*MsgSubmitJobResultResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SubmitJobResult not implemented")
 }
 func (UnimplementedMsgServer) mustEmbedUnimplementedMsgServer() {}
 
@@ -129,6 +174,60 @@ func _Msg_AddAutomation_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_CancelAutomation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgCancelAutomation)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).CancelAutomation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_CancelAutomation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).CancelAutomation(ctx, req.(*MsgCancelAutomation))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_ActivateAutomation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgActivateAutomation)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).ActivateAutomation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_ActivateAutomation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).ActivateAutomation(ctx, req.(*MsgActivateAutomation))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_SubmitJobResult_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgSubmitJobResult)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).SubmitJobResult(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_SubmitJobResult_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).SubmitJobResult(ctx, req.(*MsgSubmitJobResult))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Msg_ServiceDesc is the grpc.ServiceDesc for Msg service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -143,6 +242,18 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AddAutomation",
 			Handler:    _Msg_AddAutomation_Handler,
+		},
+		{
+			MethodName: "CancelAutomation",
+			Handler:    _Msg_CancelAutomation_Handler,
+		},
+		{
+			MethodName: "ActivateAutomation",
+			Handler:    _Msg_ActivateAutomation_Handler,
+		},
+		{
+			MethodName: "SubmitJobResult",
+			Handler:    _Msg_SubmitJobResult_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
