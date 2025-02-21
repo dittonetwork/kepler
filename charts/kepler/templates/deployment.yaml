@@ -31,8 +31,9 @@ spec:
                 cp -rL /config/client.toml /writable-config/config
                 cp -rL /config/config.toml /writable-config/config
                 cp -rL /config/genesis.json /writable-config/config
-                cp -rL /config/node_key.json /writable-config/config
-                cp -rL /config/priv_validator_key.json /writable-config/config
+                
+                cp -rL /keys/node_key.json /writable-config/config
+                cp -rL /keys/priv_validator_key.json /writable-config/config
 
                 echo "Copying data from /data to /writable-config/data"
                 cp -rL /config/priv_validator_state.json /writable-config/data
@@ -49,8 +50,8 @@ spec:
               mountPath: /config
             - name: writable-config
               mountPath: /writable-config
-            - name: secret-volume
-              mountPath: /root/app_config/keyring-test
+            - name: secret-volume-keys
+              mountPath: /keys
       containers:
         - name: kepler
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -87,7 +88,7 @@ spec:
           volumeMounts:
             - name: writable-config
               mountPath: /root/app_config
-            - name: secret-volume
+            - name: secret-volume-keyring
               mountPath: /root/app_config/keyring-test
       volumes:
         - name: config-volume
@@ -95,9 +96,12 @@ spec:
             name: {{ include "kepler.fullname" . }}-appconfig
         - name: writable-config
           emptyDir: {}
-        - name: secret-volume
+        - name: secret-volume-keyring
           secret:
-            secretName: {{ include "kepler.fullname" . }}-secrets
+            secretName: {{ include "kepler.fullname" . }}-keyring-secrets
+        - name: secret-volume-keys
+          secret:
+            secretName: {{ include "kepler.fullname" . }}-keys-secrets
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -136,8 +140,8 @@ spec:
               mountPath: /config
             - name: writable-config
               mountPath: /writable-config
-            - name: secret-volume
-              mountPath: /root/app_config/keyring-test
+            - name: secret-volume-keys
+              mountPath: /keys
       containers:
         - name: client
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -148,7 +152,7 @@ spec:
           volumeMounts:
             - name: writable-config
               mountPath: /root/app_config
-            - name: secret-volume
+            - name: secret-volume-keyring
               mountPath: /root/app_config/keyring-test
       volumes:
         - name: config-volume
@@ -156,6 +160,9 @@ spec:
             name: {{ include "kepler.fullname" . }}-appconfig
         - name: writable-config
           emptyDir: {}
-        - name: secret-volume
+        - name: secret-volume-keyring
           secret:
-            secretName: {{ include "kepler.fullname" . }}-secrets
+            secretName: {{ include "kepler.fullname" . }}-keyring-secrets
+        - name: secret-volume-keys
+          secret:
+            secretName: {{ include "kepler.fullname" . }}-keys-secrets

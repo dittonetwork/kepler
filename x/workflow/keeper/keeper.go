@@ -25,20 +25,26 @@ type (
 		GetAutomation(ctx sdk.Context, id uint64) (types.Automation, error)
 		FindActiveAutomations(ctx sdk.Context) ([]*types.Automation, error)
 		GetNextAutomationID(ctx sdk.Context) (uint64, error)
+		CancelAutomation(ctx sdk.Context, id uint64) error
+		ActivateAutomation(ctx sdk.Context, id uint64) error
 
 		GetParams(ctx context.Context) types.Params
 		SetParams(ctx context.Context, params types.Params) error
-		Params(goCtx context.Context, req *types.QueryParamsRequest) (*types.QueryParamsResponse, error)
 		GetActiveAutomations(
 			goCtx context.Context,
 			req *types.QueryGetActiveAutomationsRequest,
 		) (*types.QueryGetActiveAutomationsResponse, error)
+		Params(
+			goCtx context.Context,
+			req *types.QueryParamsRequest,
+		) (*types.QueryParamsResponse, error)
 	}
 
 	BaseKeeper struct {
-		cdc          codec.BinaryCodec
-		storeService store.KVStoreService
-		logger       log.Logger
+		cdc             codec.BinaryCodec
+		storeService    store.KVStoreService
+		logger          log.Logger
+		commetteeKeeper types.CommitteeKeeper
 
 		// the address capable of executing a MsgUpdateParams message. Typically, this
 		// should be the x/gov module account.
@@ -57,7 +63,7 @@ func NewKeeper(
 	storeService store.KVStoreService,
 	logger log.Logger,
 	authority string,
-
+	committeeKeeper types.CommitteeKeeper,
 ) BaseKeeper {
 	if _, err := sdk.AccAddressFromBech32(authority); err != nil {
 		panic(fmt.Sprintf("invalid authority address: %s", authority))
@@ -65,10 +71,11 @@ func NewKeeper(
 
 	sb := collections.NewSchemaBuilder(storeService)
 	return BaseKeeper{
-		cdc:          cdc,
-		storeService: storeService,
-		authority:    authority,
-		logger:       logger,
+		cdc:             cdc,
+		storeService:    storeService,
+		authority:       authority,
+		logger:          logger,
+		commetteeKeeper: committeeKeeper,
 		Automations: collections.NewIndexedMap(
 			sb,
 			types.KeyPrefixAutomation,
@@ -77,6 +84,7 @@ func NewKeeper(
 			codec.CollValue[types.Automation](cdc),
 			NewAutomationIndexes(sb),
 		),
+		AutomationID: collections.NewSequence(sb, types.KeyPrefixAutomation, types.CollectionNameAutomationID),
 	}
 }
 

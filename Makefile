@@ -75,6 +75,15 @@ proto-gen:
 
 .PHONY: proto-gen
 
+.PHONY: proto-lint
+proto-lint:
+	buf lint
+
+.PHONY: proto-format
+proto-format:
+	buf format -w
+
+
 #################
 ###  Linting  ###
 #################

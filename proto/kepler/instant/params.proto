@@ -10,6 +10,4 @@ option go_package = "kepler/x/instant/types";
 message Params {
   option (amino.name) = "kepler/x/instant/Params";
   option (gogoproto.equal) = true;
-
-  
 }

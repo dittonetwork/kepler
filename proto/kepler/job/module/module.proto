@@ -5,7 +5,5 @@ import "cosmos/app/v1alpha1/module.proto";
 
 // Module is the config object for the module.
 message Module {
-  option (cosmos.app.v1alpha1.module) = {
-    go_import: "kepler/x/job"
-  };
+  option (cosmos.app.v1alpha1.module) = {go_import: "kepler/x/job"};
 }

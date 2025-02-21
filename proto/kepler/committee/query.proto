@@ -1,20 +1,39 @@
 syntax = "proto3";
+
 package kepler.committee;
 
 import "amino/amino.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
 import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
-import "cosmos/base/query/v1beta1/pagination.proto";
+import "kepler/committee/genesis.proto";
 import "kepler/committee/params.proto";
 
 option go_package = "kepler/x/committee/types";
 
 // Query defines the gRPC querier service.
 service Query {
+  // Committee queries the committee of the module.
+  rpc GetCommittee(QueryGetCommitteeRequest) returns (QueryGetCommitteeResponse) {
+    option (google.api.http).get = "/kepler/committee/committee";
+  }
+
   // Parameters queries the parameters of the module.
   rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/kepler/committee/params";
   }
+}
+
+// QueryCommitteeRequest is response type for the Query/Committee RPC method.
+message QueryGetCommitteeRequest {
+  // committee_id is the identifier of the committee.
+  string committee_id = 1;
+}
+
+// QueryGetCommitteeResponse is response type for the Query/Committee RPC method.
+message QueryGetCommitteeResponse {
+  // members holds all the committee members of this module.
+  repeated Member members = 1 [(gogoproto.nullable) = false];
 }
 
 // QueryParamsRequest is request type for the Query/Params RPC method.

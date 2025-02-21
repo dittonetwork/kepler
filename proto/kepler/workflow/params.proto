@@ -10,6 +10,4 @@ option go_package = "kepler/x/workflow/types";
 message Params {
   option (amino.name) = "kepler/x/workflow/Params";
   option (gogoproto.equal) = true;
-
-  
 }

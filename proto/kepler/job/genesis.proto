@@ -7,5 +7,4 @@ import "gogoproto/gogo.proto";
 option go_package = "kepler/x/job/types";
 
 // GenesisState defines the job module's genesis state.
-message GenesisState {
-}
+message GenesisState {}
