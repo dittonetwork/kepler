@@ -55,7 +55,6 @@ message QueryCurrentEpochRequest {
 
 // QueryCurrentEpochResponse is response type for the Query/CurrentEpoch RPC method.
 message QueryCurrentEpochResponse {
-
   // current_epoch holds the current epoch of this module.
   int64 current_epoch = 1;
 }

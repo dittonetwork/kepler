@@ -9,19 +9,17 @@ option go_package = "kepler/x/job/types";
 
 // Query defines the gRPC querier service.
 service Query {
-  
   // Parameters queries the parameters of the module.
-  rpc Params (QueryParamsRequest) returns (QueryParamsResponse) {
+  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/kepler/job/params";
-  
   }
-  
+
   // Queries a list of GetJob items.
-  rpc GetJob (QueryGetJobRequest) returns (QueryGetJobResponse) {
+  rpc GetJob(QueryGetJobRequest) returns (QueryGetJobResponse) {
     option (google.api.http).get = "/kepler/job/get_job/{id}";
-  
   }
 }
+
 // QueryParamsRequest is request type for the Query/Params RPC method.
 message QueryParamsRequest {}
 
@@ -35,4 +33,3 @@ message QueryGetJobRequest {
 message QueryGetJobResponse {
   Job job = 1;
 }
-
