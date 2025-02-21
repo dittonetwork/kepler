@@ -1,0 +1,34 @@
+{{- if .Values.ingress.enabled -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "kepler.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "kepler.labels" . | nindent 4 }}
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: nginx
+    {{- with .Values.ingress.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  ingressClassName: {{ .Values.ingress.className }}
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ include "kepler.fullname" . }}
+            port:
+              number: {{ .Values.service.ports.api }}
+      - path: /rpc
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ include "kepler.fullname" . }}
+            port:
+              number: {{ .Values.service.ports.rpc }}
+{{- end }}

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "kepler.fullname" . }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: {{ .Values.service.ports.api }}
+      targetPort: {{ .Values.service.ports.api }}
+      name: api
+    - port: {{ .Values.service.ports.rpc }}
+      targetPort: {{ .Values.service.ports.rpc }}
+      name: rpc
+  selector:
+    app: {{ include "kepler.name" . }}
