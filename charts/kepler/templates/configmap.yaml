@@ -13,12 +13,5 @@ data:
     {{ (.Files.Get "app_config/config/config.toml") | nindent 4 }}
   genesis.json: |-
     {{ (.Files.Get "app_config/config/genesis.json") | nindent 4 }}
-<<<<<<< HEAD
-  node_key.json: |-
-    {{ (.Files.Get "app_config/config/node_key.json") | nindent 4 }}
-  priv_validator_key.json: |-
-    {{ (.Files.Get "app_config/config/priv_validator_key.json") | nindent 4 }}
-=======
->>>>>>> master
   priv_validator_state.json: |-
     {{ (.Files.Get "app_config/data/priv_validator_state.json") | nindent 4 }}
