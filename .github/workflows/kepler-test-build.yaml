@@ -35,6 +35,9 @@ jobs:
         run: |
           curl https://get.ignite.com/cli! | sudo bash
 
+      - name: Disable Ignite CLI telemetry
+        run: ignite config telemetry off
+
       - name: Build All with Makefile
         run: |
           pwd && ls -al && make ignite-build docker-build docker-push
