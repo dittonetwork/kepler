@@ -117,3 +117,34 @@ govulncheck:
 	@govulncheck ./...
 
 .PHONY: govet govulncheck
+
+###############################
+### Docker & Ignite Build  ####
+###############################
+
+AWS_REGION := ap-southeast-1
+ECR_REPO := 847647377987.dkr.ecr.$(AWS_REGION).amazonaws.com/kepler:latest
+
+ecr-login:
+	@echo "--> Logging in to Amazon ECR"
+	@aws ecr get-login-password --region $(AWS_REGION) | docker login --username AWS --password-stdin 847647377987.dkr.ecr.$(AWS_REGION).amazonaws.com
+
+# Building binary file via Ignite Build for linux/amd64
+ignite-build:
+	@echo "--> Building binary with Ignite"
+	@CGO_ENABLED=0 GOOS=linux GOARCH=amd64 ignite chain build
+
+# Creating Docker-image. Dockerfile use.
+docker-build:
+	@echo "--> Building Docker image"
+	@docker buildx build --platform linux/amd64 -t $(ECR_REPO) .
+
+# Отправка Docker-образа в Amazon ECR
+docker-push:
+	@echo "--> Pushing Docker image to Amazon ECR"
+	@docker push $(ECR_REPO)
+
+# Полная сборка: авторизация, сборка бинарника, создание образа и пуш в репозиторий.
+build-all: ecr-login ignite-build docker-build docker-push
+
+.PHONY: ecr-login ignite-build docker-build docker-push build-all
