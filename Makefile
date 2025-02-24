@@ -132,7 +132,7 @@ ecr-login:
 # Building binary file via Ignite Build for linux/amd64
 ignite-build:
 	@echo "--> Building binary with Ignite"
-	@CGO_ENABLED=0 GOOS=linux GOARCH=amd64 ignite chain build -o ./
+	@ignite chain build --release -t linux:amd64 -o ./
 
 # Creatiton of Docker-image. Dockerfile use.
 docker-build:
