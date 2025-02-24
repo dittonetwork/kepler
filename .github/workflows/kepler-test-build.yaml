@@ -15,6 +15,7 @@ jobs:
     env:
       IGNITE_CLI_ENV: "CI"
       IGNITE_TELEMETRY: "off"
+      CI: "true"
 
     steps:
       - name: Checkout repository
