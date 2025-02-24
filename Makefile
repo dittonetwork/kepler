@@ -132,7 +132,7 @@ ecr-login:
 # Building binary file via Ignite Build for linux/amd64
 ignite-build:
 	@echo "--> Building binary with Ignite"
-	@ignite chain build --release -t linux:amd64 -o ./
+	@ignite chain build --release -t linux:amd64 -o ./ -v
 
 # Creatiton of Docker-image. Dockerfile use.
 docker-build:
