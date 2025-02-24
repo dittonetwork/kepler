@@ -34,6 +34,12 @@ jobs:
       - name: Install Ignite CLI
         run: |
           curl https://get.ignite.com/cli! | sudo bash
+      
+      # - name: Install Buf CLI
+      #   run: |
+      #     curl -sSL https://github.com/bufbuild/buf/releases/latest/download/buf-Linux-x86_64 -o /usr/local/bin/buf
+      #     chmod +x /usr/local/bin/buf
+      #     buf --version
 
       - name: Disable Ignite CLI telemetry
         run: ignite config telemetry off
