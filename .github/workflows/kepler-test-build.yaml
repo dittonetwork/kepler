@@ -38,4 +38,15 @@ jobs:
       - name: Build and Deploy Docker Image
         run: |
           echo "Building binary, Docker image and pushing to ECR..."
-          make build-all
+          ls -al
+          make ecr-login
+      - name: Build and Deploy Docker Image
+        run: |
+          echo "make install:"
+          make install
+          ls -al
+          
+      - name: Build and Deploy Docker Image
+        run: |
+          echo "Building of Docker image and pushing to ECR"
+          make docker-build docker-push
