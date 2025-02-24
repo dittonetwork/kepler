@@ -31,15 +31,9 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Install Buf CLI
-        uses: bufbuild/buf-setup-action@v1.50.0
-        with:
-          version: "1.50.0"
-
-      - name: Build blockchain binary with Ignite CLI
-        uses: ignite/cli/actions/cli@main
-        with:
-          args: "chain build --yes --release -t linux:amd64"
+      - name: Install Ignite CLI
+        run: |
+          curl https://get.ignite.com/cli! | sudo bash
 
       - name: Build All with Makefile
         run: make ignite-build docker-build docker-push
