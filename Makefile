@@ -52,11 +52,17 @@ test: test-unit
 
 all: install
 
+# install:
+# 	@echo "--> ensure dependencies have not been modified"
+# 	@go mod verify
+# 	@echo "--> installing $(APPNAME)d"
+# 	@go install $(BUILD_FLAGS) -mod=readonly ./cmd/$(APPNAME)d
+
 install:
 	@echo "--> ensure dependencies have not been modified"
 	@go mod verify
-	@echo "--> installing $(APPNAME)d"
-	@go install $(BUILD_FLAGS) -mod=readonly ./cmd/$(APPNAME)d
+	@echo "--> building $(APPNAME)d"
+	@go build $(BUILD_FLAGS) -mod=readonly -o $(APPNAME)d ./cmd/$(APPNAME)d
 
 .PHONY: all install
 
@@ -144,6 +150,6 @@ docker-push:
 	@echo "--> Pushing Docker image to Amazon ECR"
 	@docker push $(ECR_REPO)
 
-build-all: ecr-login ignite-build docker-build docker-push
+build-all: ecr-login install docker-build docker-push
 
-.PHONY: ecr-login ignite-build docker-build docker-push build-all
+.PHONY: ecr-login install docker-build docker-push build-all
