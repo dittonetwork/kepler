@@ -62,7 +62,7 @@ install:
 	@echo "--> ensure dependencies have not been modified"
 	@go mod verify
 	@echo "--> building $(APPNAME)d"
-	@go build $(BUILD_FLAGS) -mod=readonly -o $(APPNAME)d ./cmd/$(APPNAME)d
+	@CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build $(BUILD_FLAGS) -mod=readonly -o $(APPNAME)d ./cmd/$(APPNAME)d
 
 .PHONY: all install
 
