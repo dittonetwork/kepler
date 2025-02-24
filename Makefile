@@ -134,17 +134,16 @@ ignite-build:
 	@echo "--> Building binary with Ignite"
 	@CGO_ENABLED=0 GOOS=linux GOARCH=amd64 ignite chain build
 
-# Creating Docker-image. Dockerfile use.
+# Creatiton of Docker-image. Dockerfile use.
 docker-build:
 	@echo "--> Building Docker image"
 	@docker buildx build --platform linux/amd64 -t $(ECR_REPO) .
 
-# Отправка Docker-образа в Amazon ECR
+# Push into Amazon ECR
 docker-push:
 	@echo "--> Pushing Docker image to Amazon ECR"
 	@docker push $(ECR_REPO)
 
-# Полная сборка: авторизация, сборка бинарника, создание образа и пуш в репозиторий.
 build-all: ecr-login ignite-build docker-build docker-push
 
 .PHONY: ecr-login ignite-build docker-build docker-push build-all
