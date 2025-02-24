@@ -12,9 +12,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      AWS_REGION: "ap-southeast-1"
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -36,9 +41,11 @@ jobs:
       - name: Build Binary with make install
         run: |
           echo "#########################################"
-          echo "# Building binary with 'make build' ..."
+          echo "# Building binary with 'make install' ..."
           echo "#########################################"
-          make build
+          make install
+          echo "---- Listing files after build:"
+          ls -al
 
       - name: Docker Build
         run: |
