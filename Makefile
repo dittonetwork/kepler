@@ -117,3 +117,29 @@ govulncheck:
 	@govulncheck ./...
 
 .PHONY: govet govulncheck
+
+build-linux:
+	GOOS=linux GOARCH=amd64 go build -o ./build/keplerd-linux-amd64 ./cmd/keplerd/main.go
+	GOOS=linux GOARCH=arm64 go build -o ./build/keplerd-linux-arm64 ./cmd/keplerd/main.go
+
+do-checksum-linux:
+	cd build && sha256sum \
+		keplerd-linux-amd64 keplerd-linux-arm64 \
+		> kepler-checksum-linux
+
+build-linux-with-checksum: build-linux do-checksum-linux
+
+build-darwin:
+	GOOS=darwin GOARCH=amd64 go build -o ./build/keplerd-darwin-amd64 ./cmd/keplerd/main.go
+	GOOS=darwin GOARCH=arm64 go build -o ./build/keplerd-darwin-arm64 ./cmd/keplerd/main.go
+
+build-all: build-linux build-darwin
+
+do-checksum-darwin:
+	cd build && sha256sum \
+		keplerd-darwin-amd64 keplerd-darwin-arm64 \
+		> kepler-checksum-darwin
+
+build-darwin-with-checksum: build-darwin do-checksum-darwin
+
+build-with-checksum: build-linux-with-checksum build-darwin-with-checksum

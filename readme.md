@@ -25,28 +25,11 @@ These commands can be run within your scaffolded blockchain project.
 
 For more information see the [monorepo for Ignite front-end development](https://github.com/ignite/web).
 
-## Release
-To release a new version of your blockchain, create and push a new tag with `v` prefix. A new draft release with the configured targets will be created.
+### Multi node local testing via docker-compose
 
-```
-git tag v0.1
-git push origin v0.1
-```
+1. Build container image via command `docker build docker build -f Dockerfile_multinode -t keplerd_i .`
+2. Generate testnets via command `keplerd multi-node`
+3. Replace `localhost` to `validatorN` in `persistent_peers` field of `config.toml` of each testnet member
 
-After a draft release is created, make your final changes from the release page and publish it.
-
-### Install
-To install the latest version of your blockchain node's binary, execute the following command on your machine:
-
-```
-curl https://get.ignite.com/username/kepler@latest! | sudo bash
-```
-`username/kepler` should match the `username` and `repo_name` of the Github repository to which the source code was pushed. Learn more about [the install process](https://github.com/allinbits/starport-installer).
-
-## Learn more
-
-- [Ignite CLI](https://ignite.com/cli)
-- [Tutorials](https://docs.ignite.com/guide)
-- [Ignite CLI docs](https://docs.ignite.com)
-- [Cosmos SDK docs](https://docs.cosmos.network)
-- [Developer Chat](https://discord.gg/ignite)
+   like `persistent_peers = "<address>:localhost:26656"` -> `persistent_peers = "<address>:validator0:26656"`
+4. Run `docker-compose -p kepler up -d` to start the containers

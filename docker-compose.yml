@@ -1,0 +1,106 @@
+version: "3"
+
+services:
+  validator0:
+    container_name: validator0
+    image: "keplerd_i"
+    command:
+      - start
+    environment:
+      - DEBUG=1
+      - ID=0
+      - LOG=${LOG:-keplerd.log}
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - "26656-26657:26656-26657"
+      - "1317:1317"
+      - "9090:9090"
+      - "2345:2345"
+    volumes:
+      - ./.testnets/validator0:/root/.kepler:Z
+    networks:
+      localnet:
+        ipv4_address: 192.168.10.2
+
+  validator1:
+    container_name: validator1
+    image: "keplerd_i"
+    command:
+      - start
+    environment:
+      - DEBUG=0
+      - ID=1
+      - LOG=${LOG:-keplerd.log}
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - "26653-26654:26656-26657"
+      - "1318:1317"
+      - "9091:9090"
+      - "2346:2345"
+    volumes:
+      - ./.testnets/validator1:/root/.kepler:Z
+    networks:
+      localnet:
+        ipv4_address: 192.168.10.3
+
+  validator2:
+    container_name: validator2
+    image: "keplerd_i"
+    command:
+      - start
+    environment:
+      - DEBUG=0
+      - ID=2
+      - LOG=${LOG:-keplerd.log}
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - "26650-26651:26656-26657"
+      - "1319:1317"
+      - "9092:9090"
+      - "2347:2345"
+    volumes:
+      - ./.testnets/validator2:/root/.kepler:Z
+    networks:
+      localnet:
+        ipv4_address: 192.168.10.4
+
+  validator3:
+    container_name: validator3
+    image: "keplerd_i"
+    command:
+      - start
+    environment:
+      - DEBUG=0
+      - ID=3
+      - LOG=${LOG:-keplerd.log}
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - "26647-26648:26656-26657"
+      - "1320:1317"
+      - "9093:9090"
+      - "2348:2345"
+    volumes:
+      - ./.testnets/validator3:/root/.kepler:Z
+    networks:
+      localnet:
+        ipv4_address: 192.168.10.5
+
+networks:
+  localnet:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.10.0/25

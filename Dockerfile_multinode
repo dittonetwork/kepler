@@ -1,0 +1,20 @@
+FROM golang:1.23.6-alpine AS builder
+
+RUN apk update
+RUN apk add make
+
+WORKDIR /original
+ADD . /original
+RUN go build -o ./build/keplerd ./cmd/keplerd/main.go
+RUN keplerd multi-node -v 4
+FROM alpine:3.21
+
+EXPOSE 26656 26657 1317 9090
+
+RUN apk add --no-cache curl make bash jq sed
+
+ENV LOCAL=/usr/local
+
+COPY --from=builder /original/build/keplerd ${LOCAL}/bin/keplerd
+
+ENTRYPOINT [ "keplerd" ]
