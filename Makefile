@@ -58,7 +58,7 @@ all: install
 # 	@echo "--> installing $(APPNAME)d"
 # 	@go install $(BUILD_FLAGS) -mod=readonly ./cmd/$(APPNAME)d
 
-install:
+build:
 	@echo "--> ensure dependencies have not been modified"
 	@go mod verify
 	@echo "--> building $(APPNAME)d"
@@ -135,11 +135,6 @@ ecr-login:
 	@echo "--> Logging in to Amazon ECR"
 	@aws ecr get-login-password --region $(AWS_REGION) | docker login --username AWS --password-stdin 847647377987.dkr.ecr.$(AWS_REGION).amazonaws.com
 
-# Building binary file via Ignite Build for linux/amd64
-ignite-build:
-	@echo "--> Building binary with Ignite"
-	@CGO_ENABLED=0 GOOS=linux GOARCH=amd64 ignite chain build -y -v -o ./
-
 # Creatiton of Docker-image. Dockerfile use.
 docker-build:
 	@echo "--> Building Docker image"
@@ -150,6 +145,6 @@ docker-push:
 	@echo "--> Pushing Docker image to Amazon ECR"
 	@docker push $(ECR_REPO)
 
-build-all: ecr-login install docker-build docker-push
+build-all: ecr-login build docker-build docker-push
 
-.PHONY: ecr-login install docker-build docker-push build-all
+.PHONY: ecr-login build docker-build docker-push build-all

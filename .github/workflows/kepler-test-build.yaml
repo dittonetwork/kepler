@@ -12,18 +12,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    env:
-      IGNITE_CLI_ENV: "CI"
-      IGNITE_TELEMETRY: "off"
-      CI: "true"
-      AWS_REGION: "ap-southeast-1"
-      ECR_REPO: "847647377987.dkr.ecr.ap-southeast-1.amazonaws.com/kepler:latest"
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -32,21 +23,33 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: Login to Amazon ECR
+      - name: Login to Amazon ECR (Action)
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Build and Deploy Docker Image
+      - name: ECR Login via Makefile
         run: |
-          echo "Building binary, Docker image and pushing to ECR..."
-          ls -al
+          echo "#########################################"
+          echo "# Logging into Amazon ECR (Makefile target) ..."
+          echo "#########################################"
           make ecr-login
-      - name: Build and Deploy Docker Image
+
+      - name: Build Binary with make install
         run: |
-          echo "make install:"
-          make install
-          ls -al
-          
-      - name: Build and Deploy Docker Image
+          echo "#########################################"
+          echo "# Building binary with 'make build' ..."
+          echo "#########################################"
+          make build
+
+      - name: Docker Build
         run: |
-          echo "Building of Docker image and pushing to ECR"
-          make docker-build docker-push
+          echo "#########################################"
+          echo "# Building Docker image with 'make docker-build' ..."
+          echo "#########################################"
+          make docker-build
+
+      - name: Docker Push
+        run: |
+          echo "#########################################"
+          echo "# Pushing Docker image to Amazon ECR with 'make docker-push' ..."
+          echo "#########################################"
+          make docker-push
