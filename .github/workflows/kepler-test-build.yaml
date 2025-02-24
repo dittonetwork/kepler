@@ -16,35 +16,26 @@ jobs:
       IGNITE_CLI_ENV: "CI"
       IGNITE_TELEMETRY: "off"
       CI: "true"
+      AWS_REGION: "ap-southeast-1"
+      ECR_REPO: "847647377987.dkr.ecr.ap-southeast-1.amazonaws.com/kepler:latest"
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-southeast-1
+          aws-region: ${{ env.AWS_REGION }}
 
       - name: Login to Amazon ECR
-        id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Install Ignite CLI
+      - name: Build and Deploy Docker Image
         run: |
-          curl https://get.ignite.com/cli! | sudo bash
-      
-      # - name: Install Buf CLI
-      #   run: |
-      #     curl -sSL https://github.com/bufbuild/buf/releases/latest/download/buf-Linux-x86_64 -o /usr/local/bin/buf
-      #     chmod +x /usr/local/bin/buf
-      #     buf --version
-
-      - name: Disable Ignite CLI telemetry
-        run: ignite config telemetry off
-
-      - name: Build All with Makefile
-        run: |
-          pwd && ls -al && make ignite-build docker-build docker-push
+          echo "Building binary, Docker image and pushing to ECR..."
+          make build-all
