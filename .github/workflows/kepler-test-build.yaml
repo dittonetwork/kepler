@@ -52,6 +52,17 @@ jobs:
           fi
           cat charts/kepler/values.yaml
 
+      - name: Commit updated values.yaml
+        run: |
+          echo "#########################################"
+          echo "# Committing updated charts/kepler/values.yaml..."
+          echo "#########################################"
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add charts/kepler/values.yaml
+          git commit -m "Update gitCommitHash to $(git rev-parse HEAD)" || echo "No changes to commit"
+          git push
+
       - name: Build Binary with make install
         run: |
           echo "#########################################"
