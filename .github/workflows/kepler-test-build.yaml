@@ -41,16 +41,16 @@ jobs:
       - name: Update values.yaml with gitCommitHash
         run: |
           echo "#########################################"
-          echo "# Updating values.yaml with gitCommitHash..."
+          echo "# Updating charts/kepler/values.yaml with gitCommitHash..."
           echo "#########################################"
           COMMIT_HASH=$(git rev-parse HEAD)
           echo "Current commit hash: $COMMIT_HASH"
-          if grep -q '^gitCommitHash:' values.yaml; then
-              sed -i "s/^gitCommitHash:.*/gitCommitHash: $COMMIT_HASH/" values.yaml
+          if grep -q '^gitCommitHash:' charts/kepler/values.yaml; then
+              sed -i "s/^gitCommitHash:.*/gitCommitHash: $COMMIT_HASH/" charts/kepler/values.yaml
           else
-              echo "gitCommitHash: $COMMIT_HASH" >> values.yaml
+              echo "gitCommitHash: $COMMIT_HASH" >> charts/kepler/values.yaml
           fi
-          cat values.yaml
+          cat charts/kepler/values.yaml
 
       - name: Build Binary with make install
         run: |
