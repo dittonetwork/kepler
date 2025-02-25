@@ -104,3 +104,5 @@ jobs:
           git add charts/kepler/Chart.yaml charts/kepler/values.yaml
           git commit -m "Update image digest to ${{ steps.update-image.outputs.imageDigest }}" || echo "No changes to commit"
           git push origin HEAD:test-kepler
+          
+          
