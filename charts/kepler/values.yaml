@@ -12,7 +12,7 @@ image:
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
-  digest: "sha256:bf41ab9b6fbcf0e5b6e1d4483ebb2134fdbb346f3ca8e3161755f78b78e64211"
+  digest: "sha256:e3ddf41526c5b1cdc91a7e2a9e3277adcd02f643f6bb0f902c516a23c0e7bb3f"
 
 
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
