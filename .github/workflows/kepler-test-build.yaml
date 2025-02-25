@@ -43,7 +43,7 @@ jobs:
           echo "#########################################"
           make ecr-login
 
-      - name: Build Binary with make install
+      - name: Build Binary with make build
         run: |
           echo "#########################################"
           echo "# Building binary with 'make build' ..."
