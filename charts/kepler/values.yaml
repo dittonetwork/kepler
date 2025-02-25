@@ -1,5 +1,3 @@
-gitCommitHash: 9400471779efc526674f9e7557f6e0ebb92c1be5
-
 # Default values for kepler.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
@@ -14,6 +12,8 @@ image:
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
+  digest: "sha256:placeholder"
+
 
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []

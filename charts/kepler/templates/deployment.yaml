@@ -54,7 +54,11 @@ spec:
               mountPath: /keys
       containers:
         - name: kepler
+          {{- if .Values.image.digest }}
+          image: "{{ .Values.image.repository }}@{{ .Values.image.digest }}"
+          {{- else }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          {{- end }}
           ports:
             - containerPort: {{ .Values.service.ports.api }}
               name: api
