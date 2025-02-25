@@ -84,7 +84,8 @@ jobs:
               sed -i '/tag: "latest"/a\  digest: "'$IMAGE_DIGEST'"' charts/kepler/values.yaml
           fi
           cat charts/kepler/values.yaml
-          echo "imageDigest=$IMAGE_DIGEST" >> $GITHUB_OUTPUT
+          echo "imageDigest=$IMAGE_DIGEST" >> "$GITHUB_OUTPUT"
+          echo "Set output imageDigest=$IMAGE_DIGEST"
 
       # - name: Update Chart version in Chart.yaml
       #   run: |
