@@ -46,9 +46,9 @@ jobs:
       - name: Build Binary with make install
         run: |
           echo "#########################################"
-          echo "# Building binary with 'make install' ..."
+          echo "# Building binary with 'make build' ..."
           echo "#########################################"
-          make install
+          make build
           echo "---- Listing files after build:"
           ls -al
 
