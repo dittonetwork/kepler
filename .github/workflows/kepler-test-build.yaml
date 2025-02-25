@@ -79,9 +79,9 @@ jobs:
           echo "New image digest: $IMAGE_DIGEST"
           
           if grep -q '^[[:space:]]*digest:' charts/kepler/values.yaml; then
-              sed -i "s/^[[:space:]]*digest:.*/      digest: \"$IMAGE_DIGEST\"/" charts/kepler/values.yaml
+              sed -i "s/^[[:space:]]*digest:.*/  digest: \"$IMAGE_DIGEST\"/" charts/kepler/values.yaml
           else
-              sed -i '/tag: "local"/a\  digest: "'$IMAGE_DIGEST'"' charts/kepler/values.yaml
+              sed -i '/tag: "latest"/a\  digest: "'$IMAGE_DIGEST'"' charts/kepler/values.yaml
           fi
           cat charts/kepler/values.yaml
 
