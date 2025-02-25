@@ -38,6 +38,20 @@ jobs:
           echo "#########################################"
           make ecr-login
 
+      - name: Update values.yaml with gitCommitHash
+        run: |
+          echo "#########################################"
+          echo "# Updating values.yaml with gitCommitHash..."
+          echo "#########################################"
+          COMMIT_HASH=$(git rev-parse HEAD)
+          echo "Current commit hash: $COMMIT_HASH"
+          if grep -q '^gitCommitHash:' values.yaml; then
+              sed -i "s/^gitCommitHash:.*/gitCommitHash: $COMMIT_HASH/" values.yaml
+          else
+              echo "gitCommitHash: $COMMIT_HASH" >> values.yaml
+          fi
+          cat values.yaml
+
       - name: Build Binary with make install
         run: |
           echo "#########################################"
