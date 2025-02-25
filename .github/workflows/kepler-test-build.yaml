@@ -8,12 +8,16 @@ on:
     branches:
       - test-kepler
 
+permissions:
+  contents: write  # GITHUB_TOKEN имеет права записи
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     env:
       AWS_REGION: "ap-southeast-1"
+      ECR_REPO: "847647377987.dkr.ecr.ap-southeast-1.amazonaws.com/kepler:latest"
 
     steps:
       - name: Checkout repository
@@ -58,11 +62,11 @@ jobs:
           echo "#########################################"
           echo "# Committing updated charts/kepler/values.yaml..."
           echo "#########################################"
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add charts/kepler/values.yaml
           git commit -m "Update gitCommitHash to $(git rev-parse HEAD)" || echo "No changes to commit"
-          git push
+          git push origin HEAD:test-kepler
 
       - name: Build Binary with make install
         run: |
@@ -70,6 +74,8 @@ jobs:
           echo "# Building binary with 'make build' ..."
           echo "#########################################"
           make build
+          echo "---- Listing files after build:"
+          ls -al
 
       - name: Docker Build
         run: |
