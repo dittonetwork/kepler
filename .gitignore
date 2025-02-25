@@ -9,4 +9,5 @@ release/
 *.ign
 appd
 keplerd
+build
 charts/kepler/values.yaml
