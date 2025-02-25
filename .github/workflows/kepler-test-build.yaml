@@ -43,6 +43,29 @@ jobs:
           echo "#########################################"
           make ecr-login
 
+      - name: Build Binary with make install
+        run: |
+          echo "#########################################"
+          echo "# Building binary with 'make build' ..."
+          echo "#########################################"
+          make build
+          echo "---- Listing files after build:"
+          ls -al
+
+      - name: Docker Build
+        run: |
+          echo "#########################################"
+          echo "# Building Docker image with 'make docker-build' ..."
+          echo "#########################################"
+          make docker-build
+
+      - name: Docker Push
+        run: |
+          echo "#########################################"
+          echo "# Pushing Docker image to Amazon ECR with 'make docker-push' ..."
+          echo "#########################################"
+          make docker-push
+
       - name: Update values.yaml with gitCommitHash
         run: |
           echo "#########################################"
@@ -67,26 +90,3 @@ jobs:
           git add charts/kepler/values.yaml
           git commit -m "Update gitCommitHash to $(git rev-parse HEAD)" || echo "No changes to commit"
           git push origin HEAD:test-kepler
-
-      - name: Build Binary with make install
-        run: |
-          echo "#########################################"
-          echo "# Building binary with 'make build' ..."
-          echo "#########################################"
-          make build
-          echo "---- Listing files after build:"
-          ls -al
-
-      - name: Docker Build
-        run: |
-          echo "#########################################"
-          echo "# Building Docker image with 'make docker-build' ..."
-          echo "#########################################"
-          make docker-build
-
-      - name: Docker Push
-        run: |
-          echo "#########################################"
-          echo "# Pushing Docker image to Amazon ECR with 'make docker-push' ..."
-          echo "#########################################"
-          make docker-push
