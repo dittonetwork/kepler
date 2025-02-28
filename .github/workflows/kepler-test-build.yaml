@@ -36,13 +36,6 @@ jobs:
       - name: Login to Amazon ECR (Action)
         uses: aws-actions/amazon-ecr-login@v2
 
-      # - name: ECR Login via Makefile
-      #   run: |
-      #     echo "#########################################"
-      #     echo "# Logging into Amazon ECR (Makefile target) ..."
-      #     echo "#########################################"
-      #     make ecr-login
-
       - name: Build Binary with make build
         run: |
           echo "#########################################"
@@ -83,24 +76,10 @@ jobs:
           cat charts/kepler/values.yaml
           echo "imageDigest=$IMAGE_DIGEST" >> "$GITHUB_OUTPUT"
 
-      # - name: Update Chart version in Chart.yaml
-      #   run: |
-      #     echo "#########################################"
-      #     echo "# Updating charts/kepler/Chart.yaml version..."
-      #     echo "#########################################"
-      #     CURRENT_VERSION=$(grep '^version:' charts/kepler/Chart.yaml | awk '{print $2}')
-      #     echo "Current version: $CURRENT_VERSION"
-      #     IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT_VERSION"
-      #     NEW_PATCH=$((PATCH + 1))
-      #     NEW_VERSION="${MAJOR}.${MINOR}.${NEW_PATCH}"
-      #     echo "New version: $NEW_VERSION"
-      #     sed -i "s/^version:.*/version: $NEW_VERSION/" charts/kepler/Chart.yaml
-      #     cat charts/kepler/Chart.yaml
-
       - name: Commit updated chart files
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add charts/kepler/Chart.yaml charts/kepler/values.yaml
+          git add charts/kepler/values.yaml
           git commit -m "Update image digest to ${{ steps.update-image.outputs.imageDigest }}" || echo "No changes to commit"
           git push origin HEAD:test-kepler
