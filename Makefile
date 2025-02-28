@@ -128,8 +128,8 @@ govulncheck:
 ### Docker  ####
 ################
 
-# AWS_REGION := ap-southeast-1
-# ECR_REPO := 847647377987.dkr.ecr.$(AWS_REGION).amazonaws.com/kepler:latest
+AWS_REGION := ap-southeast-1
+ECR_REPO := 847647377987.dkr.ecr.$(AWS_REGION).amazonaws.com/kepler:latest
 
 ecr-login:
 	@echo "--> Logging in to Amazon ECR"
