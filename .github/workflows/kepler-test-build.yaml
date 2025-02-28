@@ -36,12 +36,12 @@ jobs:
       - name: Login to Amazon ECR (Action)
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: ECR Login via Makefile
-        run: |
-          echo "#########################################"
-          echo "# Logging into Amazon ECR (Makefile target) ..."
-          echo "#########################################"
-          make ecr-login
+      # - name: ECR Login via Makefile
+      #   run: |
+      #     echo "#########################################"
+      #     echo "# Logging into Amazon ECR (Makefile target) ..."
+      #     echo "#########################################"
+      #     make ecr-login
 
       - name: Build Binary with make build
         run: |
