@@ -2,7 +2,8 @@ package keeper
 
 import (
 	"context"
-	"kepler/x/epochs/types"
+
+	"github.com/dittonetwork/kepler/x/epochs/types"
 )
 
 // InitGenesis initializes the module's state from a provided genesis state.

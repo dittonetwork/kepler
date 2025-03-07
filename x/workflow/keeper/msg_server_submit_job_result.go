@@ -8,8 +8,8 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	jobTypes "kepler/x/job/types"
-	"kepler/x/workflow/types"
+	jobTypes "github.com/dittonetwork/kepler/x/job/types"
+	"github.com/dittonetwork/kepler/x/workflow/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )

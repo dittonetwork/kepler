@@ -3,7 +3,8 @@ package keeper
 import (
 	"context"
 	"fmt"
-	"kepler/x/epochs/types"
+
+	"github.com/dittonetwork/kepler/x/epochs/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )

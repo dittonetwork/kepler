@@ -5,7 +5,7 @@ import "amino/amino.proto";
 import "gogoproto/gogo.proto";
 import "kepler/committee/params.proto";
 
-option go_package = "kepler/x/committee/types";
+option go_package = "github.com/dittonetwork/kepler/x/committee/types";
 
 // Committee defines the committee object.
 message Committee {

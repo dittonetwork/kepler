@@ -2,7 +2,8 @@ package keeper
 
 import (
 	"context"
-	"kepler/x/epochs/types"
+
+	"github.com/dittonetwork/kepler/x/epochs/types"
 )
 
 // Hooks returns the epoch module's epoch hooks.

@@ -3,10 +3,10 @@ package job_test
 import (
 	"testing"
 
-	keepertest "kepler/testutil/keeper"
-	"kepler/testutil/nullify"
-	job "kepler/x/job/module"
-	"kepler/x/job/types"
+	keepertest "github.com/dittonetwork/kepler/testutil/keeper"
+	"github.com/dittonetwork/kepler/testutil/nullify"
+	job "github.com/dittonetwork/kepler/x/job/module"
+	"github.com/dittonetwork/kepler/x/job/types"
 
 	"github.com/stretchr/testify/require"
 )

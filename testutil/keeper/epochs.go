@@ -15,8 +15,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 
-	"kepler/x/epochs/keeper"
-	"kepler/x/epochs/types"
+	"github.com/dittonetwork/kepler/x/epochs/keeper"
+	"github.com/dittonetwork/kepler/x/epochs/types"
 )
 
 func EpochsKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {

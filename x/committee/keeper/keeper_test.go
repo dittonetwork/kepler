@@ -3,12 +3,12 @@ package keeper_test
 import (
 	"crypto/ecdsa"
 	"fmt"
-	"kepler/testutil/keeper"
+	"github.com/dittonetwork/kepler/testutil/keeper"
 	"testing"
 
+	"github.com/dittonetwork/kepler/x/committee/types"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/stretchr/testify/require"
-	"kepler/x/committee/types"
 )
 
 func TestKeeper_CanBeSigned_Success(t *testing.T) {

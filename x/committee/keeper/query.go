@@ -2,7 +2,8 @@ package keeper
 
 import (
 	"context"
-	"kepler/x/committee/types"
+
+	"github.com/dittonetwork/kepler/x/committee/types"
 )
 
 var _ types.QueryServer = Keeper{}

@@ -3,7 +3,7 @@ package keeper
 import (
 	"context"
 
-	"kepler/x/committee/types"
+	"github.com/dittonetwork/kepler/x/committee/types"
 )
 
 // GetParams get all parameters as types.Params.

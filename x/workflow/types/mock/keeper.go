@@ -11,7 +11,7 @@ package mock
 
 import (
 	context "context"
-	types0 "kepler/x/workflow/types"
+	types0 "github.com/dittonetwork/kepler/x/workflow/types"
 	reflect "reflect"
 
 	log "cosmossdk.io/log"

@@ -1,8 +1,8 @@
 package keeper_test
 
 import (
-	epochskeeper "kepler/x/epochs/keeper"
-	"kepler/x/epochs/types"
+	epochskeeper "github.com/dittonetwork/kepler/x/epochs/keeper"
+	"github.com/dittonetwork/kepler/x/epochs/types"
 	"testing"
 	"time"
 

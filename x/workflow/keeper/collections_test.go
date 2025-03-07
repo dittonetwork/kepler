@@ -1,8 +1,8 @@
 package keeper_test
 
 import (
-	"kepler/testutil/keeper"
-	"kepler/x/workflow/types"
+	"github.com/dittonetwork/kepler/testutil/keeper"
+	"github.com/dittonetwork/kepler/x/workflow/types"
 	"testing"
 	"time"
 

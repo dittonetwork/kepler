@@ -3,8 +3,9 @@ package keeper
 import (
 	"errors"
 	"fmt"
-	"kepler/x/workflow/types"
 	"slices"
+
+	"github.com/dittonetwork/kepler/x/workflow/types"
 
 	"cosmossdk.io/collections"
 	"cosmossdk.io/collections/indexes"

@@ -1,7 +1,7 @@
 package keeper
 
 import (
-	"kepler/x/committee/types"
+	"github.com/dittonetwork/kepler/x/committee/types"
 )
 
 type msgServer struct {

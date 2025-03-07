@@ -4,10 +4,10 @@ package kepler.workflow;
 import "amino/amino.proto";
 import "gogoproto/gogo.proto";
 
-option go_package = "kepler/x/workflow/types";
+option go_package = "github.com/dittonetwork/kepler/x/workflow/types";
 
 // Params defines the parameters for the module.
 message Params {
-  option (amino.name) = "kepler/x/workflow/Params";
+  option (amino.name) = "github.com/dittonetwork/kepler/x/workflow/Params";
   option (gogoproto.equal) = true;
 }

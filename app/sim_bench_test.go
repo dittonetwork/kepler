@@ -12,7 +12,7 @@ import (
 	simcli "github.com/cosmos/cosmos-sdk/x/simulation/client/cli"
 	"github.com/stretchr/testify/require"
 
-	"kepler/app"
+	"github.com/dittonetwork/kepler/app"
 )
 
 // Profile with:

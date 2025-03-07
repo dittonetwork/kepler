@@ -5,5 +5,5 @@ import "cosmos/app/v1alpha1/module.proto";
 
 // Module is the config object for the module.
 message Module {
-  option (cosmos.app.v1alpha1.module) = {go_import: "kepler/x/epochs"};
+  option (cosmos.app.v1alpha1.module) = {go_import: "github.com/dittonetwork/kepler/x/epochs"};
 }

@@ -4,10 +4,10 @@ package kepler.instant;
 import "amino/amino.proto";
 import "gogoproto/gogo.proto";
 
-option go_package = "kepler/x/instant/types";
+option go_package = "github.com/dittonetwork/kepler/x/instant/types";
 
 // Params defines the parameters for the module.
 message Params {
-  option (amino.name) = "kepler/x/instant/Params";
+  option (amino.name) = "github.com/dittonetwork/kepler/x/instant/Params";
   option (gogoproto.equal) = true;
 }

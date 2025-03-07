@@ -1,7 +1,7 @@
 package keeper
 
 import (
-	"kepler/x/workflow/types"
+	"github.com/dittonetwork/kepler/x/workflow/types"
 )
 
 type msgServer struct {

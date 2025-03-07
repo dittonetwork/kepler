@@ -20,9 +20,9 @@ import (
 
 	// this line is used by starport scaffolding # 1.
 
-	modulev1 "kepler/api/kepler/instant/module"
-	"kepler/x/instant/keeper"
-	"kepler/x/instant/types"
+	modulev1 "github.com/dittonetwork/kepler/api/kepler/instant/module"
+	"github.com/dittonetwork/kepler/x/instant/keeper"
+	"github.com/dittonetwork/kepler/x/instant/types"
 )
 
 var (

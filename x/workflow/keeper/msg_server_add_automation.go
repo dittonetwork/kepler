@@ -3,7 +3,8 @@ package keeper
 import (
 	"context"
 	"fmt"
-	"kepler/x/workflow/types"
+
+	"github.com/dittonetwork/kepler/x/workflow/types"
 
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

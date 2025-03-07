@@ -6,7 +6,7 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	"kepler/x/job/types"
+	"github.com/dittonetwork/kepler/x/job/types"
 )
 
 func (k Keeper) Params(_ context.Context, req *types.QueryParamsRequest) (*types.QueryParamsResponse, error) {

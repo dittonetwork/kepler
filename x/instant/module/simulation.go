@@ -8,9 +8,9 @@ import (
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	"github.com/cosmos/cosmos-sdk/x/simulation"
 
-	"kepler/testutil/sample"
-	instantsimulation "kepler/x/instant/simulation"
-	"kepler/x/instant/types"
+	"github.com/dittonetwork/kepler/testutil/sample"
+	instantsimulation "github.com/dittonetwork/kepler/x/instant/simulation"
+	"github.com/dittonetwork/kepler/x/instant/types"
 )
 
 // avoid unused import issue.

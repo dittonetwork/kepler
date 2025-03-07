@@ -3,8 +3,8 @@ package committee
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"kepler/x/committee/keeper"
-	"kepler/x/committee/types"
+	"github.com/dittonetwork/kepler/x/committee/keeper"
+	"github.com/dittonetwork/kepler/x/committee/types"
 )
 
 // InitGenesis initializes the module's state from a provided genesis state.

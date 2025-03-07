@@ -6,7 +6,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 
-	"kepler/x/workflow/types"
+	"github.com/dittonetwork/kepler/x/workflow/types"
 )
 
 func TestMsgUpdateParams(t *testing.T) {

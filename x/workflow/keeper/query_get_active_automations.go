@@ -3,7 +3,7 @@ package keeper
 import (
 	"context"
 
-	"kepler/x/workflow/types"
+	"github.com/dittonetwork/kepler/x/workflow/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"google.golang.org/grpc/codes"

@@ -3,7 +3,7 @@ package types_test
 import (
 	"testing"
 
-	"kepler/x/epochs/types"
+	"github.com/dittonetwork/kepler/x/epochs/types"
 
 	"github.com/stretchr/testify/require"
 )

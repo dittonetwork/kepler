@@ -8,9 +8,9 @@ import (
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	"github.com/cosmos/cosmos-sdk/x/simulation"
 
-	"kepler/testutil/sample"
-	jobsimulation "kepler/x/job/simulation"
-	"kepler/x/job/types"
+	"github.com/dittonetwork/kepler/testutil/sample"
+	jobsimulation "github.com/dittonetwork/kepler/x/job/simulation"
+	"github.com/dittonetwork/kepler/x/job/types"
 )
 
 // avoid unused import issue.

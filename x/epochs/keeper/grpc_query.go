@@ -3,7 +3,8 @@ package keeper
 import (
 	"context"
 	"errors"
-	"kepler/x/epochs/types"
+
+	"github.com/dittonetwork/kepler/x/epochs/types"
 
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

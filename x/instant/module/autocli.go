@@ -3,7 +3,7 @@ package instant
 import (
 	autocliv1 "cosmossdk.io/api/cosmos/autocli/v1"
 
-	modulev1 "kepler/api/kepler/instant"
+	modulev1 "github.com/dittonetwork/kepler/api/kepler/instant"
 )
 
 // AutoCLIOptions implements the autocli.HasAutoCLIConfig interface.

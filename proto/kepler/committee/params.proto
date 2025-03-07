@@ -4,10 +4,10 @@ package kepler.committee;
 import "amino/amino.proto";
 import "gogoproto/gogo.proto";
 
-option go_package = "kepler/x/committee/types";
+option go_package = "github.com/dittonetwork/kepler/x/committee/types";
 
 // Params defines the parameters for the module.
 message Params {
-  option (amino.name) = "kepler/x/committee/Params";
+  option (amino.name) = "github.com/dittonetwork/kepler/x/committee/Params";
   option (gogoproto.equal) = true;
 }

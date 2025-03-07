@@ -5,7 +5,7 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/runtime"
 
-	"kepler/x/instant/types"
+	"github.com/dittonetwork/kepler/x/instant/types"
 )
 
 // GetParams get all parameters as types.Params.

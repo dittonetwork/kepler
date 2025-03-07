@@ -3,8 +3,8 @@ package job
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"kepler/x/job/keeper"
-	"kepler/x/job/types"
+	"github.com/dittonetwork/kepler/x/job/keeper"
+	"github.com/dittonetwork/kepler/x/job/types"
 )
 
 // InitGenesis initializes the module's state from a provided genesis state.

@@ -5,7 +5,7 @@ package kepler.job;
 import "google/api/annotations.proto";
 import "kepler/job/job.proto";
 
-option go_package = "kepler/x/job/types";
+option go_package = "github.com/dittonetwork/kepler/x/job/types";
 
 // Query defines the gRPC querier service.
 service Query {

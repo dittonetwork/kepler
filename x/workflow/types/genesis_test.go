@@ -3,7 +3,7 @@ package types_test
 import (
 	"testing"
 
-	"kepler/x/workflow/types"
+	"github.com/dittonetwork/kepler/x/workflow/types"
 
 	"github.com/stretchr/testify/require"
 )

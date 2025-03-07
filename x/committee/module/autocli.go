@@ -3,7 +3,7 @@ package committee
 import (
 	autocliv1 "cosmossdk.io/api/cosmos/autocli/v1"
 
-	modulev1 "kepler/api/kepler/committee"
+	modulev1 "github.com/dittonetwork/kepler/api/kepler/committee"
 )
 
 // AutoCLIOptions implements the autocli.HasAutoCLIConfig interface.

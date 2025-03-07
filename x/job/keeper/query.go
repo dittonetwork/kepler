@@ -1,7 +1,7 @@
 package keeper
 
 import (
-	"kepler/x/job/types"
+	"github.com/dittonetwork/kepler/x/job/types"
 )
 
 var _ types.QueryServer = Keeper{}

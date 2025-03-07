@@ -1,7 +1,7 @@
 syntax = "proto3";
 package kepler.job;
 
-option go_package = "kepler/x/job/types";
+option go_package = "github.com/dittonetwork/kepler/x/job/types";
 
 // Job structure
 message Job {

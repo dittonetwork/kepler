@@ -2,7 +2,8 @@ package types
 
 import (
 	"context"
-	"kepler/x/job/types"
+
+	"github.com/dittonetwork/kepler/x/job/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
