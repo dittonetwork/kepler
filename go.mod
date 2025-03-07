@@ -1,4 +1,4 @@
-module kepler
+module github.com/dittonetwork/kepler
 
 go 1.23.6
 
