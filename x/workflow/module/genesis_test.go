@@ -3,10 +3,10 @@ package workflow_test
 import (
 	"testing"
 
-	keepertest "kepler/testutil/keeper"
-	"kepler/testutil/nullify"
-	workflow "kepler/x/workflow/module"
-	"kepler/x/workflow/types"
+	keepertest "github.com/dittonetwork/kepler/testutil/keeper"
+	"github.com/dittonetwork/kepler/testutil/nullify"
+	workflow "github.com/dittonetwork/kepler/x/workflow/module"
+	"github.com/dittonetwork/kepler/x/workflow/types"
 
 	"github.com/stretchr/testify/require"
 )

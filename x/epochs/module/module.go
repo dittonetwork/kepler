@@ -18,9 +18,9 @@ import (
 
 	// this line is used by starport scaffolding # 1.
 
-	modulev1 "kepler/api/kepler/epochs/module"
-	"kepler/x/epochs/keeper"
-	"kepler/x/epochs/types"
+	modulev1 "github.com/dittonetwork/kepler/api/kepler/epochs/module"
+	"github.com/dittonetwork/kepler/x/epochs/keeper"
+	"github.com/dittonetwork/kepler/x/epochs/types"
 )
 
 var (

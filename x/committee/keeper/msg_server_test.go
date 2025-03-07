@@ -6,9 +6,9 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	keepertest "kepler/testutil/keeper"
-	"kepler/x/committee/keeper"
-	"kepler/x/committee/types"
+	keepertest "github.com/dittonetwork/kepler/testutil/keeper"
+	"github.com/dittonetwork/kepler/x/committee/keeper"
+	"github.com/dittonetwork/kepler/x/committee/types"
 )
 
 func setupMsgServer(t testing.TB) (keeper.Keeper, types.MsgServer, context.Context) {

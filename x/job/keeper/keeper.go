@@ -2,7 +2,8 @@ package keeper
 
 import (
 	"fmt"
-	"kepler/x/job/types"
+
+	"github.com/dittonetwork/kepler/x/job/types"
 
 	"github.com/pkg/errors"
 

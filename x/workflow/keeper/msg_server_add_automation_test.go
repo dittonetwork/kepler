@@ -6,10 +6,10 @@ import (
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/mock/gomock"
 
-	keepertest "kepler/testutil/keeper"
-	"kepler/x/workflow/keeper"
-	"kepler/x/workflow/types"
-	"kepler/x/workflow/types/mock"
+	keepertest "github.com/dittonetwork/kepler/testutil/keeper"
+	"github.com/dittonetwork/kepler/x/workflow/keeper"
+	"github.com/dittonetwork/kepler/x/workflow/types"
+	"github.com/dittonetwork/kepler/x/workflow/types/mock"
 	"testing"
 )
 

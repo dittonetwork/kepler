@@ -4,7 +4,7 @@ package kepler.job;
 import "amino/amino.proto";
 import "gogoproto/gogo.proto";
 
-option go_package = "kepler/x/job/types";
+option go_package = "github.com/dittonetwork/kepler/x/job/types";
 
 // GenesisState defines the job module's genesis state.
 message GenesisState {}

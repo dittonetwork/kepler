@@ -17,8 +17,8 @@ import (
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 	"github.com/stretchr/testify/require"
 
-	"kepler/x/workflow/keeper"
-	"kepler/x/workflow/types"
+	"github.com/dittonetwork/kepler/x/workflow/keeper"
+	"github.com/dittonetwork/kepler/x/workflow/types"
 )
 
 func WorkflowKeeper(t testing.TB) (keeper.BaseKeeper, sdk.Context) {

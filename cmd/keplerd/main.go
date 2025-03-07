@@ -7,8 +7,8 @@ import (
 	clienthelpers "cosmossdk.io/client/v2/helpers"
 	svrcmd "github.com/cosmos/cosmos-sdk/server/cmd"
 
-	"kepler/app"
-	"kepler/cmd/keplerd/cmd"
+	"github.com/dittonetwork/kepler/app"
+	"github.com/dittonetwork/kepler/cmd/keplerd/cmd"
 )
 
 func main() {

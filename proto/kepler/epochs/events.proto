@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package kepler.epochs;
 
-option go_package = "kepler/x/epochs/types";
+option go_package = "github.com/dittonetwork/kepler/x/epochs/types";
 
 // EventEpochEnd is an event that is emitted when an epoch ends.
 message EventEpochEnd {

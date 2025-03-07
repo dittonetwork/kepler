@@ -3,8 +3,8 @@ package simulation
 import (
 	"math/rand"
 
-	"kepler/x/workflow/keeper"
-	"kepler/x/workflow/types"
+	"github.com/dittonetwork/kepler/x/workflow/keeper"
+	"github.com/dittonetwork/kepler/x/workflow/types"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	sdk "github.com/cosmos/cosmos-sdk/types"

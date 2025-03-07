@@ -3,7 +3,7 @@ package types_test
 import (
 	"testing"
 
-	"kepler/x/job/types"
+	"github.com/dittonetwork/kepler/x/job/types"
 
 	"github.com/stretchr/testify/require"
 )

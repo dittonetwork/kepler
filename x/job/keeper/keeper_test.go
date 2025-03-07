@@ -1,10 +1,10 @@
 package keeper_test
 
 import (
+	"github.com/dittonetwork/kepler/x/job/keeper"
+	"github.com/dittonetwork/kepler/x/job/types"
+	"github.com/dittonetwork/kepler/x/job/types/mock"
 	"github.com/stretchr/testify/require"
-	"kepler/x/job/keeper"
-	"kepler/x/job/types"
-	"kepler/x/job/types/mock"
 	"testing"
 
 	"go.uber.org/mock/gomock"

@@ -3,7 +3,7 @@ package keeper
 import (
 	"fmt"
 
-	"kepler/x/epochs/types"
+	"github.com/dittonetwork/kepler/x/epochs/types"
 
 	"cosmossdk.io/collections"
 	"cosmossdk.io/core/store"

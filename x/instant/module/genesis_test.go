@@ -3,10 +3,10 @@ package instant_test
 import (
 	"testing"
 
-	keepertest "kepler/testutil/keeper"
-	"kepler/testutil/nullify"
-	instant "kepler/x/instant/module"
-	"kepler/x/instant/types"
+	keepertest "github.com/dittonetwork/kepler/testutil/keeper"
+	"github.com/dittonetwork/kepler/testutil/nullify"
+	instant "github.com/dittonetwork/kepler/x/instant/module"
+	"github.com/dittonetwork/kepler/x/instant/types"
 
 	"github.com/stretchr/testify/require"
 )

@@ -3,7 +3,7 @@ package workflow
 import (
 	autocliv1 "cosmossdk.io/api/cosmos/autocli/v1"
 
-	modulev1 "kepler/api/kepler/workflow"
+	modulev1 "github.com/dittonetwork/kepler/api/kepler/workflow"
 )
 
 // AutoCLIOptions implements the autocli.HasAutoCLIConfig interface.

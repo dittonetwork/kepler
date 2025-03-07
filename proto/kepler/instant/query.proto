@@ -7,7 +7,7 @@ import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "kepler/instant/params.proto";
 
-option go_package = "kepler/x/instant/types";
+option go_package = "github.com/dittonetwork/kepler/x/instant/types";
 
 // Query defines the gRPC querier service.
 service Query {

@@ -3,8 +3,8 @@ package instant
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"kepler/x/instant/keeper"
-	"kepler/x/instant/types"
+	"github.com/dittonetwork/kepler/x/instant/keeper"
+	"github.com/dittonetwork/kepler/x/instant/types"
 )
 
 // InitGenesis initializes the module's state from a provided genesis state.

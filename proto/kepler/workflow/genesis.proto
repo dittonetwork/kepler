@@ -5,7 +5,7 @@ import "amino/amino.proto";
 import "gogoproto/gogo.proto";
 import "kepler/workflow/params.proto";
 
-option go_package = "kepler/x/workflow/types";
+option go_package = "github.com/dittonetwork/kepler/x/workflow/types";
 
 // GenesisState defines the workflow module's genesis state.
 message GenesisState {

@@ -5,8 +5,8 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	keepertest "kepler/testutil/keeper"
-	"kepler/x/instant/types"
+	keepertest "github.com/dittonetwork/kepler/testutil/keeper"
+	"github.com/dittonetwork/kepler/x/instant/types"
 )
 
 func TestParamsQuery(t *testing.T) {

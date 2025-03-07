@@ -18,9 +18,9 @@ import (
 
 	// this line is used by starport scaffolding # 1.
 
-	modulev1 "kepler/api/kepler/job/module"
-	"kepler/x/job/keeper"
-	"kepler/x/job/types"
+	modulev1 "github.com/dittonetwork/kepler/api/kepler/job/module"
+	"github.com/dittonetwork/kepler/x/job/keeper"
+	"github.com/dittonetwork/kepler/x/job/types"
 )
 
 var (

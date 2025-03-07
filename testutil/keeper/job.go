@@ -1,7 +1,7 @@
 package keeper
 
 import (
-	"kepler/x/job/types/mock"
+	"github.com/dittonetwork/kepler/x/job/types/mock"
 	"testing"
 
 	"go.uber.org/mock/gomock"
@@ -18,8 +18,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 
-	"kepler/x/job/keeper"
-	"kepler/x/job/types"
+	"github.com/dittonetwork/kepler/x/job/keeper"
+	"github.com/dittonetwork/kepler/x/job/types"
 )
 
 func JobKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {

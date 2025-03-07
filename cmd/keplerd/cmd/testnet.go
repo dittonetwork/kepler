@@ -25,7 +25,7 @@ import (
 	"github.com/spf13/cast"
 	"github.com/spf13/cobra"
 
-	"kepler/app"
+	"github.com/dittonetwork/kepler/app"
 )
 
 const (

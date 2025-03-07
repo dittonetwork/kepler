@@ -9,7 +9,7 @@ import "google/api/annotations.proto";
 import "kepler/workflow/automation.proto";
 import "kepler/workflow/params.proto";
 
-option go_package = "kepler/x/workflow/types";
+option go_package = "github.com/dittonetwork/kepler/x/workflow/types";
 
 // Query defines the gRPC querier service.
 service Query {

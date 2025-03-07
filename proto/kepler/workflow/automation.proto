@@ -4,7 +4,7 @@ package kepler.workflow;
 import "cosmos_proto/cosmos.proto";
 import "amino/amino.proto";
 
-option go_package = "kepler/x/workflow/types";
+option go_package = "github.com/dittonetwork/kepler/x/workflow/types";
 
 // Automation entity
 message Automation {

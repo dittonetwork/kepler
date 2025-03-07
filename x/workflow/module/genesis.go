@@ -3,8 +3,8 @@ package workflow
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"kepler/x/workflow/keeper"
-	"kepler/x/workflow/types"
+	"github.com/dittonetwork/kepler/x/workflow/keeper"
+	"github.com/dittonetwork/kepler/x/workflow/types"
 )
 
 // InitGenesis initializes the module's state from a provided genesis state.

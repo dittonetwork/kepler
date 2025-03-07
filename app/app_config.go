@@ -1,25 +1,25 @@
 package app
 
 import (
-	epochsmodulev1 "kepler/api/kepler/epochs/module"
-	_ "kepler/x/epochs/module" // import for side effects
-	epochstypes "kepler/x/epochs/types"
+	epochsmodulev1 "github.com/dittonetwork/kepler/api/kepler/epochs/module"
+	_ "github.com/dittonetwork/kepler/x/epochs/module" // import for side effects
+	epochstypes "github.com/dittonetwork/kepler/x/epochs/types"
 
-	workflowmodulev1 "kepler/api/kepler/workflow/module"
-	_ "kepler/x/workflow/module" // import for side-effects
-	workflowmoduletypes "kepler/x/workflow/types"
+	workflowmodulev1 "github.com/dittonetwork/kepler/api/kepler/workflow/module"
+	_ "github.com/dittonetwork/kepler/x/workflow/module" // import for side-effects
+	workflowmoduletypes "github.com/dittonetwork/kepler/x/workflow/types"
 
-	committeemodulev1 "kepler/api/kepler/committee/module"
-	_ "kepler/x/committee/module" // import for side-effects
-	committeemoduletypes "kepler/x/committee/types"
+	committeemodulev1 "github.com/dittonetwork/kepler/api/kepler/committee/module"
+	_ "github.com/dittonetwork/kepler/x/committee/module" // import for side-effects
+	committeemoduletypes "github.com/dittonetwork/kepler/x/committee/types"
 
-	jobmodulev1 "kepler/api/kepler/job/module"
-	_ "kepler/x/job/module" // import for side-effects
-	jobmoduletypes "kepler/x/job/types"
+	jobmodulev1 "github.com/dittonetwork/kepler/api/kepler/job/module"
+	_ "github.com/dittonetwork/kepler/x/job/module" // import for side-effects
+	jobmoduletypes "github.com/dittonetwork/kepler/x/job/types"
 
-	instantmodulev1 "kepler/api/kepler/instant/module"
-	_ "kepler/x/instant/module" // import for side-effects
-	instantmoduletypes "kepler/x/instant/types"
+	instantmodulev1 "github.com/dittonetwork/kepler/api/kepler/instant/module"
+	_ "github.com/dittonetwork/kepler/x/instant/module" // import for side-effects
+	instantmoduletypes "github.com/dittonetwork/kepler/x/instant/types"
 
 	runtimev1alpha1 "cosmossdk.io/api/cosmos/app/runtime/v1alpha1"
 	appv1alpha1 "cosmossdk.io/api/cosmos/app/v1alpha1"

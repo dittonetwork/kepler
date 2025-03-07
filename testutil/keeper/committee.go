@@ -17,8 +17,8 @@ import (
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 	"github.com/stretchr/testify/require"
 
-	"kepler/x/committee/keeper"
-	"kepler/x/committee/types"
+	"github.com/dittonetwork/kepler/x/committee/keeper"
+	"github.com/dittonetwork/kepler/x/committee/types"
 )
 
 func CommitteeKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {

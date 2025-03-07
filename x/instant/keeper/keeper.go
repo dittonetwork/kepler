@@ -8,7 +8,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"kepler/x/instant/types"
+	"github.com/dittonetwork/kepler/x/instant/types"
 )
 
 type (

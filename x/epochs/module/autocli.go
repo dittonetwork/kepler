@@ -3,7 +3,7 @@ package epochs
 import (
 	autocliv1 "cosmossdk.io/api/cosmos/autocli/v1"
 
-	modulev1 "kepler/api/kepler/epochs"
+	modulev1 "github.com/dittonetwork/kepler/api/kepler/epochs"
 )
 
 // AutoCLIOptions implements the autocli.HasAutoCLIConfig interface.

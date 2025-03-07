@@ -7,7 +7,7 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	"kepler/x/workflow/types"
+	"github.com/dittonetwork/kepler/x/workflow/types"
 )
 
 func (k BaseKeeper) Params(goCtx context.Context, req *types.QueryParamsRequest) (*types.QueryParamsResponse, error) {

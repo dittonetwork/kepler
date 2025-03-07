@@ -1,9 +1,9 @@
 package keeper_test
 
 import (
+	"github.com/dittonetwork/kepler/testutil/keeper"
+	"github.com/dittonetwork/kepler/x/workflow/types"
 	"github.com/stretchr/testify/require"
-	"kepler/testutil/keeper"
-	"kepler/x/workflow/types"
 	"testing"
 )
 

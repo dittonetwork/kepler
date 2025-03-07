@@ -7,7 +7,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/testutil/network"
 	"github.com/stretchr/testify/require"
 
-	"kepler/app"
+	"github.com/dittonetwork/kepler/app"
 )
 
 type (

@@ -3,7 +3,7 @@ package types_test
 import (
 	"testing"
 
-	"kepler/x/instant/types"
+	"github.com/dittonetwork/kepler/x/instant/types"
 
 	"github.com/stretchr/testify/require"
 )

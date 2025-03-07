@@ -20,9 +20,9 @@ import (
 
 	// this line is used by starport scaffolding # 1.
 
-	modulev1 "kepler/api/kepler/committee/module"
-	"kepler/x/committee/keeper"
-	"kepler/x/committee/types"
+	modulev1 "github.com/dittonetwork/kepler/api/kepler/committee/module"
+	"github.com/dittonetwork/kepler/x/committee/keeper"
+	"github.com/dittonetwork/kepler/x/committee/types"
 )
 
 var (

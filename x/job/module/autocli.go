@@ -3,7 +3,7 @@ package job
 import (
 	autocliv1 "cosmossdk.io/api/cosmos/autocli/v1"
 
-	modulev1 "kepler/api/kepler/job"
+	modulev1 "github.com/dittonetwork/kepler/api/kepler/job"
 )
 
 // AutoCLIOptions implements the autocli.HasAutoCLIConfig interface.

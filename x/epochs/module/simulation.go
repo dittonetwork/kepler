@@ -7,7 +7,7 @@ import (
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	"github.com/cosmos/cosmos-sdk/x/simulation"
 
-	"kepler/x/epochs/types"
+	"github.com/dittonetwork/kepler/x/epochs/types"
 )
 
 // avoid unused import issue.

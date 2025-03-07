@@ -20,9 +20,9 @@ import (
 
 	// this line is used by starport scaffolding # 1.
 
-	modulev1 "kepler/api/kepler/workflow/module"
-	"kepler/x/workflow/keeper"
-	"kepler/x/workflow/types"
+	modulev1 "github.com/dittonetwork/kepler/api/kepler/workflow/module"
+	"github.com/dittonetwork/kepler/x/workflow/keeper"
+	"github.com/dittonetwork/kepler/x/workflow/types"
 )
 
 var (

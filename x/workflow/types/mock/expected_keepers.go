@@ -11,7 +11,7 @@ package mock
 
 import (
 	context "context"
-	types0 "kepler/x/job/types"
+	types0 "github.com/dittonetwork/kepler/x/job/types"
 	reflect "reflect"
 
 	types "github.com/cosmos/cosmos-sdk/types"

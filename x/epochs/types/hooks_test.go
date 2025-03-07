@@ -2,7 +2,7 @@ package types_test
 
 import (
 	"context"
-	"kepler/x/epochs/types"
+	"github.com/dittonetwork/kepler/x/epochs/types"
 	"testing"
 
 	"cosmossdk.io/errors"

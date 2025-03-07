@@ -17,8 +17,8 @@ import (
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 	"github.com/stretchr/testify/require"
 
-	"kepler/x/instant/keeper"
-	"kepler/x/instant/types"
+	"github.com/dittonetwork/kepler/x/instant/keeper"
+	"github.com/dittonetwork/kepler/x/instant/types"
 )
 
 func InstantKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {

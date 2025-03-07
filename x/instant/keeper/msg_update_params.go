@@ -6,7 +6,7 @@ import (
 	errorsmod "cosmossdk.io/errors"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"kepler/x/instant/types"
+	"github.com/dittonetwork/kepler/x/instant/types"
 )
 
 func (k msgServer) UpdateParams(

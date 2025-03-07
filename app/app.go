@@ -34,16 +34,16 @@ import (
 	_ "github.com/cosmos/cosmos-sdk/x/staking" // import for side-effects
 	stakingkeeper "github.com/cosmos/cosmos-sdk/x/staking/keeper"
 
-	epochskeeper "kepler/x/epochs/keeper"
-	workflowmodulekeeper "kepler/x/workflow/keeper"
+	epochskeeper "github.com/dittonetwork/kepler/x/epochs/keeper"
+	workflowmodulekeeper "github.com/dittonetwork/kepler/x/workflow/keeper"
 
-	committeemodulekeeper "kepler/x/committee/keeper"
-	jobmodulekeeper "kepler/x/job/keeper"
+	committeemodulekeeper "github.com/dittonetwork/kepler/x/committee/keeper"
+	jobmodulekeeper "github.com/dittonetwork/kepler/x/job/keeper"
 
-	instantmodulekeeper "kepler/x/instant/keeper"
+	instantmodulekeeper "github.com/dittonetwork/kepler/x/instant/keeper"
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 
-	"kepler/docs"
+	"github.com/dittonetwork/kepler/docs"
 )
 
 const (

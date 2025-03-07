@@ -1,7 +1,7 @@
 package keeper
 
 import (
-	"kepler/x/instant/types"
+	"github.com/dittonetwork/kepler/x/instant/types"
 )
 
 type msgServer struct {

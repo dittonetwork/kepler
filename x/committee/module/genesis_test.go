@@ -3,10 +3,10 @@ package committee_test
 import (
 	"testing"
 
-	keepertest "kepler/testutil/keeper"
-	"kepler/testutil/nullify"
-	committee "kepler/x/committee/module"
-	"kepler/x/committee/types"
+	keepertest "github.com/dittonetwork/kepler/testutil/keeper"
+	"github.com/dittonetwork/kepler/testutil/nullify"
+	committee "github.com/dittonetwork/kepler/x/committee/module"
+	"github.com/dittonetwork/kepler/x/committee/types"
 
 	"github.com/stretchr/testify/require"
 )

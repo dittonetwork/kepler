@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"kepler/testutil/sample"
+	"github.com/dittonetwork/kepler/testutil/sample"
 
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/stretchr/testify/require"
