@@ -56,7 +56,6 @@ jobs:
     name: Build
     strategy:
       matrix:
-        app_path: ${{ fromJSON(needs.prepare.outputs.apps_to_build_path) }}
         arch: [amd64]
     steps:
       - name: Checkout Code
@@ -70,8 +69,7 @@ jobs:
 
       - name: Set App Name
         run: |
-          app_name=$(basename ${{ matrix.app_path }})
-          echo "APP_NAME=$app_name" >> $GITHUB_ENV
+          echo "APP_NAME=kepler" >> $GITHUB_ENV
           echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
 
       - name: Configure AWS credentials
