@@ -79,7 +79,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.DEV_AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.DEV_AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
+          aws-region: ${{ vars.AWS_REGION }}
 
       - name: Login to Amazon ECR
         id: login-ecr
@@ -89,7 +89,7 @@ jobs:
         id: build-image
         env:
           CI_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          IMAGE_NAME: ${{ env.ECR_REGISTRY }}/${{ env.app_name }}:${{ github.ref_name }}_${{ env.SHORT_SHA }}
+          IMAGE_NAME: ${{ vars.ECR_REGISTRY }}/${{ env.app_name }}:${{ github.ref_name }}_${{ env.SHORT_SHA }}
         run: |
           docker build --build-arg TARGETARCH=${{ matrix.arch }} -f ./${{ matrix.app_path }}/Dockerfile --tag $IMAGE_NAME .
           docker push $IMAGE_NAME
