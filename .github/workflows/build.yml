@@ -71,7 +71,6 @@ jobs:
 
       - name: Set App Name
         run: |
-          echo "APP_NAME=kepler" >> $GITHUB_ENV
           echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
 
       - name: Configure AWS credentials
@@ -89,7 +88,7 @@ jobs:
         id: build-image
         env:
           CI_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          IMAGE_NAME: ${{ vars.ECR_REGISTRY }}/${{ env.app_name }}:${{ github.ref_name }}_${{ env.SHORT_SHA }}
+          IMAGE_NAME: ${{ vars.ECR_REGISTRY }}:${{ github.ref_name }}_${{ env.SHORT_SHA }}
         run: |
           docker build --build-arg TARGETARCH=${{ matrix.arch }} -f ./${{ matrix.app_path }}/Dockerfile --tag $IMAGE_NAME .
           docker push $IMAGE_NAME
