@@ -15,8 +15,9 @@ import (
 )
 
 const (
-	collectionNameJob   = "job"
-	collectionNameJobID = "job_id"
+	collectionNameJob                = "job"
+	collectionNameJobID              = "job_id"
+	collectionIndexJobByAutomationID = "job_by_automation_id"
 )
 
 type (
@@ -29,7 +30,7 @@ type (
 
 		// Jobs key: jobID | value: job
 		// This is used to store jobs
-		Jobs  collections.Map[uint64, types.Job]
+		Jobs  *collections.IndexedMap[uint64, types.Job, Idx]
 		JobID collections.Sequence
 	}
 )
@@ -47,8 +48,14 @@ func NewKeeper(
 		storeService:    storeService,
 		logger:          logger,
 		committeeKeeper: committeeKeeper,
-		Jobs: collections.NewMap(sb, types.JobsPrefix, collectionNameJob, collections.Uint64Key,
-			codec.CollValue[types.Job](cdc)),
+		Jobs: collections.NewIndexedMap(
+			sb,
+			types.JobsPrefix,
+			collectionNameJob,
+			collections.Uint64Key,
+			codec.CollValue[types.Job](cdc),
+			NewJobIndexes(sb),
+		),
 		JobID: collections.NewSequence(sb, types.JobsPrefix, collectionNameJobID),
 	}
 }
@@ -128,4 +135,34 @@ func (k Keeper) GetJobByID(ctx sdk.Context, jobID uint64) (types.Job, bool, erro
 		return job, false, err
 	}
 	return job, true, nil
+}
+
+func (k Keeper) GetLastSuccessfulJobByAutomation(ctx sdk.Context, automationID uint64) (types.Job, error) {
+	iter, err := k.Jobs.Indexes.AutomationID.Iterate(
+		ctx,
+		collections.NewPrefixedPairRange[uint64, uint64](automationID).Descending(),
+	)
+	if err != nil {
+		return types.Job{}, fmt.Errorf("failed to get active automations: %w", err)
+	}
+	defer iter.Close()
+
+	for iter.Valid() {
+		jobID, inErr := iter.PrimaryKey()
+		if inErr != nil {
+			return types.Job{}, fmt.Errorf("failed to get job id: %w", inErr)
+		}
+
+		job, inErr := k.Jobs.Get(ctx, jobID)
+		if inErr != nil {
+			return types.Job{}, fmt.Errorf("failed to get job: %w", inErr)
+		}
+		if job.Status == types.Job_STATUS_EXECUTED {
+			return job, nil
+		}
+		iter.Next()
+	}
+
+	// kinda not found case.
+	return types.Job{}, collections.ErrNotFound
 }

@@ -1,11 +1,13 @@
 package keeper_test
 
 import (
+	"testing"
+
+	"cosmossdk.io/collections"
 	"github.com/dittonetwork/kepler/x/job/keeper"
 	"github.com/dittonetwork/kepler/x/job/types"
 	"github.com/dittonetwork/kepler/x/job/types/mock"
 	"github.com/stretchr/testify/require"
-	"testing"
 
 	"go.uber.org/mock/gomock"
 
@@ -187,6 +189,78 @@ func (s *KeeperTestSuite) Test_GetJob() {
 			_, found, err := s.keeper.GetJobByID(s.ctx, id)
 			s.Require().NoError(err)
 			s.Require().Equal(tc.found, found)
+		})
+	}
+}
+
+func (s *KeeperTestSuite) Test_GetLastSuccessfulJob() {
+	cases := map[string]struct {
+		preRun       func() error
+		jobID        uint64
+		automationID uint64
+	}{
+		"found": {
+			preRun: func() error {
+				err := s.keeper.Jobs.Set(
+					s.ctx,
+					111,
+					types.Job{
+						Id:           111,
+						CommitteeId:  "1",
+						ChainId:      "1",
+						Status:       types.Job_STATUS_EXECUTED,
+						AutomationId: 1,
+						Signs: [][]byte{
+							[]byte("sign1"),
+							[]byte("sign2"),
+							[]byte("sign3"),
+						},
+					},
+				)
+
+				require.NoError(s.T(), err)
+
+				err = s.keeper.Jobs.Set(
+					s.ctx,
+					112,
+					types.Job{
+						Id:           112,
+						CommitteeId:  "1",
+						ChainId:      "1",
+						Status:       types.Job_STATUS_FAILED,
+						AutomationId: 1,
+						Signs: [][]byte{
+							[]byte("sign1"),
+							[]byte("sign2"),
+							[]byte("sign3"),
+						},
+					},
+				)
+
+				require.NoError(s.T(), err)
+
+				return nil
+			},
+			jobID:        111,
+			automationID: 1,
+		},
+		"not found": {
+			preRun: func() error {
+				return collections.ErrNotFound
+			},
+		},
+	}
+	for testName, tc := range cases {
+		s.Run(testName, func() {
+			wantErr := tc.preRun()
+			j, err := s.keeper.GetLastSuccessfulJobByAutomation(s.ctx, tc.automationID)
+			if wantErr != nil {
+				s.Require().EqualError(err, wantErr.Error())
+			} else {
+				s.Require().NoError(err)
+				s.Require().Equal(tc.jobID, j.Id)
+			}
+			s.Require().Equal(tc.jobID, j.Id)
 		})
 	}
 }

@@ -99,7 +99,7 @@ func (AppModuleBasic) RegisterGRPCGatewayRoutes(clientCtx client.Context, mux *r
 type AppModule struct {
 	AppModuleBasic
 
-	keeper          keeper.Keeper
+	keeper          keeper.BaseKeeper
 	accountKeeper   types.AccountKeeper
 	bankKeeper      types.BankKeeper
 	committeeKeeper types.CommitteeKeeper
@@ -108,7 +108,7 @@ type AppModule struct {
 
 func NewAppModule(
 	cdc codec.Codec,
-	keeper keeper.Keeper,
+	keeper keeper.BaseKeeper,
 	accountKeeper types.AccountKeeper,
 	bankKeeper types.BankKeeper,
 	committeeKeeper types.CommitteeKeeper,
@@ -127,7 +127,7 @@ func NewAppModule(
 // RegisterServices registers a gRPC query service to respond to the module-specific gRPC queries.
 func (am AppModule) RegisterServices(cfg module.Configurator) {
 	types.RegisterMsgServer(cfg.MsgServer(), keeper.NewMsgServerImpl(am.keeper, am.committeeKeeper, am.jobKeeper))
-	types.RegisterQueryServer(cfg.QueryServer(), am.keeper)
+	types.RegisterQueryServer(cfg.QueryServer(), keeper.NewQuerier(&am.keeper))
 }
 
 // RegisterInvariants registers the invariants of the module. If an invariant deviates from its predicted value,

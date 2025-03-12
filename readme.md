@@ -27,7 +27,7 @@ For more information see the [monorepo for Ignite front-end development](https:/
 
 ### Multi node local testing via docker-compose
 
-1. Build container image via command `docker build docker build -f Dockerfile_multinode -t keplerd_i .`
+1. Build container image via command `docker build -f Dockerfile_multinode -t keplerd_i .`
 2. Generate testnets via command `keplerd multi-node`
 3. Replace `localhost` to `validatorN` in `persistent_peers` field of `config.toml` of each testnet member
 

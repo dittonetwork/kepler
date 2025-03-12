@@ -6,7 +6,7 @@ RUN apk add make
 WORKDIR /original
 ADD . /original
 RUN go build -o ./build/keplerd ./cmd/keplerd/main.go
-RUN keplerd multi-node -v 4
+
 FROM alpine:3.21
 
 EXPOSE 26656 26657 1317 9090
