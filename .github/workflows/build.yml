@@ -76,6 +76,7 @@ jobs:
       - name: Set App Name
         run: |
           echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
+          echo "IMAGE_TAG=$(echo ${GITHUB_REF_NAME}_${SHORT_SHA} | sed 's|/merge_|_|g')" >> $GITHUB_ENV
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -92,7 +93,7 @@ jobs:
         id: build-image
         env:
           CI_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          IMAGE_NAME: ${{ vars.ECR_REGISTRY }}:${{ github.ref_name }}_${{ env.SHORT_SHA }}
+          IMAGE_NAME: ${{ vars.ECR_REGISTRY }}:${{ env.IMAGE_TAG }}
         run: |
-          docker build --build-arg TARGETARCH=${{ matrix.arch }} -f ./${{ matrix.app_path }}/Dockerfile --tag $IMAGE_NAME .
+          docker build --build-arg TARGETARCH=${{ matrix.arch }} -f ./Dockerfile --tag $IMAGE_NAME .
           docker push $IMAGE_NAME
