@@ -1,11 +1,8 @@
-FROM alpine:3.21
+FROM gcr.io/distroless/base-debian12
 
-RUN apk --no-cache add ca-certificates
+WORKDIR /app
 
-WORKDIR /root
+COPY main kepler
+COPY docs/static/openapi.yml docs/static/openapi.yml
 
-COPY keplerd .
-
-EXPOSE 1317 26657
-
-CMD ["./keplerd", "start", "--home", "/root/app_config"]
+CMD ["/app/kepler", "start", "--home", "/app/config"]
