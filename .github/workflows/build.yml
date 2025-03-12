@@ -69,9 +69,6 @@ jobs:
           name: main
           path: .
 
-      - name: Debug Artifact
-        run: ls -l ./main
-
       - name: Set App Name
         run: |
           echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
