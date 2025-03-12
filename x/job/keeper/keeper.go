@@ -164,5 +164,5 @@ func (k Keeper) GetLastSuccessfulJobByAutomation(ctx sdk.Context, automationID u
 	}
 
 	// kinda not found case.
-	return types.Job{}, nil
+	return types.Job{}, collections.ErrNotFound
 }

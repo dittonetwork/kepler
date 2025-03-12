@@ -3,6 +3,7 @@ package keeper_test
 import (
 	"testing"
 
+	"cosmossdk.io/collections"
 	"github.com/dittonetwork/kepler/x/job/keeper"
 	"github.com/dittonetwork/kepler/x/job/types"
 	"github.com/dittonetwork/kepler/x/job/types/mock"
@@ -194,12 +195,12 @@ func (s *KeeperTestSuite) Test_GetJob() {
 
 func (s *KeeperTestSuite) Test_GetLastSuccessfulJob() {
 	cases := map[string]struct {
-		preRun       func()
+		preRun       func() error
 		jobID        uint64
 		automationID uint64
 	}{
 		"found": {
-			preRun: func() {
+			preRun: func() error {
 				err := s.keeper.Jobs.Set(
 					s.ctx,
 					111,
@@ -237,19 +238,28 @@ func (s *KeeperTestSuite) Test_GetLastSuccessfulJob() {
 				)
 
 				require.NoError(s.T(), err)
+
+				return nil
 			},
 			jobID:        111,
 			automationID: 1,
 		},
 		"not found": {
-			preRun: func() {},
+			preRun: func() error {
+				return collections.ErrNotFound
+			},
 		},
 	}
 	for testName, tc := range cases {
 		s.Run(testName, func() {
-			tc.preRun()
+			wantErr := tc.preRun()
 			j, err := s.keeper.GetLastSuccessfulJobByAutomation(s.ctx, tc.automationID)
-			s.Require().NoError(err)
+			if wantErr != nil {
+				s.Require().EqualError(err, wantErr.Error())
+			} else {
+				s.Require().NoError(err)
+				s.Require().Equal(tc.jobID, j.Id)
+			}
 			s.Require().Equal(tc.jobID, j.Id)
 		})
 	}
