@@ -41,7 +41,7 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: '1.23'
-          cache: false
+          cache: true
 
       - name: Build Go Application
         run: go build -o main ./cmd/keplerd
@@ -68,6 +68,10 @@ jobs:
         with:
           name: main
           path: .
+
+      - name: make binary executable
+        run: |
+          chmod +x main
 
       - name: Set App Name
         run: |
