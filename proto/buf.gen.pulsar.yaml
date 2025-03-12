@@ -7,7 +7,7 @@ version: v1
 managed:
   enabled: true
   go_package_prefix:
-    default: kepler/api
+    default: github.com/dittonetwork/kepler/api
     except:
       - buf.build/googleapis/googleapis
       - buf.build/cosmos/gogo-proto

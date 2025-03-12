@@ -3,6 +3,7 @@ package kepler.workflow;
 
 import "cosmos_proto/cosmos.proto";
 import "amino/amino.proto";
+import "kepler/job/job.proto";
 
 option go_package = "github.com/dittonetwork/kepler/x/workflow/types";
 
@@ -12,8 +13,11 @@ message Automation {
   repeated Trigger triggers = 2; // Trigger object, which can be chained by logical operators in itself
   repeated Action actions = 3; // List of actions
   int64 expire_at = 4; // Expiration timestamp (Unix time)
-  AutomationStatus status = 7; // Status of the automation (active, expired, paused, failed, done)
-  string creator = 8 [(cosmos_proto.scalar) = "cosmos.AddressString"]; // Creator address
+  AutomationStatus status = 5; // Status of the automation (active, expired, paused, failed, done)
+  int64 execution_count = 6; // how many times automation has been executed
+  int64 failed_execution_streak = 7; // how many times in a row automation has failed its execution
+  job.Job last_successful_job = 8; // last successfully executed job
+  string creator = 9 [(cosmos_proto.scalar) = "cosmos.AddressString"]; // Creator address
 }
 
 // Enumeration for automation status

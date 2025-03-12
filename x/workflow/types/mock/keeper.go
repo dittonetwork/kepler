@@ -11,11 +11,11 @@ package mock
 
 import (
 	context "context"
-	types0 "github.com/dittonetwork/kepler/x/workflow/types"
 	reflect "reflect"
 
 	log "cosmossdk.io/log"
 	types "github.com/cosmos/cosmos-sdk/types"
+	types0 "github.com/dittonetwork/kepler/x/workflow/types"
 	gomock "go.uber.org/mock/gomock"
 )
 
