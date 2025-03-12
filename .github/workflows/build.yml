@@ -67,7 +67,10 @@ jobs:
         uses: actions/download-artifact@master
         with:
           name: main
-          path: ./main
+          path: .
+
+      - name: Debug Artifact
+        run: ls -l ./main
 
       - name: Set App Name
         run: |
