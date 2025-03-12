@@ -25,5 +25,3 @@ func NewMsgServerImpl(
 }
 
 var _ types.MsgServer = msgServer{}
-
-func (k BaseKeeper) mustEmbedUnimplementedQueryServer() {}

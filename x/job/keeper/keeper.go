@@ -148,14 +148,14 @@ func (k Keeper) GetLastSuccessfulJobByAutomation(ctx sdk.Context, automationID u
 	defer iter.Close()
 
 	for iter.Valid() {
-		jobID, err := iter.PrimaryKey()
-		if err != nil {
-			return types.Job{}, fmt.Errorf("failed to get job id: %w", err)
+		jobID, inErr := iter.PrimaryKey()
+		if inErr != nil {
+			return types.Job{}, fmt.Errorf("failed to get job id: %w", inErr)
 		}
 
-		job, err := k.Jobs.Get(ctx, jobID)
-		if err != nil {
-			return types.Job{}, fmt.Errorf("failed to get job: %w", err)
+		job, inErr := k.Jobs.Get(ctx, jobID)
+		if inErr != nil {
+			return types.Job{}, fmt.Errorf("failed to get job: %w", inErr)
 		}
 		if job.Status == types.Job_STATUS_EXECUTED {
 			return job, nil
