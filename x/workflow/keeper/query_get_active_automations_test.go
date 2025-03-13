@@ -27,7 +27,7 @@ func TestBaseKeeper_GetActiveAutomations(t *testing.T) {
 	err = k.InsertAutomation(ctx, automation)
 	require.NoError(t, err)
 
-	j.EXPECT().GetLastSuccessfulJobByAutomation(gomock.Any(), uint64(1)).Return(jobTypes.Job{Id: 256}, nil)
+	j.EXPECT().GetLastSuccessfulJobByAutomation(gomock.Any(), uint64(1)).Return(jobTypes.Job{Id: 256, AutomationId: 1}, nil)
 	automations, err = k.GetActiveAutomations(ctx, &types.QueryGetActiveAutomationsRequest{})
 	require.NoError(t, err)
 	require.NotNil(t, automations)
