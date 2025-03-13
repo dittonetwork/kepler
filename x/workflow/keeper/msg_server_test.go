@@ -12,9 +12,10 @@ import (
 )
 
 func setupMsgServer(t testing.TB) (keeper.Keeper, types.MsgServer, context.Context) {
-	k, ctx := keepertest.WorkflowKeeper(t)
-	cmtKeeper, _ := keepertest.CommitteeKeeper(t)
 	jobKeeper, _ := keepertest.JobKeeper(t)
+	k, ctx := keepertest.WorkflowKeeper(t, jobKeeper)
+	cmtKeeper, _ := keepertest.CommitteeKeeper(t)
+
 	return k, keeper.NewMsgServerImpl(k, cmtKeeper, jobKeeper), ctx
 }
 

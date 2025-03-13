@@ -11,10 +11,10 @@ package mock
 
 import (
 	context "context"
-	types0 "github.com/dittonetwork/kepler/x/job/types"
 	reflect "reflect"
 
 	types "github.com/cosmos/cosmos-sdk/types"
+	types0 "github.com/dittonetwork/kepler/x/job/types"
 	gomock "go.uber.org/mock/gomock"
 )
 
@@ -232,4 +232,19 @@ func (m *MockJobKeeper) CreateJob(ctx types.Context, status types0.Job_Status, c
 func (mr *MockJobKeeperMockRecorder) CreateJob(ctx, status, committeeID, chainID, automationID, txHash, executorAddress, createdAt, executedAt, signedAt, signs, payload any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateJob", reflect.TypeOf((*MockJobKeeper)(nil).CreateJob), ctx, status, committeeID, chainID, automationID, txHash, executorAddress, createdAt, executedAt, signedAt, signs, payload)
+}
+
+// GetLastSuccessfulJobByAutomation mocks base method.
+func (m *MockJobKeeper) GetLastSuccessfulJobByAutomation(ctx types.Context, automationID uint64) (types0.Job, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetLastSuccessfulJobByAutomation", ctx, automationID)
+	ret0, _ := ret[0].(types0.Job)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetLastSuccessfulJobByAutomation indicates an expected call of GetLastSuccessfulJobByAutomation.
+func (mr *MockJobKeeperMockRecorder) GetLastSuccessfulJobByAutomation(ctx, automationID any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetLastSuccessfulJobByAutomation", reflect.TypeOf((*MockJobKeeper)(nil).GetLastSuccessfulJobByAutomation), ctx, automationID)
 }

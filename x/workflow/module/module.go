@@ -218,6 +218,7 @@ func ProvideModule(in ModuleInputs) ModuleOutputs {
 		in.Logger,
 		authority.String(),
 		in.CommitteeKeeper,
+		in.JobKeeper,
 	)
 	m := NewAppModule(
 		in.Cdc,

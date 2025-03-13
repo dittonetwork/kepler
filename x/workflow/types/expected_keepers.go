@@ -52,4 +52,5 @@ type JobKeeper interface {
 		signs [][]byte,
 		payload []byte,
 	) error
+	GetLastSuccessfulJobByAutomation(ctx sdk.Context, automationID uint64) (types.Job, error)
 }

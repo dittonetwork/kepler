@@ -15,13 +15,12 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
-	"github.com/stretchr/testify/require"
-
 	"github.com/dittonetwork/kepler/x/workflow/keeper"
 	"github.com/dittonetwork/kepler/x/workflow/types"
+	"github.com/stretchr/testify/require"
 )
 
-func WorkflowKeeper(t testing.TB) (keeper.BaseKeeper, sdk.Context) {
+func WorkflowKeeper(t testing.TB, jobKeeper types.JobKeeper) (keeper.BaseKeeper, sdk.Context) {
 	storeKey := storetypes.NewKVStoreKey(types.StoreKey)
 
 	db := dbm.NewMemDB()
@@ -41,6 +40,7 @@ func WorkflowKeeper(t testing.TB) (keeper.BaseKeeper, sdk.Context) {
 		log.NewNopLogger(),
 		authority.String(),
 		cmt,
+		jobKeeper,
 	)
 
 	ctx := sdk.NewContext(stateStore, cmtproto.Header{}, false, log.NewNopLogger())
