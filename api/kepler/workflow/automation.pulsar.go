@@ -66,63 +66,11 @@ func (x *_Automation_2_list) IsValid() bool {
 	return x.list != nil
 }
 
-var _ protoreflect.List = (*_Automation_3_list)(nil)
-
-type _Automation_3_list struct {
-	list *[]*Action
-}
-
-func (x *_Automation_3_list) Len() int {
-	if x.list == nil {
-		return 0
-	}
-	return len(*x.list)
-}
-
-func (x *_Automation_3_list) Get(i int) protoreflect.Value {
-	return protoreflect.ValueOfMessage((*x.list)[i].ProtoReflect())
-}
-
-func (x *_Automation_3_list) Set(i int, value protoreflect.Value) {
-	valueUnwrapped := value.Message()
-	concreteValue := valueUnwrapped.Interface().(*Action)
-	(*x.list)[i] = concreteValue
-}
-
-func (x *_Automation_3_list) Append(value protoreflect.Value) {
-	valueUnwrapped := value.Message()
-	concreteValue := valueUnwrapped.Interface().(*Action)
-	*x.list = append(*x.list, concreteValue)
-}
-
-func (x *_Automation_3_list) AppendMutable() protoreflect.Value {
-	v := new(Action)
-	*x.list = append(*x.list, v)
-	return protoreflect.ValueOfMessage(v.ProtoReflect())
-}
-
-func (x *_Automation_3_list) Truncate(n int) {
-	for i := n; i < len(*x.list); i++ {
-		(*x.list)[i] = nil
-	}
-	*x.list = (*x.list)[:n]
-}
-
-func (x *_Automation_3_list) NewElement() protoreflect.Value {
-	v := new(Action)
-	return protoreflect.ValueOfMessage(v.ProtoReflect())
-}
-
-func (x *_Automation_3_list) IsValid() bool {
-	return x.list != nil
-}
-
 var (
 	md_Automation                         protoreflect.MessageDescriptor
 	fd_Automation_id                      protoreflect.FieldDescriptor
 	fd_Automation_triggers                protoreflect.FieldDescriptor
-	fd_Automation_actions                 protoreflect.FieldDescriptor
-	fd_Automation_expire_at               protoreflect.FieldDescriptor
+	fd_Automation_user_op                 protoreflect.FieldDescriptor
 	fd_Automation_status                  protoreflect.FieldDescriptor
 	fd_Automation_execution_count         protoreflect.FieldDescriptor
 	fd_Automation_failed_execution_streak protoreflect.FieldDescriptor
@@ -135,8 +83,7 @@ func init() {
 	md_Automation = File_kepler_workflow_automation_proto.Messages().ByName("Automation")
 	fd_Automation_id = md_Automation.Fields().ByName("id")
 	fd_Automation_triggers = md_Automation.Fields().ByName("triggers")
-	fd_Automation_actions = md_Automation.Fields().ByName("actions")
-	fd_Automation_expire_at = md_Automation.Fields().ByName("expire_at")
+	fd_Automation_user_op = md_Automation.Fields().ByName("user_op")
 	fd_Automation_status = md_Automation.Fields().ByName("status")
 	fd_Automation_execution_count = md_Automation.Fields().ByName("execution_count")
 	fd_Automation_failed_execution_streak = md_Automation.Fields().ByName("failed_execution_streak")
@@ -221,15 +168,9 @@ func (x *fastReflection_Automation) Range(f func(protoreflect.FieldDescriptor, p
 			return
 		}
 	}
-	if len(x.Actions) != 0 {
-		value := protoreflect.ValueOfList(&_Automation_3_list{list: &x.Actions})
-		if !f(fd_Automation_actions, value) {
-			return
-		}
-	}
-	if x.ExpireAt != int64(0) {
-		value := protoreflect.ValueOfInt64(x.ExpireAt)
-		if !f(fd_Automation_expire_at, value) {
+	if x.UserOp != nil {
+		value := protoreflect.ValueOfMessage(x.UserOp.ProtoReflect())
+		if !f(fd_Automation_user_op, value) {
 			return
 		}
 	}
@@ -282,10 +223,8 @@ func (x *fastReflection_Automation) Has(fd protoreflect.FieldDescriptor) bool {
 		return x.Id != uint64(0)
 	case "kepler.workflow.Automation.triggers":
 		return len(x.Triggers) != 0
-	case "kepler.workflow.Automation.actions":
-		return len(x.Actions) != 0
-	case "kepler.workflow.Automation.expire_at":
-		return x.ExpireAt != int64(0)
+	case "kepler.workflow.Automation.user_op":
+		return x.UserOp != nil
 	case "kepler.workflow.Automation.status":
 		return x.Status != 0
 	case "kepler.workflow.Automation.execution_count":
@@ -316,10 +255,8 @@ func (x *fastReflection_Automation) Clear(fd protoreflect.FieldDescriptor) {
 		x.Id = uint64(0)
 	case "kepler.workflow.Automation.triggers":
 		x.Triggers = nil
-	case "kepler.workflow.Automation.actions":
-		x.Actions = nil
-	case "kepler.workflow.Automation.expire_at":
-		x.ExpireAt = int64(0)
+	case "kepler.workflow.Automation.user_op":
+		x.UserOp = nil
 	case "kepler.workflow.Automation.status":
 		x.Status = 0
 	case "kepler.workflow.Automation.execution_count":
@@ -355,15 +292,9 @@ func (x *fastReflection_Automation) Get(descriptor protoreflect.FieldDescriptor)
 		}
 		listValue := &_Automation_2_list{list: &x.Triggers}
 		return protoreflect.ValueOfList(listValue)
-	case "kepler.workflow.Automation.actions":
-		if len(x.Actions) == 0 {
-			return protoreflect.ValueOfList(&_Automation_3_list{})
-		}
-		listValue := &_Automation_3_list{list: &x.Actions}
-		return protoreflect.ValueOfList(listValue)
-	case "kepler.workflow.Automation.expire_at":
-		value := x.ExpireAt
-		return protoreflect.ValueOfInt64(value)
+	case "kepler.workflow.Automation.user_op":
+		value := x.UserOp
+		return protoreflect.ValueOfMessage(value.ProtoReflect())
 	case "kepler.workflow.Automation.status":
 		value := x.Status
 		return protoreflect.ValueOfEnum((protoreflect.EnumNumber)(value))
@@ -405,12 +336,8 @@ func (x *fastReflection_Automation) Set(fd protoreflect.FieldDescriptor, value p
 		lv := value.List()
 		clv := lv.(*_Automation_2_list)
 		x.Triggers = *clv.list
-	case "kepler.workflow.Automation.actions":
-		lv := value.List()
-		clv := lv.(*_Automation_3_list)
-		x.Actions = *clv.list
-	case "kepler.workflow.Automation.expire_at":
-		x.ExpireAt = value.Int()
+	case "kepler.workflow.Automation.user_op":
+		x.UserOp = value.Message().Interface().(*UserOp)
 	case "kepler.workflow.Automation.status":
 		x.Status = (AutomationStatus)(value.Enum())
 	case "kepler.workflow.Automation.execution_count":
@@ -447,12 +374,11 @@ func (x *fastReflection_Automation) Mutable(fd protoreflect.FieldDescriptor) pro
 		}
 		value := &_Automation_2_list{list: &x.Triggers}
 		return protoreflect.ValueOfList(value)
-	case "kepler.workflow.Automation.actions":
-		if x.Actions == nil {
-			x.Actions = []*Action{}
+	case "kepler.workflow.Automation.user_op":
+		if x.UserOp == nil {
+			x.UserOp = new(UserOp)
 		}
-		value := &_Automation_3_list{list: &x.Actions}
-		return protoreflect.ValueOfList(value)
+		return protoreflect.ValueOfMessage(x.UserOp.ProtoReflect())
 	case "kepler.workflow.Automation.last_successful_job":
 		if x.LastSuccessfulJob == nil {
 			x.LastSuccessfulJob = new(job.Job)
@@ -460,8 +386,6 @@ func (x *fastReflection_Automation) Mutable(fd protoreflect.FieldDescriptor) pro
 		return protoreflect.ValueOfMessage(x.LastSuccessfulJob.ProtoReflect())
 	case "kepler.workflow.Automation.id":
 		panic(fmt.Errorf("field id of message kepler.workflow.Automation is not mutable"))
-	case "kepler.workflow.Automation.expire_at":
-		panic(fmt.Errorf("field expire_at of message kepler.workflow.Automation is not mutable"))
 	case "kepler.workflow.Automation.status":
 		panic(fmt.Errorf("field status of message kepler.workflow.Automation is not mutable"))
 	case "kepler.workflow.Automation.execution_count":
@@ -488,11 +412,9 @@ func (x *fastReflection_Automation) NewField(fd protoreflect.FieldDescriptor) pr
 	case "kepler.workflow.Automation.triggers":
 		list := []*Trigger{}
 		return protoreflect.ValueOfList(&_Automation_2_list{list: &list})
-	case "kepler.workflow.Automation.actions":
-		list := []*Action{}
-		return protoreflect.ValueOfList(&_Automation_3_list{list: &list})
-	case "kepler.workflow.Automation.expire_at":
-		return protoreflect.ValueOfInt64(int64(0))
+	case "kepler.workflow.Automation.user_op":
+		m := new(UserOp)
+		return protoreflect.ValueOfMessage(m.ProtoReflect())
 	case "kepler.workflow.Automation.status":
 		return protoreflect.ValueOfEnum(0)
 	case "kepler.workflow.Automation.execution_count":
@@ -582,14 +504,9 @@ func (x *fastReflection_Automation) ProtoMethods() *protoiface.Methods {
 				n += 1 + l + runtime.Sov(uint64(l))
 			}
 		}
-		if len(x.Actions) > 0 {
-			for _, e := range x.Actions {
-				l = options.Size(e)
-				n += 1 + l + runtime.Sov(uint64(l))
-			}
-		}
-		if x.ExpireAt != 0 {
-			n += 1 + runtime.Sov(uint64(x.ExpireAt))
+		if x.UserOp != nil {
+			l = options.Size(x.UserOp)
+			n += 1 + l + runtime.Sov(uint64(l))
 		}
 		if x.Status != 0 {
 			n += 1 + runtime.Sov(uint64(x.Status))
@@ -642,7 +559,7 @@ func (x *fastReflection_Automation) ProtoMethods() *protoiface.Methods {
 			copy(dAtA[i:], x.Creator)
 			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Creator)))
 			i--
-			dAtA[i] = 0x4a
+			dAtA[i] = 0x42
 		}
 		if x.LastSuccessfulJob != nil {
 			encoded, err := options.Marshal(x.LastSuccessfulJob)
@@ -656,43 +573,36 @@ func (x *fastReflection_Automation) ProtoMethods() *protoiface.Methods {
 			copy(dAtA[i:], encoded)
 			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
 			i--
-			dAtA[i] = 0x42
+			dAtA[i] = 0x3a
 		}
 		if x.FailedExecutionStreak != 0 {
 			i = runtime.EncodeVarint(dAtA, i, uint64(x.FailedExecutionStreak))
 			i--
-			dAtA[i] = 0x38
+			dAtA[i] = 0x30
 		}
 		if x.ExecutionCount != 0 {
 			i = runtime.EncodeVarint(dAtA, i, uint64(x.ExecutionCount))
 			i--
-			dAtA[i] = 0x30
+			dAtA[i] = 0x28
 		}
 		if x.Status != 0 {
 			i = runtime.EncodeVarint(dAtA, i, uint64(x.Status))
 			i--
-			dAtA[i] = 0x28
-		}
-		if x.ExpireAt != 0 {
-			i = runtime.EncodeVarint(dAtA, i, uint64(x.ExpireAt))
-			i--
 			dAtA[i] = 0x20
 		}
-		if len(x.Actions) > 0 {
-			for iNdEx := len(x.Actions) - 1; iNdEx >= 0; iNdEx-- {
-				encoded, err := options.Marshal(x.Actions[iNdEx])
-				if err != nil {
-					return protoiface.MarshalOutput{
-						NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-						Buf:               input.Buf,
-					}, err
-				}
-				i -= len(encoded)
-				copy(dAtA[i:], encoded)
-				i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
-				i--
-				dAtA[i] = 0x1a
+		if x.UserOp != nil {
+			encoded, err := options.Marshal(x.UserOp)
+			if err != nil {
+				return protoiface.MarshalOutput{
+					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+					Buf:               input.Buf,
+				}, err
 			}
+			i -= len(encoded)
+			copy(dAtA[i:], encoded)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+			i--
+			dAtA[i] = 0x1a
 		}
 		if len(x.Triggers) > 0 {
 			for iNdEx := len(x.Triggers) - 1; iNdEx >= 0; iNdEx-- {
@@ -819,7 +729,7 @@ func (x *fastReflection_Automation) ProtoMethods() *protoiface.Methods {
 				iNdEx = postIndex
 			case 3:
 				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Actions", wireType)
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field UserOp", wireType)
 				}
 				var msglen int
 				for shift := uint(0); ; shift += 7 {
@@ -846,31 +756,14 @@ func (x *fastReflection_Automation) ProtoMethods() *protoiface.Methods {
 				if postIndex > l {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
-				x.Actions = append(x.Actions, &Action{})
-				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.Actions[len(x.Actions)-1]); err != nil {
+				if x.UserOp == nil {
+					x.UserOp = &UserOp{}
+				}
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.UserOp); err != nil {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
 				}
 				iNdEx = postIndex
 			case 4:
-				if wireType != 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ExpireAt", wireType)
-				}
-				x.ExpireAt = 0
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					x.ExpireAt |= int64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-			case 5:
 				if wireType != 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
 				}
@@ -889,7 +782,7 @@ func (x *fastReflection_Automation) ProtoMethods() *protoiface.Methods {
 						break
 					}
 				}
-			case 6:
+			case 5:
 				if wireType != 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ExecutionCount", wireType)
 				}
@@ -908,7 +801,7 @@ func (x *fastReflection_Automation) ProtoMethods() *protoiface.Methods {
 						break
 					}
 				}
-			case 7:
+			case 6:
 				if wireType != 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field FailedExecutionStreak", wireType)
 				}
@@ -927,7 +820,7 @@ func (x *fastReflection_Automation) ProtoMethods() *protoiface.Methods {
 						break
 					}
 				}
-			case 8:
+			case 7:
 				if wireType != 2 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field LastSuccessfulJob", wireType)
 				}
@@ -963,7 +856,7 @@ func (x *fastReflection_Automation) ProtoMethods() *protoiface.Methods {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
 				}
 				iNdEx = postIndex
-			case 9:
+			case 8:
 				if wireType != 2 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
 				}
@@ -1037,6 +930,7 @@ var (
 	fd_Trigger_gas_price      protoreflect.FieldDescriptor
 	fd_Trigger_count          protoreflect.FieldDescriptor
 	fd_Trigger_block_interval protoreflect.FieldDescriptor
+	fd_Trigger_expire_at      protoreflect.FieldDescriptor
 )
 
 func init() {
@@ -1047,6 +941,7 @@ func init() {
 	fd_Trigger_gas_price = md_Trigger.Fields().ByName("gas_price")
 	fd_Trigger_count = md_Trigger.Fields().ByName("count")
 	fd_Trigger_block_interval = md_Trigger.Fields().ByName("block_interval")
+	fd_Trigger_expire_at = md_Trigger.Fields().ByName("expire_at")
 }
 
 var _ protoreflect.Message = (*fastReflection_Trigger)(nil)
@@ -1146,6 +1041,12 @@ func (x *fastReflection_Trigger) Range(f func(protoreflect.FieldDescriptor, prot
 			if !f(fd_Trigger_block_interval, value) {
 				return
 			}
+		case *Trigger_ExpireAt:
+			v := o.ExpireAt
+			value := protoreflect.ValueOfMessage(v.ProtoReflect())
+			if !f(fd_Trigger_expire_at, value) {
+				return
+			}
 		}
 	}
 }
@@ -1203,6 +1104,14 @@ func (x *fastReflection_Trigger) Has(fd protoreflect.FieldDescriptor) bool {
 		} else {
 			return false
 		}
+	case "kepler.workflow.Trigger.expire_at":
+		if x.Trigger == nil {
+			return false
+		} else if _, ok := x.Trigger.(*Trigger_ExpireAt); ok {
+			return true
+		} else {
+			return false
+		}
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.Trigger"))
@@ -1228,6 +1137,8 @@ func (x *fastReflection_Trigger) Clear(fd protoreflect.FieldDescriptor) {
 	case "kepler.workflow.Trigger.count":
 		x.Trigger = nil
 	case "kepler.workflow.Trigger.block_interval":
+		x.Trigger = nil
+	case "kepler.workflow.Trigger.expire_at":
 		x.Trigger = nil
 	default:
 		if fd.IsExtension() {
@@ -1285,6 +1196,14 @@ func (x *fastReflection_Trigger) Get(descriptor protoreflect.FieldDescriptor) pr
 		} else {
 			return protoreflect.ValueOfMessage((*BlockIntervalTrigger)(nil).ProtoReflect())
 		}
+	case "kepler.workflow.Trigger.expire_at":
+		if x.Trigger == nil {
+			return protoreflect.ValueOfMessage((*ExpireAtTrigger)(nil).ProtoReflect())
+		} else if v, ok := x.Trigger.(*Trigger_ExpireAt); ok {
+			return protoreflect.ValueOfMessage(v.ExpireAt.ProtoReflect())
+		} else {
+			return protoreflect.ValueOfMessage((*ExpireAtTrigger)(nil).ProtoReflect())
+		}
 	default:
 		if descriptor.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.Trigger"))
@@ -1320,6 +1239,9 @@ func (x *fastReflection_Trigger) Set(fd protoreflect.FieldDescriptor, value prot
 	case "kepler.workflow.Trigger.block_interval":
 		cv := value.Message().Interface().(*BlockIntervalTrigger)
 		x.Trigger = &Trigger_BlockInterval{BlockInterval: cv}
+	case "kepler.workflow.Trigger.expire_at":
+		cv := value.Message().Interface().(*ExpireAtTrigger)
+		x.Trigger = &Trigger_ExpireAt{ExpireAt: cv}
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.Trigger"))
@@ -1420,6 +1342,22 @@ func (x *fastReflection_Trigger) Mutable(fd protoreflect.FieldDescriptor) protor
 			x.Trigger = oneofValue
 			return protoreflect.ValueOfMessage(value.ProtoReflect())
 		}
+	case "kepler.workflow.Trigger.expire_at":
+		if x.Trigger == nil {
+			value := &ExpireAtTrigger{}
+			oneofValue := &Trigger_ExpireAt{ExpireAt: value}
+			x.Trigger = oneofValue
+			return protoreflect.ValueOfMessage(value.ProtoReflect())
+		}
+		switch m := x.Trigger.(type) {
+		case *Trigger_ExpireAt:
+			return protoreflect.ValueOfMessage(m.ExpireAt.ProtoReflect())
+		default:
+			value := &ExpireAtTrigger{}
+			oneofValue := &Trigger_ExpireAt{ExpireAt: value}
+			x.Trigger = oneofValue
+			return protoreflect.ValueOfMessage(value.ProtoReflect())
+		}
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.Trigger"))
@@ -1447,6 +1385,9 @@ func (x *fastReflection_Trigger) NewField(fd protoreflect.FieldDescriptor) proto
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
 	case "kepler.workflow.Trigger.block_interval":
 		value := &BlockIntervalTrigger{}
+		return protoreflect.ValueOfMessage(value.ProtoReflect())
+	case "kepler.workflow.Trigger.expire_at":
+		value := &ExpireAtTrigger{}
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
 	default:
 		if fd.IsExtension() {
@@ -1476,6 +1417,8 @@ func (x *fastReflection_Trigger) WhichOneof(d protoreflect.OneofDescriptor) prot
 			return x.Descriptor().Fields().ByName("count")
 		case *Trigger_BlockInterval:
 			return x.Descriptor().Fields().ByName("block_interval")
+		case *Trigger_ExpireAt:
+			return x.Descriptor().Fields().ByName("expire_at")
 		}
 	default:
 		panic(fmt.Errorf("%s is not a oneof field in kepler.workflow.Trigger", d.FullName()))
@@ -1563,6 +1506,12 @@ func (x *fastReflection_Trigger) ProtoMethods() *protoiface.Methods {
 				break
 			}
 			l = options.Size(x.BlockInterval)
+			n += 1 + l + runtime.Sov(uint64(l))
+		case *Trigger_ExpireAt:
+			if x == nil {
+				break
+			}
+			l = options.Size(x.ExpireAt)
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
 		if x.unknownFields != nil {
@@ -1660,6 +1609,19 @@ func (x *fastReflection_Trigger) ProtoMethods() *protoiface.Methods {
 			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
 			i--
 			dAtA[i] = 0x2a
+		case *Trigger_ExpireAt:
+			encoded, err := options.Marshal(x.ExpireAt)
+			if err != nil {
+				return protoiface.MarshalOutput{
+					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+					Buf:               input.Buf,
+				}, err
+			}
+			i -= len(encoded)
+			copy(dAtA[i:], encoded)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+			i--
+			dAtA[i] = 0x32
 		}
 		if input.Buf != nil {
 			input.Buf = append(input.Buf, dAtA...)
@@ -1885,6 +1847,41 @@ func (x *fastReflection_Trigger) ProtoMethods() *protoiface.Methods {
 				}
 				x.Trigger = &Trigger_BlockInterval{v}
 				iNdEx = postIndex
+			case 6:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ExpireAt", wireType)
+				}
+				var msglen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					msglen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if msglen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + msglen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				v := &ExpireAtTrigger{}
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], v); err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				x.Trigger = &Trigger_ExpireAt{v}
+				iNdEx = postIndex
 			default:
 				iNdEx = preIndex
 				skippy, err := runtime.Skip(dAtA[iNdEx:])
@@ -1921,25 +1918,29 @@ func (x *fastReflection_Trigger) ProtoMethods() *protoiface.Methods {
 }
 
 var (
-	md_Action          protoreflect.MessageDescriptor
-	fd_Action_on_chain protoreflect.FieldDescriptor
+	md_UserOp                  protoreflect.MessageDescriptor
+	fd_UserOp_contract_address protoreflect.FieldDescriptor
+	fd_UserOp_chain_id         protoreflect.FieldDescriptor
+	fd_UserOp_tx_call_data     protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_kepler_workflow_automation_proto_init()
-	md_Action = File_kepler_workflow_automation_proto.Messages().ByName("Action")
-	fd_Action_on_chain = md_Action.Fields().ByName("on_chain")
+	md_UserOp = File_kepler_workflow_automation_proto.Messages().ByName("UserOp")
+	fd_UserOp_contract_address = md_UserOp.Fields().ByName("contract_address")
+	fd_UserOp_chain_id = md_UserOp.Fields().ByName("chain_id")
+	fd_UserOp_tx_call_data = md_UserOp.Fields().ByName("tx_call_data")
 }
 
-var _ protoreflect.Message = (*fastReflection_Action)(nil)
+var _ protoreflect.Message = (*fastReflection_UserOp)(nil)
 
-type fastReflection_Action Action
+type fastReflection_UserOp UserOp
 
-func (x *Action) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_Action)(x)
+func (x *UserOp) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_UserOp)(x)
 }
 
-func (x *Action) slowProtoReflect() protoreflect.Message {
+func (x *UserOp) slowProtoReflect() protoreflect.Message {
 	mi := &file_kepler_workflow_automation_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1951,43 +1952,43 @@ func (x *Action) slowProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_Action_messageType fastReflection_Action_messageType
-var _ protoreflect.MessageType = fastReflection_Action_messageType{}
+var _fastReflection_UserOp_messageType fastReflection_UserOp_messageType
+var _ protoreflect.MessageType = fastReflection_UserOp_messageType{}
 
-type fastReflection_Action_messageType struct{}
+type fastReflection_UserOp_messageType struct{}
 
-func (x fastReflection_Action_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_Action)(nil)
+func (x fastReflection_UserOp_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_UserOp)(nil)
 }
-func (x fastReflection_Action_messageType) New() protoreflect.Message {
-	return new(fastReflection_Action)
+func (x fastReflection_UserOp_messageType) New() protoreflect.Message {
+	return new(fastReflection_UserOp)
 }
-func (x fastReflection_Action_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_Action
+func (x fastReflection_UserOp_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_UserOp
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_Action) Descriptor() protoreflect.MessageDescriptor {
-	return md_Action
+func (x *fastReflection_UserOp) Descriptor() protoreflect.MessageDescriptor {
+	return md_UserOp
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_Action) Type() protoreflect.MessageType {
-	return _fastReflection_Action_messageType
+func (x *fastReflection_UserOp) Type() protoreflect.MessageType {
+	return _fastReflection_UserOp_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_Action) New() protoreflect.Message {
-	return new(fastReflection_Action)
+func (x *fastReflection_UserOp) New() protoreflect.Message {
+	return new(fastReflection_UserOp)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_Action) Interface() protoreflect.ProtoMessage {
-	return (*Action)(x)
+func (x *fastReflection_UserOp) Interface() protoreflect.ProtoMessage {
+	return (*UserOp)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -1995,15 +1996,23 @@ func (x *fastReflection_Action) Interface() protoreflect.ProtoMessage {
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_Action) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
-	if x.Action != nil {
-		switch o := x.Action.(type) {
-		case *Action_OnChain:
-			v := o.OnChain
-			value := protoreflect.ValueOfMessage(v.ProtoReflect())
-			if !f(fd_Action_on_chain, value) {
-				return
-			}
+func (x *fastReflection_UserOp) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if len(x.ContractAddress) != 0 {
+		value := protoreflect.ValueOfBytes(x.ContractAddress)
+		if !f(fd_UserOp_contract_address, value) {
+			return
+		}
+	}
+	if x.ChainId != "" {
+		value := protoreflect.ValueOfString(x.ChainId)
+		if !f(fd_UserOp_chain_id, value) {
+			return
+		}
+	}
+	if len(x.TxCallData) != 0 {
+		value := protoreflect.ValueOfBytes(x.TxCallData)
+		if !f(fd_UserOp_tx_call_data, value) {
+			return
 		}
 	}
 }
@@ -2019,21 +2028,19 @@ func (x *fastReflection_Action) Range(f func(protoreflect.FieldDescriptor, proto
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_Action) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_UserOp) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "kepler.workflow.Action.on_chain":
-		if x.Action == nil {
-			return false
-		} else if _, ok := x.Action.(*Action_OnChain); ok {
-			return true
-		} else {
-			return false
-		}
+	case "kepler.workflow.UserOp.contract_address":
+		return len(x.ContractAddress) != 0
+	case "kepler.workflow.UserOp.chain_id":
+		return x.ChainId != ""
+	case "kepler.workflow.UserOp.tx_call_data":
+		return len(x.TxCallData) != 0
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.Action"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.UserOp"))
 		}
-		panic(fmt.Errorf("message kepler.workflow.Action does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message kepler.workflow.UserOp does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2043,15 +2050,19 @@ func (x *fastReflection_Action) Has(fd protoreflect.FieldDescriptor) bool {
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_Action) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_UserOp) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "kepler.workflow.Action.on_chain":
-		x.Action = nil
+	case "kepler.workflow.UserOp.contract_address":
+		x.ContractAddress = nil
+	case "kepler.workflow.UserOp.chain_id":
+		x.ChainId = ""
+	case "kepler.workflow.UserOp.tx_call_data":
+		x.TxCallData = nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.Action"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.UserOp"))
 		}
-		panic(fmt.Errorf("message kepler.workflow.Action does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message kepler.workflow.UserOp does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2061,21 +2072,22 @@ func (x *fastReflection_Action) Clear(fd protoreflect.FieldDescriptor) {
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_Action) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_UserOp) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "kepler.workflow.Action.on_chain":
-		if x.Action == nil {
-			return protoreflect.ValueOfMessage((*OnChainAction)(nil).ProtoReflect())
-		} else if v, ok := x.Action.(*Action_OnChain); ok {
-			return protoreflect.ValueOfMessage(v.OnChain.ProtoReflect())
-		} else {
-			return protoreflect.ValueOfMessage((*OnChainAction)(nil).ProtoReflect())
-		}
+	case "kepler.workflow.UserOp.contract_address":
+		value := x.ContractAddress
+		return protoreflect.ValueOfBytes(value)
+	case "kepler.workflow.UserOp.chain_id":
+		value := x.ChainId
+		return protoreflect.ValueOfString(value)
+	case "kepler.workflow.UserOp.tx_call_data":
+		value := x.TxCallData
+		return protoreflect.ValueOfBytes(value)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.Action"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.UserOp"))
 		}
-		panic(fmt.Errorf("message kepler.workflow.Action does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message kepler.workflow.UserOp does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -2089,16 +2101,19 @@ func (x *fastReflection_Action) Get(descriptor protoreflect.FieldDescriptor) pro
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_Action) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_UserOp) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "kepler.workflow.Action.on_chain":
-		cv := value.Message().Interface().(*OnChainAction)
-		x.Action = &Action_OnChain{OnChain: cv}
+	case "kepler.workflow.UserOp.contract_address":
+		x.ContractAddress = value.Bytes()
+	case "kepler.workflow.UserOp.chain_id":
+		x.ChainId = value.Interface().(string)
+	case "kepler.workflow.UserOp.tx_call_data":
+		x.TxCallData = value.Bytes()
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.Action"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.UserOp"))
 		}
-		panic(fmt.Errorf("message kepler.workflow.Action does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message kepler.workflow.UserOp does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2112,63 +2127,48 @@ func (x *fastReflection_Action) Set(fd protoreflect.FieldDescriptor, value proto
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_Action) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_UserOp) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "kepler.workflow.Action.on_chain":
-		if x.Action == nil {
-			value := &OnChainAction{}
-			oneofValue := &Action_OnChain{OnChain: value}
-			x.Action = oneofValue
-			return protoreflect.ValueOfMessage(value.ProtoReflect())
-		}
-		switch m := x.Action.(type) {
-		case *Action_OnChain:
-			return protoreflect.ValueOfMessage(m.OnChain.ProtoReflect())
-		default:
-			value := &OnChainAction{}
-			oneofValue := &Action_OnChain{OnChain: value}
-			x.Action = oneofValue
-			return protoreflect.ValueOfMessage(value.ProtoReflect())
-		}
+	case "kepler.workflow.UserOp.contract_address":
+		panic(fmt.Errorf("field contract_address of message kepler.workflow.UserOp is not mutable"))
+	case "kepler.workflow.UserOp.chain_id":
+		panic(fmt.Errorf("field chain_id of message kepler.workflow.UserOp is not mutable"))
+	case "kepler.workflow.UserOp.tx_call_data":
+		panic(fmt.Errorf("field tx_call_data of message kepler.workflow.UserOp is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.Action"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.UserOp"))
 		}
-		panic(fmt.Errorf("message kepler.workflow.Action does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message kepler.workflow.UserOp does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_Action) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_UserOp) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "kepler.workflow.Action.on_chain":
-		value := &OnChainAction{}
-		return protoreflect.ValueOfMessage(value.ProtoReflect())
+	case "kepler.workflow.UserOp.contract_address":
+		return protoreflect.ValueOfBytes(nil)
+	case "kepler.workflow.UserOp.chain_id":
+		return protoreflect.ValueOfString("")
+	case "kepler.workflow.UserOp.tx_call_data":
+		return protoreflect.ValueOfBytes(nil)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.Action"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.UserOp"))
 		}
-		panic(fmt.Errorf("message kepler.workflow.Action does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message kepler.workflow.UserOp does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_Action) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_UserOp) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
-	case "kepler.workflow.Action.action":
-		if x.Action == nil {
-			return nil
-		}
-		switch x.Action.(type) {
-		case *Action_OnChain:
-			return x.Descriptor().Fields().ByName("on_chain")
-		}
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in kepler.workflow.Action", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in kepler.workflow.UserOp", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -2176,7 +2176,7 @@ func (x *fastReflection_Action) WhichOneof(d protoreflect.OneofDescriptor) proto
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_Action) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_UserOp) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -2187,7 +2187,7 @@ func (x *fastReflection_Action) GetUnknown() protoreflect.RawFields {
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_Action) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_UserOp) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -2199,7 +2199,7 @@ func (x *fastReflection_Action) SetUnknown(fields protoreflect.RawFields) {
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_Action) IsValid() bool {
+func (x *fastReflection_UserOp) IsValid() bool {
 	return x != nil
 }
 
@@ -2209,9 +2209,9 @@ func (x *fastReflection_Action) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_Action) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_UserOp) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*Action)
+		x := input.Message.Interface().(*UserOp)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -2223,12 +2223,16 @@ func (x *fastReflection_Action) ProtoMethods() *protoiface.Methods {
 		var n int
 		var l int
 		_ = l
-		switch x := x.Action.(type) {
-		case *Action_OnChain:
-			if x == nil {
-				break
-			}
-			l = options.Size(x.OnChain)
+		l = len(x.ContractAddress)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.ChainId)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.TxCallData)
+		if l > 0 {
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
 		if x.unknownFields != nil {
@@ -2241,7 +2245,7 @@ func (x *fastReflection_Action) ProtoMethods() *protoiface.Methods {
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*Action)
+		x := input.Message.Interface().(*UserOp)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -2260,18 +2264,24 @@ func (x *fastReflection_Action) ProtoMethods() *protoiface.Methods {
 			i -= len(x.unknownFields)
 			copy(dAtA[i:], x.unknownFields)
 		}
-		switch x := x.Action.(type) {
-		case *Action_OnChain:
-			encoded, err := options.Marshal(x.OnChain)
-			if err != nil {
-				return protoiface.MarshalOutput{
-					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-					Buf:               input.Buf,
-				}, err
-			}
-			i -= len(encoded)
-			copy(dAtA[i:], encoded)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+		if len(x.TxCallData) > 0 {
+			i -= len(x.TxCallData)
+			copy(dAtA[i:], x.TxCallData)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.TxCallData)))
+			i--
+			dAtA[i] = 0x1a
+		}
+		if len(x.ChainId) > 0 {
+			i -= len(x.ChainId)
+			copy(dAtA[i:], x.ChainId)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ChainId)))
+			i--
+			dAtA[i] = 0x12
+		}
+		if len(x.ContractAddress) > 0 {
+			i -= len(x.ContractAddress)
+			copy(dAtA[i:], x.ContractAddress)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ContractAddress)))
 			i--
 			dAtA[i] = 0xa
 		}
@@ -2286,7 +2296,7 @@ func (x *fastReflection_Action) ProtoMethods() *protoiface.Methods {
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*Action)
+		x := input.Message.Interface().(*UserOp)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -2318,17 +2328,17 @@ func (x *fastReflection_Action) ProtoMethods() *protoiface.Methods {
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: Action: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: UserOp: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: Action: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: UserOp: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			case 1:
 				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field OnChain", wireType)
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ContractAddress", wireType)
 				}
-				var msglen int
+				var byteLen int
 				for shift := uint(0); ; shift += 7 {
 					if shift >= 64 {
 						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
@@ -2338,27 +2348,496 @@ func (x *fastReflection_Action) ProtoMethods() *protoiface.Methods {
 					}
 					b := dAtA[iNdEx]
 					iNdEx++
-					msglen |= int(b&0x7F) << shift
+					byteLen |= int(b&0x7F) << shift
 					if b < 0x80 {
 						break
 					}
 				}
-				if msglen < 0 {
+				if byteLen < 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
 				}
-				postIndex := iNdEx + msglen
+				postIndex := iNdEx + byteLen
 				if postIndex < 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
 				}
 				if postIndex > l {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
-				v := &OnChainAction{}
-				if err := options.Unmarshal(dAtA[iNdEx:postIndex], v); err != nil {
+				x.ContractAddress = append(x.ContractAddress[:0], dAtA[iNdEx:postIndex]...)
+				if x.ContractAddress == nil {
+					x.ContractAddress = []byte{}
+				}
+				iNdEx = postIndex
+			case 2:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ChainId", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.ChainId = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 3:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field TxCallData", wireType)
+				}
+				var byteLen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					byteLen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if byteLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + byteLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.TxCallData = append(x.TxCallData[:0], dAtA[iNdEx:postIndex]...)
+				if x.TxCallData == nil {
+					x.TxCallData = []byte{}
+				}
+				iNdEx = postIndex
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
 				}
-				x.Action = &Action_OnChain{v}
-				iNdEx = postIndex
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
+var (
+	md_ExpireAtTrigger           protoreflect.MessageDescriptor
+	fd_ExpireAtTrigger_timestamp protoreflect.FieldDescriptor
+)
+
+func init() {
+	file_kepler_workflow_automation_proto_init()
+	md_ExpireAtTrigger = File_kepler_workflow_automation_proto.Messages().ByName("ExpireAtTrigger")
+	fd_ExpireAtTrigger_timestamp = md_ExpireAtTrigger.Fields().ByName("timestamp")
+}
+
+var _ protoreflect.Message = (*fastReflection_ExpireAtTrigger)(nil)
+
+type fastReflection_ExpireAtTrigger ExpireAtTrigger
+
+func (x *ExpireAtTrigger) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_ExpireAtTrigger)(x)
+}
+
+func (x *ExpireAtTrigger) slowProtoReflect() protoreflect.Message {
+	mi := &file_kepler_workflow_automation_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_ExpireAtTrigger_messageType fastReflection_ExpireAtTrigger_messageType
+var _ protoreflect.MessageType = fastReflection_ExpireAtTrigger_messageType{}
+
+type fastReflection_ExpireAtTrigger_messageType struct{}
+
+func (x fastReflection_ExpireAtTrigger_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_ExpireAtTrigger)(nil)
+}
+func (x fastReflection_ExpireAtTrigger_messageType) New() protoreflect.Message {
+	return new(fastReflection_ExpireAtTrigger)
+}
+func (x fastReflection_ExpireAtTrigger_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_ExpireAtTrigger
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_ExpireAtTrigger) Descriptor() protoreflect.MessageDescriptor {
+	return md_ExpireAtTrigger
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_ExpireAtTrigger) Type() protoreflect.MessageType {
+	return _fastReflection_ExpireAtTrigger_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_ExpireAtTrigger) New() protoreflect.Message {
+	return new(fastReflection_ExpireAtTrigger)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_ExpireAtTrigger) Interface() protoreflect.ProtoMessage {
+	return (*ExpireAtTrigger)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_ExpireAtTrigger) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.Timestamp != int64(0) {
+		value := protoreflect.ValueOfInt64(x.Timestamp)
+		if !f(fd_ExpireAtTrigger_timestamp, value) {
+			return
+		}
+	}
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_ExpireAtTrigger) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	case "kepler.workflow.ExpireAtTrigger.timestamp":
+		return x.Timestamp != int64(0)
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.ExpireAtTrigger"))
+		}
+		panic(fmt.Errorf("message kepler.workflow.ExpireAtTrigger does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_ExpireAtTrigger) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	case "kepler.workflow.ExpireAtTrigger.timestamp":
+		x.Timestamp = int64(0)
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.ExpireAtTrigger"))
+		}
+		panic(fmt.Errorf("message kepler.workflow.ExpireAtTrigger does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_ExpireAtTrigger) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	case "kepler.workflow.ExpireAtTrigger.timestamp":
+		value := x.Timestamp
+		return protoreflect.ValueOfInt64(value)
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.ExpireAtTrigger"))
+		}
+		panic(fmt.Errorf("message kepler.workflow.ExpireAtTrigger does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_ExpireAtTrigger) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	case "kepler.workflow.ExpireAtTrigger.timestamp":
+		x.Timestamp = value.Int()
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.ExpireAtTrigger"))
+		}
+		panic(fmt.Errorf("message kepler.workflow.ExpireAtTrigger does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_ExpireAtTrigger) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "kepler.workflow.ExpireAtTrigger.timestamp":
+		panic(fmt.Errorf("field timestamp of message kepler.workflow.ExpireAtTrigger is not mutable"))
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.ExpireAtTrigger"))
+		}
+		panic(fmt.Errorf("message kepler.workflow.ExpireAtTrigger does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_ExpireAtTrigger) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "kepler.workflow.ExpireAtTrigger.timestamp":
+		return protoreflect.ValueOfInt64(int64(0))
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.ExpireAtTrigger"))
+		}
+		panic(fmt.Errorf("message kepler.workflow.ExpireAtTrigger does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_ExpireAtTrigger) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in kepler.workflow.ExpireAtTrigger", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_ExpireAtTrigger) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_ExpireAtTrigger) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_ExpireAtTrigger) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_ExpireAtTrigger) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*ExpireAtTrigger)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		if x.Timestamp != 0 {
+			n += 1 + runtime.Sov(uint64(x.Timestamp))
+		}
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*ExpireAtTrigger)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if x.Timestamp != 0 {
+			i = runtime.EncodeVarint(dAtA, i, uint64(x.Timestamp))
+			i--
+			dAtA[i] = 0x8
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*ExpireAtTrigger)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: ExpireAtTrigger: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: ExpireAtTrigger: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			case 1:
+				if wireType != 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Timestamp", wireType)
+				}
+				x.Timestamp = 0
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					x.Timestamp |= int64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
 			default:
 				iNdEx = preIndex
 				skippy, err := runtime.Skip(dAtA[iNdEx:])
@@ -2418,7 +2897,7 @@ func (x *OnChainTrigger) ProtoReflect() protoreflect.Message {
 }
 
 func (x *OnChainTrigger) slowProtoReflect() protoreflect.Message {
-	mi := &file_kepler_workflow_automation_proto_msgTypes[3]
+	mi := &file_kepler_workflow_automation_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2966,7 +3445,7 @@ func (x *TimeTrigger) ProtoReflect() protoreflect.Message {
 }
 
 func (x *TimeTrigger) slowProtoReflect() protoreflect.Message {
-	mi := &file_kepler_workflow_automation_proto_msgTypes[4]
+	mi := &file_kepler_workflow_automation_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3370,7 +3849,7 @@ func (x *CountTrigger) ProtoReflect() protoreflect.Message {
 }
 
 func (x *CountTrigger) slowProtoReflect() protoreflect.Message {
-	mi := &file_kepler_workflow_automation_proto_msgTypes[5]
+	mi := &file_kepler_workflow_automation_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3774,7 +4253,7 @@ func (x *BlockIntervalTrigger) ProtoReflect() protoreflect.Message {
 }
 
 func (x *BlockIntervalTrigger) slowProtoReflect() protoreflect.Message {
-	mi := &file_kepler_workflow_automation_proto_msgTypes[6]
+	mi := &file_kepler_workflow_automation_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4180,7 +4659,7 @@ func (x *GasPriceTrigger) ProtoReflect() protoreflect.Message {
 }
 
 func (x *GasPriceTrigger) slowProtoReflect() protoreflect.Message {
-	mi := &file_kepler_workflow_automation_proto_msgTypes[7]
+	mi := &file_kepler_workflow_automation_proto_msgTypes[8]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4642,558 +5121,6 @@ func (x *fastReflection_GasPriceTrigger) ProtoMethods() *protoiface.Methods {
 	}
 }
 
-var (
-	md_OnChainAction                  protoreflect.MessageDescriptor
-	fd_OnChainAction_contract_address protoreflect.FieldDescriptor
-	fd_OnChainAction_chain_id         protoreflect.FieldDescriptor
-	fd_OnChainAction_tx_call_data     protoreflect.FieldDescriptor
-)
-
-func init() {
-	file_kepler_workflow_automation_proto_init()
-	md_OnChainAction = File_kepler_workflow_automation_proto.Messages().ByName("OnChainAction")
-	fd_OnChainAction_contract_address = md_OnChainAction.Fields().ByName("contract_address")
-	fd_OnChainAction_chain_id = md_OnChainAction.Fields().ByName("chain_id")
-	fd_OnChainAction_tx_call_data = md_OnChainAction.Fields().ByName("tx_call_data")
-}
-
-var _ protoreflect.Message = (*fastReflection_OnChainAction)(nil)
-
-type fastReflection_OnChainAction OnChainAction
-
-func (x *OnChainAction) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_OnChainAction)(x)
-}
-
-func (x *OnChainAction) slowProtoReflect() protoreflect.Message {
-	mi := &file_kepler_workflow_automation_proto_msgTypes[8]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-var _fastReflection_OnChainAction_messageType fastReflection_OnChainAction_messageType
-var _ protoreflect.MessageType = fastReflection_OnChainAction_messageType{}
-
-type fastReflection_OnChainAction_messageType struct{}
-
-func (x fastReflection_OnChainAction_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_OnChainAction)(nil)
-}
-func (x fastReflection_OnChainAction_messageType) New() protoreflect.Message {
-	return new(fastReflection_OnChainAction)
-}
-func (x fastReflection_OnChainAction_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_OnChainAction
-}
-
-// Descriptor returns message descriptor, which contains only the protobuf
-// type information for the message.
-func (x *fastReflection_OnChainAction) Descriptor() protoreflect.MessageDescriptor {
-	return md_OnChainAction
-}
-
-// Type returns the message type, which encapsulates both Go and protobuf
-// type information. If the Go type information is not needed,
-// it is recommended that the message descriptor be used instead.
-func (x *fastReflection_OnChainAction) Type() protoreflect.MessageType {
-	return _fastReflection_OnChainAction_messageType
-}
-
-// New returns a newly allocated and mutable empty message.
-func (x *fastReflection_OnChainAction) New() protoreflect.Message {
-	return new(fastReflection_OnChainAction)
-}
-
-// Interface unwraps the message reflection interface and
-// returns the underlying ProtoMessage interface.
-func (x *fastReflection_OnChainAction) Interface() protoreflect.ProtoMessage {
-	return (*OnChainAction)(x)
-}
-
-// Range iterates over every populated field in an undefined order,
-// calling f for each field descriptor and value encountered.
-// Range returns immediately if f returns false.
-// While iterating, mutating operations may only be performed
-// on the current field descriptor.
-func (x *fastReflection_OnChainAction) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
-	if len(x.ContractAddress) != 0 {
-		value := protoreflect.ValueOfBytes(x.ContractAddress)
-		if !f(fd_OnChainAction_contract_address, value) {
-			return
-		}
-	}
-	if x.ChainId != "" {
-		value := protoreflect.ValueOfString(x.ChainId)
-		if !f(fd_OnChainAction_chain_id, value) {
-			return
-		}
-	}
-	if len(x.TxCallData) != 0 {
-		value := protoreflect.ValueOfBytes(x.TxCallData)
-		if !f(fd_OnChainAction_tx_call_data, value) {
-			return
-		}
-	}
-}
-
-// Has reports whether a field is populated.
-//
-// Some fields have the property of nullability where it is possible to
-// distinguish between the default value of a field and whether the field
-// was explicitly populated with the default value. Singular message fields,
-// member fields of a oneof, and proto2 scalar fields are nullable. Such
-// fields are populated only if explicitly set.
-//
-// In other cases (aside from the nullable cases above),
-// a proto3 scalar field is populated if it contains a non-zero value, and
-// a repeated field is populated if it is non-empty.
-func (x *fastReflection_OnChainAction) Has(fd protoreflect.FieldDescriptor) bool {
-	switch fd.FullName() {
-	case "kepler.workflow.OnChainAction.contract_address":
-		return len(x.ContractAddress) != 0
-	case "kepler.workflow.OnChainAction.chain_id":
-		return x.ChainId != ""
-	case "kepler.workflow.OnChainAction.tx_call_data":
-		return len(x.TxCallData) != 0
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.OnChainAction"))
-		}
-		panic(fmt.Errorf("message kepler.workflow.OnChainAction does not contain field %s", fd.FullName()))
-	}
-}
-
-// Clear clears the field such that a subsequent Has call reports false.
-//
-// Clearing an extension field clears both the extension type and value
-// associated with the given field number.
-//
-// Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_OnChainAction) Clear(fd protoreflect.FieldDescriptor) {
-	switch fd.FullName() {
-	case "kepler.workflow.OnChainAction.contract_address":
-		x.ContractAddress = nil
-	case "kepler.workflow.OnChainAction.chain_id":
-		x.ChainId = ""
-	case "kepler.workflow.OnChainAction.tx_call_data":
-		x.TxCallData = nil
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.OnChainAction"))
-		}
-		panic(fmt.Errorf("message kepler.workflow.OnChainAction does not contain field %s", fd.FullName()))
-	}
-}
-
-// Get retrieves the value for a field.
-//
-// For unpopulated scalars, it returns the default value, where
-// the default value of a bytes scalar is guaranteed to be a copy.
-// For unpopulated composite types, it returns an empty, read-only view
-// of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_OnChainAction) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
-	switch descriptor.FullName() {
-	case "kepler.workflow.OnChainAction.contract_address":
-		value := x.ContractAddress
-		return protoreflect.ValueOfBytes(value)
-	case "kepler.workflow.OnChainAction.chain_id":
-		value := x.ChainId
-		return protoreflect.ValueOfString(value)
-	case "kepler.workflow.OnChainAction.tx_call_data":
-		value := x.TxCallData
-		return protoreflect.ValueOfBytes(value)
-	default:
-		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.OnChainAction"))
-		}
-		panic(fmt.Errorf("message kepler.workflow.OnChainAction does not contain field %s", descriptor.FullName()))
-	}
-}
-
-// Set stores the value for a field.
-//
-// For a field belonging to a oneof, it implicitly clears any other field
-// that may be currently set within the same oneof.
-// For extension fields, it implicitly stores the provided ExtensionType.
-// When setting a composite type, it is unspecified whether the stored value
-// aliases the source's memory in any way. If the composite value is an
-// empty, read-only value, then it panics.
-//
-// Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_OnChainAction) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
-	switch fd.FullName() {
-	case "kepler.workflow.OnChainAction.contract_address":
-		x.ContractAddress = value.Bytes()
-	case "kepler.workflow.OnChainAction.chain_id":
-		x.ChainId = value.Interface().(string)
-	case "kepler.workflow.OnChainAction.tx_call_data":
-		x.TxCallData = value.Bytes()
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.OnChainAction"))
-		}
-		panic(fmt.Errorf("message kepler.workflow.OnChainAction does not contain field %s", fd.FullName()))
-	}
-}
-
-// Mutable returns a mutable reference to a composite type.
-//
-// If the field is unpopulated, it may allocate a composite value.
-// For a field belonging to a oneof, it implicitly clears any other field
-// that may be currently set within the same oneof.
-// For extension fields, it implicitly stores the provided ExtensionType
-// if not already stored.
-// It panics if the field does not contain a composite type.
-//
-// Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_OnChainAction) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
-	switch fd.FullName() {
-	case "kepler.workflow.OnChainAction.contract_address":
-		panic(fmt.Errorf("field contract_address of message kepler.workflow.OnChainAction is not mutable"))
-	case "kepler.workflow.OnChainAction.chain_id":
-		panic(fmt.Errorf("field chain_id of message kepler.workflow.OnChainAction is not mutable"))
-	case "kepler.workflow.OnChainAction.tx_call_data":
-		panic(fmt.Errorf("field tx_call_data of message kepler.workflow.OnChainAction is not mutable"))
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.OnChainAction"))
-		}
-		panic(fmt.Errorf("message kepler.workflow.OnChainAction does not contain field %s", fd.FullName()))
-	}
-}
-
-// NewField returns a new value that is assignable to the field
-// for the given descriptor. For scalars, this returns the default value.
-// For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_OnChainAction) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
-	switch fd.FullName() {
-	case "kepler.workflow.OnChainAction.contract_address":
-		return protoreflect.ValueOfBytes(nil)
-	case "kepler.workflow.OnChainAction.chain_id":
-		return protoreflect.ValueOfString("")
-	case "kepler.workflow.OnChainAction.tx_call_data":
-		return protoreflect.ValueOfBytes(nil)
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.workflow.OnChainAction"))
-		}
-		panic(fmt.Errorf("message kepler.workflow.OnChainAction does not contain field %s", fd.FullName()))
-	}
-}
-
-// WhichOneof reports which field within the oneof is populated,
-// returning nil if none are populated.
-// It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_OnChainAction) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
-	switch d.FullName() {
-	default:
-		panic(fmt.Errorf("%s is not a oneof field in kepler.workflow.OnChainAction", d.FullName()))
-	}
-	panic("unreachable")
-}
-
-// GetUnknown retrieves the entire list of unknown fields.
-// The caller may only mutate the contents of the RawFields
-// if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_OnChainAction) GetUnknown() protoreflect.RawFields {
-	return x.unknownFields
-}
-
-// SetUnknown stores an entire list of unknown fields.
-// The raw fields must be syntactically valid according to the wire format.
-// An implementation may panic if this is not the case.
-// Once stored, the caller must not mutate the content of the RawFields.
-// An empty RawFields may be passed to clear the fields.
-//
-// SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_OnChainAction) SetUnknown(fields protoreflect.RawFields) {
-	x.unknownFields = fields
-}
-
-// IsValid reports whether the message is valid.
-//
-// An invalid message is an empty, read-only value.
-//
-// An invalid message often corresponds to a nil pointer of the concrete
-// message type, but the details are implementation dependent.
-// Validity is not part of the protobuf data model, and may not
-// be preserved in marshaling or other operations.
-func (x *fastReflection_OnChainAction) IsValid() bool {
-	return x != nil
-}
-
-// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
-// This method may return nil.
-//
-// The returned methods type is identical to
-// "google.golang.org/protobuf/runtime/protoiface".Methods.
-// Consult the protoiface package documentation for details.
-func (x *fastReflection_OnChainAction) ProtoMethods() *protoiface.Methods {
-	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*OnChainAction)
-		if x == nil {
-			return protoiface.SizeOutput{
-				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-				Size:              0,
-			}
-		}
-		options := runtime.SizeInputToOptions(input)
-		_ = options
-		var n int
-		var l int
-		_ = l
-		l = len(x.ContractAddress)
-		if l > 0 {
-			n += 1 + l + runtime.Sov(uint64(l))
-		}
-		l = len(x.ChainId)
-		if l > 0 {
-			n += 1 + l + runtime.Sov(uint64(l))
-		}
-		l = len(x.TxCallData)
-		if l > 0 {
-			n += 1 + l + runtime.Sov(uint64(l))
-		}
-		if x.unknownFields != nil {
-			n += len(x.unknownFields)
-		}
-		return protoiface.SizeOutput{
-			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-			Size:              n,
-		}
-	}
-
-	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*OnChainAction)
-		if x == nil {
-			return protoiface.MarshalOutput{
-				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-				Buf:               input.Buf,
-			}, nil
-		}
-		options := runtime.MarshalInputToOptions(input)
-		_ = options
-		size := options.Size(x)
-		dAtA := make([]byte, size)
-		i := len(dAtA)
-		_ = i
-		var l int
-		_ = l
-		if x.unknownFields != nil {
-			i -= len(x.unknownFields)
-			copy(dAtA[i:], x.unknownFields)
-		}
-		if len(x.TxCallData) > 0 {
-			i -= len(x.TxCallData)
-			copy(dAtA[i:], x.TxCallData)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.TxCallData)))
-			i--
-			dAtA[i] = 0x1a
-		}
-		if len(x.ChainId) > 0 {
-			i -= len(x.ChainId)
-			copy(dAtA[i:], x.ChainId)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ChainId)))
-			i--
-			dAtA[i] = 0x12
-		}
-		if len(x.ContractAddress) > 0 {
-			i -= len(x.ContractAddress)
-			copy(dAtA[i:], x.ContractAddress)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ContractAddress)))
-			i--
-			dAtA[i] = 0xa
-		}
-		if input.Buf != nil {
-			input.Buf = append(input.Buf, dAtA...)
-		} else {
-			input.Buf = dAtA
-		}
-		return protoiface.MarshalOutput{
-			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-			Buf:               input.Buf,
-		}, nil
-	}
-	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*OnChainAction)
-		if x == nil {
-			return protoiface.UnmarshalOutput{
-				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-				Flags:             input.Flags,
-			}, nil
-		}
-		options := runtime.UnmarshalInputToOptions(input)
-		_ = options
-		dAtA := input.Buf
-		l := len(dAtA)
-		iNdEx := 0
-		for iNdEx < l {
-			preIndex := iNdEx
-			var wire uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				wire |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			fieldNum := int32(wire >> 3)
-			wireType := int(wire & 0x7)
-			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: OnChainAction: wiretype end group for non-group")
-			}
-			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: OnChainAction: illegal tag %d (wire type %d)", fieldNum, wire)
-			}
-			switch fieldNum {
-			case 1:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ContractAddress", wireType)
-				}
-				var byteLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					byteLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				if byteLen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + byteLen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				x.ContractAddress = append(x.ContractAddress[:0], dAtA[iNdEx:postIndex]...)
-				if x.ContractAddress == nil {
-					x.ContractAddress = []byte{}
-				}
-				iNdEx = postIndex
-			case 2:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ChainId", wireType)
-				}
-				var stringLen uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + intStringLen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				x.ChainId = string(dAtA[iNdEx:postIndex])
-				iNdEx = postIndex
-			case 3:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field TxCallData", wireType)
-				}
-				var byteLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					byteLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				if byteLen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + byteLen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				x.TxCallData = append(x.TxCallData[:0], dAtA[iNdEx:postIndex]...)
-				if x.TxCallData == nil {
-					x.TxCallData = []byte{}
-				}
-				iNdEx = postIndex
-			default:
-				iNdEx = preIndex
-				skippy, err := runtime.Skip(dAtA[iNdEx:])
-				if err != nil {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
-				}
-				if (skippy < 0) || (iNdEx+skippy) < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if (iNdEx + skippy) > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				if !options.DiscardUnknown {
-					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
-				}
-				iNdEx += skippy
-			}
-		}
-
-		if iNdEx > l {
-			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-		}
-		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
-	}
-	return &protoiface.Methods{
-		NoUnkeyedLiterals: struct{}{},
-		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
-		Size:              size,
-		Marshal:           marshal,
-		Unmarshal:         unmarshal,
-		Merge:             nil,
-		CheckInitialized:  nil,
-	}
-}
-
 // Code generated by protoc-gen-go. DO NOT EDIT.
 // versions:
 // 	protoc-gen-go v1.27.0
@@ -5211,13 +5138,20 @@ const (
 type AutomationStatus int32
 
 const (
-	AutomationStatus_AUTOMATION_STATUS_STATUS_UNSPECIFIED AutomationStatus = 0 // Default unknown status
-	AutomationStatus_AUTOMATION_STATUS_ACTIVE             AutomationStatus = 1 // Active automation
-	AutomationStatus_AUTOMATION_STATUS_EXPIRED            AutomationStatus = 2 // Expired automation
-	AutomationStatus_AUTOMATION_STATUS_PAUSED             AutomationStatus = 3 // Paused automation
-	AutomationStatus_AUTOMATION_STATUS_FAILED             AutomationStatus = 4 // Failed automation
-	AutomationStatus_AUTOMATION_STATUS_DONE               AutomationStatus = 5 // Completed automation
-	AutomationStatus_AUTOMATION_STATUS_CANCELED           AutomationStatus = 6 // Canceled automation
+	// AUTOMATION_STATUS_STATUS_UNSPECIFIED - Default unknown status
+	AutomationStatus_AUTOMATION_STATUS_STATUS_UNSPECIFIED AutomationStatus = 0
+	// AUTOMATION_STATUS_ACTIVE - Active automation
+	AutomationStatus_AUTOMATION_STATUS_ACTIVE AutomationStatus = 1
+	// AUTOMATION_STATUS_EXPIRED - Expired automation
+	AutomationStatus_AUTOMATION_STATUS_EXPIRED AutomationStatus = 2
+	// AUTOMATION_STATUS_PAUSED - Paused automation
+	AutomationStatus_AUTOMATION_STATUS_PAUSED AutomationStatus = 3
+	// AUTOMATION_STATUS_FAILED - Failed automation
+	AutomationStatus_AUTOMATION_STATUS_FAILED AutomationStatus = 4
+	// AUTOMATION_STATUS_DONE - Completed automation
+	AutomationStatus_AUTOMATION_STATUS_DONE AutomationStatus = 5
+	// AUTOMATION_STATUS_CANCELED - Canceled automation
+	AutomationStatus_AUTOMATION_STATUS_CANCELED AutomationStatus = 6 // Canceled automation
 )
 
 // Enum value maps for AutomationStatus.
@@ -5277,13 +5211,12 @@ type Automation struct {
 
 	Id                    uint64           `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`                                                                      // Incremental ID for blockchain consistency
 	Triggers              []*Trigger       `protobuf:"bytes,2,rep,name=triggers,proto3" json:"triggers,omitempty"`                                                           // Trigger object, which can be chained by logical operators in itself
-	Actions               []*Action        `protobuf:"bytes,3,rep,name=actions,proto3" json:"actions,omitempty"`                                                             // List of actions
-	ExpireAt              int64            `protobuf:"varint,4,opt,name=expire_at,json=expireAt,proto3" json:"expire_at,omitempty"`                                          // Expiration timestamp (Unix time)
-	Status                AutomationStatus `protobuf:"varint,5,opt,name=status,proto3,enum=kepler.workflow.AutomationStatus" json:"status,omitempty"`                        // Status of the automation (active, expired, paused, failed, done)
-	ExecutionCount        int64            `protobuf:"varint,6,opt,name=execution_count,json=executionCount,proto3" json:"execution_count,omitempty"`                        // how many times automation has been executed
-	FailedExecutionStreak int64            `protobuf:"varint,7,opt,name=failed_execution_streak,json=failedExecutionStreak,proto3" json:"failed_execution_streak,omitempty"` // how many times in a row automation has failed its execution
-	LastSuccessfulJob     *job.Job         `protobuf:"bytes,8,opt,name=last_successful_job,json=lastSuccessfulJob,proto3" json:"last_successful_job,omitempty"`              // last successfully executed job
-	Creator               string           `protobuf:"bytes,9,opt,name=creator,proto3" json:"creator,omitempty"`                                                             // Creator address
+	UserOp                *UserOp          `protobuf:"bytes,3,opt,name=user_op,json=userOp,proto3" json:"user_op,omitempty"`                                                 // User operation to be executed
+	Status                AutomationStatus `protobuf:"varint,4,opt,name=status,proto3,enum=kepler.workflow.AutomationStatus" json:"status,omitempty"`                        // Status of the automation (active, expired, paused, failed, done)
+	ExecutionCount        int64            `protobuf:"varint,5,opt,name=execution_count,json=executionCount,proto3" json:"execution_count,omitempty"`                        // how many times automation has been executed
+	FailedExecutionStreak int64            `protobuf:"varint,6,opt,name=failed_execution_streak,json=failedExecutionStreak,proto3" json:"failed_execution_streak,omitempty"` // how many times in a row automation has failed its execution
+	LastSuccessfulJob     *job.Job         `protobuf:"bytes,7,opt,name=last_successful_job,json=lastSuccessfulJob,proto3" json:"last_successful_job,omitempty"`              // last successfully executed job
+	Creator               string           `protobuf:"bytes,8,opt,name=creator,proto3" json:"creator,omitempty"`                                                             // Creator address
 }
 
 func (x *Automation) Reset() {
@@ -5320,18 +5253,11 @@ func (x *Automation) GetTriggers() []*Trigger {
 	return nil
 }
 
-func (x *Automation) GetActions() []*Action {
+func (x *Automation) GetUserOp() *UserOp {
 	if x != nil {
-		return x.Actions
+		return x.UserOp
 	}
 	return nil
-}
-
-func (x *Automation) GetExpireAt() int64 {
-	if x != nil {
-		return x.ExpireAt
-	}
-	return 0
 }
 
 func (x *Automation) GetStatus() AutomationStatus {
@@ -5375,6 +5301,8 @@ type Trigger struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// trigger is a union of all trigger types
+	//
 	// Types that are assignable to Trigger:
 	//
 	//	*Trigger_OnChain
@@ -5382,6 +5310,7 @@ type Trigger struct {
 	//	*Trigger_GasPrice
 	//	*Trigger_Count
 	//	*Trigger_BlockInterval
+	//	*Trigger_ExpireAt
 	Trigger isTrigger_Trigger `protobuf_oneof:"trigger"`
 }
 
@@ -5447,6 +5376,13 @@ func (x *Trigger) GetBlockInterval() *BlockIntervalTrigger {
 	return nil
 }
 
+func (x *Trigger) GetExpireAt() *ExpireAtTrigger {
+	if x, ok := x.GetTrigger().(*Trigger_ExpireAt); ok {
+		return x.ExpireAt
+	}
+	return nil
+}
+
 type isTrigger_Trigger interface {
 	isTrigger_Trigger()
 }
@@ -5471,6 +5407,10 @@ type Trigger_BlockInterval struct {
 	BlockInterval *BlockIntervalTrigger `protobuf:"bytes,5,opt,name=block_interval,json=blockInterval,proto3,oneof"`
 }
 
+type Trigger_ExpireAt struct {
+	ExpireAt *ExpireAtTrigger `protobuf:"bytes,6,opt,name=expire_at,json=expireAt,proto3,oneof"`
+}
+
 func (*Trigger_OnChain) isTrigger_Trigger() {}
 
 func (*Trigger_Time) isTrigger_Trigger() {}
@@ -5481,20 +5421,21 @@ func (*Trigger_Count) isTrigger_Trigger() {}
 
 func (*Trigger_BlockInterval) isTrigger_Trigger() {}
 
-// Base action with type selection
-type Action struct {
+func (*Trigger_ExpireAt) isTrigger_Trigger() {}
+
+// UserOp is user operation process
+type UserOp struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Types that are assignable to Action:
-	//
-	//	*Action_OnChain
-	Action isAction_Action `protobuf_oneof:"action"`
+	ContractAddress []byte `protobuf:"bytes,1,opt,name=contract_address,json=contractAddress,proto3" json:"contract_address,omitempty"` // Contract address
+	ChainId         string `protobuf:"bytes,2,opt,name=chain_id,json=chainId,proto3" json:"chain_id,omitempty"`                         // Chain ID
+	TxCallData      []byte `protobuf:"bytes,3,opt,name=tx_call_data,json=txCallData,proto3" json:"tx_call_data,omitempty"`
 }
 
-func (x *Action) Reset() {
-	*x = Action{}
+func (x *UserOp) Reset() {
+	*x = UserOp{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_kepler_workflow_automation_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -5502,40 +5443,74 @@ func (x *Action) Reset() {
 	}
 }
 
-func (x *Action) String() string {
+func (x *UserOp) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Action) ProtoMessage() {}
+func (*UserOp) ProtoMessage() {}
 
-// Deprecated: Use Action.ProtoReflect.Descriptor instead.
-func (*Action) Descriptor() ([]byte, []int) {
+// Deprecated: Use UserOp.ProtoReflect.Descriptor instead.
+func (*UserOp) Descriptor() ([]byte, []int) {
 	return file_kepler_workflow_automation_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *Action) GetAction() isAction_Action {
+func (x *UserOp) GetContractAddress() []byte {
 	if x != nil {
-		return x.Action
+		return x.ContractAddress
 	}
 	return nil
 }
 
-func (x *Action) GetOnChain() *OnChainAction {
-	if x, ok := x.GetAction().(*Action_OnChain); ok {
-		return x.OnChain
+func (x *UserOp) GetChainId() string {
+	if x != nil {
+		return x.ChainId
+	}
+	return ""
+}
+
+func (x *UserOp) GetTxCallData() []byte {
+	if x != nil {
+		return x.TxCallData
 	}
 	return nil
 }
 
-type isAction_Action interface {
-	isAction_Action()
+// Expire at trigger
+type ExpireAtTrigger struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// timestamp is the Unix timestamp when the trigger should be executed
+	Timestamp int64 `protobuf:"varint,1,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
 }
 
-type Action_OnChain struct {
-	OnChain *OnChainAction `protobuf:"bytes,1,opt,name=on_chain,json=onChain,proto3,oneof"`
+func (x *ExpireAtTrigger) Reset() {
+	*x = ExpireAtTrigger{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_kepler_workflow_automation_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
 }
 
-func (*Action_OnChain) isAction_Action() {}
+func (x *ExpireAtTrigger) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExpireAtTrigger) ProtoMessage() {}
+
+// Deprecated: Use ExpireAtTrigger.ProtoReflect.Descriptor instead.
+func (*ExpireAtTrigger) Descriptor() ([]byte, []int) {
+	return file_kepler_workflow_automation_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *ExpireAtTrigger) GetTimestamp() int64 {
+	if x != nil {
+		return x.Timestamp
+	}
+	return 0
+}
 
 // On chain trigger
 type OnChainTrigger struct {
@@ -5551,7 +5526,7 @@ type OnChainTrigger struct {
 func (x *OnChainTrigger) Reset() {
 	*x = OnChainTrigger{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_kepler_workflow_automation_proto_msgTypes[3]
+		mi := &file_kepler_workflow_automation_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5565,7 +5540,7 @@ func (*OnChainTrigger) ProtoMessage() {}
 
 // Deprecated: Use OnChainTrigger.ProtoReflect.Descriptor instead.
 func (*OnChainTrigger) Descriptor() ([]byte, []int) {
-	return file_kepler_workflow_automation_proto_rawDescGZIP(), []int{3}
+	return file_kepler_workflow_automation_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *OnChainTrigger) GetContractAddress() []byte {
@@ -5601,7 +5576,7 @@ type TimeTrigger struct {
 func (x *TimeTrigger) Reset() {
 	*x = TimeTrigger{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_kepler_workflow_automation_proto_msgTypes[4]
+		mi := &file_kepler_workflow_automation_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5615,7 +5590,7 @@ func (*TimeTrigger) ProtoMessage() {}
 
 // Deprecated: Use TimeTrigger.ProtoReflect.Descriptor instead.
 func (*TimeTrigger) Descriptor() ([]byte, []int) {
-	return file_kepler_workflow_automation_proto_rawDescGZIP(), []int{4}
+	return file_kepler_workflow_automation_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *TimeTrigger) GetExecuteAfter() int64 {
@@ -5637,7 +5612,7 @@ type CountTrigger struct {
 func (x *CountTrigger) Reset() {
 	*x = CountTrigger{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_kepler_workflow_automation_proto_msgTypes[5]
+		mi := &file_kepler_workflow_automation_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5651,7 +5626,7 @@ func (*CountTrigger) ProtoMessage() {}
 
 // Deprecated: Use CountTrigger.ProtoReflect.Descriptor instead.
 func (*CountTrigger) Descriptor() ([]byte, []int) {
-	return file_kepler_workflow_automation_proto_rawDescGZIP(), []int{5}
+	return file_kepler_workflow_automation_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *CountTrigger) GetRepeatCount() uint64 {
@@ -5673,7 +5648,7 @@ type BlockIntervalTrigger struct {
 func (x *BlockIntervalTrigger) Reset() {
 	*x = BlockIntervalTrigger{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_kepler_workflow_automation_proto_msgTypes[6]
+		mi := &file_kepler_workflow_automation_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5687,7 +5662,7 @@ func (*BlockIntervalTrigger) ProtoMessage() {}
 
 // Deprecated: Use BlockIntervalTrigger.ProtoReflect.Descriptor instead.
 func (*BlockIntervalTrigger) Descriptor() ([]byte, []int) {
-	return file_kepler_workflow_automation_proto_rawDescGZIP(), []int{6}
+	return file_kepler_workflow_automation_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *BlockIntervalTrigger) GetBlockInterval() uint64 {
@@ -5710,7 +5685,7 @@ type GasPriceTrigger struct {
 func (x *GasPriceTrigger) Reset() {
 	*x = GasPriceTrigger{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_kepler_workflow_automation_proto_msgTypes[7]
+		mi := &file_kepler_workflow_automation_proto_msgTypes[8]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5724,7 +5699,7 @@ func (*GasPriceTrigger) ProtoMessage() {}
 
 // Deprecated: Use GasPriceTrigger.ProtoReflect.Descriptor instead.
 func (*GasPriceTrigger) Descriptor() ([]byte, []int) {
-	return file_kepler_workflow_automation_proto_rawDescGZIP(), []int{7}
+	return file_kepler_workflow_automation_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *GasPriceTrigger) GetChainId() string {
@@ -5741,186 +5716,134 @@ func (x *GasPriceTrigger) GetThreshold() string {
 	return ""
 }
 
-// On chain action
-type OnChainAction struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	ContractAddress []byte `protobuf:"bytes,1,opt,name=contract_address,json=contractAddress,proto3" json:"contract_address,omitempty"` // Contract address
-	ChainId         string `protobuf:"bytes,2,opt,name=chain_id,json=chainId,proto3" json:"chain_id,omitempty"`                         // Chain ID
-	TxCallData      []byte `protobuf:"bytes,3,opt,name=tx_call_data,json=txCallData,proto3" json:"tx_call_data,omitempty"`
-}
-
-func (x *OnChainAction) Reset() {
-	*x = OnChainAction{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_kepler_workflow_automation_proto_msgTypes[8]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *OnChainAction) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*OnChainAction) ProtoMessage() {}
-
-// Deprecated: Use OnChainAction.ProtoReflect.Descriptor instead.
-func (*OnChainAction) Descriptor() ([]byte, []int) {
-	return file_kepler_workflow_automation_proto_rawDescGZIP(), []int{8}
-}
-
-func (x *OnChainAction) GetContractAddress() []byte {
-	if x != nil {
-		return x.ContractAddress
-	}
-	return nil
-}
-
-func (x *OnChainAction) GetChainId() string {
-	if x != nil {
-		return x.ChainId
-	}
-	return ""
-}
-
-func (x *OnChainAction) GetTxCallData() []byte {
-	if x != nil {
-		return x.TxCallData
-	}
-	return nil
-}
-
 var File_kepler_workflow_automation_proto protoreflect.FileDescriptor
 
 var file_kepler_workflow_automation_proto_rawDesc = []byte{
 	0x0a, 0x20, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f,
 	0x77, 0x2f, 0x61, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x70, 0x72, 0x6f,
 	0x74, 0x6f, 0x12, 0x0f, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66,
-	0x6c, 0x6f, 0x77, 0x1a, 0x19, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x5f, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x11,
-	0x61, 0x6d, 0x69, 0x6e, 0x6f, 0x2f, 0x61, 0x6d, 0x69, 0x6e, 0x6f, 0x2e, 0x70, 0x72, 0x6f, 0x74,
+	0x6c, 0x6f, 0x77, 0x1a, 0x11, 0x61, 0x6d, 0x69, 0x6e, 0x6f, 0x2f, 0x61, 0x6d, 0x69, 0x6e, 0x6f,
+	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x19, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x5f, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74,
 	0x6f, 0x1a, 0x14, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x6a, 0x6f, 0x62, 0x2f, 0x6a, 0x6f,
-	0x62, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0xb3, 0x03, 0x0a, 0x0a, 0x41, 0x75, 0x74, 0x6f,
+	0x62, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x95, 0x03, 0x0a, 0x0a, 0x41, 0x75, 0x74, 0x6f,
 	0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01,
 	0x28, 0x04, 0x52, 0x02, 0x69, 0x64, 0x12, 0x34, 0x0a, 0x08, 0x74, 0x72, 0x69, 0x67, 0x67, 0x65,
 	0x72, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65,
 	0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x54, 0x72, 0x69, 0x67, 0x67,
-	0x65, 0x72, 0x52, 0x08, 0x74, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x73, 0x12, 0x31, 0x0a, 0x07,
-	0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x17, 0x2e,
+	0x65, 0x72, 0x52, 0x08, 0x74, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x73, 0x12, 0x30, 0x0a, 0x07,
+	0x75, 0x73, 0x65, 0x72, 0x5f, 0x6f, 0x70, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x17, 0x2e,
 	0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e,
-	0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x07, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x12,
-	0x1b, 0x0a, 0x09, 0x65, 0x78, 0x70, 0x69, 0x72, 0x65, 0x5f, 0x61, 0x74, 0x18, 0x04, 0x20, 0x01,
-	0x28, 0x03, 0x52, 0x08, 0x65, 0x78, 0x70, 0x69, 0x72, 0x65, 0x41, 0x74, 0x12, 0x39, 0x0a, 0x06,
-	0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x21, 0x2e, 0x6b,
-	0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x41,
-	0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52,
-	0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x27, 0x0a, 0x0f, 0x65, 0x78, 0x65, 0x63, 0x75,
-	0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x06, 0x20, 0x01, 0x28, 0x03,
-	0x52, 0x0e, 0x65, 0x78, 0x65, 0x63, 0x75, 0x74, 0x69, 0x6f, 0x6e, 0x43, 0x6f, 0x75, 0x6e, 0x74,
-	0x12, 0x36, 0x0a, 0x17, 0x66, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x5f, 0x65, 0x78, 0x65, 0x63, 0x75,
-	0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6b, 0x18, 0x07, 0x20, 0x01, 0x28,
-	0x03, 0x52, 0x15, 0x66, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x45, 0x78, 0x65, 0x63, 0x75, 0x74, 0x69,
-	0x6f, 0x6e, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6b, 0x12, 0x3f, 0x0a, 0x13, 0x6c, 0x61, 0x73, 0x74,
-	0x5f, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x66, 0x75, 0x6c, 0x5f, 0x6a, 0x6f, 0x62, 0x18,
-	0x08, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0f, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x6a,
-	0x6f, 0x62, 0x2e, 0x4a, 0x6f, 0x62, 0x52, 0x11, 0x6c, 0x61, 0x73, 0x74, 0x53, 0x75, 0x63, 0x63,
-	0x65, 0x73, 0x73, 0x66, 0x75, 0x6c, 0x4a, 0x6f, 0x62, 0x12, 0x32, 0x0a, 0x07, 0x63, 0x72, 0x65,
-	0x61, 0x74, 0x6f, 0x72, 0x18, 0x09, 0x20, 0x01, 0x28, 0x09, 0x42, 0x18, 0xd2, 0xb4, 0x2d, 0x14,
-	0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x53, 0x74,
-	0x72, 0x69, 0x6e, 0x67, 0x52, 0x07, 0x63, 0x72, 0x65, 0x61, 0x74, 0x6f, 0x72, 0x22, 0x99, 0x03,
-	0x0a, 0x07, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x12, 0x4b, 0x0a, 0x08, 0x6f, 0x6e, 0x5f,
-	0x63, 0x68, 0x61, 0x69, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1f, 0x2e, 0x6b, 0x65,
-	0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x4f, 0x6e,
-	0x43, 0x68, 0x61, 0x69, 0x6e, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x42, 0x0d, 0xb2, 0xe7,
-	0xb0, 0x2a, 0x08, 0x6f, 0x6e, 0x5f, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x48, 0x00, 0x52, 0x07, 0x6f,
-	0x6e, 0x43, 0x68, 0x61, 0x69, 0x6e, 0x12, 0x3d, 0x0a, 0x04, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x02,
-	0x20, 0x01, 0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f,
-	0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x54, 0x72, 0x69, 0x67, 0x67,
-	0x65, 0x72, 0x42, 0x09, 0xb2, 0xe7, 0xb0, 0x2a, 0x04, 0x74, 0x69, 0x6d, 0x65, 0x48, 0x00, 0x52,
-	0x04, 0x74, 0x69, 0x6d, 0x65, 0x12, 0x4f, 0x0a, 0x09, 0x67, 0x61, 0x73, 0x5f, 0x70, 0x72, 0x69,
-	0x63, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x20, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65,
-	0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x47, 0x61, 0x73, 0x50, 0x72,
-	0x69, 0x63, 0x65, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x42, 0x0e, 0xb2, 0xe7, 0xb0, 0x2a,
-	0x09, 0x67, 0x61, 0x73, 0x5f, 0x70, 0x72, 0x69, 0x63, 0x65, 0x48, 0x00, 0x52, 0x08, 0x67, 0x61,
-	0x73, 0x50, 0x72, 0x69, 0x63, 0x65, 0x12, 0x41, 0x0a, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18,
-	0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77,
-	0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x54, 0x72, 0x69,
-	0x67, 0x67, 0x65, 0x72, 0x42, 0x0a, 0xb2, 0xe7, 0xb0, 0x2a, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74,
-	0x48, 0x00, 0x52, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x63, 0x0a, 0x0e, 0x62, 0x6c, 0x6f,
-	0x63, 0x6b, 0x5f, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x18, 0x05, 0x20, 0x01, 0x28,
-	0x0b, 0x32, 0x25, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66,
-	0x6c, 0x6f, 0x77, 0x2e, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61,
-	0x6c, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x42, 0x13, 0xb2, 0xe7, 0xb0, 0x2a, 0x0e, 0x62,
-	0x6c, 0x6f, 0x63, 0x6b, 0x5f, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x48, 0x00, 0x52,
-	0x0d, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x42, 0x09,
-	0x0a, 0x07, 0x74, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x22, 0x5e, 0x0a, 0x06, 0x41, 0x63, 0x74,
-	0x69, 0x6f, 0x6e, 0x12, 0x4a, 0x0a, 0x08, 0x6f, 0x6e, 0x5f, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1e, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77,
-	0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x4f, 0x6e, 0x43, 0x68, 0x61, 0x69, 0x6e, 0x41,
-	0x63, 0x74, 0x69, 0x6f, 0x6e, 0x42, 0x0d, 0xb2, 0xe7, 0xb0, 0x2a, 0x08, 0x6f, 0x6e, 0x5f, 0x63,
-	0x68, 0x61, 0x69, 0x6e, 0x48, 0x00, 0x52, 0x07, 0x6f, 0x6e, 0x43, 0x68, 0x61, 0x69, 0x6e, 0x42,
-	0x08, 0x0a, 0x06, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0x78, 0x0a, 0x0e, 0x4f, 0x6e, 0x43,
-	0x68, 0x61, 0x69, 0x6e, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x12, 0x29, 0x0a, 0x10, 0x63,
-	0x6f, 0x6e, 0x74, 0x72, 0x61, 0x63, 0x74, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x0f, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x61, 0x63, 0x74, 0x41,
-	0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x19, 0x0a, 0x08, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x5f,
-	0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x49,
-	0x64, 0x12, 0x20, 0x0a, 0x0c, 0x74, 0x78, 0x5f, 0x63, 0x61, 0x6c, 0x6c, 0x5f, 0x64, 0x61, 0x74,
-	0x61, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x0a, 0x74, 0x78, 0x43, 0x61, 0x6c, 0x6c, 0x44,
-	0x61, 0x74, 0x61, 0x22, 0x32, 0x0a, 0x0b, 0x54, 0x69, 0x6d, 0x65, 0x54, 0x72, 0x69, 0x67, 0x67,
-	0x65, 0x72, 0x12, 0x23, 0x0a, 0x0d, 0x65, 0x78, 0x65, 0x63, 0x75, 0x74, 0x65, 0x5f, 0x61, 0x66,
-	0x74, 0x65, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0c, 0x65, 0x78, 0x65, 0x63, 0x75,
-	0x74, 0x65, 0x41, 0x66, 0x74, 0x65, 0x72, 0x22, 0x31, 0x0a, 0x0c, 0x43, 0x6f, 0x75, 0x6e, 0x74,
-	0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x12, 0x21, 0x0a, 0x0c, 0x72, 0x65, 0x70, 0x65, 0x61,
-	0x74, 0x5f, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x04, 0x52, 0x0b, 0x72,
-	0x65, 0x70, 0x65, 0x61, 0x74, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x22, 0x3d, 0x0a, 0x14, 0x42, 0x6c,
-	0x6f, 0x63, 0x6b, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x54, 0x72, 0x69, 0x67, 0x67,
-	0x65, 0x72, 0x12, 0x25, 0x0a, 0x0e, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x5f, 0x69, 0x6e, 0x74, 0x65,
-	0x72, 0x76, 0x61, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x04, 0x52, 0x0d, 0x62, 0x6c, 0x6f, 0x63,
-	0x6b, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x22, 0x4a, 0x0a, 0x0f, 0x47, 0x61, 0x73,
-	0x50, 0x72, 0x69, 0x63, 0x65, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x12, 0x19, 0x0a, 0x08,
-	0x63, 0x68, 0x61, 0x69, 0x6e, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07,
-	0x63, 0x68, 0x61, 0x69, 0x6e, 0x49, 0x64, 0x12, 0x1c, 0x0a, 0x09, 0x74, 0x68, 0x72, 0x65, 0x73,
-	0x68, 0x6f, 0x6c, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x74, 0x68, 0x72, 0x65,
-	0x73, 0x68, 0x6f, 0x6c, 0x64, 0x22, 0x77, 0x0a, 0x0d, 0x4f, 0x6e, 0x43, 0x68, 0x61, 0x69, 0x6e,
-	0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x29, 0x0a, 0x10, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x61,
+	0x55, 0x73, 0x65, 0x72, 0x4f, 0x70, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x4f, 0x70, 0x12, 0x39,
+	0x0a, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x21,
+	0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77,
+	0x2e, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x74, 0x61, 0x74, 0x75,
+	0x73, 0x52, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x27, 0x0a, 0x0f, 0x65, 0x78, 0x65,
+	0x63, 0x75, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x05, 0x20, 0x01,
+	0x28, 0x03, 0x52, 0x0e, 0x65, 0x78, 0x65, 0x63, 0x75, 0x74, 0x69, 0x6f, 0x6e, 0x43, 0x6f, 0x75,
+	0x6e, 0x74, 0x12, 0x36, 0x0a, 0x17, 0x66, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x5f, 0x65, 0x78, 0x65,
+	0x63, 0x75, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6b, 0x18, 0x06, 0x20,
+	0x01, 0x28, 0x03, 0x52, 0x15, 0x66, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x45, 0x78, 0x65, 0x63, 0x75,
+	0x74, 0x69, 0x6f, 0x6e, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6b, 0x12, 0x3f, 0x0a, 0x13, 0x6c, 0x61,
+	0x73, 0x74, 0x5f, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x66, 0x75, 0x6c, 0x5f, 0x6a, 0x6f,
+	0x62, 0x18, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0f, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72,
+	0x2e, 0x6a, 0x6f, 0x62, 0x2e, 0x4a, 0x6f, 0x62, 0x52, 0x11, 0x6c, 0x61, 0x73, 0x74, 0x53, 0x75,
+	0x63, 0x63, 0x65, 0x73, 0x73, 0x66, 0x75, 0x6c, 0x4a, 0x6f, 0x62, 0x12, 0x32, 0x0a, 0x07, 0x63,
+	0x72, 0x65, 0x61, 0x74, 0x6f, 0x72, 0x18, 0x08, 0x20, 0x01, 0x28, 0x09, 0x42, 0x18, 0xd2, 0xb4,
+	0x2d, 0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73,
+	0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x52, 0x07, 0x63, 0x72, 0x65, 0x61, 0x74, 0x6f, 0x72, 0x22,
+	0xea, 0x03, 0x0a, 0x07, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x12, 0x4b, 0x0a, 0x08, 0x6f,
+	0x6e, 0x5f, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1f, 0x2e,
+	0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e,
+	0x4f, 0x6e, 0x43, 0x68, 0x61, 0x69, 0x6e, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x42, 0x0d,
+	0xb2, 0xe7, 0xb0, 0x2a, 0x08, 0x6f, 0x6e, 0x5f, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x48, 0x00, 0x52,
+	0x07, 0x6f, 0x6e, 0x43, 0x68, 0x61, 0x69, 0x6e, 0x12, 0x3d, 0x0a, 0x04, 0x74, 0x69, 0x6d, 0x65,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e,
+	0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x54, 0x72, 0x69,
+	0x67, 0x67, 0x65, 0x72, 0x42, 0x09, 0xb2, 0xe7, 0xb0, 0x2a, 0x04, 0x74, 0x69, 0x6d, 0x65, 0x48,
+	0x00, 0x52, 0x04, 0x74, 0x69, 0x6d, 0x65, 0x12, 0x4f, 0x0a, 0x09, 0x67, 0x61, 0x73, 0x5f, 0x70,
+	0x72, 0x69, 0x63, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x20, 0x2e, 0x6b, 0x65, 0x70,
+	0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x47, 0x61, 0x73,
+	0x50, 0x72, 0x69, 0x63, 0x65, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x42, 0x0e, 0xb2, 0xe7,
+	0xb0, 0x2a, 0x09, 0x67, 0x61, 0x73, 0x5f, 0x70, 0x72, 0x69, 0x63, 0x65, 0x48, 0x00, 0x52, 0x08,
+	0x67, 0x61, 0x73, 0x50, 0x72, 0x69, 0x63, 0x65, 0x12, 0x41, 0x0a, 0x05, 0x63, 0x6f, 0x75, 0x6e,
+	0x74, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72,
+	0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x54,
+	0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x42, 0x0a, 0xb2, 0xe7, 0xb0, 0x2a, 0x05, 0x63, 0x6f, 0x75,
+	0x6e, 0x74, 0x48, 0x00, 0x52, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x63, 0x0a, 0x0e, 0x62,
+	0x6c, 0x6f, 0x63, 0x6b, 0x5f, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x18, 0x05, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x25, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72,
+	0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x49, 0x6e, 0x74, 0x65, 0x72,
+	0x76, 0x61, 0x6c, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x42, 0x13, 0xb2, 0xe7, 0xb0, 0x2a,
+	0x0e, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x5f, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x48,
+	0x00, 0x52, 0x0d, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c,
+	0x12, 0x4f, 0x0a, 0x09, 0x65, 0x78, 0x70, 0x69, 0x72, 0x65, 0x5f, 0x61, 0x74, 0x18, 0x06, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x20, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77, 0x6f, 0x72,
+	0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x2e, 0x45, 0x78, 0x70, 0x69, 0x72, 0x65, 0x41, 0x74, 0x54, 0x72,
+	0x69, 0x67, 0x67, 0x65, 0x72, 0x42, 0x0e, 0xb2, 0xe7, 0xb0, 0x2a, 0x09, 0x65, 0x78, 0x70, 0x69,
+	0x72, 0x65, 0x5f, 0x61, 0x74, 0x48, 0x00, 0x52, 0x08, 0x65, 0x78, 0x70, 0x69, 0x72, 0x65, 0x41,
+	0x74, 0x42, 0x09, 0x0a, 0x07, 0x74, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x22, 0x70, 0x0a, 0x06,
+	0x55, 0x73, 0x65, 0x72, 0x4f, 0x70, 0x12, 0x29, 0x0a, 0x10, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x61,
 	0x63, 0x74, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0c,
 	0x52, 0x0f, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x61, 0x63, 0x74, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73,
 	0x73, 0x12, 0x19, 0x0a, 0x08, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20,
 	0x01, 0x28, 0x09, 0x52, 0x07, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x49, 0x64, 0x12, 0x20, 0x0a, 0x0c,
 	0x74, 0x78, 0x5f, 0x63, 0x61, 0x6c, 0x6c, 0x5f, 0x64, 0x61, 0x74, 0x61, 0x18, 0x03, 0x20, 0x01,
-	0x28, 0x0c, 0x52, 0x0a, 0x74, 0x78, 0x43, 0x61, 0x6c, 0x6c, 0x44, 0x61, 0x74, 0x61, 0x2a, 0xf1,
-	0x01, 0x0a, 0x10, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x74, 0x61,
-	0x74, 0x75, 0x73, 0x12, 0x28, 0x0a, 0x24, 0x41, 0x55, 0x54, 0x4f, 0x4d, 0x41, 0x54, 0x49, 0x4f,
-	0x4e, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f,
-	0x55, 0x4e, 0x53, 0x50, 0x45, 0x43, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10, 0x00, 0x12, 0x1c, 0x0a,
-	0x18, 0x41, 0x55, 0x54, 0x4f, 0x4d, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x53, 0x54, 0x41, 0x54,
-	0x55, 0x53, 0x5f, 0x41, 0x43, 0x54, 0x49, 0x56, 0x45, 0x10, 0x01, 0x12, 0x1d, 0x0a, 0x19, 0x41,
-	0x55, 0x54, 0x4f, 0x4d, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53,
-	0x5f, 0x45, 0x58, 0x50, 0x49, 0x52, 0x45, 0x44, 0x10, 0x02, 0x12, 0x1c, 0x0a, 0x18, 0x41, 0x55,
+	0x28, 0x0c, 0x52, 0x0a, 0x74, 0x78, 0x43, 0x61, 0x6c, 0x6c, 0x44, 0x61, 0x74, 0x61, 0x22, 0x2f,
+	0x0a, 0x0f, 0x45, 0x78, 0x70, 0x69, 0x72, 0x65, 0x41, 0x74, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65,
+	0x72, 0x12, 0x1c, 0x0a, 0x09, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x03, 0x52, 0x09, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x22,
+	0x78, 0x0a, 0x0e, 0x4f, 0x6e, 0x43, 0x68, 0x61, 0x69, 0x6e, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65,
+	0x72, 0x12, 0x29, 0x0a, 0x10, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x61, 0x63, 0x74, 0x5f, 0x61, 0x64,
+	0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x0f, 0x63, 0x6f, 0x6e,
+	0x74, 0x72, 0x61, 0x63, 0x74, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x19, 0x0a, 0x08,
+	0x63, 0x68, 0x61, 0x69, 0x6e, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07,
+	0x63, 0x68, 0x61, 0x69, 0x6e, 0x49, 0x64, 0x12, 0x20, 0x0a, 0x0c, 0x74, 0x78, 0x5f, 0x63, 0x61,
+	0x6c, 0x6c, 0x5f, 0x64, 0x61, 0x74, 0x61, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x0a, 0x74,
+	0x78, 0x43, 0x61, 0x6c, 0x6c, 0x44, 0x61, 0x74, 0x61, 0x22, 0x32, 0x0a, 0x0b, 0x54, 0x69, 0x6d,
+	0x65, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x12, 0x23, 0x0a, 0x0d, 0x65, 0x78, 0x65, 0x63,
+	0x75, 0x74, 0x65, 0x5f, 0x61, 0x66, 0x74, 0x65, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52,
+	0x0c, 0x65, 0x78, 0x65, 0x63, 0x75, 0x74, 0x65, 0x41, 0x66, 0x74, 0x65, 0x72, 0x22, 0x31, 0x0a,
+	0x0c, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x12, 0x21, 0x0a,
+	0x0c, 0x72, 0x65, 0x70, 0x65, 0x61, 0x74, 0x5f, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x04, 0x52, 0x0b, 0x72, 0x65, 0x70, 0x65, 0x61, 0x74, 0x43, 0x6f, 0x75, 0x6e, 0x74,
+	0x22, 0x3d, 0x0a, 0x14, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61,
+	0x6c, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x12, 0x25, 0x0a, 0x0e, 0x62, 0x6c, 0x6f, 0x63,
+	0x6b, 0x5f, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x04,
+	0x52, 0x0d, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x22,
+	0x4a, 0x0a, 0x0f, 0x47, 0x61, 0x73, 0x50, 0x72, 0x69, 0x63, 0x65, 0x54, 0x72, 0x69, 0x67, 0x67,
+	0x65, 0x72, 0x12, 0x19, 0x0a, 0x08, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x5f, 0x69, 0x64, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x49, 0x64, 0x12, 0x1c, 0x0a,
+	0x09, 0x74, 0x68, 0x72, 0x65, 0x73, 0x68, 0x6f, 0x6c, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x09, 0x74, 0x68, 0x72, 0x65, 0x73, 0x68, 0x6f, 0x6c, 0x64, 0x2a, 0xf1, 0x01, 0x0a, 0x10,
+	0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73,
+	0x12, 0x28, 0x0a, 0x24, 0x41, 0x55, 0x54, 0x4f, 0x4d, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x53,
+	0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x55, 0x4e, 0x53,
+	0x50, 0x45, 0x43, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10, 0x00, 0x12, 0x1c, 0x0a, 0x18, 0x41, 0x55,
 	0x54, 0x4f, 0x4d, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f,
-	0x50, 0x41, 0x55, 0x53, 0x45, 0x44, 0x10, 0x03, 0x12, 0x1c, 0x0a, 0x18, 0x41, 0x55, 0x54, 0x4f,
-	0x4d, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x46, 0x41,
-	0x49, 0x4c, 0x45, 0x44, 0x10, 0x04, 0x12, 0x1a, 0x0a, 0x16, 0x41, 0x55, 0x54, 0x4f, 0x4d, 0x41,
-	0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x44, 0x4f, 0x4e, 0x45,
-	0x10, 0x05, 0x12, 0x1e, 0x0a, 0x1a, 0x41, 0x55, 0x54, 0x4f, 0x4d, 0x41, 0x54, 0x49, 0x4f, 0x4e,
-	0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x43, 0x41, 0x4e, 0x43, 0x45, 0x4c, 0x45, 0x44,
-	0x10, 0x06, 0x42, 0xb7, 0x01, 0x0a, 0x13, 0x63, 0x6f, 0x6d, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65,
-	0x72, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x42, 0x0f, 0x41, 0x75, 0x74, 0x6f,
-	0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x32, 0x67,
-	0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x64, 0x69, 0x74, 0x74, 0x6f, 0x6e,
-	0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x2f, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x61, 0x70,
-	0x69, 0x2f, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f,
-	0x77, 0xa2, 0x02, 0x03, 0x4b, 0x57, 0x58, 0xaa, 0x02, 0x0f, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72,
-	0x2e, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0xca, 0x02, 0x0f, 0x4b, 0x65, 0x70, 0x6c,
-	0x65, 0x72, 0x5c, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0xe2, 0x02, 0x1b, 0x4b, 0x65,
-	0x70, 0x6c, 0x65, 0x72, 0x5c, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x5c, 0x47, 0x50,
-	0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x10, 0x4b, 0x65, 0x70, 0x6c,
-	0x65, 0x72, 0x3a, 0x3a, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x62, 0x06, 0x70, 0x72,
-	0x6f, 0x74, 0x6f, 0x33,
+	0x41, 0x43, 0x54, 0x49, 0x56, 0x45, 0x10, 0x01, 0x12, 0x1d, 0x0a, 0x19, 0x41, 0x55, 0x54, 0x4f,
+	0x4d, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x45, 0x58,
+	0x50, 0x49, 0x52, 0x45, 0x44, 0x10, 0x02, 0x12, 0x1c, 0x0a, 0x18, 0x41, 0x55, 0x54, 0x4f, 0x4d,
+	0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x50, 0x41, 0x55,
+	0x53, 0x45, 0x44, 0x10, 0x03, 0x12, 0x1c, 0x0a, 0x18, 0x41, 0x55, 0x54, 0x4f, 0x4d, 0x41, 0x54,
+	0x49, 0x4f, 0x4e, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x46, 0x41, 0x49, 0x4c, 0x45,
+	0x44, 0x10, 0x04, 0x12, 0x1a, 0x0a, 0x16, 0x41, 0x55, 0x54, 0x4f, 0x4d, 0x41, 0x54, 0x49, 0x4f,
+	0x4e, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x44, 0x4f, 0x4e, 0x45, 0x10, 0x05, 0x12,
+	0x1e, 0x0a, 0x1a, 0x41, 0x55, 0x54, 0x4f, 0x4d, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x53, 0x54,
+	0x41, 0x54, 0x55, 0x53, 0x5f, 0x43, 0x41, 0x4e, 0x43, 0x45, 0x4c, 0x45, 0x44, 0x10, 0x06, 0x42,
+	0xb7, 0x01, 0x0a, 0x13, 0x63, 0x6f, 0x6d, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x77,
+	0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x42, 0x0f, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74,
+	0x69, 0x6f, 0x6e, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x32, 0x67, 0x69, 0x74, 0x68,
+	0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x64, 0x69, 0x74, 0x74, 0x6f, 0x6e, 0x65, 0x74, 0x77,
+	0x6f, 0x72, 0x6b, 0x2f, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6b,
+	0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0xa2, 0x02,
+	0x03, 0x4b, 0x57, 0x58, 0xaa, 0x02, 0x0f, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x57, 0x6f,
+	0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0xca, 0x02, 0x0f, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x5c,
+	0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0xe2, 0x02, 0x1b, 0x4b, 0x65, 0x70, 0x6c, 0x65,
+	0x72, 0x5c, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65,
+	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x10, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x3a,
+	0x3a, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+	0x33,
 }
 
 var (
@@ -5941,26 +5864,26 @@ var file_kepler_workflow_automation_proto_goTypes = []interface{}{
 	(AutomationStatus)(0),        // 0: kepler.workflow.AutomationStatus
 	(*Automation)(nil),           // 1: kepler.workflow.Automation
 	(*Trigger)(nil),              // 2: kepler.workflow.Trigger
-	(*Action)(nil),               // 3: kepler.workflow.Action
-	(*OnChainTrigger)(nil),       // 4: kepler.workflow.OnChainTrigger
-	(*TimeTrigger)(nil),          // 5: kepler.workflow.TimeTrigger
-	(*CountTrigger)(nil),         // 6: kepler.workflow.CountTrigger
-	(*BlockIntervalTrigger)(nil), // 7: kepler.workflow.BlockIntervalTrigger
-	(*GasPriceTrigger)(nil),      // 8: kepler.workflow.GasPriceTrigger
-	(*OnChainAction)(nil),        // 9: kepler.workflow.OnChainAction
+	(*UserOp)(nil),               // 3: kepler.workflow.UserOp
+	(*ExpireAtTrigger)(nil),      // 4: kepler.workflow.ExpireAtTrigger
+	(*OnChainTrigger)(nil),       // 5: kepler.workflow.OnChainTrigger
+	(*TimeTrigger)(nil),          // 6: kepler.workflow.TimeTrigger
+	(*CountTrigger)(nil),         // 7: kepler.workflow.CountTrigger
+	(*BlockIntervalTrigger)(nil), // 8: kepler.workflow.BlockIntervalTrigger
+	(*GasPriceTrigger)(nil),      // 9: kepler.workflow.GasPriceTrigger
 	(*job.Job)(nil),              // 10: kepler.job.Job
 }
 var file_kepler_workflow_automation_proto_depIdxs = []int32{
 	2,  // 0: kepler.workflow.Automation.triggers:type_name -> kepler.workflow.Trigger
-	3,  // 1: kepler.workflow.Automation.actions:type_name -> kepler.workflow.Action
+	3,  // 1: kepler.workflow.Automation.user_op:type_name -> kepler.workflow.UserOp
 	0,  // 2: kepler.workflow.Automation.status:type_name -> kepler.workflow.AutomationStatus
 	10, // 3: kepler.workflow.Automation.last_successful_job:type_name -> kepler.job.Job
-	4,  // 4: kepler.workflow.Trigger.on_chain:type_name -> kepler.workflow.OnChainTrigger
-	5,  // 5: kepler.workflow.Trigger.time:type_name -> kepler.workflow.TimeTrigger
-	8,  // 6: kepler.workflow.Trigger.gas_price:type_name -> kepler.workflow.GasPriceTrigger
-	6,  // 7: kepler.workflow.Trigger.count:type_name -> kepler.workflow.CountTrigger
-	7,  // 8: kepler.workflow.Trigger.block_interval:type_name -> kepler.workflow.BlockIntervalTrigger
-	9,  // 9: kepler.workflow.Action.on_chain:type_name -> kepler.workflow.OnChainAction
+	5,  // 4: kepler.workflow.Trigger.on_chain:type_name -> kepler.workflow.OnChainTrigger
+	6,  // 5: kepler.workflow.Trigger.time:type_name -> kepler.workflow.TimeTrigger
+	9,  // 6: kepler.workflow.Trigger.gas_price:type_name -> kepler.workflow.GasPriceTrigger
+	7,  // 7: kepler.workflow.Trigger.count:type_name -> kepler.workflow.CountTrigger
+	8,  // 8: kepler.workflow.Trigger.block_interval:type_name -> kepler.workflow.BlockIntervalTrigger
+	4,  // 9: kepler.workflow.Trigger.expire_at:type_name -> kepler.workflow.ExpireAtTrigger
 	10, // [10:10] is the sub-list for method output_type
 	10, // [10:10] is the sub-list for method input_type
 	10, // [10:10] is the sub-list for extension type_name
@@ -5999,7 +5922,7 @@ func file_kepler_workflow_automation_proto_init() {
 			}
 		}
 		file_kepler_workflow_automation_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Action); i {
+			switch v := v.(*UserOp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -6011,7 +5934,7 @@ func file_kepler_workflow_automation_proto_init() {
 			}
 		}
 		file_kepler_workflow_automation_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*OnChainTrigger); i {
+			switch v := v.(*ExpireAtTrigger); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -6023,7 +5946,7 @@ func file_kepler_workflow_automation_proto_init() {
 			}
 		}
 		file_kepler_workflow_automation_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*TimeTrigger); i {
+			switch v := v.(*OnChainTrigger); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -6035,7 +5958,7 @@ func file_kepler_workflow_automation_proto_init() {
 			}
 		}
 		file_kepler_workflow_automation_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CountTrigger); i {
+			switch v := v.(*TimeTrigger); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -6047,7 +5970,7 @@ func file_kepler_workflow_automation_proto_init() {
 			}
 		}
 		file_kepler_workflow_automation_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BlockIntervalTrigger); i {
+			switch v := v.(*CountTrigger); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -6059,7 +5982,7 @@ func file_kepler_workflow_automation_proto_init() {
 			}
 		}
 		file_kepler_workflow_automation_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GasPriceTrigger); i {
+			switch v := v.(*BlockIntervalTrigger); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -6071,7 +5994,7 @@ func file_kepler_workflow_automation_proto_init() {
 			}
 		}
 		file_kepler_workflow_automation_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*OnChainAction); i {
+			switch v := v.(*GasPriceTrigger); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -6089,9 +6012,7 @@ func file_kepler_workflow_automation_proto_init() {
 		(*Trigger_GasPrice)(nil),
 		(*Trigger_Count)(nil),
 		(*Trigger_BlockInterval)(nil),
-	}
-	file_kepler_workflow_automation_proto_msgTypes[2].OneofWrappers = []interface{}{
-		(*Action_OnChain)(nil),
+		(*Trigger_ExpireAt)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{

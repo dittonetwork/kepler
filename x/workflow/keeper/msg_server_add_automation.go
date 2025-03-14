@@ -26,8 +26,7 @@ func (k msgServer) AddAutomation(
 	automation := &types.Automation{
 		Id:       id,
 		Triggers: msg.GetTriggers(),
-		Actions:  msg.GetActions(),
-		ExpireAt: msg.GetExpireAt(),
+		UserOp:   msg.GetUserOp(),
 		Status:   types.AutomationStatus_AUTOMATION_STATUS_ACTIVE,
 		Creator:  msg.Creator,
 	}

@@ -32,22 +32,52 @@ func (msg *MsgAddAutomation) ValidateBasic() error {
 		}
 	}
 
-	for _, a := range msg.Actions {
-		if a.GetOnChain() != nil {
-			if a.GetOnChain().ChainId != ChainIDEth && a.GetOnChain().ChainId != ChainIDPolygon {
-				return errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "unsupported chain id")
-			}
+	if err = msg.CheckExpireTimeTrigger(); err != nil {
+		return err
+	}
 
-			chainIDs[a.GetOnChain().ChainId] = struct{}{}
-		}
+	if err = msg.ValidateUserOp(); err != nil {
+		return err
 	}
 
 	if len(chainIDs) > 1 {
 		return errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "we only support one chain id per automation")
 	}
 
-	if time.Unix(msg.ExpireAt, 0).Before(time.Now()) {
-		return errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "expire at time must be in the future")
+	return nil
+}
+
+func (msg *MsgAddAutomation) ValidateUserOp() error {
+	if msg.UserOp == nil {
+		return errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "user operation is required")
+	}
+
+	if msg.UserOp.GetChainId() != ChainIDEth && msg.UserOp.GetChainId() != ChainIDPolygon {
+		return errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "unsupported chain id")
+	}
+
+	return nil
+}
+
+func (msg *MsgAddAutomation) CheckExpireTimeTrigger() error {
+	hasExpireTimeTrigger := false
+
+	for _, t := range msg.Triggers {
+		if t.GetExpireAt() != nil {
+			if hasExpireTimeTrigger {
+				return errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "only one expire time trigger is allowed")
+			}
+
+			expireTime := time.Unix(t.GetExpireAt().Timestamp, 0)
+			currentTime := time.Now()
+
+			// Mark that we have an expire time trigger
+			hasExpireTimeTrigger = true
+
+			if expireTime.Before(currentTime) {
+				return errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "expire at time must be in the future")
+			}
+		}
 	}
 
 	return nil

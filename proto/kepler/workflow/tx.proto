@@ -49,8 +49,7 @@ message MsgAddAutomation {
   option (cosmos.msg.v1.signer) = "creator";
   string creator = 1;
   repeated Trigger triggers = 2; // Trigger object, which can be chained by logical operators in itself
-  repeated Action actions = 3; // List of actions
-  int64 expire_at = 4; // Expiration timestamp (Unix time)
+  UserOp user_op = 3; // User operation to be executed
 }
 
 message MsgAddAutomationResponse {
