@@ -32,6 +32,10 @@ func (msg *MsgAddAutomation) ValidateBasic() error {
 		}
 	}
 
+	if err = msg.ValidateCountTrigger(); err != nil {
+		return err
+	}
+
 	for _, a := range msg.Actions {
 		if a.GetOnChain() != nil {
 			if a.GetOnChain().ChainId != ChainIDEth && a.GetOnChain().ChainId != ChainIDPolygon {
@@ -48,6 +52,19 @@ func (msg *MsgAddAutomation) ValidateBasic() error {
 
 	if time.Unix(msg.ExpireAt, 0).Before(time.Now()) {
 		return errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "expire at time must be in the future")
+	}
+
+	return nil
+}
+
+// ValidateCountTrigger validates the count trigger.
+func (msg *MsgAddAutomation) ValidateCountTrigger() error {
+	for _, t := range msg.Triggers {
+		if t.GetCount() != nil {
+			if t.GetCount().RepeatCount < 1 {
+				return errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "count must be greater than 0")
+			}
+		}
 	}
 
 	return nil
