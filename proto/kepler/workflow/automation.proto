@@ -39,6 +39,7 @@ message Trigger {
     GasPriceTrigger gas_price = 3 [(amino.oneof_name) = "gas_price"];
     CountTrigger count = 4 [(amino.oneof_name) = "count"];
     BlockIntervalTrigger block_interval = 5 [(amino.oneof_name) = "block_interval"];
+    ScheduleTrigger schedule = 6 [(amino.oneof_name) = "schedule"];
   }
 }
 
@@ -75,6 +76,10 @@ message BlockIntervalTrigger {
 message GasPriceTrigger {
   string chain_id = 1; // EVM chain ID (e.g., "1" for Ethereum)
   string threshold = 2; // Threshold gas price (in wei, as string to handle large values)
+}
+
+message ScheduleTrigger {
+  string cron = 1; // Cron expression, with minumum resolution of 1 minute, also accepts descriptors like @every 1h30m
 }
 
 // On chain action

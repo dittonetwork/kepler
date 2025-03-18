@@ -6,6 +6,7 @@ import (
 	errorsmod "cosmossdk.io/errors"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+	"github.com/robfig/cron/v3"
 )
 
 const (
@@ -29,6 +30,12 @@ func (msg *MsgAddAutomation) ValidateBasic() error {
 			}
 
 			chainIDs[t.GetOnChain().ChainId] = struct{}{}
+		}
+
+		if t.GetSchedule() != nil {
+			if _, err := cron.ParseStandard(t.GetSchedule().Cron); err != nil {
+				return errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "invalid cron expression")
+			}
 		}
 	}
 
