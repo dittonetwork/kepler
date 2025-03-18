@@ -16,6 +16,7 @@ const (
 
 var _ sdk.Msg = &MsgAddAutomation{}
 
+//nolint:gocognit // this is a validation function of a big msg, it must be this complex
 func (msg *MsgAddAutomation) ValidateBasic() error {
 	_, err := sdk.AccAddressFromBech32(msg.Creator)
 	if err != nil {
@@ -33,7 +34,7 @@ func (msg *MsgAddAutomation) ValidateBasic() error {
 		}
 
 		if t.GetSchedule() != nil {
-			if _, err := cron.ParseStandard(t.GetSchedule().Cron); err != nil {
+			if _, parseErr := cron.ParseStandard(t.GetSchedule().Cron); parseErr != nil {
 				return errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "invalid cron expression")
 			}
 		}
