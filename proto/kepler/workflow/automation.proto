@@ -34,9 +34,9 @@ enum AutomationStatus {
 // Base trigger with type selection
 message Trigger {
   oneof trigger {
-    OnChainTrigger on_chain =1 [(amino.oneof_name) = "on_chain"];
+    OnChainCallTrigger on_chain_call =1 [(amino.oneof_name) = "on_chain_call"];
     TimeTrigger time = 2 [(amino.oneof_name) = "time"];
-    GasPriceTrigger gas_price = 3 [(amino.oneof_name) = "gas_price"];
+    GasLimitTrigger gas_price = 3 [(amino.oneof_name) = "gas_price"];
     CountTrigger count = 4 [(amino.oneof_name) = "count"];
     BlockIntervalTrigger block_interval = 5 [(amino.oneof_name) = "block_interval"];
     ScheduleTrigger schedule = 6 [(amino.oneof_name) = "schedule"];
@@ -50,11 +50,27 @@ message Action {
   }
 }
 
-// On chain trigger
-message OnChainTrigger {
-  bytes contract_address = 1; // Contract address
-  string chain_id = 2; // Chain ID
-  bytes tx_call_data = 3;
+// Represents the ABI definition of a smart contract method.
+message MethodABI {
+  string name = 1; // e.g., "checkCondition"
+  repeated Input inputs = 2; // The inputs for the method
+}
+
+// Represents a single input parameter for a method.
+message Input {
+  string name = 1; // e.g., "user"
+  string type = 2; // e.g., "address" or "uint256"
+}
+
+// OnChainCallTrigger defines a trigger that calls a smart contract method.
+// Instead of just sending raw call data, we now provide a more structured
+// approach that includes the method's ABI and the list of arguments.
+message OnChainCallTrigger {
+  string contract = 1; // Contract address (e.g., "0x1234567890abcdef...")
+  string chain_id = 2; // Chain ID (e.g., 1 for Ethereum mainnet)
+  MethodABI method_abi = 3; // ABI of the method to be invoked
+  bool only_finalized = 4; // If true, trigger will be simulated only on finalized blocks
+  repeated string args = 5; // Arguments for the method (as strings)
 }
 
 // Time trigger
@@ -72,19 +88,21 @@ message BlockIntervalTrigger {
   uint64 block_interval = 1; // Block interval in blocks
 }
 
-// GasPriceTrigger activates when the chain's gas price ≤ threshold
-message GasPriceTrigger {
-  string chain_id = 1; // EVM chain ID (e.g., "1" for Ethereum)
-  string threshold = 2; // Threshold gas price (in wei, as string to handle large values)
-}
-
+// ScheduleTrigger activates by a cron expression
 message ScheduleTrigger {
   string cron = 1; // Cron expression, with minumum resolution of 1 minute, also accepts descriptors like @every 1h30m
 }
 
+// GasLimitTrigger activates when the chain's gas limit ≤ threshold
+message GasLimitTrigger {
+  string chain_id = 1; // EVM chain ID (e.g., "1" for Ethereum)
+  string max_fee_per_gas = 2; // Maximum total fee per gas (in wei, as string) - covers base fee and priority fee.
+  string max_priority_fee_per_gas = 3; // Maximum priority fee (in wei, as string) given as a tip to miners.
+}
+
 // On chain action
 message OnChainAction {
-  bytes contract_address = 1; // Contract address
+  string contract_address = 1; // Contract address
   string chain_id = 2; // Chain ID
   bytes tx_call_data = 3;
 }
