@@ -14,10 +14,6 @@ import (
 	"github.com/robfig/cron/v3"
 )
 
-const (
-	abiFunctionTypeFunction = "function"
-)
-
 var _ sdk.Msg = &MsgAddAutomation{}
 
 func (msg *MsgAddAutomation) ValidateBasic() error {
@@ -180,7 +176,7 @@ func validateMethodABI(occ *OnChainCallTrigger, idx int) error {
 		)
 	}
 
-	if err := validateMethodABIArguments(abiJSON.Methods[occ.MethodAbi.Name].Inputs, occ.Args, idx); err != nil {
+	if err = validateMethodABIArguments(abiJSON.Methods[occ.MethodAbi.Name].Inputs, occ.Args, idx); err != nil {
 		return err
 	}
 
