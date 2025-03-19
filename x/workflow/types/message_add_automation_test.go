@@ -26,11 +26,7 @@ func buildValidOnChainCallTrigger(chainID string) *types.Trigger {
 				ChainId:  chainID,
 				MethodAbi: &types.MethodABI{
 					Name: "checkCondition",
-					Type: "function",
-					Inputs: []*types.Input{
-						{Name: "user", Type: "address"},
-						{Name: "amount", Type: "uint256"},
-					},
+					Abi:  []byte("{\"name\":\"checkCondition\",\"type\":\"function\",\"inputs\":[{\"name\":\"user\",\"type\":\"address\"},{\"name\":\"amount\",\"type\":\"uint256\"}],\"outputs\":[{\"name\":\"isValid\",\"type\":\"bool\"}],\"stateMutability\":\"view\"}"),
 				},
 				Args: []string{
 					"0xabcdef1234567890abcdef1234567890abcdef12",

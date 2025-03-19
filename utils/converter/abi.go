@@ -1,4 +1,4 @@
-package types
+package converter
 
 import (
 	"encoding/json"
@@ -20,10 +20,10 @@ const (
 	bitSizeDefault     = 0
 )
 
-// ConvertArgAgainstType validates and converts an argument (as a string)
+// StrToABICompatible validates and converts an argument (as a string)
 // to the proper Go type expected by the ABI for the given expectedType.
 // It supports slices, fixed-length arrays, and primitive types.
-func ConvertArgAgainstType(arg string, expectedType string) (interface{}, error) {
+func StrToABICompatible(arg string, expectedType string) (interface{}, error) {
 	if strings.HasPrefix(expectedType, "[]") {
 		elemType := expectedType[2:]
 		return convertSliceArg(arg, elemType)
@@ -47,7 +47,7 @@ func convertSliceArg(arg, elemType string) (interface{}, error) {
 	for i, elem := range raw {
 		// Convert the element to string and recursively convert it.
 		elemStr := fmt.Sprintf("%v", elem)
-		conv, err := ConvertArgAgainstType(elemStr, elemType)
+		conv, err := StrToABICompatible(elemStr, elemType)
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert slice element %d: %w", i, err)
 		}
@@ -81,7 +81,7 @@ func convertArrayArg(arg, expectedType string) (interface{}, error) {
 	resultArray := make([]interface{}, len(raw))
 	for i, elem := range raw {
 		elemStr := fmt.Sprintf("%v", elem)
-		conv, convErr := ConvertArgAgainstType(elemStr, elemType)
+		conv, convErr := StrToABICompatible(elemStr, elemType)
 		if convErr != nil {
 			return nil, fmt.Errorf("failed to convert array element %d: %w", i, convErr)
 		}

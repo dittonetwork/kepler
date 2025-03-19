@@ -1,18 +1,17 @@
-package types_test
+package converter_test
 
 import (
 	"math/big"
 	"testing"
 
+	"github.com/dittonetwork/kepler/utils/converter"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/stretchr/testify/require"
-
-	"github.com/dittonetwork/kepler/x/workflow/types"
 )
 
 func TestConvertArg_Address_Valid(t *testing.T) {
 	arg := "0x1234567890abcdef1234567890abcdef12345678"
-	result, err := types.ConvertArgAgainstType(arg, "address")
+	result, err := converter.StrToABICompatible(arg, "address")
 	require.NoError(t, err)
 	addr, ok := result.(common.Address)
 	require.True(t, ok)
@@ -21,14 +20,14 @@ func TestConvertArg_Address_Valid(t *testing.T) {
 
 func TestConvertArg_Address_Invalid(t *testing.T) {
 	arg := "123456"
-	_, err := types.ConvertArgAgainstType(arg, "address")
+	_, err := converter.StrToABICompatible(arg, "address")
 	require.Error(t, err)
 	require.Contains(t, err.Error(), "expected valid address")
 }
 
 func TestConvertArg_Uint256_Valid(t *testing.T) {
 	arg := "123456789"
-	result, err := types.ConvertArgAgainstType(arg, "uint256")
+	result, err := converter.StrToABICompatible(arg, "uint256")
 	require.NoError(t, err)
 	bi, ok := result.(*big.Int)
 	require.True(t, ok)
@@ -39,14 +38,14 @@ func TestConvertArg_Uint256_Valid(t *testing.T) {
 
 func TestConvertArg_Uint256_Invalid(t *testing.T) {
 	arg := "abc"
-	_, err := types.ConvertArgAgainstType(arg, "uint256")
+	_, err := converter.StrToABICompatible(arg, "uint256")
 	require.Error(t, err)
 	require.Contains(t, err.Error(), "expected uint256")
 }
 
 func TestConvertArg_String(t *testing.T) {
 	arg := "hello world"
-	result, err := types.ConvertArgAgainstType(arg, "string")
+	result, err := converter.StrToABICompatible(arg, "string")
 	require.NoError(t, err)
 	s, ok := result.(string)
 	require.True(t, ok)
@@ -54,13 +53,13 @@ func TestConvertArg_String(t *testing.T) {
 }
 
 func TestConvertArg_Bool_Valid(t *testing.T) {
-	result, err := types.ConvertArgAgainstType("true", "bool")
+	result, err := converter.StrToABICompatible("true", "bool")
 	require.NoError(t, err)
 	b, ok := result.(bool)
 	require.True(t, ok)
 	require.True(t, b)
 
-	result, err = types.ConvertArgAgainstType("false", "bool")
+	result, err = converter.StrToABICompatible("false", "bool")
 	require.NoError(t, err)
 	b, ok = result.(bool)
 	require.True(t, ok)
@@ -68,14 +67,14 @@ func TestConvertArg_Bool_Valid(t *testing.T) {
 }
 
 func TestConvertArg_Bool_Invalid(t *testing.T) {
-	_, err := types.ConvertArgAgainstType("notabool", "bool")
+	_, err := converter.StrToABICompatible("notabool", "bool")
 	require.Error(t, err)
 	require.Contains(t, err.Error(), "expected bool")
 }
 
 func TestConvertArg_Bytes_Hex(t *testing.T) {
 	arg := "0xabcdef"
-	result, err := types.ConvertArgAgainstType(arg, "bytes")
+	result, err := converter.StrToABICompatible(arg, "bytes")
 	require.NoError(t, err)
 	b, ok := result.([]byte)
 	require.True(t, ok)
@@ -84,7 +83,7 @@ func TestConvertArg_Bytes_Hex(t *testing.T) {
 
 func TestConvertArg_Bytes_String(t *testing.T) {
 	arg := "abcdef"
-	result, err := types.ConvertArgAgainstType(arg, "bytes")
+	result, err := converter.StrToABICompatible(arg, "bytes")
 	require.NoError(t, err)
 	b, ok := result.([]byte)
 	require.True(t, ok)
@@ -93,7 +92,7 @@ func TestConvertArg_Bytes_String(t *testing.T) {
 
 func TestConvertArg_Uint8(t *testing.T) {
 	arg := "255"
-	result, err := types.ConvertArgAgainstType(arg, "uint8")
+	result, err := converter.StrToABICompatible(arg, "uint8")
 	require.NoError(t, err)
 	u, ok := result.(uint8)
 	require.True(t, ok)
@@ -102,7 +101,7 @@ func TestConvertArg_Uint8(t *testing.T) {
 
 func TestConvertArg_Uint16(t *testing.T) {
 	arg := "65535"
-	result, err := types.ConvertArgAgainstType(arg, "uint16")
+	result, err := converter.StrToABICompatible(arg, "uint16")
 	require.NoError(t, err)
 	u, ok := result.(uint16)
 	require.True(t, ok)
@@ -111,7 +110,7 @@ func TestConvertArg_Uint16(t *testing.T) {
 
 func TestConvertArg_Uint32(t *testing.T) {
 	arg := "4294967295"
-	result, err := types.ConvertArgAgainstType(arg, "uint32")
+	result, err := converter.StrToABICompatible(arg, "uint32")
 	require.NoError(t, err)
 	u, ok := result.(uint32)
 	require.True(t, ok)
@@ -120,7 +119,7 @@ func TestConvertArg_Uint32(t *testing.T) {
 
 func TestConvertArg_Uint64(t *testing.T) {
 	arg := "18446744073709551615" // max uint64
-	result, err := types.ConvertArgAgainstType(arg, "uint64")
+	result, err := converter.StrToABICompatible(arg, "uint64")
 	require.NoError(t, err)
 	u, ok := result.(uint64)
 	require.True(t, ok)
@@ -129,7 +128,7 @@ func TestConvertArg_Uint64(t *testing.T) {
 
 func TestConvertArg_Uint(t *testing.T) {
 	arg := "1000"
-	result, err := types.ConvertArgAgainstType(arg, "uint")
+	result, err := converter.StrToABICompatible(arg, "uint")
 	require.NoError(t, err)
 	u, ok := result.(uint)
 	require.True(t, ok)
@@ -138,7 +137,7 @@ func TestConvertArg_Uint(t *testing.T) {
 
 func TestConvertArg_Int8(t *testing.T) {
 	arg := "127"
-	result, err := types.ConvertArgAgainstType(arg, "int8")
+	result, err := converter.StrToABICompatible(arg, "int8")
 	require.NoError(t, err)
 	i, ok := result.(int8)
 	require.True(t, ok)
@@ -147,7 +146,7 @@ func TestConvertArg_Int8(t *testing.T) {
 
 func TestConvertArg_Int16(t *testing.T) {
 	arg := "32767"
-	result, err := types.ConvertArgAgainstType(arg, "int16")
+	result, err := converter.StrToABICompatible(arg, "int16")
 	require.NoError(t, err)
 	i, ok := result.(int16)
 	require.True(t, ok)
@@ -156,7 +155,7 @@ func TestConvertArg_Int16(t *testing.T) {
 
 func TestConvertArg_Int32(t *testing.T) {
 	arg := "2147483647"
-	result, err := types.ConvertArgAgainstType(arg, "int32")
+	result, err := converter.StrToABICompatible(arg, "int32")
 	require.NoError(t, err)
 	i, ok := result.(int32)
 	require.True(t, ok)
@@ -165,7 +164,7 @@ func TestConvertArg_Int32(t *testing.T) {
 
 func TestConvertArg_Int64(t *testing.T) {
 	arg := "9223372036854775807"
-	result, err := types.ConvertArgAgainstType(arg, "int64")
+	result, err := converter.StrToABICompatible(arg, "int64")
 	require.NoError(t, err)
 	i, ok := result.(int64)
 	require.True(t, ok)
@@ -174,7 +173,7 @@ func TestConvertArg_Int64(t *testing.T) {
 
 func TestConvertArg_Int(t *testing.T) {
 	arg := "100"
-	result, err := types.ConvertArgAgainstType(arg, "int")
+	result, err := converter.StrToABICompatible(arg, "int")
 	require.NoError(t, err)
 	i, ok := result.(int)
 	require.True(t, ok)
@@ -182,7 +181,7 @@ func TestConvertArg_Int(t *testing.T) {
 }
 
 func TestConvertArg_UnsupportedType(t *testing.T) {
-	_, err := types.ConvertArgAgainstType("123.45", "float")
+	_, err := converter.StrToABICompatible("123.45", "float")
 	require.Error(t, err)
 	require.Contains(t, err.Error(), "unsupported input type")
 }
@@ -190,7 +189,7 @@ func TestConvertArg_UnsupportedType(t *testing.T) {
 func TestConvertArg_SliceUint256(t *testing.T) {
 	// JSON array string of uint256 values.
 	arg := `["123", "456", "789"]`
-	result, err := types.ConvertArgAgainstType(arg, "[]uint256")
+	result, err := converter.StrToABICompatible(arg, "[]uint256")
 	require.NoError(t, err)
 	slice, ok := result.([]interface{})
 	require.True(t, ok)
@@ -208,7 +207,7 @@ func TestConvertArg_SliceUint256(t *testing.T) {
 func TestConvertArg_FixedArrayAddress(t *testing.T) {
 	// JSON array string for a fixed-length array of 2 addresses.
 	arg := `["0x1234567890abcdef1234567890abcdef12345678", "0xabcdef1234567890abcdef1234567890abcdef12"]`
-	result, err := types.ConvertArgAgainstType(arg, "[2]address")
+	result, err := converter.StrToABICompatible(arg, "[2]address")
 	require.NoError(t, err)
 	array, ok := result.([]interface{})
 	require.True(t, ok)

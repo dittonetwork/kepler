@@ -2,11 +2,13 @@ package types
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	errorsmod "cosmossdk.io/errors"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+	"github.com/dittonetwork/kepler/utils/converter"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/robfig/cron/v3"
@@ -156,61 +158,39 @@ func validateMethodABI(occ *OnChainCallTrigger, idx int) error {
 			fmt.Sprintf("trigger %d: method_abi must be provided", idx),
 		)
 	}
-	if occ.MethodAbi.Name == "" {
+
+	wrappedABI := fmt.Sprintf("[%s]", occ.MethodAbi.Abi)
+	abiJSON, err := abi.JSON(strings.NewReader(wrappedABI))
+	if err != nil {
 		return errorsmod.Wrap(
 			sdkerrors.ErrInvalidRequest,
-			fmt.Sprintf("trigger %d: method name cannot be empty", idx),
+			fmt.Sprintf("trigger %d: %v", idx, err),
 		)
 	}
-	if occ.MethodAbi.Type != abiFunctionTypeFunction {
-		return errorsmod.Wrap(
-			sdkerrors.ErrInvalidRequest,
-			fmt.Sprintf("trigger %d: method type must be %q", idx, abiFunctionTypeFunction),
-		)
-	}
-	if len(occ.Args) != len(occ.MethodAbi.Inputs) {
+
+	if len(occ.Args) != len(abiJSON.Methods[occ.MethodAbi.Name].Inputs) {
 		return errorsmod.Wrap(
 			sdkerrors.ErrInvalidRequest,
 			fmt.Sprintf(
 				"trigger %d: number of args (%d) does not match number of inputs in method ABI (%d)",
 				idx,
 				len(occ.Args),
-				len(occ.MethodAbi.Inputs),
+				len(abiJSON.Methods[occ.MethodAbi.Name].Inputs),
 			),
 		)
 	}
-	if err := validateMethodABIInputs(occ, idx); err != nil {
+
+	if err := validateMethodABIArguments(abiJSON.Methods[occ.MethodAbi.Name].Inputs, occ.Args, idx); err != nil {
 		return err
 	}
-	if err := validateMethodABIOutputs(occ, idx); err != nil {
-		return err
-	}
+
 	return nil
 }
 
-// validateMethodABIInputs validates each input parameter and its corresponding argument.
-func validateMethodABIInputs(occ *OnChainCallTrigger, idx int) error {
-	for j, input := range occ.MethodAbi.Inputs {
-		if input.Name == "" {
-			return errorsmod.Wrap(
-				sdkerrors.ErrInvalidRequest,
-				fmt.Sprintf("trigger %d, input %d: input name cannot be empty", idx, j),
-			)
-		}
-		if input.Type == "" {
-			return errorsmod.Wrap(
-				sdkerrors.ErrInvalidRequest,
-				fmt.Sprintf("trigger %d, input %d: input type cannot be empty", idx, j),
-			)
-		}
-		it, err := abi.NewType(input.Type, "", nil)
-		if err != nil {
-			return errorsmod.Wrap(
-				sdkerrors.ErrInvalidRequest,
-				fmt.Sprintf("trigger %d, input %d: %v", idx, j, err),
-			)
-		}
-		convertedArg, err := ConvertArgAgainstType(occ.Args[j], input.Type)
+// validateMethodABIArguments validates each input parameter and its corresponding argument.
+func validateMethodABIArguments(abiArguments abi.Arguments, arguments []string, idx int) error {
+	for j, arg := range abiArguments {
+		convertedArg, err := converter.StrToABICompatible(arguments[j], arg.Type.String())
 		if err != nil {
 			return errorsmod.Wrap(
 				sdkerrors.ErrInvalidRequest,
@@ -219,39 +199,14 @@ func validateMethodABIInputs(occ *OnChainCallTrigger, idx int) error {
 		}
 		args := abi.Arguments{
 			{
-				Type: it,
-				Name: input.Name,
+				Type: arg.Type,
+				Name: arg.Name,
 			},
 		}
 		if _, packErr := args.Pack(convertedArg); packErr != nil {
 			return errorsmod.Wrap(
 				sdkerrors.ErrInvalidRequest,
 				fmt.Sprintf("trigger %d, argument %d: %v", idx, j, err),
-			)
-		}
-	}
-	return nil
-}
-
-// validateMethodABIOutputs validates each output parameter in the method ABI.
-func validateMethodABIOutputs(occ *OnChainCallTrigger, idx int) error {
-	for k, output := range occ.MethodAbi.Outputs {
-		if output.Name == "" {
-			return errorsmod.Wrap(
-				sdkerrors.ErrInvalidRequest,
-				fmt.Sprintf("trigger %d, output %d: output name cannot be empty", idx, k),
-			)
-		}
-		if output.Type == "" {
-			return errorsmod.Wrap(
-				sdkerrors.ErrInvalidRequest,
-				fmt.Sprintf("trigger %d, output %d: output type cannot be empty", idx, k),
-			)
-		}
-		if _, err := abi.NewType(output.Type, "", nil); err != nil {
-			return errorsmod.Wrap(
-				sdkerrors.ErrInvalidRequest,
-				fmt.Sprintf("trigger %d, output %d: %v", idx, k, err),
 			)
 		}
 	}

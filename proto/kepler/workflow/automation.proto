@@ -50,28 +50,6 @@ message Action {
   }
 }
 
-// Represents the ABI definition of a smart contract method.
-message MethodABI {
-  string name = 1; // e.g., "checkCondition"
-  repeated Input inputs = 2; // The inputs for the method
-  repeated Output outputs = 3; // The outputs for the method
-  string type = 4; // "function" or "receive"
-  string state_mutability = 5; // e.g., "pure", "view", "payable", "nonpayable"
-}
-
-// Represents a single input parameter for a method.
-message Input {
-  string name = 1; // e.g., "user"
-  string type = 2; // e.g., "address" or "uint256"
-}
-
-// Represents a single output parameter for a method.
-message Output {
-  string name = 1; // e.g., "user"
-  string type = 2; // e.g., "address" or "uint256"
-}
-
-
 // OnChainCallTrigger defines a trigger that calls a smart contract method.
 // Instead of just sending raw call data, we now provide a more structured
 // approach that includes the method's ABI and the list of arguments.
@@ -81,6 +59,11 @@ message OnChainCallTrigger {
   MethodABI method_abi = 3; // ABI of the method to be invoked
   bool only_finalized = 4; // If true, trigger will be simulated only on finalized blocks
   repeated string args = 5; // Arguments for the method (as strings)
+}
+
+message MethodABI {
+  string name = 1; // Method name
+  bytes abi = 2; // Method ABI
 }
 
 // Time trigger
@@ -114,5 +97,5 @@ message GasLimitTrigger {
 message OnChainAction {
   string contract_address = 1; // Contract address
   string chain_id = 2; // Chain ID
-  bytes tx_call_data = 3;
+  bytes tx_call_data = 3; // Transaction call data
 }
