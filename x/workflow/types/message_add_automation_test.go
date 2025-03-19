@@ -26,6 +26,7 @@ func buildValidOnChainCallTrigger(chainID string) *types.Trigger {
 				ChainId:  chainID,
 				MethodAbi: &types.MethodABI{
 					Name: "checkCondition",
+					Type: "function",
 					Inputs: []*types.Input{
 						{Name: "user", Type: "address"},
 						{Name: "amount", Type: "uint256"},
@@ -203,7 +204,7 @@ func TestValidateOnChainCallTriggers_InvalidArgType(t *testing.T) {
 	}
 	_, err := msg.ValidateOnChainCallTriggers()
 	require.Error(t, err)
-	require.Contains(t, err.Error(), "expected address")
+	require.Contains(t, err.Error(), "expected valid address")
 }
 
 func TestValidateOnChainActions_InvalidContract(t *testing.T) {

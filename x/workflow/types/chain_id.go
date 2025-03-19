@@ -1,13 +1,13 @@
 package types
 
 const (
-	ChainIDEth     = "1"
-	ChainIDPolygon = "137"
+	EthereumChainID = "1"
+	PolygonChainID  = "137"
 )
 
 var SupportedChainIDs = chainIDs{
-	ChainIDEth:     {},
-	ChainIDPolygon: {},
+	EthereumChainID: {},
+	PolygonChainID:  {},
 }
 
 type chainIDs map[string]struct{}

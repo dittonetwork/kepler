@@ -2,18 +2,19 @@ package types
 
 import (
 	"fmt"
-	"math/big"
-	"strings"
 	"time"
 
 	errorsmod "cosmossdk.io/errors"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/robfig/cron/v3"
 )
 
-const defaultIntegerBase = 10
+const (
+	abiFunctionTypeFunction = "function"
+)
 
 var _ sdk.Msg = &MsgAddAutomation{}
 
@@ -90,75 +91,171 @@ func (msg *MsgAddAutomation) ValidateScheduleTriggers() error {
 }
 
 // ValidateOnChainCallTriggers validates all on-chain-call triggers of an automation.
-//
-//nolint:gocognit // this is a validation function of a big msg, it must be this complex
 func (msg *MsgAddAutomation) ValidateOnChainCallTriggers() (string, error) {
-	chainID := ""
+	var chainID string
 	for i, t := range msg.Triggers {
 		occ := t.GetOnChainCall()
-		//nolint:nestif // trigger is big
-		if occ != nil {
-			if !common.IsHexAddress(occ.Contract) {
-				return "", errorsmod.Wrap(
-					sdkerrors.ErrInvalidRequest,
-					fmt.Sprintf("trigger %d: invalid contract address", i),
-				)
-			}
+		if occ == nil {
+			continue
+		}
 
-			if !SupportedChainIDs.IsSupported(occ.ChainId) {
-				return "", errorsmod.Wrap(
-					sdkerrors.ErrInvalidRequest,
-					fmt.Sprintf("trigger %d: unsupported chain id %s", i, occ.ChainId),
-				)
-			}
+		// Validate the contract address.
+		if err := validateContractAddress(occ, i); err != nil {
+			return "", err
+		}
 
-			if chainID == "" {
-				chainID = occ.ChainId
-			}
+		// Validate that the chain id is supported.
+		if err := validateSupportedChainID(occ, i); err != nil {
+			return "", err
+		}
+		if chainID == "" {
+			chainID = occ.ChainId
+		}
+		if chainID != occ.ChainId {
+			return "", errorsmod.Wrap(
+				sdkerrors.ErrInvalidRequest,
+				"only one chain id is supported per automation",
+			)
+		}
 
-			if chainID != occ.ChainId {
-				return "", errorsmod.Wrap(
-					sdkerrors.ErrInvalidRequest,
-					"only one chain id is supported per automation",
-				)
-			}
-
-			if occ.MethodAbi == nil {
-				return "", errorsmod.Wrap(
-					sdkerrors.ErrInvalidRequest,
-					fmt.Sprintf("trigger %d: method_abi must be provided", i),
-				)
-			}
-			if occ.MethodAbi.Name == "" {
-				return "", errorsmod.Wrap(
-					sdkerrors.ErrInvalidRequest,
-					fmt.Sprintf("trigger %d: method name cannot be empty", i),
-				)
-			}
-			if len(occ.Args) != len(occ.MethodAbi.Inputs) {
-				return "", errorsmod.Wrap(
-					sdkerrors.ErrInvalidRequest,
-					fmt.Sprintf(
-						"trigger %d: number of args (%d) does not match number of inputs in method ABI (%d)",
-						i,
-						len(occ.Args),
-						len(occ.MethodAbi.Inputs),
-					),
-				)
-			}
-			for j, input := range occ.MethodAbi.Inputs {
-				arg := occ.Args[j]
-				if err := validateArgAgainstInputType(arg, input.Type); err != nil {
-					return "", errorsmod.Wrap(
-						sdkerrors.ErrInvalidRequest,
-						fmt.Sprintf("trigger %d, argument %d: %v", i, j, err),
-					)
-				}
-			}
+		// Validate the method ABI, inputs, outputs, and arguments.
+		if err := validateMethodABI(occ, i); err != nil {
+			return "", err
 		}
 	}
-
 	return chainID, nil
+}
+
+// validateContractAddress ensures the contract address is a valid Ethereum hex address.
+func validateContractAddress(occ *OnChainCallTrigger, idx int) error {
+	if !common.IsHexAddress(occ.Contract) {
+		return errorsmod.Wrap(
+			sdkerrors.ErrInvalidRequest,
+			fmt.Sprintf("trigger %d: invalid contract address", idx),
+		)
+	}
+	return nil
+}
+
+// validateSupportedChainID ensures that the chain id is supported.
+func validateSupportedChainID(occ *OnChainCallTrigger, idx int) error {
+	if !SupportedChainIDs.IsSupported(occ.ChainId) {
+		return errorsmod.Wrap(
+			sdkerrors.ErrInvalidRequest,
+			fmt.Sprintf("trigger %d: unsupported chain id %s", idx, occ.ChainId),
+		)
+	}
+	return nil
+}
+
+// validateMethodABI validates the provided method ABI along with its inputs, outputs, and arguments.
+func validateMethodABI(occ *OnChainCallTrigger, idx int) error {
+	if occ.MethodAbi == nil {
+		return errorsmod.Wrap(
+			sdkerrors.ErrInvalidRequest,
+			fmt.Sprintf("trigger %d: method_abi must be provided", idx),
+		)
+	}
+	if occ.MethodAbi.Name == "" {
+		return errorsmod.Wrap(
+			sdkerrors.ErrInvalidRequest,
+			fmt.Sprintf("trigger %d: method name cannot be empty", idx),
+		)
+	}
+	if occ.MethodAbi.Type != abiFunctionTypeFunction {
+		return errorsmod.Wrap(
+			sdkerrors.ErrInvalidRequest,
+			fmt.Sprintf("trigger %d: method type must be %q", idx, abiFunctionTypeFunction),
+		)
+	}
+	if len(occ.Args) != len(occ.MethodAbi.Inputs) {
+		return errorsmod.Wrap(
+			sdkerrors.ErrInvalidRequest,
+			fmt.Sprintf(
+				"trigger %d: number of args (%d) does not match number of inputs in method ABI (%d)",
+				idx,
+				len(occ.Args),
+				len(occ.MethodAbi.Inputs),
+			),
+		)
+	}
+	if err := validateMethodABIInputs(occ, idx); err != nil {
+		return err
+	}
+	if err := validateMethodABIOutputs(occ, idx); err != nil {
+		return err
+	}
+	return nil
+}
+
+// validateMethodABIInputs validates each input parameter and its corresponding argument.
+func validateMethodABIInputs(occ *OnChainCallTrigger, idx int) error {
+	for j, input := range occ.MethodAbi.Inputs {
+		if input.Name == "" {
+			return errorsmod.Wrap(
+				sdkerrors.ErrInvalidRequest,
+				fmt.Sprintf("trigger %d, input %d: input name cannot be empty", idx, j),
+			)
+		}
+		if input.Type == "" {
+			return errorsmod.Wrap(
+				sdkerrors.ErrInvalidRequest,
+				fmt.Sprintf("trigger %d, input %d: input type cannot be empty", idx, j),
+			)
+		}
+		it, err := abi.NewType(input.Type, "", nil)
+		if err != nil {
+			return errorsmod.Wrap(
+				sdkerrors.ErrInvalidRequest,
+				fmt.Sprintf("trigger %d, input %d: %v", idx, j, err),
+			)
+		}
+		convertedArg, err := ConvertArgAgainstType(occ.Args[j], input.Type)
+		if err != nil {
+			return errorsmod.Wrap(
+				sdkerrors.ErrInvalidRequest,
+				fmt.Sprintf("trigger %d, argument %d: %v", idx, j, err),
+			)
+		}
+		args := abi.Arguments{
+			{
+				Type: it,
+				Name: input.Name,
+			},
+		}
+		if _, packErr := args.Pack(convertedArg); packErr != nil {
+			return errorsmod.Wrap(
+				sdkerrors.ErrInvalidRequest,
+				fmt.Sprintf("trigger %d, argument %d: %v", idx, j, err),
+			)
+		}
+	}
+	return nil
+}
+
+// validateMethodABIOutputs validates each output parameter in the method ABI.
+func validateMethodABIOutputs(occ *OnChainCallTrigger, idx int) error {
+	for k, output := range occ.MethodAbi.Outputs {
+		if output.Name == "" {
+			return errorsmod.Wrap(
+				sdkerrors.ErrInvalidRequest,
+				fmt.Sprintf("trigger %d, output %d: output name cannot be empty", idx, k),
+			)
+		}
+		if output.Type == "" {
+			return errorsmod.Wrap(
+				sdkerrors.ErrInvalidRequest,
+				fmt.Sprintf("trigger %d, output %d: output type cannot be empty", idx, k),
+			)
+		}
+		if _, err := abi.NewType(output.Type, "", nil); err != nil {
+			return errorsmod.Wrap(
+				sdkerrors.ErrInvalidRequest,
+				fmt.Sprintf("trigger %d, output %d: %v", idx, k, err),
+			)
+		}
+	}
+	return nil
 }
 
 func (msg *MsgAddAutomation) ValidateOnChainActions() (string, error) {
@@ -194,26 +291,4 @@ func (msg *MsgAddAutomation) ValidateOnChainActions() (string, error) {
 	}
 
 	return chainID, nil
-}
-
-// validateArgAgainstInputType validates that an argument (as a string)
-// is appropriate for the expected input type. Supported types are "address", "uint256", and "string".
-func validateArgAgainstInputType(arg string, expectedType string) error {
-	switch strings.ToLower(expectedType) {
-	case "address":
-		if !common.IsHexAddress(arg) {
-			return fmt.Errorf("expected address, got %q", arg)
-		}
-	case "uint256":
-		// Try to parse the argument as a base-10 big integer.
-		if _, ok := new(big.Int).SetString(arg, defaultIntegerBase); !ok {
-			return fmt.Errorf("expected uint256, got %q", arg)
-		}
-	case "string":
-		// No validation needed for generic strings.
-	default:
-		// For unsupported types, return an error.
-		return fmt.Errorf("unsupported input type %q", expectedType)
-	}
-	return nil
 }
