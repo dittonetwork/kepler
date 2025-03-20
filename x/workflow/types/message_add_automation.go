@@ -2,6 +2,7 @@ package types
 
 import (
 	"fmt"
+	"math/big"
 	"strings"
 	"time"
 
@@ -76,10 +77,42 @@ func (msg *MsgAddAutomation) ValidateScheduleTriggers() error {
 	for i, t := range msg.Triggers {
 		schd := t.GetSchedule()
 		if schd != nil {
-			if _, parseErr := cron.ParseStandard(t.GetSchedule().Cron); parseErr != nil {
+			if _, parseErr := cron.ParseStandard(schd.Cron); parseErr != nil {
 				return errorsmod.Wrap(
 					sdkerrors.ErrInvalidRequest,
 					fmt.Sprintf("trigger %d: invalid cron expression", i),
+				)
+			}
+		}
+	}
+
+	return nil
+}
+
+func (msg *MsgAddAutomation) ValidateGasLimitTriggers() error {
+	for i, t := range msg.Triggers {
+		gl := t.GetGasLimit()
+		if gl != nil {
+			maxFeePerGas, ok := new(big.Int).SetString(gl.MaxFeePerGas, converter.DefaultIntegerBase)
+			if !ok {
+				return errorsmod.Wrap(
+					sdkerrors.ErrInvalidRequest,
+					fmt.Sprintf("trigger %d: invalid max fee per gas", i),
+				)
+			}
+			maxPriorityFeePerGas, ok := new(big.Int).SetString(gl.MaxPriorityFeePerGas, converter.DefaultIntegerBase)
+			if !ok {
+				return errorsmod.Wrap(
+					sdkerrors.ErrInvalidRequest,
+					fmt.Sprintf("trigger %d: invalid max priority fee per gas", i),
+				)
+			}
+
+			one := new(big.Int).SetUint64(1)
+			if maxFeePerGas.Cmp(one) < 0 || maxPriorityFeePerGas.Cmp(one) < 0 {
+				return errorsmod.Wrap(
+					sdkerrors.ErrInvalidRequest,
+					fmt.Sprintf("trigger %d: gas limit must be greater than or equal to 1", i),
 				)
 			}
 		}

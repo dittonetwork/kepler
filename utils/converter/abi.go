@@ -10,9 +10,9 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
-// defaultIntegerBase defines the number base for integer conversions.
+// DefaultIntegerBase defines the number base for integer conversions.
 const (
-	defaultIntegerBase = 10
+	DefaultIntegerBase = 10
 	bitSize64          = 64
 	bitSize32          = 32
 	bitSize16          = 16
@@ -138,7 +138,7 @@ func convertAddress(arg string) (interface{}, error) {
 
 // convertUint256 converts a string to a *big.Int representing a uint256.
 func convertUint256(arg string) (interface{}, error) {
-	bi, ok := new(big.Int).SetString(arg, defaultIntegerBase)
+	bi, ok := new(big.Int).SetString(arg, DefaultIntegerBase)
 	if !ok {
 		return nil, fmt.Errorf("expected uint256, got %q", arg)
 	}

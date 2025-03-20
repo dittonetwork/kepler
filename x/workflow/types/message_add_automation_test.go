@@ -59,6 +59,17 @@ func buildValidCountTrigger() *types.Trigger {
 	}
 }
 
+func buildValidGasLimitTrigger() *types.Trigger {
+	return &types.Trigger{
+		Trigger: &types.Trigger_GasLimit{
+			GasLimit: &types.GasLimitTrigger{
+				MaxFeePerGas:         "1",
+				MaxPriorityFeePerGas: "1",
+			},
+		},
+	}
+}
+
 // buildValidOnChainAction returns a valid on-chain action.
 func buildValidOnChainAction(chainID string) *types.Action {
 	return &types.Action{
@@ -81,6 +92,7 @@ func buildValidMsg() *types.MsgAddAutomation {
 			buildValidOnChainCallTrigger(chainID),
 			buildValidScheduleTrigger(),
 			buildValidCountTrigger(),
+			buildValidGasLimitTrigger(),
 		},
 		Actions: []*types.Action{
 			buildValidOnChainAction(chainID),
@@ -130,6 +142,41 @@ func TestValidateCountTriggers_InvalidRepeatCount(t *testing.T) {
 	err := msg.ValidateCountTriggers()
 	require.Error(t, err)
 	require.Contains(t, err.Error(), "repeat count must be greater than 0")
+}
+
+func TestValidateGasLimitTriggers_InvalidValue(t *testing.T) {
+	msg := buildValidMsg()
+	// Set a count trigger with repeat count 0.
+	for _, trig := range msg.Triggers {
+		if cnt := trig.GetGasLimit(); cnt != nil {
+			cnt.MaxFeePerGas = "fsdf"
+		}
+	}
+	err := msg.ValidateGasLimitTriggers()
+	require.Error(t, err)
+	require.Contains(t, err.Error(), "invalid max fee per gas")
+
+	msg = buildValidMsg()
+	// Set a count trigger with repeat count 0.
+	for _, trig := range msg.Triggers {
+		if cnt := trig.GetGasLimit(); cnt != nil {
+			cnt.MaxPriorityFeePerGas = "fsdf"
+		}
+	}
+	err = msg.ValidateGasLimitTriggers()
+	require.Error(t, err)
+	require.Contains(t, err.Error(), "invalid max priority fee per gas")
+
+	msg = buildValidMsg()
+	// Set a count trigger with repeat count 0.
+	for _, trig := range msg.Triggers {
+		if cnt := trig.GetGasLimit(); cnt != nil {
+			cnt.MaxPriorityFeePerGas = "-1"
+		}
+	}
+	err = msg.ValidateGasLimitTriggers()
+	require.Error(t, err)
+	require.Contains(t, err.Error(), "gas limit must be greater than or equal to 1")
 }
 
 func TestValidateScheduleTriggers_InvalidCron(t *testing.T) {
