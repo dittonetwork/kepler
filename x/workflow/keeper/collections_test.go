@@ -100,7 +100,7 @@ func newValidAutomation() types.Automation {
 	actions := []*types.Action{
 		{
 			&types.Action_OnChain{OnChain: &types.OnChainAction{
-				ContractAddress: []byte("0x1234"),
+				ContractAddress: "0x1234",
 				ChainId:         "1",
 				TxCallData:      []byte("tx_call_data"),
 			}},
