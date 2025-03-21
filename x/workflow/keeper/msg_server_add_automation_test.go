@@ -6,11 +6,12 @@ import (
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/mock/gomock"
 
+	"testing"
+
 	keepertest "github.com/dittonetwork/kepler/testutil/keeper"
 	"github.com/dittonetwork/kepler/x/workflow/keeper"
 	"github.com/dittonetwork/kepler/x/workflow/types"
 	"github.com/dittonetwork/kepler/x/workflow/types/mock"
-	"testing"
 )
 
 // TestAddAutomation tests the InsertAutomation function
@@ -37,8 +38,7 @@ func TestAddAutomationSuccess(t *testing.T) {
 	// Create a new message
 	msg := &types.MsgAddAutomation{
 		Triggers: automation.Triggers,
-		Actions:  automation.Actions,
-		ExpireAt: automation.ExpireAt,
+		UserOp:   automation.UserOp,
 	}
 
 	// Call the AddAutomation function

@@ -70,15 +70,21 @@ func buildValidGasLimitTrigger() *types.Trigger {
 	}
 }
 
-// buildValidOnChainAction returns a valid on-chain action.
-func buildValidOnChainAction(chainID string) *types.Action {
-	return &types.Action{
-		Action: &types.Action_OnChain{
-			OnChain: &types.OnChainAction{
-				ContractAddress: validEthAddress,
-				ChainId:         chainID,
+func buildValidValidUntilTrigger() *types.Trigger {
+	return &types.Trigger{
+		Trigger: &types.Trigger_ValidUntil{
+			ValidUntil: &types.ValidUntilTrigger{
+				Timestamp: time.Now().Add(time.Hour).Unix(),
 			},
 		},
+	}
+}
+
+// buildValidUserOp returns a valid user op.
+func buildValidUserOp(chainID string) *types.UserOp {
+	return &types.UserOp{
+		ContractAddress: []byte(validEthAddress),
+		ChainId:         chainID,
 	}
 }
 
@@ -86,17 +92,15 @@ func buildValidOnChainAction(chainID string) *types.Action {
 func buildValidMsg() *types.MsgAddAutomation {
 	chainID := "1"
 	return &types.MsgAddAutomation{
-		Creator:  validCosmosAddress,
-		ExpireAt: time.Now().Add(time.Hour).Unix(),
+		Creator: validCosmosAddress,
 		Triggers: []*types.Trigger{
 			buildValidOnChainCallTrigger(chainID),
 			buildValidScheduleTrigger(),
 			buildValidCountTrigger(),
 			buildValidGasLimitTrigger(),
+			buildValidValidUntilTrigger(),
 		},
-		Actions: []*types.Action{
-			buildValidOnChainAction(chainID),
-		},
+		UserOp: buildValidUserOp(chainID),
 	}
 }
 
@@ -114,21 +118,25 @@ func TestMsgAddAutomation_ValidateBasic_InvalidCreator(t *testing.T) {
 	require.Contains(t, err.Error(), "invalid creator address")
 }
 
-func TestMsgAddAutomation_ValidateBasic_PastExpireAt(t *testing.T) {
+func TestValidateValidUntilTrigger_PastExpireAt(t *testing.T) {
 	msg := buildValidMsg()
-	msg.ExpireAt = time.Now().Add(-time.Minute).Unix()
+	for _, trig := range msg.Triggers {
+		if vut := trig.GetValidUntil(); vut != nil {
+			vut.Timestamp = time.Now().Add(-time.Hour).Unix()
+		}
+	}
 	err := msg.ValidateBasic()
 	require.Error(t, err)
-	require.Contains(t, err.Error(), "expire at time must be in the future")
+	require.Contains(t, err.Error(), "valid until time must be in the future")
 }
 
 func TestMsgAddAutomation_ValidateBasic_MismatchedChainID(t *testing.T) {
 	msg := buildValidMsg()
 	// Change the chain id in the on-chain action to mismatch.
-	msg.Actions[0].GetOnChain().ChainId = "137"
+	msg.UserOp.ChainId = "137"
 	err := msg.ValidateBasic()
 	require.Error(t, err)
-	require.Contains(t, err.Error(), "triggers and actions must be on the same chain")
+	require.Contains(t, err.Error(), "triggers and user_op must be on the same chain")
 }
 
 func TestValidateCountTriggers_InvalidRepeatCount(t *testing.T) {
@@ -250,30 +258,11 @@ func TestValidateOnChainCallTriggers_InvalidArgType(t *testing.T) {
 	require.Contains(t, err.Error(), "expected valid address")
 }
 
-func TestValidateOnChainActions_InvalidContract(t *testing.T) {
-	msg := buildValidMsg()
-	// Set invalid contract address in on-chain action.
-	for i, act := range msg.Actions {
-		if oca := act.GetOnChain(); oca != nil {
-			oca.ContractAddress = "invalid_contract"
-			t.Logf("Action %d has invalid contract address", i)
-		}
-	}
-	_, err := msg.ValidateOnChainActions()
-	require.Error(t, err)
-	require.Contains(t, err.Error(), "invalid contract address")
-}
-
-func TestValidateOnChainActions_UnsupportedChain(t *testing.T) {
+func TestValidateUserOp_UnsupportedChain(t *testing.T) {
 	msg := buildValidMsg()
 	// Set unsupported chain id in on-chain action.
-	for i, act := range msg.Actions {
-		if oca := act.GetOnChain(); oca != nil {
-			oca.ChainId = "unsupported"
-			t.Logf("Action %d has unsupported chain id", i)
-		}
-	}
-	_, err := msg.ValidateOnChainActions()
+	msg.UserOp.ChainId = "unsupported"
+	err := msg.ValidateUserOp()
 	require.Error(t, err)
 	require.Contains(t, err.Error(), "unsupported chain id")
 }
