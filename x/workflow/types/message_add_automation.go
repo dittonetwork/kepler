@@ -49,7 +49,7 @@ func (msg *MsgAddAutomation) ValidateBasic() error {
 		return err
 	}
 
-	if triggersChainID != msg.UserOp.GetChainId() {
+	if triggersChainID != "" && triggersChainID != msg.UserOp.GetChainId() {
 		return errorsmod.Wrap(
 			sdkerrors.ErrInvalidRequest,
 			"triggers and user_op must be on the same chain",
