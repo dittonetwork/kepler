@@ -48,9 +48,10 @@ message MsgUpdateParamsResponse {}
 message MsgAddAutomation {
   option (cosmos.msg.v1.signer) = "creator";
   string creator = 1;
-  repeated Trigger triggers = 2; // Trigger object, which can be chained by logical operators in itself
-  repeated Action actions = 3; // List of actions
-  int64 expire_at = 4; // Expiration timestamp (Unix time)
+  // Trigger object, which can be chained by logical operators in itself
+  repeated Trigger triggers = 2;
+  // User operation
+  UserOp user_op = 3;
 }
 
 message MsgAddAutomationResponse {
@@ -95,13 +96,13 @@ message MsgSubmitJobResult {
   option (cosmos.msg.v1.signer) = "creator";
   string creator = 1;
   string status = 2;
-  string committeeId = 3;
-  string chainId = 4;
-  uint64 automationId = 5;
-  string txHash = 6;
-  uint64 createdAt = 7;
-  uint64 executedAt = 8;
-  uint64 signedAt = 9;
+  string committee_id = 3;
+  string chain_id = 4;
+  uint64 automation_id = 5;
+  string tx_hash = 6;
+  uint64 created_at = 7;
+  uint64 executed_at = 8;
+  uint64 signed_at = 9;
   repeated bytes signs = 10;
   bytes payload = 11;
 }

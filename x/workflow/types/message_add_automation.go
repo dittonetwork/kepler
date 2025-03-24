@@ -36,20 +36,24 @@ func (msg *MsgAddAutomation) ValidateBasic() error {
 		return err
 	}
 
-	actionsChainID, err := msg.ValidateOnChainActions()
+	if err = msg.ValidateGasLimitTriggers(); err != nil {
+		return err
+	}
+
+	if err = msg.ValidateValidUntilTrigger(); err != nil {
+		return err
+	}
+
+	err = msg.ValidateUserOp()
 	if err != nil {
 		return err
 	}
 
-	if triggersChainID != actionsChainID {
+	if triggersChainID != msg.UserOp.GetChainId() {
 		return errorsmod.Wrap(
 			sdkerrors.ErrInvalidRequest,
-			"triggers and actions must be on the same chain",
+			"triggers and user_op must be on the same chain",
 		)
-	}
-
-	if time.Unix(msg.ExpireAt, 0).Before(time.Now()) {
-		return errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "expire at time must be in the future")
 	}
 
 	return nil
@@ -242,37 +246,41 @@ func validateMethodABIArguments(abiArguments abi.Arguments, arguments []string, 
 	return nil
 }
 
-func (msg *MsgAddAutomation) ValidateOnChainActions() (string, error) {
-	chainID := ""
-	for i, a := range msg.Actions {
-		oca := a.GetOnChain()
-		if oca != nil {
-			if !common.IsHexAddress(oca.ContractAddress) {
-				return "", errorsmod.Wrap(
-					sdkerrors.ErrInvalidRequest,
-					fmt.Sprintf("action %d: invalid contract address", i),
-				)
+func (msg *MsgAddAutomation) ValidateUserOp() error {
+	if msg.UserOp == nil {
+		return errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "user operation is required")
+	}
+
+	if !SupportedChainIDs.IsSupported(msg.UserOp.GetChainId()) {
+		return errorsmod.Wrap(
+			sdkerrors.ErrInvalidRequest,
+			fmt.Sprintf("user_op: unsupported chain id %s", msg.UserOp.GetChainId()),
+		)
+	}
+
+	return nil
+}
+
+func (msg *MsgAddAutomation) ValidateValidUntilTrigger() error {
+	hasValidUntilTrigger := false
+
+	for _, t := range msg.Triggers {
+		if t.GetValidUntil() != nil {
+			if hasValidUntilTrigger {
+				return errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "only one expire time trigger is allowed")
 			}
 
-			if !SupportedChainIDs.IsSupported(oca.ChainId) {
-				return "", errorsmod.Wrap(
-					sdkerrors.ErrInvalidRequest,
-					fmt.Sprintf("action %d: unsupported chain id %s", i, oca.ChainId),
-				)
-			}
+			expireTime := time.Unix(t.GetValidUntil().Timestamp, 0)
+			currentTime := time.Now()
 
-			if chainID == "" {
-				chainID = oca.ChainId
-			}
+			// Mark that we have this trigger already
+			hasValidUntilTrigger = true
 
-			if chainID != oca.ChainId {
-				return "", errorsmod.Wrap(
-					sdkerrors.ErrInvalidRequest,
-					"only one chain id is supported per automation",
-				)
+			if expireTime.Before(currentTime) {
+				return errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "valid until time must be in the future")
 			}
 		}
 	}
 
-	return chainID, nil
+	return nil
 }

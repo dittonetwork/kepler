@@ -2,7 +2,6 @@ package keeper_test
 
 import (
 	"testing"
-	"time"
 
 	"github.com/dittonetwork/kepler/testutil/keeper"
 	jobTypes "github.com/dittonetwork/kepler/x/job/types"
@@ -97,24 +96,17 @@ func newValidAutomation() types.Automation {
 			}},
 		},
 	}
-	actions := []*types.Action{
-		{
-			&types.Action_OnChain{OnChain: &types.OnChainAction{
-				ContractAddress: "0x1234",
-				ChainId:         "1",
-				TxCallData:      []byte("tx_call_data"),
-			}},
-		},
+	userOp := &types.UserOp{
+		ContractAddress: []byte("0x1234"),
+		ChainId:         "1",
+		TxCallData:      []byte("tx_call_data"),
 	}
-
-	expireAt := time.Now().Add(time.Hour).Unix()
 
 	return types.Automation{
 		Id:       1,
 		Triggers: triggers,
-		Actions:  actions,
+		UserOp:   userOp,
 		Status:   types.AutomationStatus_AUTOMATION_STATUS_ACTIVE,
-		ExpireAt: expireAt,
 	}
 }
 
