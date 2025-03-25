@@ -1,8 +1,9 @@
 package keeper
 
 import (
-	"github.com/dittonetwork/kepler/x/job/types/mock"
 	"testing"
+
+	"github.com/dittonetwork/kepler/x/job/types/mock"
 
 	"go.uber.org/mock/gomock"
 

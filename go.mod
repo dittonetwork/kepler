@@ -1,6 +1,6 @@
 module github.com/dittonetwork/kepler
 
-go 1.23.6
+go 1.24.1
 
 replace (
 	// fix upstream GHSA-h395-qcrw-5vmq vulnerability.

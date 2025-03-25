@@ -1,11 +1,12 @@
 package keeper_test
 
 import (
-	"github.com/dittonetwork/kepler/x/epochs/types"
 	"maps"
 	"slices"
 	"testing"
 	"time"
+
+	"github.com/dittonetwork/kepler/x/epochs/types"
 
 	"cosmossdk.io/core/header"
 	"github.com/stretchr/testify/require"

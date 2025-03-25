@@ -2,8 +2,9 @@ package types_test
 
 import (
 	"context"
-	"github.com/dittonetwork/kepler/x/epochs/types"
 	"testing"
+
+	"github.com/dittonetwork/kepler/x/epochs/types"
 
 	"cosmossdk.io/errors"
 	storetypes "cosmossdk.io/store/types"

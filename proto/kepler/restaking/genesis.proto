@@ -1,0 +1,17 @@
+syntax = "proto3";
+package kepler.restaking;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "kepler/restaking/params.proto";
+
+option go_package = "github.com/dittonetwork/kepler/x/restaking/types";
+
+// GenesisState defines the restaking module's genesis state.
+message GenesisState {
+  // params defines all the parameters of the module.
+  Params params = 1 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}

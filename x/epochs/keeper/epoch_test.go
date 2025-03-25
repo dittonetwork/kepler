@@ -1,8 +1,9 @@
 package keeper_test
 
 import (
-	"github.com/dittonetwork/kepler/x/epochs/types"
 	"time"
+
+	"github.com/dittonetwork/kepler/x/epochs/types"
 
 	"cosmossdk.io/core/header"
 )

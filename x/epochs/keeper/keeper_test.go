@@ -1,10 +1,11 @@
 package keeper_test
 
 import (
-	epochskeeper "github.com/dittonetwork/kepler/x/epochs/keeper"
-	"github.com/dittonetwork/kepler/x/epochs/types"
 	"testing"
 	"time"
+
+	epochskeeper "github.com/dittonetwork/kepler/x/epochs/keeper"
+	"github.com/dittonetwork/kepler/x/epochs/types"
 
 	"cosmossdk.io/core/header"
 	storetypes "cosmossdk.io/store/types"

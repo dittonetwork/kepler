@@ -1,8 +1,10 @@
 package keeper_test
 
 import (
-	storetypes "cosmossdk.io/store/types"
 	"errors"
+	"testing"
+
+	storetypes "cosmossdk.io/store/types"
 	"github.com/cosmos/cosmos-sdk/testutil"
 	jobTypes "github.com/dittonetwork/kepler/x/job/types"
 	"github.com/dittonetwork/kepler/x/workflow/keeper"
@@ -10,7 +12,6 @@ import (
 	"github.com/dittonetwork/kepler/x/workflow/types/mock"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/mock/gomock"
-	"testing"
 )
 
 func TestMsgServer_SubmitJobResult(t *testing.T) {

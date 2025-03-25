@@ -3,8 +3,9 @@ package keeper_test
 import (
 	"crypto/ecdsa"
 	"fmt"
-	"github.com/dittonetwork/kepler/testutil/keeper"
 	"testing"
+
+	"github.com/dittonetwork/kepler/testutil/keeper"
 
 	"github.com/dittonetwork/kepler/x/committee/types"
 	"github.com/ethereum/go-ethereum/crypto"

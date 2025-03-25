@@ -41,6 +41,8 @@ import (
 	jobmodulekeeper "github.com/dittonetwork/kepler/x/job/keeper"
 
 	instantmodulekeeper "github.com/dittonetwork/kepler/x/instant/keeper"
+	restakingmodulekeeper "github.com/dittonetwork/kepler/x/restaking/keeper"
+
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 
 	"github.com/dittonetwork/kepler/docs"
@@ -83,6 +85,7 @@ type App struct {
 	CommitteeKeeper committeemodulekeeper.Keeper
 	JobKeeper       jobmodulekeeper.Keeper
 	InstantKeeper   instantmodulekeeper.Keeper
+	RestakingKeeper restakingmodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
 	// simulation manager
@@ -160,6 +163,7 @@ func New(
 		&app.CommitteeKeeper,
 		&app.JobKeeper,
 		&app.InstantKeeper,
+		&app.RestakingKeeper,
 		// this line is used by starport scaffolding # stargate/app/keeperDefinition
 	); err != nil {
 		panic(err)

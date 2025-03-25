@@ -40,6 +40,9 @@ import (
 	genutiltypes "github.com/cosmos/cosmos-sdk/x/genutil/types"
 	minttypes "github.com/cosmos/cosmos-sdk/x/mint/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
+	restakingmodulev1 "github.com/dittonetwork/kepler/api/kepler/restaking/module"
+	_ "github.com/dittonetwork/kepler/x/restaking/module" // import for side-effects
+	restakingmoduletypes "github.com/dittonetwork/kepler/x/restaking/types"
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 )
 
@@ -64,6 +67,7 @@ var (
 		committeemoduletypes.ModuleName,
 		jobmoduletypes.ModuleName,
 		instantmoduletypes.ModuleName,
+		restakingmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/initGenesis
 	}
 
@@ -81,6 +85,7 @@ var (
 		committeemoduletypes.ModuleName,
 		jobmoduletypes.ModuleName,
 		instantmoduletypes.ModuleName,
+		restakingmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/beginBlockers
 	}
 
@@ -93,6 +98,7 @@ var (
 		committeemoduletypes.ModuleName,
 		jobmoduletypes.ModuleName,
 		instantmoduletypes.ModuleName,
+		restakingmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/endBlockers
 	}
 
@@ -203,6 +209,10 @@ var (
 			{
 				Name:   instantmoduletypes.ModuleName,
 				Config: appconfig.WrapAny(&instantmodulev1.Module{}),
+			},
+			{
+				Name:   restakingmoduletypes.ModuleName,
+				Config: appconfig.WrapAny(&restakingmodulev1.Module{}),
 			},
 			// this line is used by starport scaffolding # stargate/app/moduleConfig
 		},
