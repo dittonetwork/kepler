@@ -1,0 +1,41 @@
+syntax = "proto3";
+package kepler.restaking;
+
+import "cosmos_proto/cosmos.proto";
+
+option go_package = "github.com/dittonetwork/kepler/x/restaking/types";
+
+// ValidatorStatus is the status of a validator
+enum ValidatorStatus {
+  // VALIDATOR_STATUS_UNSPECIFIED indicates that the status of the validator is unknown
+  VALIDATOR_STATUS_UNSPECIFIED = 0;
+  // VALIDATOR_STATUS_BONDING indicates that the validator is in the process of bonding
+  VALIDATOR_STATUS_BONDING = 1;
+  // VALIDATOR_STATUS_BONDED indicates that the validator is connected to the network
+  VALIDATOR_STATUS_BONDED = 2;
+  // VALIDATOR_STATUS_UNBONDING indicates that the validator is in the process of unbonding from L1
+  VALIDATOR_STATUS_UNBONDING = 3;
+  // VALIDATOR_STATUS_UNBONDED indicates that the validator is not connected to the network
+  VALIDATOR_STATUS_UNBONDED = 4;
+}
+
+// Validator is a validator that is eligible for restaking
+message Validator {
+  // Address of the validator operator on L1
+  string address = 1;
+
+  // Address of the validator on Kepler
+  string cosmos_address = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+
+  // Public key of the validator (may change, e.g. on key rotation)
+  bytes public_key = 3;
+
+  // Flag to indicate if this validator is an emergency validator
+  bool is_emergency = 4;
+
+  // Voting power of the validator
+  uint64 voting_power = 5;
+
+  // Status of the validator
+  ValidatorStatus status = 6;
+}

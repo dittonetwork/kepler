@@ -1,6 +1,7 @@
 package keeper
 
 import (
+	"context"
 	"fmt"
 
 	"cosmossdk.io/core/store"
@@ -40,6 +41,27 @@ func NewKeeper(
 		authority:    authority,
 		logger:       logger,
 	}
+}
+
+// BondValidator complete the bonding process for a validator recognized in Bonding status.
+func (k Keeper) BondValidator(_ context.Context, _ *types.BondValidatorRequest) (*types.BondValidatorResponse, error) {
+	// TODO github.com/dittonetwork/kepler/issues/175
+	panic("implement me")
+}
+
+// ValidatorStatus returns the status of a validator by its operator address.
+func (k Keeper) ValidatorStatus(
+	_ context.Context,
+	_ *types.QueryValidatorStatusRequest,
+) (*types.QueryValidatorStatusResponse, error) {
+	// TODO github.com/dittonetwork/kepler/issues/176
+	panic("implement me")
+}
+
+// Validators returns the list of all validators.
+func (k Keeper) Validators(_ context.Context, _ *types.QueryValidatorsRequest) (*types.QueryValidatorsResponse, error) {
+	// TODO github.com/dittonetwork/kepler/issues/177
+	panic("implement me")
 }
 
 // GetAuthority returns the module's authority.

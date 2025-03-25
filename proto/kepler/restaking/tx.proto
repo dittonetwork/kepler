@@ -13,10 +13,24 @@ option go_package = "github.com/dittonetwork/kepler/x/restaking/types";
 service Msg {
   option (cosmos.msg.v1.service) = true;
 
+  // Complete the bonding process for a validator recognized in Bonding status.
+  rpc BondValidator(BondValidatorRequest) returns (BondValidatorResponse);
+
   // UpdateParams defines a (governance) operation for updating the module
   // parameters. The authority defaults to the x/gov module account.
   rpc UpdateParams(MsgUpdateParams) returns (MsgUpdateParamsResponse);
 }
+
+// BondValidatorRequest is the request type for the Msg/BondValidator RPC method.
+message BondValidatorRequest {
+  option (amino.name) = "kepler/x/restaking/BondValidatorRequest";
+
+  // Signature over (address, validator_status, is_emergency)
+  string signature = 1;
+}
+
+// BondValidatorResponse is the response type for the Msg/BondValidator RPC method.
+message BondValidatorResponse {}
 
 // MsgUpdateParams is the Msg/UpdateParams request type.
 message MsgUpdateParams {
