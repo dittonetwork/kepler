@@ -1,5 +1,0 @@
-broadcast-mode = "sync"
-chain-id = "kepler"
-keyring-backend = "test"
-node = "http://<ingress_address>/rpc"
-output = "text"
