@@ -4,17 +4,48 @@ package kepler.restaking;
 import "amino/amino.proto";
 import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
-import "cosmos/base/query/v1beta1/pagination.proto";
 import "kepler/restaking/params.proto";
+import "kepler/restaking/validator.proto";
 
 option go_package = "github.com/dittonetwork/kepler/x/restaking/types";
 
 // Query defines the gRPC querier service.
 service Query {
+  // Retrieve a validator's status by address.
+  rpc ValidatorStatus(QueryValidatorStatusRequest) returns (QueryValidatorStatusResponse) {
+    option (google.api.http).get = "/dittonetwork/kepler/restaking/validator_status/{address}";
+  }
+
+  // Retrieve a list of all validators.
+  rpc Validators(QueryValidatorsRequest) returns (QueryValidatorsResponse) {
+    option (google.api.http).get = "/dittonetwork/kepler/restaking/validators";
+  }
+
   // Parameters queries the parameters of the module.
   rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/dittonetwork/kepler/restaking/params";
   }
+}
+
+// QueryValidatorsRequest is the request type for the Query/Validators RPC method.
+message QueryValidatorsRequest {}
+
+// QueryValidatorsResponse is the response type for the Query/Validators RPC method.
+message QueryValidatorsResponse {
+  // validators is a list of validators.
+  repeated Validator validators = 1;
+}
+
+// QueryValidatorStatusRequest is the request type for the Query/ValidatorStatus RPC method.
+message QueryValidatorStatusRequest {
+  // address is the address of the validator to query.
+  string address = 1;
+}
+
+// QueryValidatorStatusResponse is the response type for the Query/ValidatorStatus RPC method.
+message QueryValidatorStatusResponse {
+  // status is the status of the validator.
+  ValidatorStatus status = 1;
 }
 
 // QueryParamsRequest is request type for the Query/Params RPC method.

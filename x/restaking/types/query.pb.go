@@ -6,11 +6,6 @@ package types
 import (
 	context "context"
 	fmt "fmt"
-	io "io"
-	math "math"
-	math_bits "math/bits"
-
-	_ "github.com/cosmos/cosmos-sdk/types/query"
 	_ "github.com/cosmos/cosmos-sdk/types/tx/amino"
 	_ "github.com/cosmos/gogoproto/gogoproto"
 	grpc1 "github.com/cosmos/gogoproto/grpc"
@@ -19,6 +14,9 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	io "io"
+	math "math"
+	math_bits "math/bits"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -32,6 +30,181 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
+// QueryValidatorsRequest is the request type for the Query/Validators RPC method.
+type QueryValidatorsRequest struct {
+}
+
+func (m *QueryValidatorsRequest) Reset()         { *m = QueryValidatorsRequest{} }
+func (m *QueryValidatorsRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryValidatorsRequest) ProtoMessage()    {}
+func (*QueryValidatorsRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_42c580f934388672, []int{0}
+}
+func (m *QueryValidatorsRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryValidatorsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryValidatorsRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryValidatorsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryValidatorsRequest.Merge(m, src)
+}
+func (m *QueryValidatorsRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryValidatorsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryValidatorsRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryValidatorsRequest proto.InternalMessageInfo
+
+// QueryValidatorsResponse is the response type for the Query/Validators RPC method.
+type QueryValidatorsResponse struct {
+	// validators is a list of validators.
+	Validators []*Validator `protobuf:"bytes,1,rep,name=validators,proto3" json:"validators,omitempty"`
+}
+
+func (m *QueryValidatorsResponse) Reset()         { *m = QueryValidatorsResponse{} }
+func (m *QueryValidatorsResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryValidatorsResponse) ProtoMessage()    {}
+func (*QueryValidatorsResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_42c580f934388672, []int{1}
+}
+func (m *QueryValidatorsResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryValidatorsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryValidatorsResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryValidatorsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryValidatorsResponse.Merge(m, src)
+}
+func (m *QueryValidatorsResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryValidatorsResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryValidatorsResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryValidatorsResponse proto.InternalMessageInfo
+
+func (m *QueryValidatorsResponse) GetValidators() []*Validator {
+	if m != nil {
+		return m.Validators
+	}
+	return nil
+}
+
+// QueryValidatorStatusRequest is the request type for the Query/ValidatorStatus RPC method.
+type QueryValidatorStatusRequest struct {
+	// address is the address of the validator to query.
+	Address string `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
+}
+
+func (m *QueryValidatorStatusRequest) Reset()         { *m = QueryValidatorStatusRequest{} }
+func (m *QueryValidatorStatusRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryValidatorStatusRequest) ProtoMessage()    {}
+func (*QueryValidatorStatusRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_42c580f934388672, []int{2}
+}
+func (m *QueryValidatorStatusRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryValidatorStatusRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryValidatorStatusRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryValidatorStatusRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryValidatorStatusRequest.Merge(m, src)
+}
+func (m *QueryValidatorStatusRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryValidatorStatusRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryValidatorStatusRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryValidatorStatusRequest proto.InternalMessageInfo
+
+func (m *QueryValidatorStatusRequest) GetAddress() string {
+	if m != nil {
+		return m.Address
+	}
+	return ""
+}
+
+// QueryValidatorStatusResponse is the response type for the Query/ValidatorStatus RPC method.
+type QueryValidatorStatusResponse struct {
+	// status is the status of the validator.
+	Status ValidatorStatus `protobuf:"varint,1,opt,name=status,proto3,enum=kepler.restaking.ValidatorStatus" json:"status,omitempty"`
+}
+
+func (m *QueryValidatorStatusResponse) Reset()         { *m = QueryValidatorStatusResponse{} }
+func (m *QueryValidatorStatusResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryValidatorStatusResponse) ProtoMessage()    {}
+func (*QueryValidatorStatusResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_42c580f934388672, []int{3}
+}
+func (m *QueryValidatorStatusResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryValidatorStatusResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryValidatorStatusResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryValidatorStatusResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryValidatorStatusResponse.Merge(m, src)
+}
+func (m *QueryValidatorStatusResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryValidatorStatusResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryValidatorStatusResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryValidatorStatusResponse proto.InternalMessageInfo
+
+func (m *QueryValidatorStatusResponse) GetStatus() ValidatorStatus {
+	if m != nil {
+		return m.Status
+	}
+	return ValidatorStatus_VALIDATOR_STATUS_UNSPECIFIED
+}
+
 // QueryParamsRequest is request type for the Query/Params RPC method.
 type QueryParamsRequest struct {
 }
@@ -40,7 +213,7 @@ func (m *QueryParamsRequest) Reset()         { *m = QueryParamsRequest{} }
 func (m *QueryParamsRequest) String() string { return proto.CompactTextString(m) }
 func (*QueryParamsRequest) ProtoMessage()    {}
 func (*QueryParamsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_42c580f934388672, []int{0}
+	return fileDescriptor_42c580f934388672, []int{4}
 }
 func (m *QueryParamsRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -79,7 +252,7 @@ func (m *QueryParamsResponse) Reset()         { *m = QueryParamsResponse{} }
 func (m *QueryParamsResponse) String() string { return proto.CompactTextString(m) }
 func (*QueryParamsResponse) ProtoMessage()    {}
 func (*QueryParamsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_42c580f934388672, []int{1}
+	return fileDescriptor_42c580f934388672, []int{5}
 }
 func (m *QueryParamsResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -116,6 +289,10 @@ func (m *QueryParamsResponse) GetParams() Params {
 }
 
 func init() {
+	proto.RegisterType((*QueryValidatorsRequest)(nil), "kepler.restaking.QueryValidatorsRequest")
+	proto.RegisterType((*QueryValidatorsResponse)(nil), "kepler.restaking.QueryValidatorsResponse")
+	proto.RegisterType((*QueryValidatorStatusRequest)(nil), "kepler.restaking.QueryValidatorStatusRequest")
+	proto.RegisterType((*QueryValidatorStatusResponse)(nil), "kepler.restaking.QueryValidatorStatusResponse")
 	proto.RegisterType((*QueryParamsRequest)(nil), "kepler.restaking.QueryParamsRequest")
 	proto.RegisterType((*QueryParamsResponse)(nil), "kepler.restaking.QueryParamsResponse")
 }
@@ -123,28 +300,37 @@ func init() {
 func init() { proto.RegisterFile("kepler/restaking/query.proto", fileDescriptor_42c580f934388672) }
 
 var fileDescriptor_42c580f934388672 = []byte{
-	// 325 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x90, 0xb1, 0x4a, 0x33, 0x41,
-	0x14, 0x85, 0x77, 0x7e, 0xf8, 0x03, 0xae, 0x8d, 0xae, 0x29, 0x42, 0x88, 0xab, 0x04, 0x83, 0x12,
-	0x70, 0xc7, 0xc4, 0xd2, 0x2e, 0xa5, 0x95, 0xa6, 0xb4, 0x9b, 0x8d, 0x97, 0x71, 0x48, 0x76, 0xee,
-	0x64, 0x66, 0xa2, 0xa6, 0x15, 0x6b, 0x11, 0x7c, 0x09, 0x4b, 0x1f, 0x23, 0x65, 0xc0, 0xc6, 0x4a,
-	0x24, 0x11, 0x7c, 0x0d, 0xc9, 0xcc, 0x22, 0xea, 0x2a, 0x36, 0xcb, 0xe5, 0x9e, 0x73, 0xbe, 0x3d,
-	0x73, 0xc3, 0x5a, 0x1f, 0xd4, 0x00, 0x34, 0xd5, 0x60, 0x2c, 0xeb, 0x0b, 0xc9, 0xe9, 0x70, 0x04,
-	0x7a, 0x9c, 0x28, 0x8d, 0x16, 0xa3, 0x15, 0xaf, 0x26, 0x1f, 0x6a, 0x75, 0x95, 0x65, 0x42, 0x22,
-	0x75, 0x5f, 0x6f, 0xaa, 0x96, 0x39, 0x72, 0x74, 0x23, 0x5d, 0x4c, 0xf9, 0xb6, 0xc6, 0x11, 0xf9,
-	0x00, 0x28, 0x53, 0x82, 0x32, 0x29, 0xd1, 0x32, 0x2b, 0x50, 0x9a, 0x5c, 0x6d, 0xf6, 0xd0, 0x64,
-	0x68, 0x68, 0xca, 0x0c, 0xf8, 0x3f, 0xd2, 0xf3, 0x56, 0x0a, 0x96, 0xb5, 0xa8, 0x62, 0x5c, 0x48,
-	0x67, 0xce, 0xbd, 0xeb, 0x85, 0x8a, 0x8a, 0x69, 0x96, 0xe5, 0xa8, 0x7a, 0x39, 0x8c, 0x8e, 0x17,
-	0x80, 0x23, 0xb7, 0xec, 0xc2, 0x70, 0x04, 0xc6, 0xd6, 0xbb, 0xe1, 0xda, 0x97, 0xad, 0x51, 0x28,
-	0x0d, 0x44, 0x07, 0x61, 0xc9, 0x87, 0x2b, 0x64, 0x93, 0xec, 0x2c, 0xb7, 0x2b, 0xc9, 0xf7, 0x17,
-	0x26, 0x3e, 0xd1, 0x59, 0x9a, 0x3c, 0x6f, 0x04, 0xf7, 0x6f, 0x0f, 0x4d, 0xd2, 0xcd, 0x23, 0xed,
-	0x1b, 0x12, 0xfe, 0x77, 0xd0, 0xe8, 0x9a, 0x84, 0x25, 0xef, 0x8b, 0xb6, 0x8a, 0x84, 0x62, 0x9d,
-	0x6a, 0xe3, 0x0f, 0x97, 0xaf, 0x57, 0xdf, 0xbd, 0x7a, 0x7c, 0xbd, 0xfb, 0xb7, 0x1d, 0x35, 0xe8,
-	0xa9, 0xb0, 0x16, 0x25, 0xd8, 0x0b, 0xd4, 0x7d, 0xfa, 0xcb, 0x01, 0x3a, 0x87, 0x93, 0x59, 0x4c,
-	0xa6, 0xb3, 0x98, 0xbc, 0xcc, 0x62, 0x72, 0x3b, 0x8f, 0x83, 0xe9, 0x3c, 0x0e, 0x9e, 0xe6, 0x71,
-	0x70, 0xb2, 0xc7, 0x85, 0x3d, 0x1b, 0xa5, 0x49, 0x0f, 0xb3, 0x1f, 0x51, 0x97, 0x9f, 0x60, 0x76,
-	0xac, 0xc0, 0xa4, 0x25, 0x77, 0xcd, 0xfd, 0xf7, 0x00, 0x00, 0x00, 0xff, 0xff, 0x83, 0x6a, 0xac,
-	0xec, 0x11, 0x02, 0x00, 0x00,
+	// 474 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0xc9, 0x4e, 0x2d, 0xc8,
+	0x49, 0x2d, 0xd2, 0x2f, 0x4a, 0x2d, 0x2e, 0x49, 0xcc, 0xce, 0xcc, 0x4b, 0xd7, 0x2f, 0x2c, 0x4d,
+	0x2d, 0xaa, 0xd4, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x12, 0x80, 0xc8, 0xea, 0xc1, 0x65, 0xa5,
+	0x04, 0x13, 0x73, 0x33, 0xf3, 0xf2, 0xf5, 0xc1, 0x24, 0x44, 0x91, 0x94, 0x48, 0x7a, 0x7e, 0x7a,
+	0x3e, 0x98, 0xa9, 0x0f, 0x62, 0x41, 0x45, 0x65, 0xd2, 0xf3, 0xf3, 0xd3, 0x73, 0x52, 0xf5, 0x13,
+	0x0b, 0x32, 0xf5, 0x13, 0xf3, 0xf2, 0xf2, 0x4b, 0x12, 0x4b, 0x32, 0xf3, 0xf3, 0x8a, 0xa1, 0xb2,
+	0xb2, 0x18, 0xd6, 0x16, 0x24, 0x16, 0x25, 0xe6, 0xc2, 0xa4, 0x15, 0x30, 0xa4, 0xcb, 0x12, 0x73,
+	0x32, 0x53, 0x12, 0x4b, 0xf2, 0x8b, 0x20, 0x2a, 0x94, 0x24, 0xb8, 0xc4, 0x02, 0x41, 0x0e, 0x0d,
+	0x83, 0x89, 0x17, 0x07, 0xa5, 0x16, 0x96, 0xa6, 0x16, 0x97, 0x28, 0x85, 0x71, 0x89, 0x63, 0xc8,
+	0x14, 0x17, 0xe4, 0xe7, 0x15, 0xa7, 0x0a, 0x59, 0x73, 0x71, 0xc1, 0xcd, 0x29, 0x96, 0x60, 0x54,
+	0x60, 0xd6, 0xe0, 0x36, 0x92, 0xd6, 0x43, 0xf7, 0xa3, 0x1e, 0x5c, 0x67, 0x10, 0x92, 0x72, 0x25,
+	0x73, 0x2e, 0x69, 0x54, 0x73, 0x83, 0x4b, 0x12, 0x4b, 0x4a, 0x61, 0xd6, 0x0a, 0x49, 0x70, 0xb1,
+	0x27, 0xa6, 0xa4, 0x14, 0xa5, 0x16, 0x83, 0x0c, 0x66, 0xd4, 0xe0, 0x0c, 0x82, 0x71, 0x95, 0x22,
+	0xb9, 0x64, 0xb0, 0x6b, 0x84, 0xba, 0xca, 0x92, 0x8b, 0xad, 0x18, 0x2c, 0x02, 0xd6, 0xc8, 0x67,
+	0xa4, 0x88, 0xc7, 0x45, 0x50, 0xad, 0x50, 0x0d, 0x4a, 0x22, 0x5c, 0x42, 0x60, 0xa3, 0x03, 0xc0,
+	0x81, 0x07, 0x0b, 0x81, 0x20, 0x2e, 0x61, 0x14, 0x51, 0xb8, 0xef, 0xd9, 0x20, 0x81, 0x0c, 0xb6,
+	0x87, 0xdb, 0x48, 0x02, 0xd3, 0x1e, 0x88, 0x0e, 0x27, 0xce, 0x13, 0xf7, 0xe4, 0x19, 0x56, 0x3c,
+	0xdf, 0xa0, 0xc5, 0x18, 0x04, 0xd5, 0x62, 0x74, 0x9b, 0x99, 0x8b, 0x15, 0x6c, 0xa8, 0xd0, 0x66,
+	0x46, 0x2e, 0x7e, 0x34, 0xf7, 0x08, 0xe9, 0x62, 0x1a, 0x85, 0x27, 0xac, 0xa4, 0xf4, 0x88, 0x55,
+	0x0e, 0x71, 0xb9, 0x92, 0x63, 0xd3, 0xe5, 0x27, 0x93, 0x99, 0xac, 0x85, 0x2c, 0xf5, 0x53, 0x32,
+	0x4b, 0x4a, 0xf2, 0xf3, 0x52, 0x4b, 0xca, 0xf3, 0x8b, 0xb2, 0xf5, 0x71, 0x27, 0x92, 0x78, 0x48,
+	0xf8, 0xe8, 0x57, 0x43, 0xe3, 0xa0, 0x56, 0x68, 0x0a, 0x23, 0x17, 0x17, 0x22, 0x45, 0x08, 0x69,
+	0x10, 0x72, 0x01, 0xdc, 0xad, 0x9a, 0x44, 0xa8, 0x84, 0x3a, 0xd3, 0x10, 0xec, 0x4c, 0x6d, 0x21,
+	0x4d, 0x62, 0x9d, 0x59, 0x2c, 0xd4, 0xc2, 0xc8, 0xc5, 0x06, 0x09, 0x74, 0x21, 0x15, 0x1c, 0x16,
+	0xa1, 0xc4, 0xad, 0x94, 0x2a, 0x01, 0x55, 0x50, 0xa7, 0xe8, 0x82, 0x9d, 0xa2, 0x2e, 0xa4, 0x4a,
+	0xc0, 0x29, 0x90, 0xd8, 0x75, 0xf2, 0x3a, 0xf1, 0x48, 0x8e, 0xf1, 0xc2, 0x23, 0x39, 0xc6, 0x07,
+	0x8f, 0xe4, 0x18, 0x27, 0x3c, 0x96, 0x63, 0xb8, 0xf0, 0x58, 0x8e, 0xe1, 0xc6, 0x63, 0x39, 0x86,
+	0x28, 0x83, 0xf4, 0xcc, 0x92, 0x8c, 0xd2, 0x24, 0xbd, 0xe4, 0xfc, 0x5c, 0xac, 0x46, 0x55, 0x20,
+	0x19, 0x56, 0x52, 0x59, 0x90, 0x5a, 0x9c, 0xc4, 0x06, 0xce, 0xa0, 0xc6, 0x80, 0x00, 0x00, 0x00,
+	0xff, 0xff, 0x0a, 0xf2, 0x30, 0x45, 0x5a, 0x04, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -159,6 +345,10 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type QueryClient interface {
+	// Retrieve a validator's status by address.
+	ValidatorStatus(ctx context.Context, in *QueryValidatorStatusRequest, opts ...grpc.CallOption) (*QueryValidatorStatusResponse, error)
+	// Retrieve a list of all validators.
+	Validators(ctx context.Context, in *QueryValidatorsRequest, opts ...grpc.CallOption) (*QueryValidatorsResponse, error)
 	// Parameters queries the parameters of the module.
 	Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error)
 }
@@ -169,6 +359,24 @@ type queryClient struct {
 
 func NewQueryClient(cc grpc1.ClientConn) QueryClient {
 	return &queryClient{cc}
+}
+
+func (c *queryClient) ValidatorStatus(ctx context.Context, in *QueryValidatorStatusRequest, opts ...grpc.CallOption) (*QueryValidatorStatusResponse, error) {
+	out := new(QueryValidatorStatusResponse)
+	err := c.cc.Invoke(ctx, "/kepler.restaking.Query/ValidatorStatus", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) Validators(ctx context.Context, in *QueryValidatorsRequest, opts ...grpc.CallOption) (*QueryValidatorsResponse, error) {
+	out := new(QueryValidatorsResponse)
+	err := c.cc.Invoke(ctx, "/kepler.restaking.Query/Validators", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *queryClient) Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error) {
@@ -182,6 +390,10 @@ func (c *queryClient) Params(ctx context.Context, in *QueryParamsRequest, opts .
 
 // QueryServer is the server API for Query service.
 type QueryServer interface {
+	// Retrieve a validator's status by address.
+	ValidatorStatus(context.Context, *QueryValidatorStatusRequest) (*QueryValidatorStatusResponse, error)
+	// Retrieve a list of all validators.
+	Validators(context.Context, *QueryValidatorsRequest) (*QueryValidatorsResponse, error)
 	// Parameters queries the parameters of the module.
 	Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error)
 }
@@ -190,12 +402,54 @@ type QueryServer interface {
 type UnimplementedQueryServer struct {
 }
 
+func (*UnimplementedQueryServer) ValidatorStatus(ctx context.Context, req *QueryValidatorStatusRequest) (*QueryValidatorStatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ValidatorStatus not implemented")
+}
+func (*UnimplementedQueryServer) Validators(ctx context.Context, req *QueryValidatorsRequest) (*QueryValidatorsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Validators not implemented")
+}
 func (*UnimplementedQueryServer) Params(ctx context.Context, req *QueryParamsRequest) (*QueryParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Params not implemented")
 }
 
 func RegisterQueryServer(s grpc1.Server, srv QueryServer) {
 	s.RegisterService(&_Query_serviceDesc, srv)
+}
+
+func _Query_ValidatorStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryValidatorStatusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).ValidatorStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/kepler.restaking.Query/ValidatorStatus",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).ValidatorStatus(ctx, req.(*QueryValidatorStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_Validators_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryValidatorsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).Validators(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/kepler.restaking.Query/Validators",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).Validators(ctx, req.(*QueryValidatorsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _Query_Params_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -222,12 +476,138 @@ var _Query_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*QueryServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
+			MethodName: "ValidatorStatus",
+			Handler:    _Query_ValidatorStatus_Handler,
+		},
+		{
+			MethodName: "Validators",
+			Handler:    _Query_Validators_Handler,
+		},
+		{
 			MethodName: "Params",
 			Handler:    _Query_Params_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "kepler/restaking/query.proto",
+}
+
+func (m *QueryValidatorsRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryValidatorsRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryValidatorsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryValidatorsResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryValidatorsResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryValidatorsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Validators) > 0 {
+		for iNdEx := len(m.Validators) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Validators[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintQuery(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryValidatorStatusRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryValidatorStatusRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryValidatorStatusRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Address) > 0 {
+		i -= len(m.Address)
+		copy(dAtA[i:], m.Address)
+		i = encodeVarintQuery(dAtA, i, uint64(len(m.Address)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryValidatorStatusResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryValidatorStatusResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryValidatorStatusResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Status != 0 {
+		i = encodeVarintQuery(dAtA, i, uint64(m.Status))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *QueryParamsRequest) Marshal() (dAtA []byte, err error) {
@@ -297,6 +677,55 @@ func encodeVarintQuery(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
+func (m *QueryValidatorsRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *QueryValidatorsResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.Validators) > 0 {
+		for _, e := range m.Validators {
+			l = e.Size()
+			n += 1 + l + sovQuery(uint64(l))
+		}
+	}
+	return n
+}
+
+func (m *QueryValidatorStatusRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Address)
+	if l > 0 {
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	return n
+}
+
+func (m *QueryValidatorStatusResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Status != 0 {
+		n += 1 + sovQuery(uint64(m.Status))
+	}
+	return n
+}
+
 func (m *QueryParamsRequest) Size() (n int) {
 	if m == nil {
 		return 0
@@ -322,6 +751,291 @@ func sovQuery(x uint64) (n int) {
 }
 func sozQuery(x uint64) (n int) {
 	return sovQuery(uint64((x << 1) ^ uint64((int64(x) >> 63))))
+}
+func (m *QueryValidatorsRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryValidatorsRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryValidatorsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryValidatorsResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryValidatorsResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryValidatorsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Validators", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Validators = append(m.Validators, &Validator{})
+			if err := m.Validators[len(m.Validators)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryValidatorStatusRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryValidatorStatusRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryValidatorStatusRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Address", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Address = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryValidatorStatusResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryValidatorStatusResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryValidatorStatusResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
+			}
+			m.Status = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Status |= ValidatorStatus(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
 }
 func (m *QueryParamsRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)

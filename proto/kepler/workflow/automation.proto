@@ -1,8 +1,8 @@
 syntax = "proto3";
 package kepler.workflow;
 
-import "cosmos_proto/cosmos.proto";
 import "amino/amino.proto";
+import "cosmos_proto/cosmos.proto";
 import "kepler/job/job.proto";
 
 option go_package = "github.com/dittonetwork/kepler/x/workflow/types";
@@ -48,7 +48,7 @@ enum AutomationStatus {
 // Base trigger with type selection
 message Trigger {
   oneof trigger {
-    OnChainCallTrigger on_chain_call =1 [(amino.oneof_name) = "on_chain_call"];
+    OnChainCallTrigger on_chain_call = 1 [(amino.oneof_name) = "on_chain_call"];
     TimeTrigger time = 2 [(amino.oneof_name) = "time"];
     GasLimitTrigger gas_limit = 3 [(amino.oneof_name) = "gas_limit"];
     CountTrigger count = 4 [(amino.oneof_name) = "count"];

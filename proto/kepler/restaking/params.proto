@@ -10,6 +10,4 @@ option go_package = "github.com/dittonetwork/kepler/x/restaking/types";
 message Params {
   option (amino.name) = "kepler/x/restaking/Params";
   option (gogoproto.equal) = true;
-
-  
 }
