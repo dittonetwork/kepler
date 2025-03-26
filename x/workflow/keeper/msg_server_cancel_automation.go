@@ -16,7 +16,7 @@ func (k msgServer) CancelAutomation(
 	msg *types.MsgCancelAutomation,
 ) (*types.MsgCancelAutomationResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-	automation, err := k.Keeper.GetAutomation(ctx, msg.Id)
+	automation, err := k.GetAutomation(ctx, msg.Id)
 	if err != nil {
 		return nil, status.Error(codes.NotFound, fmt.Sprintf("failed to get automation: %s", err))
 	}

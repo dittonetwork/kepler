@@ -1,8 +1,9 @@
 package keeper_test
 
 import (
-	"github.com/dittonetwork/kepler/x/epochs/types"
 	"testing"
+
+	"github.com/dittonetwork/kepler/x/epochs/types"
 
 	"github.com/stretchr/testify/require"
 )
