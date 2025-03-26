@@ -6,10 +6,6 @@ package types
 import (
 	context "context"
 	fmt "fmt"
-	io "io"
-	math "math"
-	math_bits "math/bits"
-
 	_ "github.com/cosmos/cosmos-proto"
 	_ "github.com/cosmos/cosmos-sdk/types/msgservice"
 	_ "github.com/cosmos/cosmos-sdk/types/tx/amino"
@@ -19,6 +15,9 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	io "io"
+	math "math"
+	math_bits "math/bits"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -127,37 +126,333 @@ func (m *MsgUpdateParamsResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgUpdateParamsResponse proto.InternalMessageInfo
 
+// MsgAddExecutor defines a transaction to add a new executor.
+type MsgAddExecutor struct {
+	Creator string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	// Owner's address (e.g., Ethereum address).
+	OwnerAddress string `protobuf:"bytes,2,opt,name=owner_address,json=ownerAddress,proto3" json:"owner_address,omitempty"`
+	// Public key of the new executor.
+	PublicKey string `protobuf:"bytes,3,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty"`
+}
+
+func (m *MsgAddExecutor) Reset()         { *m = MsgAddExecutor{} }
+func (m *MsgAddExecutor) String() string { return proto.CompactTextString(m) }
+func (*MsgAddExecutor) ProtoMessage()    {}
+func (*MsgAddExecutor) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bbbd47538c2c4268, []int{2}
+}
+func (m *MsgAddExecutor) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgAddExecutor) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgAddExecutor.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgAddExecutor) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgAddExecutor.Merge(m, src)
+}
+func (m *MsgAddExecutor) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgAddExecutor) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgAddExecutor.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgAddExecutor proto.InternalMessageInfo
+
+func (m *MsgAddExecutor) GetCreator() string {
+	if m != nil {
+		return m.Creator
+	}
+	return ""
+}
+
+func (m *MsgAddExecutor) GetOwnerAddress() string {
+	if m != nil {
+		return m.OwnerAddress
+	}
+	return ""
+}
+
+func (m *MsgAddExecutor) GetPublicKey() string {
+	if m != nil {
+		return m.PublicKey
+	}
+	return ""
+}
+
+// MsgActivateExecutor defines a transaction to activate an executor.
+type MsgActivateExecutor struct {
+	Owner string `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
+}
+
+func (m *MsgActivateExecutor) Reset()         { *m = MsgActivateExecutor{} }
+func (m *MsgActivateExecutor) String() string { return proto.CompactTextString(m) }
+func (*MsgActivateExecutor) ProtoMessage()    {}
+func (*MsgActivateExecutor) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bbbd47538c2c4268, []int{3}
+}
+func (m *MsgActivateExecutor) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgActivateExecutor) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgActivateExecutor.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgActivateExecutor) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgActivateExecutor.Merge(m, src)
+}
+func (m *MsgActivateExecutor) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgActivateExecutor) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgActivateExecutor.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgActivateExecutor proto.InternalMessageInfo
+
+func (m *MsgActivateExecutor) GetOwner() string {
+	if m != nil {
+		return m.Owner
+	}
+	return ""
+}
+
+// MsgDeactivateExecutor defines a transaction to deactivate an executor.
+type MsgDeactivateExecutor struct {
+	Owner string `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
+}
+
+func (m *MsgDeactivateExecutor) Reset()         { *m = MsgDeactivateExecutor{} }
+func (m *MsgDeactivateExecutor) String() string { return proto.CompactTextString(m) }
+func (*MsgDeactivateExecutor) ProtoMessage()    {}
+func (*MsgDeactivateExecutor) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bbbd47538c2c4268, []int{4}
+}
+func (m *MsgDeactivateExecutor) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgDeactivateExecutor) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgDeactivateExecutor.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgDeactivateExecutor) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgDeactivateExecutor.Merge(m, src)
+}
+func (m *MsgDeactivateExecutor) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgDeactivateExecutor) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgDeactivateExecutor.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgDeactivateExecutor proto.InternalMessageInfo
+
+func (m *MsgDeactivateExecutor) GetOwner() string {
+	if m != nil {
+		return m.Owner
+	}
+	return ""
+}
+
+// MsgAddExecutorResponse defines the response structure for executing a
+// MsgAddExecutor message.
+type MsgAddExecutorResponse struct {
+	// Executor.
+	Executor *Executor `protobuf:"bytes,1,opt,name=executor,proto3" json:"executor,omitempty"`
+}
+
+func (m *MsgAddExecutorResponse) Reset()         { *m = MsgAddExecutorResponse{} }
+func (m *MsgAddExecutorResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgAddExecutorResponse) ProtoMessage()    {}
+func (*MsgAddExecutorResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bbbd47538c2c4268, []int{5}
+}
+func (m *MsgAddExecutorResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgAddExecutorResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgAddExecutorResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgAddExecutorResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgAddExecutorResponse.Merge(m, src)
+}
+func (m *MsgAddExecutorResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgAddExecutorResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgAddExecutorResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgAddExecutorResponse proto.InternalMessageInfo
+
+func (m *MsgAddExecutorResponse) GetExecutor() *Executor {
+	if m != nil {
+		return m.Executor
+	}
+	return nil
+}
+
+// MsgActivateExecutorResponse defines the response structure for executing a
+// MsgActivateExecutor message.
+type MsgActivateExecutorResponse struct {
+}
+
+func (m *MsgActivateExecutorResponse) Reset()         { *m = MsgActivateExecutorResponse{} }
+func (m *MsgActivateExecutorResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgActivateExecutorResponse) ProtoMessage()    {}
+func (*MsgActivateExecutorResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bbbd47538c2c4268, []int{6}
+}
+func (m *MsgActivateExecutorResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgActivateExecutorResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgActivateExecutorResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgActivateExecutorResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgActivateExecutorResponse.Merge(m, src)
+}
+func (m *MsgActivateExecutorResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgActivateExecutorResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgActivateExecutorResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgActivateExecutorResponse proto.InternalMessageInfo
+
+// MsgDeactivateExecutorResponse defines the response structure for executing a
+// MsgDeactivateExecutor message.
+type MsgDeactivateExecutorResponse struct {
+}
+
+func (m *MsgDeactivateExecutorResponse) Reset()         { *m = MsgDeactivateExecutorResponse{} }
+func (m *MsgDeactivateExecutorResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgDeactivateExecutorResponse) ProtoMessage()    {}
+func (*MsgDeactivateExecutorResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bbbd47538c2c4268, []int{7}
+}
+func (m *MsgDeactivateExecutorResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgDeactivateExecutorResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgDeactivateExecutorResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgDeactivateExecutorResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgDeactivateExecutorResponse.Merge(m, src)
+}
+func (m *MsgDeactivateExecutorResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgDeactivateExecutorResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgDeactivateExecutorResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgDeactivateExecutorResponse proto.InternalMessageInfo
+
 func init() {
 	proto.RegisterType((*MsgUpdateParams)(nil), "kepler.executors.MsgUpdateParams")
 	proto.RegisterType((*MsgUpdateParamsResponse)(nil), "kepler.executors.MsgUpdateParamsResponse")
+	proto.RegisterType((*MsgAddExecutor)(nil), "kepler.executors.MsgAddExecutor")
+	proto.RegisterType((*MsgActivateExecutor)(nil), "kepler.executors.MsgActivateExecutor")
+	proto.RegisterType((*MsgDeactivateExecutor)(nil), "kepler.executors.MsgDeactivateExecutor")
+	proto.RegisterType((*MsgAddExecutorResponse)(nil), "kepler.executors.MsgAddExecutorResponse")
+	proto.RegisterType((*MsgActivateExecutorResponse)(nil), "kepler.executors.MsgActivateExecutorResponse")
+	proto.RegisterType((*MsgDeactivateExecutorResponse)(nil), "kepler.executors.MsgDeactivateExecutorResponse")
 }
 
 func init() { proto.RegisterFile("kepler/executors/tx.proto", fileDescriptor_bbbd47538c2c4268) }
 
 var fileDescriptor_bbbd47538c2c4268 = []byte{
-	// 347 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0xcc, 0x4e, 0x2d, 0xc8,
-	0x49, 0x2d, 0xd2, 0x4f, 0xad, 0x48, 0x4d, 0x2e, 0x2d, 0xc9, 0x2f, 0x2a, 0xd6, 0x2f, 0xa9, 0xd0,
-	0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x12, 0x80, 0x48, 0xe9, 0xc1, 0xa5, 0xa4, 0x04, 0x13, 0x73,
-	0x33, 0xf3, 0xf2, 0xf5, 0xc1, 0x24, 0x44, 0x91, 0x94, 0x78, 0x72, 0x7e, 0x71, 0x6e, 0x7e, 0xb1,
-	0x7e, 0x6e, 0x71, 0xba, 0x7e, 0x99, 0x21, 0x88, 0x82, 0x4a, 0x48, 0x42, 0x24, 0xe2, 0xc1, 0x3c,
-	0x7d, 0x08, 0x07, 0x2a, 0x25, 0x92, 0x9e, 0x9f, 0x9e, 0x0f, 0x11, 0x07, 0xb1, 0xa0, 0xa2, 0xb2,
-	0x18, 0x2e, 0x29, 0x48, 0x2c, 0x4a, 0xcc, 0x85, 0x6a, 0x52, 0xda, 0xcb, 0xc8, 0xc5, 0xef, 0x5b,
-	0x9c, 0x1e, 0x5a, 0x90, 0x92, 0x58, 0x92, 0x1a, 0x00, 0x96, 0x11, 0x32, 0xe3, 0xe2, 0x4c, 0x2c,
-	0x2d, 0xc9, 0xc8, 0x2f, 0xca, 0x2c, 0xa9, 0x94, 0x60, 0x54, 0x60, 0xd4, 0xe0, 0x74, 0x92, 0xb8,
-	0xb4, 0x45, 0x57, 0x04, 0x6a, 0x9b, 0x63, 0x4a, 0x4a, 0x51, 0x6a, 0x71, 0x71, 0x70, 0x49, 0x51,
-	0x66, 0x5e, 0x7a, 0x10, 0x42, 0xa9, 0x90, 0x35, 0x17, 0x1b, 0xc4, 0x6c, 0x09, 0x26, 0x05, 0x46,
-	0x0d, 0x6e, 0x23, 0x09, 0x3d, 0x74, 0xaf, 0xea, 0x41, 0x6c, 0x70, 0xe2, 0x3c, 0x71, 0x4f, 0x9e,
-	0x61, 0xc5, 0xf3, 0x0d, 0x5a, 0x8c, 0x41, 0x50, 0x2d, 0x56, 0xa6, 0x4d, 0xcf, 0x37, 0x68, 0x21,
-	0x0c, 0xeb, 0x7a, 0xbe, 0x41, 0x4b, 0x09, 0xea, 0xf4, 0x0a, 0x24, 0xc7, 0xa3, 0xb9, 0x55, 0x49,
-	0x92, 0x4b, 0x1c, 0x4d, 0x28, 0x28, 0xb5, 0xb8, 0x20, 0x3f, 0xaf, 0x38, 0xd5, 0x28, 0x8b, 0x8b,
-	0xd9, 0xb7, 0x38, 0x5d, 0x28, 0x86, 0x8b, 0x07, 0xc5, 0x77, 0x8a, 0x98, 0xae, 0x42, 0x33, 0x41,
-	0x4a, 0x93, 0xa0, 0x12, 0x98, 0x25, 0x52, 0xac, 0x0d, 0x20, 0x5f, 0x38, 0x79, 0x9d, 0x78, 0x24,
-	0xc7, 0x78, 0xe1, 0x91, 0x1c, 0xe3, 0x83, 0x47, 0x72, 0x8c, 0x13, 0x1e, 0xcb, 0x31, 0x5c, 0x78,
-	0x2c, 0xc7, 0x70, 0xe3, 0xb1, 0x1c, 0x43, 0x94, 0x41, 0x7a, 0x66, 0x49, 0x46, 0x69, 0x92, 0x5e,
-	0x72, 0x7e, 0xae, 0x7e, 0x4a, 0x66, 0x49, 0x49, 0x7e, 0x5e, 0x6a, 0x49, 0x79, 0x7e, 0x51, 0xb6,
-	0x3e, 0x16, 0xcf, 0x95, 0x54, 0x16, 0xa4, 0x16, 0x27, 0xb1, 0x81, 0x63, 0xc6, 0x18, 0x10, 0x00,
-	0x00, 0xff, 0xff, 0x06, 0x14, 0x00, 0xff, 0x44, 0x02, 0x00, 0x00,
+	// 566 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x54, 0xc1, 0x8f, 0xd2, 0x4e,
+	0x14, 0xa6, 0x3f, 0xb2, 0xfb, 0x93, 0x07, 0xea, 0x5a, 0xd1, 0x2d, 0x35, 0x14, 0xac, 0x31, 0x22,
+	0xc9, 0x52, 0xc5, 0xb8, 0x46, 0x3c, 0x2d, 0xd1, 0x8b, 0x86, 0x64, 0x83, 0xf1, 0xa0, 0x31, 0x21,
+	0xa5, 0x9d, 0x94, 0x86, 0x6d, 0xa7, 0x99, 0x19, 0x76, 0x21, 0xf1, 0x60, 0x3c, 0x7a, 0xf2, 0x3f,
+	0xf0, 0xea, 0x91, 0x83, 0x57, 0xef, 0x7b, 0xdc, 0x78, 0xf2, 0x64, 0x0c, 0x1c, 0xf8, 0x37, 0x4c,
+	0x3b, 0x6d, 0x97, 0x6d, 0x9b, 0xec, 0x7a, 0x81, 0x99, 0xf7, 0xbe, 0xef, 0xbd, 0xef, 0x7b, 0x8f,
+	0x01, 0x2a, 0x63, 0xe4, 0x1d, 0x20, 0xa2, 0xa1, 0x29, 0x32, 0x26, 0x0c, 0x13, 0xaa, 0xb1, 0x69,
+	0xcb, 0x23, 0x98, 0x61, 0x71, 0x8b, 0xa7, 0x5a, 0x71, 0x4a, 0xbe, 0xa6, 0x3b, 0xb6, 0x8b, 0xb5,
+	0xe0, 0x93, 0x83, 0xe4, 0x6d, 0x03, 0x53, 0x07, 0x53, 0xcd, 0xa1, 0x96, 0x76, 0xf8, 0xd0, 0xff,
+	0x0a, 0x13, 0x15, 0x9e, 0x18, 0x04, 0x37, 0x8d, 0x5f, 0xc2, 0x54, 0xd9, 0xc2, 0x16, 0xe6, 0x71,
+	0xff, 0x14, 0x46, 0xab, 0x29, 0x25, 0x9e, 0x4e, 0x74, 0x27, 0x22, 0xd5, 0x52, 0xe9, 0xe8, 0xc4,
+	0x01, 0xea, 0x0f, 0x01, 0xae, 0xf6, 0xa8, 0xf5, 0xc6, 0x33, 0x75, 0x86, 0xf6, 0x03, 0xaa, 0xb8,
+	0x0b, 0x05, 0x7d, 0xc2, 0x46, 0x98, 0xd8, 0x6c, 0x26, 0x09, 0x75, 0xa1, 0x51, 0xe8, 0x4a, 0x3f,
+	0xbf, 0xef, 0x94, 0x43, 0x39, 0x7b, 0xa6, 0x49, 0x10, 0xa5, 0xaf, 0x19, 0xb1, 0x5d, 0xab, 0x7f,
+	0x0a, 0x15, 0x9f, 0xc1, 0x26, 0x6f, 0x2e, 0xfd, 0x57, 0x17, 0x1a, 0xc5, 0xb6, 0xd4, 0x4a, 0xce,
+	0xa2, 0xc5, 0x3b, 0x74, 0x0b, 0xc7, 0xbf, 0x6b, 0xb9, 0x6f, 0xab, 0x79, 0x53, 0xe8, 0x87, 0x94,
+	0xce, 0xe3, 0x4f, 0xab, 0x79, 0xf3, 0xb4, 0xd8, 0xe7, 0xd5, 0xbc, 0xa9, 0x86, 0xe2, 0xa7, 0x6b,
+	0xf2, 0x13, 0x5a, 0xd5, 0x0a, 0x6c, 0x27, 0x42, 0x7d, 0x44, 0x3d, 0xec, 0x52, 0xa4, 0x7e, 0x80,
+	0x2b, 0x3d, 0x6a, 0xed, 0x99, 0xe6, 0x8b, 0x90, 0x2d, 0x4a, 0xf0, 0xbf, 0x41, 0x90, 0xce, 0x30,
+	0xe1, 0xb6, 0xfa, 0xd1, 0x55, 0xbc, 0x03, 0x97, 0xf1, 0x91, 0x8b, 0xc8, 0x40, 0xe7, 0xe6, 0x02,
+	0x07, 0x85, 0x7e, 0x29, 0x08, 0x86, 0x86, 0xc5, 0x2a, 0x80, 0x37, 0x19, 0x1e, 0xd8, 0xc6, 0x60,
+	0x8c, 0x66, 0x52, 0x3e, 0x40, 0x14, 0x78, 0xe4, 0x15, 0x9a, 0x75, 0x4a, 0xbe, 0x83, 0xa8, 0xa2,
+	0xfa, 0x04, 0xae, 0xfb, 0xdd, 0x0d, 0x66, 0x1f, 0xea, 0x0c, 0xc5, 0x12, 0xca, 0xb0, 0x11, 0xd4,
+	0x0c, 0x05, 0xf0, 0x4b, 0x07, 0x7c, 0x2a, 0x3f, 0xab, 0x4f, 0xe1, 0x46, 0x8f, 0x5a, 0xcf, 0x91,
+	0xfe, 0xef, 0xd4, 0x7d, 0xb8, 0x79, 0xd6, 0x71, 0x34, 0x0b, 0x71, 0x17, 0x2e, 0x45, 0x33, 0x0c,
+	0xe8, 0xc5, 0xb6, 0x9c, 0x5e, 0x4e, 0xcc, 0x8a, 0xb1, 0x6a, 0x15, 0x6e, 0x65, 0xb8, 0x88, 0x47,
+	0x5c, 0x83, 0x6a, 0xa6, 0xd6, 0x08, 0xd0, 0xfe, 0x9a, 0x87, 0x7c, 0x8f, 0x5a, 0xe2, 0x7b, 0x28,
+	0x9d, 0xf9, 0x89, 0xdd, 0x4e, 0x77, 0x4f, 0xac, 0x51, 0xbe, 0x7f, 0x2e, 0x24, 0x76, 0xf7, 0x16,
+	0x8a, 0xeb, 0x6b, 0xae, 0x67, 0x32, 0xd7, 0x10, 0x72, 0xe3, 0x3c, 0x44, 0x5c, 0x7a, 0x04, 0x5b,
+	0xa9, 0x1d, 0xde, 0xcd, 0x66, 0x27, 0x60, 0xf2, 0xce, 0x85, 0x60, 0x71, 0x27, 0x17, 0xc4, 0x8c,
+	0xa5, 0xdf, 0xcb, 0x2c, 0x92, 0x06, 0xca, 0xda, 0x05, 0x81, 0x51, 0x3f, 0x79, 0xe3, 0xa3, 0xff,
+	0xfe, 0xba, 0x2f, 0x8f, 0x17, 0x8a, 0x70, 0xb2, 0x50, 0x84, 0x3f, 0x0b, 0x45, 0xf8, 0xb2, 0x54,
+	0x72, 0x27, 0x4b, 0x25, 0xf7, 0x6b, 0xa9, 0xe4, 0xde, 0x3d, 0xb0, 0x6c, 0x36, 0x9a, 0x0c, 0x5b,
+	0x06, 0x76, 0x34, 0xd3, 0x66, 0x0c, 0xbb, 0x88, 0x1d, 0x61, 0x32, 0xd6, 0x32, 0x9e, 0x25, 0x9b,
+	0x79, 0x88, 0x0e, 0x37, 0x83, 0xff, 0x94, 0x47, 0x7f, 0x03, 0x00, 0x00, 0xff, 0xff, 0x92, 0x0c,
+	0x5c, 0xdd, 0x1f, 0x05, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -175,6 +470,12 @@ type MsgClient interface {
 	// UpdateParams defines a (governance) operation for updating the module
 	// parameters. The authority defaults to the x/gov module account.
 	UpdateParams(ctx context.Context, in *MsgUpdateParams, opts ...grpc.CallOption) (*MsgUpdateParamsResponse, error)
+	// AddExecutor defines a transaction to add a new executor.
+	AddExecutor(ctx context.Context, in *MsgAddExecutor, opts ...grpc.CallOption) (*MsgAddExecutorResponse, error)
+	// ActivateExecutor defines a transaction to activate an executor.
+	ActivateExecutor(ctx context.Context, in *MsgActivateExecutor, opts ...grpc.CallOption) (*MsgActivateExecutorResponse, error)
+	// DeactivateExecutor defines a transaction to deactivate an executor.
+	DeactivateExecutor(ctx context.Context, in *MsgDeactivateExecutor, opts ...grpc.CallOption) (*MsgDeactivateExecutorResponse, error)
 }
 
 type msgClient struct {
@@ -194,11 +495,44 @@ func (c *msgClient) UpdateParams(ctx context.Context, in *MsgUpdateParams, opts 
 	return out, nil
 }
 
+func (c *msgClient) AddExecutor(ctx context.Context, in *MsgAddExecutor, opts ...grpc.CallOption) (*MsgAddExecutorResponse, error) {
+	out := new(MsgAddExecutorResponse)
+	err := c.cc.Invoke(ctx, "/kepler.executors.Msg/AddExecutor", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) ActivateExecutor(ctx context.Context, in *MsgActivateExecutor, opts ...grpc.CallOption) (*MsgActivateExecutorResponse, error) {
+	out := new(MsgActivateExecutorResponse)
+	err := c.cc.Invoke(ctx, "/kepler.executors.Msg/ActivateExecutor", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) DeactivateExecutor(ctx context.Context, in *MsgDeactivateExecutor, opts ...grpc.CallOption) (*MsgDeactivateExecutorResponse, error) {
+	out := new(MsgDeactivateExecutorResponse)
+	err := c.cc.Invoke(ctx, "/kepler.executors.Msg/DeactivateExecutor", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 type MsgServer interface {
 	// UpdateParams defines a (governance) operation for updating the module
 	// parameters. The authority defaults to the x/gov module account.
 	UpdateParams(context.Context, *MsgUpdateParams) (*MsgUpdateParamsResponse, error)
+	// AddExecutor defines a transaction to add a new executor.
+	AddExecutor(context.Context, *MsgAddExecutor) (*MsgAddExecutorResponse, error)
+	// ActivateExecutor defines a transaction to activate an executor.
+	ActivateExecutor(context.Context, *MsgActivateExecutor) (*MsgActivateExecutorResponse, error)
+	// DeactivateExecutor defines a transaction to deactivate an executor.
+	DeactivateExecutor(context.Context, *MsgDeactivateExecutor) (*MsgDeactivateExecutorResponse, error)
 }
 
 // UnimplementedMsgServer can be embedded to have forward compatible implementations.
@@ -207,6 +541,15 @@ type UnimplementedMsgServer struct {
 
 func (*UnimplementedMsgServer) UpdateParams(ctx context.Context, req *MsgUpdateParams) (*MsgUpdateParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateParams not implemented")
+}
+func (*UnimplementedMsgServer) AddExecutor(ctx context.Context, req *MsgAddExecutor) (*MsgAddExecutorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddExecutor not implemented")
+}
+func (*UnimplementedMsgServer) ActivateExecutor(ctx context.Context, req *MsgActivateExecutor) (*MsgActivateExecutorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ActivateExecutor not implemented")
+}
+func (*UnimplementedMsgServer) DeactivateExecutor(ctx context.Context, req *MsgDeactivateExecutor) (*MsgDeactivateExecutorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeactivateExecutor not implemented")
 }
 
 func RegisterMsgServer(s grpc1.Server, srv MsgServer) {
@@ -231,6 +574,60 @@ func _Msg_UpdateParams_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_AddExecutor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgAddExecutor)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).AddExecutor(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/kepler.executors.Msg/AddExecutor",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).AddExecutor(ctx, req.(*MsgAddExecutor))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_ActivateExecutor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgActivateExecutor)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).ActivateExecutor(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/kepler.executors.Msg/ActivateExecutor",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).ActivateExecutor(ctx, req.(*MsgActivateExecutor))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_DeactivateExecutor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgDeactivateExecutor)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).DeactivateExecutor(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/kepler.executors.Msg/DeactivateExecutor",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).DeactivateExecutor(ctx, req.(*MsgDeactivateExecutor))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var Msg_serviceDesc = _Msg_serviceDesc
 var _Msg_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "kepler.executors.Msg",
@@ -239,6 +636,18 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateParams",
 			Handler:    _Msg_UpdateParams_Handler,
+		},
+		{
+			MethodName: "AddExecutor",
+			Handler:    _Msg_AddExecutor_Handler,
+		},
+		{
+			MethodName: "ActivateExecutor",
+			Handler:    _Msg_ActivateExecutor_Handler,
+		},
+		{
+			MethodName: "DeactivateExecutor",
+			Handler:    _Msg_DeactivateExecutor_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -308,6 +717,191 @@ func (m *MsgUpdateParamsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	return len(dAtA) - i, nil
 }
 
+func (m *MsgAddExecutor) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgAddExecutor) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgAddExecutor) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.PublicKey) > 0 {
+		i -= len(m.PublicKey)
+		copy(dAtA[i:], m.PublicKey)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.PublicKey)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.OwnerAddress) > 0 {
+		i -= len(m.OwnerAddress)
+		copy(dAtA[i:], m.OwnerAddress)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.OwnerAddress)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Creator) > 0 {
+		i -= len(m.Creator)
+		copy(dAtA[i:], m.Creator)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Creator)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgActivateExecutor) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgActivateExecutor) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgActivateExecutor) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Owner) > 0 {
+		i -= len(m.Owner)
+		copy(dAtA[i:], m.Owner)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Owner)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgDeactivateExecutor) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgDeactivateExecutor) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgDeactivateExecutor) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Owner) > 0 {
+		i -= len(m.Owner)
+		copy(dAtA[i:], m.Owner)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Owner)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgAddExecutorResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgAddExecutorResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgAddExecutorResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Executor != nil {
+		{
+			size, err := m.Executor.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintTx(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgActivateExecutorResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgActivateExecutorResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgActivateExecutorResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgDeactivateExecutorResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgDeactivateExecutorResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgDeactivateExecutorResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintTx(dAtA []byte, offset int, v uint64) int {
 	offset -= sovTx(v)
 	base := offset
@@ -335,6 +929,84 @@ func (m *MsgUpdateParams) Size() (n int) {
 }
 
 func (m *MsgUpdateParamsResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *MsgAddExecutor) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Creator)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.OwnerAddress)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.PublicKey)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgActivateExecutor) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Owner)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgDeactivateExecutor) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Owner)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgAddExecutorResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Executor != nil {
+		l = m.Executor.Size()
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgActivateExecutorResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *MsgDeactivateExecutorResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -491,6 +1163,502 @@ func (m *MsgUpdateParamsResponse) Unmarshal(dAtA []byte) error {
 		}
 		if fieldNum <= 0 {
 			return fmt.Errorf("proto: MsgUpdateParamsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgAddExecutor) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgAddExecutor: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgAddExecutor: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Creator = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OwnerAddress", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.OwnerAddress = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PublicKey", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PublicKey = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgActivateExecutor) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgActivateExecutor: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgActivateExecutor: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Owner", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Owner = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgDeactivateExecutor) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgDeactivateExecutor: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgDeactivateExecutor: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Owner", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Owner = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgAddExecutorResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgAddExecutorResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgAddExecutorResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Executor", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Executor == nil {
+				m.Executor = &Executor{}
+			}
+			if err := m.Executor.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgActivateExecutorResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgActivateExecutorResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgActivateExecutorResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgDeactivateExecutorResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgDeactivateExecutorResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgDeactivateExecutorResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		default:

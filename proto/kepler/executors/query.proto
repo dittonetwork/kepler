@@ -6,6 +6,7 @@ import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "kepler/executors/params.proto";
+import "kepler/executors/executor.proto";
 
 option go_package = "github.com/dittonetwork/kepler/x/executors/types";
 
@@ -15,6 +16,10 @@ service Query {
   rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/dittonetwork/kepler/executors/params";
   }
+  // GetExecutors returns all executors.
+  rpc GetExecutors(QueryExecutorsRequest) returns (QueryExecutorsResponse);
+  // GetEmergencyExecutors returns a list of emergency executors.
+  rpc GetEmergencyExecutors(QueryEmergencyExecutorsRequest) returns (QueryEmergencyExecutorsResponse);
 }
 
 // QueryParamsRequest is request type for the Query/Params RPC method.
@@ -27,4 +32,20 @@ message QueryParamsResponse {
     (gogoproto.nullable) = false,
     (amino.dont_omitempty) = true
   ];
+}
+
+// QueryExecutorsRequest defines a request to fetch all executors.
+message QueryExecutorsRequest {}
+
+message QueryExecutorsResponse {
+  // executors list of executors.
+  repeated Executor executors = 1;
+}
+
+// QueryEmergencyExecutorsRequest defines a request to fetch emergency executors.
+message QueryEmergencyExecutorsRequest {}
+
+message QueryEmergencyExecutorsResponse {
+  // executors list of emergency executors.
+  repeated Executor executors = 1;
 }

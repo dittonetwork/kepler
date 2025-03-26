@@ -6,6 +6,7 @@ import "cosmos/msg/v1/msg.proto";
 import "cosmos_proto/cosmos.proto";
 import "gogoproto/gogo.proto";
 import "kepler/executors/params.proto";
+import "kepler/executors/executor.proto";
 
 option go_package = "github.com/dittonetwork/kepler/x/executors/types";
 
@@ -16,6 +17,12 @@ service Msg {
   // UpdateParams defines a (governance) operation for updating the module
   // parameters. The authority defaults to the x/gov module account.
   rpc UpdateParams(MsgUpdateParams) returns (MsgUpdateParamsResponse);
+  // AddExecutor defines a transaction to add a new executor.
+  rpc AddExecutor(MsgAddExecutor) returns (MsgAddExecutorResponse);
+  // ActivateExecutor defines a transaction to activate an executor.
+  rpc ActivateExecutor(MsgActivateExecutor) returns (MsgActivateExecutorResponse);
+  // DeactivateExecutor defines a transaction to deactivate an executor.
+  rpc DeactivateExecutor(MsgDeactivateExecutor) returns (MsgDeactivateExecutorResponse);
 }
 
 // MsgUpdateParams is the Msg/UpdateParams request type.
@@ -38,3 +45,43 @@ message MsgUpdateParams {
 // MsgUpdateParamsResponse defines the response structure for executing a
 // MsgUpdateParams message.
 message MsgUpdateParamsResponse {}
+
+// MsgAddExecutor defines a transaction to add a new executor.
+message MsgAddExecutor {
+  // Cosmos address of the new executor.
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1;
+  // Owner's address (e.g., Ethereum address).
+  string owner_address = 2;
+  // Public key of the new executor.
+  string public_key = 3;
+}
+
+// MsgActivateExecutor defines a transaction to activate an executor.
+message MsgActivateExecutor {
+  // Address of the executor to activate.
+  option (cosmos.msg.v1.signer) = "owner";
+  string owner = 1;
+}
+
+// MsgDeactivateExecutor defines a transaction to deactivate an executor.
+message MsgDeactivateExecutor {
+  // Address of the executor to deactivate.
+  option (cosmos.msg.v1.signer) = "owner";
+  string owner = 1;
+}
+
+// MsgAddExecutorResponse defines the response structure for executing a
+// MsgAddExecutor message.
+message MsgAddExecutorResponse {
+  // Executor.
+  Executor executor = 1;
+}
+
+// MsgActivateExecutorResponse defines the response structure for executing a
+// MsgActivateExecutor message.
+message MsgActivateExecutorResponse {}
+
+// MsgDeactivateExecutorResponse defines the response structure for executing a
+// MsgDeactivateExecutor message.
+message MsgDeactivateExecutorResponse {}

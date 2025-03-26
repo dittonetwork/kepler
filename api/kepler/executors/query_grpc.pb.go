@@ -8,7 +8,6 @@ package executors
 
 import (
 	context "context"
-
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -20,7 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Query_Params_FullMethodName = "/kepler.executors.Query/Params"
+	Query_Params_FullMethodName                = "/kepler.executors.Query/Params"
+	Query_GetExecutors_FullMethodName          = "/kepler.executors.Query/GetExecutors"
+	Query_GetEmergencyExecutors_FullMethodName = "/kepler.executors.Query/GetEmergencyExecutors"
 )
 
 // QueryClient is the client API for Query service.
@@ -29,6 +30,10 @@ const (
 type QueryClient interface {
 	// Parameters queries the parameters of the module.
 	Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error)
+	// GetExecutors returns all executors.
+	GetExecutors(ctx context.Context, in *QueryExecutorsRequest, opts ...grpc.CallOption) (*QueryExecutorsResponse, error)
+	// GetEmergencyExecutors returns a list of emergency executors.
+	GetEmergencyExecutors(ctx context.Context, in *QueryEmergencyExecutorsRequest, opts ...grpc.CallOption) (*QueryEmergencyExecutorsResponse, error)
 }
 
 type queryClient struct {
@@ -48,12 +53,34 @@ func (c *queryClient) Params(ctx context.Context, in *QueryParamsRequest, opts .
 	return out, nil
 }
 
+func (c *queryClient) GetExecutors(ctx context.Context, in *QueryExecutorsRequest, opts ...grpc.CallOption) (*QueryExecutorsResponse, error) {
+	out := new(QueryExecutorsResponse)
+	err := c.cc.Invoke(ctx, Query_GetExecutors_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) GetEmergencyExecutors(ctx context.Context, in *QueryEmergencyExecutorsRequest, opts ...grpc.CallOption) (*QueryEmergencyExecutorsResponse, error) {
+	out := new(QueryEmergencyExecutorsResponse)
+	err := c.cc.Invoke(ctx, Query_GetEmergencyExecutors_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueryServer is the server API for Query service.
 // All implementations must embed UnimplementedQueryServer
 // for forward compatibility
 type QueryServer interface {
 	// Parameters queries the parameters of the module.
 	Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error)
+	// GetExecutors returns all executors.
+	GetExecutors(context.Context, *QueryExecutorsRequest) (*QueryExecutorsResponse, error)
+	// GetEmergencyExecutors returns a list of emergency executors.
+	GetEmergencyExecutors(context.Context, *QueryEmergencyExecutorsRequest) (*QueryEmergencyExecutorsResponse, error)
 	mustEmbedUnimplementedQueryServer()
 }
 
@@ -63,6 +90,12 @@ type UnimplementedQueryServer struct {
 
 func (UnimplementedQueryServer) Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Params not implemented")
+}
+func (UnimplementedQueryServer) GetExecutors(context.Context, *QueryExecutorsRequest) (*QueryExecutorsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetExecutors not implemented")
+}
+func (UnimplementedQueryServer) GetEmergencyExecutors(context.Context, *QueryEmergencyExecutorsRequest) (*QueryEmergencyExecutorsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetEmergencyExecutors not implemented")
 }
 func (UnimplementedQueryServer) mustEmbedUnimplementedQueryServer() {}
 
@@ -95,6 +128,42 @@ func _Query_Params_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_GetExecutors_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryExecutorsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).GetExecutors(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Query_GetExecutors_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).GetExecutors(ctx, req.(*QueryExecutorsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_GetEmergencyExecutors_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryEmergencyExecutorsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).GetEmergencyExecutors(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Query_GetEmergencyExecutors_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).GetEmergencyExecutors(ctx, req.(*QueryEmergencyExecutorsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Query_ServiceDesc is the grpc.ServiceDesc for Query service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -105,6 +174,14 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Params",
 			Handler:    _Query_Params_Handler,
+		},
+		{
+			MethodName: "GetExecutors",
+			Handler:    _Query_GetExecutors_Handler,
+		},
+		{
+			MethodName: "GetEmergencyExecutors",
+			Handler:    _Query_GetEmergencyExecutors_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

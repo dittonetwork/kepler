@@ -8,7 +8,6 @@ package executors
 
 import (
 	context "context"
-
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -20,7 +19,10 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Msg_UpdateParams_FullMethodName = "/kepler.executors.Msg/UpdateParams"
+	Msg_UpdateParams_FullMethodName       = "/kepler.executors.Msg/UpdateParams"
+	Msg_AddExecutor_FullMethodName        = "/kepler.executors.Msg/AddExecutor"
+	Msg_ActivateExecutor_FullMethodName   = "/kepler.executors.Msg/ActivateExecutor"
+	Msg_DeactivateExecutor_FullMethodName = "/kepler.executors.Msg/DeactivateExecutor"
 )
 
 // MsgClient is the client API for Msg service.
@@ -30,6 +32,12 @@ type MsgClient interface {
 	// UpdateParams defines a (governance) operation for updating the module
 	// parameters. The authority defaults to the x/gov module account.
 	UpdateParams(ctx context.Context, in *MsgUpdateParams, opts ...grpc.CallOption) (*MsgUpdateParamsResponse, error)
+	// AddExecutor defines a transaction to add a new executor.
+	AddExecutor(ctx context.Context, in *MsgAddExecutor, opts ...grpc.CallOption) (*MsgAddExecutorResponse, error)
+	// ActivateExecutor defines a transaction to activate an executor.
+	ActivateExecutor(ctx context.Context, in *MsgActivateExecutor, opts ...grpc.CallOption) (*MsgActivateExecutorResponse, error)
+	// DeactivateExecutor defines a transaction to deactivate an executor.
+	DeactivateExecutor(ctx context.Context, in *MsgDeactivateExecutor, opts ...grpc.CallOption) (*MsgDeactivateExecutorResponse, error)
 }
 
 type msgClient struct {
@@ -49,6 +57,33 @@ func (c *msgClient) UpdateParams(ctx context.Context, in *MsgUpdateParams, opts 
 	return out, nil
 }
 
+func (c *msgClient) AddExecutor(ctx context.Context, in *MsgAddExecutor, opts ...grpc.CallOption) (*MsgAddExecutorResponse, error) {
+	out := new(MsgAddExecutorResponse)
+	err := c.cc.Invoke(ctx, Msg_AddExecutor_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) ActivateExecutor(ctx context.Context, in *MsgActivateExecutor, opts ...grpc.CallOption) (*MsgActivateExecutorResponse, error) {
+	out := new(MsgActivateExecutorResponse)
+	err := c.cc.Invoke(ctx, Msg_ActivateExecutor_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) DeactivateExecutor(ctx context.Context, in *MsgDeactivateExecutor, opts ...grpc.CallOption) (*MsgDeactivateExecutorResponse, error) {
+	out := new(MsgDeactivateExecutorResponse)
+	err := c.cc.Invoke(ctx, Msg_DeactivateExecutor_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 // All implementations must embed UnimplementedMsgServer
 // for forward compatibility
@@ -56,6 +91,12 @@ type MsgServer interface {
 	// UpdateParams defines a (governance) operation for updating the module
 	// parameters. The authority defaults to the x/gov module account.
 	UpdateParams(context.Context, *MsgUpdateParams) (*MsgUpdateParamsResponse, error)
+	// AddExecutor defines a transaction to add a new executor.
+	AddExecutor(context.Context, *MsgAddExecutor) (*MsgAddExecutorResponse, error)
+	// ActivateExecutor defines a transaction to activate an executor.
+	ActivateExecutor(context.Context, *MsgActivateExecutor) (*MsgActivateExecutorResponse, error)
+	// DeactivateExecutor defines a transaction to deactivate an executor.
+	DeactivateExecutor(context.Context, *MsgDeactivateExecutor) (*MsgDeactivateExecutorResponse, error)
 	mustEmbedUnimplementedMsgServer()
 }
 
@@ -65,6 +106,15 @@ type UnimplementedMsgServer struct {
 
 func (UnimplementedMsgServer) UpdateParams(context.Context, *MsgUpdateParams) (*MsgUpdateParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateParams not implemented")
+}
+func (UnimplementedMsgServer) AddExecutor(context.Context, *MsgAddExecutor) (*MsgAddExecutorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddExecutor not implemented")
+}
+func (UnimplementedMsgServer) ActivateExecutor(context.Context, *MsgActivateExecutor) (*MsgActivateExecutorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ActivateExecutor not implemented")
+}
+func (UnimplementedMsgServer) DeactivateExecutor(context.Context, *MsgDeactivateExecutor) (*MsgDeactivateExecutorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeactivateExecutor not implemented")
 }
 func (UnimplementedMsgServer) mustEmbedUnimplementedMsgServer() {}
 
@@ -97,6 +147,60 @@ func _Msg_UpdateParams_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_AddExecutor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgAddExecutor)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).AddExecutor(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_AddExecutor_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).AddExecutor(ctx, req.(*MsgAddExecutor))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_ActivateExecutor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgActivateExecutor)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).ActivateExecutor(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_ActivateExecutor_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).ActivateExecutor(ctx, req.(*MsgActivateExecutor))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_DeactivateExecutor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgDeactivateExecutor)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).DeactivateExecutor(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_DeactivateExecutor_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).DeactivateExecutor(ctx, req.(*MsgDeactivateExecutor))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Msg_ServiceDesc is the grpc.ServiceDesc for Msg service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -107,6 +211,18 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateParams",
 			Handler:    _Msg_UpdateParams_Handler,
+		},
+		{
+			MethodName: "AddExecutor",
+			Handler:    _Msg_AddExecutor_Handler,
+		},
+		{
+			MethodName: "ActivateExecutor",
+			Handler:    _Msg_ActivateExecutor_Handler,
+		},
+		{
+			MethodName: "DeactivateExecutor",
+			Handler:    _Msg_DeactivateExecutor_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

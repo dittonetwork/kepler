@@ -6,10 +6,6 @@ package types
 import (
 	context "context"
 	fmt "fmt"
-	io "io"
-	math "math"
-	math_bits "math/bits"
-
 	_ "github.com/cosmos/cosmos-sdk/types/query"
 	_ "github.com/cosmos/cosmos-sdk/types/tx/amino"
 	_ "github.com/cosmos/gogoproto/gogoproto"
@@ -19,6 +15,9 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	io "io"
+	math "math"
+	math_bits "math/bits"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -115,36 +114,211 @@ func (m *QueryParamsResponse) GetParams() Params {
 	return Params{}
 }
 
+// QueryExecutorsRequest defines a request to fetch all executors.
+type QueryExecutorsRequest struct {
+}
+
+func (m *QueryExecutorsRequest) Reset()         { *m = QueryExecutorsRequest{} }
+func (m *QueryExecutorsRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryExecutorsRequest) ProtoMessage()    {}
+func (*QueryExecutorsRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_76888d1e779625ec, []int{2}
+}
+func (m *QueryExecutorsRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryExecutorsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryExecutorsRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryExecutorsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryExecutorsRequest.Merge(m, src)
+}
+func (m *QueryExecutorsRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryExecutorsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryExecutorsRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryExecutorsRequest proto.InternalMessageInfo
+
+type QueryExecutorsResponse struct {
+	// executors list of executors.
+	Executors []*Executor `protobuf:"bytes,1,rep,name=executors,proto3" json:"executors,omitempty"`
+}
+
+func (m *QueryExecutorsResponse) Reset()         { *m = QueryExecutorsResponse{} }
+func (m *QueryExecutorsResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryExecutorsResponse) ProtoMessage()    {}
+func (*QueryExecutorsResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_76888d1e779625ec, []int{3}
+}
+func (m *QueryExecutorsResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryExecutorsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryExecutorsResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryExecutorsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryExecutorsResponse.Merge(m, src)
+}
+func (m *QueryExecutorsResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryExecutorsResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryExecutorsResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryExecutorsResponse proto.InternalMessageInfo
+
+func (m *QueryExecutorsResponse) GetExecutors() []*Executor {
+	if m != nil {
+		return m.Executors
+	}
+	return nil
+}
+
+// QueryEmergencyExecutorsRequest defines a request to fetch emergency executors.
+type QueryEmergencyExecutorsRequest struct {
+}
+
+func (m *QueryEmergencyExecutorsRequest) Reset()         { *m = QueryEmergencyExecutorsRequest{} }
+func (m *QueryEmergencyExecutorsRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryEmergencyExecutorsRequest) ProtoMessage()    {}
+func (*QueryEmergencyExecutorsRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_76888d1e779625ec, []int{4}
+}
+func (m *QueryEmergencyExecutorsRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryEmergencyExecutorsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryEmergencyExecutorsRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryEmergencyExecutorsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryEmergencyExecutorsRequest.Merge(m, src)
+}
+func (m *QueryEmergencyExecutorsRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryEmergencyExecutorsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryEmergencyExecutorsRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryEmergencyExecutorsRequest proto.InternalMessageInfo
+
+type QueryEmergencyExecutorsResponse struct {
+	// executors list of emergency executors.
+	Executors []*Executor `protobuf:"bytes,1,rep,name=executors,proto3" json:"executors,omitempty"`
+}
+
+func (m *QueryEmergencyExecutorsResponse) Reset()         { *m = QueryEmergencyExecutorsResponse{} }
+func (m *QueryEmergencyExecutorsResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryEmergencyExecutorsResponse) ProtoMessage()    {}
+func (*QueryEmergencyExecutorsResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_76888d1e779625ec, []int{5}
+}
+func (m *QueryEmergencyExecutorsResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryEmergencyExecutorsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryEmergencyExecutorsResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryEmergencyExecutorsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryEmergencyExecutorsResponse.Merge(m, src)
+}
+func (m *QueryEmergencyExecutorsResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryEmergencyExecutorsResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryEmergencyExecutorsResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryEmergencyExecutorsResponse proto.InternalMessageInfo
+
+func (m *QueryEmergencyExecutorsResponse) GetExecutors() []*Executor {
+	if m != nil {
+		return m.Executors
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterType((*QueryParamsRequest)(nil), "kepler.executors.QueryParamsRequest")
 	proto.RegisterType((*QueryParamsResponse)(nil), "kepler.executors.QueryParamsResponse")
+	proto.RegisterType((*QueryExecutorsRequest)(nil), "kepler.executors.QueryExecutorsRequest")
+	proto.RegisterType((*QueryExecutorsResponse)(nil), "kepler.executors.QueryExecutorsResponse")
+	proto.RegisterType((*QueryEmergencyExecutorsRequest)(nil), "kepler.executors.QueryEmergencyExecutorsRequest")
+	proto.RegisterType((*QueryEmergencyExecutorsResponse)(nil), "kepler.executors.QueryEmergencyExecutorsResponse")
 }
 
 func init() { proto.RegisterFile("kepler/executors/query.proto", fileDescriptor_76888d1e779625ec) }
 
 var fileDescriptor_76888d1e779625ec = []byte{
-	// 324 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x90, 0xb1, 0x4b, 0xc3, 0x40,
-	0x14, 0xc6, 0x73, 0x82, 0x05, 0xe3, 0xa2, 0xb1, 0x43, 0x29, 0x35, 0x4a, 0xb1, 0x28, 0x05, 0x73,
-	0xb6, 0x8e, 0x6e, 0x1d, 0x9d, 0xb4, 0xa3, 0xdb, 0xa5, 0x3e, 0xe2, 0xd1, 0xe6, 0xde, 0xf5, 0xee,
-	0xa2, 0xed, 0x2a, 0xce, 0x22, 0xf8, 0x4f, 0x38, 0xfa, 0x67, 0x74, 0x2c, 0xb8, 0x38, 0x89, 0xb4,
-	0x82, 0xff, 0x86, 0xf4, 0x2e, 0x88, 0x1a, 0xc5, 0x25, 0x3c, 0xde, 0xf7, 0x7d, 0xbf, 0x7c, 0xf7,
-	0xfc, 0x5a, 0x1f, 0xe4, 0x00, 0x14, 0x85, 0x11, 0xf4, 0x32, 0x83, 0x4a, 0xd3, 0x61, 0x06, 0x6a,
-	0x1c, 0x49, 0x85, 0x06, 0x83, 0x35, 0xa7, 0x46, 0x9f, 0x6a, 0x75, 0x9d, 0xa5, 0x5c, 0x20, 0xb5,
-	0x5f, 0x67, 0xaa, 0x96, 0x13, 0x4c, 0xd0, 0x8e, 0x74, 0x31, 0xe5, 0xdb, 0x5a, 0x82, 0x98, 0x0c,
-	0x80, 0x32, 0xc9, 0x29, 0x13, 0x02, 0x0d, 0x33, 0x1c, 0x85, 0xce, 0xd5, 0x66, 0x0f, 0x75, 0x8a,
-	0x9a, 0xc6, 0x4c, 0x83, 0xfb, 0x23, 0xbd, 0x6c, 0xc5, 0x60, 0x58, 0x8b, 0x4a, 0x96, 0x70, 0x61,
-	0xcd, 0xb9, 0x77, 0xb3, 0x50, 0x51, 0x32, 0xc5, 0xd2, 0x1c, 0x55, 0x2f, 0xfb, 0xc1, 0xe9, 0x02,
-	0x70, 0x62, 0x97, 0x5d, 0x18, 0x66, 0xa0, 0x4d, 0xbd, 0xeb, 0x6f, 0x7c, 0xdb, 0x6a, 0x89, 0x42,
-	0x43, 0x70, 0xe4, 0x97, 0x5c, 0xb8, 0x42, 0xb6, 0xc9, 0xde, 0x6a, 0xbb, 0x12, 0xfd, 0x7c, 0x61,
-	0xe4, 0x12, 0x9d, 0x95, 0xc9, 0xcb, 0x96, 0xf7, 0xf0, 0xfe, 0xd8, 0x24, 0xdd, 0x3c, 0xd2, 0xbe,
-	0x25, 0xfe, 0xb2, 0x85, 0x06, 0x37, 0xc4, 0x2f, 0x39, 0x5f, 0xb0, 0x53, 0x24, 0x14, 0xeb, 0x54,
-	0x1b, 0xff, 0xb8, 0x5c, 0xbd, 0xfa, 0xfe, 0xf5, 0xd3, 0xdb, 0xfd, 0xd2, 0x6e, 0xd0, 0xa0, 0xe7,
-	0xdc, 0x18, 0x14, 0x60, 0xae, 0x50, 0xf5, 0xe9, 0x1f, 0x07, 0xe8, 0x1c, 0x4f, 0x66, 0x21, 0x99,
-	0xce, 0x42, 0xf2, 0x3a, 0x0b, 0xc9, 0xdd, 0x3c, 0xf4, 0xa6, 0xf3, 0xd0, 0x7b, 0x9e, 0x87, 0xde,
-	0xd9, 0x41, 0xc2, 0xcd, 0x45, 0x16, 0x47, 0x3d, 0x4c, 0x7f, 0x45, 0x8d, 0xbe, 0xc0, 0xcc, 0x58,
-	0x82, 0x8e, 0x4b, 0xf6, 0x9a, 0x87, 0x1f, 0x01, 0x00, 0x00, 0xff, 0xff, 0x4e, 0xe6, 0xf7, 0xd2,
-	0x11, 0x02, 0x00, 0x00,
+	// 436 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x93, 0x41, 0x8b, 0xd3, 0x40,
+	0x18, 0x86, 0x33, 0x2b, 0x16, 0x76, 0xd6, 0x83, 0x8e, 0xbb, 0x5a, 0xc2, 0x9a, 0x96, 0xe0, 0xb2,
+	0x65, 0xc1, 0xcc, 0xb6, 0x5e, 0x04, 0x6f, 0x0b, 0x22, 0x78, 0xd2, 0x1c, 0xf5, 0x34, 0x89, 0x1f,
+	0x31, 0xb4, 0x99, 0x2f, 0xcd, 0x4c, 0xb4, 0x05, 0x4f, 0xe2, 0x0f, 0x10, 0xfc, 0x13, 0x1e, 0xfd,
+	0x19, 0x3d, 0x16, 0xbc, 0x78, 0x12, 0x69, 0x05, 0x8f, 0xfe, 0x05, 0x69, 0x26, 0x69, 0xb5, 0x31,
+	0x14, 0xd9, 0x4b, 0xf9, 0x98, 0xef, 0x7d, 0xdf, 0x67, 0xfa, 0x26, 0xa1, 0xc7, 0x43, 0x48, 0x47,
+	0x90, 0x71, 0x98, 0x40, 0x98, 0x6b, 0xcc, 0x14, 0x1f, 0xe7, 0x90, 0x4d, 0xbd, 0x34, 0x43, 0x8d,
+	0xec, 0xba, 0xd9, 0x7a, 0xeb, 0xad, 0x7d, 0x43, 0x24, 0xb1, 0x44, 0x5e, 0xfc, 0x1a, 0x91, 0x7d,
+	0x18, 0x61, 0x84, 0xc5, 0xc8, 0x57, 0x53, 0x79, 0x7a, 0x1c, 0x21, 0x46, 0x23, 0xe0, 0x22, 0x8d,
+	0xb9, 0x90, 0x12, 0xb5, 0xd0, 0x31, 0x4a, 0x55, 0x6e, 0xcf, 0x42, 0x54, 0x09, 0x2a, 0x1e, 0x08,
+	0x05, 0x86, 0xc8, 0x5f, 0xf7, 0x03, 0xd0, 0xa2, 0xcf, 0x53, 0x11, 0xc5, 0xb2, 0x10, 0x97, 0xda,
+	0x3b, 0xb5, 0x2b, 0xa6, 0x22, 0x13, 0x49, 0x15, 0xd5, 0xa9, 0xad, 0xab, 0xc9, 0x08, 0xdc, 0x43,
+	0xca, 0x9e, 0xad, 0x08, 0x4f, 0x0b, 0x97, 0x0f, 0xe3, 0x1c, 0x94, 0x76, 0x7d, 0x7a, 0xf3, 0xaf,
+	0x53, 0x95, 0xa2, 0x54, 0xc0, 0x1e, 0xd2, 0x96, 0x49, 0x6f, 0x93, 0x2e, 0xe9, 0x1d, 0x0c, 0xda,
+	0xde, 0x76, 0x05, 0x9e, 0x71, 0x5c, 0xec, 0xcf, 0xbe, 0x75, 0xac, 0x4f, 0x3f, 0x3f, 0x9f, 0x11,
+	0xbf, 0xb4, 0xb8, 0xb7, 0xe9, 0x51, 0x91, 0xf9, 0xa8, 0xd2, 0x6e, 0x60, 0xb7, 0xb6, 0x17, 0x25,
+	0xef, 0x01, 0xdd, 0x5f, 0x27, 0xb7, 0x49, 0xf7, 0x4a, 0xef, 0x60, 0x60, 0xd7, 0x91, 0x95, 0xcf,
+	0xdf, 0x88, 0xdd, 0x2e, 0x75, 0x4c, 0x66, 0x02, 0x59, 0x04, 0x32, 0xac, 0x53, 0x5f, 0xd0, 0x4e,
+	0xa3, 0xe2, 0xb2, 0xf8, 0xc1, 0xaf, 0x3d, 0x7a, 0xb5, 0x48, 0x67, 0xef, 0x09, 0x6d, 0x99, 0x4e,
+	0xd8, 0xdd, 0xba, 0xb7, 0x5e, 0xbd, 0x7d, 0xb2, 0x43, 0x65, 0xee, 0xe6, 0xde, 0x7b, 0xf7, 0xe5,
+	0xc7, 0xc7, 0xbd, 0x53, 0x76, 0xc2, 0x5f, 0xc6, 0x5a, 0xa3, 0x04, 0xfd, 0x06, 0xb3, 0x21, 0x6f,
+	0x78, 0x1b, 0x98, 0xa0, 0xd7, 0x1e, 0x83, 0x5e, 0xff, 0x45, 0x76, 0xda, 0x40, 0xd9, 0xae, 0xc9,
+	0xee, 0xed, 0x16, 0x96, 0x6d, 0xbd, 0xa5, 0x47, 0x2b, 0x44, 0xad, 0x4e, 0x76, 0xde, 0x14, 0xd1,
+	0xf4, 0x6c, 0xec, 0xfe, 0x7f, 0x38, 0x0c, 0xfd, 0xe2, 0xc9, 0x6c, 0xe1, 0x90, 0xf9, 0xc2, 0x21,
+	0xdf, 0x17, 0x0e, 0xf9, 0xb0, 0x74, 0xac, 0xf9, 0xd2, 0xb1, 0xbe, 0x2e, 0x1d, 0xeb, 0xf9, 0x79,
+	0x14, 0xeb, 0x57, 0x79, 0xe0, 0x85, 0x98, 0xfc, 0xb3, 0xab, 0xc9, 0x1f, 0x6d, 0xe9, 0x69, 0x0a,
+	0x2a, 0x68, 0x15, 0x9f, 0xc6, 0xfd, 0xdf, 0x01, 0x00, 0x00, 0xff, 0xff, 0x9e, 0xa9, 0xab, 0xe3,
+	0xff, 0x03, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -161,6 +335,10 @@ const _ = grpc.SupportPackageIsVersion4
 type QueryClient interface {
 	// Parameters queries the parameters of the module.
 	Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error)
+	// GetExecutors returns all executors.
+	GetExecutors(ctx context.Context, in *QueryExecutorsRequest, opts ...grpc.CallOption) (*QueryExecutorsResponse, error)
+	// GetEmergencyExecutors returns a list of emergency executors.
+	GetEmergencyExecutors(ctx context.Context, in *QueryEmergencyExecutorsRequest, opts ...grpc.CallOption) (*QueryEmergencyExecutorsResponse, error)
 }
 
 type queryClient struct {
@@ -180,10 +358,32 @@ func (c *queryClient) Params(ctx context.Context, in *QueryParamsRequest, opts .
 	return out, nil
 }
 
+func (c *queryClient) GetExecutors(ctx context.Context, in *QueryExecutorsRequest, opts ...grpc.CallOption) (*QueryExecutorsResponse, error) {
+	out := new(QueryExecutorsResponse)
+	err := c.cc.Invoke(ctx, "/kepler.executors.Query/GetExecutors", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) GetEmergencyExecutors(ctx context.Context, in *QueryEmergencyExecutorsRequest, opts ...grpc.CallOption) (*QueryEmergencyExecutorsResponse, error) {
+	out := new(QueryEmergencyExecutorsResponse)
+	err := c.cc.Invoke(ctx, "/kepler.executors.Query/GetEmergencyExecutors", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueryServer is the server API for Query service.
 type QueryServer interface {
 	// Parameters queries the parameters of the module.
 	Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error)
+	// GetExecutors returns all executors.
+	GetExecutors(context.Context, *QueryExecutorsRequest) (*QueryExecutorsResponse, error)
+	// GetEmergencyExecutors returns a list of emergency executors.
+	GetEmergencyExecutors(context.Context, *QueryEmergencyExecutorsRequest) (*QueryEmergencyExecutorsResponse, error)
 }
 
 // UnimplementedQueryServer can be embedded to have forward compatible implementations.
@@ -192,6 +392,12 @@ type UnimplementedQueryServer struct {
 
 func (*UnimplementedQueryServer) Params(ctx context.Context, req *QueryParamsRequest) (*QueryParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Params not implemented")
+}
+func (*UnimplementedQueryServer) GetExecutors(ctx context.Context, req *QueryExecutorsRequest) (*QueryExecutorsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetExecutors not implemented")
+}
+func (*UnimplementedQueryServer) GetEmergencyExecutors(ctx context.Context, req *QueryEmergencyExecutorsRequest) (*QueryEmergencyExecutorsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetEmergencyExecutors not implemented")
 }
 
 func RegisterQueryServer(s grpc1.Server, srv QueryServer) {
@@ -216,6 +422,42 @@ func _Query_Params_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_GetExecutors_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryExecutorsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).GetExecutors(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/kepler.executors.Query/GetExecutors",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).GetExecutors(ctx, req.(*QueryExecutorsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_GetEmergencyExecutors_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryEmergencyExecutorsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).GetEmergencyExecutors(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/kepler.executors.Query/GetEmergencyExecutors",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).GetEmergencyExecutors(ctx, req.(*QueryEmergencyExecutorsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var Query_serviceDesc = _Query_serviceDesc
 var _Query_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "kepler.executors.Query",
@@ -224,6 +466,14 @@ var _Query_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Params",
 			Handler:    _Query_Params_Handler,
+		},
+		{
+			MethodName: "GetExecutors",
+			Handler:    _Query_GetExecutors_Handler,
+		},
+		{
+			MethodName: "GetEmergencyExecutors",
+			Handler:    _Query_GetEmergencyExecutors_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -286,6 +536,126 @@ func (m *QueryParamsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *QueryExecutorsRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryExecutorsRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryExecutorsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryExecutorsResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryExecutorsResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryExecutorsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Executors) > 0 {
+		for iNdEx := len(m.Executors) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Executors[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintQuery(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryEmergencyExecutorsRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryEmergencyExecutorsRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryEmergencyExecutorsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryEmergencyExecutorsResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryEmergencyExecutorsResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryEmergencyExecutorsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Executors) > 0 {
+		for iNdEx := len(m.Executors) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Executors[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintQuery(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintQuery(dAtA []byte, offset int, v uint64) int {
 	offset -= sovQuery(v)
 	base := offset
@@ -314,6 +684,54 @@ func (m *QueryParamsResponse) Size() (n int) {
 	_ = l
 	l = m.Params.Size()
 	n += 1 + l + sovQuery(uint64(l))
+	return n
+}
+
+func (m *QueryExecutorsRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *QueryExecutorsResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.Executors) > 0 {
+		for _, e := range m.Executors {
+			l = e.Size()
+			n += 1 + l + sovQuery(uint64(l))
+		}
+	}
+	return n
+}
+
+func (m *QueryEmergencyExecutorsRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *QueryEmergencyExecutorsResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.Executors) > 0 {
+		for _, e := range m.Executors {
+			l = e.Size()
+			n += 1 + l + sovQuery(uint64(l))
+		}
+	}
 	return n
 }
 
@@ -432,6 +850,274 @@ func (m *QueryParamsResponse) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if err := m.Params.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryExecutorsRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryExecutorsRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryExecutorsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryExecutorsResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryExecutorsResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryExecutorsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Executors", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Executors = append(m.Executors, &Executor{})
+			if err := m.Executors[len(m.Executors)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryEmergencyExecutorsRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryEmergencyExecutorsRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryEmergencyExecutorsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryEmergencyExecutorsResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryEmergencyExecutorsResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryEmergencyExecutorsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Executors", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Executors = append(m.Executors, &Executor{})
+			if err := m.Executors[len(m.Executors)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
