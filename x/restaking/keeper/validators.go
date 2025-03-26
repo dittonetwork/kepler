@@ -35,9 +35,9 @@ func (k Keeper) UpdateValidatorSet(ctx sdk.Context, params types.UpdateValidator
 		valAddr := sdk.ValAddress(cosmosAddr)
 
 		// Process validator update
-		processErr := k.processValidatorUpdate(ctx, operator, cosmosAddr, valAddr, logger)
-		if processErr != nil {
-			return processErr
+		err = k.processValidatorUpdate(ctx, operator, cosmosAddr, valAddr, logger)
+		if err != nil {
+			return err
 		}
 
 		logger.Info("validator updated")
@@ -72,15 +72,17 @@ func (k Keeper) processValidatorUpdate(
 			return nil
 		}
 
-		logger.Info("created new validator",
-			"status", validator.Status,
-			"isNewValidator", isNewValidator)
+		logger.
+			With("status", validator.Status, "isNewValidator", isNewValidator).
+			Info("created new validator")
 	} else {
 		// Update public key
-		updateErr := k.updateValidatorPubKey(ctx, validator, operator, logger)
-		if updateErr != nil {
-			return updateErr
+		err = k.updateValidatorPubKey(ctx, validator, operator, logger)
+		if err != nil {
+			return err
 		}
+
+		logger.Info("updated validator public key")
 	}
 
 	// Update validator status and tokens
@@ -119,7 +121,7 @@ func (k Keeper) createNewValidator(
 
 	// Initialize validator status
 	validator.Status = stakingtypes.Unspecified
-	logger.Debug("new validator created", "validator", validator)
+	logger.With("validator", validator).Debug("new validator created")
 	return validator, true
 }
 
@@ -131,21 +133,21 @@ func (k Keeper) updateValidatorPubKey(
 	logger log.Logger,
 ) error {
 	config := sdk.GetConfig()
-	validatorPubKeyBytes, pubKeyErr := sdk.GetFromBech32(
+	validatorPubKeyBytes, err := sdk.GetFromBech32(
 		operator.PublicKey,
 		config.GetBech32ValidatorPubPrefix(),
 	)
-	if pubKeyErr != nil {
-		logger.Error("failed to convert public key for existing validator", "error", pubKeyErr)
+	if err != nil {
+		logger.With("error", err).Error("failed to convert public key for existing validator")
 		return nil
 	}
 
 	pubKey := &ed25519.PubKey{Key: validatorPubKeyBytes}
 
 	// Serialize public key to Any
-	anyPubKey, encodeErr := codectypes.NewAnyWithValue(pubKey)
-	if encodeErr != nil {
-		logger.Error("failed to encode public key to Any", "error", encodeErr)
+	anyPubKey, err := codectypes.NewAnyWithValue(pubKey)
+	if err != nil {
+		logger.With("error", err).Error("failed to encode public key to Any")
 		return nil
 	}
 
