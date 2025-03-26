@@ -51,7 +51,7 @@ message MsgAddExecutor {
   // Cosmos address of the new executor.
   option (cosmos.msg.v1.signer) = "creator";
   string creator = 1;
-  // Owner's address (e.g., Ethereum address).
+  // Owner's address (e.g., staker address).
   string owner_address = 2;
   // Public key of the new executor.
   string public_key = 3;
@@ -60,15 +60,15 @@ message MsgAddExecutor {
 // MsgActivateExecutor defines a transaction to activate an executor.
 message MsgActivateExecutor {
   // Address of the executor to activate.
-  option (cosmos.msg.v1.signer) = "owner";
-  string owner = 1;
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1;
 }
 
 // MsgDeactivateExecutor defines a transaction to deactivate an executor.
 message MsgDeactivateExecutor {
   // Address of the executor to deactivate.
-  option (cosmos.msg.v1.signer) = "owner";
-  string owner = 1;
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1;
 }
 
 // MsgAddExecutorResponse defines the response structure for executing a
