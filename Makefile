@@ -21,6 +21,13 @@ ldflags = -X github.com/cosmos/cosmos-sdk/version.Name=$(APPNAME) \
 
 BUILD_FLAGS := -ldflags '$(ldflags)'
 
+###################
+###  Toolchain  ###
+###################
+.PHONY: toolchain
+toolchain:
+	go install go.uber.org/mock/mockgen@v0.5.0
+
 ##############
 ###  Test  ###
 ##############

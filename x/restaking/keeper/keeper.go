@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"cosmossdk.io/collections"
 	"cosmossdk.io/core/store"
 	"cosmossdk.io/log"
 	"github.com/cosmos/cosmos-sdk/codec"
@@ -17,10 +18,13 @@ type (
 		cdc          codec.BinaryCodec
 		storeService store.KVStoreService
 		logger       log.Logger
+		staking      types.StakingKeeper
 
 		// the address capable of executing a MsgUpdateParams message. Typically, this
 		// should be the x/gov module account.
 		authority string
+
+		ValidatorsMap *collections.IndexedMap[string, types.Validator, Idx]
 	}
 )
 
@@ -29,17 +33,27 @@ func NewKeeper(
 	storeService store.KVStoreService,
 	logger log.Logger,
 	authority string,
-
+	stakeKeeper types.StakingKeeper,
 ) Keeper {
 	if _, err := sdk.AccAddressFromBech32(authority); err != nil {
 		panic(fmt.Sprintf("invalid authority address: %s", authority))
 	}
 
+	sb := collections.NewSchemaBuilder(storeService)
 	return Keeper{
 		cdc:          cdc,
 		storeService: storeService,
 		authority:    authority,
+		staking:      stakeKeeper,
 		logger:       logger,
+		ValidatorsMap: collections.NewIndexedMap(
+			sb,
+			types.KeyPrefixValidator,
+			types.CollectionNameValidators,
+			collections.StringKey,
+			codec.CollValue[types.Validator](cdc),
+			NewIndexes(sb),
+		),
 	}
 }
 

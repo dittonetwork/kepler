@@ -27,15 +27,12 @@ message Validator {
   // Address of the validator on Kepler
   string cosmos_address = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 
-  // Public key of the validator (may change, e.g. on key rotation)
-  bytes public_key = 3;
-
   // Flag to indicate if this validator is an emergency validator
-  bool is_emergency = 4;
+  bool is_emergency = 3;
 
   // Voting power of the validator
-  uint64 voting_power = 5;
+  uint64 voting_power = 4;
 
   // Status of the validator
-  ValidatorStatus status = 6;
+  ValidatorStatus status = 5;
 }
