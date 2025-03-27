@@ -13,9 +13,39 @@ import (
 	"github.com/dittonetwork/kepler/x/restaking/types"
 )
 
+// NeedValidatorsUpdate is a helper function to check if the validators need to be updated for TaskManager module.
+func (k Keeper) NeedValidatorsUpdate(ctx sdk.Context, epoch int64) (bool, error) {
+	// Get the last epoch number
+	lastUpdate, err := k.LastUpdate.Get(ctx)
+	if err != nil {
+		return false, err
+	}
+
+	return lastUpdate.Epoch < epoch, nil
+}
+
 // UpdateValidatorSet updates the validator set in the staking module and keeps a local copy
 // of validators with additional metadata in the restaking module's store.
 func (k Keeper) UpdateValidatorSet(ctx sdk.Context, params types.UpdateValidatorSetParams) error {
+	ok, err := k.NeedValidatorsUpdate(ctx, params.EpochNumber)
+	if err != nil {
+		return err
+	}
+
+	if !ok {
+		return sdkerrors.Wrap(types.ErrUpdateValidator, "update not needed")
+	}
+
+	lastUpdate, err := k.LastUpdate.Get(ctx)
+	if err != nil {
+		return err
+	}
+
+	// Ensure the block height is higher than the last update
+	if lastUpdate.BlockHeight >= params.BlockHeight {
+		return sdkerrors.Wrap(types.ErrUpdateValidator, "block height is lower than last update")
+	}
+
 	for _, operator := range params.Operators {
 		logger := k.Logger().With(
 			"operator", operator.Address,
@@ -24,7 +54,8 @@ func (k Keeper) UpdateValidatorSet(ctx sdk.Context, params types.UpdateValidator
 		)
 
 		// Convert operator address to cosmos address
-		cosmosAddr, err := sdk.AccAddressFromBech32(operator.Address)
+		var cosmosAddr sdk.AccAddress
+		cosmosAddr, err = sdk.AccAddressFromBech32(operator.Address)
 		if err != nil {
 			// Skip invalid addresses
 			logger.Error("failed to convert operator address")
@@ -43,7 +74,13 @@ func (k Keeper) UpdateValidatorSet(ctx sdk.Context, params types.UpdateValidator
 		logger.Info("validator updated")
 	}
 
-	return nil
+	// Update the last epoch number
+	return k.LastUpdate.Set(ctx, types.LastUpdate{
+		Epoch:       params.EpochNumber,
+		Timestamp:   ctx.BlockTime(),
+		BlockHeight: params.BlockHeight,
+		BlockHash:   params.BlockHash,
+	})
 }
 
 // processValidatorUpdate handles updating or creating a validator based on operator information.

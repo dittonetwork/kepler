@@ -25,6 +25,7 @@ type (
 		authority string
 
 		ValidatorsMap *collections.IndexedMap[string, types.Validator, Idx]
+		LastUpdate    collections.Item[types.LastUpdate]
 	}
 )
 
@@ -53,6 +54,12 @@ func NewKeeper(
 			collections.StringKey,
 			codec.CollValue[types.Validator](cdc),
 			NewIndexes(sb),
+		),
+		LastUpdate: collections.NewItem(
+			sb,
+			types.KeyPrefixLastUpdate,
+			"last_update",
+			codec.CollValue[types.LastUpdate](cdc),
 		),
 	}
 }
