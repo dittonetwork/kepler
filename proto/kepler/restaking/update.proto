@@ -1,0 +1,25 @@
+syntax = "proto3";
+package kepler.restaking;
+
+import "gogoproto/gogo.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/dittonetwork/kepler/x/restaking/types";
+
+// LastUpdate of the restaking module
+message LastUpdate {
+  // epoch of the last update
+  int64 epoch = 1;
+
+  // timestamp of the last update
+  google.protobuf.Timestamp timestamp = 2 [
+    (gogoproto.stdtime) = true,
+    (gogoproto.nullable) = false
+  ];
+
+  // block height on L1 of the last update
+  int64 block_height = 3;
+
+  // block hash on L1 of the last update
+  string block_hash = 4;
+}

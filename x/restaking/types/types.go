@@ -72,7 +72,9 @@ type Operator struct {
 
 // UpdateValidatorSetParams defines the parameters for updating the validator set.
 type UpdateValidatorSetParams struct {
-	Operators   []Operator `json:"validator_set"`
-	BlockHeight int64      `json:"block_height"`
-	BlockHash   []byte     `json:"block_hash"`
+	Operators   []Operator
+	BlockHeight int64
+	BlockHash   string
+	// EpochNumber is the epoch number of the Cosmos chain
+	EpochNumber int64
 }

@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"maps"
+	"slices"
 
 	"cosmossdk.io/core/appmodule"
 	"cosmossdk.io/core/store"
@@ -168,6 +170,7 @@ func init() {
 	appmodule.Register(
 		&modulev1.Module{},
 		appmodule.Provide(ProvideModule),
+		appmodule.Invoke(InvokeSetHooks),
 	)
 }
 
@@ -204,4 +207,26 @@ func ProvideModule(in ModuleInputs) ModuleOutputs {
 		EpochsKeeper: k,
 		Module:       m,
 	}
+}
+
+// InvokeSetHooks invokes the epoch hooks for the module.
+func InvokeSetHooks(keeper *keeper.Keeper, hooks map[string]types.EpochHooksWrapper) error {
+	if hooks == nil {
+		return nil
+	}
+
+	// Default ordering is lexical by module name.
+	// Explicit ordering can be added to the module config if required.
+	modNames := slices.Sorted(maps.Keys(hooks))
+	var multiHooks types.MultiEpochHooks
+	for _, modName := range modNames {
+		hook, ok := hooks[modName]
+		if !ok {
+			return fmt.Errorf("can't find epochs hooks for module %s", modName)
+		}
+		multiHooks = append(multiHooks, hook)
+	}
+
+	keeper.SetHooks(multiHooks)
+	return nil
 }

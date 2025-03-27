@@ -3,6 +3,7 @@ package keeper_test
 import (
 	"errors"
 	"testing"
+	"time"
 
 	"cosmossdk.io/log"
 	"cosmossdk.io/store"
@@ -76,6 +77,53 @@ func TestUpdateValidatorSet(t *testing.T) {
 		err := k.SetParams(ctx, types.DefaultParams())
 		require.NoError(t, err)
 
+		// Initialize LastUpdate with a default value to support the new validation in UpdateValidatorSet
+		err = k.LastUpdate.Set(ctx, types.LastUpdate{
+			Epoch:       0,
+			Timestamp:   time.Now(),
+			BlockHeight: 0,
+			BlockHash:   "initial-hash",
+		})
+		require.NoError(t, err)
+
+		return ctx, stakingKeeper, k, ctrl
+	}
+
+	// Function to create a test setup without initializing LastUpdate
+	setupWithoutLastUpdate := func(t *testing.T) (sdk.Context, *restakingmock.MockStakingKeeper, keeper.Keeper, *gomock.Controller) {
+		// Create a new controller for each test
+		ctrl := gomock.NewController(t)
+
+		// Create a mock staking keeper
+		stakingKeeper := restakingmock.NewMockStakingKeeper(ctrl)
+
+		// Create a test Keeper with the mock staking keeper
+		storeKey := storetypes.NewKVStoreKey(types.StoreKey)
+		db := dbm.NewMemDB()
+		stateStore := store.NewCommitMultiStore(db, log.NewNopLogger(), metrics.NewNoOpMetrics())
+		stateStore.MountStoreWithDB(storeKey, storetypes.StoreTypeIAVL, db)
+		require.NoError(t, stateStore.LoadLatestVersion())
+
+		registry := codectypes.NewInterfaceRegistry()
+		cdc := codec.NewProtoCodec(registry)
+		authority := authtypes.NewModuleAddress(govtypes.ModuleName)
+
+		k := keeper.NewKeeper(
+			cdc,
+			runtime.NewKVStoreService(storeKey),
+			log.NewNopLogger(),
+			authority.String(),
+			stakingKeeper,
+		)
+
+		ctx := sdk.NewContext(stateStore, cmtproto.Header{}, false, log.NewNopLogger())
+
+		// Initialize params
+		err := k.SetParams(ctx, types.DefaultParams())
+		require.NoError(t, err)
+
+		// Don't initialize LastUpdate for this setup
+
 		return ctx, stakingKeeper, k, ctrl
 	}
 
@@ -103,6 +151,9 @@ func TestUpdateValidatorSet(t *testing.T) {
 					Tokens:    100,
 				},
 			},
+			EpochNumber: 1, // Ensure EpochNumber is greater than the default (0)
+			BlockHeight: 1, // Ensure BlockHeight is greater than the default (0)
+			BlockHash:   "test-hash",
 		}
 
 		err := k.UpdateValidatorSet(ctx, params)
@@ -148,6 +199,9 @@ func TestUpdateValidatorSet(t *testing.T) {
 					Tokens:    200,
 				},
 			},
+			EpochNumber: 1, // Ensure EpochNumber is greater than the default (0)
+			BlockHeight: 1, // Ensure BlockHeight is greater than the default (0)
+			BlockHash:   "test-hash",
 		}
 
 		err = k.UpdateValidatorSet(ctx, params)
@@ -167,6 +221,9 @@ func TestUpdateValidatorSet(t *testing.T) {
 					Tokens:    100,
 				},
 			},
+			EpochNumber: 1, // Ensure EpochNumber is greater than the default (0)
+			BlockHeight: 1, // Ensure BlockHeight is greater than the default (0)
+			BlockHash:   "test-hash",
 		}
 
 		err := k.UpdateValidatorSet(ctx, params)
@@ -191,6 +248,9 @@ func TestUpdateValidatorSet(t *testing.T) {
 					Tokens:    100,
 				},
 			},
+			EpochNumber: 1, // Ensure EpochNumber is greater than the default (0)
+			BlockHeight: 1, // Ensure BlockHeight is greater than the default (0)
+			BlockHash:   "test-hash",
 		}
 
 		err := k.UpdateValidatorSet(ctx, params)
@@ -215,6 +275,9 @@ func TestUpdateValidatorSet(t *testing.T) {
 					Tokens:    100,
 				},
 			},
+			EpochNumber: 1, // Ensure EpochNumber is greater than the default (0)
+			BlockHeight: 1, // Ensure BlockHeight is greater than the default (0)
+			BlockHash:   "test-hash",
 		}
 
 		err := k.UpdateValidatorSet(ctx, params)
@@ -253,9 +316,12 @@ func TestUpdateValidatorSet(t *testing.T) {
 					Address:   operatorAddress.String(),
 					PublicKey: pubKeyBech32Val,
 					Status:    types.OperatorStatusBonded,
-					Tokens:    200,
+					Tokens:    100,
 				},
 			},
+			EpochNumber: 1, // Ensure EpochNumber is greater than the default (0)
+			BlockHeight: 1, // Ensure BlockHeight is greater than the default (0)
+			BlockHash:   "test-hash",
 		}
 
 		err = k.UpdateValidatorSet(ctx, params)
@@ -264,11 +330,11 @@ func TestUpdateValidatorSet(t *testing.T) {
 	})
 
 	t.Run("handling different validator statuses", func(t *testing.T) {
-		// Test for Unbonded status
 		t.Run("unbonded status", func(t *testing.T) {
 			ctx, stakingKeeper, k, ctrl := setupTest(t)
 			defer ctrl.Finish()
 
+			// Create an existing validator
 			anyPubKey, err := codectypes.NewAnyWithValue(pubKey)
 			require.NoError(t, err)
 
@@ -279,19 +345,16 @@ func TestUpdateValidatorSet(t *testing.T) {
 				Tokens:          sdk.TokensFromConsensusPower(50, sdk.DefaultPowerReduction),
 			}
 
+			// Setup mock expectations
 			stakingKeeper.EXPECT().
 				GetValidator(gomock.Any(), valAddress).
 				Return(existingValidator, nil)
 
-			// First call to update public key
+			// Set Validator calls
 			stakingKeeper.EXPECT().
 				SetValidator(gomock.Any(), gomock.Any()).
-				Return(nil)
-
-			// Second call to update status and tokens
-			stakingKeeper.EXPECT().
-				SetValidator(gomock.Any(), gomock.Any()).
-				Return(nil)
+				Return(nil).
+				AnyTimes()
 
 			params := types.UpdateValidatorSetParams{
 				Operators: []types.Operator{
@@ -302,17 +365,25 @@ func TestUpdateValidatorSet(t *testing.T) {
 						Tokens:    100,
 					},
 				},
+				EpochNumber: 1, // Ensure EpochNumber is greater than the default (0)
+				BlockHeight: 1, // Ensure BlockHeight is greater than the default (0)
+				BlockHash:   "test-hash",
 			}
 
 			err = k.UpdateValidatorSet(ctx, params)
 			require.NoError(t, err)
+
+			// Check validator status in local store
+			val, err := k.ValidatorsMap.Get(ctx, operatorAddress.String())
+			require.NoError(t, err)
+			require.Equal(t, types.ValidatorStatus_VALIDATOR_STATUS_UNBONDED, val.Status)
 		})
 
-		// Test for Unbonding status
 		t.Run("unbonding status", func(t *testing.T) {
 			ctx, stakingKeeper, k, ctrl := setupTest(t)
 			defer ctrl.Finish()
 
+			// Create an existing validator
 			anyPubKey, err := codectypes.NewAnyWithValue(pubKey)
 			require.NoError(t, err)
 
@@ -323,19 +394,16 @@ func TestUpdateValidatorSet(t *testing.T) {
 				Tokens:          sdk.TokensFromConsensusPower(50, sdk.DefaultPowerReduction),
 			}
 
+			// Setup mock expectations
 			stakingKeeper.EXPECT().
 				GetValidator(gomock.Any(), valAddress).
 				Return(existingValidator, nil)
 
-			// First call to update public key
+			// Set Validator calls
 			stakingKeeper.EXPECT().
 				SetValidator(gomock.Any(), gomock.Any()).
-				Return(nil)
-
-			// Second call to update status and tokens
-			stakingKeeper.EXPECT().
-				SetValidator(gomock.Any(), gomock.Any()).
-				Return(nil)
+				Return(nil).
+				AnyTimes()
 
 			params := types.UpdateValidatorSetParams{
 				Operators: []types.Operator{
@@ -346,10 +414,229 @@ func TestUpdateValidatorSet(t *testing.T) {
 						Tokens:    100,
 					},
 				},
+				EpochNumber: 1, // Ensure EpochNumber is greater than the default (0)
+				BlockHeight: 1, // Ensure BlockHeight is greater than the default (0)
+				BlockHash:   "test-hash",
 			}
 
 			err = k.UpdateValidatorSet(ctx, params)
 			require.NoError(t, err)
+
+			// Check validator status in local store
+			val, err := k.ValidatorsMap.Get(ctx, operatorAddress.String())
+			require.NoError(t, err)
+			require.Equal(t, types.ValidatorStatus_VALIDATOR_STATUS_UNBONDING, val.Status)
 		})
+	})
+
+	// New tests for updated code
+	t.Run("should return error when update is not needed", func(t *testing.T) {
+		ctx, _, k, ctrl := setupTest(t)
+		defer ctrl.Finish()
+
+		// Set last update epoch to 10
+		err := k.LastUpdate.Set(ctx, types.LastUpdate{
+			Epoch:       10,
+			Timestamp:   time.Now(),
+			BlockHeight: 100,
+			BlockHash:   "test-hash",
+		})
+		require.NoError(t, err)
+
+		// Test with current epoch 5 (less than last update)
+		params := types.UpdateValidatorSetParams{
+			EpochNumber: 5,
+			BlockHeight: 200,
+			BlockHash:   "new-hash",
+			Operators:   []types.Operator{},
+		}
+
+		err = k.UpdateValidatorSet(ctx, params)
+		require.Error(t, err)
+		require.Contains(t, err.Error(), "update not needed")
+	})
+
+	t.Run("should return error when block height is lower than last update", func(t *testing.T) {
+		ctx, _, k, ctrl := setupTest(t)
+		defer ctrl.Finish()
+
+		// Set last update with epoch 5 and block height 100
+		err := k.LastUpdate.Set(ctx, types.LastUpdate{
+			Epoch:       5,
+			Timestamp:   time.Now(),
+			BlockHeight: 100,
+			BlockHash:   "test-hash",
+		})
+		require.NoError(t, err)
+
+		// Test with current epoch 10 (greater than last update) but block height 50 (lower than last update)
+		params := types.UpdateValidatorSetParams{
+			EpochNumber: 10,
+			BlockHeight: 50, // Lower than last update
+			BlockHash:   "new-hash",
+			Operators:   []types.Operator{},
+		}
+
+		err = k.UpdateValidatorSet(ctx, params)
+		require.Error(t, err)
+		require.Contains(t, err.Error(), "block height is lower than last update")
+	})
+
+	t.Run("should process update when conditions are met", func(t *testing.T) {
+		ctx, _, k, ctrl := setupTest(t)
+		defer ctrl.Finish()
+
+		// Set last update with epoch 5 and block height 100
+		err := k.LastUpdate.Set(ctx, types.LastUpdate{
+			Epoch:       5,
+			Timestamp:   time.Now(),
+			BlockHeight: 100,
+			BlockHash:   "test-hash",
+		})
+		require.NoError(t, err)
+
+		// Test with current epoch 10 (greater than last update) and block height 200 (greater than last update)
+		// But no operators to process, so it should just update the LastUpdate
+		params := types.UpdateValidatorSetParams{
+			EpochNumber: 10,
+			BlockHeight: 200,
+			BlockHash:   "new-hash",
+			Operators:   []types.Operator{},
+		}
+
+		err = k.UpdateValidatorSet(ctx, params)
+		require.NoError(t, err)
+
+		// Verify LastUpdate was updated
+		lastUpdate, err := k.LastUpdate.Get(ctx)
+		require.NoError(t, err)
+		require.Equal(t, params.EpochNumber, lastUpdate.Epoch)
+		require.Equal(t, params.BlockHeight, lastUpdate.BlockHeight)
+		require.Equal(t, params.BlockHash, lastUpdate.BlockHash)
+	})
+
+	t.Run("should return error when LastUpdate.Get fails", func(t *testing.T) {
+		ctx, _, k, ctrl := setupWithoutLastUpdate(t)
+		defer ctrl.Finish()
+
+		// We don't set LastUpdate, so NeedValidatorsUpdate will return an error
+		params := types.UpdateValidatorSetParams{
+			EpochNumber: 10,
+			BlockHeight: 200,
+			BlockHash:   "new-hash",
+			Operators:   []types.Operator{},
+		}
+
+		err := k.UpdateValidatorSet(ctx, params)
+		require.Error(t, err)
+	})
+}
+
+func TestNeedValidatorsUpdate(t *testing.T) {
+	// Function to create a fresh test setup for each test
+	setupTest := func(t *testing.T) (sdk.Context, *restakingmock.MockStakingKeeper, keeper.Keeper, *gomock.Controller) {
+		// Create a new controller for each test
+		ctrl := gomock.NewController(t)
+
+		// Create a mock staking keeper
+		stakingKeeper := restakingmock.NewMockStakingKeeper(ctrl)
+
+		// Create a test Keeper with the mock staking keeper
+		storeKey := storetypes.NewKVStoreKey(types.StoreKey)
+		db := dbm.NewMemDB()
+		stateStore := store.NewCommitMultiStore(db, log.NewNopLogger(), metrics.NewNoOpMetrics())
+		stateStore.MountStoreWithDB(storeKey, storetypes.StoreTypeIAVL, db)
+		require.NoError(t, stateStore.LoadLatestVersion())
+
+		registry := codectypes.NewInterfaceRegistry()
+		cdc := codec.NewProtoCodec(registry)
+		authority := authtypes.NewModuleAddress(govtypes.ModuleName)
+
+		k := keeper.NewKeeper(
+			cdc,
+			runtime.NewKVStoreService(storeKey),
+			log.NewNopLogger(),
+			authority.String(),
+			stakingKeeper,
+		)
+
+		ctx := sdk.NewContext(stateStore, cmtproto.Header{}, false, log.NewNopLogger())
+
+		// Initialize params
+		err := k.SetParams(ctx, types.DefaultParams())
+		require.NoError(t, err)
+
+		return ctx, stakingKeeper, k, ctrl
+	}
+
+	t.Run("should return true when epoch is greater than last update epoch", func(t *testing.T) {
+		// Setup
+		ctx, _, k, ctrl := setupTest(t)
+		defer ctrl.Finish()
+
+		// Set last update epoch to 5
+		err := k.LastUpdate.Set(ctx, types.LastUpdate{
+			Epoch:       5,
+			Timestamp:   time.Now(),
+			BlockHeight: 100,
+			BlockHash:   "test-hash",
+		})
+		require.NoError(t, err)
+
+		// Test with current epoch 10 (greater than last update)
+		result, err := k.NeedValidatorsUpdate(ctx, 10)
+		require.NoError(t, err)
+		require.True(t, result, "should return true when current epoch is greater than last update epoch")
+	})
+
+	t.Run("should return false when epoch is equal to last update epoch", func(t *testing.T) {
+		// Setup
+		ctx, _, k, ctrl := setupTest(t)
+		defer ctrl.Finish()
+
+		// Set last update epoch to 5
+		err := k.LastUpdate.Set(ctx, types.LastUpdate{
+			Epoch:       5,
+			Timestamp:   time.Now(),
+			BlockHeight: 100,
+			BlockHash:   "test-hash",
+		})
+		require.NoError(t, err)
+
+		// Test with current epoch 5 (equal to last update)
+		result, err := k.NeedValidatorsUpdate(ctx, 5)
+		require.NoError(t, err)
+		require.False(t, result, "should return false when current epoch is equal to last update epoch")
+	})
+
+	t.Run("should return false when epoch is less than last update epoch", func(t *testing.T) {
+		// Setup
+		ctx, _, k, ctrl := setupTest(t)
+		defer ctrl.Finish()
+
+		// Set last update epoch to 5
+		err := k.LastUpdate.Set(ctx, types.LastUpdate{
+			Epoch:       5,
+			Timestamp:   time.Now(),
+			BlockHeight: 100,
+			BlockHash:   "test-hash",
+		})
+		require.NoError(t, err)
+
+		// Test with current epoch 3 (less than last update)
+		result, err := k.NeedValidatorsUpdate(ctx, 3)
+		require.NoError(t, err)
+		require.False(t, result, "should return false when current epoch is less than last update epoch")
+	})
+
+	t.Run("should handle error when LastUpdate.Get fails", func(t *testing.T) {
+		ctx, _, k, ctrl := setupTest(t)
+		defer ctrl.Finish()
+
+		// We don't set LastUpdate, so Get will return an error
+
+		result, err := k.NeedValidatorsUpdate(ctx, 10)
+		require.False(t, result)
+		require.Error(t, err)
 	})
 }
