@@ -1,0 +1,87 @@
+syntax = "proto3";
+package kepler.executors;
+
+import "amino/amino.proto";
+import "cosmos/msg/v1/msg.proto";
+import "cosmos_proto/cosmos.proto";
+import "gogoproto/gogo.proto";
+import "kepler/executors/params.proto";
+import "kepler/executors/executor.proto";
+
+option go_package = "github.com/dittonetwork/kepler/x/executors/types";
+
+// Msg defines the Msg service.
+service Msg {
+  option (cosmos.msg.v1.service) = true;
+
+  // UpdateParams defines a (governance) operation for updating the module
+  // parameters. The authority defaults to the x/gov module account.
+  rpc UpdateParams(MsgUpdateParams) returns (MsgUpdateParamsResponse);
+  // AddExecutor defines a transaction to add a new executor.
+  rpc AddExecutor(MsgAddExecutor) returns (MsgAddExecutorResponse);
+  // ActivateExecutor defines a transaction to activate an executor.
+  rpc ActivateExecutor(MsgActivateExecutor) returns (MsgActivateExecutorResponse);
+  // DeactivateExecutor defines a transaction to deactivate an executor.
+  rpc DeactivateExecutor(MsgDeactivateExecutor) returns (MsgDeactivateExecutorResponse);
+}
+
+// MsgUpdateParams is the Msg/UpdateParams request type.
+message MsgUpdateParams {
+  option (cosmos.msg.v1.signer) = "authority";
+  option (amino.name) = "kepler/x/executors/MsgUpdateParams";
+
+  // authority is the address that controls the module (defaults to x/gov unless overwritten).
+  string authority = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+
+  // params defines the module parameters to update.
+  //
+  // NOTE: All parameters must be supplied.
+  Params params = 2 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}
+
+// MsgUpdateParamsResponse defines the response structure for executing a
+// MsgUpdateParams message.
+message MsgUpdateParamsResponse {}
+
+// MsgAddExecutor defines a transaction to add a new executor.
+message MsgAddExecutor {
+  // Cosmos address of the new executor.
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1;
+  // Owner's address (e.g., staker address).
+  string owner_address = 2;
+  // Public key of the new executor.
+  string public_key = 3;
+}
+
+// MsgActivateExecutor defines a transaction to activate an executor.
+message MsgActivateExecutor {
+  // Address of the executor to activate.
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1;
+}
+
+// MsgDeactivateExecutor defines a transaction to deactivate an executor.
+message MsgDeactivateExecutor {
+  // Address of the executor to deactivate.
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1;
+}
+
+// MsgAddExecutorResponse defines the response structure for executing a
+// MsgAddExecutor message.
+message MsgAddExecutorResponse {
+  // Executor.
+  Executor executor = 1;
+}
+
+// MsgActivateExecutorResponse defines the response structure for executing a
+// MsgActivateExecutor message.
+message MsgActivateExecutorResponse {}
+
+// MsgDeactivateExecutorResponse defines the response structure for executing a
+// MsgDeactivateExecutor message.
+message MsgDeactivateExecutorResponse {}
