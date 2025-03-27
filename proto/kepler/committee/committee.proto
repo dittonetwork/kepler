@@ -1,0 +1,39 @@
+syntax = "proto3";
+package kepler.committee;
+
+import "amino/amino.proto";
+import "cosmos_proto/cosmos.proto";
+import "gogoproto/gogo.proto";
+
+option go_package = "github.com/dittonetwork/kepler/x/committee/types";
+
+// Committee defines a group of executors that participate in a decision-making process.
+message Committee {
+  option (gogoproto.equal) = true;
+
+  // epoch is the epoch of the committee.
+  int64 epoch = 1;
+
+  // seed is the seed of the committee. Needed for randomness.
+  string seed = 2;
+
+  // is_emergency indicates whether this committee was formed for an emergency situation.
+  bool is_emergency = 3;
+
+  // executors is the list of participants in this committee.
+  repeated Executor executors = 4 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}
+
+// Executor represents a committee member with voting capabilities.
+message Executor {
+  option (gogoproto.equal) = true;
+
+  // address is the account address of the executor.
+  string address = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+
+  // voting_power represents the weight of this executor's vote in committee decisions.
+  uint32 voting_power = 2;
+}

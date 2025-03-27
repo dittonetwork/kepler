@@ -31,98 +31,6 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
-// QueryCommitteeRequest is response type for the Query/Committee RPC method.
-type QueryGetCommitteeRequest struct {
-	// committee_id is the identifier of the committee.
-	CommitteeId string `protobuf:"bytes,1,opt,name=committee_id,json=committeeId,proto3" json:"committee_id,omitempty"`
-}
-
-func (m *QueryGetCommitteeRequest) Reset()         { *m = QueryGetCommitteeRequest{} }
-func (m *QueryGetCommitteeRequest) String() string { return proto.CompactTextString(m) }
-func (*QueryGetCommitteeRequest) ProtoMessage()    {}
-func (*QueryGetCommitteeRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_68269786207d1688, []int{0}
-}
-func (m *QueryGetCommitteeRequest) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *QueryGetCommitteeRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_QueryGetCommitteeRequest.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *QueryGetCommitteeRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryGetCommitteeRequest.Merge(m, src)
-}
-func (m *QueryGetCommitteeRequest) XXX_Size() int {
-	return m.Size()
-}
-func (m *QueryGetCommitteeRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryGetCommitteeRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_QueryGetCommitteeRequest proto.InternalMessageInfo
-
-func (m *QueryGetCommitteeRequest) GetCommitteeId() string {
-	if m != nil {
-		return m.CommitteeId
-	}
-	return ""
-}
-
-// QueryGetCommitteeResponse is response type for the Query/Committee RPC method.
-type QueryGetCommitteeResponse struct {
-	// members holds all the committee members of this module.
-	Members []Member `protobuf:"bytes,1,rep,name=members,proto3" json:"members"`
-}
-
-func (m *QueryGetCommitteeResponse) Reset()         { *m = QueryGetCommitteeResponse{} }
-func (m *QueryGetCommitteeResponse) String() string { return proto.CompactTextString(m) }
-func (*QueryGetCommitteeResponse) ProtoMessage()    {}
-func (*QueryGetCommitteeResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_68269786207d1688, []int{1}
-}
-func (m *QueryGetCommitteeResponse) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *QueryGetCommitteeResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_QueryGetCommitteeResponse.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *QueryGetCommitteeResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryGetCommitteeResponse.Merge(m, src)
-}
-func (m *QueryGetCommitteeResponse) XXX_Size() int {
-	return m.Size()
-}
-func (m *QueryGetCommitteeResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryGetCommitteeResponse.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_QueryGetCommitteeResponse proto.InternalMessageInfo
-
-func (m *QueryGetCommitteeResponse) GetMembers() []Member {
-	if m != nil {
-		return m.Members
-	}
-	return nil
-}
-
 // QueryParamsRequest is request type for the Query/Params RPC method.
 type QueryParamsRequest struct {
 }
@@ -131,7 +39,7 @@ func (m *QueryParamsRequest) Reset()         { *m = QueryParamsRequest{} }
 func (m *QueryParamsRequest) String() string { return proto.CompactTextString(m) }
 func (*QueryParamsRequest) ProtoMessage()    {}
 func (*QueryParamsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_68269786207d1688, []int{2}
+	return fileDescriptor_68269786207d1688, []int{0}
 }
 func (m *QueryParamsRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -170,7 +78,7 @@ func (m *QueryParamsResponse) Reset()         { *m = QueryParamsResponse{} }
 func (m *QueryParamsResponse) String() string { return proto.CompactTextString(m) }
 func (*QueryParamsResponse) ProtoMessage()    {}
 func (*QueryParamsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_68269786207d1688, []int{3}
+	return fileDescriptor_68269786207d1688, []int{1}
 }
 func (m *QueryParamsResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -207,8 +115,6 @@ func (m *QueryParamsResponse) GetParams() Params {
 }
 
 func init() {
-	proto.RegisterType((*QueryGetCommitteeRequest)(nil), "kepler.committee.QueryGetCommitteeRequest")
-	proto.RegisterType((*QueryGetCommitteeResponse)(nil), "kepler.committee.QueryGetCommitteeResponse")
 	proto.RegisterType((*QueryParamsRequest)(nil), "kepler.committee.QueryParamsRequest")
 	proto.RegisterType((*QueryParamsResponse)(nil), "kepler.committee.QueryParamsResponse")
 }
@@ -216,34 +122,28 @@ func init() {
 func init() { proto.RegisterFile("kepler/committee/query.proto", fileDescriptor_68269786207d1688) }
 
 var fileDescriptor_68269786207d1688 = []byte{
-	// 427 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x52, 0xcf, 0x8a, 0xd3, 0x40,
-	0x18, 0xcf, 0xac, 0x5a, 0xd9, 0xd9, 0x3d, 0xe8, 0xb8, 0x87, 0x18, 0x77, 0x63, 0x8d, 0x0a, 0x4b,
-	0x85, 0x8c, 0x5b, 0x2f, 0x82, 0x78, 0xa9, 0x07, 0x51, 0x10, 0x34, 0xe0, 0xc5, 0x8b, 0x4c, 0xda,
-	0x8f, 0x38, 0xb4, 0x99, 0x49, 0x33, 0x53, 0x6b, 0xaf, 0x9e, 0x05, 0x05, 0x5f, 0xc2, 0xa3, 0x8f,
-	0xd1, 0x63, 0xc1, 0x8b, 0x27, 0x91, 0x56, 0xf0, 0x35, 0x24, 0x93, 0x49, 0x68, 0x4d, 0x8b, 0x5e,
-	0xc2, 0xf0, 0xfd, 0xfe, 0xce, 0x97, 0xc1, 0xc7, 0x43, 0xc8, 0x46, 0x90, 0xd3, 0xbe, 0x4c, 0x53,
-	0xae, 0x35, 0x00, 0x1d, 0x4f, 0x20, 0x9f, 0x85, 0x59, 0x2e, 0xb5, 0x24, 0x97, 0x4a, 0x34, 0xac,
-	0x51, 0xef, 0x32, 0x4b, 0xb9, 0x90, 0xd4, 0x7c, 0x4b, 0x92, 0xd7, 0xe9, 0x4b, 0x95, 0x4a, 0x45,
-	0x63, 0xa6, 0xac, 0x9a, 0xbe, 0x3d, 0x8b, 0x41, 0xb3, 0x33, 0x9a, 0xb1, 0x84, 0x0b, 0xa6, 0xb9,
-	0x14, 0x96, 0x7b, 0x94, 0xc8, 0x44, 0x9a, 0x23, 0x2d, 0x4e, 0x76, 0x7a, 0x9c, 0x48, 0x99, 0x8c,
-	0x80, 0xb2, 0x8c, 0x53, 0x26, 0x84, 0xd4, 0x46, 0xa2, 0x2c, 0xea, 0x37, 0x2a, 0x26, 0x20, 0x40,
-	0xf1, 0x0a, 0x3f, 0x69, 0xe0, 0x19, 0xcb, 0x59, 0x6a, 0xe1, 0xe0, 0x21, 0x76, 0x5f, 0x14, 0xa5,
-	0x1e, 0x83, 0x7e, 0x54, 0x31, 0x22, 0x18, 0x4f, 0x40, 0x69, 0x72, 0x03, 0x1f, 0xd6, 0xaa, 0xd7,
-	0x7c, 0xe0, 0xa2, 0x36, 0x3a, 0xdd, 0x8f, 0x0e, 0xea, 0xd9, 0x93, 0x41, 0xf0, 0x12, 0x5f, 0xdd,
-	0x22, 0x57, 0x99, 0x14, 0x0a, 0xc8, 0x7d, 0x7c, 0x31, 0x85, 0x34, 0x86, 0x5c, 0xb9, 0xa8, 0x7d,
-	0xee, 0xf4, 0xa0, 0xeb, 0x86, 0x7f, 0x6f, 0x2c, 0x7c, 0x66, 0x08, 0xbd, 0xf3, 0xf3, 0x1f, 0xd7,
-	0x9d, 0xa8, 0xa2, 0x07, 0x47, 0x98, 0x18, 0xdb, 0xe7, 0xa6, 0xaa, 0xed, 0x13, 0x44, 0xf8, 0xca,
-	0xc6, 0xd4, 0xc6, 0x3c, 0xc0, 0xad, 0xf2, 0x4a, 0xa6, 0xe0, 0xd6, 0x94, 0x52, 0xd1, 0xdb, 0x2f,
-	0x52, 0xbe, 0xfc, 0xfe, 0xda, 0x41, 0x91, 0x95, 0x74, 0x3f, 0xee, 0xe1, 0x0b, 0xc6, 0x94, 0x7c,
-	0x40, 0xf8, 0x70, 0xfd, 0x1a, 0xa4, 0xd3, 0xf4, 0xd9, 0xb5, 0x2a, 0xef, 0xce, 0x7f, 0x71, 0xcb,
-	0xc2, 0xc1, 0xcd, 0xf7, 0xdf, 0x7e, 0x7d, 0xde, 0x3b, 0x21, 0xd7, 0x68, 0xe3, 0xdf, 0xd4, 0x27,
-	0x32, 0xc5, 0xad, 0xb2, 0x35, 0xb9, 0xb5, 0xc3, 0x7b, 0x63, 0x39, 0xde, 0xed, 0x7f, 0xb0, 0x6c,
-	0x76, 0xdb, 0x64, 0x7b, 0xc4, 0xa5, 0x3b, 0xde, 0x45, 0xef, 0xe9, 0x7c, 0xe9, 0xa3, 0xc5, 0xd2,
-	0x47, 0x3f, 0x97, 0x3e, 0xfa, 0xb4, 0xf2, 0x9d, 0xc5, 0xca, 0x77, 0xbe, 0xaf, 0x7c, 0xe7, 0xd5,
-	0xdd, 0x84, 0xeb, 0x37, 0x93, 0xb8, 0x48, 0xa0, 0x03, 0xae, 0xb5, 0x14, 0xa0, 0xa7, 0x32, 0x1f,
-	0x56, 0x56, 0xef, 0xd6, 0xcc, 0xf4, 0x2c, 0x03, 0x15, 0xb7, 0xcc, 0x23, 0xbb, 0xf7, 0x27, 0x00,
-	0x00, 0xff, 0xff, 0x46, 0x1b, 0x94, 0x61, 0x48, 0x03, 0x00, 0x00,
+	// 328 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x90, 0x31, 0x4b, 0xc3, 0x40,
+	0x14, 0xc7, 0x73, 0x82, 0x05, 0xe3, 0xa2, 0xb1, 0x43, 0x09, 0xf5, 0x2c, 0x45, 0x41, 0x3a, 0xe4,
+	0x6c, 0x1d, 0xdd, 0x3a, 0x3a, 0x69, 0x47, 0xb7, 0x4b, 0x7d, 0x9c, 0x47, 0x9b, 0x7b, 0xd7, 0xdc,
+	0xd5, 0xda, 0x4d, 0xfc, 0x04, 0x82, 0x5f, 0xc2, 0xd1, 0x8f, 0xd1, 0xb1, 0xe0, 0xe2, 0x24, 0xd2,
+	0x0a, 0x7e, 0x0d, 0x49, 0x72, 0x15, 0x35, 0x88, 0x4b, 0x78, 0xbc, 0xdf, 0xff, 0xff, 0xcf, 0xff,
+	0x9e, 0x5f, 0x1f, 0x80, 0x1e, 0x42, 0xca, 0xfa, 0x98, 0x24, 0xd2, 0x5a, 0x00, 0x36, 0x1a, 0x43,
+	0x3a, 0x8d, 0x74, 0x8a, 0x16, 0x83, 0xad, 0x82, 0x46, 0x5f, 0x34, 0xdc, 0xe6, 0x89, 0x54, 0xc8,
+	0xf2, 0x6f, 0x21, 0x0a, 0x5b, 0x7d, 0x34, 0x09, 0x1a, 0x16, 0x73, 0xe3, 0xdc, 0xec, 0xba, 0x1d,
+	0x83, 0xe5, 0x6d, 0xa6, 0xb9, 0x90, 0x8a, 0x5b, 0x89, 0xca, 0x69, 0xab, 0x02, 0x05, 0xe6, 0x23,
+	0xcb, 0x26, 0xb7, 0xad, 0x0b, 0x44, 0x31, 0x04, 0xc6, 0xb5, 0x64, 0x5c, 0x29, 0xb4, 0xb9, 0xc5,
+	0x38, 0x4a, 0x4b, 0x15, 0x05, 0x28, 0x30, 0x72, 0xc5, 0x77, 0x4b, 0x5c, 0xf3, 0x94, 0x27, 0x0e,
+	0x37, 0xab, 0x7e, 0x70, 0x9e, 0x95, 0x3a, 0xcb, 0x97, 0x3d, 0x18, 0x8d, 0xc1, 0xd8, 0x66, 0xcf,
+	0xdf, 0xf9, 0xb1, 0x35, 0x1a, 0x95, 0x81, 0xe0, 0xc4, 0xaf, 0x14, 0xe6, 0x1a, 0x69, 0x90, 0xc3,
+	0xcd, 0x4e, 0x2d, 0xfa, 0x7d, 0x81, 0xa8, 0x70, 0x74, 0x37, 0x66, 0xaf, 0x7b, 0xde, 0xe3, 0xc7,
+	0x53, 0x8b, 0xf4, 0x9c, 0xa5, 0x73, 0x4b, 0xfc, 0xf5, 0x3c, 0x34, 0x98, 0xf8, 0x95, 0x42, 0x16,
+	0xec, 0x97, 0x03, 0xca, 0x6d, 0xc2, 0x83, 0x7f, 0x54, 0x45, 0xbb, 0x66, 0xe3, 0xee, 0xf9, 0xfd,
+	0x61, 0x2d, 0x0c, 0x6a, 0xec, 0x8f, 0x27, 0x77, 0x4f, 0x67, 0x0b, 0x4a, 0xe6, 0x0b, 0x4a, 0xde,
+	0x16, 0x94, 0xdc, 0x2f, 0xa9, 0x37, 0x5f, 0x52, 0xef, 0x65, 0x49, 0xbd, 0x8b, 0x23, 0x21, 0xed,
+	0xd5, 0x38, 0xce, 0xfe, 0xc0, 0x2e, 0xa5, 0xb5, 0xa8, 0xc0, 0x4e, 0x30, 0x1d, 0xac, 0xa2, 0x6e,
+	0xbe, 0x85, 0xd9, 0xa9, 0x06, 0x13, 0x57, 0xf2, 0xfb, 0x1d, 0x7f, 0x06, 0x00, 0x00, 0xff, 0xff,
+	0xf7, 0xdc, 0xb1, 0xb9, 0x23, 0x02, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -258,8 +158,6 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type QueryClient interface {
-	// Committee queries the committee of the module.
-	GetCommittee(ctx context.Context, in *QueryGetCommitteeRequest, opts ...grpc.CallOption) (*QueryGetCommitteeResponse, error)
 	// Parameters queries the parameters of the module.
 	Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error)
 }
@@ -270,15 +168,6 @@ type queryClient struct {
 
 func NewQueryClient(cc grpc1.ClientConn) QueryClient {
 	return &queryClient{cc}
-}
-
-func (c *queryClient) GetCommittee(ctx context.Context, in *QueryGetCommitteeRequest, opts ...grpc.CallOption) (*QueryGetCommitteeResponse, error) {
-	out := new(QueryGetCommitteeResponse)
-	err := c.cc.Invoke(ctx, "/kepler.committee.Query/GetCommittee", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *queryClient) Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error) {
@@ -292,8 +181,6 @@ func (c *queryClient) Params(ctx context.Context, in *QueryParamsRequest, opts .
 
 // QueryServer is the server API for Query service.
 type QueryServer interface {
-	// Committee queries the committee of the module.
-	GetCommittee(context.Context, *QueryGetCommitteeRequest) (*QueryGetCommitteeResponse, error)
 	// Parameters queries the parameters of the module.
 	Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error)
 }
@@ -302,33 +189,12 @@ type QueryServer interface {
 type UnimplementedQueryServer struct {
 }
 
-func (*UnimplementedQueryServer) GetCommittee(ctx context.Context, req *QueryGetCommitteeRequest) (*QueryGetCommitteeResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetCommittee not implemented")
-}
 func (*UnimplementedQueryServer) Params(ctx context.Context, req *QueryParamsRequest) (*QueryParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Params not implemented")
 }
 
 func RegisterQueryServer(s grpc1.Server, srv QueryServer) {
 	s.RegisterService(&_Query_serviceDesc, srv)
-}
-
-func _Query_GetCommittee_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryGetCommitteeRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(QueryServer).GetCommittee(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/kepler.committee.Query/GetCommittee",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).GetCommittee(ctx, req.(*QueryGetCommitteeRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _Query_Params_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -355,83 +221,12 @@ var _Query_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*QueryServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetCommittee",
-			Handler:    _Query_GetCommittee_Handler,
-		},
-		{
 			MethodName: "Params",
 			Handler:    _Query_Params_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "kepler/committee/query.proto",
-}
-
-func (m *QueryGetCommitteeRequest) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *QueryGetCommitteeRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *QueryGetCommitteeRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if len(m.CommitteeId) > 0 {
-		i -= len(m.CommitteeId)
-		copy(dAtA[i:], m.CommitteeId)
-		i = encodeVarintQuery(dAtA, i, uint64(len(m.CommitteeId)))
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *QueryGetCommitteeResponse) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *QueryGetCommitteeResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *QueryGetCommitteeResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if len(m.Members) > 0 {
-		for iNdEx := len(m.Members) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.Members[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintQuery(dAtA, i, uint64(size))
-			}
-			i--
-			dAtA[i] = 0xa
-		}
-	}
-	return len(dAtA) - i, nil
 }
 
 func (m *QueryParamsRequest) Marshal() (dAtA []byte, err error) {
@@ -501,34 +296,6 @@ func encodeVarintQuery(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
-func (m *QueryGetCommitteeRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = len(m.CommitteeId)
-	if l > 0 {
-		n += 1 + l + sovQuery(uint64(l))
-	}
-	return n
-}
-
-func (m *QueryGetCommitteeResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if len(m.Members) > 0 {
-		for _, e := range m.Members {
-			l = e.Size()
-			n += 1 + l + sovQuery(uint64(l))
-		}
-	}
-	return n
-}
-
 func (m *QueryParamsRequest) Size() (n int) {
 	if m == nil {
 		return 0
@@ -554,172 +321,6 @@ func sovQuery(x uint64) (n int) {
 }
 func sozQuery(x uint64) (n int) {
 	return sovQuery(uint64((x << 1) ^ uint64((int64(x) >> 63))))
-}
-func (m *QueryGetCommitteeRequest) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowQuery
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: QueryGetCommitteeRequest: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryGetCommitteeRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field CommitteeId", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowQuery
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthQuery
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthQuery
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.CommitteeId = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipQuery(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthQuery
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *QueryGetCommitteeResponse) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowQuery
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: QueryGetCommitteeResponse: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryGetCommitteeResponse: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Members", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowQuery
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthQuery
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthQuery
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Members = append(m.Members, Member{})
-			if err := m.Members[len(m.Members)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipQuery(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthQuery
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
 }
 func (m *QueryParamsRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)

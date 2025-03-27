@@ -10,4 +10,10 @@ option go_package = "github.com/dittonetwork/kepler/x/committee/types";
 message Params {
   option (amino.name) = "github.com/dittonetwork/kepler/x/committee/Params";
   option (gogoproto.equal) = true;
+
+  // min_committee_size is the min number of members in a committee.
+  uint32 min_committee_size = 1;
+
+  // max_committee_size is the max number of members in a committee.
+  uint32 max_committee_size = 2;
 }
