@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"maps"
+	"slices"
 
 	"cosmossdk.io/core/appmodule"
 	"cosmossdk.io/core/store"
@@ -170,6 +172,7 @@ func init() { //nolint: gochecknoinits // module registration
 	appmodule.Register(
 		&modulev1.Module{},
 		appmodule.Provide(ProvideModule),
+		appmodule.Invoke(InvokeSetHooks),
 	)
 }
 
@@ -214,4 +217,26 @@ func ProvideModule(in ModuleInputs) ModuleOutputs {
 	)
 
 	return ModuleOutputs{RestakingKeeper: k, Module: m}
+}
+
+// InvokeSetHooks invokes the SetHooks method on the keeper with the provided hooks.
+func InvokeSetHooks(keeper *keeper.Keeper, hooks map[string]types.RestakingHooksWrapper) error {
+	if hooks == nil {
+		return nil
+	}
+
+	// Default ordering is lexical by module name.
+	// Explicit ordering can be added to the module config if required.
+	modNames := slices.Sorted(maps.Keys(hooks))
+	var multiHooks types.MultiRestakingHooks
+	for _, modName := range modNames {
+		hook, ok := hooks[modName]
+		if !ok {
+			return fmt.Errorf("can't find restaking hooks for module %s", modName)
+		}
+		multiHooks = append(multiHooks, hook)
+	}
+
+	keeper.SetHooks(multiHooks)
+	return nil
 }
