@@ -114,22 +114,22 @@ func (m *QueryParamsResponse) GetParams() Params {
 	return Params{}
 }
 
-// QueryExecutorsRequest defines a request to fetch all executors.
-type QueryExecutorsRequest struct {
+// QueryExecutorsRequest defines a request to fetch all active executors.
+type QueryActiveExecutorsRequest struct {
 }
 
-func (m *QueryExecutorsRequest) Reset()         { *m = QueryExecutorsRequest{} }
-func (m *QueryExecutorsRequest) String() string { return proto.CompactTextString(m) }
-func (*QueryExecutorsRequest) ProtoMessage()    {}
-func (*QueryExecutorsRequest) Descriptor() ([]byte, []int) {
+func (m *QueryActiveExecutorsRequest) Reset()         { *m = QueryActiveExecutorsRequest{} }
+func (m *QueryActiveExecutorsRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryActiveExecutorsRequest) ProtoMessage()    {}
+func (*QueryActiveExecutorsRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_76888d1e779625ec, []int{2}
 }
-func (m *QueryExecutorsRequest) XXX_Unmarshal(b []byte) error {
+func (m *QueryActiveExecutorsRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *QueryExecutorsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *QueryActiveExecutorsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_QueryExecutorsRequest.Marshal(b, m, deterministic)
+		return xxx_messageInfo_QueryActiveExecutorsRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -139,35 +139,35 @@ func (m *QueryExecutorsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byt
 		return b[:n], nil
 	}
 }
-func (m *QueryExecutorsRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryExecutorsRequest.Merge(m, src)
+func (m *QueryActiveExecutorsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryActiveExecutorsRequest.Merge(m, src)
 }
-func (m *QueryExecutorsRequest) XXX_Size() int {
+func (m *QueryActiveExecutorsRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *QueryExecutorsRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryExecutorsRequest.DiscardUnknown(m)
+func (m *QueryActiveExecutorsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryActiveExecutorsRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_QueryExecutorsRequest proto.InternalMessageInfo
+var xxx_messageInfo_QueryActiveExecutorsRequest proto.InternalMessageInfo
 
-type QueryExecutorsResponse struct {
-	// executors list of executors.
+type QueryActiveExecutorsResponse struct {
+	// executors list of active executors.
 	Executors []*Executor `protobuf:"bytes,1,rep,name=executors,proto3" json:"executors,omitempty"`
 }
 
-func (m *QueryExecutorsResponse) Reset()         { *m = QueryExecutorsResponse{} }
-func (m *QueryExecutorsResponse) String() string { return proto.CompactTextString(m) }
-func (*QueryExecutorsResponse) ProtoMessage()    {}
-func (*QueryExecutorsResponse) Descriptor() ([]byte, []int) {
+func (m *QueryActiveExecutorsResponse) Reset()         { *m = QueryActiveExecutorsResponse{} }
+func (m *QueryActiveExecutorsResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryActiveExecutorsResponse) ProtoMessage()    {}
+func (*QueryActiveExecutorsResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_76888d1e779625ec, []int{3}
 }
-func (m *QueryExecutorsResponse) XXX_Unmarshal(b []byte) error {
+func (m *QueryActiveExecutorsResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *QueryExecutorsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *QueryActiveExecutorsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_QueryExecutorsResponse.Marshal(b, m, deterministic)
+		return xxx_messageInfo_QueryActiveExecutorsResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -177,19 +177,19 @@ func (m *QueryExecutorsResponse) XXX_Marshal(b []byte, deterministic bool) ([]by
 		return b[:n], nil
 	}
 }
-func (m *QueryExecutorsResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryExecutorsResponse.Merge(m, src)
+func (m *QueryActiveExecutorsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryActiveExecutorsResponse.Merge(m, src)
 }
-func (m *QueryExecutorsResponse) XXX_Size() int {
+func (m *QueryActiveExecutorsResponse) XXX_Size() int {
 	return m.Size()
 }
-func (m *QueryExecutorsResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryExecutorsResponse.DiscardUnknown(m)
+func (m *QueryActiveExecutorsResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryActiveExecutorsResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_QueryExecutorsResponse proto.InternalMessageInfo
+var xxx_messageInfo_QueryActiveExecutorsResponse proto.InternalMessageInfo
 
-func (m *QueryExecutorsResponse) GetExecutors() []*Executor {
+func (m *QueryActiveExecutorsResponse) GetExecutors() []*Executor {
 	if m != nil {
 		return m.Executors
 	}
@@ -281,8 +281,8 @@ func (m *QueryEmergencyExecutorsResponse) GetExecutors() []*Executor {
 func init() {
 	proto.RegisterType((*QueryParamsRequest)(nil), "kepler.executors.QueryParamsRequest")
 	proto.RegisterType((*QueryParamsResponse)(nil), "kepler.executors.QueryParamsResponse")
-	proto.RegisterType((*QueryExecutorsRequest)(nil), "kepler.executors.QueryExecutorsRequest")
-	proto.RegisterType((*QueryExecutorsResponse)(nil), "kepler.executors.QueryExecutorsResponse")
+	proto.RegisterType((*QueryActiveExecutorsRequest)(nil), "kepler.executors.QueryActiveExecutorsRequest")
+	proto.RegisterType((*QueryActiveExecutorsResponse)(nil), "kepler.executors.QueryActiveExecutorsResponse")
 	proto.RegisterType((*QueryEmergencyExecutorsRequest)(nil), "kepler.executors.QueryEmergencyExecutorsRequest")
 	proto.RegisterType((*QueryEmergencyExecutorsResponse)(nil), "kepler.executors.QueryEmergencyExecutorsResponse")
 }
@@ -290,35 +290,35 @@ func init() {
 func init() { proto.RegisterFile("kepler/executors/query.proto", fileDescriptor_76888d1e779625ec) }
 
 var fileDescriptor_76888d1e779625ec = []byte{
-	// 434 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x53, 0x4f, 0x8b, 0xd3, 0x40,
-	0x14, 0xcf, 0xac, 0x58, 0xd8, 0x59, 0x0f, 0x3a, 0xee, 0x6a, 0x09, 0x6b, 0x5a, 0x82, 0xcb, 0x96,
-	0x05, 0x33, 0xdb, 0x7a, 0x11, 0xbc, 0x2d, 0x88, 0xe0, 0x49, 0x73, 0xd4, 0xd3, 0x24, 0x3e, 0x62,
-	0xd8, 0xcd, 0xbc, 0x34, 0x33, 0xd1, 0x16, 0x3c, 0x89, 0x1f, 0x40, 0xf0, 0x4b, 0x78, 0xf4, 0x63,
-	0xf4, 0x58, 0xf0, 0xe2, 0x49, 0xa4, 0x15, 0x3c, 0xfa, 0x15, 0xa4, 0x99, 0x69, 0xab, 0x8d, 0xa1,
-	0xc8, 0x5e, 0xc2, 0xe3, 0xbd, 0xdf, 0x9f, 0x97, 0xdf, 0x63, 0xe8, 0xe1, 0x39, 0xe4, 0x17, 0x50,
-	0x70, 0x18, 0x41, 0x5c, 0x6a, 0x2c, 0x14, 0x1f, 0x96, 0x50, 0x8c, 0x83, 0xbc, 0x40, 0x8d, 0xec,
-	0xba, 0x99, 0x06, 0xab, 0xa9, 0x7b, 0x43, 0x64, 0xa9, 0x44, 0x5e, 0x7d, 0x0d, 0xc8, 0x3d, 0x89,
-	0x51, 0x65, 0xa8, 0x78, 0x24, 0x14, 0x18, 0x36, 0x7f, 0xdd, 0x8f, 0x40, 0x8b, 0x3e, 0xcf, 0x45,
-	0x92, 0x4a, 0xa1, 0x53, 0x94, 0x16, 0xbb, 0x9f, 0x60, 0x82, 0x55, 0xc9, 0x17, 0x95, 0xed, 0x1e,
-	0x26, 0x88, 0xc9, 0x05, 0x70, 0x91, 0xa7, 0x5c, 0x48, 0x89, 0xba, 0xa2, 0x28, 0x3b, 0xed, 0xd4,
-	0x56, 0x5c, 0x56, 0x16, 0x70, 0xa7, 0x06, 0xc8, 0x45, 0x21, 0x32, 0xcb, 0xf7, 0xf7, 0x29, 0x7b,
-	0xb6, 0xd8, 0xea, 0x69, 0xd5, 0x0c, 0x61, 0x58, 0x82, 0xd2, 0x7e, 0x48, 0x6f, 0xfe, 0xd5, 0x55,
-	0x39, 0x4a, 0x05, 0xec, 0x21, 0x6d, 0x19, 0x72, 0x9b, 0x74, 0x49, 0x6f, 0x6f, 0xd0, 0x0e, 0x36,
-	0x23, 0x08, 0x0c, 0xe3, 0x6c, 0x77, 0xf2, 0xad, 0xe3, 0x7c, 0xfa, 0xf9, 0xf9, 0x84, 0x84, 0x96,
-	0xe2, 0xdf, 0xa6, 0x07, 0x95, 0xe6, 0xa3, 0x25, 0x76, 0x6d, 0x76, 0x6b, 0x73, 0x60, 0xfd, 0x1e,
-	0xd0, 0xdd, 0x95, 0x72, 0x9b, 0x74, 0xaf, 0xf4, 0xf6, 0x06, 0x6e, 0xdd, 0x72, 0xc9, 0x0b, 0xd7,
-	0x60, 0xbf, 0x4b, 0x3d, 0xa3, 0x99, 0x41, 0x91, 0x80, 0x8c, 0xeb, 0xae, 0x2f, 0x68, 0xa7, 0x11,
-	0x71, 0x59, 0xfb, 0xc1, 0xaf, 0x1d, 0x7a, 0xb5, 0x52, 0x67, 0xef, 0x09, 0x6d, 0x99, 0x4c, 0xd8,
-	0xdd, 0x3a, 0xb7, 0x1e, 0xbd, 0x7b, 0xb4, 0x05, 0x65, 0x76, 0xf3, 0xef, 0xbd, 0xfb, 0xf2, 0xe3,
-	0xe3, 0xce, 0x31, 0x3b, 0xe2, 0x2f, 0x53, 0xad, 0x51, 0x82, 0x7e, 0x83, 0xc5, 0x39, 0x6f, 0x38,
-	0x36, 0x13, 0xf4, 0xda, 0x63, 0xd0, 0xab, 0x5f, 0x64, 0xc7, 0x0d, 0x2e, 0x9b, 0x31, 0xb9, 0xbd,
-	0xed, 0x40, 0x9b, 0xd6, 0x5b, 0x7a, 0xb0, 0xb0, 0xa8, 0xc5, 0xc9, 0x4e, 0x9b, 0x24, 0x9a, 0x6e,
-	0xe3, 0xf6, 0xff, 0x83, 0x61, 0xdc, 0xcf, 0x9e, 0x4c, 0x66, 0x1e, 0x99, 0xce, 0x3c, 0xf2, 0x7d,
-	0xe6, 0x91, 0x0f, 0x73, 0xcf, 0x99, 0xce, 0x3d, 0xe7, 0xeb, 0xdc, 0x73, 0x9e, 0x9f, 0x26, 0xa9,
-	0x7e, 0x55, 0x46, 0x41, 0x8c, 0xd9, 0x3f, 0xb3, 0x1a, 0xfd, 0x91, 0x96, 0x1e, 0xe7, 0xa0, 0xa2,
-	0x56, 0xf5, 0x34, 0xee, 0xff, 0x0e, 0x00, 0x00, 0xff, 0xff, 0x28, 0xdd, 0xe9, 0x6f, 0xff, 0x03,
-	0x00, 0x00,
+	// 444 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x93, 0x41, 0x6b, 0xd4, 0x40,
+	0x14, 0xc7, 0x33, 0x16, 0x17, 0x3a, 0xbd, 0xe8, 0x58, 0x61, 0x89, 0xdb, 0xec, 0x12, 0x2c, 0x96,
+	0x42, 0x33, 0xdd, 0xf5, 0x22, 0x78, 0xb2, 0x50, 0x0a, 0x9e, 0x34, 0x27, 0xd1, 0xd3, 0x24, 0x3e,
+	0x62, 0x68, 0x33, 0x2f, 0xcd, 0x4c, 0x6a, 0x17, 0xbc, 0x28, 0x7e, 0x00, 0xc1, 0x2f, 0xe1, 0xd1,
+	0x8f, 0xd1, 0x63, 0xc1, 0x8b, 0x27, 0x91, 0x5d, 0xc1, 0xaf, 0x21, 0x9d, 0x99, 0x54, 0xdd, 0x6c,
+	0x50, 0xf1, 0x12, 0x86, 0xf7, 0xfe, 0xbf, 0xf7, 0x7f, 0xfc, 0x1f, 0xa1, 0x83, 0x43, 0x28, 0x8f,
+	0xa0, 0xe2, 0x70, 0x0a, 0x69, 0xad, 0xb1, 0x52, 0xfc, 0xb8, 0x86, 0x6a, 0x1a, 0x95, 0x15, 0x6a,
+	0x64, 0xd7, 0x6c, 0x37, 0xba, 0xec, 0xfa, 0xd7, 0x45, 0x91, 0x4b, 0xe4, 0xe6, 0x6b, 0x45, 0xfe,
+	0x76, 0x8a, 0xaa, 0x40, 0xc5, 0x13, 0xa1, 0xc0, 0xd2, 0xfc, 0x64, 0x9c, 0x80, 0x16, 0x63, 0x5e,
+	0x8a, 0x2c, 0x97, 0x42, 0xe7, 0x28, 0x9d, 0x76, 0x3d, 0xc3, 0x0c, 0xcd, 0x93, 0x5f, 0xbc, 0x5c,
+	0x75, 0x90, 0x21, 0x66, 0x47, 0xc0, 0x45, 0x99, 0x73, 0x21, 0x25, 0x6a, 0x83, 0x28, 0xd7, 0x1d,
+	0xb6, 0x56, 0x6c, 0x5e, 0x4e, 0xb0, 0xd1, 0x12, 0x94, 0xa2, 0x12, 0x85, 0xe3, 0xc3, 0x75, 0xca,
+	0x1e, 0x5f, 0x6c, 0xf5, 0xc8, 0x14, 0x63, 0x38, 0xae, 0x41, 0xe9, 0x30, 0xa6, 0x37, 0x7e, 0xab,
+	0xaa, 0x12, 0xa5, 0x02, 0x76, 0x9f, 0xf6, 0x2c, 0xdc, 0x27, 0x23, 0xb2, 0xb5, 0x36, 0xe9, 0x47,
+	0x8b, 0x11, 0x44, 0x96, 0xd8, 0x5b, 0x3d, 0xfb, 0x32, 0xf4, 0x3e, 0x7c, 0xff, 0xb8, 0x4d, 0x62,
+	0x87, 0x84, 0x1b, 0xf4, 0x96, 0x99, 0xf9, 0x20, 0xd5, 0xf9, 0x09, 0xec, 0x37, 0x44, 0x63, 0xf9,
+	0x84, 0x0e, 0x96, 0xb7, 0x9d, 0xf7, 0x3d, 0xba, 0x7a, 0xe9, 0xd2, 0x27, 0xa3, 0x95, 0xad, 0xb5,
+	0x89, 0xdf, 0xb6, 0x6f, 0xb8, 0xf8, 0xa7, 0x38, 0x1c, 0xd1, 0xc0, 0x4c, 0xde, 0x2f, 0xa0, 0xca,
+	0x40, 0xa6, 0xd3, 0x96, 0xf7, 0x33, 0x3a, 0xec, 0x54, 0xfc, 0xaf, 0xfd, 0xe4, 0xf5, 0x0a, 0xbd,
+	0x6a, 0xa6, 0xb3, 0xb7, 0x84, 0xf6, 0x6c, 0x3e, 0xec, 0x76, 0x9b, 0x6d, 0x9f, 0xc1, 0xdf, 0xfc,
+	0x83, 0xca, 0xee, 0x16, 0xee, 0xbc, 0xf9, 0xf4, 0xed, 0xfd, 0x95, 0x3b, 0x6c, 0x93, 0x3f, 0xcf,
+	0xb5, 0x46, 0x09, 0xfa, 0x25, 0x56, 0x87, 0xbc, 0xe3, 0xf0, 0x4c, 0x51, 0x76, 0x00, 0x7a, 0x21,
+	0x67, 0xb6, 0xd3, 0xe1, 0xb5, 0xfc, 0x5c, 0x7e, 0xf4, 0xb7, 0x72, 0x97, 0xdf, 0x2b, 0x7a, 0xf3,
+	0x00, 0x74, 0x3b, 0x60, 0xb6, 0xdb, 0x31, 0xa8, 0xf3, 0x5a, 0xfe, 0xf8, 0x1f, 0x08, 0xeb, 0xbe,
+	0xf7, 0xf0, 0x6c, 0x16, 0x90, 0xf3, 0x59, 0x40, 0xbe, 0xce, 0x02, 0xf2, 0x6e, 0x1e, 0x78, 0xe7,
+	0xf3, 0xc0, 0xfb, 0x3c, 0x0f, 0xbc, 0xa7, 0xbb, 0x59, 0xae, 0x5f, 0xd4, 0x49, 0x94, 0x62, 0xb1,
+	0x34, 0xbd, 0xd3, 0x5f, 0xf2, 0xd3, 0xd3, 0x12, 0x54, 0xd2, 0x33, 0x3f, 0xce, 0xdd, 0x1f, 0x01,
+	0x00, 0x00, 0xff, 0xff, 0xef, 0xaa, 0x01, 0x42, 0x1d, 0x04, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -335,9 +335,9 @@ const _ = grpc.SupportPackageIsVersion4
 type QueryClient interface {
 	// Parameters queries the parameters of the module.
 	Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error)
-	// GetExecutors returns all executors.
-	GetExecutors(ctx context.Context, in *QueryExecutorsRequest, opts ...grpc.CallOption) (*QueryExecutorsResponse, error)
-	// GetEmergencyExecutors returns a list of emergency executors.
+	// GetActiveExecutors returns active executors.
+	GetActiveExecutors(ctx context.Context, in *QueryActiveExecutorsRequest, opts ...grpc.CallOption) (*QueryActiveExecutorsResponse, error)
+	// GetEmergencyExecutors returns a list of emergency executors. They are also active.
 	GetEmergencyExecutors(ctx context.Context, in *QueryEmergencyExecutorsRequest, opts ...grpc.CallOption) (*QueryEmergencyExecutorsResponse, error)
 }
 
@@ -358,9 +358,9 @@ func (c *queryClient) Params(ctx context.Context, in *QueryParamsRequest, opts .
 	return out, nil
 }
 
-func (c *queryClient) GetExecutors(ctx context.Context, in *QueryExecutorsRequest, opts ...grpc.CallOption) (*QueryExecutorsResponse, error) {
-	out := new(QueryExecutorsResponse)
-	err := c.cc.Invoke(ctx, "/kepler.executors.Query/GetExecutors", in, out, opts...)
+func (c *queryClient) GetActiveExecutors(ctx context.Context, in *QueryActiveExecutorsRequest, opts ...grpc.CallOption) (*QueryActiveExecutorsResponse, error) {
+	out := new(QueryActiveExecutorsResponse)
+	err := c.cc.Invoke(ctx, "/kepler.executors.Query/GetActiveExecutors", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -380,9 +380,9 @@ func (c *queryClient) GetEmergencyExecutors(ctx context.Context, in *QueryEmerge
 type QueryServer interface {
 	// Parameters queries the parameters of the module.
 	Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error)
-	// GetExecutors returns all executors.
-	GetExecutors(context.Context, *QueryExecutorsRequest) (*QueryExecutorsResponse, error)
-	// GetEmergencyExecutors returns a list of emergency executors.
+	// GetActiveExecutors returns active executors.
+	GetActiveExecutors(context.Context, *QueryActiveExecutorsRequest) (*QueryActiveExecutorsResponse, error)
+	// GetEmergencyExecutors returns a list of emergency executors. They are also active.
 	GetEmergencyExecutors(context.Context, *QueryEmergencyExecutorsRequest) (*QueryEmergencyExecutorsResponse, error)
 }
 
@@ -393,8 +393,8 @@ type UnimplementedQueryServer struct {
 func (*UnimplementedQueryServer) Params(ctx context.Context, req *QueryParamsRequest) (*QueryParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Params not implemented")
 }
-func (*UnimplementedQueryServer) GetExecutors(ctx context.Context, req *QueryExecutorsRequest) (*QueryExecutorsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetExecutors not implemented")
+func (*UnimplementedQueryServer) GetActiveExecutors(ctx context.Context, req *QueryActiveExecutorsRequest) (*QueryActiveExecutorsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetActiveExecutors not implemented")
 }
 func (*UnimplementedQueryServer) GetEmergencyExecutors(ctx context.Context, req *QueryEmergencyExecutorsRequest) (*QueryEmergencyExecutorsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetEmergencyExecutors not implemented")
@@ -422,20 +422,20 @@ func _Query_Params_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Query_GetExecutors_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryExecutorsRequest)
+func _Query_GetActiveExecutors_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryActiveExecutorsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(QueryServer).GetExecutors(ctx, in)
+		return srv.(QueryServer).GetActiveExecutors(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/kepler.executors.Query/GetExecutors",
+		FullMethod: "/kepler.executors.Query/GetActiveExecutors",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).GetExecutors(ctx, req.(*QueryExecutorsRequest))
+		return srv.(QueryServer).GetActiveExecutors(ctx, req.(*QueryActiveExecutorsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -468,8 +468,8 @@ var _Query_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Query_Params_Handler,
 		},
 		{
-			MethodName: "GetExecutors",
-			Handler:    _Query_GetExecutors_Handler,
+			MethodName: "GetActiveExecutors",
+			Handler:    _Query_GetActiveExecutors_Handler,
 		},
 		{
 			MethodName: "GetEmergencyExecutors",
@@ -536,7 +536,7 @@ func (m *QueryParamsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *QueryExecutorsRequest) Marshal() (dAtA []byte, err error) {
+func (m *QueryActiveExecutorsRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -546,12 +546,12 @@ func (m *QueryExecutorsRequest) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *QueryExecutorsRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *QueryActiveExecutorsRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *QueryExecutorsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *QueryActiveExecutorsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -559,7 +559,7 @@ func (m *QueryExecutorsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *QueryExecutorsResponse) Marshal() (dAtA []byte, err error) {
+func (m *QueryActiveExecutorsResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -569,12 +569,12 @@ func (m *QueryExecutorsResponse) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *QueryExecutorsResponse) MarshalTo(dAtA []byte) (int, error) {
+func (m *QueryActiveExecutorsResponse) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *QueryExecutorsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *QueryActiveExecutorsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -687,7 +687,7 @@ func (m *QueryParamsResponse) Size() (n int) {
 	return n
 }
 
-func (m *QueryExecutorsRequest) Size() (n int) {
+func (m *QueryActiveExecutorsRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -696,7 +696,7 @@ func (m *QueryExecutorsRequest) Size() (n int) {
 	return n
 }
 
-func (m *QueryExecutorsResponse) Size() (n int) {
+func (m *QueryActiveExecutorsResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -874,7 +874,7 @@ func (m *QueryParamsResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *QueryExecutorsRequest) Unmarshal(dAtA []byte) error {
+func (m *QueryActiveExecutorsRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -897,10 +897,10 @@ func (m *QueryExecutorsRequest) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: QueryExecutorsRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: QueryActiveExecutorsRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryExecutorsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: QueryActiveExecutorsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		default:
@@ -924,7 +924,7 @@ func (m *QueryExecutorsRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *QueryExecutorsResponse) Unmarshal(dAtA []byte) error {
+func (m *QueryActiveExecutorsResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -947,10 +947,10 @@ func (m *QueryExecutorsResponse) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: QueryExecutorsResponse: wiretype end group for non-group")
+			return fmt.Errorf("proto: QueryActiveExecutorsResponse: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryExecutorsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: QueryActiveExecutorsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:

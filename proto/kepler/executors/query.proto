@@ -16,9 +16,9 @@ service Query {
   rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/dittonetwork/kepler/executors/params";
   }
-  // GetExecutors returns all executors.
-  rpc GetExecutors(QueryExecutorsRequest) returns (QueryExecutorsResponse);
-  // GetEmergencyExecutors returns a list of emergency executors.
+  // GetActiveExecutors returns active executors.
+  rpc GetActiveExecutors(QueryActiveExecutorsRequest) returns (QueryActiveExecutorsResponse);
+  // GetEmergencyExecutors returns a list of emergency executors. They are also active.
   rpc GetEmergencyExecutors(QueryEmergencyExecutorsRequest) returns (QueryEmergencyExecutorsResponse);
 }
 
@@ -34,11 +34,11 @@ message QueryParamsResponse {
   ];
 }
 
-// QueryExecutorsRequest defines a request to fetch all executors.
-message QueryExecutorsRequest {}
+// QueryExecutorsRequest defines a request to fetch all active executors.
+message QueryActiveExecutorsRequest {}
 
-message QueryExecutorsResponse {
-  // executors list of executors.
+message QueryActiveExecutorsResponse {
+  // executors list of active executors.
   repeated Executor executors = 1;
 }
 

@@ -18,14 +18,6 @@ func NewMsgServerImpl(keeper Keeper) types.MsgServer {
 
 var _ types.MsgServer = msgServer{}
 
-func (k msgServer) AddExecutor(
-	_ context.Context,
-	_ *types.MsgAddExecutor,
-) (*types.MsgAddExecutorResponse, error) {
-	// TODO implement me
-	panic("implement me")
-}
-
 func (k msgServer) ActivateExecutor(
 	_ context.Context,
 	_ *types.MsgActivateExecutor,

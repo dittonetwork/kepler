@@ -22,7 +22,7 @@ type (
 		// should be the x/gov module account.
 		authority string
 
-		Executors collections.Map[string, types.Executor]
+		Executors *collections.IndexedMap[string, types.Executor, Idx]
 	}
 )
 
@@ -44,12 +44,13 @@ func NewKeeper(
 		storeService: storeService,
 		authority:    authority,
 		logger:       logger,
-		Executors: collections.NewMap(
+		Executors: collections.NewIndexedMap(
 			sb,
 			types.ExecutorsPrefix,
 			types.CollectionNameExecutors,
 			collections.StringKey,
 			codec.CollValue[types.Executor](cdc),
+			NewIndexes(sb),
 		),
 	}
 }
