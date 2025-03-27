@@ -10,6 +10,4 @@ option go_package = "github.com/dittonetwork/kepler/x/executors/types";
 message Params {
   option (amino.name) = "kepler/x/executors/Params";
   option (gogoproto.equal) = true;
-
-  
 }

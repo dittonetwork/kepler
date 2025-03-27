@@ -19,8 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Query_GetCommittee_FullMethodName = "/kepler.committee.Query/GetCommittee"
-	Query_Params_FullMethodName       = "/kepler.committee.Query/Params"
+	Query_Params_FullMethodName = "/kepler.committee.Query/Params"
 )
 
 // QueryClient is the client API for Query service.
@@ -29,8 +28,6 @@ const (
 //
 // Query defines the gRPC querier service.
 type QueryClient interface {
-	// Committee queries the committee of the module.
-	GetCommittee(ctx context.Context, in *QueryGetCommitteeRequest, opts ...grpc.CallOption) (*QueryGetCommitteeResponse, error)
 	// Parameters queries the parameters of the module.
 	Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error)
 }
@@ -41,16 +38,6 @@ type queryClient struct {
 
 func NewQueryClient(cc grpc.ClientConnInterface) QueryClient {
 	return &queryClient{cc}
-}
-
-func (c *queryClient) GetCommittee(ctx context.Context, in *QueryGetCommitteeRequest, opts ...grpc.CallOption) (*QueryGetCommitteeResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(QueryGetCommitteeResponse)
-	err := c.cc.Invoke(ctx, Query_GetCommittee_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *queryClient) Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error) {
@@ -69,8 +56,6 @@ func (c *queryClient) Params(ctx context.Context, in *QueryParamsRequest, opts .
 //
 // Query defines the gRPC querier service.
 type QueryServer interface {
-	// Committee queries the committee of the module.
-	GetCommittee(context.Context, *QueryGetCommitteeRequest) (*QueryGetCommitteeResponse, error)
 	// Parameters queries the parameters of the module.
 	Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error)
 	mustEmbedUnimplementedQueryServer()
@@ -83,9 +68,6 @@ type QueryServer interface {
 // pointer dereference when methods are called.
 type UnimplementedQueryServer struct{}
 
-func (UnimplementedQueryServer) GetCommittee(context.Context, *QueryGetCommitteeRequest) (*QueryGetCommitteeResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetCommittee not implemented")
-}
 func (UnimplementedQueryServer) Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Params not implemented")
 }
@@ -108,24 +90,6 @@ func RegisterQueryServer(s grpc.ServiceRegistrar, srv QueryServer) {
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&Query_ServiceDesc, srv)
-}
-
-func _Query_GetCommittee_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryGetCommitteeRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(QueryServer).GetCommittee(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Query_GetCommittee_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).GetCommittee(ctx, req.(*QueryGetCommitteeRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _Query_Params_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -153,10 +117,6 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "kepler.committee.Query",
 	HandlerType: (*QueryServer)(nil),
 	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "GetCommittee",
-			Handler:    _Query_GetCommittee_Handler,
-		},
 		{
 			MethodName: "Params",
 			Handler:    _Query_Params_Handler,
