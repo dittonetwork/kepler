@@ -1,6 +1,7 @@
 package types
 
 import (
+	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 )
 
@@ -77,4 +78,9 @@ type UpdateValidatorSetParams struct {
 	BlockHash   string
 	// EpochNumber is the epoch number of the Cosmos chain
 	EpochNumber int64
+}
+
+type EmergencyValidator struct {
+	Address     sdk.ValAddress
+	VotingPower int64
 }
