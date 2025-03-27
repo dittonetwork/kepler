@@ -2,7 +2,6 @@ package keeper
 
 import (
 	"fmt"
-	"strconv"
 	"time"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -43,15 +42,11 @@ func (k Keeper) GetAllExecutors(ctx sdk.Context) ([]types.Executor, error) {
 	return executors, nil
 }
 
-// ToggleExecutorActivity toggles the activity status of an executor.
-func (k Keeper) ToggleExecutorActivity(ctx sdk.Context, addr string, isActive bool) error {
+// SetIsActive sets isActive for executor.
+func (k Keeper) SetIsActive(ctx sdk.Context, addr string, isActive bool) error {
 	v, err := k.Executors.Get(ctx, addr)
 	if err != nil {
 		return fmt.Errorf("failed to get executor: %w", err)
-	}
-
-	if v.GetIsActive() == isActive {
-		return fmt.Errorf("executor is already %s", strconv.FormatBool(isActive))
 	}
 
 	v.IsActive = isActive

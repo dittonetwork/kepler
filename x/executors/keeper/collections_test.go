@@ -1,8 +1,10 @@
 package keeper_test
 
 import (
+	"errors"
 	"testing"
 
+	"cosmossdk.io/collections"
 	"github.com/dittonetwork/kepler/testutil/keeper"
 	"github.com/dittonetwork/kepler/x/executors/types"
 	"github.com/stretchr/testify/require"
@@ -53,7 +55,7 @@ func TestGetAllExecutors(t *testing.T) {
 	require.Len(t, all, 2)
 }
 
-func TestToggleExecutorActivity(t *testing.T) {
+func TestSetIsActive(t *testing.T) {
 	k, ctx := keeper.ExecutorsKeeper(t)
 
 	exec := types.Executor{
@@ -66,21 +68,21 @@ func TestToggleExecutorActivity(t *testing.T) {
 	require.NoError(t, err)
 
 	// Toggle from false to true.
-	err = k.ToggleExecutorActivity(ctx, exec.Address, true)
+	err = k.SetIsActive(ctx, exec.Address, true)
 	require.NoError(t, err)
 	updated, err := k.Executors.Get(ctx, exec.Address)
 	require.NoError(t, err)
 	require.True(t, updated.IsActive)
 
-	// Trying to toggle to true again should result in an error.
-	err = k.ToggleExecutorActivity(ctx, exec.Address, true)
-	require.Error(t, err)
-	require.Contains(t, err.Error(), "executor is already true")
-
 	// Toggle back to false.
-	err = k.ToggleExecutorActivity(ctx, exec.Address, false)
+	err = k.SetIsActive(ctx, exec.Address, false)
 	require.NoError(t, err)
 	updated, err = k.Executors.Get(ctx, exec.Address)
 	require.NoError(t, err)
 	require.False(t, updated.IsActive)
+
+	// Not found case
+	err = k.SetIsActive(ctx, "cosmos1notfound", true)
+	require.Error(t, err)
+	require.True(t, errors.Is(err, collections.ErrNotFound))
 }
