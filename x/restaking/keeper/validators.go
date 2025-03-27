@@ -222,8 +222,28 @@ func (k Keeper) updateValidatorStatusAndTokens(
 	tokenAmount := sdk.TokensFromConsensusPower(int64(operator.Tokens), sdk.DefaultPowerReduction)
 	validator.Tokens = tokenAmount
 
+	if validator.Status == stakingtypes.Unbonding {
+		// Set the unbonding completion time
+		err := k.BeforeValidatorBeginUnbonding(ctx, validator)
+		if err != nil {
+			logger.With("error", err).Error("failed to set unbonding hook")
+			return err
+		}
+	}
+
 	// Set the updated validator in the staking module
-	return k.staking.SetValidator(ctx, validator)
+	err := k.staking.SetValidator(ctx, validator)
+	if err != nil {
+		logger.With("error", err).Error("failed to update validator")
+		return err
+	}
+
+	// Dispatch hook for validator update if the validator is bonded
+	if validator.Status == stakingtypes.Bonded {
+		return k.AfterValidatorBonded(ctx, validator)
+	}
+
+	return nil
 }
 
 // saveValidatorToStore saves the validator to the restaking module's store.
