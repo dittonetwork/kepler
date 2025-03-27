@@ -10,6 +10,7 @@ import (
 
 // AddExecutor generates a new executor ID, sets the creation timestamp,
 // and stores the executor. It returns the stored executor.
+// nolint: unused // TODO: remove this comment once the function is used
 func (k Keeper) addExecutor(ctx sdk.Context, executor types.Executor) (*types.Executor, error) {
 	executor.CreatedAt = time.Now().UTC().Unix()
 	if err := k.Executors.Set(ctx, executor.Address, executor); err != nil {
@@ -20,6 +21,7 @@ func (k Keeper) addExecutor(ctx sdk.Context, executor types.Executor) (*types.Ex
 }
 
 // GetAllExecutors returns a slice of all executors stored.
+// nolint: unused // TODO: remove this comment once the function is used
 func (k Keeper) getAllExecutors(ctx sdk.Context) ([]types.Executor, error) {
 	var executors []types.Executor
 	iter, err := k.Executors.Iterate(ctx, nil)
