@@ -3,6 +3,7 @@ package keeper
 import (
 	"fmt"
 
+	"cosmossdk.io/collections"
 	"cosmossdk.io/core/store"
 	"cosmossdk.io/log"
 	"github.com/cosmos/cosmos-sdk/codec"
@@ -20,6 +21,8 @@ type (
 		// the address capable of executing a MsgUpdateParams message. Typically, this
 		// should be the x/gov module account.
 		authority string
+
+		Executors collections.Map[string, types.Executor]
 	}
 )
 
@@ -34,11 +37,20 @@ func NewKeeper(
 		panic(fmt.Sprintf("invalid authority address: %s", authority))
 	}
 
+	sb := collections.NewSchemaBuilder(storeService)
+
 	return Keeper{
 		cdc:          cdc,
 		storeService: storeService,
 		authority:    authority,
 		logger:       logger,
+		Executors: collections.NewMap(
+			sb,
+			types.ExecutorsPrefix,
+			types.CollectionNameExecutors,
+			collections.StringKey,
+			codec.CollValue[types.Executor](cdc),
+		),
 	}
 }
 
