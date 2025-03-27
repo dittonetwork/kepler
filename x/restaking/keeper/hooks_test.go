@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"testing"
+	"time"
 
 	"cosmossdk.io/log"
 	"cosmossdk.io/store"
@@ -103,6 +104,15 @@ func TestUpdateValidatorSetWithHooks(t *testing.T) {
 		err := k.SetParams(ctx, types.DefaultParams())
 		require.NoError(t, err)
 
+		// Initialize LastUpdate with default values
+		err = k.LastUpdate.Set(ctx, types.LastUpdate{
+			Epoch:       0,
+			Timestamp:   time.Now(),
+			BlockHeight: 0,
+			BlockHash:   "",
+		})
+		require.NoError(t, err)
+
 		// Create and set hooks
 		mockHooks := &MockRestakingHooks{}
 		k.SetHooks(types.NewMultiRestakingHooks(mockHooks))
@@ -154,6 +164,9 @@ func TestUpdateValidatorSetWithHooks(t *testing.T) {
 					Tokens:    100,
 				},
 			},
+			EpochNumber: 1, // Set a higher epoch number
+			BlockHeight: 100,
+			BlockHash:   "test_hash",
 		}
 
 		err = k.UpdateValidatorSet(ctx, params)
@@ -214,6 +227,9 @@ func TestUpdateValidatorSetWithHooks(t *testing.T) {
 					Tokens:    100,
 				},
 			},
+			EpochNumber: 1, // Set a higher epoch number
+			BlockHeight: 100,
+			BlockHash:   "test_hash",
 		}
 
 		err = k.UpdateValidatorSet(ctx, params)
@@ -274,11 +290,18 @@ func TestUpdateValidatorSetWithHooks(t *testing.T) {
 					Tokens:    100,
 				},
 			},
+			EpochNumber: 1, // Set a higher epoch number
+			BlockHeight: 100,
+			BlockHash:   "test_hash",
 		}
 
+		// Expect error from hook
 		err = k.UpdateValidatorSet(ctx, params)
 		require.Error(t, err)
 		require.Contains(t, err.Error(), "unauthorized")
+
+		// Verify hook was called
+		require.True(t, mockHooks.AfterBondedCalled)
 	})
 
 	t.Run("Should handle error from BeforeValidatorBeginUnbonding hook", func(t *testing.T) {
@@ -309,8 +332,6 @@ func TestUpdateValidatorSetWithHooks(t *testing.T) {
 			SetValidator(gomock.Any(), gomock.Any()).
 			Return(nil)
 
-		// We expect the hook error to prevent execution from proceeding
-
 		params := types.UpdateValidatorSetParams{
 			Operators: []types.Operator{
 				{
@@ -320,10 +341,17 @@ func TestUpdateValidatorSetWithHooks(t *testing.T) {
 					Tokens:    100,
 				},
 			},
+			EpochNumber: 1, // Set a higher epoch number
+			BlockHeight: 100,
+			BlockHash:   "test_hash",
 		}
 
+		// Expect error from hook
 		err = k.UpdateValidatorSet(ctx, params)
 		require.Error(t, err)
 		require.Contains(t, err.Error(), "unauthorized")
+
+		// Verify hook was called
+		require.True(t, mockHooks.BeforeUnbondingCalled)
 	})
 }
