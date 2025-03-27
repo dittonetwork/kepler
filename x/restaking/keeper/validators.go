@@ -226,7 +226,7 @@ func (k Keeper) updateValidatorStatusAndTokens(
 		// Set the unbonding completion time
 		err := k.BeforeValidatorBeginUnbonding(ctx, validator)
 		if err != nil {
-			logger.With("error", err).Error("failed to set unbonding completion time")
+			logger.With("error", err).Error("failed to set unbonding hook")
 			return err
 		}
 	}
