@@ -1,15 +1,22 @@
 package types
 
-// this line is used by starport scaffolding # genesis/types/import
+import (
+	"time"
+)
 
-// DefaultIndex is the default global index.
-const DefaultIndex uint64 = 1
+// this line is used by starport scaffolding # genesis/types/import
 
 // DefaultGenesis returns the default genesis state.
 func DefaultGenesis() *GenesisState {
 	return &GenesisState{
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
+		LastUpdate: LastUpdate{
+			Epoch:       1,
+			Timestamp:   time.Time{},
+			BlockHeight: 1,
+			BlockHash:   "",
+		},
 	}
 }
 
