@@ -19,7 +19,7 @@ func (k Keeper) GetActiveExecutors(
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
-	activeExecutors := make([]*types.Executor, 0)
+	var activeExecutors []*types.Executor
 	for i := range executors {
 		if executors[i].GetIsActive() {
 			activeExecutors = append(activeExecutors, &executors[i])
