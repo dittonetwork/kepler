@@ -13,15 +13,17 @@ const (
 
 	// MemStoreKey defines the in-memory store key.
 	MemStoreKey = "mem_committee"
+
+	latestEpochStorePrefixIndex = 2
 )
 
 var (
-	// CommitteeStoreKeyPrefix is the prefix for the committee store key.
-	CommitteeStoreKeyPrefix = collections.NewPrefix(1)
+	// CommitteesStoreKeyPrefix is the prefix for the committee store key.
+	CommitteesStoreKeyPrefix = collections.NewPrefix(0)
 
-	// ChainIDStoreKeyPrefix is the prefix for the chain id store key.
-	ChainIDStoreKeyPrefix = collections.NewPrefix("chain_id")
+	// CommitteesEmergencyIdxPrefix is the prefix for the emergency committees emergency index key.
+	CommitteesEmergencyIdxPrefix = collections.NewPrefix(1)
 
-	// ActiveCommitteeStoreKeyPrefix is the prefix for the active committee store key.
-	ActiveCommitteeStoreKeyPrefix = collections.NewPrefix("active_committee")
+	// LatestEpochStorePrefix is the prefix for the latest epoch store key.
+	LatestEpochStorePrefix = collections.NewPrefix(latestEpochStorePrefixIndex)
 )
