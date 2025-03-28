@@ -7,8 +7,9 @@ import (
 )
 
 const (
-	ErrCodeInvalidSigner = 1100
-	ErrCodeSample        = 1101
+	ErrCodeInvalidSigner          = 1100
+	ErrCodeCommitteeAlreadyExists = 1102
+	ErrCodeCommitteeInvalidEpoch  = 1103
 )
 
 // x/committee module sentinel errors.
@@ -18,5 +19,15 @@ var (
 		ErrCodeInvalidSigner,
 		"expected gov account as only signer for proposal message",
 	)
-	ErrSample = sdkerrors.Register(ModuleName, ErrCodeSample, "sample error")
+	ErrCommitteeAlreadyExists = sdkerrors.Register(
+		ModuleName,
+		ErrCodeCommitteeAlreadyExists,
+		"committee already exists",
+	)
+
+	ErrInvalidEpoch = sdkerrors.Register(
+		ModuleName,
+		ErrCodeCommitteeInvalidEpoch,
+		"invalid epoch",
+	)
 )

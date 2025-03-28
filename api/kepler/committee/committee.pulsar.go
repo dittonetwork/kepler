@@ -148,14 +148,14 @@ func (x *fastReflection_Committee) Interface() protoreflect.ProtoMessage {
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
 func (x *fastReflection_Committee) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
-	if x.Epoch != int64(0) {
-		value := protoreflect.ValueOfInt64(x.Epoch)
+	if x.Epoch != uint32(0) {
+		value := protoreflect.ValueOfUint32(x.Epoch)
 		if !f(fd_Committee_epoch, value) {
 			return
 		}
 	}
-	if x.Seed != "" {
-		value := protoreflect.ValueOfString(x.Seed)
+	if len(x.Seed) != 0 {
+		value := protoreflect.ValueOfBytes(x.Seed)
 		if !f(fd_Committee_seed, value) {
 			return
 		}
@@ -188,9 +188,9 @@ func (x *fastReflection_Committee) Range(f func(protoreflect.FieldDescriptor, pr
 func (x *fastReflection_Committee) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
 	case "kepler.committee.Committee.epoch":
-		return x.Epoch != int64(0)
+		return x.Epoch != uint32(0)
 	case "kepler.committee.Committee.seed":
-		return x.Seed != ""
+		return len(x.Seed) != 0
 	case "kepler.committee.Committee.is_emergency":
 		return x.IsEmergency != false
 	case "kepler.committee.Committee.executors":
@@ -212,9 +212,9 @@ func (x *fastReflection_Committee) Has(fd protoreflect.FieldDescriptor) bool {
 func (x *fastReflection_Committee) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
 	case "kepler.committee.Committee.epoch":
-		x.Epoch = int64(0)
+		x.Epoch = uint32(0)
 	case "kepler.committee.Committee.seed":
-		x.Seed = ""
+		x.Seed = nil
 	case "kepler.committee.Committee.is_emergency":
 		x.IsEmergency = false
 	case "kepler.committee.Committee.executors":
@@ -237,10 +237,10 @@ func (x *fastReflection_Committee) Get(descriptor protoreflect.FieldDescriptor) 
 	switch descriptor.FullName() {
 	case "kepler.committee.Committee.epoch":
 		value := x.Epoch
-		return protoreflect.ValueOfInt64(value)
+		return protoreflect.ValueOfUint32(value)
 	case "kepler.committee.Committee.seed":
 		value := x.Seed
-		return protoreflect.ValueOfString(value)
+		return protoreflect.ValueOfBytes(value)
 	case "kepler.committee.Committee.is_emergency":
 		value := x.IsEmergency
 		return protoreflect.ValueOfBool(value)
@@ -271,9 +271,9 @@ func (x *fastReflection_Committee) Get(descriptor protoreflect.FieldDescriptor) 
 func (x *fastReflection_Committee) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
 	case "kepler.committee.Committee.epoch":
-		x.Epoch = value.Int()
+		x.Epoch = uint32(value.Uint())
 	case "kepler.committee.Committee.seed":
-		x.Seed = value.Interface().(string)
+		x.Seed = value.Bytes()
 	case "kepler.committee.Committee.is_emergency":
 		x.IsEmergency = value.Bool()
 	case "kepler.committee.Committee.executors":
@@ -326,9 +326,9 @@ func (x *fastReflection_Committee) Mutable(fd protoreflect.FieldDescriptor) prot
 func (x *fastReflection_Committee) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
 	case "kepler.committee.Committee.epoch":
-		return protoreflect.ValueOfInt64(int64(0))
+		return protoreflect.ValueOfUint32(uint32(0))
 	case "kepler.committee.Committee.seed":
-		return protoreflect.ValueOfString("")
+		return protoreflect.ValueOfBytes(nil)
 	case "kepler.committee.Committee.is_emergency":
 		return protoreflect.ValueOfBool(false)
 	case "kepler.committee.Committee.executors":
@@ -549,7 +549,7 @@ func (x *fastReflection_Committee) ProtoMethods() *protoiface.Methods {
 					}
 					b := dAtA[iNdEx]
 					iNdEx++
-					x.Epoch |= int64(b&0x7F) << shift
+					x.Epoch |= uint32(b&0x7F) << shift
 					if b < 0x80 {
 						break
 					}
@@ -558,7 +558,7 @@ func (x *fastReflection_Committee) ProtoMethods() *protoiface.Methods {
 				if wireType != 2 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Seed", wireType)
 				}
-				var stringLen uint64
+				var byteLen int
 				for shift := uint(0); ; shift += 7 {
 					if shift >= 64 {
 						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
@@ -568,23 +568,25 @@ func (x *fastReflection_Committee) ProtoMethods() *protoiface.Methods {
 					}
 					b := dAtA[iNdEx]
 					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
+					byteLen |= int(b&0x7F) << shift
 					if b < 0x80 {
 						break
 					}
 				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
+				if byteLen < 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
 				}
-				postIndex := iNdEx + intStringLen
+				postIndex := iNdEx + byteLen
 				if postIndex < 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
 				}
 				if postIndex > l {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
-				x.Seed = string(dAtA[iNdEx:postIndex])
+				x.Seed = append(x.Seed[:0], dAtA[iNdEx:postIndex]...)
+				if x.Seed == nil {
+					x.Seed = []byte{}
+				}
 				iNdEx = postIndex
 			case 3:
 				if wireType != 0 {
@@ -1163,9 +1165,9 @@ type Committee struct {
 	unknownFields protoimpl.UnknownFields
 
 	// epoch is the epoch of the committee.
-	Epoch int64 `protobuf:"varint,1,opt,name=epoch,proto3" json:"epoch,omitempty"`
+	Epoch uint32 `protobuf:"varint,1,opt,name=epoch,proto3" json:"epoch,omitempty"`
 	// seed is the seed of the committee. Needed for randomness.
-	Seed string `protobuf:"bytes,2,opt,name=seed,proto3" json:"seed,omitempty"`
+	Seed []byte `protobuf:"bytes,2,opt,name=seed,proto3" json:"seed,omitempty"`
 	// is_emergency indicates whether this committee was formed for an emergency situation.
 	IsEmergency bool `protobuf:"varint,3,opt,name=is_emergency,json=isEmergency,proto3" json:"is_emergency,omitempty"`
 	// executors is the list of participants in this committee.
@@ -1192,18 +1194,18 @@ func (*Committee) Descriptor() ([]byte, []int) {
 	return file_kepler_committee_committee_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *Committee) GetEpoch() int64 {
+func (x *Committee) GetEpoch() uint32 {
 	if x != nil {
 		return x.Epoch
 	}
 	return 0
 }
 
-func (x *Committee) GetSeed() string {
+func (x *Committee) GetSeed() []byte {
 	if x != nil {
 		return x.Seed
 	}
-	return ""
+	return nil
 }
 
 func (x *Committee) GetIsEmergency() bool {
@@ -1278,8 +1280,8 @@ var file_kepler_committee_committee_proto_rawDesc = []byte{
 	0x74, 0x6f, 0x1a, 0x14, 0x67, 0x6f, 0x67, 0x6f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x67, 0x6f,
 	0x67, 0x6f, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0xa3, 0x01, 0x0a, 0x09, 0x43, 0x6f, 0x6d,
 	0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x65, 0x70, 0x6f, 0x63, 0x68, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x65, 0x70, 0x6f, 0x63, 0x68, 0x12, 0x12, 0x0a, 0x04,
-	0x73, 0x65, 0x65, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x73, 0x65, 0x65, 0x64,
+	0x01, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x05, 0x65, 0x70, 0x6f, 0x63, 0x68, 0x12, 0x12, 0x0a, 0x04,
+	0x73, 0x65, 0x65, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x04, 0x73, 0x65, 0x65, 0x64,
 	0x12, 0x21, 0x0a, 0x0c, 0x69, 0x73, 0x5f, 0x65, 0x6d, 0x65, 0x72, 0x67, 0x65, 0x6e, 0x63, 0x79,
 	0x18, 0x03, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0b, 0x69, 0x73, 0x45, 0x6d, 0x65, 0x72, 0x67, 0x65,
 	0x6e, 0x63, 0x79, 0x12, 0x43, 0x0a, 0x09, 0x65, 0x78, 0x65, 0x63, 0x75, 0x74, 0x6f, 0x72, 0x73,

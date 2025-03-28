@@ -12,10 +12,10 @@ message Committee {
   option (gogoproto.equal) = true;
 
   // epoch is the epoch of the committee.
-  int64 epoch = 1;
+  uint32 epoch = 1;
 
   // seed is the seed of the committee. Needed for randomness.
-  string seed = 2;
+  bytes seed = 2;
 
   // is_emergency indicates whether this committee was formed for an emergency situation.
   bool is_emergency = 3;

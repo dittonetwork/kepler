@@ -16,4 +16,7 @@ message Params {
 
   // max_committee_size is the max number of members in a committee.
   uint32 max_committee_size = 2;
+
+  // randao_enabled is a flag to enable/disable the RANDAO.
+  bool randao_enabled = 3;
 }
