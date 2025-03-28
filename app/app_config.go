@@ -205,8 +205,10 @@ var (
 				Config: appconfig.WrapAny(&workflowmodulev1.Module{}),
 			},
 			{
-				Name:   committeemoduletypes.ModuleName,
-				Config: appconfig.WrapAny(&committeemodulev1.Module{}),
+				Name: committeemoduletypes.ModuleName,
+				Config: appconfig.WrapAny(&committeemodulev1.Module{
+					EpochId: MainEpochID,
+				}),
 			},
 			{
 				Name:   jobmoduletypes.ModuleName,

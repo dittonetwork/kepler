@@ -32,9 +32,9 @@ type Keeper struct {
 	cdc    codec.BinaryCodec
 	logger log.Logger
 
-	Schema      collections.Schema
-	Committees  *collections.IndexedMap[uint32, types.Committee, Idx]
-	LatestEpoch collections.Item[uint32]
+	Schema     collections.Schema
+	Committees *collections.IndexedMap[uint32, types.Committee, Idx]
+	LastEpoch  collections.Item[uint32]
 
 	executors types.Executors
 
@@ -70,10 +70,10 @@ func NewKeeper(
 			codec.CollValue[types.Committee](cdc),
 			NewIndexes(sb),
 		),
-		LatestEpoch: collections.NewItem(
+		LastEpoch: collections.NewItem(
 			sb,
 			types.LatestEpochStorePrefix,
-			"latest_epoch",
+			"last_epoch",
 			collections.Uint32Value,
 		),
 	}

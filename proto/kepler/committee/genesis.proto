@@ -13,8 +13,11 @@ message GenesisState {
   // committees is the list of committees.
   repeated Committee committees = 1 [(gogoproto.nullable) = false];
 
+  // latest_epoch is the latest epoch.
+  uint32 latest_epoch = 2;
+
   // params defines all the parameters of the module.
-  Params params = 2 [
+  Params params = 3 [
     (gogoproto.nullable) = false,
     (amino.dont_omitempty) = true
   ];

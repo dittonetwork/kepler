@@ -20,14 +20,14 @@ func (k Keeper) CreateCommittee(ctx sdk.Context, epoch uint32) (types.Committee,
 		return types.Committee{}, types.ErrCommitteeAlreadyExists
 	}
 
-	var latestEpoch uint32
-	latestEpoch, err = k.LatestEpoch.Get(ctx)
+	var lastSavedEpoch uint32
+	lastSavedEpoch, err = k.LastEpoch.Get(ctx)
 	if err != nil {
-		return types.Committee{}, sdkerrors.Wrap(err, "failed to get latest epoch")
+		return types.Committee{}, sdkerrors.Wrap(err, "failed to get last saved epoch")
 	}
 
-	// check if the latest epoch is less than the given epoch
-	if latestEpoch <= epoch {
+	// check if the new epoch is greater than the last saved epoch
+	if epoch <= lastSavedEpoch {
 		return types.Committee{}, types.ErrInvalidEpoch
 	}
 
@@ -39,6 +39,10 @@ func (k Keeper) CreateCommittee(ctx sdk.Context, epoch uint32) (types.Committee,
 	err = k.Committees.Set(ctx, epoch, committee)
 	if err != nil {
 		return types.Committee{}, sdkerrors.Wrap(err, "failed to set committee")
+	}
+	err = k.LastEpoch.Set(ctx, epoch)
+	if err != nil {
+		return types.Committee{}, sdkerrors.Wrap(err, "failed to set last epoch")
 	}
 
 	k.Logger().With("committee", committee).Info("committee created")
