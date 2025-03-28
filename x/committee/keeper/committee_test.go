@@ -21,7 +21,7 @@ func TestCreateCommittee(t *testing.T) {
 	testCases := []struct {
 		name            string
 		epoch           uint32
-		latestEpoch     uint32
+		lastEpoch       uint32
 		committeeExists bool
 		mockSetup       func()
 		expectedError   error
@@ -34,17 +34,25 @@ func TestCreateCommittee(t *testing.T) {
 			expectedError:   types.ErrCommitteeAlreadyExists,
 		},
 		{
-			name:            "Latest epoch less than or equal to given epoch",
+			name:            "Epoch equal to last epoch",
 			epoch:           10,
-			latestEpoch:     5,
+			lastEpoch:       10,
+			committeeExists: false,
+			mockSetup:       func() {},
+			expectedError:   types.ErrInvalidEpoch,
+		},
+		{
+			name:            "Epoch less than last epoch",
+			epoch:           5,
+			lastEpoch:       10,
 			committeeExists: false,
 			mockSetup:       func() {},
 			expectedError:   types.ErrInvalidEpoch,
 		},
 		{
 			name:            "Failed to get emergency executors",
-			epoch:           5,
-			latestEpoch:     10,
+			epoch:           15,
+			lastEpoch:       10,
 			committeeExists: false,
 			mockSetup: func() {
 				executorsMock.EXPECT().
@@ -54,12 +62,38 @@ func TestCreateCommittee(t *testing.T) {
 			expectedError: types.ErrInvalidSigner,
 		},
 		{
-			name:            "Success case",
-			epoch:           5,
-			latestEpoch:     10,
+			name:            "Success case - epoch greater than last epoch",
+			epoch:           11,
+			lastEpoch:       10,
 			committeeExists: false,
 			mockSetup: func() {
 				// Create sample executors to return
+				addr1, _ := sdk.AccAddressFromBech32("cosmos1v9jxgun9wdenzc33zgq")
+				addr2, _ := sdk.AccAddressFromBech32("cosmos1s4ycalgh3gjemd5z4qj4w9n8vz3cplecafqa97")
+
+				executors := []types.ExecutorI{
+					&testExecutor{
+						address:     addr1,
+						votingPower: 10,
+					},
+					&testExecutor{
+						address:     addr2,
+						votingPower: 20,
+					},
+				}
+
+				executorsMock.EXPECT().
+					GetEmergencyExecutors(gomock.Any()).
+					Return(executors, nil)
+			},
+			expectedError: nil,
+		},
+		{
+			name:            "Boundary case - epoch exactly one more than last epoch",
+			epoch:           11,
+			lastEpoch:       10,
+			committeeExists: false,
+			mockSetup: func() {
 				addr1, _ := sdk.AccAddressFromBech32("cosmos1v9jxgun9wdenzc33zgq")
 				addr2, _ := sdk.AccAddressFromBech32("cosmos1s4ycalgh3gjemd5z4qj4w9n8vz3cplecafqa97")
 
@@ -90,9 +124,9 @@ func TestCreateCommittee(t *testing.T) {
 			// Setup the test case
 			tc.mockSetup()
 
-			// Set latest epoch
-			if tc.latestEpoch > 0 {
-				require.NoError(t, k.LatestEpoch.Set(ctx, tc.latestEpoch))
+			// Set last epoch
+			if tc.lastEpoch > 0 {
+				require.NoError(t, k.LastEpoch.Set(ctx, tc.lastEpoch))
 			}
 
 			// Set committee existence
@@ -118,6 +152,11 @@ func TestCreateCommittee(t *testing.T) {
 			// Check that addresses and voting powers match what we expect
 			require.Equal(t, uint32(10), committee.Executors[0].VotingPower)
 			require.Equal(t, uint32(20), committee.Executors[1].VotingPower)
+
+			// Verify that LastEpoch was updated to the new epoch value
+			lastEpoch, err := k.LastEpoch.Get(ctx)
+			require.NoError(t, err)
+			require.Equal(t, tc.epoch, lastEpoch, "LastEpoch should be updated to the new epoch value")
 		})
 	}
 }

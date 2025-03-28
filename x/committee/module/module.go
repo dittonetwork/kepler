@@ -98,6 +98,8 @@ type AppModule struct {
 	keeper        keeper.Keeper
 	accountKeeper types.AccountKeeper
 	bankKeeper    types.BankKeeper
+
+	epochMainID string
 }
 
 func NewAppModule(
@@ -105,12 +107,14 @@ func NewAppModule(
 	keeper keeper.Keeper,
 	accountKeeper types.AccountKeeper,
 	bankKeeper types.BankKeeper,
+	epochMainID string,
 ) AppModule {
 	return AppModule{
 		AppModuleBasic: NewAppModuleBasic(cdc),
 		keeper:         keeper,
 		accountKeeper:  accountKeeper,
 		bankKeeper:     bankKeeper,
+		epochMainID:    epochMainID,
 	}
 }
 
@@ -213,6 +217,7 @@ func ProvideModule(in ModuleInputs) ModuleOutputs {
 		k,
 		in.AccountKeeper,
 		in.BankKeeper,
+		in.Config.EpochId,
 	)
 
 	return ModuleOutputs{CommitteeKeeper: k, Module: m}

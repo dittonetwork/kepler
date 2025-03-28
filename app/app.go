@@ -52,6 +52,7 @@ import (
 const (
 	AccountAddressPrefix = "ditto"
 	Name                 = "kepler"
+	MainEpochID          = "main"
 )
 
 var (
