@@ -1,4 +1,4 @@
-package keeper
+package keeper_test
 
 import (
 	"testing"
@@ -15,15 +15,16 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
+	"github.com/dittonetwork/kepler/x/executors/keeper"
+	restakingTypes "github.com/dittonetwork/kepler/x/restaking/types"
+
+	"github.com/dittonetwork/kepler/x/executors/types"
 	"github.com/dittonetwork/kepler/x/executors/types/mock"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/mock/gomock"
-
-	"github.com/dittonetwork/kepler/x/executors/keeper"
-	"github.com/dittonetwork/kepler/x/executors/types"
 )
 
-func ExecutorsKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {
+func TestGetEmergencyExecutors_Success(t *testing.T) {
 	storeKey := storetypes.NewKVStoreKey(types.StoreKey)
 
 	db := dbm.NewMemDB()
@@ -49,10 +50,36 @@ func ExecutorsKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {
 
 	ctx := sdk.NewContext(stateStore, cmtproto.Header{}, false, log.NewNopLogger())
 
-	// Initialize params
-	if err := k.SetParams(ctx, types.DefaultParams()); err != nil {
-		panic(err)
+	valAddr, err := sdk.ValAddressFromBech32("cosmosvaloper1w7f3xx7e75p4l7qdym5msqem9rd4dyc4mq79dm")
+	require.NoError(t, err)
+
+	// Prepare two executors: one active and one inactive.
+	one := types.Executor{
+		Address:  valAddr.String(),
+		IsActive: true,
+	}
+	two := types.Executor{
+		Address:  "cosmos1address2",
+		IsActive: true,
 	}
 
-	return k, ctx
+	err = k.Executors.Set(ctx, one.Address, one)
+	require.NoError(t, err)
+	err = k.Executors.Set(ctx, two.Address, two)
+	require.NoError(t, err)
+
+	restaking.EXPECT().GetActiveEmergencyValidators(gomock.Any()).Return([]restakingTypes.EmergencyValidator{
+		{
+			Address: valAddr,
+		},
+	})
+
+	req := &types.QueryEmergencyExecutorsRequest{}
+	resp, err := k.GetEmergencyExecutors(ctx, req)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+
+	// Only the emergency executor should be returned.
+	require.Len(t, resp.Executors, 1)
+	require.Equal(t, "cosmosvaloper1w7f3xx7e75p4l7qdym5msqem9rd4dyc4mq79dm", resp.Executors[0].Address)
 }

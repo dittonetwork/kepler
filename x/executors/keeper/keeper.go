@@ -8,7 +8,6 @@ import (
 	"cosmossdk.io/log"
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-
 	"github.com/dittonetwork/kepler/x/executors/types"
 )
 
@@ -23,6 +22,8 @@ type (
 		authority string
 
 		Executors *collections.IndexedMap[string, types.Executor, Idx]
+
+		restaking types.RestakingKeeper
 	}
 )
 
@@ -31,7 +32,7 @@ func NewKeeper(
 	storeService store.KVStoreService,
 	logger log.Logger,
 	authority string,
-
+	restaking types.RestakingKeeper,
 ) Keeper {
 	if _, err := sdk.AccAddressFromBech32(authority); err != nil {
 		panic(fmt.Sprintf("invalid authority address: %s", authority))
@@ -52,6 +53,7 @@ func NewKeeper(
 			codec.CollValue[types.Executor](cdc),
 			NewIndexes(sb),
 		),
+		restaking: restaking,
 	}
 }
 
