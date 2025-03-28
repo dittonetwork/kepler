@@ -68,8 +68,8 @@ func TestUpdateValidatorSetWithHooks(t *testing.T) {
 	// Generate Bech32 encoded public keys
 	pubKeyBech32Val := sdk.MustBech32ifyAddressBytes("cosmosvaloperpub", pubKey.Address())
 
-	operatorAddress := sdk.AccAddress(pubKey.Address())
-	valAddress := sdk.ValAddress(operatorAddress)
+	operatorAddress := pubKey.Address().String()
+	valAddress := sdk.ValAddress(pubKey.Address())
 
 	// Function to create a fresh test setup for each test
 	setupTest := func(t *testing.T) (sdk.Context, *restakingmock.MockStakingKeeper, keeper.Keeper, *MockRestakingHooks, *gomock.Controller) {
@@ -158,7 +158,7 @@ func TestUpdateValidatorSetWithHooks(t *testing.T) {
 		params := types.UpdateValidatorSetParams{
 			Operators: []types.Operator{
 				{
-					Address:   operatorAddress.String(),
+					Address:   operatorAddress,
 					PublicKey: pubKeyBech32Val,
 					Status:    types.OperatorStatusBonded, // We want to bond the validator
 					Tokens:    100,
@@ -221,7 +221,7 @@ func TestUpdateValidatorSetWithHooks(t *testing.T) {
 		params := types.UpdateValidatorSetParams{
 			Operators: []types.Operator{
 				{
-					Address:   operatorAddress.String(),
+					Address:   operatorAddress,
 					PublicKey: pubKeyBech32Val,
 					Status:    types.OperatorStatusUnbonding, // We want to unbond the validator
 					Tokens:    100,
@@ -284,7 +284,7 @@ func TestUpdateValidatorSetWithHooks(t *testing.T) {
 		params := types.UpdateValidatorSetParams{
 			Operators: []types.Operator{
 				{
-					Address:   operatorAddress.String(),
+					Address:   operatorAddress,
 					PublicKey: pubKeyBech32Val,
 					Status:    types.OperatorStatusBonded,
 					Tokens:    100,
@@ -335,7 +335,7 @@ func TestUpdateValidatorSetWithHooks(t *testing.T) {
 		params := types.UpdateValidatorSetParams{
 			Operators: []types.Operator{
 				{
-					Address:   operatorAddress.String(),
+					Address:   operatorAddress,
 					PublicKey: pubKeyBech32Val,
 					Status:    types.OperatorStatusUnbonding,
 					Tokens:    100,

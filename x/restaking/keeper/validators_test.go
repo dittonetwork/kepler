@@ -41,8 +41,9 @@ func TestUpdateValidatorSet(t *testing.T) {
 	pubKeyBech32Acc := sdk.MustBech32ifyAddressBytes("cosmospub", pubKey.Address())
 	pubKeyBech32Val := sdk.MustBech32ifyAddressBytes("cosmosvaloperpub", pubKey.Address())
 
-	operatorAddress := sdk.AccAddress(pubKey.Address())
-	valAddress := sdk.ValAddress(operatorAddress)
+	operatorAddress := pubKey.Address().String()
+	accAddress := sdk.AccAddress(pubKey.Address())
+	valAddress := sdk.ValAddress(pubKey.Address())
 
 	// Function to create a fresh test setup for each test
 	setupTest := func(t *testing.T) (sdk.Context, *restakingmock.MockStakingKeeper, keeper.Keeper, *gomock.Controller) {
@@ -145,7 +146,7 @@ func TestUpdateValidatorSet(t *testing.T) {
 		params := types.UpdateValidatorSetParams{
 			Operators: []types.Operator{
 				{
-					Address:   operatorAddress.String(),
+					Address:   operatorAddress,
 					PublicKey: pubKeyBech32Acc,
 					Status:    types.OperatorStatusBonded,
 					Tokens:    100,
@@ -193,7 +194,7 @@ func TestUpdateValidatorSet(t *testing.T) {
 		params := types.UpdateValidatorSetParams{
 			Operators: []types.Operator{
 				{
-					Address:   operatorAddress.String(),
+					Address:   operatorAddress,
 					PublicKey: pubKeyBech32Val,
 					Status:    types.OperatorStatusBonded,
 					Tokens:    200,
@@ -242,7 +243,7 @@ func TestUpdateValidatorSet(t *testing.T) {
 		params := types.UpdateValidatorSetParams{
 			Operators: []types.Operator{
 				{
-					Address:   operatorAddress.String(),
+					Address:   operatorAddress,
 					PublicKey: "invalid-pubkey",
 					Status:    types.OperatorStatusBonded,
 					Tokens:    100,
@@ -269,7 +270,7 @@ func TestUpdateValidatorSet(t *testing.T) {
 		params := types.UpdateValidatorSetParams{
 			Operators: []types.Operator{
 				{
-					Address:   operatorAddress.String(),
+					Address:   operatorAddress,
 					PublicKey: pubKeyBech32Val,
 					Status:    types.OperatorStatusBonded,
 					Tokens:    100,
@@ -313,7 +314,7 @@ func TestUpdateValidatorSet(t *testing.T) {
 		params := types.UpdateValidatorSetParams{
 			Operators: []types.Operator{
 				{
-					Address:   operatorAddress.String(),
+					Address:   operatorAddress,
 					PublicKey: pubKeyBech32Val,
 					Status:    types.OperatorStatusBonded,
 					Tokens:    100,
@@ -339,7 +340,7 @@ func TestUpdateValidatorSet(t *testing.T) {
 			require.NoError(t, err)
 
 			existingValidator := stakingtypes.Validator{
-				OperatorAddress: valAddress.String(),
+				OperatorAddress: operatorAddress,
 				ConsensusPubkey: anyPubKey,
 				Status:          stakingtypes.Bonded,
 				Tokens:          sdk.TokensFromConsensusPower(50, sdk.DefaultPowerReduction),
@@ -359,7 +360,7 @@ func TestUpdateValidatorSet(t *testing.T) {
 			params := types.UpdateValidatorSetParams{
 				Operators: []types.Operator{
 					{
-						Address:   operatorAddress.String(),
+						Address:   operatorAddress,
 						PublicKey: pubKeyBech32Val,
 						Status:    types.OperatorStatusUnbonded,
 						Tokens:    100,
@@ -374,7 +375,7 @@ func TestUpdateValidatorSet(t *testing.T) {
 			require.NoError(t, err)
 
 			// Check validator status in local store
-			val, err := k.ValidatorsMap.Get(ctx, operatorAddress.String())
+			val, err := k.ValidatorsMap.Get(ctx, accAddress.String())
 			require.NoError(t, err)
 			require.Equal(t, types.ValidatorStatus_VALIDATOR_STATUS_UNBONDED, val.Status)
 		})
@@ -388,7 +389,7 @@ func TestUpdateValidatorSet(t *testing.T) {
 			require.NoError(t, err)
 
 			existingValidator := stakingtypes.Validator{
-				OperatorAddress: valAddress.String(),
+				OperatorAddress: operatorAddress,
 				ConsensusPubkey: anyPubKey,
 				Status:          stakingtypes.Bonded,
 				Tokens:          sdk.TokensFromConsensusPower(50, sdk.DefaultPowerReduction),
@@ -408,7 +409,7 @@ func TestUpdateValidatorSet(t *testing.T) {
 			params := types.UpdateValidatorSetParams{
 				Operators: []types.Operator{
 					{
-						Address:   operatorAddress.String(),
+						Address:   operatorAddress,
 						PublicKey: pubKeyBech32Val,
 						Status:    types.OperatorStatusUnbonding,
 						Tokens:    100,
@@ -423,7 +424,7 @@ func TestUpdateValidatorSet(t *testing.T) {
 			require.NoError(t, err)
 
 			// Check validator status in local store
-			val, err := k.ValidatorsMap.Get(ctx, operatorAddress.String())
+			val, err := k.ValidatorsMap.Get(ctx, accAddress.String())
 			require.NoError(t, err)
 			require.Equal(t, types.ValidatorStatus_VALIDATOR_STATUS_UNBONDING, val.Status)
 		})

@@ -2,7 +2,10 @@ package keeper
 
 import (
 	"errors"
+	"fmt"
 	"math"
+
+	"github.com/ethereum/go-ethereum/common"
 
 	sdkerrors "cosmossdk.io/errors"
 	"cosmossdk.io/log"
@@ -53,9 +56,29 @@ func (k Keeper) UpdateValidatorSet(ctx sdk.Context, params types.UpdateValidator
 			"tokens", operator.Tokens,
 		)
 
-		// Convert operator address to cosmos address
+		// check if operator's address is a valid Ethereum address
+		if !common.IsHexAddress(operator.Address) {
+			logger.Error(fmt.Sprintf("operator's address %s is not a valid Ethereum address", operator.Address))
+			continue
+		}
+
+		// convert Ethereum address to bytes
+		addressBytes := common.HexToAddress(operator.Address).Bytes()
+
+		// convert address bytes to bech32 address
+		var bech32Address string
+		bech32Address, err = sdk.Bech32ifyAddressBytes(
+			sdk.GetConfig().GetBech32AccountAddrPrefix(),
+			addressBytes,
+		)
+		if err != nil {
+			logger.Error("failed to convert Ethereum address to bech32 address")
+			continue
+		}
+
+		// Convert bech32 address to cosmos address
 		var cosmosAddr sdk.AccAddress
-		cosmosAddr, err = sdk.AccAddressFromBech32(operator.Address)
+		cosmosAddr, err = sdk.AccAddressFromBech32(bech32Address)
 		if err != nil {
 			// Skip invalid addresses
 			logger.Error("failed to convert operator address")
