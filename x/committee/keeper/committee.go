@@ -16,7 +16,7 @@ func (k Keeper) CreateCommittee(ctx sdk.Context, epoch uint32) (types.Committee,
 	}
 
 	// check if the committee already exists
-	if !ok {
+	if ok {
 		return types.Committee{}, types.ErrCommitteeAlreadyExists
 	}
 

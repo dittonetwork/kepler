@@ -96,7 +96,7 @@ func TestCreateCommittee(t *testing.T) {
 			}
 
 			// Set committee existence
-			if !tc.committeeExists {
+			if tc.committeeExists {
 				require.NoError(t, k.Committees.Set(ctx, tc.epoch, types.Committee{}))
 			}
 
@@ -106,17 +106,18 @@ func TestCreateCommittee(t *testing.T) {
 			// Check the results
 			if tc.expectedError != nil {
 				require.ErrorIs(t, err, tc.expectedError)
-			} else {
-				require.NoError(t, err)
-				require.Equal(t, tc.epoch, committee.Epoch)
-				require.True(t, committee.IsEmergency)
-				require.Len(t, committee.Executors, 2)
-
-				// Check that addresses and voting powers match what we expect
-				// Don't compare the actual address strings as they will be formatted
-				require.Equal(t, uint32(10), committee.Executors[0].VotingPower)
-				require.Equal(t, uint32(20), committee.Executors[1].VotingPower)
+				return
 			}
+
+			require.NoError(t, err)
+			require.Equal(t, tc.epoch, committee.Epoch)
+			require.True(t, committee.IsEmergency)
+			require.Equal(t, ctx.HeaderInfo().Hash, committee.Seed)
+			require.Len(t, committee.Executors, 2)
+
+			// Check that addresses and voting powers match what we expect
+			require.Equal(t, uint32(10), committee.Executors[0].VotingPower)
+			require.Equal(t, uint32(20), committee.Executors[1].VotingPower)
 		})
 	}
 }
