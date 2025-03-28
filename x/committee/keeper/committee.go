@@ -23,11 +23,11 @@ func (k Keeper) CreateCommittee(ctx sdk.Context, epoch uint32) (types.Committee,
 	var lastSavedEpoch uint32
 	lastSavedEpoch, err = k.LastEpoch.Get(ctx)
 	if err != nil {
-		return types.Committee{}, sdkerrors.Wrap(err, "failed to get latest epoch")
+		return types.Committee{}, sdkerrors.Wrap(err, "failed to get last saved epoch")
 	}
 
-	// check if the latest epoch is less than the given epoch
-	if lastSavedEpoch >= epoch {
+	// check if the new epoch is greater than the last saved epoch
+	if epoch <= lastSavedEpoch {
 		return types.Committee{}, types.ErrInvalidEpoch
 	}
 
