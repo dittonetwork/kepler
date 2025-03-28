@@ -10,7 +10,8 @@ const (
 	StoreKey = ModuleName
 
 	// CollectionNameExecutors is the name of executors collection.
-	CollectionNameExecutors = "executors"
+	CollectionNameExecutors                = "executors"
+	CollectionIndexExecutorsByOwnerAddress = "executors_by_owner_address"
 
 	// MemStoreKey defines the in-memory store key.
 	MemStoreKey = "mem_executors"

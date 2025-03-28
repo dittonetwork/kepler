@@ -8,11 +8,6 @@ import (
 
 var _ types.QueryServer = Keeper{}
 
-func (k Keeper) GetExecutors(_ context.Context, _ *types.QueryExecutorsRequest) (*types.QueryExecutorsResponse, error) {
-	// TODO implement me
-	panic("implement me")
-}
-
 func (k Keeper) GetEmergencyExecutors(
 	_ context.Context,
 	_ *types.QueryEmergencyExecutorsRequest,

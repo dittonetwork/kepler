@@ -808,23 +808,23 @@ func (x *fastReflection_QueryParamsResponse) ProtoMethods() *protoiface.Methods 
 }
 
 var (
-	md_QueryExecutorsRequest protoreflect.MessageDescriptor
+	md_QueryActiveExecutorsRequest protoreflect.MessageDescriptor
 )
 
 func init() {
 	file_kepler_executors_query_proto_init()
-	md_QueryExecutorsRequest = File_kepler_executors_query_proto.Messages().ByName("QueryExecutorsRequest")
+	md_QueryActiveExecutorsRequest = File_kepler_executors_query_proto.Messages().ByName("QueryActiveExecutorsRequest")
 }
 
-var _ protoreflect.Message = (*fastReflection_QueryExecutorsRequest)(nil)
+var _ protoreflect.Message = (*fastReflection_QueryActiveExecutorsRequest)(nil)
 
-type fastReflection_QueryExecutorsRequest QueryExecutorsRequest
+type fastReflection_QueryActiveExecutorsRequest QueryActiveExecutorsRequest
 
-func (x *QueryExecutorsRequest) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_QueryExecutorsRequest)(x)
+func (x *QueryActiveExecutorsRequest) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_QueryActiveExecutorsRequest)(x)
 }
 
-func (x *QueryExecutorsRequest) slowProtoReflect() protoreflect.Message {
+func (x *QueryActiveExecutorsRequest) slowProtoReflect() protoreflect.Message {
 	mi := &file_kepler_executors_query_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -836,43 +836,43 @@ func (x *QueryExecutorsRequest) slowProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_QueryExecutorsRequest_messageType fastReflection_QueryExecutorsRequest_messageType
-var _ protoreflect.MessageType = fastReflection_QueryExecutorsRequest_messageType{}
+var _fastReflection_QueryActiveExecutorsRequest_messageType fastReflection_QueryActiveExecutorsRequest_messageType
+var _ protoreflect.MessageType = fastReflection_QueryActiveExecutorsRequest_messageType{}
 
-type fastReflection_QueryExecutorsRequest_messageType struct{}
+type fastReflection_QueryActiveExecutorsRequest_messageType struct{}
 
-func (x fastReflection_QueryExecutorsRequest_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_QueryExecutorsRequest)(nil)
+func (x fastReflection_QueryActiveExecutorsRequest_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_QueryActiveExecutorsRequest)(nil)
 }
-func (x fastReflection_QueryExecutorsRequest_messageType) New() protoreflect.Message {
-	return new(fastReflection_QueryExecutorsRequest)
+func (x fastReflection_QueryActiveExecutorsRequest_messageType) New() protoreflect.Message {
+	return new(fastReflection_QueryActiveExecutorsRequest)
 }
-func (x fastReflection_QueryExecutorsRequest_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryExecutorsRequest
+func (x fastReflection_QueryActiveExecutorsRequest_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryActiveExecutorsRequest
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_QueryExecutorsRequest) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryExecutorsRequest
+func (x *fastReflection_QueryActiveExecutorsRequest) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryActiveExecutorsRequest
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_QueryExecutorsRequest) Type() protoreflect.MessageType {
-	return _fastReflection_QueryExecutorsRequest_messageType
+func (x *fastReflection_QueryActiveExecutorsRequest) Type() protoreflect.MessageType {
+	return _fastReflection_QueryActiveExecutorsRequest_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_QueryExecutorsRequest) New() protoreflect.Message {
-	return new(fastReflection_QueryExecutorsRequest)
+func (x *fastReflection_QueryActiveExecutorsRequest) New() protoreflect.Message {
+	return new(fastReflection_QueryActiveExecutorsRequest)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_QueryExecutorsRequest) Interface() protoreflect.ProtoMessage {
-	return (*QueryExecutorsRequest)(x)
+func (x *fastReflection_QueryActiveExecutorsRequest) Interface() protoreflect.ProtoMessage {
+	return (*QueryActiveExecutorsRequest)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -880,7 +880,7 @@ func (x *fastReflection_QueryExecutorsRequest) Interface() protoreflect.ProtoMes
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_QueryExecutorsRequest) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+func (x *fastReflection_QueryActiveExecutorsRequest) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
 }
 
 // Has reports whether a field is populated.
@@ -894,13 +894,13 @@ func (x *fastReflection_QueryExecutorsRequest) Range(f func(protoreflect.FieldDe
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_QueryExecutorsRequest) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_QueryActiveExecutorsRequest) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.executors.QueryExecutorsRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.executors.QueryActiveExecutorsRequest"))
 		}
-		panic(fmt.Errorf("message kepler.executors.QueryExecutorsRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message kepler.executors.QueryActiveExecutorsRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -910,13 +910,13 @@ func (x *fastReflection_QueryExecutorsRequest) Has(fd protoreflect.FieldDescript
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryExecutorsRequest) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_QueryActiveExecutorsRequest) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.executors.QueryExecutorsRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.executors.QueryActiveExecutorsRequest"))
 		}
-		panic(fmt.Errorf("message kepler.executors.QueryExecutorsRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message kepler.executors.QueryActiveExecutorsRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -926,13 +926,13 @@ func (x *fastReflection_QueryExecutorsRequest) Clear(fd protoreflect.FieldDescri
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_QueryExecutorsRequest) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryActiveExecutorsRequest) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.executors.QueryExecutorsRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.executors.QueryActiveExecutorsRequest"))
 		}
-		panic(fmt.Errorf("message kepler.executors.QueryExecutorsRequest does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message kepler.executors.QueryActiveExecutorsRequest does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -946,13 +946,13 @@ func (x *fastReflection_QueryExecutorsRequest) Get(descriptor protoreflect.Field
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryExecutorsRequest) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_QueryActiveExecutorsRequest) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.executors.QueryExecutorsRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.executors.QueryActiveExecutorsRequest"))
 		}
-		panic(fmt.Errorf("message kepler.executors.QueryExecutorsRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message kepler.executors.QueryActiveExecutorsRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -966,36 +966,36 @@ func (x *fastReflection_QueryExecutorsRequest) Set(fd protoreflect.FieldDescript
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryExecutorsRequest) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryActiveExecutorsRequest) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.executors.QueryExecutorsRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.executors.QueryActiveExecutorsRequest"))
 		}
-		panic(fmt.Errorf("message kepler.executors.QueryExecutorsRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message kepler.executors.QueryActiveExecutorsRequest does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_QueryExecutorsRequest) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryActiveExecutorsRequest) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.executors.QueryExecutorsRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.executors.QueryActiveExecutorsRequest"))
 		}
-		panic(fmt.Errorf("message kepler.executors.QueryExecutorsRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message kepler.executors.QueryActiveExecutorsRequest does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_QueryExecutorsRequest) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_QueryActiveExecutorsRequest) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in kepler.executors.QueryExecutorsRequest", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in kepler.executors.QueryActiveExecutorsRequest", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -1003,7 +1003,7 @@ func (x *fastReflection_QueryExecutorsRequest) WhichOneof(d protoreflect.OneofDe
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_QueryExecutorsRequest) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_QueryActiveExecutorsRequest) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -1014,7 +1014,7 @@ func (x *fastReflection_QueryExecutorsRequest) GetUnknown() protoreflect.RawFiel
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryExecutorsRequest) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_QueryActiveExecutorsRequest) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -1026,7 +1026,7 @@ func (x *fastReflection_QueryExecutorsRequest) SetUnknown(fields protoreflect.Ra
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_QueryExecutorsRequest) IsValid() bool {
+func (x *fastReflection_QueryActiveExecutorsRequest) IsValid() bool {
 	return x != nil
 }
 
@@ -1036,9 +1036,9 @@ func (x *fastReflection_QueryExecutorsRequest) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_QueryExecutorsRequest) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_QueryActiveExecutorsRequest) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*QueryExecutorsRequest)
+		x := input.Message.Interface().(*QueryActiveExecutorsRequest)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1060,7 +1060,7 @@ func (x *fastReflection_QueryExecutorsRequest) ProtoMethods() *protoiface.Method
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*QueryExecutorsRequest)
+		x := input.Message.Interface().(*QueryActiveExecutorsRequest)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1090,7 +1090,7 @@ func (x *fastReflection_QueryExecutorsRequest) ProtoMethods() *protoiface.Method
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*QueryExecutorsRequest)
+		x := input.Message.Interface().(*QueryActiveExecutorsRequest)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1122,10 +1122,10 @@ func (x *fastReflection_QueryExecutorsRequest) ProtoMethods() *protoiface.Method
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryExecutorsRequest: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryActiveExecutorsRequest: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryExecutorsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryActiveExecutorsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			default:
@@ -1163,77 +1163,77 @@ func (x *fastReflection_QueryExecutorsRequest) ProtoMethods() *protoiface.Method
 	}
 }
 
-var _ protoreflect.List = (*_QueryExecutorsResponse_1_list)(nil)
+var _ protoreflect.List = (*_QueryActiveExecutorsResponse_1_list)(nil)
 
-type _QueryExecutorsResponse_1_list struct {
+type _QueryActiveExecutorsResponse_1_list struct {
 	list *[]*Executor
 }
 
-func (x *_QueryExecutorsResponse_1_list) Len() int {
+func (x *_QueryActiveExecutorsResponse_1_list) Len() int {
 	if x.list == nil {
 		return 0
 	}
 	return len(*x.list)
 }
 
-func (x *_QueryExecutorsResponse_1_list) Get(i int) protoreflect.Value {
+func (x *_QueryActiveExecutorsResponse_1_list) Get(i int) protoreflect.Value {
 	return protoreflect.ValueOfMessage((*x.list)[i].ProtoReflect())
 }
 
-func (x *_QueryExecutorsResponse_1_list) Set(i int, value protoreflect.Value) {
+func (x *_QueryActiveExecutorsResponse_1_list) Set(i int, value protoreflect.Value) {
 	valueUnwrapped := value.Message()
 	concreteValue := valueUnwrapped.Interface().(*Executor)
 	(*x.list)[i] = concreteValue
 }
 
-func (x *_QueryExecutorsResponse_1_list) Append(value protoreflect.Value) {
+func (x *_QueryActiveExecutorsResponse_1_list) Append(value protoreflect.Value) {
 	valueUnwrapped := value.Message()
 	concreteValue := valueUnwrapped.Interface().(*Executor)
 	*x.list = append(*x.list, concreteValue)
 }
 
-func (x *_QueryExecutorsResponse_1_list) AppendMutable() protoreflect.Value {
+func (x *_QueryActiveExecutorsResponse_1_list) AppendMutable() protoreflect.Value {
 	v := new(Executor)
 	*x.list = append(*x.list, v)
 	return protoreflect.ValueOfMessage(v.ProtoReflect())
 }
 
-func (x *_QueryExecutorsResponse_1_list) Truncate(n int) {
+func (x *_QueryActiveExecutorsResponse_1_list) Truncate(n int) {
 	for i := n; i < len(*x.list); i++ {
 		(*x.list)[i] = nil
 	}
 	*x.list = (*x.list)[:n]
 }
 
-func (x *_QueryExecutorsResponse_1_list) NewElement() protoreflect.Value {
+func (x *_QueryActiveExecutorsResponse_1_list) NewElement() protoreflect.Value {
 	v := new(Executor)
 	return protoreflect.ValueOfMessage(v.ProtoReflect())
 }
 
-func (x *_QueryExecutorsResponse_1_list) IsValid() bool {
+func (x *_QueryActiveExecutorsResponse_1_list) IsValid() bool {
 	return x.list != nil
 }
 
 var (
-	md_QueryExecutorsResponse           protoreflect.MessageDescriptor
-	fd_QueryExecutorsResponse_executors protoreflect.FieldDescriptor
+	md_QueryActiveExecutorsResponse           protoreflect.MessageDescriptor
+	fd_QueryActiveExecutorsResponse_executors protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_kepler_executors_query_proto_init()
-	md_QueryExecutorsResponse = File_kepler_executors_query_proto.Messages().ByName("QueryExecutorsResponse")
-	fd_QueryExecutorsResponse_executors = md_QueryExecutorsResponse.Fields().ByName("executors")
+	md_QueryActiveExecutorsResponse = File_kepler_executors_query_proto.Messages().ByName("QueryActiveExecutorsResponse")
+	fd_QueryActiveExecutorsResponse_executors = md_QueryActiveExecutorsResponse.Fields().ByName("executors")
 }
 
-var _ protoreflect.Message = (*fastReflection_QueryExecutorsResponse)(nil)
+var _ protoreflect.Message = (*fastReflection_QueryActiveExecutorsResponse)(nil)
 
-type fastReflection_QueryExecutorsResponse QueryExecutorsResponse
+type fastReflection_QueryActiveExecutorsResponse QueryActiveExecutorsResponse
 
-func (x *QueryExecutorsResponse) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_QueryExecutorsResponse)(x)
+func (x *QueryActiveExecutorsResponse) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_QueryActiveExecutorsResponse)(x)
 }
 
-func (x *QueryExecutorsResponse) slowProtoReflect() protoreflect.Message {
+func (x *QueryActiveExecutorsResponse) slowProtoReflect() protoreflect.Message {
 	mi := &file_kepler_executors_query_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1245,43 +1245,43 @@ func (x *QueryExecutorsResponse) slowProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_QueryExecutorsResponse_messageType fastReflection_QueryExecutorsResponse_messageType
-var _ protoreflect.MessageType = fastReflection_QueryExecutorsResponse_messageType{}
+var _fastReflection_QueryActiveExecutorsResponse_messageType fastReflection_QueryActiveExecutorsResponse_messageType
+var _ protoreflect.MessageType = fastReflection_QueryActiveExecutorsResponse_messageType{}
 
-type fastReflection_QueryExecutorsResponse_messageType struct{}
+type fastReflection_QueryActiveExecutorsResponse_messageType struct{}
 
-func (x fastReflection_QueryExecutorsResponse_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_QueryExecutorsResponse)(nil)
+func (x fastReflection_QueryActiveExecutorsResponse_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_QueryActiveExecutorsResponse)(nil)
 }
-func (x fastReflection_QueryExecutorsResponse_messageType) New() protoreflect.Message {
-	return new(fastReflection_QueryExecutorsResponse)
+func (x fastReflection_QueryActiveExecutorsResponse_messageType) New() protoreflect.Message {
+	return new(fastReflection_QueryActiveExecutorsResponse)
 }
-func (x fastReflection_QueryExecutorsResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryExecutorsResponse
+func (x fastReflection_QueryActiveExecutorsResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryActiveExecutorsResponse
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_QueryExecutorsResponse) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryExecutorsResponse
+func (x *fastReflection_QueryActiveExecutorsResponse) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryActiveExecutorsResponse
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_QueryExecutorsResponse) Type() protoreflect.MessageType {
-	return _fastReflection_QueryExecutorsResponse_messageType
+func (x *fastReflection_QueryActiveExecutorsResponse) Type() protoreflect.MessageType {
+	return _fastReflection_QueryActiveExecutorsResponse_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_QueryExecutorsResponse) New() protoreflect.Message {
-	return new(fastReflection_QueryExecutorsResponse)
+func (x *fastReflection_QueryActiveExecutorsResponse) New() protoreflect.Message {
+	return new(fastReflection_QueryActiveExecutorsResponse)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_QueryExecutorsResponse) Interface() protoreflect.ProtoMessage {
-	return (*QueryExecutorsResponse)(x)
+func (x *fastReflection_QueryActiveExecutorsResponse) Interface() protoreflect.ProtoMessage {
+	return (*QueryActiveExecutorsResponse)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -1289,10 +1289,10 @@ func (x *fastReflection_QueryExecutorsResponse) Interface() protoreflect.ProtoMe
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_QueryExecutorsResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+func (x *fastReflection_QueryActiveExecutorsResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
 	if len(x.Executors) != 0 {
-		value := protoreflect.ValueOfList(&_QueryExecutorsResponse_1_list{list: &x.Executors})
-		if !f(fd_QueryExecutorsResponse_executors, value) {
+		value := protoreflect.ValueOfList(&_QueryActiveExecutorsResponse_1_list{list: &x.Executors})
+		if !f(fd_QueryActiveExecutorsResponse_executors, value) {
 			return
 		}
 	}
@@ -1309,15 +1309,15 @@ func (x *fastReflection_QueryExecutorsResponse) Range(f func(protoreflect.FieldD
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_QueryExecutorsResponse) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_QueryActiveExecutorsResponse) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "kepler.executors.QueryExecutorsResponse.executors":
+	case "kepler.executors.QueryActiveExecutorsResponse.executors":
 		return len(x.Executors) != 0
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.executors.QueryExecutorsResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.executors.QueryActiveExecutorsResponse"))
 		}
-		panic(fmt.Errorf("message kepler.executors.QueryExecutorsResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message kepler.executors.QueryActiveExecutorsResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1327,15 +1327,15 @@ func (x *fastReflection_QueryExecutorsResponse) Has(fd protoreflect.FieldDescrip
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryExecutorsResponse) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_QueryActiveExecutorsResponse) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "kepler.executors.QueryExecutorsResponse.executors":
+	case "kepler.executors.QueryActiveExecutorsResponse.executors":
 		x.Executors = nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.executors.QueryExecutorsResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.executors.QueryActiveExecutorsResponse"))
 		}
-		panic(fmt.Errorf("message kepler.executors.QueryExecutorsResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message kepler.executors.QueryActiveExecutorsResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1345,19 +1345,19 @@ func (x *fastReflection_QueryExecutorsResponse) Clear(fd protoreflect.FieldDescr
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_QueryExecutorsResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryActiveExecutorsResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "kepler.executors.QueryExecutorsResponse.executors":
+	case "kepler.executors.QueryActiveExecutorsResponse.executors":
 		if len(x.Executors) == 0 {
-			return protoreflect.ValueOfList(&_QueryExecutorsResponse_1_list{})
+			return protoreflect.ValueOfList(&_QueryActiveExecutorsResponse_1_list{})
 		}
-		listValue := &_QueryExecutorsResponse_1_list{list: &x.Executors}
+		listValue := &_QueryActiveExecutorsResponse_1_list{list: &x.Executors}
 		return protoreflect.ValueOfList(listValue)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.executors.QueryExecutorsResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.executors.QueryActiveExecutorsResponse"))
 		}
-		panic(fmt.Errorf("message kepler.executors.QueryExecutorsResponse does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message kepler.executors.QueryActiveExecutorsResponse does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -1371,17 +1371,17 @@ func (x *fastReflection_QueryExecutorsResponse) Get(descriptor protoreflect.Fiel
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryExecutorsResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_QueryActiveExecutorsResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "kepler.executors.QueryExecutorsResponse.executors":
+	case "kepler.executors.QueryActiveExecutorsResponse.executors":
 		lv := value.List()
-		clv := lv.(*_QueryExecutorsResponse_1_list)
+		clv := lv.(*_QueryActiveExecutorsResponse_1_list)
 		x.Executors = *clv.list
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.executors.QueryExecutorsResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.executors.QueryActiveExecutorsResponse"))
 		}
-		panic(fmt.Errorf("message kepler.executors.QueryExecutorsResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message kepler.executors.QueryActiveExecutorsResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1395,45 +1395,45 @@ func (x *fastReflection_QueryExecutorsResponse) Set(fd protoreflect.FieldDescrip
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryExecutorsResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryActiveExecutorsResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "kepler.executors.QueryExecutorsResponse.executors":
+	case "kepler.executors.QueryActiveExecutorsResponse.executors":
 		if x.Executors == nil {
 			x.Executors = []*Executor{}
 		}
-		value := &_QueryExecutorsResponse_1_list{list: &x.Executors}
+		value := &_QueryActiveExecutorsResponse_1_list{list: &x.Executors}
 		return protoreflect.ValueOfList(value)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.executors.QueryExecutorsResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.executors.QueryActiveExecutorsResponse"))
 		}
-		panic(fmt.Errorf("message kepler.executors.QueryExecutorsResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message kepler.executors.QueryActiveExecutorsResponse does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_QueryExecutorsResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryActiveExecutorsResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "kepler.executors.QueryExecutorsResponse.executors":
+	case "kepler.executors.QueryActiveExecutorsResponse.executors":
 		list := []*Executor{}
-		return protoreflect.ValueOfList(&_QueryExecutorsResponse_1_list{list: &list})
+		return protoreflect.ValueOfList(&_QueryActiveExecutorsResponse_1_list{list: &list})
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.executors.QueryExecutorsResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.executors.QueryActiveExecutorsResponse"))
 		}
-		panic(fmt.Errorf("message kepler.executors.QueryExecutorsResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message kepler.executors.QueryActiveExecutorsResponse does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_QueryExecutorsResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_QueryActiveExecutorsResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in kepler.executors.QueryExecutorsResponse", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in kepler.executors.QueryActiveExecutorsResponse", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -1441,7 +1441,7 @@ func (x *fastReflection_QueryExecutorsResponse) WhichOneof(d protoreflect.OneofD
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_QueryExecutorsResponse) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_QueryActiveExecutorsResponse) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -1452,7 +1452,7 @@ func (x *fastReflection_QueryExecutorsResponse) GetUnknown() protoreflect.RawFie
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryExecutorsResponse) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_QueryActiveExecutorsResponse) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -1464,7 +1464,7 @@ func (x *fastReflection_QueryExecutorsResponse) SetUnknown(fields protoreflect.R
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_QueryExecutorsResponse) IsValid() bool {
+func (x *fastReflection_QueryActiveExecutorsResponse) IsValid() bool {
 	return x != nil
 }
 
@@ -1474,9 +1474,9 @@ func (x *fastReflection_QueryExecutorsResponse) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_QueryExecutorsResponse) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_QueryActiveExecutorsResponse) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*QueryExecutorsResponse)
+		x := input.Message.Interface().(*QueryActiveExecutorsResponse)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1504,7 +1504,7 @@ func (x *fastReflection_QueryExecutorsResponse) ProtoMethods() *protoiface.Metho
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*QueryExecutorsResponse)
+		x := input.Message.Interface().(*QueryActiveExecutorsResponse)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1550,7 +1550,7 @@ func (x *fastReflection_QueryExecutorsResponse) ProtoMethods() *protoiface.Metho
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*QueryExecutorsResponse)
+		x := input.Message.Interface().(*QueryActiveExecutorsResponse)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1582,10 +1582,10 @@ func (x *fastReflection_QueryExecutorsResponse) ProtoMethods() *protoiface.Metho
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryExecutorsResponse: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryActiveExecutorsResponse: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryExecutorsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryActiveExecutorsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			case 1:
@@ -2584,15 +2584,15 @@ func (x *QueryParamsResponse) GetParams() *Params {
 	return nil
 }
 
-// QueryExecutorsRequest defines a request to fetch all executors.
-type QueryExecutorsRequest struct {
+// QueryExecutorsRequest defines a request to fetch all active executors.
+type QueryActiveExecutorsRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 }
 
-func (x *QueryExecutorsRequest) Reset() {
-	*x = QueryExecutorsRequest{}
+func (x *QueryActiveExecutorsRequest) Reset() {
+	*x = QueryActiveExecutorsRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_kepler_executors_query_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -2600,28 +2600,28 @@ func (x *QueryExecutorsRequest) Reset() {
 	}
 }
 
-func (x *QueryExecutorsRequest) String() string {
+func (x *QueryActiveExecutorsRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*QueryExecutorsRequest) ProtoMessage() {}
+func (*QueryActiveExecutorsRequest) ProtoMessage() {}
 
-// Deprecated: Use QueryExecutorsRequest.ProtoReflect.Descriptor instead.
-func (*QueryExecutorsRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use QueryActiveExecutorsRequest.ProtoReflect.Descriptor instead.
+func (*QueryActiveExecutorsRequest) Descriptor() ([]byte, []int) {
 	return file_kepler_executors_query_proto_rawDescGZIP(), []int{2}
 }
 
-type QueryExecutorsResponse struct {
+type QueryActiveExecutorsResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// executors list of executors.
+	// executors list of active executors.
 	Executors []*Executor `protobuf:"bytes,1,rep,name=executors,proto3" json:"executors,omitempty"`
 }
 
-func (x *QueryExecutorsResponse) Reset() {
-	*x = QueryExecutorsResponse{}
+func (x *QueryActiveExecutorsResponse) Reset() {
+	*x = QueryActiveExecutorsResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_kepler_executors_query_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -2629,18 +2629,18 @@ func (x *QueryExecutorsResponse) Reset() {
 	}
 }
 
-func (x *QueryExecutorsResponse) String() string {
+func (x *QueryActiveExecutorsResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*QueryExecutorsResponse) ProtoMessage() {}
+func (*QueryActiveExecutorsResponse) ProtoMessage() {}
 
-// Deprecated: Use QueryExecutorsResponse.ProtoReflect.Descriptor instead.
-func (*QueryExecutorsResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use QueryActiveExecutorsResponse.ProtoReflect.Descriptor instead.
+func (*QueryActiveExecutorsResponse) Descriptor() ([]byte, []int) {
 	return file_kepler_executors_query_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *QueryExecutorsResponse) GetExecutors() []*Executor {
+func (x *QueryActiveExecutorsResponse) GetExecutors() []*Executor {
 	if x != nil {
 		return x.Executors
 	}
@@ -2733,57 +2733,59 @@ var file_kepler_executors_query_proto_rawDesc = []byte{
 	0x12, 0x3b, 0x0a, 0x06, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b,
 	0x32, 0x18, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x65, 0x78, 0x65, 0x63, 0x75, 0x74,
 	0x6f, 0x72, 0x73, 0x2e, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x42, 0x09, 0xc8, 0xde, 0x1f, 0x00,
-	0xa8, 0xe7, 0xb0, 0x2a, 0x01, 0x52, 0x06, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x22, 0x17, 0x0a,
-	0x15, 0x51, 0x75, 0x65, 0x72, 0x79, 0x45, 0x78, 0x65, 0x63, 0x75, 0x74, 0x6f, 0x72, 0x73, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x22, 0x52, 0x0a, 0x16, 0x51, 0x75, 0x65, 0x72, 0x79, 0x45,
-	0x78, 0x65, 0x63, 0x75, 0x74, 0x6f, 0x72, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
-	0x12, 0x38, 0x0a, 0x09, 0x65, 0x78, 0x65, 0x63, 0x75, 0x74, 0x6f, 0x72, 0x73, 0x18, 0x01, 0x20,
-	0x03, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x65, 0x78, 0x65,
-	0x63, 0x75, 0x74, 0x6f, 0x72, 0x73, 0x2e, 0x45, 0x78, 0x65, 0x63, 0x75, 0x74, 0x6f, 0x72, 0x52,
-	0x09, 0x65, 0x78, 0x65, 0x63, 0x75, 0x74, 0x6f, 0x72, 0x73, 0x22, 0x20, 0x0a, 0x1e, 0x51, 0x75,
-	0x65, 0x72, 0x79, 0x45, 0x6d, 0x65, 0x72, 0x67, 0x65, 0x6e, 0x63, 0x79, 0x45, 0x78, 0x65, 0x63,
-	0x75, 0x74, 0x6f, 0x72, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x22, 0x5b, 0x0a, 0x1f,
-	0x51, 0x75, 0x65, 0x72, 0x79, 0x45, 0x6d, 0x65, 0x72, 0x67, 0x65, 0x6e, 0x63, 0x79, 0x45, 0x78,
-	0x65, 0x63, 0x75, 0x74, 0x6f, 0x72, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
-	0x38, 0x0a, 0x09, 0x65, 0x78, 0x65, 0x63, 0x75, 0x74, 0x6f, 0x72, 0x73, 0x18, 0x01, 0x20, 0x03,
-	0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x65, 0x78, 0x65, 0x63,
-	0x75, 0x74, 0x6f, 0x72, 0x73, 0x2e, 0x45, 0x78, 0x65, 0x63, 0x75, 0x74, 0x6f, 0x72, 0x52, 0x09,
-	0x65, 0x78, 0x65, 0x63, 0x75, 0x74, 0x6f, 0x72, 0x73, 0x32, 0xef, 0x02, 0x0a, 0x05, 0x51, 0x75,
-	0x65, 0x72, 0x79, 0x12, 0x84, 0x01, 0x0a, 0x06, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x12, 0x24,
+	0xa8, 0xe7, 0xb0, 0x2a, 0x01, 0x52, 0x06, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x22, 0x1d, 0x0a,
+	0x1b, 0x51, 0x75, 0x65, 0x72, 0x79, 0x41, 0x63, 0x74, 0x69, 0x76, 0x65, 0x45, 0x78, 0x65, 0x63,
+	0x75, 0x74, 0x6f, 0x72, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x22, 0x58, 0x0a, 0x1c,
+	0x51, 0x75, 0x65, 0x72, 0x79, 0x41, 0x63, 0x74, 0x69, 0x76, 0x65, 0x45, 0x78, 0x65, 0x63, 0x75,
+	0x74, 0x6f, 0x72, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x38, 0x0a, 0x09,
+	0x65, 0x78, 0x65, 0x63, 0x75, 0x74, 0x6f, 0x72, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32,
+	0x1a, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x65, 0x78, 0x65, 0x63, 0x75, 0x74, 0x6f,
+	0x72, 0x73, 0x2e, 0x45, 0x78, 0x65, 0x63, 0x75, 0x74, 0x6f, 0x72, 0x52, 0x09, 0x65, 0x78, 0x65,
+	0x63, 0x75, 0x74, 0x6f, 0x72, 0x73, 0x22, 0x20, 0x0a, 0x1e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x45,
+	0x6d, 0x65, 0x72, 0x67, 0x65, 0x6e, 0x63, 0x79, 0x45, 0x78, 0x65, 0x63, 0x75, 0x74, 0x6f, 0x72,
+	0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x22, 0x5b, 0x0a, 0x1f, 0x51, 0x75, 0x65, 0x72,
+	0x79, 0x45, 0x6d, 0x65, 0x72, 0x67, 0x65, 0x6e, 0x63, 0x79, 0x45, 0x78, 0x65, 0x63, 0x75, 0x74,
+	0x6f, 0x72, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x38, 0x0a, 0x09, 0x65,
+	0x78, 0x65, 0x63, 0x75, 0x74, 0x6f, 0x72, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1a,
 	0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x65, 0x78, 0x65, 0x63, 0x75, 0x74, 0x6f, 0x72,
-	0x73, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x71,
-	0x75, 0x65, 0x73, 0x74, 0x1a, 0x25, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x65, 0x78,
-	0x65, 0x63, 0x75, 0x74, 0x6f, 0x72, 0x73, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x61, 0x72,
-	0x61, 0x6d, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x2d, 0x82, 0xd3, 0xe4,
-	0x93, 0x02, 0x27, 0x12, 0x25, 0x2f, 0x64, 0x69, 0x74, 0x74, 0x6f, 0x6e, 0x65, 0x74, 0x77, 0x6f,
-	0x72, 0x6b, 0x2f, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x65, 0x78, 0x65, 0x63, 0x75, 0x74,
-	0x6f, 0x72, 0x73, 0x2f, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x12, 0x61, 0x0a, 0x0c, 0x47, 0x65,
-	0x74, 0x45, 0x78, 0x65, 0x63, 0x75, 0x74, 0x6f, 0x72, 0x73, 0x12, 0x27, 0x2e, 0x6b, 0x65, 0x70,
+	0x73, 0x2e, 0x45, 0x78, 0x65, 0x63, 0x75, 0x74, 0x6f, 0x72, 0x52, 0x09, 0x65, 0x78, 0x65, 0x63,
+	0x75, 0x74, 0x6f, 0x72, 0x73, 0x32, 0x81, 0x03, 0x0a, 0x05, 0x51, 0x75, 0x65, 0x72, 0x79, 0x12,
+	0x84, 0x01, 0x0a, 0x06, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x12, 0x24, 0x2e, 0x6b, 0x65, 0x70,
 	0x6c, 0x65, 0x72, 0x2e, 0x65, 0x78, 0x65, 0x63, 0x75, 0x74, 0x6f, 0x72, 0x73, 0x2e, 0x51, 0x75,
-	0x65, 0x72, 0x79, 0x45, 0x78, 0x65, 0x63, 0x75, 0x74, 0x6f, 0x72, 0x73, 0x52, 0x65, 0x71, 0x75,
-	0x65, 0x73, 0x74, 0x1a, 0x28, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x65, 0x78, 0x65,
-	0x63, 0x75, 0x74, 0x6f, 0x72, 0x73, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x45, 0x78, 0x65, 0x63,
-	0x75, 0x74, 0x6f, 0x72, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x7c, 0x0a,
-	0x15, 0x47, 0x65, 0x74, 0x45, 0x6d, 0x65, 0x72, 0x67, 0x65, 0x6e, 0x63, 0x79, 0x45, 0x78, 0x65,
-	0x63, 0x75, 0x74, 0x6f, 0x72, 0x73, 0x12, 0x30, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e,
+	0x65, 0x72, 0x79, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x1a, 0x25, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x65, 0x78, 0x65, 0x63, 0x75, 0x74,
+	0x6f, 0x72, 0x73, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x2d, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x27, 0x12,
+	0x25, 0x2f, 0x64, 0x69, 0x74, 0x74, 0x6f, 0x6e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x2f, 0x6b,
+	0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x65, 0x78, 0x65, 0x63, 0x75, 0x74, 0x6f, 0x72, 0x73, 0x2f,
+	0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x12, 0x73, 0x0a, 0x12, 0x47, 0x65, 0x74, 0x41, 0x63, 0x74,
+	0x69, 0x76, 0x65, 0x45, 0x78, 0x65, 0x63, 0x75, 0x74, 0x6f, 0x72, 0x73, 0x12, 0x2d, 0x2e, 0x6b,
+	0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x65, 0x78, 0x65, 0x63, 0x75, 0x74, 0x6f, 0x72, 0x73, 0x2e,
+	0x51, 0x75, 0x65, 0x72, 0x79, 0x41, 0x63, 0x74, 0x69, 0x76, 0x65, 0x45, 0x78, 0x65, 0x63, 0x75,
+	0x74, 0x6f, 0x72, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2e, 0x2e, 0x6b, 0x65,
+	0x70, 0x6c, 0x65, 0x72, 0x2e, 0x65, 0x78, 0x65, 0x63, 0x75, 0x74, 0x6f, 0x72, 0x73, 0x2e, 0x51,
+	0x75, 0x65, 0x72, 0x79, 0x41, 0x63, 0x74, 0x69, 0x76, 0x65, 0x45, 0x78, 0x65, 0x63, 0x75, 0x74,
+	0x6f, 0x72, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x7c, 0x0a, 0x15, 0x47,
+	0x65, 0x74, 0x45, 0x6d, 0x65, 0x72, 0x67, 0x65, 0x6e, 0x63, 0x79, 0x45, 0x78, 0x65, 0x63, 0x75,
+	0x74, 0x6f, 0x72, 0x73, 0x12, 0x30, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x65, 0x78,
+	0x65, 0x63, 0x75, 0x74, 0x6f, 0x72, 0x73, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x45, 0x6d, 0x65,
+	0x72, 0x67, 0x65, 0x6e, 0x63, 0x79, 0x45, 0x78, 0x65, 0x63, 0x75, 0x74, 0x6f, 0x72, 0x73, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x31, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e,
 	0x65, 0x78, 0x65, 0x63, 0x75, 0x74, 0x6f, 0x72, 0x73, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x45,
 	0x6d, 0x65, 0x72, 0x67, 0x65, 0x6e, 0x63, 0x79, 0x45, 0x78, 0x65, 0x63, 0x75, 0x74, 0x6f, 0x72,
-	0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x31, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65,
-	0x72, 0x2e, 0x65, 0x78, 0x65, 0x63, 0x75, 0x74, 0x6f, 0x72, 0x73, 0x2e, 0x51, 0x75, 0x65, 0x72,
-	0x79, 0x45, 0x6d, 0x65, 0x72, 0x67, 0x65, 0x6e, 0x63, 0x79, 0x45, 0x78, 0x65, 0x63, 0x75, 0x74,
-	0x6f, 0x72, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0xb8, 0x01, 0x0a, 0x14,
-	0x63, 0x6f, 0x6d, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x65, 0x78, 0x65, 0x63, 0x75,
-	0x74, 0x6f, 0x72, 0x73, 0x42, 0x0a, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x72, 0x6f, 0x74, 0x6f,
-	0x50, 0x01, 0x5a, 0x33, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x64,
-	0x69, 0x74, 0x74, 0x6f, 0x6e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x2f, 0x6b, 0x65, 0x70, 0x6c,
-	0x65, 0x72, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x65, 0x78,
-	0x65, 0x63, 0x75, 0x74, 0x6f, 0x72, 0x73, 0xa2, 0x02, 0x03, 0x4b, 0x45, 0x58, 0xaa, 0x02, 0x10,
-	0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x45, 0x78, 0x65, 0x63, 0x75, 0x74, 0x6f, 0x72, 0x73,
-	0xca, 0x02, 0x10, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x5c, 0x45, 0x78, 0x65, 0x63, 0x75, 0x74,
-	0x6f, 0x72, 0x73, 0xe2, 0x02, 0x1c, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x5c, 0x45, 0x78, 0x65,
-	0x63, 0x75, 0x74, 0x6f, 0x72, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61,
-	0x74, 0x61, 0xea, 0x02, 0x11, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x3a, 0x3a, 0x45, 0x78, 0x65,
-	0x63, 0x75, 0x74, 0x6f, 0x72, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0xb8, 0x01, 0x0a, 0x14, 0x63, 0x6f,
+	0x6d, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x65, 0x78, 0x65, 0x63, 0x75, 0x74, 0x6f,
+	0x72, 0x73, 0x42, 0x0a, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01,
+	0x5a, 0x33, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x64, 0x69, 0x74,
+	0x74, 0x6f, 0x6e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x2f, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72,
+	0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x65, 0x78, 0x65, 0x63,
+	0x75, 0x74, 0x6f, 0x72, 0x73, 0xa2, 0x02, 0x03, 0x4b, 0x45, 0x58, 0xaa, 0x02, 0x10, 0x4b, 0x65,
+	0x70, 0x6c, 0x65, 0x72, 0x2e, 0x45, 0x78, 0x65, 0x63, 0x75, 0x74, 0x6f, 0x72, 0x73, 0xca, 0x02,
+	0x10, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x5c, 0x45, 0x78, 0x65, 0x63, 0x75, 0x74, 0x6f, 0x72,
+	0x73, 0xe2, 0x02, 0x1c, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x5c, 0x45, 0x78, 0x65, 0x63, 0x75,
+	0x74, 0x6f, 0x72, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
+	0xea, 0x02, 0x11, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x3a, 0x3a, 0x45, 0x78, 0x65, 0x63, 0x75,
+	0x74, 0x6f, 0x72, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -2802,8 +2804,8 @@ var file_kepler_executors_query_proto_msgTypes = make([]protoimpl.MessageInfo, 6
 var file_kepler_executors_query_proto_goTypes = []interface{}{
 	(*QueryParamsRequest)(nil),              // 0: kepler.executors.QueryParamsRequest
 	(*QueryParamsResponse)(nil),             // 1: kepler.executors.QueryParamsResponse
-	(*QueryExecutorsRequest)(nil),           // 2: kepler.executors.QueryExecutorsRequest
-	(*QueryExecutorsResponse)(nil),          // 3: kepler.executors.QueryExecutorsResponse
+	(*QueryActiveExecutorsRequest)(nil),     // 2: kepler.executors.QueryActiveExecutorsRequest
+	(*QueryActiveExecutorsResponse)(nil),    // 3: kepler.executors.QueryActiveExecutorsResponse
 	(*QueryEmergencyExecutorsRequest)(nil),  // 4: kepler.executors.QueryEmergencyExecutorsRequest
 	(*QueryEmergencyExecutorsResponse)(nil), // 5: kepler.executors.QueryEmergencyExecutorsResponse
 	(*Params)(nil),                          // 6: kepler.executors.Params
@@ -2811,13 +2813,13 @@ var file_kepler_executors_query_proto_goTypes = []interface{}{
 }
 var file_kepler_executors_query_proto_depIdxs = []int32{
 	6, // 0: kepler.executors.QueryParamsResponse.params:type_name -> kepler.executors.Params
-	7, // 1: kepler.executors.QueryExecutorsResponse.executors:type_name -> kepler.executors.Executor
+	7, // 1: kepler.executors.QueryActiveExecutorsResponse.executors:type_name -> kepler.executors.Executor
 	7, // 2: kepler.executors.QueryEmergencyExecutorsResponse.executors:type_name -> kepler.executors.Executor
 	0, // 3: kepler.executors.Query.Params:input_type -> kepler.executors.QueryParamsRequest
-	2, // 4: kepler.executors.Query.GetExecutors:input_type -> kepler.executors.QueryExecutorsRequest
+	2, // 4: kepler.executors.Query.GetActiveExecutors:input_type -> kepler.executors.QueryActiveExecutorsRequest
 	4, // 5: kepler.executors.Query.GetEmergencyExecutors:input_type -> kepler.executors.QueryEmergencyExecutorsRequest
 	1, // 6: kepler.executors.Query.Params:output_type -> kepler.executors.QueryParamsResponse
-	3, // 7: kepler.executors.Query.GetExecutors:output_type -> kepler.executors.QueryExecutorsResponse
+	3, // 7: kepler.executors.Query.GetActiveExecutors:output_type -> kepler.executors.QueryActiveExecutorsResponse
 	5, // 8: kepler.executors.Query.GetEmergencyExecutors:output_type -> kepler.executors.QueryEmergencyExecutorsResponse
 	6, // [6:9] is the sub-list for method output_type
 	3, // [3:6] is the sub-list for method input_type
@@ -2859,7 +2861,7 @@ func file_kepler_executors_query_proto_init() {
 			}
 		}
 		file_kepler_executors_query_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QueryExecutorsRequest); i {
+			switch v := v.(*QueryActiveExecutorsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2871,7 +2873,7 @@ func file_kepler_executors_query_proto_init() {
 			}
 		}
 		file_kepler_executors_query_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QueryExecutorsResponse); i {
+			switch v := v.(*QueryActiveExecutorsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
