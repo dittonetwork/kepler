@@ -21,12 +21,12 @@ func (k Keeper) GetEmergencyExecutors(
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
-activeExecutors := make([]*types.Executor, 0)
-for i := range executors {
-    if executors[i].GetIsActive() {
-        activeExecutors = append(activeExecutors, &executors[i])
-    }
-}
+	activeExecutors := make([]*types.Executor, 0)
+	for i := range executors {
+		if executors[i].GetIsActive() {
+			activeExecutors = append(activeExecutors, &executors[i])
+		}
+	}
 
 	emergencyValidators := k.restaking.GetActiveEmergencyValidators(sdkCtx)
 	res := make([]*types.Executor, 0, len(emergencyValidators))

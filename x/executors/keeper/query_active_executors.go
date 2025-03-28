@@ -20,9 +20,9 @@ func (k Keeper) GetActiveExecutors(
 	}
 
 	activeExecutors := make([]*types.Executor, 0)
-	for _, executor := range executors {
-		if executor.GetIsActive() {
-			activeExecutors = append(activeExecutors, &executor)
+	for i := range executors {
+		if executors[i].GetIsActive() {
+			activeExecutors = append(activeExecutors, &executors[i])
 		}
 	}
 
