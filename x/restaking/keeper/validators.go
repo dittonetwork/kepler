@@ -2,7 +2,6 @@ package keeper
 
 import (
 	"errors"
-	"fmt"
 	"math"
 
 	"github.com/ethereum/go-ethereum/common"
@@ -58,7 +57,7 @@ func (k Keeper) UpdateValidatorSet(ctx sdk.Context, params types.UpdateValidator
 
 		// check if operator's address is a valid Ethereum address
 		if !common.IsHexAddress(operator.Address) {
-			logger.Error(fmt.Sprintf("operator's address %s is not a valid Ethereum address", operator.Address))
+			logger.Error("operator's address is not a valid Ethereum address")
 			continue
 		}
 
