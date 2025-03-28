@@ -4,6 +4,7 @@ package kepler.executors;
 import "amino/amino.proto";
 import "gogoproto/gogo.proto";
 import "kepler/executors/params.proto";
+import "kepler/executors/executor.proto";
 
 option go_package = "github.com/dittonetwork/kepler/x/executors/types";
 
@@ -11,6 +12,10 @@ option go_package = "github.com/dittonetwork/kepler/x/executors/types";
 message GenesisState {
   // params defines all the parameters of the module.
   Params params = 1 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+  repeated Executor executors = 2 [
     (gogoproto.nullable) = false,
     (amino.dont_omitempty) = true
   ];
