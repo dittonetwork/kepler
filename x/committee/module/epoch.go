@@ -1,6 +1,7 @@
 package committee
 
 import (
+	"context"
 	"fmt"
 	"math"
 
@@ -8,7 +9,7 @@ import (
 )
 
 // AfterEpochEnd is called when epoch is going to be ended, epochNumber is the number of epoch that is ending.
-func (am AppModule) AfterEpochEnd(ctx sdk.Context, id string, number int64) error {
+func (am AppModule) AfterEpochEnd(ctx context.Context, id string, number int64) error {
 	if id == am.epochMainID {
 		// @TODO: need change type of epoch number to uint32 for avoid this check
 		// https://github.com/dittonetwork/kepler/issues/208
@@ -17,7 +18,9 @@ func (am AppModule) AfterEpochEnd(ctx sdk.Context, id string, number int64) erro
 			return fmt.Errorf("invalid epoch number: %d", number)
 		}
 
-		_, err := am.keeper.CreateCommittee(ctx, uint32(number))
+		sdkCtx := sdk.UnwrapSDKContext(ctx)
+
+		_, err := am.keeper.CreateCommittee(sdkCtx, uint32(number))
 		if err != nil {
 			return err
 		}
@@ -27,7 +30,7 @@ func (am AppModule) AfterEpochEnd(ctx sdk.Context, id string, number int64) erro
 }
 
 // BeforeEpochStart is called when epoch is going to be started, epochNumber is the number of epoch that is starting.
-func (am AppModule) BeforeEpochStart(_ sdk.Context, _ string, _ int64) error {
+func (am AppModule) BeforeEpochStart(_ context.Context, _ string, _ int64) error {
 	// noop
 	return nil
 }
