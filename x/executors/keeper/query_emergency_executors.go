@@ -2,11 +2,9 @@ package keeper
 
 import (
 	"context"
-	"slices"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/dittonetwork/kepler/x/executors/types"
-	restakingTypes "github.com/dittonetwork/kepler/x/restaking/types"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
@@ -16,29 +14,17 @@ func (q queryServer) GetEmergencyExecutors(
 	_ *types.QueryEmergencyExecutorsRequest,
 ) (*types.QueryEmergencyExecutorsResponse, error) {
 	sdkCtx := sdk.UnwrapSDKContext(ctx)
-	executors, err := q.getAllExecutors(sdkCtx)
+	executors, err := q.Keeper.GetEmergencyExecutors(sdkCtx)
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
 	var activeExecutors []*types.Executor
 	for i := range executors {
-		if executors[i].GetIsActive() {
-			activeExecutors = append(activeExecutors, &executors[i])
-		}
-	}
-
-	emergencyValidators := q.restaking.GetActiveEmergencyValidators(sdkCtx)
-	res := make([]*types.Executor, 0, len(emergencyValidators))
-	for _, activeExecutor := range activeExecutors {
-		if slices.ContainsFunc(emergencyValidators, func(v restakingTypes.EmergencyValidator) bool {
-			return v.Address.String() == activeExecutor.GetAddress()
-		}) {
-			res = append(res, activeExecutor)
-		}
+		activeExecutors = append(activeExecutors, &executors[i])
 	}
 
 	return &types.QueryEmergencyExecutorsResponse{
-		Executors: res,
+		Executors: activeExecutors,
 	}, nil
 }

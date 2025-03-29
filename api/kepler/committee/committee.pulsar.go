@@ -761,8 +761,8 @@ func (x *fastReflection_Executor) Range(f func(protoreflect.FieldDescriptor, pro
 			return
 		}
 	}
-	if x.VotingPower != uint32(0) {
-		value := protoreflect.ValueOfUint32(x.VotingPower)
+	if x.VotingPower != uint64(0) {
+		value := protoreflect.ValueOfUint64(x.VotingPower)
 		if !f(fd_Executor_voting_power, value) {
 			return
 		}
@@ -785,7 +785,7 @@ func (x *fastReflection_Executor) Has(fd protoreflect.FieldDescriptor) bool {
 	case "kepler.committee.Executor.address":
 		return x.Address != ""
 	case "kepler.committee.Executor.voting_power":
-		return x.VotingPower != uint32(0)
+		return x.VotingPower != uint64(0)
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.committee.Executor"))
@@ -805,7 +805,7 @@ func (x *fastReflection_Executor) Clear(fd protoreflect.FieldDescriptor) {
 	case "kepler.committee.Executor.address":
 		x.Address = ""
 	case "kepler.committee.Executor.voting_power":
-		x.VotingPower = uint32(0)
+		x.VotingPower = uint64(0)
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.committee.Executor"))
@@ -827,7 +827,7 @@ func (x *fastReflection_Executor) Get(descriptor protoreflect.FieldDescriptor) p
 		return protoreflect.ValueOfString(value)
 	case "kepler.committee.Executor.voting_power":
 		value := x.VotingPower
-		return protoreflect.ValueOfUint32(value)
+		return protoreflect.ValueOfUint64(value)
 	default:
 		if descriptor.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.committee.Executor"))
@@ -851,7 +851,7 @@ func (x *fastReflection_Executor) Set(fd protoreflect.FieldDescriptor, value pro
 	case "kepler.committee.Executor.address":
 		x.Address = value.Interface().(string)
 	case "kepler.committee.Executor.voting_power":
-		x.VotingPower = uint32(value.Uint())
+		x.VotingPower = value.Uint()
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.committee.Executor"))
@@ -892,7 +892,7 @@ func (x *fastReflection_Executor) NewField(fd protoreflect.FieldDescriptor) prot
 	case "kepler.committee.Executor.address":
 		return protoreflect.ValueOfString("")
 	case "kepler.committee.Executor.voting_power":
-		return protoreflect.ValueOfUint32(uint32(0))
+		return protoreflect.ValueOfUint64(uint64(0))
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.committee.Executor"))
@@ -1105,7 +1105,7 @@ func (x *fastReflection_Executor) ProtoMethods() *protoiface.Methods {
 					}
 					b := dAtA[iNdEx]
 					iNdEx++
-					x.VotingPower |= uint32(b&0x7F) << shift
+					x.VotingPower |= uint64(b&0x7F) << shift
 					if b < 0x80 {
 						break
 					}
@@ -1231,7 +1231,7 @@ type Executor struct {
 	// address is the account address of the executor.
 	Address string `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
 	// voting_power represents the weight of this executor's vote in committee decisions.
-	VotingPower uint32 `protobuf:"varint,2,opt,name=voting_power,json=votingPower,proto3" json:"voting_power,omitempty"`
+	VotingPower uint64 `protobuf:"varint,2,opt,name=voting_power,json=votingPower,proto3" json:"voting_power,omitempty"`
 }
 
 func (x *Executor) Reset() {
@@ -1261,7 +1261,7 @@ func (x *Executor) GetAddress() string {
 	return ""
 }
 
-func (x *Executor) GetVotingPower() uint32 {
+func (x *Executor) GetVotingPower() uint64 {
 	if x != nil {
 		return x.VotingPower
 	}
@@ -1294,7 +1294,7 @@ var file_kepler_committee_committee_proto_rawDesc = []byte{
 	0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x53,
 	0x74, 0x72, 0x69, 0x6e, 0x67, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x21,
 	0x0a, 0x0c, 0x76, 0x6f, 0x74, 0x69, 0x6e, 0x67, 0x5f, 0x70, 0x6f, 0x77, 0x65, 0x72, 0x18, 0x02,
-	0x20, 0x01, 0x28, 0x0d, 0x52, 0x0b, 0x76, 0x6f, 0x74, 0x69, 0x6e, 0x67, 0x50, 0x6f, 0x77, 0x65,
+	0x20, 0x01, 0x28, 0x04, 0x52, 0x0b, 0x76, 0x6f, 0x74, 0x69, 0x6e, 0x67, 0x50, 0x6f, 0x77, 0x65,
 	0x72, 0x3a, 0x04, 0xe8, 0xa0, 0x1f, 0x01, 0x42, 0xbc, 0x01, 0x0a, 0x14, 0x63, 0x6f, 0x6d, 0x2e,
 	0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x65,
 	0x42, 0x0e, 0x43, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x50, 0x72, 0x6f, 0x74, 0x6f,

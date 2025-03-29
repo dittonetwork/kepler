@@ -15,7 +15,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
-	committeemock "github.com/dittonetwork/kepler/x/committee/types/mock"
+	committeemock "github.com/dittonetwork/kepler/x/committee/testutil"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/mock/gomock"
 
@@ -37,45 +37,15 @@ func CommitteeKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {
 
 	// Mock staking keeper
 	ctrl := gomock.NewController(t)
-	executorsKeeper := committeemock.NewMockExecutors(ctrl)
+	executorsKeeper := committeemock.NewMockExecutorsKeeper(ctrl)
+	restakingKeeper := committeemock.NewMockRestakingKeeper(ctrl)
 
 	k := keeper.NewKeeper(
 		cdc,
 		runtime.NewKVStoreService(storeKey),
-		log.NewNopLogger(),
 		authority.String(),
 		executorsKeeper,
-	)
-
-	ctx := sdk.NewContext(stateStore, cmtproto.Header{}, false, log.NewNopLogger())
-
-	// Initialize params
-	if err := k.SetParams(ctx, types.DefaultParams()); err != nil {
-		panic(err)
-	}
-
-	return k, ctx
-}
-
-// CommitteeKeeperWithMocks creates a keeper with a custom mock for executors
-func CommitteeKeeperWithMocks(t testing.TB, executorsKeeper types.Executors) (keeper.Keeper, sdk.Context) {
-	storeKey := storetypes.NewKVStoreKey(types.StoreKey)
-
-	db := dbm.NewMemDB()
-	stateStore := store.NewCommitMultiStore(db, log.NewNopLogger(), metrics.NewNoOpMetrics())
-	stateStore.MountStoreWithDB(storeKey, storetypes.StoreTypeIAVL, db)
-	require.NoError(t, stateStore.LoadLatestVersion())
-
-	registry := codectypes.NewInterfaceRegistry()
-	cdc := codec.NewProtoCodec(registry)
-	authority := authtypes.NewModuleAddress(govtypes.ModuleName)
-
-	k := keeper.NewKeeper(
-		cdc,
-		runtime.NewKVStoreService(storeKey),
-		log.NewNopLogger(),
-		authority.String(),
-		executorsKeeper,
+		restakingKeeper,
 	)
 
 	ctx := sdk.NewContext(stateStore, cmtproto.Header{}, false, log.NewNopLogger())

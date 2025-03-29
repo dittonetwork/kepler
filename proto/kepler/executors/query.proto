@@ -10,18 +10,13 @@ option go_package = "github.com/dittonetwork/kepler/x/executors/types";
 service Query {
   // GetActiveExecutors returns active executors.
   rpc GetActiveExecutors(QueryActiveExecutorsRequest) returns (QueryActiveExecutorsResponse) {
-    option (google.api.http) = {
-      get: "/kepler/executors/v1/active_list"
-    };
-  };
+    option (google.api.http) = {get: "/kepler/executors/v1/active_list"};
+  }
   // GetEmergencyExecutors returns a list of emergency executors. They are also active.
   rpc GetEmergencyExecutors(QueryEmergencyExecutorsRequest) returns (QueryEmergencyExecutorsResponse) {
-    option (google.api.http) = {
-      get: "/kepler/executors/v1/emergency_list"
-    };
-  };
+    option (google.api.http) = {get: "/kepler/executors/v1/emergency_list"};
+  }
 }
-
 
 // QueryExecutorsRequest defines a request to fetch all active executors.
 message QueryActiveExecutorsRequest {}

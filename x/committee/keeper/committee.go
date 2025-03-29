@@ -4,6 +4,7 @@ import (
 	sdkerrors "cosmossdk.io/errors"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/dittonetwork/kepler/x/committee/types"
+	restaking "github.com/dittonetwork/kepler/x/restaking/types"
 )
 
 // CreateCommittee creates a new committee by the given epoch.
@@ -45,7 +46,7 @@ func (k Keeper) CreateCommittee(ctx sdk.Context, epoch uint32) (types.Committee,
 		return types.Committee{}, sdkerrors.Wrap(err, "failed to set last epoch")
 	}
 
-	k.Logger().With("committee", committee).Info("committee created")
+	k.Logger(ctx).With("committee", committee).Info("committee created")
 
 	return committee, nil
 }
@@ -61,9 +62,22 @@ func (k Keeper) createEmergencyCommittee(ctx sdk.Context, epoch uint32) (types.C
 	committeeExecutors := make([]types.Executor, len(executors))
 
 	for i, executor := range executors {
+		var addr sdk.ValAddress
+		addr, err = sdk.ValAddressFromBech32(executor.GetOwnerAddress())
+		if err != nil {
+			return types.Committee{}, sdkerrors.Wrap(err, "failed to convert address")
+		}
+
+		var validator restaking.Validator
+		validator, err = k.restaking.GetValidator(ctx, addr)
+
+		if err != nil {
+			return types.Committee{}, sdkerrors.Wrap(err, "failed to get validator")
+		}
+
 		committeeExecutors[i] = types.Executor{
-			Address:     executor.GetAddress().String(),
-			VotingPower: executor.GetVotingPower(),
+			Address:     executor.GetAddress(),
+			VotingPower: validator.VotingPower,
 		}
 	}
 
