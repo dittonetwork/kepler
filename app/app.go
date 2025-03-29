@@ -163,11 +163,11 @@ func New(
 		&app.ConsensusParamsKeeper,
 		&app.EpochsKeeper,
 		&app.WorkflowKeeper,
+		&app.RestakingKeeper,
+		&app.ExecutorsKeeper,
 		&app.CommitteeKeeper,
 		&app.JobKeeper,
 		&app.InstantKeeper,
-		&app.RestakingKeeper,
-		&app.ExecutorsKeeper,
 		// this line is used by starport scaffolding # stargate/app/keeperDefinition
 	); err != nil {
 		panic(err)
