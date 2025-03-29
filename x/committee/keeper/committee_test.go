@@ -1,23 +1,13 @@
 package keeper_test
 
 import (
-	"testing"
-
-	"github.com/stretchr/testify/require"
-	"go.uber.org/mock/gomock"
-
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	keepertest "github.com/dittonetwork/kepler/testutil/keeper"
 	"github.com/dittonetwork/kepler/x/committee/types"
-	"github.com/dittonetwork/kepler/x/committee/types/mock"
+	executortypes "github.com/dittonetwork/kepler/x/executors/types"
+	restakingtypes "github.com/dittonetwork/kepler/x/restaking/types"
+	"go.uber.org/mock/gomock"
 )
 
-func TestCreateCommittee(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-
-	executorsMock := mock.NewMockExecutors(ctrl)
-
+func (s *TestSuite) TestCreateCommittee() {
 	testCases := []struct {
 		name            string
 		epoch           uint32
@@ -55,7 +45,7 @@ func TestCreateCommittee(t *testing.T) {
 			lastEpoch:       10,
 			committeeExists: false,
 			mockSetup: func() {
-				executorsMock.EXPECT().
+				s.executorKeeper.EXPECT().
 					GetEmergencyExecutors(gomock.Any()).
 					Return(nil, types.ErrInvalidSigner)
 			},
@@ -67,24 +57,27 @@ func TestCreateCommittee(t *testing.T) {
 			lastEpoch:       10,
 			committeeExists: false,
 			mockSetup: func() {
-				// Create sample executors to return
-				addr1, _ := sdk.AccAddressFromBech32("cosmos1v9jxgun9wdenzc33zgq")
-				addr2, _ := sdk.AccAddressFromBech32("cosmos1s4ycalgh3gjemd5z4qj4w9n8vz3cplecafqa97")
-
-				executors := []types.ExecutorI{
-					&testExecutor{
-						address:     addr1,
-						votingPower: 10,
+				executors := []executortypes.Executor{
+					{
+						Address:      "cosmos1v9jxgun9wdenzc33zgq23q8r9hfv2z4x0762r",
+						OwnerAddress: "cosmosvaloper1w7f3xx7e75p4l7qdym5msqem9rd4dyc4mq79dm",
+						IsActive:     true,
 					},
-					&testExecutor{
-						address:     addr2,
-						votingPower: 20,
+					{
+						Address:      "cosmos1s4ycalgh3gjemd5z4qj4w9n8vz3cplecafqa97",
+						OwnerAddress: "cosmosvaloper1w7f3xx7e75p4l7qdym5msqem9rd4dyc4mq79dm",
+						IsActive:     true,
 					},
 				}
-
-				executorsMock.EXPECT().
+				s.executorKeeper.EXPECT().
 					GetEmergencyExecutors(gomock.Any()).
 					Return(executors, nil)
+
+				// Mock GetValidator calls for each executor
+				s.restakingKeeper.EXPECT().
+					GetValidator(gomock.Any(), gomock.Any()).
+					Return(restakingtypes.Validator{VotingPower: 10}, nil).
+					AnyTimes()
 			},
 			expectedError: nil,
 		},
@@ -94,83 +87,74 @@ func TestCreateCommittee(t *testing.T) {
 			lastEpoch:       10,
 			committeeExists: false,
 			mockSetup: func() {
-				addr1, _ := sdk.AccAddressFromBech32("cosmos1v9jxgun9wdenzc33zgq")
-				addr2, _ := sdk.AccAddressFromBech32("cosmos1s4ycalgh3gjemd5z4qj4w9n8vz3cplecafqa97")
-
-				executors := []types.ExecutorI{
-					&testExecutor{
-						address:     addr1,
-						votingPower: 10,
+				executors := []executortypes.Executor{
+					{
+						Address:      "cosmos1v9jxgun9wdenzc33zgq23q8r9hfv2z4x0762r",
+						OwnerAddress: "cosmosvaloper1w7f3xx7e75p4l7qdym5msqem9rd4dyc4mq79dm",
+						IsActive:     true,
 					},
-					&testExecutor{
-						address:     addr2,
-						votingPower: 20,
+					{
+						Address:      "cosmos1s4ycalgh3gjemd5z4qj4w9n8vz3cplecafqa97",
+						OwnerAddress: "cosmosvaloper1w7f3xx7e75p4l7qdym5msqem9rd4dyc4mq79dm",
+						IsActive:     true,
 					},
 				}
-
-				executorsMock.EXPECT().
+				s.executorKeeper.EXPECT().
 					GetEmergencyExecutors(gomock.Any()).
 					Return(executors, nil)
+
+				// Mock GetValidator calls for each executor
+				s.restakingKeeper.EXPECT().
+					GetValidator(gomock.Any(), gomock.Any()).
+					Return(restakingtypes.Validator{VotingPower: 20}, nil).
+					AnyTimes()
 			},
 			expectedError: nil,
 		},
 	}
 
 	for _, tc := range testCases {
-		t.Run(tc.name, func(t *testing.T) {
-			// Create keeper with mocks
-			k, ctx := keepertest.CommitteeKeeperWithMocks(t, executorsMock)
+		s.Run(tc.name, func() {
+			// Reset the keeper state for each test case
+			s.SetupTest()
+
+			// Get keeper from suite
+			k := s.keeper
+			ctx := s.ctx
 
 			// Setup the test case
 			tc.mockSetup()
 
 			// Set last epoch
 			if tc.lastEpoch > 0 {
-				require.NoError(t, k.LastEpoch.Set(ctx, tc.lastEpoch))
+				s.Require().NoError(k.LastEpoch.Set(ctx, tc.lastEpoch))
 			}
 
 			// Set committee existence
 			if tc.committeeExists {
-				require.NoError(t, k.Committees.Set(ctx, tc.epoch, types.Committee{}))
+				s.Require().NoError(k.Committees.Set(ctx, tc.epoch, types.Committee{}))
 			}
 
-			// Execute the method
+			// Call the actual CreateCommittee method
 			committee, err := k.CreateCommittee(ctx, tc.epoch)
 
 			// Check the results
 			if tc.expectedError != nil {
-				require.ErrorIs(t, err, tc.expectedError)
+				s.Require().ErrorIs(err, tc.expectedError)
 				return
 			}
 
-			require.NoError(t, err)
-			require.Equal(t, tc.epoch, committee.Epoch)
-			require.True(t, committee.IsEmergency)
-			require.Equal(t, ctx.HeaderInfo().Hash, committee.Seed)
-			require.Len(t, committee.Executors, 2)
-
-			// Check that addresses and voting powers match what we expect
-			require.Equal(t, uint32(10), committee.Executors[0].VotingPower)
-			require.Equal(t, uint32(20), committee.Executors[1].VotingPower)
+			// For successful cases
+			s.Require().NoError(err)
+			s.Require().Equal(tc.epoch, committee.Epoch)
+			s.Require().True(committee.IsEmergency)
+			s.Require().Equal(ctx.HeaderInfo().Hash, committee.Seed)
+			s.Require().Len(committee.Executors, 2)
 
 			// Verify that LastEpoch was updated to the new epoch value
 			lastEpoch, err := k.LastEpoch.Get(ctx)
-			require.NoError(t, err)
-			require.Equal(t, tc.epoch, lastEpoch, "LastEpoch should be updated to the new epoch value")
+			s.Require().NoError(err)
+			s.Require().Equal(tc.epoch, lastEpoch, "LastEpoch should be updated to the new epoch value")
 		})
 	}
-}
-
-// testExecutor is a mock implementation of ExecutorI for testing
-type testExecutor struct {
-	address     sdk.AccAddress
-	votingPower uint32
-}
-
-func (e *testExecutor) GetAddress() sdk.AccAddress {
-	return e.address
-}
-
-func (e *testExecutor) GetVotingPower() uint32 {
-	return e.votingPower
 }

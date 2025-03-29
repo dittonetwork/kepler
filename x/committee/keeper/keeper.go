@@ -29,14 +29,14 @@ type CommitteeKeeper interface {
 }
 
 type Keeper struct {
-	cdc    codec.BinaryCodec
-	logger log.Logger
+	cdc codec.BinaryCodec
 
 	Schema     collections.Schema
 	Committees *collections.IndexedMap[uint32, types.Committee, Idx]
 	LastEpoch  collections.Item[uint32]
 
-	executors types.Executors
+	executors types.ExecutorsKeeper
+	restaking types.RestakingKeeper
 
 	// the address capable of executing a MsgUpdateParams message. Typically, this
 	// should be the x/gov module account.
@@ -46,9 +46,9 @@ type Keeper struct {
 func NewKeeper(
 	cdc codec.BinaryCodec,
 	storeService store.KVStoreService,
-	logger log.Logger,
 	authority string,
-	executors types.Executors,
+	executors types.ExecutorsKeeper,
+	restaking types.RestakingKeeper,
 ) Keeper {
 	if _, err := sdk.AccAddressFromBech32(authority); err != nil {
 		panic(fmt.Sprintf("invalid authority address: %s", authority))
@@ -59,8 +59,8 @@ func NewKeeper(
 	k := Keeper{
 		cdc:       cdc,
 		authority: authority,
-		logger:    logger,
 		executors: executors,
+		restaking: restaking,
 
 		Committees: collections.NewIndexedMap(
 			sb,
@@ -106,6 +106,8 @@ func (k Keeper) GetAuthority() string {
 }
 
 // Logger returns a module-specific logger.
-func (k Keeper) Logger() log.Logger {
-	return k.logger.With("module", fmt.Sprintf("x/%s", types.ModuleName))
+func (k Keeper) Logger(ctx context.Context) log.Logger {
+	sdkCtx := sdk.UnwrapSDKContext(ctx)
+
+	return sdkCtx.Logger().With("module", fmt.Sprintf("x/%s", types.ModuleName))
 }

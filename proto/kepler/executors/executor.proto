@@ -1,13 +1,15 @@
 syntax = "proto3";
 package kepler.executors;
 
-import "amino/amino.proto";
 import "cosmos_proto/cosmos.proto";
+import "gogoproto/gogo.proto";
 
 option go_package = "github.com/dittonetwork/kepler/x/executors/types";
 
 // Executor defines the structure for an executor.
 message Executor {
+  option (gogoproto.equal) = true;
+
   // Cosmos address (e.g., bech32).
   string address = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
   // Owner's address (e.g., staker address).

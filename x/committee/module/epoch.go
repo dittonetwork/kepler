@@ -14,7 +14,7 @@ func (am AppModule) AfterEpochEnd(ctx context.Context, id string, number int64) 
 		// @TODO: need change type of epoch number to uint32 for avoid this check
 		// https://github.com/dittonetwork/kepler/issues/208
 		if number < 0 || number > math.MaxUint32 {
-			am.keeper.Logger().With("number", number).Error("invalid epoch number")
+			am.keeper.Logger(ctx).With("number", number).Error("invalid epoch number")
 			return fmt.Errorf("invalid epoch number: %d", number)
 		}
 
