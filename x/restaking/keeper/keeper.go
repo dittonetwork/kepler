@@ -37,13 +37,13 @@ func NewKeeper(
 	logger log.Logger,
 	authority string,
 	stakeKeeper types.StakingKeeper,
-) Keeper {
+) *Keeper {
 	if _, err := sdk.AccAddressFromBech32(authority); err != nil {
 		panic(fmt.Sprintf("invalid authority address: %s", authority))
 	}
 
 	sb := collections.NewSchemaBuilder(storeService)
-	return Keeper{
+	return &Keeper{
 		cdc:          cdc,
 		storeService: storeService,
 		authority:    authority,

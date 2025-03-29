@@ -117,7 +117,7 @@ func TestUpdateValidatorSetWithHooks(t *testing.T) {
 		mockHooks := &MockRestakingHooks{}
 		k.SetHooks(types.NewMultiRestakingHooks(mockHooks))
 
-		return ctx, stakingKeeper, k, mockHooks, ctrl
+		return ctx, stakingKeeper, *k, mockHooks, ctrl
 	}
 
 	t.Run("AfterValidatorBonded hook should be called for bonded validators", func(t *testing.T) {

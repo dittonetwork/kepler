@@ -87,7 +87,7 @@ func TestUpdateValidatorSet(t *testing.T) {
 		})
 		require.NoError(t, err)
 
-		return ctx, stakingKeeper, k, ctrl
+		return ctx, stakingKeeper, *k, ctrl
 	}
 
 	// Function to create a test setup without initializing LastUpdate
@@ -125,7 +125,7 @@ func TestUpdateValidatorSet(t *testing.T) {
 
 		// Don't initialize LastUpdate for this setup
 
-		return ctx, stakingKeeper, k, ctrl
+		return ctx, stakingKeeper, *k, ctrl
 	}
 
 	t.Run("creating new validator", func(t *testing.T) {
@@ -567,7 +567,7 @@ func TestNeedValidatorsUpdate(t *testing.T) {
 		err := k.SetParams(ctx, types.DefaultParams())
 		require.NoError(t, err)
 
-		return ctx, stakingKeeper, k, ctrl
+		return ctx, stakingKeeper, *k, ctrl
 	}
 
 	t.Run("should return true when epoch is greater than last update epoch", func(t *testing.T) {

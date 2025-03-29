@@ -66,7 +66,7 @@ func TestGetActiveEmergencyValidators(t *testing.T) {
 		err := k.SetParams(ctx, types.DefaultParams())
 		require.NoError(t, err)
 
-		return ctx, stakingKeeper, k, ctrl
+		return ctx, stakingKeeper, *k, ctrl
 	}
 
 	t.Run("empty list when no emergency validators", func(t *testing.T) {
