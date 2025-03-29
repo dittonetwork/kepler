@@ -19,7 +19,6 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Query_Params_FullMethodName                = "/kepler.executors.Query/Params"
 	Query_GetActiveExecutors_FullMethodName    = "/kepler.executors.Query/GetActiveExecutors"
 	Query_GetEmergencyExecutors_FullMethodName = "/kepler.executors.Query/GetEmergencyExecutors"
 )
@@ -30,8 +29,6 @@ const (
 //
 // Query defines the gRPC querier service.
 type QueryClient interface {
-	// Parameters queries the parameters of the module.
-	Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error)
 	// GetActiveExecutors returns active executors.
 	GetActiveExecutors(ctx context.Context, in *QueryActiveExecutorsRequest, opts ...grpc.CallOption) (*QueryActiveExecutorsResponse, error)
 	// GetEmergencyExecutors returns a list of emergency executors. They are also active.
@@ -44,16 +41,6 @@ type queryClient struct {
 
 func NewQueryClient(cc grpc.ClientConnInterface) QueryClient {
 	return &queryClient{cc}
-}
-
-func (c *queryClient) Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(QueryParamsResponse)
-	err := c.cc.Invoke(ctx, Query_Params_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *queryClient) GetActiveExecutors(ctx context.Context, in *QueryActiveExecutorsRequest, opts ...grpc.CallOption) (*QueryActiveExecutorsResponse, error) {
@@ -82,8 +69,6 @@ func (c *queryClient) GetEmergencyExecutors(ctx context.Context, in *QueryEmerge
 //
 // Query defines the gRPC querier service.
 type QueryServer interface {
-	// Parameters queries the parameters of the module.
-	Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error)
 	// GetActiveExecutors returns active executors.
 	GetActiveExecutors(context.Context, *QueryActiveExecutorsRequest) (*QueryActiveExecutorsResponse, error)
 	// GetEmergencyExecutors returns a list of emergency executors. They are also active.
@@ -98,9 +83,6 @@ type QueryServer interface {
 // pointer dereference when methods are called.
 type UnimplementedQueryServer struct{}
 
-func (UnimplementedQueryServer) Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Params not implemented")
-}
 func (UnimplementedQueryServer) GetActiveExecutors(context.Context, *QueryActiveExecutorsRequest) (*QueryActiveExecutorsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetActiveExecutors not implemented")
 }
@@ -126,24 +108,6 @@ func RegisterQueryServer(s grpc.ServiceRegistrar, srv QueryServer) {
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&Query_ServiceDesc, srv)
-}
-
-func _Query_Params_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryParamsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(QueryServer).Params(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Query_Params_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).Params(ctx, req.(*QueryParamsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _Query_GetActiveExecutors_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -189,10 +153,6 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "kepler.executors.Query",
 	HandlerType: (*QueryServer)(nil),
 	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "Params",
-			Handler:    _Query_Params_Handler,
-		},
 		{
 			MethodName: "GetActiveExecutors",
 			Handler:    _Query_GetActiveExecutors_Handler,

@@ -11,12 +11,12 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (k Keeper) GetEmergencyExecutors(
+func (q queryServer) GetEmergencyExecutors(
 	ctx context.Context,
 	_ *types.QueryEmergencyExecutorsRequest,
 ) (*types.QueryEmergencyExecutorsResponse, error) {
 	sdkCtx := sdk.UnwrapSDKContext(ctx)
-	executors, err := k.getAllExecutors(sdkCtx)
+	executors, err := q.getAllExecutors(sdkCtx)
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}
@@ -28,7 +28,7 @@ func (k Keeper) GetEmergencyExecutors(
 		}
 	}
 
-	emergencyValidators := k.restaking.GetActiveEmergencyValidators(sdkCtx)
+	emergencyValidators := q.restaking.GetActiveEmergencyValidators(sdkCtx)
 	res := make([]*types.Executor, 0, len(emergencyValidators))
 	for _, activeExecutor := range activeExecutors {
 		if slices.ContainsFunc(emergencyValidators, func(v restakingTypes.EmergencyValidator) bool {
