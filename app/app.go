@@ -87,7 +87,7 @@ type App struct {
 	CommitteeKeeper committeemodulekeeper.Keeper
 	JobKeeper       jobmodulekeeper.Keeper
 	InstantKeeper   instantmodulekeeper.Keeper
-	RestakingKeeper restakingmodulekeeper.Keeper
+	RestakingKeeper *restakingmodulekeeper.Keeper
 	ExecutorsKeeper executorsmodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
