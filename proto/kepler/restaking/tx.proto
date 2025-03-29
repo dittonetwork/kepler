@@ -24,9 +24,10 @@ service Msg {
 // BondValidatorRequest is the request type for the Msg/BondValidator RPC method.
 message BondValidatorRequest {
   option (amino.name) = "kepler/x/restaking/BondValidatorRequest";
+  option (cosmos.msg.v1.signer) = "owner";
 
-  // Signature over (address, validator_status, is_emergency)
-  string signature = 1;
+  // owner is the address of the validator operator.
+  string owner = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 }
 
 // BondValidatorResponse is the response type for the Msg/BondValidator RPC method.
