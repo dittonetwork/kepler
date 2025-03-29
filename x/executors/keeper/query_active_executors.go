@@ -9,12 +9,13 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (k Keeper) GetActiveExecutors(
+// GetActiveExecutors returns all active executors.
+func (q queryServer) GetActiveExecutors(
 	ctx context.Context,
 	_ *types.QueryActiveExecutorsRequest,
 ) (*types.QueryActiveExecutorsResponse, error) {
 	sdkCtx := sdk.UnwrapSDKContext(ctx)
-	executors, err := k.getAllExecutors(sdkCtx)
+	executors, err := q.getAllExecutors(sdkCtx)
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}

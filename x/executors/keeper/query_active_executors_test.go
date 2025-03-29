@@ -1,16 +1,12 @@
 package keeper_test
 
 import (
-	"testing"
-
-	"github.com/dittonetwork/kepler/testutil/keeper"
+	"github.com/dittonetwork/kepler/api/kepler/executors"
 	"github.com/dittonetwork/kepler/x/executors/types"
 	"github.com/stretchr/testify/require"
 )
 
-func TestGetActiveExecutors_Success(t *testing.T) {
-	k, ctx := keeper.ExecutorsKeeper(t)
-
+func (s *TestSuite) TestQueryGetActiveExecutors_Success() {
 	// Prepare two executors: one active and one inactive.
 	activeExec := types.Executor{
 		Address:  "cosmos1active",
@@ -21,16 +17,15 @@ func TestGetActiveExecutors_Success(t *testing.T) {
 		IsActive: false,
 	}
 
-	err := k.Executors.Set(ctx, activeExec.Address, activeExec)
-	require.NoError(t, err)
-	err = k.Executors.Set(ctx, inactiveExec.Address, inactiveExec)
-	require.NoError(t, err)
+	err := s.keeper.Executors.Set(s.ctx, activeExec.Address, activeExec)
+	require.NoError(s.T(), err)
+	err = s.keeper.Executors.Set(s.ctx, inactiveExec.Address, inactiveExec)
+	require.NoError(s.T(), err)
 
-	req := &types.QueryActiveExecutorsRequest{}
-	resp, err := k.GetActiveExecutors(ctx, req)
-	require.NoError(t, err)
-	require.NotNil(t, resp)
+	resp, err := s.queryClient.GetActiveExecutors(s.ctx, &executors.QueryActiveExecutorsRequest{})
+	require.NoError(s.T(), err)
+	require.NotNil(s.T(), resp)
 	// Only the active executor should be returned.
-	require.Len(t, resp.Executors, 1)
-	require.Equal(t, "cosmos1active", resp.Executors[0].Address)
+	require.Len(s.T(), resp.Executors, 1)
+	require.Equal(s.T(), "cosmos1active", resp.Executors[0].Address)
 }

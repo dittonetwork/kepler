@@ -19,7 +19,6 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Msg_UpdateParams_FullMethodName       = "/kepler.executors.Msg/UpdateParams"
 	Msg_AddExecutor_FullMethodName        = "/kepler.executors.Msg/AddExecutor"
 	Msg_ActivateExecutor_FullMethodName   = "/kepler.executors.Msg/ActivateExecutor"
 	Msg_DeactivateExecutor_FullMethodName = "/kepler.executors.Msg/DeactivateExecutor"
@@ -31,9 +30,6 @@ const (
 //
 // Msg defines the Msg service.
 type MsgClient interface {
-	// UpdateParams defines a (governance) operation for updating the module
-	// parameters. The authority defaults to the x/gov module account.
-	UpdateParams(ctx context.Context, in *MsgUpdateParams, opts ...grpc.CallOption) (*MsgUpdateParamsResponse, error)
 	// AddExecutor defines a transaction to add a new executor.
 	AddExecutor(ctx context.Context, in *MsgAddExecutor, opts ...grpc.CallOption) (*MsgAddExecutorResponse, error)
 	// ActivateExecutor defines a transaction to activate an executor.
@@ -48,16 +44,6 @@ type msgClient struct {
 
 func NewMsgClient(cc grpc.ClientConnInterface) MsgClient {
 	return &msgClient{cc}
-}
-
-func (c *msgClient) UpdateParams(ctx context.Context, in *MsgUpdateParams, opts ...grpc.CallOption) (*MsgUpdateParamsResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(MsgUpdateParamsResponse)
-	err := c.cc.Invoke(ctx, Msg_UpdateParams_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *msgClient) AddExecutor(ctx context.Context, in *MsgAddExecutor, opts ...grpc.CallOption) (*MsgAddExecutorResponse, error) {
@@ -96,9 +82,6 @@ func (c *msgClient) DeactivateExecutor(ctx context.Context, in *MsgDeactivateExe
 //
 // Msg defines the Msg service.
 type MsgServer interface {
-	// UpdateParams defines a (governance) operation for updating the module
-	// parameters. The authority defaults to the x/gov module account.
-	UpdateParams(context.Context, *MsgUpdateParams) (*MsgUpdateParamsResponse, error)
 	// AddExecutor defines a transaction to add a new executor.
 	AddExecutor(context.Context, *MsgAddExecutor) (*MsgAddExecutorResponse, error)
 	// ActivateExecutor defines a transaction to activate an executor.
@@ -115,9 +98,6 @@ type MsgServer interface {
 // pointer dereference when methods are called.
 type UnimplementedMsgServer struct{}
 
-func (UnimplementedMsgServer) UpdateParams(context.Context, *MsgUpdateParams) (*MsgUpdateParamsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateParams not implemented")
-}
 func (UnimplementedMsgServer) AddExecutor(context.Context, *MsgAddExecutor) (*MsgAddExecutorResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddExecutor not implemented")
 }
@@ -146,24 +126,6 @@ func RegisterMsgServer(s grpc.ServiceRegistrar, srv MsgServer) {
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&Msg_ServiceDesc, srv)
-}
-
-func _Msg_UpdateParams_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgUpdateParams)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MsgServer).UpdateParams(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Msg_UpdateParams_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).UpdateParams(ctx, req.(*MsgUpdateParams))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _Msg_AddExecutor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -227,10 +189,6 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "kepler.executors.Msg",
 	HandlerType: (*MsgServer)(nil),
 	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "UpdateParams",
-			Handler:    _Msg_UpdateParams_Handler,
-		},
 		{
 			MethodName: "AddExecutor",
 			Handler:    _Msg_AddExecutor_Handler,
