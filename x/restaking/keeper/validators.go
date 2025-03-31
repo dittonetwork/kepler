@@ -260,11 +260,6 @@ func (k Keeper) updateValidatorStatusAndTokens(
 		return err
 	}
 
-	// Dispatch hook for validator update if the validator is bonded
-	if validator.Status == stakingtypes.Bonded {
-		return k.AfterValidatorBonded(ctx, validator)
-	}
-
 	return nil
 }
 

@@ -69,8 +69,8 @@ func (k Keeper) getAllExecutors(ctx sdk.Context) ([]types.Executor, error) {
 	return executors, nil
 }
 
-// getExecutorsByOwnerAddress returns a slice of executors with the given owner address.
-func (k Keeper) getExecutorsByOwnerAddress(ctx sdk.Context, ownerAddress string) ([]types.Executor, error) {
+// GetExecutorsByOwnerAddress returns a slice of executors with the given owner address.
+func (k Keeper) GetExecutorsByOwnerAddress(ctx sdk.Context, ownerAddress string) ([]types.Executor, error) {
 	iter, err := k.Executors.Indexes.ExecutorsByOwnerAddress.MatchExact(
 		ctx,
 		ownerAddress,

@@ -16,7 +16,7 @@ func (s *TestSuite) TestMsgAddExecutor_Success() {
 	require.NotNil(s.T(), resp)
 	require.Equal(s.T(), "cosmos1address1", resp.GetExecutor().GetAddress())
 	require.Equal(s.T(), "cosmos1owner", resp.GetExecutor().GetOwnerAddress())
-	require.Equal(s.T(), true, resp.GetExecutor().GetIsActive())
+	require.Equal(s.T(), false, resp.GetExecutor().GetIsActive())
 	require.Equal(s.T(), "cosmos1publickey", resp.GetExecutor().GetPublicKey())
 	require.NotZero(s.T(), resp.GetExecutor().GetCreatedAt())
 }

@@ -13,6 +13,7 @@ import (
 	cdctypes "github.com/cosmos/cosmos-sdk/codec/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
+	restakingTypes "github.com/dittonetwork/kepler/x/restaking/types"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 
 	// this line is used by starport scaffolding # 1.
@@ -189,6 +190,7 @@ type ModuleOutputs struct {
 
 	ExecutorsKeeper keeper.Keeper
 	Module          appmodule.AppModule
+	RestakingHooks  restakingTypes.RestakingHooksWrapper
 }
 
 func ProvideModule(in ModuleInputs) ModuleOutputs {
@@ -204,5 +206,9 @@ func ProvideModule(in ModuleInputs) ModuleOutputs {
 		in.BankKeeper,
 	)
 
-	return ModuleOutputs{ExecutorsKeeper: k, Module: m}
+	return ModuleOutputs{
+		ExecutorsKeeper: k,
+		Module:          m,
+		RestakingHooks:  restakingTypes.RestakingHooksWrapper{RestakingHooks: m},
+	}
 }

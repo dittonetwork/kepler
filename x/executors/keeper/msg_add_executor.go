@@ -14,24 +14,9 @@ func (k msgServer) AddExecutor(
 	msg *types.MsgAddExecutor,
 ) (*types.MsgAddExecutorResponse, error) {
 	sdkCtx := sdk.UnwrapSDKContext(ctx)
-	executors, err := k.getExecutorsByOwnerAddress(sdkCtx, msg.GetOwnerAddress())
-	if err != nil {
-		return nil, status.Error(codes.Internal, err.Error())
-	}
-
-	// owner can have only one active executor
-	isActive := true
-	for _, executor := range executors {
-		if executor.IsActive {
-			isActive = false
-			break
-		}
-	}
-
 	newExecutor := types.Executor{
 		Address:      msg.GetCreator(),
 		OwnerAddress: msg.GetOwnerAddress(),
-		IsActive:     isActive,
 		PublicKey:    msg.GetPublicKey(),
 	}
 

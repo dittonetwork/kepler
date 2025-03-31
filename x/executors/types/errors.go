@@ -7,10 +7,11 @@ import (
 )
 
 const (
-	ErrCodeSample = 1101
+	ErrCodeAlreadyHasActiveExecutor = 1102
 )
 
-// x/executors module sentinel errors.
-var (
-	ErrSample = sdkerrors.Register(ModuleName, ErrCodeSample, "sample error")
+var ErrAlreadyHasActiveExecutor = sdkerrors.Register(
+	ModuleName,
+	ErrCodeAlreadyHasActiveExecutor,
+	"owner already has active executor",
 )
