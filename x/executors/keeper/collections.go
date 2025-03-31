@@ -1,7 +1,6 @@
 package keeper
 
 import (
-	"errors"
 	"fmt"
 	"time"
 
@@ -101,10 +100,6 @@ func (k Keeper) getExecutorsByOwnerAddress(ctx sdk.Context, ownerAddress string)
 func (k Keeper) CheckAndSetExecutorIsActive(ctx sdk.Context, address string) error {
 	executor, err := k.Executors.Get(ctx, address)
 	if err != nil {
-		if errors.Is(err, collections.ErrNotFound) {
-			return err
-		}
-
 		return err
 	}
 
