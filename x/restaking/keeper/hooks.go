@@ -15,11 +15,6 @@ func (k Keeper) Hooks() types.RestakingHooks {
 	return k.hooks
 }
 
-// AfterValidatorBonded is called after a validator is bonded.
-func (k Keeper) AfterValidatorBonded(ctx sdk.Context, validator stakingtypes.ValidatorI) error {
-	return k.Hooks().AfterValidatorBonded(ctx, validator)
-}
-
 // BeforeValidatorBeginUnbonding is called before a validator begins unbonding.
 func (k Keeper) BeforeValidatorBeginUnbonding(ctx sdk.Context, validator stakingtypes.ValidatorI) error {
 	return k.Hooks().BeforeValidatorBeginUnbonding(ctx, validator)

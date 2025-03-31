@@ -31,23 +31,13 @@ import (
 
 // MockRestakingHooks is a mock implementation of the RestakingHooks interface
 type MockRestakingHooks struct {
-	AfterBondedCalled        bool
 	BeforeUnbondingCalled    bool
-	AfterBondedValidator     stakingtypes.ValidatorI
 	BeforeUnbondingValidator stakingtypes.ValidatorI
-	AfterBondedError         error
 	BeforeUnbondingError     error
 }
 
 // Ensure MockRestakingHooks implements the RestakingHooks interface
 var _ types.RestakingHooks = &MockRestakingHooks{}
-
-// AfterValidatorBonded implements RestakingHooks
-func (m *MockRestakingHooks) AfterValidatorBonded(_ context.Context, validator stakingtypes.ValidatorI) error {
-	m.AfterBondedCalled = true
-	m.AfterBondedValidator = validator
-	return m.AfterBondedError
-}
 
 // BeforeValidatorBeginUnbonding implements RestakingHooks
 func (m *MockRestakingHooks) BeforeValidatorBeginUnbonding(_ context.Context, validator stakingtypes.ValidatorI) error {
@@ -120,68 +110,6 @@ func TestUpdateValidatorSetWithHooks(t *testing.T) {
 		return ctx, stakingKeeper, *k, mockHooks, ctrl
 	}
 
-	t.Run("AfterValidatorBonded hook should be called for bonded validators", func(t *testing.T) {
-		ctx, stakingKeeper, k, mockHooks, ctrl := setupTest(t)
-		defer ctrl.Finish()
-
-		// Create a mock validator for an existing validator
-		anyPubKey, err := codectypes.NewAnyWithValue(pubKey)
-		require.NoError(t, err)
-
-		existingValidator := stakingtypes.Validator{
-			OperatorAddress: valAddress.String(),
-			ConsensusPubkey: anyPubKey,
-			Status:          stakingtypes.Unbonded, // Starting as unbonded
-			Tokens:          sdk.TokensFromConsensusPower(50, sdk.DefaultPowerReduction),
-		}
-
-		// Setup mock expectations
-		stakingKeeper.EXPECT().
-			GetValidator(gomock.Any(), valAddress).
-			Return(existingValidator, nil)
-
-		// First call to SetValidator for updating pubkey
-		stakingKeeper.EXPECT().
-			SetValidator(gomock.Any(), gomock.Any()).
-			Return(nil)
-
-		// Second call to SetValidator for updating status and tokens
-		// This will cause the validator to become bonded
-		stakingKeeper.EXPECT().
-			SetValidator(gomock.Any(), gomock.Any()).
-			DoAndReturn(func(ctx sdk.Context, validator stakingtypes.Validator) error {
-				// Simulate staking module's behavior of setting validator status
-				validator.Status = stakingtypes.Bonded
-				return nil
-			})
-
-		params := types.UpdateValidatorSetParams{
-			Operators: []types.Operator{
-				{
-					Address:   operatorAddress,
-					PublicKey: pubKeyBech32Val,
-					Status:    types.OperatorStatusBonded, // We want to bond the validator
-					Tokens:    100,
-				},
-			},
-			EpochNumber: 1, // Set a higher epoch number
-			BlockHeight: 100,
-			BlockHash:   "test_hash",
-		}
-
-		err = k.UpdateValidatorSet(ctx, params)
-		require.NoError(t, err)
-
-		// Verify that the hook was called
-		require.True(t, mockHooks.AfterBondedCalled, "AfterValidatorBonded hook should have been called")
-		require.NotNil(t, mockHooks.AfterBondedValidator, "Hook should have received a validator")
-		if v, ok := mockHooks.AfterBondedValidator.(stakingtypes.Validator); ok {
-			require.Equal(t, valAddress.String(), v.OperatorAddress, "Wrong validator passed to hook")
-		} else {
-			require.Equal(t, valAddress.String(), mockHooks.AfterBondedValidator.GetOperator(), "Wrong validator passed to hook")
-		}
-	})
-
 	t.Run("BeforeValidatorBeginUnbonding hook should be called for unbonding validators", func(t *testing.T) {
 		ctx, stakingKeeper, k, mockHooks, ctrl := setupTest(t)
 		defer ctrl.Finish()
@@ -243,65 +171,6 @@ func TestUpdateValidatorSetWithHooks(t *testing.T) {
 		} else {
 			require.Equal(t, valAddress.String(), mockHooks.BeforeUnbondingValidator.GetOperator(), "Wrong validator passed to hook")
 		}
-	})
-
-	t.Run("Should handle error from AfterValidatorBonded hook", func(t *testing.T) {
-		ctx, stakingKeeper, k, mockHooks, ctrl := setupTest(t)
-		defer ctrl.Finish()
-
-		// Set hooks to return an error
-		mockHooks.AfterBondedError = errors.New("unauthorized")
-
-		// Create a mock validator
-		anyPubKey, err := codectypes.NewAnyWithValue(pubKey)
-		require.NoError(t, err)
-
-		existingValidator := stakingtypes.Validator{
-			OperatorAddress: valAddress.String(),
-			ConsensusPubkey: anyPubKey,
-			Status:          stakingtypes.Unbonded,
-			Tokens:          sdk.TokensFromConsensusPower(50, sdk.DefaultPowerReduction),
-		}
-
-		// Setup mock expectations
-		stakingKeeper.EXPECT().
-			GetValidator(gomock.Any(), valAddress).
-			Return(existingValidator, nil)
-
-		// First call to SetValidator for updating pubkey
-		stakingKeeper.EXPECT().
-			SetValidator(gomock.Any(), gomock.Any()).
-			Return(nil)
-
-		// Second call to SetValidator for updating status and tokens
-		stakingKeeper.EXPECT().
-			SetValidator(gomock.Any(), gomock.Any()).
-			DoAndReturn(func(ctx sdk.Context, validator stakingtypes.Validator) error {
-				validator.Status = stakingtypes.Bonded
-				return nil
-			})
-
-		params := types.UpdateValidatorSetParams{
-			Operators: []types.Operator{
-				{
-					Address:   operatorAddress,
-					PublicKey: pubKeyBech32Val,
-					Status:    types.OperatorStatusBonded,
-					Tokens:    100,
-				},
-			},
-			EpochNumber: 1, // Set a higher epoch number
-			BlockHeight: 100,
-			BlockHash:   "test_hash",
-		}
-
-		// Expect error from hook
-		err = k.UpdateValidatorSet(ctx, params)
-		require.Error(t, err)
-		require.Contains(t, err.Error(), "unauthorized")
-
-		// Verify hook was called
-		require.True(t, mockHooks.AfterBondedCalled)
 	})
 
 	t.Run("Should handle error from BeforeValidatorBeginUnbonding hook", func(t *testing.T) {

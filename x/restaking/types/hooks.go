@@ -7,9 +7,6 @@ import (
 )
 
 type RestakingHooks interface {
-	// AfterValidatorBonded is called after a validator is bonded.
-	AfterValidatorBonded(ctx context.Context, validator stakingtypes.ValidatorI) error
-
 	// BeforeValidatorBeginUnbonding is called before a validator begins unbonding.
 	BeforeValidatorBeginUnbonding(ctx context.Context, validator stakingtypes.ValidatorI) error
 }
@@ -21,16 +18,6 @@ type MultiRestakingHooks []RestakingHooks
 // NewMultiRestakingHooks creates a new MultiRestakingHooks object.
 func NewMultiRestakingHooks(hooks ...RestakingHooks) MultiRestakingHooks {
 	return hooks
-}
-
-// AfterValidatorBonded is called after a validator is bonded.
-func (m MultiRestakingHooks) AfterValidatorBonded(ctx context.Context, validator stakingtypes.ValidatorI) error {
-	for i := range m {
-		if err := m[i].AfterValidatorBonded(ctx, validator); err != nil {
-			return err
-		}
-	}
-	return nil
 }
 
 // BeforeValidatorBeginUnbonding is called before a validator begins unbonding.
