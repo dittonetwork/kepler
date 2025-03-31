@@ -16,34 +16,16 @@ func (k msgServer) ActivateExecutor(
 	msg *types.MsgActivateExecutor,
 ) (*types.MsgActivateExecutorResponse, error) {
 	sdkCtx := sdk.UnwrapSDKContext(ctx)
-	executor, err := k.Keeper.Executors.Get(sdkCtx, msg.GetCreator())
-	if err != nil {
+
+	if err := k.CheckAndSetExecutorIsActive(sdkCtx, msg.GetCreator()); err != nil {
 		if errors.Is(err, collections.ErrNotFound) {
 			return nil, status.Error(codes.NotFound, "executor not found")
 		}
 
-		return nil, status.Error(codes.Internal, err.Error())
-	}
-
-	ownersExecutors, err := k.getExecutorsByOwnerAddress(sdkCtx, executor.OwnerAddress)
-	if err != nil {
-		return nil, status.Error(codes.Internal, err.Error())
-	}
-
-	var hasActiveExecutors bool
-	for _, e := range ownersExecutors {
-		if e.IsActive {
-			hasActiveExecutors = true
-			break
+		if errors.Is(err, types.ErrAlreadyHasActiveExecutors) {
+			return nil, status.Error(codes.AlreadyExists, "owner can have only one active executor")
 		}
-	}
 
-	if hasActiveExecutors {
-		return nil, status.Error(codes.InvalidArgument, "owner can have only one active executor")
-	}
-
-	executor.IsActive = true
-	if err := k.Keeper.Executors.Set(sdkCtx, executor.Address, executor); err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 

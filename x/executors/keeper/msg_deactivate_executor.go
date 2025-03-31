@@ -16,7 +16,7 @@ func (k msgServer) DeactivateExecutor(
 	msg *types.MsgDeactivateExecutor,
 ) (*types.MsgDeactivateExecutorResponse, error) {
 	sdkCtx := sdk.UnwrapSDKContext(ctx)
-	executor, err := k.Keeper.Executors.Get(sdkCtx, msg.GetCreator())
+	executor, err := k.Executors.Get(sdkCtx, msg.GetCreator())
 	if err != nil {
 		if errors.Is(err, collections.ErrNotFound) {
 			return nil, status.Error(codes.NotFound, "executor not found")
@@ -26,7 +26,7 @@ func (k msgServer) DeactivateExecutor(
 	}
 
 	executor.IsActive = false
-	if err := k.Keeper.Executors.Set(sdkCtx, executor.Address, executor); err != nil {
+	if err = k.Executors.Set(sdkCtx, executor.Address, executor); err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
