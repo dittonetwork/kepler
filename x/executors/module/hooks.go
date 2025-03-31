@@ -10,17 +10,24 @@ import (
 
 var _ restakingTypes.RestakingHooks = AppModule{}
 
-func (am AppModule) AfterValidatorBonded(ctx context.Context, validator stakingtypes.ValidatorI) error {
-	sdkCtx := sdk.UnwrapSDKContext(ctx)
-	return am.keeper.CheckAndSetExecutorIsActive(sdkCtx, validator.GetOperator())
+func (am AppModule) AfterValidatorBonded(_ context.Context, _ stakingtypes.ValidatorI) error {
+	// in executors module we don't need to do anything after validator is bonded, so just return nil
+	return nil
 }
 
 func (am AppModule) BeforeValidatorBeginUnbonding(ctx context.Context, validator stakingtypes.ValidatorI) error {
-	executor, err := am.keeper.Executors.Get(ctx, validator.GetOperator())
+	sdkCtx := sdk.UnwrapSDKContext(ctx)
+	executors, err := am.keeper.GetExecutorsByOwnerAddress(sdkCtx, validator.GetOperator())
 	if err != nil {
 		return err
 	}
 
-	executor.IsActive = false
-	return am.keeper.Executors.Set(ctx, executor.Address, executor)
+	for _, executor := range executors {
+		executor.IsActive = false
+		if err = am.keeper.Executors.Set(ctx, executor.Address, executor); err != nil {
+			return err
+		}
+	}
+
+	return nil
 }

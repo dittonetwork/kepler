@@ -14,7 +14,7 @@ func (k msgServer) AddExecutor(
 	msg *types.MsgAddExecutor,
 ) (*types.MsgAddExecutorResponse, error) {
 	sdkCtx := sdk.UnwrapSDKContext(ctx)
-	executors, err := k.getExecutorsByOwnerAddress(sdkCtx, msg.GetOwnerAddress())
+	executors, err := k.GetExecutorsByOwnerAddress(sdkCtx, msg.GetOwnerAddress())
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}
