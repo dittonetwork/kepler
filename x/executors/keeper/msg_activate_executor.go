@@ -39,7 +39,7 @@ func (k msgServer) ActivateExecutor(
 	}
 
 	if hasActiveExecutors {
-		return nil, status.Error(codes.AlreadyExists, "owner can have only one active executor")
+		return nil, status.Error(codes.AlreadyExists, types.ErrAlreadyHasActiveExecutor.Error())
 	}
 
 	executor.IsActive = true

@@ -66,7 +66,7 @@ func (s *TestSuite) TestMsgActivateExecutor_OwnerHasActive() {
 	})
 
 	require.Error(s.T(), err)
-	require.Contains(s.T(), err.Error(), "owner can have only one active executor")
+	require.Contains(s.T(), err.Error(), types.ErrAlreadyHasActiveExecutor.Error())
 	require.Nil(s.T(), activateResp)
 }
 
