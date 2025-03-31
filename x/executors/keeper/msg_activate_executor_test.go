@@ -45,6 +45,9 @@ func (s *TestSuite) TestMsgActivateExecutor_OwnerHasActive() {
 	require.NoError(s.T(), err)
 	require.NotNil(s.T(), resp)
 
+	_, err = s.msgServer.ActivateExecutor(s.ctx, &types.MsgActivateExecutor{Creator: "cosmos1address1"})
+	require.NoError(s.T(), err)
+
 	resp, err = s.msgServer.AddExecutor(s.ctx, &types.MsgAddExecutor{
 		Creator:      "cosmos1address2",
 		OwnerAddress: "cosmos1owner",
