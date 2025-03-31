@@ -1,8 +1,6 @@
 package keeper
 
 import (
-	"context"
-
 	"github.com/dittonetwork/kepler/x/executors/types"
 )
 
@@ -17,19 +15,3 @@ func NewMsgServerImpl(keeper Keeper) types.MsgServer {
 }
 
 var _ types.MsgServer = msgServer{}
-
-func (k msgServer) ActivateExecutor(
-	_ context.Context,
-	_ *types.MsgActivateExecutor,
-) (*types.MsgActivateExecutorResponse, error) {
-	// TODO implement me
-	panic("implement me")
-}
-
-func (k msgServer) DeactivateExecutor(
-	_ context.Context,
-	_ *types.MsgDeactivateExecutor,
-) (*types.MsgDeactivateExecutorResponse, error) {
-	// TODO implement me
-	panic("implement me")
-}
