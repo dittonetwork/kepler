@@ -25,9 +25,11 @@ func (k msgServer) DeactivateExecutor(
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
-	executor.IsActive = false
-	if err = k.Executors.Set(sdkCtx, executor.Address, executor); err != nil {
-		return nil, status.Error(codes.Internal, err.Error())
+	if executor.GetIsActive() {
+		executor.IsActive = false
+		if err = k.Executors.Set(sdkCtx, executor.Address, executor); err != nil {
+			return nil, status.Error(codes.Internal, err.Error())
+		}
 	}
 
 	return &types.MsgDeactivateExecutorResponse{}, nil

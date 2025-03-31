@@ -21,9 +21,11 @@ func (k msgServer) ActivateExecutor(
 		if errors.Is(err, collections.ErrNotFound) {
 			return nil, status.Error(codes.NotFound, "executor not found")
 		}
+
+		return nil, status.Error(codes.Internal, err.Error())
 	}
 
-	ownersExecutors, err := k.GetExecutorsByOwnerAddress(sdkCtx, executor.OwnerAddress)
+	ownersExecutors, err := k.GetExecutorsByOwnerAddress(sdkCtx, executor.GetOwnerAddress())
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}

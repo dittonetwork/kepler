@@ -23,6 +23,10 @@ func (am AppModule) BeforeValidatorBeginUnbonding(ctx context.Context, validator
 	}
 
 	for _, executor := range executors {
+		if !executor.GetIsActive() {
+			continue
+		}
+
 		executor.IsActive = false
 		if err = am.keeper.Executors.Set(ctx, executor.Address, executor); err != nil {
 			return err
