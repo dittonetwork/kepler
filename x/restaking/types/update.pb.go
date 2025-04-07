@@ -27,30 +27,30 @@ var _ = time.Kitchen
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
-// LastUpdate of the restaking module
-type LastUpdate struct {
-	// epoch of the last update
-	Epoch int64 `protobuf:"varint,1,opt,name=epoch,proto3" json:"epoch,omitempty"`
+// UpdateInfo is a collection of update information from L1.
+type UpdateInfo struct {
+	// epoch_num is the epoch number of the update
+	EpochNum int64 `protobuf:"varint,1,opt,name=epoch_num,json=epochNum,proto3" json:"epoch_num,omitempty"`
 	// timestamp of the last update
 	Timestamp time.Time `protobuf:"bytes,2,opt,name=timestamp,proto3,stdtime" json:"timestamp"`
-	// block height on L1 of the last update
+	// block_height is the block height on L1 of the last update
 	BlockHeight int64 `protobuf:"varint,3,opt,name=block_height,json=blockHeight,proto3" json:"block_height,omitempty"`
-	// block hash on L1 of the last update
+	// block_hash is the block hash on L1 of the last update
 	BlockHash string `protobuf:"bytes,4,opt,name=block_hash,json=blockHash,proto3" json:"block_hash,omitempty"`
 }
 
-func (m *LastUpdate) Reset()         { *m = LastUpdate{} }
-func (m *LastUpdate) String() string { return proto.CompactTextString(m) }
-func (*LastUpdate) ProtoMessage()    {}
-func (*LastUpdate) Descriptor() ([]byte, []int) {
+func (m *UpdateInfo) Reset()         { *m = UpdateInfo{} }
+func (m *UpdateInfo) String() string { return proto.CompactTextString(m) }
+func (*UpdateInfo) ProtoMessage()    {}
+func (*UpdateInfo) Descriptor() ([]byte, []int) {
 	return fileDescriptor_c9508bc76a93fdf8, []int{0}
 }
-func (m *LastUpdate) XXX_Unmarshal(b []byte) error {
+func (m *UpdateInfo) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *LastUpdate) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *UpdateInfo) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_LastUpdate.Marshal(b, m, deterministic)
+		return xxx_messageInfo_UpdateInfo.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -60,75 +60,169 @@ func (m *LastUpdate) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return b[:n], nil
 	}
 }
-func (m *LastUpdate) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_LastUpdate.Merge(m, src)
+func (m *UpdateInfo) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpdateInfo.Merge(m, src)
 }
-func (m *LastUpdate) XXX_Size() int {
+func (m *UpdateInfo) XXX_Size() int {
 	return m.Size()
 }
-func (m *LastUpdate) XXX_DiscardUnknown() {
-	xxx_messageInfo_LastUpdate.DiscardUnknown(m)
+func (m *UpdateInfo) XXX_DiscardUnknown() {
+	xxx_messageInfo_UpdateInfo.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_LastUpdate proto.InternalMessageInfo
+var xxx_messageInfo_UpdateInfo proto.InternalMessageInfo
 
-func (m *LastUpdate) GetEpoch() int64 {
+func (m *UpdateInfo) GetEpochNum() int64 {
 	if m != nil {
-		return m.Epoch
+		return m.EpochNum
 	}
 	return 0
 }
 
-func (m *LastUpdate) GetTimestamp() time.Time {
+func (m *UpdateInfo) GetTimestamp() time.Time {
 	if m != nil {
 		return m.Timestamp
 	}
 	return time.Time{}
 }
 
-func (m *LastUpdate) GetBlockHeight() int64 {
+func (m *UpdateInfo) GetBlockHeight() int64 {
 	if m != nil {
 		return m.BlockHeight
 	}
 	return 0
 }
 
-func (m *LastUpdate) GetBlockHash() string {
+func (m *UpdateInfo) GetBlockHash() string {
 	if m != nil {
 		return m.BlockHash
 	}
 	return ""
 }
 
+// UpdateValidators is a message that contains a list of updates for validators.
+type ValidatorsUpdate struct {
+	// validators defines a list of validators to be updated.
+	Operators []Validator `protobuf:"bytes,1,rep,name=operators,proto3" json:"operators"`
+	// info contains information about the last update.
+	Info UpdateInfo `protobuf:"bytes,2,opt,name=info,proto3" json:"info"`
+}
+
+func (m *ValidatorsUpdate) Reset()         { *m = ValidatorsUpdate{} }
+func (m *ValidatorsUpdate) String() string { return proto.CompactTextString(m) }
+func (*ValidatorsUpdate) ProtoMessage()    {}
+func (*ValidatorsUpdate) Descriptor() ([]byte, []int) {
+	return fileDescriptor_c9508bc76a93fdf8, []int{1}
+}
+func (m *ValidatorsUpdate) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ValidatorsUpdate) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ValidatorsUpdate.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ValidatorsUpdate) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ValidatorsUpdate.Merge(m, src)
+}
+func (m *ValidatorsUpdate) XXX_Size() int {
+	return m.Size()
+}
+func (m *ValidatorsUpdate) XXX_DiscardUnknown() {
+	xxx_messageInfo_ValidatorsUpdate.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ValidatorsUpdate proto.InternalMessageInfo
+
+func (m *ValidatorsUpdate) GetOperators() []Validator {
+	if m != nil {
+		return m.Operators
+	}
+	return nil
+}
+
+func (m *ValidatorsUpdate) GetInfo() UpdateInfo {
+	if m != nil {
+		return m.Info
+	}
+	return UpdateInfo{}
+}
+
 func init() {
-	proto.RegisterType((*LastUpdate)(nil), "kepler.restaking.LastUpdate")
+	proto.RegisterType((*UpdateInfo)(nil), "kepler.restaking.UpdateInfo")
+	proto.RegisterType((*ValidatorsUpdate)(nil), "kepler.restaking.ValidatorsUpdate")
 }
 
 func init() { proto.RegisterFile("kepler/restaking/update.proto", fileDescriptor_c9508bc76a93fdf8) }
 
 var fileDescriptor_c9508bc76a93fdf8 = []byte{
-	// 281 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x4c, 0x90, 0xb1, 0x4e, 0xf3, 0x30,
-	0x14, 0x85, 0xe3, 0xbf, 0x3f, 0x88, 0xb8, 0x0c, 0x28, 0xea, 0x10, 0x45, 0xaa, 0x13, 0x98, 0x32,
-	0xd9, 0x08, 0xde, 0x20, 0x13, 0x42, 0x4c, 0x11, 0x2c, 0x2c, 0x28, 0x49, 0x8d, 0x1d, 0x25, 0xa9,
-	0xad, 0xe4, 0x46, 0xc0, 0x5b, 0xf4, 0x31, 0x78, 0x94, 0x8e, 0x1d, 0x99, 0x00, 0x25, 0x2f, 0x82,
-	0x6a, 0xb7, 0x85, 0xcd, 0xf7, 0x9e, 0xef, 0x1c, 0x5f, 0x1d, 0x3c, 0xaf, 0xb8, 0xae, 0x79, 0xcb,
-	0x5a, 0xde, 0x41, 0x56, 0x95, 0x4b, 0xc1, 0x7a, 0xbd, 0xc8, 0x80, 0x53, 0xdd, 0x2a, 0x50, 0xde,
-	0x99, 0x95, 0xe9, 0x41, 0x0e, 0x66, 0x42, 0x09, 0x65, 0x44, 0xb6, 0x7d, 0x59, 0x2e, 0x08, 0x85,
-	0x52, 0xa2, 0xe6, 0xcc, 0x4c, 0x79, 0xff, 0xcc, 0xa0, 0x6c, 0xb6, 0x96, 0x46, 0x5b, 0xe0, 0xe2,
-	0x1d, 0x61, 0x7c, 0x97, 0x75, 0xf0, 0x60, 0xd2, 0xbd, 0x19, 0x3e, 0xe2, 0x5a, 0x15, 0xd2, 0x47,
-	0x11, 0x8a, 0x27, 0xa9, 0x1d, 0xbc, 0x04, 0xbb, 0x07, 0x9f, 0xff, 0x2f, 0x42, 0xf1, 0xf4, 0x2a,
-	0xa0, 0x36, 0x99, 0xee, 0x93, 0xe9, 0xfd, 0x9e, 0x48, 0x4e, 0xd6, 0x9f, 0xa1, 0xb3, 0xfa, 0x0a,
-	0x51, 0xfa, 0x6b, 0xf3, 0xce, 0xf1, 0x69, 0x5e, 0xab, 0xa2, 0x7a, 0x92, 0xbc, 0x14, 0x12, 0xfc,
-	0x89, 0xf9, 0x60, 0x6a, 0x76, 0x37, 0x66, 0xe5, 0xcd, 0x31, 0xde, 0x21, 0x59, 0x27, 0xfd, 0xff,
-	0x11, 0x8a, 0xdd, 0xd4, 0xb5, 0x40, 0xd6, 0xc9, 0xe4, 0x76, 0x3d, 0x10, 0xb4, 0x19, 0x08, 0xfa,
-	0x1e, 0x08, 0x5a, 0x8d, 0xc4, 0xd9, 0x8c, 0xc4, 0xf9, 0x18, 0x89, 0xf3, 0x78, 0x29, 0x4a, 0x90,
-	0x7d, 0x4e, 0x0b, 0xd5, 0xb0, 0x45, 0x09, 0xa0, 0x96, 0x1c, 0x5e, 0x54, 0x5b, 0xb1, 0x5d, 0x89,
-	0xaf, 0x7f, 0x6a, 0x84, 0x37, 0xcd, 0xbb, 0xfc, 0xd8, 0x9c, 0x7d, 0xfd, 0x13, 0x00, 0x00, 0xff,
-	0xff, 0x39, 0xb3, 0x99, 0x19, 0x67, 0x01, 0x00, 0x00,
+	// 366 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x64, 0x91, 0xbb, 0x4e, 0xc3, 0x30,
+	0x14, 0x86, 0x63, 0x1a, 0xa1, 0xc6, 0x65, 0xa8, 0x22, 0x86, 0xa8, 0xa5, 0x49, 0xe8, 0x94, 0xc9,
+	0x41, 0x45, 0x62, 0x60, 0x41, 0xca, 0x04, 0x0c, 0x0c, 0x11, 0x30, 0xb0, 0x54, 0x49, 0xeb, 0x26,
+	0x51, 0x2e, 0xc7, 0x4a, 0x1c, 0x2e, 0xcf, 0xc0, 0xd2, 0x47, 0xe0, 0x25, 0x78, 0x87, 0x8e, 0x1d,
+	0x99, 0x00, 0xb5, 0x0b, 0x8f, 0x81, 0xea, 0xa4, 0x2d, 0xa2, 0x9b, 0xfd, 0x9f, 0xef, 0xd7, 0x7f,
+	0x2e, 0xb8, 0x17, 0x53, 0x96, 0xd0, 0xdc, 0xce, 0x69, 0xc1, 0xbd, 0x38, 0xca, 0x02, 0xbb, 0x64,
+	0x63, 0x8f, 0x53, 0xc2, 0x72, 0xe0, 0xa0, 0xb6, 0xab, 0x32, 0xd9, 0x94, 0x3b, 0x87, 0x01, 0x04,
+	0x20, 0x8a, 0xf6, 0xea, 0x55, 0x71, 0x1d, 0x23, 0x00, 0x08, 0x12, 0x6a, 0x8b, 0x9f, 0x5f, 0x4e,
+	0x6c, 0x1e, 0xa5, 0x2b, 0x4b, 0xca, 0x6a, 0xc0, 0xdc, 0xc9, 0x79, 0xf4, 0x92, 0x68, 0xec, 0x71,
+	0xc8, 0x2b, 0xa2, 0xff, 0x8e, 0x30, 0xbe, 0x13, 0xd9, 0x57, 0xd9, 0x04, 0xd4, 0x2e, 0x56, 0x28,
+	0x83, 0x51, 0x38, 0xcc, 0xca, 0x54, 0x43, 0x26, 0xb2, 0x1a, 0x6e, 0x53, 0x08, 0x37, 0x65, 0xaa,
+	0x3a, 0x58, 0xd9, 0x04, 0x68, 0x7b, 0x26, 0xb2, 0x5a, 0x83, 0x0e, 0xa9, 0x5a, 0x20, 0xeb, 0x16,
+	0xc8, 0xed, 0x9a, 0x70, 0x9a, 0xb3, 0x4f, 0x43, 0x9a, 0x7e, 0x19, 0xc8, 0xdd, 0xda, 0xd4, 0x63,
+	0x7c, 0xe0, 0x27, 0x30, 0x8a, 0x87, 0x21, 0x8d, 0x82, 0x90, 0x6b, 0x0d, 0x91, 0xd1, 0x12, 0xda,
+	0xa5, 0x90, 0xd4, 0x1e, 0xc6, 0x35, 0xe2, 0x15, 0xa1, 0x26, 0x9b, 0xc8, 0x52, 0x5c, 0xa5, 0x02,
+	0xbc, 0x22, 0x3c, 0x97, 0x7f, 0xde, 0x0c, 0xd4, 0x7f, 0x45, 0xb8, 0x7d, 0xbf, 0x9e, 0xa5, 0xa8,
+	0x26, 0x50, 0x2f, 0xb0, 0x02, 0x8c, 0xe6, 0x42, 0xd2, 0x90, 0xd9, 0xb0, 0x5a, 0x83, 0x2e, 0xf9,
+	0xbf, 0x4b, 0xb2, 0xb1, 0x39, 0xf2, 0xaa, 0x43, 0x77, 0xeb, 0x51, 0xcf, 0xb0, 0x1c, 0x65, 0x13,
+	0xa8, 0x87, 0x3b, 0xda, 0xf5, 0x6e, 0x57, 0x55, 0x9b, 0x05, 0xef, 0x5c, 0xcf, 0x16, 0x3a, 0x9a,
+	0x2f, 0x74, 0xf4, 0xbd, 0xd0, 0xd1, 0x74, 0xa9, 0x4b, 0xf3, 0xa5, 0x2e, 0x7d, 0x2c, 0x75, 0xe9,
+	0xe1, 0x24, 0x88, 0x78, 0x58, 0xfa, 0x64, 0x04, 0xa9, 0x3d, 0x8e, 0x38, 0x87, 0x8c, 0xf2, 0x27,
+	0xc8, 0x63, 0xbb, 0xbe, 0xcc, 0xf3, 0x9f, 0xdb, 0xf0, 0x17, 0x46, 0x0b, 0x7f, 0x5f, 0xac, 0xf2,
+	0xf4, 0x37, 0x00, 0x00, 0xff, 0xff, 0x91, 0x58, 0xe3, 0x60, 0x24, 0x02, 0x00, 0x00,
 }
 
-func (m *LastUpdate) Marshal() (dAtA []byte, err error) {
+func (this *UpdateInfo) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*UpdateInfo)
+	if !ok {
+		that2, ok := that.(UpdateInfo)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
+		return false
+	}
+	if this.EpochNum != that1.EpochNum {
+		return false
+	}
+	if !this.Timestamp.Equal(that1.Timestamp) {
+		return false
+	}
+	if this.BlockHeight != that1.BlockHeight {
+		return false
+	}
+	if this.BlockHash != that1.BlockHash {
+		return false
+	}
+	return true
+}
+func (m *UpdateInfo) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -138,12 +232,12 @@ func (m *LastUpdate) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *LastUpdate) MarshalTo(dAtA []byte) (int, error) {
+func (m *UpdateInfo) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *LastUpdate) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *UpdateInfo) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -168,10 +262,57 @@ func (m *LastUpdate) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i = encodeVarintUpdate(dAtA, i, uint64(n1))
 	i--
 	dAtA[i] = 0x12
-	if m.Epoch != 0 {
-		i = encodeVarintUpdate(dAtA, i, uint64(m.Epoch))
+	if m.EpochNum != 0 {
+		i = encodeVarintUpdate(dAtA, i, uint64(m.EpochNum))
 		i--
 		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *ValidatorsUpdate) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ValidatorsUpdate) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ValidatorsUpdate) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	{
+		size, err := m.Info.MarshalToSizedBuffer(dAtA[:i])
+		if err != nil {
+			return 0, err
+		}
+		i -= size
+		i = encodeVarintUpdate(dAtA, i, uint64(size))
+	}
+	i--
+	dAtA[i] = 0x12
+	if len(m.Operators) > 0 {
+		for iNdEx := len(m.Operators) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Operators[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintUpdate(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
 	}
 	return len(dAtA) - i, nil
 }
@@ -187,14 +328,14 @@ func encodeVarintUpdate(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
-func (m *LastUpdate) Size() (n int) {
+func (m *UpdateInfo) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	if m.Epoch != 0 {
-		n += 1 + sovUpdate(uint64(m.Epoch))
+	if m.EpochNum != 0 {
+		n += 1 + sovUpdate(uint64(m.EpochNum))
 	}
 	l = github_com_cosmos_gogoproto_types.SizeOfStdTime(m.Timestamp)
 	n += 1 + l + sovUpdate(uint64(l))
@@ -208,13 +349,30 @@ func (m *LastUpdate) Size() (n int) {
 	return n
 }
 
+func (m *ValidatorsUpdate) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.Operators) > 0 {
+		for _, e := range m.Operators {
+			l = e.Size()
+			n += 1 + l + sovUpdate(uint64(l))
+		}
+	}
+	l = m.Info.Size()
+	n += 1 + l + sovUpdate(uint64(l))
+	return n
+}
+
 func sovUpdate(x uint64) (n int) {
 	return (math_bits.Len64(x|1) + 6) / 7
 }
 func sozUpdate(x uint64) (n int) {
 	return sovUpdate(uint64((x << 1) ^ uint64((int64(x) >> 63))))
 }
-func (m *LastUpdate) Unmarshal(dAtA []byte) error {
+func (m *UpdateInfo) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -237,17 +395,17 @@ func (m *LastUpdate) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: LastUpdate: wiretype end group for non-group")
+			return fmt.Errorf("proto: UpdateInfo: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: LastUpdate: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: UpdateInfo: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Epoch", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field EpochNum", wireType)
 			}
-			m.Epoch = 0
+			m.EpochNum = 0
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowUpdate
@@ -257,7 +415,7 @@ func (m *LastUpdate) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Epoch |= int64(b&0x7F) << shift
+				m.EpochNum |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -345,6 +503,123 @@ func (m *LastUpdate) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.BlockHash = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipUpdate(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthUpdate
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ValidatorsUpdate) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowUpdate
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ValidatorsUpdate: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ValidatorsUpdate: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Operators", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowUpdate
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthUpdate
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthUpdate
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Operators = append(m.Operators, Validator{})
+			if err := m.Operators[len(m.Operators)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Info", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowUpdate
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthUpdate
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthUpdate
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if err := m.Info.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex

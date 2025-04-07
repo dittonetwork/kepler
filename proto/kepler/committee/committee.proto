@@ -35,5 +35,5 @@ message Executor {
   string address = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 
   // voting_power represents the weight of this executor's vote in committee decisions.
-  uint64 voting_power = 2;
+  int64 voting_power = 2;
 }

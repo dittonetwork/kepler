@@ -10,9 +10,8 @@ import (
 func DefaultGenesis() *GenesisState {
 	return &GenesisState{
 		// this line is used by starport scaffolding # genesis/types/default
-		Params: DefaultParams(),
-		LastUpdate: LastUpdate{
-			Epoch:       1,
+		LastUpdate: UpdateInfo{
+			EpochNum:    1,
 			Timestamp:   time.Time{},
 			BlockHeight: 1,
 			BlockHash:   "",
@@ -25,5 +24,5 @@ func DefaultGenesis() *GenesisState {
 func (gs GenesisState) Validate() error {
 	// this line is used by starport scaffolding # genesis/types/validate
 
-	return gs.Params.Validate()
+	return nil
 }

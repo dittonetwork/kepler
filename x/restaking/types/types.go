@@ -1,83 +1,50 @@
 package types
 
 import (
+	"cosmossdk.io/errors"
+	cmtprotocrypto "github.com/cometbft/cometbft/proto/tendermint/crypto"
+	cryptocodec "github.com/cosmos/cosmos-sdk/crypto/codec"
+	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
-// OperatorStatus defines the status of an operator.
-type OperatorStatus string
+// IsBonded helper function to check if the validator is bonded.
+func (v Validator) IsBonded() bool {
+	return v.Status == Bonded
+}
 
-const (
-	// OperatorStatusBonded represents a bonded operator.
-	OperatorStatusBonded OperatorStatus = "bonded"
-	// OperatorStatusUnbonded represents an unbonded operator.
-	OperatorStatusUnbonded OperatorStatus = "unbonded"
-	// OperatorStatusUnbonding represents an unbonding operator.
-	OperatorStatusUnbonding OperatorStatus = "unbonding"
-)
+// IsUnbonding helper function to check if the validator is unbonding.
+func (v Validator) IsUnbonding() bool {
+	return v.Status == Unbonding
+}
 
-// ToStakingBondStatus converts restaking operator status to staking bond status.
-// This mapping is used when updating the staking module with validator information.
-func (x OperatorStatus) ToStakingBondStatus() stakingtypes.BondStatus {
-	switch x {
-	case OperatorStatusBonded:
-		return stakingtypes.Bonded
-	case OperatorStatusUnbonded:
-		return stakingtypes.Unbonded
-	case OperatorStatusUnbonding:
-		return stakingtypes.Unbonding
-	default:
-		return stakingtypes.Unspecified
+// ConsPubKey returns the validator's PubKey as cryptotypes.PubKey.
+func (v Validator) ConsPubKey() (cryptotypes.PubKey, error) {
+	pk, ok := v.ConsensusPubkey.GetCachedValue().(cryptotypes.PubKey)
+	if !ok {
+		return nil, errors.Wrapf(
+			sdkerrors.ErrInvalidType,
+			"expecting cryptotypes.PubKey, got %T", v.ConsensusPubkey,
+		)
 	}
+
+	return pk, nil
 }
 
-// ToRestakingValidatorStatus converts operator status to restaking validator status
-// This mapping is used when saving validator information to the restaking module's store
-// Note: isNew is a flag that indicates if the operator is a new validator.
-// This flag is set to true when the operator is a new validator coming from L1 chain.
-func (x OperatorStatus) ToRestakingValidatorStatus(isNew bool) ValidatorStatus {
-	switch x {
-	case OperatorStatusBonded:
-		if isNew {
-			return ValidatorStatus_VALIDATOR_STATUS_BONDING
-		}
-
-		return ValidatorStatus_VALIDATOR_STATUS_BONDED
-	case OperatorStatusUnbonded:
-		return ValidatorStatus_VALIDATOR_STATUS_UNBONDED
-	case OperatorStatusUnbonding:
-		return ValidatorStatus_VALIDATOR_STATUS_UNBONDING
-	default:
-		return ValidatorStatus_VALIDATOR_STATUS_UNSPECIFIED
+// CmtConsPublicKey casts Validator.ConsPublicKey to cmtprotocrypto.PublicKey.
+func (v Validator) CmtConsPublicKey() (cmtprotocrypto.PublicKey, error) {
+	pk, err := v.ConsPubKey()
+	if err != nil {
+		return cmtprotocrypto.PublicKey{}, err
 	}
-}
 
-// Operator represents an operator from the L1 chain.
-type Operator struct {
-	// Address of the operator from L1 chain
-	Address string `json:"address"`
+	tmPk, err := cryptocodec.ToCmtProtoPublicKey(pk)
+	if err != nil {
+		return cmtprotocrypto.PublicKey{}, err
+	}
 
-	// PublicKey of the operator from L1 chain (can be rotated)
-	PublicKey string `json:"public_key"`
-
-	// Status of the operator
-	Status OperatorStatus `json:"status"`
-
-	// IsEmergency is true if the operator is in emergency mode
-	IsEmergency bool `json:"is_emergency"`
-
-	// Tokens is the amount of tokens staked by the operator
-	Tokens uint64 `json:"tokens"`
-}
-
-// UpdateValidatorSetParams defines the parameters for updating the validator set.
-type UpdateValidatorSetParams struct {
-	Operators   []Operator
-	BlockHeight int64
-	BlockHash   string
-	// EpochNumber is the epoch number of the Cosmos chain
-	EpochNumber int64
+	return tmPk, nil
 }
 
 type EmergencyValidator struct {

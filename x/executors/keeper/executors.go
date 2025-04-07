@@ -26,8 +26,8 @@ func (k Keeper) GetEmergencyExecutors(ctx sdk.Context) ([]types.Executor, error)
 	emergencyValidators := k.restaking.GetActiveEmergencyValidators(ctx)
 	res := make([]types.Executor, 0, len(emergencyValidators))
 	for _, activeExecutor := range activeExecutors {
-		if slices.ContainsFunc(emergencyValidators, func(v restaking.EmergencyValidator) bool {
-			return v.Address.String() == activeExecutor.GetAddress()
+		if slices.ContainsFunc(emergencyValidators, func(v restaking.Validator) bool {
+			return v.OperatorAddress == activeExecutor.GetOwnerAddress()
 		}) {
 			res = append(res, *activeExecutor)
 		}

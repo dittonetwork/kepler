@@ -167,10 +167,10 @@ func (m *MockRestakingKeeper) EXPECT() *MockRestakingKeeperMockRecorder {
 }
 
 // GetActiveEmergencyValidators mocks base method.
-func (m *MockRestakingKeeper) GetActiveEmergencyValidators(ctx types.Context) []types0.EmergencyValidator {
+func (m *MockRestakingKeeper) GetActiveEmergencyValidators(ctx types.Context) []types0.Validator {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetActiveEmergencyValidators", ctx)
-	ret0, _ := ret[0].([]types0.EmergencyValidator)
+	ret0, _ := ret[0].([]types0.Validator)
 	return ret0
 }
 

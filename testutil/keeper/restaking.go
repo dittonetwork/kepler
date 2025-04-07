@@ -13,14 +13,11 @@ import (
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	"github.com/cosmos/cosmos-sdk/runtime"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
-	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/mock/gomock"
 
 	"github.com/dittonetwork/kepler/x/restaking/keeper"
 	"github.com/dittonetwork/kepler/x/restaking/types"
-	restakingmock "github.com/dittonetwork/kepler/x/restaking/types/mock"
 )
 
 func RestakingKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {
@@ -33,26 +30,17 @@ func RestakingKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {
 
 	registry := codectypes.NewInterfaceRegistry()
 	cdc := codec.NewProtoCodec(registry)
-	authority := authtypes.NewModuleAddress(govtypes.ModuleName)
 
 	// Mock staking keeper
-	ctrl := gomock.NewController(t)
-	stakingKeeper := restakingmock.NewMockStakingKeeper(ctrl)
+	_ = gomock.NewController(t)
 
 	k := keeper.NewKeeper(
 		cdc,
 		runtime.NewKVStoreService(storeKey),
 		log.NewNopLogger(),
-		authority.String(),
-		stakingKeeper,
 	)
 
 	ctx := sdk.NewContext(stateStore, cmtproto.Header{}, false, log.NewNopLogger())
-
-	// Initialize params
-	if err := k.SetParams(ctx, types.DefaultParams()); err != nil {
-		panic(err)
-	}
 
 	return *k, ctx
 }
