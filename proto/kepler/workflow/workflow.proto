@@ -1,0 +1,79 @@
+syntax = "proto3";
+
+// Step within a job
+message Step {
+  string name = 1;
+  string address = 2;
+  string calldata = 3;
+  optional string uses = 4;
+  optional bool triggers = 5;
+  optional bool checkers = 6;
+}
+
+// Universal type for representing arguments of different types
+message ArgumentValue {
+  oneof value {
+    string string_value = 1;
+    int64 int_value = 2;
+    bool bool_value = 3;
+  }
+}
+
+// On-chain call checker
+message OnChainCallChecker {
+  string abi = 1;
+  string method = 2;
+  int32 chain_id = 3;
+  repeated ArgumentValue args = 4;
+}
+
+// Gas settings
+message GasLimitChecker {
+  int64 max_fee = 1;
+  int64 max_priority_fee = 2;
+}
+
+// Checkers for jobs
+message Checkers {
+  repeated OnChainCallChecker onchain_calls = 1;
+  optional GasLimitChecker gas_limit = 2;
+  optional int32 count = 3;
+}
+
+// Job within a workflow
+message Job {
+  string id = 1;
+  int32 chain_id = 2;
+  optional string account_abstraction = 3;
+  optional string needs = 4;
+  Checkers checkers = 5;
+  repeated Step steps = 6;
+}
+
+// Schedule-based trigger
+message ScheduleTrigger {
+  string cron = 1;
+}
+
+// Blockchain event-based trigger
+message OnchainEventTrigger {
+  string abi = 1;
+  repeated string addresses = 2;
+  string event_name = 3;
+}
+
+// Workflow triggers
+message WorkflowTriggers {
+  optional ScheduleTrigger schedule = 1;
+  optional OnchainEventTrigger onchain_event = 2;
+}
+
+// Complete workflow description
+message Workflow {
+  string name = 1;
+  WorkflowTriggers on = 2;
+  optional int32 count = 3;
+  optional int64 expired_at = 4;
+  string signature = 5;
+  repeated Job jobs = 6;
+}
