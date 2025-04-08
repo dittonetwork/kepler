@@ -8,6 +8,7 @@ import (
 
 // GetPendingValidators returns all pending validators.
 func (s *RestakingRepository) GetPendingValidators(_ sdk.Context) ([]types.Validator, error) {
+	// @TODO https://github.com/dittonetwork/kepler/issues/175
 	panic("not implemented")
 }
 

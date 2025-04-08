@@ -20,7 +20,7 @@ func (q queryServer) PendingValidators(
 	_ context.Context,
 	_ *types.QueryPendingValidatorsRequest,
 ) (*types.QueryPendingValidatorsResponse, error) {
-	// TODO implement me
+	// @TODO https://github.com/dittonetwork/kepler/issues/175
 	panic("implement me")
 }
 
