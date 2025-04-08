@@ -1,7 +1,6 @@
 syntax = "proto3";
 package kepler.restaking;
 
-import "amino/amino.proto";
 import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "kepler/restaking/validator.proto";

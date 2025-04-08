@@ -1,9 +1,8 @@
-package keeper
+package repository
 
 import (
 	"cosmossdk.io/collections"
 	"cosmossdk.io/collections/indexes"
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/dittonetwork/kepler/x/restaking/types"
 )
 
@@ -45,28 +44,4 @@ func (a Idx) IndexesList() []collections.Index[string, types.Validator] {
 		a.Emergency,
 		a.Bonded,
 	}
-}
-
-// getAllValidators retrieves all validators from the store.
-func (k Keeper) getAllValidators(ctx sdk.Context) ([]*types.Validator, error) {
-	iter, err := k.validators.Iterate(ctx, nil)
-	if err != nil {
-		return nil, err
-	}
-	defer iter.Close()
-
-	var validators []*types.Validator
-
-	for ; iter.Valid(); iter.Next() {
-		var validator types.Validator
-
-		validator, err = iter.Value()
-		if err != nil {
-			return nil, err
-		}
-
-		validators = append(validators, &validator)
-	}
-
-	return validators, nil
 }

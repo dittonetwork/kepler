@@ -3,25 +3,17 @@ package keeper
 import (
 	"context"
 
-	"cosmossdk.io/collections/indexes"
 	abci "github.com/cometbft/cometbft/abci/types"
 	cmtprotocrypto "github.com/cometbft/cometbft/proto/tendermint/crypto"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/dittonetwork/kepler/x/restaking/types"
 )
 
 // ApplyAndReturnValidatorSetUpdates applies and return accumulated updates to the bonded validator set.
 // Notes: we always return the full set of validators, even if they are not updated.
 func (k Keeper) ApplyAndReturnValidatorSetUpdates(ctx context.Context) ([]abci.ValidatorUpdate, error) {
-	iter, err := k.validators.Indexes.Bonded.Iterate(ctx, nil)
+	validators, err := k.repository.GetBondedValidators(sdk.UnwrapSDKContext(ctx))
 
-	if err != nil {
-		k.Logger().With("error", err).Error("failed to get bonded validators iterator")
-		return nil, err
-	}
-
-	defer iter.Close()
-
-	validators, err := indexes.CollectValues(ctx, k.validators, iter)
 	if err != nil {
 		k.Logger().With("error", err).Error("failed to collect bonded validators")
 		return nil, err

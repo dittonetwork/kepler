@@ -33,7 +33,7 @@ func (s *TestSuite) TestQueryGetEmergencyExecutors_Success() {
 		{
 			OperatorAddress: valAddr.String(),
 		},
-	})
+	}, nil)
 
 	resp, err := s.queryClient.GetEmergencyExecutors(s.ctx, &api.QueryEmergencyExecutorsRequest{})
 	require.NoError(s.T(), err)

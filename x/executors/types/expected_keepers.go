@@ -26,5 +26,5 @@ type ParamSubspace interface {
 }
 
 type RestakingKeeper interface {
-	GetActiveEmergencyValidators(ctx sdk.Context) []restaking.Validator
+	GetActiveEmergencyValidators(ctx sdk.Context) ([]restaking.Validator, error)
 }

@@ -8,12 +8,12 @@ import (
 
 // InitGenesis initializes the genesis state of the restaking module.
 func (k Keeper) InitGenesis(ctx sdk.Context, state types.GenesisState) error {
-	if err := k.lastUpdate.Set(ctx, state.LastUpdate); err != nil {
+	if err := k.repository.SetLastUpdate(ctx, state.LastUpdate); err != nil {
 		return sdkerrors.Wrap(err, "last update")
 	}
 
 	for _, validator := range state.Validators {
-		if err := k.validators.Set(ctx, validator.OperatorAddress, validator); err != nil {
+		if err := k.repository.SetValidator(ctx, validator.OperatorAddress, validator); err != nil {
 			return sdkerrors.Wrap(err, "validators")
 		}
 	}
@@ -25,22 +25,14 @@ func (k Keeper) ExportGenesis(ctx sdk.Context) (*types.GenesisState, error) {
 	genesis := types.DefaultGenesis()
 
 	var err error
-	genesis.LastUpdate, err = k.lastUpdate.Get(ctx)
+	genesis.LastUpdate, err = k.repository.GetLastUpdate(ctx)
 	if err != nil {
 		return genesis, sdkerrors.Wrap(err, "last update")
 	}
 
-	iter, err := k.validators.Iterate(ctx, nil)
-
+	genesis.Validators, err = k.repository.GetAllValidators(ctx)
 	if err != nil {
-		return genesis, sdkerrors.Wrap(err, "validators iterate")
-	}
-
-	defer iter.Close()
-
-	genesis.Validators, err = iter.Values()
-	if err != nil {
-		return genesis, sdkerrors.Wrap(err, "validators values")
+		return genesis, err
 	}
 
 	return genesis, nil

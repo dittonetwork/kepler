@@ -7,8 +7,6 @@ import "kepler/restaking/validator.proto";
 
 option go_package = "github.com/dittonetwork/kepler/x/restaking/types";
 
-
-
 // UpdateInfo is a collection of update information from L1.
 message UpdateInfo {
   option (gogoproto.equal) = true;

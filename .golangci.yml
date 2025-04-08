@@ -125,6 +125,7 @@ linters:
         - os.WriteFile
         - prometheus.ExponentialBuckets.*
         - prometheus.LinearBuckets
+        - collections.NewPrefix
     nolintlint:
       require-explanation: true
       require-specific: true

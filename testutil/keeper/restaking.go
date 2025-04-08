@@ -11,12 +11,12 @@ import (
 	dbm "github.com/cosmos/cosmos-db"
 	"github.com/cosmos/cosmos-sdk/codec"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
-	"github.com/cosmos/cosmos-sdk/runtime"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/mock/gomock"
 
 	"github.com/dittonetwork/kepler/x/restaking/keeper"
+	restakingtestutil "github.com/dittonetwork/kepler/x/restaking/testutil"
 	"github.com/dittonetwork/kepler/x/restaking/types"
 )
 
@@ -32,12 +32,13 @@ func RestakingKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {
 	cdc := codec.NewProtoCodec(registry)
 
 	// Mock staking keeper
-	_ = gomock.NewController(t)
+	ctrl := gomock.NewController(t)
+	repository := restakingtestutil.NewMockRepository(ctrl)
 
 	k := keeper.NewKeeper(
 		cdc,
-		runtime.NewKVStoreService(storeKey),
 		log.NewNopLogger(),
+		repository,
 	)
 
 	ctx := sdk.NewContext(stateStore, cmtproto.Header{}, false, log.NewNopLogger())

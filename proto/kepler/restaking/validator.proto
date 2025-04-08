@@ -42,7 +42,9 @@ message Validator {
   option (gogoproto.equal) = true;
   option (gogoproto.goproto_getters) = false;
 
-  // operator_address is the bech32 address
+  // operator_address is the Ethereum-style address (hex-encoded, 0x-prefixed) derived from
+  // the last 20 bytes of the keccak256 hash of the operator's public key.
+  // This address uniquely identifies the validator in the network.
   string operator_address = 1;
 
   // consensus_pubkey is the consensus ed25519 public key of the validator, as a
