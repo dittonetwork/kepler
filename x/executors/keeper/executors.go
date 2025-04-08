@@ -23,11 +23,17 @@ func (k Keeper) GetEmergencyExecutors(ctx sdk.Context) ([]types.Executor, error)
 		}
 	}
 
-	emergencyValidators := k.restaking.GetActiveEmergencyValidators(ctx)
+	var emergencyValidators []restaking.Validator
+	emergencyValidators, err = k.restaking.GetActiveEmergencyValidators(ctx)
+	if err != nil {
+		k.Logger(ctx).With("error", err).Error("failed to get active emergency validators")
+		return nil, err
+	}
+
 	res := make([]types.Executor, 0, len(emergencyValidators))
 	for _, activeExecutor := range activeExecutors {
-		if slices.ContainsFunc(emergencyValidators, func(v restaking.EmergencyValidator) bool {
-			return v.Address.String() == activeExecutor.GetAddress()
+		if slices.ContainsFunc(emergencyValidators, func(v restaking.Validator) bool {
+			return v.OperatorAddress == activeExecutor.GetOwnerAddress()
 		}) {
 			res = append(res, *activeExecutor)
 		}

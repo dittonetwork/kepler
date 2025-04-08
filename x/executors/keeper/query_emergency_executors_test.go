@@ -6,7 +6,6 @@ import (
 	"github.com/dittonetwork/kepler/x/executors/types"
 	restaking "github.com/dittonetwork/kepler/x/restaking/types"
 	"github.com/stretchr/testify/require"
-	"go.uber.org/mock/gomock"
 )
 
 func (s *TestSuite) TestQueryGetEmergencyExecutors_Success() {
@@ -15,12 +14,14 @@ func (s *TestSuite) TestQueryGetEmergencyExecutors_Success() {
 
 	// Prepare two executors: one active and one inactive.
 	one := types.Executor{
-		Address:  valAddr.String(),
-		IsActive: true,
+		Address:      "cosmos1address1",
+		OwnerAddress: valAddr.String(),
+		IsActive:     true,
 	}
 	two := types.Executor{
-		Address:  "cosmos1address2",
-		IsActive: true,
+		Address:      "cosmos1address2",
+		OwnerAddress: "cosmos1address2",
+		IsActive:     true,
 	}
 
 	err = s.keeper.Executors.Set(s.ctx, one.Address, one)
@@ -28,11 +29,11 @@ func (s *TestSuite) TestQueryGetEmergencyExecutors_Success() {
 	err = s.keeper.Executors.Set(s.ctx, two.Address, two)
 	require.NoError(s.T(), err)
 
-	s.restakingKeeper.EXPECT().GetActiveEmergencyValidators(gomock.Any()).Return([]restaking.EmergencyValidator{
+	s.restakingKeeper.EXPECT().GetActiveEmergencyValidators(s.ctx).Return([]restaking.Validator{
 		{
-			Address: valAddr,
+			OperatorAddress: valAddr.String(),
 		},
-	})
+	}, nil)
 
 	resp, err := s.queryClient.GetEmergencyExecutors(s.ctx, &api.QueryEmergencyExecutorsRequest{})
 	require.NoError(s.T(), err)
@@ -40,5 +41,5 @@ func (s *TestSuite) TestQueryGetEmergencyExecutors_Success() {
 
 	// Only the emergency executor should be returned.
 	require.Len(s.T(), resp.Executors, 1)
-	require.Equal(s.T(), "cosmosvaloper1w7f3xx7e75p4l7qdym5msqem9rd4dyc4mq79dm", resp.Executors[0].Address)
+	require.Equal(s.T(), "cosmosvaloper1w7f3xx7e75p4l7qdym5msqem9rd4dyc4mq79dm", resp.Executors[0].OwnerAddress)
 }

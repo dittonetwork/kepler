@@ -1,30 +1,32 @@
 syntax = "proto3";
 package kepler.restaking;
 
-import "amino/amino.proto";
 import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
-import "kepler/restaking/params.proto";
 import "kepler/restaking/validator.proto";
 
 option go_package = "github.com/dittonetwork/kepler/x/restaking/types";
 
 // Query defines the gRPC querier service.
 service Query {
-  // Retrieve a validator's status by address.
-  rpc ValidatorStatus(QueryValidatorStatusRequest) returns (QueryValidatorStatusResponse) {
-    option (google.api.http).get = "/dittonetwork/kepler/restaking/validator_status/{address}";
+  // PendingValidators returns currently pending validators of the module.
+  rpc PendingValidators(QueryPendingValidatorsRequest) returns (QueryPendingValidatorsResponse) {
+    option (google.api.http).get = "/dittonetwork/kepler/restaking/v1/pending_validators";
   }
 
   // Retrieve a list of all validators.
   rpc Validators(QueryValidatorsRequest) returns (QueryValidatorsResponse) {
     option (google.api.http).get = "/dittonetwork/kepler/restaking/validators";
   }
+}
 
-  // Parameters queries the parameters of the module.
-  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
-    option (google.api.http).get = "/dittonetwork/kepler/restaking/params";
-  }
+// QueryPendingValidatorsRequest is the request type for the Query/PendingValidators RPC method.
+message QueryPendingValidatorsRequest {}
+
+// QueryPendingValidatorsResponse is the response type for the Query/PendingValidators RPC method.
+message QueryPendingValidatorsResponse {
+  // Pending is the returned pending validators from the module.
+  repeated Validator pending = 1 [(gogoproto.nullable) = false];
 }
 
 // QueryValidatorsRequest is the request type for the Query/Validators RPC method.
@@ -34,28 +36,4 @@ message QueryValidatorsRequest {}
 message QueryValidatorsResponse {
   // validators is a list of validators.
   repeated Validator validators = 1;
-}
-
-// QueryValidatorStatusRequest is the request type for the Query/ValidatorStatus RPC method.
-message QueryValidatorStatusRequest {
-  // address is the address of the validator to query.
-  string address = 1;
-}
-
-// QueryValidatorStatusResponse is the response type for the Query/ValidatorStatus RPC method.
-message QueryValidatorStatusResponse {
-  // status is the status of the validator.
-  ValidatorStatus status = 1;
-}
-
-// QueryParamsRequest is request type for the Query/Params RPC method.
-message QueryParamsRequest {}
-
-// QueryParamsResponse is response type for the Query/Params RPC method.
-message QueryParamsResponse {
-  // params holds all the parameters of this module.
-  Params params = 1 [
-    (gogoproto.nullable) = false,
-    (amino.dont_omitempty) = true
-  ];
 }

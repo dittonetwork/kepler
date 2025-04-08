@@ -15,31 +15,31 @@ import (
 )
 
 var (
-	md_LastUpdate              protoreflect.MessageDescriptor
-	fd_LastUpdate_epoch        protoreflect.FieldDescriptor
-	fd_LastUpdate_timestamp    protoreflect.FieldDescriptor
-	fd_LastUpdate_block_height protoreflect.FieldDescriptor
-	fd_LastUpdate_block_hash   protoreflect.FieldDescriptor
+	md_UpdateInfo              protoreflect.MessageDescriptor
+	fd_UpdateInfo_epoch_num    protoreflect.FieldDescriptor
+	fd_UpdateInfo_timestamp    protoreflect.FieldDescriptor
+	fd_UpdateInfo_block_height protoreflect.FieldDescriptor
+	fd_UpdateInfo_block_hash   protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_kepler_restaking_update_proto_init()
-	md_LastUpdate = File_kepler_restaking_update_proto.Messages().ByName("LastUpdate")
-	fd_LastUpdate_epoch = md_LastUpdate.Fields().ByName("epoch")
-	fd_LastUpdate_timestamp = md_LastUpdate.Fields().ByName("timestamp")
-	fd_LastUpdate_block_height = md_LastUpdate.Fields().ByName("block_height")
-	fd_LastUpdate_block_hash = md_LastUpdate.Fields().ByName("block_hash")
+	md_UpdateInfo = File_kepler_restaking_update_proto.Messages().ByName("UpdateInfo")
+	fd_UpdateInfo_epoch_num = md_UpdateInfo.Fields().ByName("epoch_num")
+	fd_UpdateInfo_timestamp = md_UpdateInfo.Fields().ByName("timestamp")
+	fd_UpdateInfo_block_height = md_UpdateInfo.Fields().ByName("block_height")
+	fd_UpdateInfo_block_hash = md_UpdateInfo.Fields().ByName("block_hash")
 }
 
-var _ protoreflect.Message = (*fastReflection_LastUpdate)(nil)
+var _ protoreflect.Message = (*fastReflection_UpdateInfo)(nil)
 
-type fastReflection_LastUpdate LastUpdate
+type fastReflection_UpdateInfo UpdateInfo
 
-func (x *LastUpdate) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_LastUpdate)(x)
+func (x *UpdateInfo) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_UpdateInfo)(x)
 }
 
-func (x *LastUpdate) slowProtoReflect() protoreflect.Message {
+func (x *UpdateInfo) slowProtoReflect() protoreflect.Message {
 	mi := &file_kepler_restaking_update_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -51,43 +51,43 @@ func (x *LastUpdate) slowProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_LastUpdate_messageType fastReflection_LastUpdate_messageType
-var _ protoreflect.MessageType = fastReflection_LastUpdate_messageType{}
+var _fastReflection_UpdateInfo_messageType fastReflection_UpdateInfo_messageType
+var _ protoreflect.MessageType = fastReflection_UpdateInfo_messageType{}
 
-type fastReflection_LastUpdate_messageType struct{}
+type fastReflection_UpdateInfo_messageType struct{}
 
-func (x fastReflection_LastUpdate_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_LastUpdate)(nil)
+func (x fastReflection_UpdateInfo_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_UpdateInfo)(nil)
 }
-func (x fastReflection_LastUpdate_messageType) New() protoreflect.Message {
-	return new(fastReflection_LastUpdate)
+func (x fastReflection_UpdateInfo_messageType) New() protoreflect.Message {
+	return new(fastReflection_UpdateInfo)
 }
-func (x fastReflection_LastUpdate_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_LastUpdate
+func (x fastReflection_UpdateInfo_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_UpdateInfo
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_LastUpdate) Descriptor() protoreflect.MessageDescriptor {
-	return md_LastUpdate
+func (x *fastReflection_UpdateInfo) Descriptor() protoreflect.MessageDescriptor {
+	return md_UpdateInfo
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_LastUpdate) Type() protoreflect.MessageType {
-	return _fastReflection_LastUpdate_messageType
+func (x *fastReflection_UpdateInfo) Type() protoreflect.MessageType {
+	return _fastReflection_UpdateInfo_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_LastUpdate) New() protoreflect.Message {
-	return new(fastReflection_LastUpdate)
+func (x *fastReflection_UpdateInfo) New() protoreflect.Message {
+	return new(fastReflection_UpdateInfo)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_LastUpdate) Interface() protoreflect.ProtoMessage {
-	return (*LastUpdate)(x)
+func (x *fastReflection_UpdateInfo) Interface() protoreflect.ProtoMessage {
+	return (*UpdateInfo)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -95,28 +95,28 @@ func (x *fastReflection_LastUpdate) Interface() protoreflect.ProtoMessage {
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_LastUpdate) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
-	if x.Epoch != int64(0) {
-		value := protoreflect.ValueOfInt64(x.Epoch)
-		if !f(fd_LastUpdate_epoch, value) {
+func (x *fastReflection_UpdateInfo) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.EpochNum != int64(0) {
+		value := protoreflect.ValueOfInt64(x.EpochNum)
+		if !f(fd_UpdateInfo_epoch_num, value) {
 			return
 		}
 	}
 	if x.Timestamp != nil {
 		value := protoreflect.ValueOfMessage(x.Timestamp.ProtoReflect())
-		if !f(fd_LastUpdate_timestamp, value) {
+		if !f(fd_UpdateInfo_timestamp, value) {
 			return
 		}
 	}
 	if x.BlockHeight != int64(0) {
 		value := protoreflect.ValueOfInt64(x.BlockHeight)
-		if !f(fd_LastUpdate_block_height, value) {
+		if !f(fd_UpdateInfo_block_height, value) {
 			return
 		}
 	}
 	if x.BlockHash != "" {
 		value := protoreflect.ValueOfString(x.BlockHash)
-		if !f(fd_LastUpdate_block_hash, value) {
+		if !f(fd_UpdateInfo_block_hash, value) {
 			return
 		}
 	}
@@ -133,21 +133,21 @@ func (x *fastReflection_LastUpdate) Range(f func(protoreflect.FieldDescriptor, p
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_LastUpdate) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_UpdateInfo) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "kepler.restaking.LastUpdate.epoch":
-		return x.Epoch != int64(0)
-	case "kepler.restaking.LastUpdate.timestamp":
+	case "kepler.restaking.UpdateInfo.epoch_num":
+		return x.EpochNum != int64(0)
+	case "kepler.restaking.UpdateInfo.timestamp":
 		return x.Timestamp != nil
-	case "kepler.restaking.LastUpdate.block_height":
+	case "kepler.restaking.UpdateInfo.block_height":
 		return x.BlockHeight != int64(0)
-	case "kepler.restaking.LastUpdate.block_hash":
+	case "kepler.restaking.UpdateInfo.block_hash":
 		return x.BlockHash != ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.LastUpdate"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.UpdateInfo"))
 		}
-		panic(fmt.Errorf("message kepler.restaking.LastUpdate does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message kepler.restaking.UpdateInfo does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -157,21 +157,21 @@ func (x *fastReflection_LastUpdate) Has(fd protoreflect.FieldDescriptor) bool {
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_LastUpdate) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_UpdateInfo) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "kepler.restaking.LastUpdate.epoch":
-		x.Epoch = int64(0)
-	case "kepler.restaking.LastUpdate.timestamp":
+	case "kepler.restaking.UpdateInfo.epoch_num":
+		x.EpochNum = int64(0)
+	case "kepler.restaking.UpdateInfo.timestamp":
 		x.Timestamp = nil
-	case "kepler.restaking.LastUpdate.block_height":
+	case "kepler.restaking.UpdateInfo.block_height":
 		x.BlockHeight = int64(0)
-	case "kepler.restaking.LastUpdate.block_hash":
+	case "kepler.restaking.UpdateInfo.block_hash":
 		x.BlockHash = ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.LastUpdate"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.UpdateInfo"))
 		}
-		panic(fmt.Errorf("message kepler.restaking.LastUpdate does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message kepler.restaking.UpdateInfo does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -181,25 +181,25 @@ func (x *fastReflection_LastUpdate) Clear(fd protoreflect.FieldDescriptor) {
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_LastUpdate) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_UpdateInfo) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "kepler.restaking.LastUpdate.epoch":
-		value := x.Epoch
+	case "kepler.restaking.UpdateInfo.epoch_num":
+		value := x.EpochNum
 		return protoreflect.ValueOfInt64(value)
-	case "kepler.restaking.LastUpdate.timestamp":
+	case "kepler.restaking.UpdateInfo.timestamp":
 		value := x.Timestamp
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
-	case "kepler.restaking.LastUpdate.block_height":
+	case "kepler.restaking.UpdateInfo.block_height":
 		value := x.BlockHeight
 		return protoreflect.ValueOfInt64(value)
-	case "kepler.restaking.LastUpdate.block_hash":
+	case "kepler.restaking.UpdateInfo.block_hash":
 		value := x.BlockHash
 		return protoreflect.ValueOfString(value)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.LastUpdate"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.UpdateInfo"))
 		}
-		panic(fmt.Errorf("message kepler.restaking.LastUpdate does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message kepler.restaking.UpdateInfo does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -213,21 +213,21 @@ func (x *fastReflection_LastUpdate) Get(descriptor protoreflect.FieldDescriptor)
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_LastUpdate) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_UpdateInfo) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "kepler.restaking.LastUpdate.epoch":
-		x.Epoch = value.Int()
-	case "kepler.restaking.LastUpdate.timestamp":
+	case "kepler.restaking.UpdateInfo.epoch_num":
+		x.EpochNum = value.Int()
+	case "kepler.restaking.UpdateInfo.timestamp":
 		x.Timestamp = value.Message().Interface().(*timestamppb.Timestamp)
-	case "kepler.restaking.LastUpdate.block_height":
+	case "kepler.restaking.UpdateInfo.block_height":
 		x.BlockHeight = value.Int()
-	case "kepler.restaking.LastUpdate.block_hash":
+	case "kepler.restaking.UpdateInfo.block_hash":
 		x.BlockHash = value.Interface().(string)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.LastUpdate"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.UpdateInfo"))
 		}
-		panic(fmt.Errorf("message kepler.restaking.LastUpdate does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message kepler.restaking.UpdateInfo does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -241,56 +241,56 @@ func (x *fastReflection_LastUpdate) Set(fd protoreflect.FieldDescriptor, value p
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_LastUpdate) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_UpdateInfo) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "kepler.restaking.LastUpdate.timestamp":
+	case "kepler.restaking.UpdateInfo.timestamp":
 		if x.Timestamp == nil {
 			x.Timestamp = new(timestamppb.Timestamp)
 		}
 		return protoreflect.ValueOfMessage(x.Timestamp.ProtoReflect())
-	case "kepler.restaking.LastUpdate.epoch":
-		panic(fmt.Errorf("field epoch of message kepler.restaking.LastUpdate is not mutable"))
-	case "kepler.restaking.LastUpdate.block_height":
-		panic(fmt.Errorf("field block_height of message kepler.restaking.LastUpdate is not mutable"))
-	case "kepler.restaking.LastUpdate.block_hash":
-		panic(fmt.Errorf("field block_hash of message kepler.restaking.LastUpdate is not mutable"))
+	case "kepler.restaking.UpdateInfo.epoch_num":
+		panic(fmt.Errorf("field epoch_num of message kepler.restaking.UpdateInfo is not mutable"))
+	case "kepler.restaking.UpdateInfo.block_height":
+		panic(fmt.Errorf("field block_height of message kepler.restaking.UpdateInfo is not mutable"))
+	case "kepler.restaking.UpdateInfo.block_hash":
+		panic(fmt.Errorf("field block_hash of message kepler.restaking.UpdateInfo is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.LastUpdate"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.UpdateInfo"))
 		}
-		panic(fmt.Errorf("message kepler.restaking.LastUpdate does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message kepler.restaking.UpdateInfo does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_LastUpdate) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_UpdateInfo) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "kepler.restaking.LastUpdate.epoch":
+	case "kepler.restaking.UpdateInfo.epoch_num":
 		return protoreflect.ValueOfInt64(int64(0))
-	case "kepler.restaking.LastUpdate.timestamp":
+	case "kepler.restaking.UpdateInfo.timestamp":
 		m := new(timestamppb.Timestamp)
 		return protoreflect.ValueOfMessage(m.ProtoReflect())
-	case "kepler.restaking.LastUpdate.block_height":
+	case "kepler.restaking.UpdateInfo.block_height":
 		return protoreflect.ValueOfInt64(int64(0))
-	case "kepler.restaking.LastUpdate.block_hash":
+	case "kepler.restaking.UpdateInfo.block_hash":
 		return protoreflect.ValueOfString("")
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.LastUpdate"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.UpdateInfo"))
 		}
-		panic(fmt.Errorf("message kepler.restaking.LastUpdate does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message kepler.restaking.UpdateInfo does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_LastUpdate) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_UpdateInfo) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in kepler.restaking.LastUpdate", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in kepler.restaking.UpdateInfo", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -298,7 +298,7 @@ func (x *fastReflection_LastUpdate) WhichOneof(d protoreflect.OneofDescriptor) p
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_LastUpdate) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_UpdateInfo) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -309,7 +309,7 @@ func (x *fastReflection_LastUpdate) GetUnknown() protoreflect.RawFields {
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_LastUpdate) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_UpdateInfo) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -321,7 +321,7 @@ func (x *fastReflection_LastUpdate) SetUnknown(fields protoreflect.RawFields) {
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_LastUpdate) IsValid() bool {
+func (x *fastReflection_UpdateInfo) IsValid() bool {
 	return x != nil
 }
 
@@ -331,9 +331,9 @@ func (x *fastReflection_LastUpdate) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_LastUpdate) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_UpdateInfo) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*LastUpdate)
+		x := input.Message.Interface().(*UpdateInfo)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -345,8 +345,8 @@ func (x *fastReflection_LastUpdate) ProtoMethods() *protoiface.Methods {
 		var n int
 		var l int
 		_ = l
-		if x.Epoch != 0 {
-			n += 1 + runtime.Sov(uint64(x.Epoch))
+		if x.EpochNum != 0 {
+			n += 1 + runtime.Sov(uint64(x.EpochNum))
 		}
 		if x.Timestamp != nil {
 			l = options.Size(x.Timestamp)
@@ -369,7 +369,7 @@ func (x *fastReflection_LastUpdate) ProtoMethods() *protoiface.Methods {
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*LastUpdate)
+		x := input.Message.Interface().(*UpdateInfo)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -414,8 +414,8 @@ func (x *fastReflection_LastUpdate) ProtoMethods() *protoiface.Methods {
 			i--
 			dAtA[i] = 0x12
 		}
-		if x.Epoch != 0 {
-			i = runtime.EncodeVarint(dAtA, i, uint64(x.Epoch))
+		if x.EpochNum != 0 {
+			i = runtime.EncodeVarint(dAtA, i, uint64(x.EpochNum))
 			i--
 			dAtA[i] = 0x8
 		}
@@ -430,7 +430,7 @@ func (x *fastReflection_LastUpdate) ProtoMethods() *protoiface.Methods {
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*LastUpdate)
+		x := input.Message.Interface().(*UpdateInfo)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -462,17 +462,17 @@ func (x *fastReflection_LastUpdate) ProtoMethods() *protoiface.Methods {
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: LastUpdate: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: UpdateInfo: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: LastUpdate: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: UpdateInfo: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			case 1:
 				if wireType != 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Epoch", wireType)
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field EpochNum", wireType)
 				}
-				x.Epoch = 0
+				x.EpochNum = 0
 				for shift := uint(0); ; shift += 7 {
 					if shift >= 64 {
 						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
@@ -482,7 +482,7 @@ func (x *fastReflection_LastUpdate) ProtoMethods() *protoiface.Methods {
 					}
 					b := dAtA[iNdEx]
 					iNdEx++
-					x.Epoch |= int64(b&0x7F) << shift
+					x.EpochNum |= int64(b&0x7F) << shift
 					if b < 0x80 {
 						break
 					}
@@ -609,6 +609,579 @@ func (x *fastReflection_LastUpdate) ProtoMethods() *protoiface.Methods {
 	}
 }
 
+var _ protoreflect.List = (*_ValidatorsUpdate_1_list)(nil)
+
+type _ValidatorsUpdate_1_list struct {
+	list *[]*Validator
+}
+
+func (x *_ValidatorsUpdate_1_list) Len() int {
+	if x.list == nil {
+		return 0
+	}
+	return len(*x.list)
+}
+
+func (x *_ValidatorsUpdate_1_list) Get(i int) protoreflect.Value {
+	return protoreflect.ValueOfMessage((*x.list)[i].ProtoReflect())
+}
+
+func (x *_ValidatorsUpdate_1_list) Set(i int, value protoreflect.Value) {
+	valueUnwrapped := value.Message()
+	concreteValue := valueUnwrapped.Interface().(*Validator)
+	(*x.list)[i] = concreteValue
+}
+
+func (x *_ValidatorsUpdate_1_list) Append(value protoreflect.Value) {
+	valueUnwrapped := value.Message()
+	concreteValue := valueUnwrapped.Interface().(*Validator)
+	*x.list = append(*x.list, concreteValue)
+}
+
+func (x *_ValidatorsUpdate_1_list) AppendMutable() protoreflect.Value {
+	v := new(Validator)
+	*x.list = append(*x.list, v)
+	return protoreflect.ValueOfMessage(v.ProtoReflect())
+}
+
+func (x *_ValidatorsUpdate_1_list) Truncate(n int) {
+	for i := n; i < len(*x.list); i++ {
+		(*x.list)[i] = nil
+	}
+	*x.list = (*x.list)[:n]
+}
+
+func (x *_ValidatorsUpdate_1_list) NewElement() protoreflect.Value {
+	v := new(Validator)
+	return protoreflect.ValueOfMessage(v.ProtoReflect())
+}
+
+func (x *_ValidatorsUpdate_1_list) IsValid() bool {
+	return x.list != nil
+}
+
+var (
+	md_ValidatorsUpdate           protoreflect.MessageDescriptor
+	fd_ValidatorsUpdate_operators protoreflect.FieldDescriptor
+	fd_ValidatorsUpdate_info      protoreflect.FieldDescriptor
+)
+
+func init() {
+	file_kepler_restaking_update_proto_init()
+	md_ValidatorsUpdate = File_kepler_restaking_update_proto.Messages().ByName("ValidatorsUpdate")
+	fd_ValidatorsUpdate_operators = md_ValidatorsUpdate.Fields().ByName("operators")
+	fd_ValidatorsUpdate_info = md_ValidatorsUpdate.Fields().ByName("info")
+}
+
+var _ protoreflect.Message = (*fastReflection_ValidatorsUpdate)(nil)
+
+type fastReflection_ValidatorsUpdate ValidatorsUpdate
+
+func (x *ValidatorsUpdate) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_ValidatorsUpdate)(x)
+}
+
+func (x *ValidatorsUpdate) slowProtoReflect() protoreflect.Message {
+	mi := &file_kepler_restaking_update_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_ValidatorsUpdate_messageType fastReflection_ValidatorsUpdate_messageType
+var _ protoreflect.MessageType = fastReflection_ValidatorsUpdate_messageType{}
+
+type fastReflection_ValidatorsUpdate_messageType struct{}
+
+func (x fastReflection_ValidatorsUpdate_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_ValidatorsUpdate)(nil)
+}
+func (x fastReflection_ValidatorsUpdate_messageType) New() protoreflect.Message {
+	return new(fastReflection_ValidatorsUpdate)
+}
+func (x fastReflection_ValidatorsUpdate_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_ValidatorsUpdate
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_ValidatorsUpdate) Descriptor() protoreflect.MessageDescriptor {
+	return md_ValidatorsUpdate
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_ValidatorsUpdate) Type() protoreflect.MessageType {
+	return _fastReflection_ValidatorsUpdate_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_ValidatorsUpdate) New() protoreflect.Message {
+	return new(fastReflection_ValidatorsUpdate)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_ValidatorsUpdate) Interface() protoreflect.ProtoMessage {
+	return (*ValidatorsUpdate)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_ValidatorsUpdate) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if len(x.Operators) != 0 {
+		value := protoreflect.ValueOfList(&_ValidatorsUpdate_1_list{list: &x.Operators})
+		if !f(fd_ValidatorsUpdate_operators, value) {
+			return
+		}
+	}
+	if x.Info != nil {
+		value := protoreflect.ValueOfMessage(x.Info.ProtoReflect())
+		if !f(fd_ValidatorsUpdate_info, value) {
+			return
+		}
+	}
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_ValidatorsUpdate) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	case "kepler.restaking.ValidatorsUpdate.operators":
+		return len(x.Operators) != 0
+	case "kepler.restaking.ValidatorsUpdate.info":
+		return x.Info != nil
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.ValidatorsUpdate"))
+		}
+		panic(fmt.Errorf("message kepler.restaking.ValidatorsUpdate does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_ValidatorsUpdate) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	case "kepler.restaking.ValidatorsUpdate.operators":
+		x.Operators = nil
+	case "kepler.restaking.ValidatorsUpdate.info":
+		x.Info = nil
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.ValidatorsUpdate"))
+		}
+		panic(fmt.Errorf("message kepler.restaking.ValidatorsUpdate does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_ValidatorsUpdate) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	case "kepler.restaking.ValidatorsUpdate.operators":
+		if len(x.Operators) == 0 {
+			return protoreflect.ValueOfList(&_ValidatorsUpdate_1_list{})
+		}
+		listValue := &_ValidatorsUpdate_1_list{list: &x.Operators}
+		return protoreflect.ValueOfList(listValue)
+	case "kepler.restaking.ValidatorsUpdate.info":
+		value := x.Info
+		return protoreflect.ValueOfMessage(value.ProtoReflect())
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.ValidatorsUpdate"))
+		}
+		panic(fmt.Errorf("message kepler.restaking.ValidatorsUpdate does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_ValidatorsUpdate) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	case "kepler.restaking.ValidatorsUpdate.operators":
+		lv := value.List()
+		clv := lv.(*_ValidatorsUpdate_1_list)
+		x.Operators = *clv.list
+	case "kepler.restaking.ValidatorsUpdate.info":
+		x.Info = value.Message().Interface().(*UpdateInfo)
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.ValidatorsUpdate"))
+		}
+		panic(fmt.Errorf("message kepler.restaking.ValidatorsUpdate does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_ValidatorsUpdate) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "kepler.restaking.ValidatorsUpdate.operators":
+		if x.Operators == nil {
+			x.Operators = []*Validator{}
+		}
+		value := &_ValidatorsUpdate_1_list{list: &x.Operators}
+		return protoreflect.ValueOfList(value)
+	case "kepler.restaking.ValidatorsUpdate.info":
+		if x.Info == nil {
+			x.Info = new(UpdateInfo)
+		}
+		return protoreflect.ValueOfMessage(x.Info.ProtoReflect())
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.ValidatorsUpdate"))
+		}
+		panic(fmt.Errorf("message kepler.restaking.ValidatorsUpdate does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_ValidatorsUpdate) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "kepler.restaking.ValidatorsUpdate.operators":
+		list := []*Validator{}
+		return protoreflect.ValueOfList(&_ValidatorsUpdate_1_list{list: &list})
+	case "kepler.restaking.ValidatorsUpdate.info":
+		m := new(UpdateInfo)
+		return protoreflect.ValueOfMessage(m.ProtoReflect())
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.ValidatorsUpdate"))
+		}
+		panic(fmt.Errorf("message kepler.restaking.ValidatorsUpdate does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_ValidatorsUpdate) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in kepler.restaking.ValidatorsUpdate", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_ValidatorsUpdate) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_ValidatorsUpdate) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_ValidatorsUpdate) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_ValidatorsUpdate) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*ValidatorsUpdate)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		if len(x.Operators) > 0 {
+			for _, e := range x.Operators {
+				l = options.Size(e)
+				n += 1 + l + runtime.Sov(uint64(l))
+			}
+		}
+		if x.Info != nil {
+			l = options.Size(x.Info)
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*ValidatorsUpdate)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if x.Info != nil {
+			encoded, err := options.Marshal(x.Info)
+			if err != nil {
+				return protoiface.MarshalOutput{
+					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+					Buf:               input.Buf,
+				}, err
+			}
+			i -= len(encoded)
+			copy(dAtA[i:], encoded)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+			i--
+			dAtA[i] = 0x12
+		}
+		if len(x.Operators) > 0 {
+			for iNdEx := len(x.Operators) - 1; iNdEx >= 0; iNdEx-- {
+				encoded, err := options.Marshal(x.Operators[iNdEx])
+				if err != nil {
+					return protoiface.MarshalOutput{
+						NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+						Buf:               input.Buf,
+					}, err
+				}
+				i -= len(encoded)
+				copy(dAtA[i:], encoded)
+				i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+				i--
+				dAtA[i] = 0xa
+			}
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*ValidatorsUpdate)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: ValidatorsUpdate: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: ValidatorsUpdate: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			case 1:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Operators", wireType)
+				}
+				var msglen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					msglen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if msglen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + msglen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.Operators = append(x.Operators, &Validator{})
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.Operators[len(x.Operators)-1]); err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				iNdEx = postIndex
+			case 2:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Info", wireType)
+				}
+				var msglen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					msglen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if msglen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + msglen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if x.Info == nil {
+					x.Info = &UpdateInfo{}
+				}
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.Info); err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				iNdEx = postIndex
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
 // Code generated by protoc-gen-go. DO NOT EDIT.
 // versions:
 // 	protoc-gen-go v1.27.0
@@ -622,24 +1195,24 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// LastUpdate of the restaking module
-type LastUpdate struct {
+// UpdateInfo is a collection of update information from L1.
+type UpdateInfo struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// epoch of the last update
-	Epoch int64 `protobuf:"varint,1,opt,name=epoch,proto3" json:"epoch,omitempty"`
+	// epoch_num is the epoch number of the update
+	EpochNum int64 `protobuf:"varint,1,opt,name=epoch_num,json=epochNum,proto3" json:"epoch_num,omitempty"`
 	// timestamp of the last update
 	Timestamp *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
-	// block height on L1 of the last update
+	// block_height is the block height on L1 of the last update
 	BlockHeight int64 `protobuf:"varint,3,opt,name=block_height,json=blockHeight,proto3" json:"block_height,omitempty"`
-	// block hash on L1 of the last update
+	// block_hash is the block hash on L1 of the last update
 	BlockHash string `protobuf:"bytes,4,opt,name=block_hash,json=blockHash,proto3" json:"block_hash,omitempty"`
 }
 
-func (x *LastUpdate) Reset() {
-	*x = LastUpdate{}
+func (x *UpdateInfo) Reset() {
+	*x = UpdateInfo{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_kepler_restaking_update_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -647,43 +1220,89 @@ func (x *LastUpdate) Reset() {
 	}
 }
 
-func (x *LastUpdate) String() string {
+func (x *UpdateInfo) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*LastUpdate) ProtoMessage() {}
+func (*UpdateInfo) ProtoMessage() {}
 
-// Deprecated: Use LastUpdate.ProtoReflect.Descriptor instead.
-func (*LastUpdate) Descriptor() ([]byte, []int) {
+// Deprecated: Use UpdateInfo.ProtoReflect.Descriptor instead.
+func (*UpdateInfo) Descriptor() ([]byte, []int) {
 	return file_kepler_restaking_update_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *LastUpdate) GetEpoch() int64 {
+func (x *UpdateInfo) GetEpochNum() int64 {
 	if x != nil {
-		return x.Epoch
+		return x.EpochNum
 	}
 	return 0
 }
 
-func (x *LastUpdate) GetTimestamp() *timestamppb.Timestamp {
+func (x *UpdateInfo) GetTimestamp() *timestamppb.Timestamp {
 	if x != nil {
 		return x.Timestamp
 	}
 	return nil
 }
 
-func (x *LastUpdate) GetBlockHeight() int64 {
+func (x *UpdateInfo) GetBlockHeight() int64 {
 	if x != nil {
 		return x.BlockHeight
 	}
 	return 0
 }
 
-func (x *LastUpdate) GetBlockHash() string {
+func (x *UpdateInfo) GetBlockHash() string {
 	if x != nil {
 		return x.BlockHash
 	}
 	return ""
+}
+
+// UpdateValidators is a message that contains a list of updates for validators.
+type ValidatorsUpdate struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// validators defines a list of validators to be updated.
+	Operators []*Validator `protobuf:"bytes,1,rep,name=operators,proto3" json:"operators,omitempty"`
+	// info contains information about the last update.
+	Info *UpdateInfo `protobuf:"bytes,2,opt,name=info,proto3" json:"info,omitempty"`
+}
+
+func (x *ValidatorsUpdate) Reset() {
+	*x = ValidatorsUpdate{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_kepler_restaking_update_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ValidatorsUpdate) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ValidatorsUpdate) ProtoMessage() {}
+
+// Deprecated: Use ValidatorsUpdate.ProtoReflect.Descriptor instead.
+func (*ValidatorsUpdate) Descriptor() ([]byte, []int) {
+	return file_kepler_restaking_update_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *ValidatorsUpdate) GetOperators() []*Validator {
+	if x != nil {
+		return x.Operators
+	}
+	return nil
+}
+
+func (x *ValidatorsUpdate) GetInfo() *UpdateInfo {
+	if x != nil {
+		return x.Info
+	}
+	return nil
 }
 
 var File_kepler_restaking_update_proto protoreflect.FileDescriptor
@@ -695,30 +1314,42 @@ var file_kepler_restaking_update_proto_rawDesc = []byte{
 	0x67, 0x1a, 0x14, 0x67, 0x6f, 0x67, 0x6f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x67, 0x6f, 0x67,
 	0x6f, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1f, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f,
 	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61,
-	0x6d, 0x70, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0xa8, 0x01, 0x0a, 0x0a, 0x4c, 0x61, 0x73,
-	0x74, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x65, 0x70, 0x6f, 0x63, 0x68,
-	0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x65, 0x70, 0x6f, 0x63, 0x68, 0x12, 0x42, 0x0a,
-	0x09, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b,
-	0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62,
-	0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x42, 0x08, 0xc8, 0xde,
-	0x1f, 0x00, 0x90, 0xdf, 0x1f, 0x01, 0x52, 0x09, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d,
-	0x70, 0x12, 0x21, 0x0a, 0x0c, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x5f, 0x68, 0x65, 0x69, 0x67, 0x68,
-	0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0b, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x48, 0x65,
-	0x69, 0x67, 0x68, 0x74, 0x12, 0x1d, 0x0a, 0x0a, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x5f, 0x68, 0x61,
-	0x73, 0x68, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x48,
-	0x61, 0x73, 0x68, 0x42, 0xb9, 0x01, 0x0a, 0x14, 0x63, 0x6f, 0x6d, 0x2e, 0x6b, 0x65, 0x70, 0x6c,
-	0x65, 0x72, 0x2e, 0x72, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x42, 0x0b, 0x55, 0x70,
-	0x64, 0x61, 0x74, 0x65, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x33, 0x67, 0x69, 0x74,
-	0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x64, 0x69, 0x74, 0x74, 0x6f, 0x6e, 0x65, 0x74,
-	0x77, 0x6f, 0x72, 0x6b, 0x2f, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x61, 0x70, 0x69, 0x2f,
-	0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x72, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67,
-	0xa2, 0x02, 0x03, 0x4b, 0x52, 0x58, 0xaa, 0x02, 0x10, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e,
-	0x52, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0xca, 0x02, 0x10, 0x4b, 0x65, 0x70, 0x6c,
-	0x65, 0x72, 0x5c, 0x52, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0xe2, 0x02, 0x1c, 0x4b,
-	0x65, 0x70, 0x6c, 0x65, 0x72, 0x5c, 0x52, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x5c,
-	0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x11, 0x4b, 0x65,
-	0x70, 0x6c, 0x65, 0x72, 0x3a, 0x3a, 0x52, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x62,
-	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x6d, 0x70, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x20, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72,
+	0x2f, 0x72, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2f, 0x76, 0x61, 0x6c, 0x69, 0x64,
+	0x61, 0x74, 0x6f, 0x72, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0xb5, 0x01, 0x0a, 0x0a, 0x55,
+	0x70, 0x64, 0x61, 0x74, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x1b, 0x0a, 0x09, 0x65, 0x70, 0x6f,
+	0x63, 0x68, 0x5f, 0x6e, 0x75, 0x6d, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x08, 0x65, 0x70,
+	0x6f, 0x63, 0x68, 0x4e, 0x75, 0x6d, 0x12, 0x42, 0x0a, 0x09, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74,
+	0x61, 0x6d, 0x70, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67,
+	0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65,
+	0x73, 0x74, 0x61, 0x6d, 0x70, 0x42, 0x08, 0xc8, 0xde, 0x1f, 0x00, 0x90, 0xdf, 0x1f, 0x01, 0x52,
+	0x09, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x21, 0x0a, 0x0c, 0x62, 0x6c,
+	0x6f, 0x63, 0x6b, 0x5f, 0x68, 0x65, 0x69, 0x67, 0x68, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03,
+	0x52, 0x0b, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x48, 0x65, 0x69, 0x67, 0x68, 0x74, 0x12, 0x1d, 0x0a,
+	0x0a, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x5f, 0x68, 0x61, 0x73, 0x68, 0x18, 0x04, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x09, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x48, 0x61, 0x73, 0x68, 0x3a, 0x04, 0xe8, 0xa0,
+	0x1f, 0x01, 0x22, 0x8b, 0x01, 0x0a, 0x10, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f, 0x72,
+	0x73, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x12, 0x3f, 0x0a, 0x09, 0x6f, 0x70, 0x65, 0x72, 0x61,
+	0x74, 0x6f, 0x72, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x6b, 0x65, 0x70,
+	0x6c, 0x65, 0x72, 0x2e, 0x72, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x56, 0x61,
+	0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f, 0x72, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x09, 0x6f,
+	0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x73, 0x12, 0x36, 0x0a, 0x04, 0x69, 0x6e, 0x66, 0x6f,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e,
+	0x72, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65,
+	0x49, 0x6e, 0x66, 0x6f, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x04, 0x69, 0x6e, 0x66, 0x6f,
+	0x42, 0xb9, 0x01, 0x0a, 0x14, 0x63, 0x6f, 0x6d, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e,
+	0x72, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x42, 0x0b, 0x55, 0x70, 0x64, 0x61, 0x74,
+	0x65, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x33, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62,
+	0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x64, 0x69, 0x74, 0x74, 0x6f, 0x6e, 0x65, 0x74, 0x77, 0x6f, 0x72,
+	0x6b, 0x2f, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6b, 0x65, 0x70,
+	0x6c, 0x65, 0x72, 0x2f, 0x72, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0xa2, 0x02, 0x03,
+	0x4b, 0x52, 0x58, 0xaa, 0x02, 0x10, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x52, 0x65, 0x73,
+	0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0xca, 0x02, 0x10, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x5c,
+	0x52, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0xe2, 0x02, 0x1c, 0x4b, 0x65, 0x70, 0x6c,
+	0x65, 0x72, 0x5c, 0x52, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x5c, 0x47, 0x50, 0x42,
+	0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x11, 0x4b, 0x65, 0x70, 0x6c, 0x65,
+	0x72, 0x3a, 0x3a, 0x52, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x62, 0x06, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -733,18 +1364,22 @@ func file_kepler_restaking_update_proto_rawDescGZIP() []byte {
 	return file_kepler_restaking_update_proto_rawDescData
 }
 
-var file_kepler_restaking_update_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_kepler_restaking_update_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_kepler_restaking_update_proto_goTypes = []interface{}{
-	(*LastUpdate)(nil),            // 0: kepler.restaking.LastUpdate
-	(*timestamppb.Timestamp)(nil), // 1: google.protobuf.Timestamp
+	(*UpdateInfo)(nil),            // 0: kepler.restaking.UpdateInfo
+	(*ValidatorsUpdate)(nil),      // 1: kepler.restaking.ValidatorsUpdate
+	(*timestamppb.Timestamp)(nil), // 2: google.protobuf.Timestamp
+	(*Validator)(nil),             // 3: kepler.restaking.Validator
 }
 var file_kepler_restaking_update_proto_depIdxs = []int32{
-	1, // 0: kepler.restaking.LastUpdate.timestamp:type_name -> google.protobuf.Timestamp
-	1, // [1:1] is the sub-list for method output_type
-	1, // [1:1] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	2, // 0: kepler.restaking.UpdateInfo.timestamp:type_name -> google.protobuf.Timestamp
+	3, // 1: kepler.restaking.ValidatorsUpdate.operators:type_name -> kepler.restaking.Validator
+	0, // 2: kepler.restaking.ValidatorsUpdate.info:type_name -> kepler.restaking.UpdateInfo
+	3, // [3:3] is the sub-list for method output_type
+	3, // [3:3] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_kepler_restaking_update_proto_init() }
@@ -752,9 +1387,22 @@ func file_kepler_restaking_update_proto_init() {
 	if File_kepler_restaking_update_proto != nil {
 		return
 	}
+	file_kepler_restaking_validator_proto_init()
 	if !protoimpl.UnsafeEnabled {
 		file_kepler_restaking_update_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*LastUpdate); i {
+			switch v := v.(*UpdateInfo); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_kepler_restaking_update_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ValidatorsUpdate); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -772,7 +1420,7 @@ func file_kepler_restaking_update_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_kepler_restaking_update_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   1,
+			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

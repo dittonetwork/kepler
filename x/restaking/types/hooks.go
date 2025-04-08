@@ -2,13 +2,11 @@ package types
 
 import (
 	"context"
-
-	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 )
 
 type RestakingHooks interface {
 	// BeforeValidatorBeginUnbonding is called before a validator begins unbonding.
-	BeforeValidatorBeginUnbonding(ctx context.Context, validator stakingtypes.ValidatorI) error
+	BeforeValidatorBeginUnbonding(ctx context.Context, validator Validator) error
 }
 
 var _ RestakingHooks = MultiRestakingHooks{}
@@ -23,7 +21,7 @@ func NewMultiRestakingHooks(hooks ...RestakingHooks) MultiRestakingHooks {
 // BeforeValidatorBeginUnbonding is called before a validator begins unbonding.
 func (m MultiRestakingHooks) BeforeValidatorBeginUnbonding(
 	ctx context.Context,
-	validator stakingtypes.ValidatorI,
+	validator Validator,
 ) error {
 	for i := range m {
 		if err := m[i].BeforeValidatorBeginUnbonding(ctx, validator); err != nil {

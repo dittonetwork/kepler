@@ -13,7 +13,7 @@ import (
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	"github.com/cosmos/cosmos-sdk/runtime"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/dittonetwork/kepler/x/executors/types/mock"
+	"github.com/dittonetwork/kepler/x/executors/testutil"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/mock/gomock"
 
@@ -34,7 +34,7 @@ func ExecutorsKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {
 
 	// Mock staking keeper
 	ctrl := gomock.NewController(t)
-	restaking := mock.NewMockRestakingKeeper(ctrl)
+	restaking := testutil.NewMockRestakingKeeper(ctrl)
 
 	k := keeper.NewKeeper(
 		cdc,

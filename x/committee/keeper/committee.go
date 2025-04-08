@@ -62,14 +62,8 @@ func (k Keeper) createEmergencyCommittee(ctx sdk.Context, epoch uint32) (types.C
 	committeeExecutors := make([]types.Executor, len(executors))
 
 	for i, executor := range executors {
-		var addr sdk.ValAddress
-		addr, err = sdk.ValAddressFromBech32(executor.GetOwnerAddress())
-		if err != nil {
-			return types.Committee{}, sdkerrors.Wrap(err, "failed to convert address")
-		}
-
 		var validator restaking.Validator
-		validator, err = k.restaking.GetValidator(ctx, addr)
+		validator, err = k.restaking.GetValidator(ctx, executor.GetOwnerAddress())
 
 		if err != nil {
 			return types.Committee{}, sdkerrors.Wrap(err, "failed to get validator")

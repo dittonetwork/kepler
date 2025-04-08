@@ -3,13 +3,16 @@ package kepler.restaking;
 
 import "gogoproto/gogo.proto";
 import "google/protobuf/timestamp.proto";
+import "kepler/restaking/validator.proto";
 
 option go_package = "github.com/dittonetwork/kepler/x/restaking/types";
 
-// LastUpdate of the restaking module
-message LastUpdate {
-  // epoch of the last update
-  int64 epoch = 1;
+// UpdateInfo is a collection of update information from L1.
+message UpdateInfo {
+  option (gogoproto.equal) = true;
+
+  // epoch_num is the epoch number of the update
+  int64 epoch_num = 1;
 
   // timestamp of the last update
   google.protobuf.Timestamp timestamp = 2 [
@@ -17,9 +20,18 @@ message LastUpdate {
     (gogoproto.nullable) = false
   ];
 
-  // block height on L1 of the last update
+  // block_height is the block height on L1 of the last update
   int64 block_height = 3;
 
-  // block hash on L1 of the last update
+  // block_hash is the block hash on L1 of the last update
   string block_hash = 4;
+}
+
+// UpdateValidators is a message that contains a list of updates for validators.
+message ValidatorsUpdate {
+  // validators defines a list of validators to be updated.
+  repeated Validator operators = 1 [(gogoproto.nullable) = false];
+
+  // info contains information about the last update.
+  UpdateInfo info = 2 [(gogoproto.nullable) = false];
 }

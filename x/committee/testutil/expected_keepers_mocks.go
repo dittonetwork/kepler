@@ -159,18 +159,18 @@ func (m *MockRestakingKeeper) EXPECT() *MockRestakingKeeperMockRecorder {
 }
 
 // GetValidator mocks base method.
-func (m *MockRestakingKeeper) GetValidator(ctx types.Context, valAddr types.ValAddress) (types1.Validator, error) {
+func (m *MockRestakingKeeper) GetValidator(ctx types.Context, address string) (types1.Validator, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetValidator", ctx, valAddr)
+	ret := m.ctrl.Call(m, "GetValidator", ctx, address)
 	ret0, _ := ret[0].(types1.Validator)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetValidator indicates an expected call of GetValidator.
-func (mr *MockRestakingKeeperMockRecorder) GetValidator(ctx, valAddr any) *gomock.Call {
+func (mr *MockRestakingKeeperMockRecorder) GetValidator(ctx, address any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetValidator", reflect.TypeOf((*MockRestakingKeeper)(nil).GetValidator), ctx, valAddr)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetValidator", reflect.TypeOf((*MockRestakingKeeper)(nil).GetValidator), ctx, address)
 }
 
 // MockParamSubspace is a mock of ParamSubspace interface.

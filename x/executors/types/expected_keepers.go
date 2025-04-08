@@ -4,7 +4,7 @@ import (
 	"context"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	restakingTypes "github.com/dittonetwork/kepler/x/restaking/types"
+	restaking "github.com/dittonetwork/kepler/x/restaking/types"
 )
 
 // AccountKeeper defines the expected interface for the Account module.
@@ -26,5 +26,5 @@ type ParamSubspace interface {
 }
 
 type RestakingKeeper interface {
-	GetActiveEmergencyValidators(ctx sdk.Context) []restakingTypes.EmergencyValidator
+	GetActiveEmergencyValidators(ctx sdk.Context) ([]restaking.Validator, error)
 }

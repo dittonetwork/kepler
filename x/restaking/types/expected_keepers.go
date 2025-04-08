@@ -4,7 +4,6 @@ import (
 	"context"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/cosmos/cosmos-sdk/x/staking/types"
 )
 
 // AccountKeeper defines the expected interface for the Account module.
@@ -17,12 +16,6 @@ type AccountKeeper interface {
 type BankKeeper interface {
 	SpendableCoins(context.Context, sdk.AccAddress) sdk.Coins
 	// Methods imported from bank should be defined here
-}
-
-// StakingKeeper defines the expected interface needed to interface with the staking keeper.
-type StakingKeeper interface {
-	GetValidator(ctx context.Context, addr sdk.ValAddress) (types.Validator, error)
-	SetValidator(ctx context.Context, validator types.Validator) error
 }
 
 // ParamSubspace defines the expected Subspace interface for parameters.

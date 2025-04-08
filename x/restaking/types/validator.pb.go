@@ -6,6 +6,8 @@ package types
 import (
 	fmt "fmt"
 	_ "github.com/cosmos/cosmos-proto"
+	types "github.com/cosmos/cosmos-sdk/codec/types"
+	_ "github.com/cosmos/gogoproto/gogoproto"
 	proto "github.com/cosmos/gogoproto/proto"
 	io "io"
 	math "math"
@@ -23,65 +25,194 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
-// ValidatorStatus is the status of a validator
-type ValidatorStatus int32
+// BondStatus is the status of a validator
+type BondStatus int32
 
 const (
-	// VALIDATOR_STATUS_UNSPECIFIED indicates that the status of the validator is unknown
-	ValidatorStatus_VALIDATOR_STATUS_UNSPECIFIED ValidatorStatus = 0
-	// VALIDATOR_STATUS_BONDING indicates that the validator is in the process of bonding
-	ValidatorStatus_VALIDATOR_STATUS_BONDING ValidatorStatus = 1
-	// VALIDATOR_STATUS_BONDED indicates that the validator is connected to the network
-	ValidatorStatus_VALIDATOR_STATUS_BONDED ValidatorStatus = 2
-	// VALIDATOR_STATUS_UNBONDING indicates that the validator is in the process of unbonding from L1
-	ValidatorStatus_VALIDATOR_STATUS_UNBONDING ValidatorStatus = 3
-	// VALIDATOR_STATUS_UNBONDED indicates that the validator is not connected to the network
-	ValidatorStatus_VALIDATOR_STATUS_UNBONDED ValidatorStatus = 4
+	// UNSPECIFIED indicates that the status of the validator is unknown.
+	UnspecifiedStatus BondStatus = 0
+	// UNBONDED indicates that the validator is in the process of bonding.
+	Unbonded BondStatus = 1
+	// UNBONDING defines a validator that is unbonding.
+	Unbonding BondStatus = 2
+	// BONDED defines a validator that is bonded.
+	Bonded BondStatus = 3
 )
 
-var ValidatorStatus_name = map[int32]string{
-	0: "VALIDATOR_STATUS_UNSPECIFIED",
-	1: "VALIDATOR_STATUS_BONDING",
-	2: "VALIDATOR_STATUS_BONDED",
-	3: "VALIDATOR_STATUS_UNBONDING",
-	4: "VALIDATOR_STATUS_UNBONDED",
+var BondStatus_name = map[int32]string{
+	0: "BOND_STATUS_UNSPECIFIED",
+	1: "BOND_STATUS_UNBONDED",
+	2: "BOND_STATUS_UNBONDING",
+	3: "BOND_STATUS_BONDED",
 }
 
-var ValidatorStatus_value = map[string]int32{
-	"VALIDATOR_STATUS_UNSPECIFIED": 0,
-	"VALIDATOR_STATUS_BONDING":     1,
-	"VALIDATOR_STATUS_BONDED":      2,
-	"VALIDATOR_STATUS_UNBONDING":   3,
-	"VALIDATOR_STATUS_UNBONDED":    4,
+var BondStatus_value = map[string]int32{
+	"BOND_STATUS_UNSPECIFIED": 0,
+	"BOND_STATUS_UNBONDED":    1,
+	"BOND_STATUS_UNBONDING":   2,
+	"BOND_STATUS_BONDED":      3,
 }
 
-func (x ValidatorStatus) String() string {
-	return proto.EnumName(ValidatorStatus_name, int32(x))
+func (x BondStatus) String() string {
+	return proto.EnumName(BondStatus_name, int32(x))
 }
 
-func (ValidatorStatus) EnumDescriptor() ([]byte, []int) {
+func (BondStatus) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor_a36da287b66aa06c, []int{0}
 }
 
-// Validator is a validator that is eligible for restaking
+// Protocol is the protocol of the restaking module
+type Protocol int32
+
+const (
+	// UNSPECIFIED indicates that the protocol is unknown.
+	UnspecifiedProtocol Protocol = 0
+	// DITTO defines the protocol for Ditto.
+	Ditto Protocol = 1
+	// SYMBIOTIC defines the protocol for Symbiotic.
+	Symbiotic Protocol = 2
+	// EIGENLAYER defines the protocol for EigenLayer.
+	EigenLayer Protocol = 3
+)
+
+var Protocol_name = map[int32]string{
+	0: "PROTOCOL_UNSPECIFIED",
+	1: "PROTOCOL_DITTO",
+	2: "PROTOCOL_SYMBIOTIC",
+	3: "PROTOCOL_EIGENLAYER",
+}
+
+var Protocol_value = map[string]int32{
+	"PROTOCOL_UNSPECIFIED": 0,
+	"PROTOCOL_DITTO":       1,
+	"PROTOCOL_SYMBIOTIC":   2,
+	"PROTOCOL_EIGENLAYER":  3,
+}
+
+func (x Protocol) String() string {
+	return proto.EnumName(Protocol_name, int32(x))
+}
+
+func (Protocol) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_a36da287b66aa06c, []int{1}
+}
+
+// Validators is a collection of validators.
+type Validators struct {
+	// validators defines a list of validators.
+	Validators []Validator `protobuf:"bytes,1,rep,name=validators,proto3" json:"validators"`
+}
+
+func (m *Validators) Reset()         { *m = Validators{} }
+func (m *Validators) String() string { return proto.CompactTextString(m) }
+func (*Validators) ProtoMessage()    {}
+func (*Validators) Descriptor() ([]byte, []int) {
+	return fileDescriptor_a36da287b66aa06c, []int{0}
+}
+func (m *Validators) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Validators) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Validators.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *Validators) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Validators.Merge(m, src)
+}
+func (m *Validators) XXX_Size() int {
+	return m.Size()
+}
+func (m *Validators) XXX_DiscardUnknown() {
+	xxx_messageInfo_Validators.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Validators proto.InternalMessageInfo
+
+func (m *Validators) GetValidators() []Validator {
+	if m != nil {
+		return m.Validators
+	}
+	return nil
+}
+
+// EmergencyValidators is a collection of emergency validators.
+type EmergencyValidators struct {
+	// validators defines a list of emergency validators.
+	Addresses []string `protobuf:"bytes,1,rep,name=addresses,proto3" json:"addresses,omitempty"`
+}
+
+func (m *EmergencyValidators) Reset()         { *m = EmergencyValidators{} }
+func (m *EmergencyValidators) String() string { return proto.CompactTextString(m) }
+func (*EmergencyValidators) ProtoMessage()    {}
+func (*EmergencyValidators) Descriptor() ([]byte, []int) {
+	return fileDescriptor_a36da287b66aa06c, []int{1}
+}
+func (m *EmergencyValidators) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *EmergencyValidators) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_EmergencyValidators.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *EmergencyValidators) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_EmergencyValidators.Merge(m, src)
+}
+func (m *EmergencyValidators) XXX_Size() int {
+	return m.Size()
+}
+func (m *EmergencyValidators) XXX_DiscardUnknown() {
+	xxx_messageInfo_EmergencyValidators.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_EmergencyValidators proto.InternalMessageInfo
+
+func (m *EmergencyValidators) GetAddresses() []string {
+	if m != nil {
+		return m.Addresses
+	}
+	return nil
+}
+
+// Validator defines a validator in the restaking module.
 type Validator struct {
-	// Address of the validator operator on L1
-	Address string `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
-	// Address of the validator on Kepler
-	CosmosAddress string `protobuf:"bytes,2,opt,name=cosmos_address,json=cosmosAddress,proto3" json:"cosmos_address,omitempty"`
-	// Flag to indicate if this validator is an emergency validator
+	// operator_address is the Ethereum-style address (hex-encoded, 0x-prefixed) derived from
+	// the last 20 bytes of the keccak256 hash of the operator's public key.
+	// This address uniquely identifies the validator in the network.
+	OperatorAddress string `protobuf:"bytes,1,opt,name=operator_address,json=operatorAddress,proto3" json:"operator_address,omitempty"`
+	// consensus_pubkey is the consensus ed25519 public key of the validator, as a
+	// Protobuf Any.
+	ConsensusPubkey *types.Any `protobuf:"bytes,2,opt,name=consensus_pubkey,json=consensusPubkey,proto3" json:"consensus_pubkey,omitempty"`
+	// is_emergency defines whether the validator is an emergency validator
 	IsEmergency bool `protobuf:"varint,3,opt,name=is_emergency,json=isEmergency,proto3" json:"is_emergency,omitempty"`
-	// Voting power of the validator
-	VotingPower uint64 `protobuf:"varint,4,opt,name=voting_power,json=votingPower,proto3" json:"voting_power,omitempty"`
-	// Status of the validator
-	Status ValidatorStatus `protobuf:"varint,5,opt,name=status,proto3,enum=kepler.restaking.ValidatorStatus" json:"status,omitempty"`
+	// status defines the validator's status (bonded/unbonding/unbonded)
+	Status BondStatus `protobuf:"varint,4,opt,name=status,proto3,enum=kepler.restaking.BondStatus" json:"status,omitempty"`
+	// voting_power is the voting power of the validator
+	VotingPower int64 `protobuf:"varint,5,opt,name=voting_power,json=votingPower,proto3" json:"voting_power,omitempty"`
+	// protocol is the protocol of the restaking module
+	Protocol Protocol `protobuf:"varint,6,opt,name=protocol,proto3,enum=kepler.restaking.Protocol" json:"protocol,omitempty"`
 }
 
 func (m *Validator) Reset()         { *m = Validator{} }
 func (m *Validator) String() string { return proto.CompactTextString(m) }
 func (*Validator) ProtoMessage()    {}
 func (*Validator) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a36da287b66aa06c, []int{0}
+	return fileDescriptor_a36da287b66aa06c, []int{2}
 }
 func (m *Validator) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -110,74 +241,169 @@ func (m *Validator) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_Validator proto.InternalMessageInfo
 
-func (m *Validator) GetAddress() string {
-	if m != nil {
-		return m.Address
-	}
-	return ""
-}
-
-func (m *Validator) GetCosmosAddress() string {
-	if m != nil {
-		return m.CosmosAddress
-	}
-	return ""
-}
-
-func (m *Validator) GetIsEmergency() bool {
-	if m != nil {
-		return m.IsEmergency
-	}
-	return false
-}
-
-func (m *Validator) GetVotingPower() uint64 {
-	if m != nil {
-		return m.VotingPower
-	}
-	return 0
-}
-
-func (m *Validator) GetStatus() ValidatorStatus {
-	if m != nil {
-		return m.Status
-	}
-	return ValidatorStatus_VALIDATOR_STATUS_UNSPECIFIED
-}
-
 func init() {
-	proto.RegisterEnum("kepler.restaking.ValidatorStatus", ValidatorStatus_name, ValidatorStatus_value)
+	proto.RegisterEnum("kepler.restaking.BondStatus", BondStatus_name, BondStatus_value)
+	proto.RegisterEnum("kepler.restaking.Protocol", Protocol_name, Protocol_value)
+	proto.RegisterType((*Validators)(nil), "kepler.restaking.Validators")
+	proto.RegisterType((*EmergencyValidators)(nil), "kepler.restaking.EmergencyValidators")
 	proto.RegisterType((*Validator)(nil), "kepler.restaking.Validator")
 }
 
 func init() { proto.RegisterFile("kepler/restaking/validator.proto", fileDescriptor_a36da287b66aa06c) }
 
 var fileDescriptor_a36da287b66aa06c = []byte{
-	// 382 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x74, 0x92, 0xc1, 0xae, 0xd2, 0x40,
-	0x14, 0x86, 0x3b, 0x80, 0x28, 0x83, 0x62, 0x33, 0x31, 0xb1, 0x20, 0x36, 0xc5, 0x55, 0x63, 0x62,
-	0x6b, 0x74, 0xe5, 0xca, 0x14, 0x5b, 0x4d, 0x8d, 0x01, 0xd2, 0x02, 0x0b, 0x37, 0x4d, 0xa1, 0x93,
-	0x3a, 0x01, 0x3a, 0xcd, 0xcc, 0x00, 0xf2, 0x16, 0xbe, 0x88, 0x3b, 0x1f, 0xc2, 0x25, 0x71, 0xe5,
-	0xf2, 0x06, 0x16, 0xf7, 0x35, 0x6e, 0xa0, 0x2d, 0xb9, 0xe1, 0x72, 0x97, 0xf3, 0x7f, 0xdf, 0xf9,
-	0x93, 0x93, 0x39, 0x50, 0x9b, 0xe1, 0x74, 0x8e, 0x99, 0xc9, 0x30, 0x17, 0xe1, 0x8c, 0x24, 0xb1,
-	0xb9, 0x0a, 0xe7, 0x24, 0x0a, 0x05, 0x65, 0x46, 0xca, 0xa8, 0xa0, 0x48, 0xce, 0x0c, 0xe3, 0x64,
-	0xb4, 0x9a, 0x53, 0xca, 0x17, 0x94, 0x07, 0x47, 0x6e, 0x66, 0x8f, 0x4c, 0x7e, 0x75, 0x0d, 0x60,
-	0x6d, 0x5c, 0x14, 0x20, 0x05, 0x3e, 0x0c, 0xa3, 0x88, 0x61, 0xce, 0x15, 0xa0, 0x01, 0xbd, 0xe6,
-	0x15, 0x4f, 0xf4, 0x11, 0x36, 0xf2, 0x92, 0x42, 0x28, 0x1d, 0x84, 0xae, 0xf2, 0xef, 0xcf, 0x9b,
-	0x67, 0x79, 0xa3, 0x95, 0x11, 0x5f, 0x30, 0x92, 0xc4, 0xde, 0x93, 0x2c, 0xcd, 0x43, 0xd4, 0x81,
-	0x8f, 0x09, 0x0f, 0xf0, 0x02, 0xb3, 0x18, 0x27, 0xd3, 0x8d, 0x52, 0xd6, 0x80, 0xfe, 0xc8, 0xab,
-	0x13, 0xee, 0x14, 0xd1, 0x41, 0x59, 0x51, 0x41, 0x92, 0x38, 0x48, 0xe9, 0x1a, 0x33, 0xa5, 0xa2,
-	0x01, 0xbd, 0xe2, 0xd5, 0xb3, 0x6c, 0x70, 0x88, 0xd0, 0x07, 0x58, 0xe5, 0x22, 0x14, 0x4b, 0xae,
-	0x3c, 0xd0, 0x80, 0xde, 0x78, 0xd7, 0x31, 0xce, 0x97, 0x35, 0x4e, 0xdb, 0xf8, 0x47, 0xd1, 0xcb,
-	0x07, 0x5e, 0xff, 0x06, 0xf0, 0xe9, 0x19, 0x43, 0x1a, 0x6c, 0x8f, 0xad, 0x6f, 0xae, 0x6d, 0x0d,
-	0xfb, 0x5e, 0xe0, 0x0f, 0xad, 0xe1, 0xc8, 0x0f, 0x46, 0x3d, 0x7f, 0xe0, 0x7c, 0x72, 0x3f, 0xbb,
-	0x8e, 0x2d, 0x4b, 0xa8, 0x0d, 0x95, 0x3b, 0x46, 0xb7, 0xdf, 0xb3, 0xdd, 0xde, 0x17, 0x19, 0xa0,
-	0x17, 0xf0, 0xf9, 0x45, 0xea, 0xd8, 0x72, 0x09, 0xa9, 0xb0, 0x75, 0xa1, 0xbc, 0x18, 0x2e, 0xa3,
-	0x97, 0xb0, 0x79, 0x0f, 0x77, 0x6c, 0xb9, 0xd2, 0xfd, 0xfa, 0x77, 0xa7, 0x82, 0xed, 0x4e, 0x05,
-	0x57, 0x3b, 0x15, 0xfc, 0xda, 0xab, 0xd2, 0x76, 0xaf, 0x4a, 0xff, 0xf7, 0xaa, 0xf4, 0xfd, 0x6d,
-	0x4c, 0xc4, 0x8f, 0xe5, 0xc4, 0x98, 0xd2, 0x85, 0x19, 0x11, 0x21, 0x68, 0x82, 0xc5, 0x9a, 0xb2,
-	0x99, 0x99, 0x9f, 0xc6, 0xcf, 0x5b, 0xc7, 0x21, 0x36, 0x29, 0xe6, 0x93, 0xea, 0xf1, 0xb3, 0xdf,
-	0xdf, 0x04, 0x00, 0x00, 0xff, 0xff, 0x57, 0x07, 0xd8, 0xf3, 0x3d, 0x02, 0x00, 0x00,
+	// 680 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x64, 0x94, 0x41, 0x6f, 0x12, 0x4f,
+	0x18, 0xc6, 0x99, 0xd2, 0x12, 0x18, 0xfa, 0x6f, 0xf7, 0x3f, 0xa5, 0xe9, 0x76, 0x55, 0xba, 0x92,
+	0xa8, 0xd8, 0xc4, 0x45, 0xd1, 0xf4, 0xe0, 0x8d, 0x2d, 0x6b, 0x83, 0xb6, 0x40, 0x16, 0x30, 0xa9,
+	0x17, 0x02, 0xcb, 0x74, 0x9d, 0x00, 0x33, 0x9b, 0x9d, 0xa1, 0x75, 0xbf, 0x41, 0xc3, 0xc9, 0x2f,
+	0x40, 0xd2, 0xc4, 0x6f, 0x60, 0x3c, 0xfa, 0x01, 0x1a, 0x2f, 0x36, 0x9e, 0x3c, 0x19, 0xd3, 0x5e,
+	0xfc, 0x18, 0x86, 0xdd, 0x65, 0x8b, 0xed, 0x6d, 0xe7, 0x7d, 0x7f, 0xcf, 0x33, 0xcf, 0xfb, 0x6e,
+	0x32, 0x50, 0xed, 0x63, 0x67, 0x80, 0xdd, 0x82, 0x8b, 0xb9, 0xe8, 0xf4, 0x09, 0xb5, 0x0b, 0xc7,
+	0x9d, 0x01, 0xe9, 0x75, 0x04, 0x73, 0x35, 0xc7, 0x65, 0x82, 0x21, 0x29, 0x20, 0xb4, 0x88, 0x50,
+	0x36, 0x2d, 0xc6, 0x87, 0x8c, 0xb7, 0xfd, 0x7e, 0x21, 0x38, 0x04, 0xb0, 0x92, 0xb1, 0x99, 0xcd,
+	0x82, 0xfa, 0xf4, 0x2b, 0xac, 0x6e, 0xda, 0x8c, 0xd9, 0x03, 0x5c, 0xf0, 0x4f, 0xdd, 0xd1, 0x51,
+	0xa1, 0x43, 0xbd, 0xa0, 0x95, 0xab, 0x41, 0xf8, 0x76, 0x76, 0x21, 0x47, 0x25, 0x08, 0xa3, 0xeb,
+	0xb9, 0x0c, 0xd4, 0x78, 0x3e, 0x5d, 0xbc, 0xa3, 0xdd, 0x0c, 0xa0, 0x45, 0x0a, 0x7d, 0xf1, 0xfc,
+	0xd7, 0x56, 0xcc, 0x9c, 0x13, 0xe5, 0x0e, 0xe0, 0x9a, 0x31, 0xc4, 0xae, 0x8d, 0xa9, 0xe5, 0xcd,
+	0x39, 0xef, 0xc0, 0x54, 0xa7, 0xd7, 0x73, 0x31, 0xe7, 0x38, 0x30, 0x4e, 0xe9, 0xf2, 0x8f, 0x2f,
+	0x4f, 0x32, 0x61, 0xfa, 0x52, 0xd0, 0x6b, 0x08, 0x97, 0x50, 0xdb, 0xbc, 0x46, 0x73, 0xdf, 0x17,
+	0x60, 0x2a, 0xb2, 0x41, 0x8f, 0xa1, 0xc4, 0x1c, 0xec, 0x4e, 0xbf, 0xdb, 0x21, 0x23, 0x03, 0x15,
+	0xe4, 0x53, 0xe6, 0xea, 0xac, 0x1e, 0x3a, 0xa1, 0x43, 0x28, 0x59, 0x8c, 0x72, 0x4c, 0xf9, 0x88,
+	0xb7, 0x9d, 0x51, 0xb7, 0x8f, 0x3d, 0x79, 0x41, 0x05, 0xf9, 0x74, 0x31, 0xa3, 0x05, 0xeb, 0xd0,
+	0x66, 0xeb, 0xd0, 0x4a, 0xd4, 0xd3, 0xe5, 0x6f, 0xd7, 0x69, 0x2c, 0xd7, 0x73, 0x04, 0xd3, 0xea,
+	0xa3, 0xee, 0x1b, 0xec, 0x99, 0xab, 0x91, 0x4f, 0xdd, 0xb7, 0x41, 0xf7, 0xe1, 0x32, 0xe1, 0x6d,
+	0x3c, 0x9b, 0x52, 0x8e, 0xab, 0x20, 0x9f, 0x34, 0xd3, 0x84, 0x47, 0x83, 0xa3, 0x17, 0x30, 0xc1,
+	0x45, 0x47, 0x8c, 0xb8, 0xbc, 0xa8, 0x82, 0xfc, 0x4a, 0xf1, 0xee, 0xed, 0x25, 0xea, 0x8c, 0xf6,
+	0x1a, 0x3e, 0x63, 0x86, 0xec, 0xd4, 0xf8, 0x98, 0x09, 0x42, 0xed, 0xb6, 0xc3, 0x4e, 0xb0, 0x2b,
+	0x2f, 0xa9, 0x20, 0x1f, 0x37, 0xd3, 0x41, 0xad, 0x3e, 0x2d, 0xa1, 0x1d, 0x98, 0xf4, 0x63, 0x5b,
+	0x6c, 0x20, 0x27, 0x7c, 0x6b, 0xe5, 0xb6, 0x75, 0x3d, 0x24, 0xcc, 0x88, 0x7d, 0x99, 0x3c, 0x3d,
+	0xdb, 0x8a, 0xfd, 0x39, 0xdb, 0x02, 0xdb, 0x5f, 0x01, 0x84, 0xd7, 0x77, 0xa3, 0x22, 0xdc, 0xd0,
+	0x6b, 0xd5, 0x72, 0xbb, 0xd1, 0x2c, 0x35, 0x5b, 0x8d, 0x76, 0xab, 0xda, 0xa8, 0x1b, 0xbb, 0x95,
+	0x57, 0x15, 0xa3, 0x2c, 0xc5, 0x94, 0xf5, 0xf1, 0x44, 0xfd, 0xbf, 0x45, 0xb9, 0x83, 0x2d, 0x72,
+	0x44, 0xf0, 0x4c, 0xf3, 0x10, 0x66, 0xfe, 0xd5, 0x4c, 0x4f, 0x46, 0x59, 0x02, 0xca, 0xf2, 0x78,
+	0xa2, 0x26, 0x5b, 0xb4, 0xcb, 0x68, 0x0f, 0xf7, 0x50, 0x1e, 0xae, 0xdf, 0xe6, 0x2a, 0xd5, 0x3d,
+	0x69, 0x41, 0xf9, 0x6f, 0x3c, 0x51, 0x53, 0x01, 0x48, 0xa8, 0x8d, 0x72, 0x10, 0xcd, 0x93, 0xa1,
+	0x5f, 0x5c, 0x81, 0xe3, 0x89, 0x9a, 0xd0, 0x7d, 0x37, 0x65, 0xf1, 0xf4, 0x53, 0x36, 0xb6, 0xfd,
+	0x19, 0xc0, 0xe4, 0x6c, 0x3e, 0xf4, 0x0c, 0x66, 0xea, 0x66, 0xad, 0x59, 0xdb, 0xad, 0xed, 0xdf,
+	0x48, 0xbe, 0x31, 0x9e, 0xa8, 0x6b, 0x73, 0xc9, 0x23, 0xc9, 0x3d, 0xb8, 0x12, 0x49, 0xca, 0x95,
+	0x66, 0xb3, 0x26, 0x01, 0x25, 0x35, 0x9e, 0xa8, 0x4b, 0x65, 0x22, 0x04, 0x43, 0x0f, 0x20, 0x8a,
+	0xda, 0x8d, 0xc3, 0x03, 0xbd, 0x52, 0x6b, 0x56, 0x76, 0x67, 0x79, 0x1b, 0xde, 0xb0, 0x4b, 0x98,
+	0x20, 0x16, 0x7a, 0x04, 0xd7, 0x22, 0xcc, 0xa8, 0xec, 0x19, 0xd5, 0xfd, 0xd2, 0xa1, 0x61, 0x4a,
+	0x71, 0x65, 0x65, 0x3c, 0x51, 0xa1, 0x41, 0x6c, 0x4c, 0xf7, 0x3b, 0x1e, 0x76, 0x83, 0xd0, 0xfa,
+	0xeb, 0xf3, 0xcb, 0x2c, 0xb8, 0xb8, 0xcc, 0x82, 0xdf, 0x97, 0x59, 0xf0, 0xf1, 0x2a, 0x1b, 0xbb,
+	0xb8, 0xca, 0xc6, 0x7e, 0x5e, 0x65, 0x63, 0xef, 0x9e, 0xda, 0x44, 0xbc, 0x1f, 0x75, 0x35, 0x8b,
+	0x0d, 0x0b, 0xbd, 0x69, 0x02, 0x8a, 0xc5, 0x09, 0x73, 0xfb, 0x85, 0xf0, 0x5d, 0xf8, 0x30, 0xf7,
+	0x32, 0x08, 0xcf, 0xc1, 0xbc, 0x9b, 0xf0, 0xff, 0xe9, 0xf3, 0xbf, 0x01, 0x00, 0x00, 0xff, 0xff,
+	0x07, 0x58, 0x99, 0x8b, 0x3a, 0x04, 0x00, 0x00,
+}
+
+func (this *Validator) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*Validator)
+	if !ok {
+		that2, ok := that.(Validator)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
+		return false
+	}
+	if this.OperatorAddress != that1.OperatorAddress {
+		return false
+	}
+	if !this.ConsensusPubkey.Equal(that1.ConsensusPubkey) {
+		return false
+	}
+	if this.IsEmergency != that1.IsEmergency {
+		return false
+	}
+	if this.Status != that1.Status {
+		return false
+	}
+	if this.VotingPower != that1.VotingPower {
+		return false
+	}
+	if this.Protocol != that1.Protocol {
+		return false
+	}
+	return true
+}
+func (m *Validators) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Validators) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Validators) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Validators) > 0 {
+		for iNdEx := len(m.Validators) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Validators[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintValidator(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *EmergencyValidators) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *EmergencyValidators) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *EmergencyValidators) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Addresses) > 0 {
+		for iNdEx := len(m.Addresses) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.Addresses[iNdEx])
+			copy(dAtA[i:], m.Addresses[iNdEx])
+			i = encodeVarintValidator(dAtA, i, uint64(len(m.Addresses[iNdEx])))
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *Validator) Marshal() (dAtA []byte, err error) {
@@ -200,13 +426,18 @@ func (m *Validator) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.Status != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.Status))
+	if m.Protocol != 0 {
+		i = encodeVarintValidator(dAtA, i, uint64(m.Protocol))
 		i--
-		dAtA[i] = 0x28
+		dAtA[i] = 0x30
 	}
 	if m.VotingPower != 0 {
 		i = encodeVarintValidator(dAtA, i, uint64(m.VotingPower))
+		i--
+		dAtA[i] = 0x28
+	}
+	if m.Status != 0 {
+		i = encodeVarintValidator(dAtA, i, uint64(m.Status))
 		i--
 		dAtA[i] = 0x20
 	}
@@ -220,17 +451,22 @@ func (m *Validator) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x18
 	}
-	if len(m.CosmosAddress) > 0 {
-		i -= len(m.CosmosAddress)
-		copy(dAtA[i:], m.CosmosAddress)
-		i = encodeVarintValidator(dAtA, i, uint64(len(m.CosmosAddress)))
+	if m.ConsensusPubkey != nil {
+		{
+			size, err := m.ConsensusPubkey.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintValidator(dAtA, i, uint64(size))
+		}
 		i--
 		dAtA[i] = 0x12
 	}
-	if len(m.Address) > 0 {
-		i -= len(m.Address)
-		copy(dAtA[i:], m.Address)
-		i = encodeVarintValidator(dAtA, i, uint64(len(m.Address)))
+	if len(m.OperatorAddress) > 0 {
+		i -= len(m.OperatorAddress)
+		copy(dAtA[i:], m.OperatorAddress)
+		i = encodeVarintValidator(dAtA, i, uint64(len(m.OperatorAddress)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -248,28 +484,61 @@ func encodeVarintValidator(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
+func (m *Validators) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.Validators) > 0 {
+		for _, e := range m.Validators {
+			l = e.Size()
+			n += 1 + l + sovValidator(uint64(l))
+		}
+	}
+	return n
+}
+
+func (m *EmergencyValidators) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.Addresses) > 0 {
+		for _, s := range m.Addresses {
+			l = len(s)
+			n += 1 + l + sovValidator(uint64(l))
+		}
+	}
+	return n
+}
+
 func (m *Validator) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	l = len(m.Address)
+	l = len(m.OperatorAddress)
 	if l > 0 {
 		n += 1 + l + sovValidator(uint64(l))
 	}
-	l = len(m.CosmosAddress)
-	if l > 0 {
+	if m.ConsensusPubkey != nil {
+		l = m.ConsensusPubkey.Size()
 		n += 1 + l + sovValidator(uint64(l))
 	}
 	if m.IsEmergency {
 		n += 2
 	}
+	if m.Status != 0 {
+		n += 1 + sovValidator(uint64(m.Status))
+	}
 	if m.VotingPower != 0 {
 		n += 1 + sovValidator(uint64(m.VotingPower))
 	}
-	if m.Status != 0 {
-		n += 1 + sovValidator(uint64(m.Status))
+	if m.Protocol != 0 {
+		n += 1 + sovValidator(uint64(m.Protocol))
 	}
 	return n
 }
@@ -279,6 +548,172 @@ func sovValidator(x uint64) (n int) {
 }
 func sozValidator(x uint64) (n int) {
 	return sovValidator(uint64((x << 1) ^ uint64((int64(x) >> 63))))
+}
+func (m *Validators) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowValidator
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Validators: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Validators: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Validators", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowValidator
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthValidator
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthValidator
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Validators = append(m.Validators, Validator{})
+			if err := m.Validators[len(m.Validators)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipValidator(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthValidator
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *EmergencyValidators) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowValidator
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: EmergencyValidators: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: EmergencyValidators: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Addresses", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowValidator
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthValidator
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthValidator
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Addresses = append(m.Addresses, string(dAtA[iNdEx:postIndex]))
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipValidator(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthValidator
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
 }
 func (m *Validator) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -311,7 +746,7 @@ func (m *Validator) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Address", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field OperatorAddress", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -339,13 +774,13 @@ func (m *Validator) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Address = string(dAtA[iNdEx:postIndex])
+			m.OperatorAddress = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field CosmosAddress", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ConsensusPubkey", wireType)
 			}
-			var stringLen uint64
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowValidator
@@ -355,23 +790,27 @@ func (m *Validator) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if msglen < 0 {
 				return ErrInvalidLengthValidator
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + msglen
 			if postIndex < 0 {
 				return ErrInvalidLengthValidator
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.CosmosAddress = string(dAtA[iNdEx:postIndex])
+			if m.ConsensusPubkey == nil {
+				m.ConsensusPubkey = &types.Any{}
+			}
+			if err := m.ConsensusPubkey.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		case 3:
 			if wireType != 0 {
@@ -395,25 +834,6 @@ func (m *Validator) Unmarshal(dAtA []byte) error {
 			m.IsEmergency = bool(v != 0)
 		case 4:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field VotingPower", wireType)
-			}
-			m.VotingPower = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowValidator
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.VotingPower |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		case 5:
-			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
 			}
 			m.Status = 0
@@ -426,7 +846,45 @@ func (m *Validator) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Status |= ValidatorStatus(b&0x7F) << shift
+				m.Status |= BondStatus(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field VotingPower", wireType)
+			}
+			m.VotingPower = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowValidator
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.VotingPower |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 6:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Protocol", wireType)
+			}
+			m.Protocol = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowValidator
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Protocol |= Protocol(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}

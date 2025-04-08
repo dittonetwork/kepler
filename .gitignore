@@ -11,3 +11,4 @@ appd
 keplerd
 build
 charts/kepler/values.yaml
+.qodo

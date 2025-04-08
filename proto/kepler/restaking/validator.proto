@@ -2,37 +2,80 @@ syntax = "proto3";
 package kepler.restaking;
 
 import "cosmos_proto/cosmos.proto";
+import "gogoproto/gogo.proto";
+import "google/protobuf/any.proto";
 
 option go_package = "github.com/dittonetwork/kepler/x/restaking/types";
 
-// ValidatorStatus is the status of a validator
-enum ValidatorStatus {
-  // VALIDATOR_STATUS_UNSPECIFIED indicates that the status of the validator is unknown
-  VALIDATOR_STATUS_UNSPECIFIED = 0;
-  // VALIDATOR_STATUS_BONDING indicates that the validator is in the process of bonding
-  VALIDATOR_STATUS_BONDING = 1;
-  // VALIDATOR_STATUS_BONDED indicates that the validator is connected to the network
-  VALIDATOR_STATUS_BONDED = 2;
-  // VALIDATOR_STATUS_UNBONDING indicates that the validator is in the process of unbonding from L1
-  VALIDATOR_STATUS_UNBONDING = 3;
-  // VALIDATOR_STATUS_UNBONDED indicates that the validator is not connected to the network
-  VALIDATOR_STATUS_UNBONDED = 4;
+// Validators is a collection of validators.
+message Validators {
+  // validators defines a list of validators.
+  repeated Validator validators = 1 [(gogoproto.nullable) = false];
 }
 
-// Validator is a validator that is eligible for restaking
+// EmergencyValidators is a collection of emergency validators.
+message EmergencyValidators {
+  // validators defines a list of emergency validators.
+  repeated string addresses = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+}
+
+// Validator defines a validator in the restaking module.
 message Validator {
-  // Address of the validator operator on L1
-  string address = 1;
+  option (gogoproto.equal) = true;
+  option (gogoproto.goproto_getters) = false;
 
-  // Address of the validator on Kepler
-  string cosmos_address = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  // operator_address is the Ethereum-style address (hex-encoded, 0x-prefixed) derived from
+  // the last 20 bytes of the keccak256 hash of the operator's public key.
+  // This address uniquely identifies the validator in the network.
+  string operator_address = 1;
 
-  // Flag to indicate if this validator is an emergency validator
+  // consensus_pubkey is the consensus ed25519 public key of the validator, as a
+  // Protobuf Any.
+  google.protobuf.Any consensus_pubkey = 2 [(cosmos_proto.accepts_interface) = "cosmos.crypto.PubKey"];
+
+  // is_emergency defines whether the validator is an emergency validator
   bool is_emergency = 3;
 
-  // Voting power of the validator
-  uint64 voting_power = 4;
+  // status defines the validator's status (bonded/unbonding/unbonded)
+  BondStatus status = 4;
 
-  // Status of the validator
-  ValidatorStatus status = 5;
+  // voting_power is the voting power of the validator
+  int64 voting_power = 5;
+
+  // protocol is the protocol of the restaking module
+  Protocol protocol = 6;
+}
+
+// BondStatus is the status of a validator
+enum BondStatus {
+  option (gogoproto.goproto_enum_prefix) = false;
+
+  // UNSPECIFIED indicates that the status of the validator is unknown.
+  BOND_STATUS_UNSPECIFIED = 0 [(gogoproto.enumvalue_customname) = "UnspecifiedStatus"];
+
+  // UNBONDED indicates that the validator is in the process of bonding.
+  BOND_STATUS_UNBONDED = 1 [(gogoproto.enumvalue_customname) = "Unbonded"];
+
+  // UNBONDING defines a validator that is unbonding.
+  BOND_STATUS_UNBONDING = 2 [(gogoproto.enumvalue_customname) = "Unbonding"];
+
+  // BONDED defines a validator that is bonded.
+  BOND_STATUS_BONDED = 3 [(gogoproto.enumvalue_customname) = "Bonded"];
+}
+
+// Protocol is the protocol of the restaking module
+enum Protocol {
+  option (gogoproto.goproto_enum_prefix) = false;
+
+  // UNSPECIFIED indicates that the protocol is unknown.
+  PROTOCOL_UNSPECIFIED = 0 [(gogoproto.enumvalue_customname) = "UnspecifiedProtocol"];
+
+  // DITTO defines the protocol for Ditto.
+  PROTOCOL_DITTO = 1 [(gogoproto.enumvalue_customname) = "Ditto"];
+
+  // SYMBIOTIC defines the protocol for Symbiotic.
+  PROTOCOL_SYMBIOTIC = 2 [(gogoproto.enumvalue_customname) = "Symbiotic"];
+
+  // EIGENLAYER defines the protocol for EigenLayer.
+  PROTOCOL_EIGENLAYER = 3 [(gogoproto.enumvalue_customname) = "EigenLayer"];
 }
