@@ -4,15 +4,14 @@ import (
 	"context"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
-	restakingTypes "github.com/dittonetwork/kepler/x/restaking/types"
+	restaking "github.com/dittonetwork/kepler/x/restaking/types"
 )
 
-var _ restakingTypes.RestakingHooks = AppModule{}
+var _ restaking.RestakingHooks = AppModule{}
 
-func (am AppModule) BeforeValidatorBeginUnbonding(ctx context.Context, validator stakingtypes.ValidatorI) error {
+func (am AppModule) BeforeValidatorBeginUnbonding(ctx context.Context, validator restaking.Validator) error {
 	sdkCtx := sdk.UnwrapSDKContext(ctx)
-	executors, err := am.keeper.GetExecutorsByOwnerAddress(sdkCtx, validator.GetOperator())
+	executors, err := am.keeper.GetExecutorsByOwnerAddress(sdkCtx, validator.OperatorAddress)
 	if err != nil {
 		return err
 	}

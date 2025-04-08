@@ -13,15 +13,6 @@ const (
 
 	// MemStoreKey defines the in-memory store key.
 	MemStoreKey = "mem_restaking"
-
-	// CollectionNameValidators is the name of validators collection.
-	CollectionNameValidators = "validators"
-	// CollectionNameLastUpdate is the name of last update collection.
-	CollectionNameLastUpdate = "last_update"
-	// CollectionIndexValidatorsByEmergency is the name of validators by emergency index.
-	CollectionIndexValidatorsByEmergency = "validators_by_emergency"
-	// CollectionIndexValidatorsByOperatorAddress is the name of validators by operator address index.
-	CollectionIndexValidatorsByOperatorAddress = "validators_by_operator_address"
 )
 
 var (
@@ -33,11 +24,4 @@ var (
 	KeyPrefixLastUpdate = collections.NewPrefix(2)
 	// KeyPrefixPendingValidators is the prefix for pending validators keys.
 	KeyPrefixPendingValidators = collections.NewPrefix(3)
-	// KeyPrefixEmergencyValidators is the prefix for emergency validators keys.
-	KeyPrefixEmergencyValidators = collections.NewPrefix(4)
 )
-
-// KeyPrefix returns the key prefix.
-func KeyPrefix(p string) []byte {
-	return []byte(p)
-}

@@ -79,29 +79,13 @@ func (k Keeper) processUpdatedValidators(ctx sdk.Context, updates []*validatorUp
 			return sdkerrors.Wrap(types.ErrUpdateValidator, "unable to set updated validator")
 		}
 
-		if err := k.handleValidatorStatusChange(ctx, update); err != nil {
-			return err
+		// Validator began unbonding
+		if update.Before.IsBonded() && update.After.IsUnbonding() {
+			if err := k.hooks.BeforeValidatorBeginUnbonding(ctx, *update.After); err != nil {
+				return sdkerrors.Wrap(types.ErrUpdateValidator, "error in BeforeValidatorBeginUnbonding hook")
+			}
 		}
 	}
-	return nil
-}
-
-// handleValidatorStatusChange triggers appropriate hooks based on validator status changes.
-func (k Keeper) handleValidatorStatusChange(ctx sdk.Context, update *validatorUpdate) error {
-	// Validator became bonded
-	if !update.Before.IsBonded() && update.After.IsBonded() {
-		if err := k.hooks.AfterValidatorBonded(ctx, *update.After); err != nil {
-			return sdkerrors.Wrap(types.ErrUpdateValidator, "error in AfterValidatorBonded hook")
-		}
-	}
-
-	// Validator began unbonding
-	if update.Before.IsBonded() && update.After.IsUnbonding() {
-		if err := k.hooks.BeforeValidatorBeginUnbonding(ctx, *update.After); err != nil {
-			return sdkerrors.Wrap(types.ErrUpdateValidator, "error in BeforeValidatorBeginUnbonding hook")
-		}
-	}
-
 	return nil
 }
 
