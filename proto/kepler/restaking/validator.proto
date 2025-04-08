@@ -1,11 +1,9 @@
 syntax = "proto3";
 package kepler.restaking;
 
-import "amino/amino.proto";
 import "cosmos_proto/cosmos.proto";
 import "gogoproto/gogo.proto";
 import "google/protobuf/any.proto";
-import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/dittonetwork/kepler/x/restaking/types";
 
@@ -46,13 +44,6 @@ message Validator {
 
   // protocol is the protocol of the restaking module
   Protocol protocol = 6;
-
-  // unbonding_time is the time when the validator is expected to be unbonded from the restaking module.
-  google.protobuf.Timestamp unbonding_time = 7 [
-    (gogoproto.nullable) = false,
-    (amino.dont_omitempty) = true,
-    (gogoproto.stdtime) = true
-  ];
 }
 
 // BondStatus is the status of a validator
