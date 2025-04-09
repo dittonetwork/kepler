@@ -116,6 +116,21 @@ func (mr *MockRepositoryMockRecorder) GetPendingValidators(ctx any) *gomock.Call
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPendingValidators", reflect.TypeOf((*MockRepository)(nil).GetPendingValidators), ctx)
 }
 
+// GetValidator mocks base method.
+func (m *MockRepository) GetValidator(ctx types.Context, operatorAddr string) (types0.Validator, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetValidator", ctx, operatorAddr)
+	ret0, _ := ret[0].(types0.Validator)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetValidator indicates an expected call of GetValidator.
+func (mr *MockRepositoryMockRecorder) GetValidator(ctx, operatorAddr any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetValidator", reflect.TypeOf((*MockRepository)(nil).GetValidator), ctx, operatorAddr)
+}
+
 // RemovePendingValidator mocks base method.
 func (m *MockRepository) RemovePendingValidator(ctx types.Context, operatorAddr string) error {
 	m.ctrl.T.Helper()
