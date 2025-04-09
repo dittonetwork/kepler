@@ -1,0 +1,33 @@
+syntax = "proto3";
+package kepler.taskmanager;
+
+import "cosmos/msg/v1/msg.proto";
+import "cosmos_proto/cosmos.proto";
+
+option go_package = "github.com/dittonetwork/kepler/x/taskmanager/types";
+
+// Msg defines the Msg service.
+service Msg {
+  option (cosmos.msg.v1.service) = true;
+
+  // rpc Reports(TaskReportsRequest) returns (TaskReportsResponse);
+}
+
+message TaskReportsRequest {
+  // Cosmos address of the new executor.
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1;
+  
+  string task_id = 2;
+
+  repeated CommitteeReport committee_reports = 3;
+}
+
+message CommitteeReport {
+  string committee_id = 1;
+  string chain_id = 2;
+  bool updated = 3;
+}
+
+message TaskReportsResponse {
+}

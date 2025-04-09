@@ -1,0 +1,26 @@
+syntax = "proto3";
+package kepler.taskmanager;
+
+option go_package = "github.com/dittonetwork/kepler/x/taskmanager/types";
+
+// Query defines the gRPC querier service.
+service Query {
+
+  // rpc GetTask(QueryGetTaskRequest) returns (QueryGetTaskResponse) {
+  //   option (google.api.http).get = "/dittonetwork/kepler/taskmanager/task";
+  // }
+}
+
+
+message QueryGetTaskRequest {
+}
+
+message QueryGetTaskResponse {
+  string task_id = 1;
+  repeated CommitteeTask committee_tasks = 2;
+}
+
+message CommitteeTask {
+  string committee_id = 1;
+  string chain_id = 2;
+}

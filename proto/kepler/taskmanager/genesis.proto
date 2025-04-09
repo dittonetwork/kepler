@@ -1,0 +1,8 @@
+syntax = "proto3";
+package kepler.taskmanager;
+
+option go_package = "github.com/dittonetwork/kepler/x/taskmanager/types";
+
+// GenesisState defines the taskmanager module's genesis state.
+message GenesisState {
+}
