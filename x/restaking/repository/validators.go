@@ -68,3 +68,8 @@ func (s *RestakingRepository) GetEmergencyValidators(ctx sdk.Context) ([]types.V
 func (s *RestakingRepository) RemoveValidator(ctx sdk.Context, operatorAddr string) error {
 	return s.validators.Remove(ctx, operatorAddr)
 }
+
+// GetValidator returns validator by operator address.
+func (s *RestakingRepository) GetValidator(ctx sdk.Context, operatorAddr string) (types.Validator, error) {
+	return s.validators.Get(ctx, operatorAddr)
+}
