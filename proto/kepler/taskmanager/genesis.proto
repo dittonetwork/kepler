@@ -1,0 +1,17 @@
+syntax = "proto3";
+package kepler.taskmanager;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "kepler/taskmanager/params.proto";
+
+option go_package = "github.com/dittonetwork/kepler/x/taskmanager/types";
+
+// GenesisState defines the taskmanager module's genesis state.
+message GenesisState {
+  // params defines all the parameters of the module.
+  Params params = 1 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}
