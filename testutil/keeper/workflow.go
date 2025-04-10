@@ -20,7 +20,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func WorkflowKeeper(t testing.TB, jobKeeper types.JobKeeper) (keeper.BaseKeeper, sdk.Context) {
+func WorkflowKeeper(t testing.TB) (keeper.BaseKeeper, sdk.Context) {
 	storeKey := storetypes.NewKVStoreKey(types.StoreKey)
 
 	db := dbm.NewMemDB()
@@ -40,7 +40,6 @@ func WorkflowKeeper(t testing.TB, jobKeeper types.JobKeeper) (keeper.BaseKeeper,
 		log.NewNopLogger(),
 		authority.String(),
 		cmt,
-		jobKeeper,
 	)
 
 	ctx := sdk.NewContext(stateStore, cmtproto.Header{}, false, log.NewNopLogger())

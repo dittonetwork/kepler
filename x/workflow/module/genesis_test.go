@@ -18,7 +18,7 @@ func TestGenesis(t *testing.T) {
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
-	k, ctx := keepertest.WorkflowKeeper(t, nil)
+	k, ctx := keepertest.WorkflowKeeper(t)
 	workflow.InitGenesis(ctx, k, genesisState)
 	got := workflow.ExportGenesis(ctx, k)
 	require.NotNil(t, got)

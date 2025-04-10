@@ -14,7 +14,6 @@ import (
 	reflect "reflect"
 
 	types "github.com/cosmos/cosmos-sdk/types"
-	types0 "github.com/dittonetwork/kepler/x/job/types"
 	gomock "go.uber.org/mock/gomock"
 )
 
@@ -221,7 +220,7 @@ func (m *MockJobKeeper) EXPECT() *MockJobKeeperMockRecorder {
 }
 
 // CreateJob mocks base method.
-func (m *MockJobKeeper) CreateJob(ctx types.Context, status types0.Job_Status, committeeID, chainID string, automationID uint64, txHash, executorAddress string, createdAt, executedAt, signedAt uint64, signs [][]byte, payload []byte) error {
+func (m *MockJobKeeper) CreateJob(ctx types.Context, status any, committeeID, chainID string, automationID uint64, txHash, executorAddress string, createdAt, executedAt, signedAt uint64, signs [][]byte, payload []byte) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateJob", ctx, status, committeeID, chainID, automationID, txHash, executorAddress, createdAt, executedAt, signedAt, signs, payload)
 	ret0, _ := ret[0].(error)
@@ -235,10 +234,10 @@ func (mr *MockJobKeeperMockRecorder) CreateJob(ctx, status, committeeID, chainID
 }
 
 // GetLastSuccessfulJobByAutomation mocks base method.
-func (m *MockJobKeeper) GetLastSuccessfulJobByAutomation(ctx types.Context, automationID uint64) (types0.Job, error) {
+func (m *MockJobKeeper) GetLastSuccessfulJobByAutomation(ctx types.Context, automationID uint64) (any, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetLastSuccessfulJobByAutomation", ctx, automationID)
-	ret0, _ := ret[0].(types0.Job)
+	ret0, _ := ret[0].(any)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

@@ -38,13 +38,10 @@ import (
 	workflowmodulekeeper "github.com/dittonetwork/kepler/x/workflow/keeper"
 
 	committeemodulekeeper "github.com/dittonetwork/kepler/x/committee/keeper"
-	jobmodulekeeper "github.com/dittonetwork/kepler/x/job/keeper"
 
-	instantmodulekeeper "github.com/dittonetwork/kepler/x/instant/keeper"
 	restakingmodulekeeper "github.com/dittonetwork/kepler/x/restaking/keeper"
 
 	executorsmodulekeeper "github.com/dittonetwork/kepler/x/executors/keeper"
-	taskmanagermodulekeeper "github.com/dittonetwork/kepler/x/taskmanager/keeper"
 
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 
@@ -84,14 +81,11 @@ type App struct {
 	DistrKeeper           distrkeeper.Keeper
 	ConsensusParamsKeeper consensuskeeper.Keeper
 
-	EpochsKeeper      *epochskeeper.Keeper
-	WorkflowKeeper    workflowmodulekeeper.Keeper
-	CommitteeKeeper   committeemodulekeeper.Keeper
-	JobKeeper         jobmodulekeeper.Keeper
-	InstantKeeper     instantmodulekeeper.Keeper
-	RestakingKeeper   *restakingmodulekeeper.Keeper
-	ExecutorsKeeper   executorsmodulekeeper.Keeper
-	TaskmanagerKeeper taskmanagermodulekeeper.Keeper
+	EpochsKeeper    *epochskeeper.Keeper
+	WorkflowKeeper  workflowmodulekeeper.Keeper
+	CommitteeKeeper committeemodulekeeper.Keeper
+	RestakingKeeper *restakingmodulekeeper.Keeper
+	ExecutorsKeeper executorsmodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
 	// simulation manager
@@ -169,9 +163,6 @@ func New(
 		&app.RestakingKeeper,
 		&app.ExecutorsKeeper,
 		&app.CommitteeKeeper,
-		&app.JobKeeper,
-		&app.InstantKeeper,
-		&app.TaskmanagerKeeper,
 		// this line is used by starport scaffolding # stargate/app/keeperDefinition
 	); err != nil {
 		panic(err)

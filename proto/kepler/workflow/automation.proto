@@ -3,7 +3,6 @@ package kepler.workflow;
 
 import "amino/amino.proto";
 import "cosmos_proto/cosmos.proto";
-import "kepler/job/job.proto";
 
 option go_package = "github.com/dittonetwork/kepler/x/workflow/types";
 
@@ -21,8 +20,6 @@ message Automation {
   int64 execution_count = 5;
   // how many times in a row automation has failed its execution
   int64 failed_execution_streak = 6;
-  // last successfully executed job
-  job.Job last_successful_job = 7;
   // Creator address
   string creator = 8 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 }

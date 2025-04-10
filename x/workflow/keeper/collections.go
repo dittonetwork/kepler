@@ -111,16 +111,11 @@ func (k BaseKeeper) FindActiveAutomations(ctx sdk.Context) ([]*types.Automation,
 			return nil, fmt.Errorf("failed to get automation: %w", inErr)
 		}
 
-		job, inErr := k.jobKeeper.GetLastSuccessfulJobByAutomation(ctx, automation.Id)
+		_, inErr = k.jobKeeper.GetLastSuccessfulJobByAutomation(ctx, automation.Id)
 		if inErr != nil {
 			if !errors.Is(inErr, collections.ErrNotFound) {
 				return nil, fmt.Errorf("failed to get last successful job: %w", inErr)
 			}
-		}
-
-		// empty check
-		if job.Id > 0 && job.AutomationId == automation.Id {
-			automation.LastSuccessfulJob = &job
 		}
 
 		automations[i] = &automation

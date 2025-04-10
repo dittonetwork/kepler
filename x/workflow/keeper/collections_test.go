@@ -4,17 +4,14 @@ import (
 	"testing"
 
 	"github.com/dittonetwork/kepler/testutil/keeper"
-	jobTypes "github.com/dittonetwork/kepler/x/job/types"
 	"github.com/dittonetwork/kepler/x/workflow/types"
-	"github.com/dittonetwork/kepler/x/workflow/types/mock"
-	"go.uber.org/mock/gomock"
 
 	"github.com/stretchr/testify/require"
 )
 
 // TestInsertAutomation tests the InsertAutomation function
 func TestInsertAutomation(t *testing.T) {
-	k, ctx := keeper.WorkflowKeeper(t, nil)
+	k, ctx := keeper.WorkflowKeeper(t)
 
 	// Add an automation
 	automation := newTestAutomation(5, types.AutomationStatus_AUTOMATION_STATUS_ACTIVE)
@@ -29,7 +26,7 @@ func TestInsertAutomation(t *testing.T) {
 
 // TestSetAutomationStatus tests the SetAutomationStatus function
 func TestSetAutomationStatus(t *testing.T) {
-	k, ctx := keeper.WorkflowKeeper(t, nil)
+	k, ctx := keeper.WorkflowKeeper(t)
 
 	// Add an automation
 	automation := newTestAutomation(5, types.AutomationStatus_AUTOMATION_STATUS_ACTIVE)
@@ -44,40 +41,6 @@ func TestSetAutomationStatus(t *testing.T) {
 	retrieved, err := k.GetAutomation(ctx, 5)
 	require.NoError(t, err)
 	require.Equal(t, types.AutomationStatus_AUTOMATION_STATUS_PAUSED, retrieved.Status)
-}
-
-// TestFindActiveAutomations tests the GetActiveAutomations function
-func TestFindActiveAutomations(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-	j := mock.NewMockJobKeeper(ctrl)
-	k, ctx := keeper.WorkflowKeeper(t, j)
-
-	// Add multiple active automations
-	automation := newTestAutomation(5, types.AutomationStatus_AUTOMATION_STATUS_ACTIVE)
-	err := k.InsertAutomation(ctx, automation)
-	require.NoError(t, err)
-
-	automation = newTestAutomation(7, types.AutomationStatus_AUTOMATION_STATUS_ACTIVE)
-	err = k.InsertAutomation(ctx, automation)
-	require.NoError(t, err)
-
-	automation = newTestAutomation(9, types.AutomationStatus_AUTOMATION_STATUS_ACTIVE)
-	err = k.InsertAutomation(ctx, automation)
-	require.NoError(t, err)
-
-	// one of em will be paused
-	automation = newTestAutomation(11, types.AutomationStatus_AUTOMATION_STATUS_PAUSED)
-	err = k.InsertAutomation(ctx, automation)
-	require.NoError(t, err)
-
-	j.EXPECT().GetLastSuccessfulJobByAutomation(gomock.Any(), uint64(5)).Return(jobTypes.Job{}, nil)
-	j.EXPECT().GetLastSuccessfulJobByAutomation(gomock.Any(), uint64(7)).Return(jobTypes.Job{}, nil)
-	j.EXPECT().GetLastSuccessfulJobByAutomation(gomock.Any(), uint64(9)).Return(jobTypes.Job{}, nil)
-	// Retrieve and verify
-	activeAutomations, err := k.FindActiveAutomations(ctx)
-	require.NoError(t, err)
-	require.Len(t, activeAutomations, 3)
 }
 
 // Helper function to create a test automation
@@ -111,7 +74,7 @@ func newValidAutomation() types.Automation {
 }
 
 func TestCancelAutomation(t *testing.T) {
-	k, ctx := keeper.WorkflowKeeper(t, nil)
+	k, ctx := keeper.WorkflowKeeper(t)
 
 	// Add an automation
 	automation := newTestAutomation(5, types.AutomationStatus_AUTOMATION_STATUS_ACTIVE)
@@ -129,7 +92,7 @@ func TestCancelAutomation(t *testing.T) {
 }
 
 func TestCancelAutomationFail(t *testing.T) {
-	k, ctx := keeper.WorkflowKeeper(t, nil)
+	k, ctx := keeper.WorkflowKeeper(t)
 
 	// Add an automation
 	automation := newTestAutomation(5, types.AutomationStatus_AUTOMATION_STATUS_DONE)
@@ -142,7 +105,7 @@ func TestCancelAutomationFail(t *testing.T) {
 }
 
 func TestActivateAutomation(t *testing.T) {
-	k, ctx := keeper.WorkflowKeeper(t, nil)
+	k, ctx := keeper.WorkflowKeeper(t)
 
 	// Add an automation
 	automation := newTestAutomation(5, types.AutomationStatus_AUTOMATION_STATUS_PAUSED)
@@ -160,7 +123,7 @@ func TestActivateAutomation(t *testing.T) {
 }
 
 func TestActivateAutomationFail(t *testing.T) {
-	k, ctx := keeper.WorkflowKeeper(t, nil)
+	k, ctx := keeper.WorkflowKeeper(t)
 
 	// Add an automation
 	automation := newTestAutomation(5, types.AutomationStatus_AUTOMATION_STATUS_DONE)

@@ -3,8 +3,6 @@ package types
 import (
 	"context"
 
-	"github.com/dittonetwork/kepler/x/job/types"
-
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
@@ -40,7 +38,7 @@ type CommitteeKeeper interface {
 type JobKeeper interface {
 	CreateJob(
 		ctx sdk.Context,
-		status types.Job_Status,
+		status any,
 		committeeID string,
 		chainID string,
 		automationID uint64,
@@ -52,5 +50,5 @@ type JobKeeper interface {
 		signs [][]byte,
 		payload []byte,
 	) error
-	GetLastSuccessfulJobByAutomation(ctx sdk.Context, automationID uint64) (types.Job, error)
+	GetLastSuccessfulJobByAutomation(ctx sdk.Context, automationID uint64) (any, error)
 }

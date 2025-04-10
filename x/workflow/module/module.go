@@ -112,7 +112,6 @@ func NewAppModule(
 	accountKeeper types.AccountKeeper,
 	bankKeeper types.BankKeeper,
 	committeeKeeper types.CommitteeKeeper,
-	jobKeeper types.JobKeeper,
 ) AppModule {
 	return AppModule{
 		AppModuleBasic:  NewAppModuleBasic(cdc),
@@ -120,7 +119,6 @@ func NewAppModule(
 		accountKeeper:   accountKeeper,
 		bankKeeper:      bankKeeper,
 		committeeKeeper: committeeKeeper,
-		jobKeeper:       jobKeeper,
 	}
 }
 
@@ -195,7 +193,6 @@ type ModuleInputs struct {
 	AccountKeeper   types.AccountKeeper
 	BankKeeper      types.BankKeeper
 	CommitteeKeeper types.CommitteeKeeper
-	JobKeeper       types.JobKeeper
 }
 
 type ModuleOutputs struct {
@@ -218,7 +215,6 @@ func ProvideModule(in ModuleInputs) ModuleOutputs {
 		in.Logger,
 		authority.String(),
 		in.CommitteeKeeper,
-		in.JobKeeper,
 	)
 	m := NewAppModule(
 		in.Cdc,
@@ -226,7 +222,6 @@ func ProvideModule(in ModuleInputs) ModuleOutputs {
 		in.AccountKeeper,
 		in.BankKeeper,
 		in.CommitteeKeeper,
-		in.JobKeeper,
 	)
 
 	return ModuleOutputs{WorkflowKeeper: k, Module: m}
