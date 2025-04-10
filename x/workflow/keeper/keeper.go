@@ -65,7 +65,6 @@ func NewKeeper(
 	logger log.Logger,
 	authority string,
 	committeeKeeper types.CommitteeKeeper,
-	jobKeeper types.JobKeeper,
 ) BaseKeeper {
 	if _, err := sdk.AccAddressFromBech32(authority); err != nil {
 		panic(fmt.Sprintf("invalid authority address: %s", authority))
@@ -78,7 +77,6 @@ func NewKeeper(
 		authority:       authority,
 		logger:          logger,
 		committeeKeeper: committeeKeeper,
-		jobKeeper:       jobKeeper,
 		Automations: collections.NewIndexedMap(
 			sb,
 			types.KeyPrefixAutomation,

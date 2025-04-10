@@ -13,14 +13,6 @@ import (
 	_ "github.com/dittonetwork/kepler/x/committee/module" // import for side-effects
 	committeemoduletypes "github.com/dittonetwork/kepler/x/committee/types"
 
-	jobmodulev1 "github.com/dittonetwork/kepler/api/kepler/job/module"
-	_ "github.com/dittonetwork/kepler/x/job/module" // import for side-effects
-	jobmoduletypes "github.com/dittonetwork/kepler/x/job/types"
-
-	instantmodulev1 "github.com/dittonetwork/kepler/api/kepler/instant/module"
-	_ "github.com/dittonetwork/kepler/x/instant/module" // import for side-effects
-	instantmoduletypes "github.com/dittonetwork/kepler/x/instant/types"
-
 	runtimev1alpha1 "cosmossdk.io/api/cosmos/app/runtime/v1alpha1"
 	appv1alpha1 "cosmossdk.io/api/cosmos/app/v1alpha1"
 	authmodulev1 "cosmossdk.io/api/cosmos/auth/module/v1"
@@ -42,13 +34,10 @@ import (
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	executorsmodulev1 "github.com/dittonetwork/kepler/api/kepler/executors/module"
 	restakingmodulev1 "github.com/dittonetwork/kepler/api/kepler/restaking/module"
-	taskmanagermodulev1 "github.com/dittonetwork/kepler/api/kepler/taskmanager/module"
 	_ "github.com/dittonetwork/kepler/x/executors/module" // import for side-effects
 	executorsmoduletypes "github.com/dittonetwork/kepler/x/executors/types"
 	_ "github.com/dittonetwork/kepler/x/restaking/module" // import for side-effects
 	restakingmoduletypes "github.com/dittonetwork/kepler/x/restaking/types"
-	_ "github.com/dittonetwork/kepler/x/taskmanager/module" // import for side-effects
-	taskmanagermoduletypes "github.com/dittonetwork/kepler/x/taskmanager/types"
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 )
 
@@ -71,11 +60,8 @@ var (
 		epochstypes.ModuleName,
 		workflowmoduletypes.ModuleName,
 		committeemoduletypes.ModuleName,
-		jobmoduletypes.ModuleName,
-		instantmoduletypes.ModuleName,
 		restakingmoduletypes.ModuleName,
 		executorsmoduletypes.ModuleName,
-		taskmanagermoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/initGenesis
 	}
 
@@ -91,11 +77,8 @@ var (
 		epochstypes.ModuleName,
 		workflowmoduletypes.ModuleName,
 		committeemoduletypes.ModuleName,
-		jobmoduletypes.ModuleName,
-		instantmoduletypes.ModuleName,
 		restakingmoduletypes.ModuleName,
 		executorsmoduletypes.ModuleName,
-		taskmanagermoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/beginBlockers
 	}
 
@@ -106,11 +89,8 @@ var (
 		epochstypes.ModuleName,
 		workflowmoduletypes.ModuleName,
 		committeemoduletypes.ModuleName,
-		jobmoduletypes.ModuleName,
-		instantmoduletypes.ModuleName,
 		restakingmoduletypes.ModuleName,
 		executorsmoduletypes.ModuleName,
-		taskmanagermoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/endBlockers
 	}
 
@@ -217,24 +197,12 @@ var (
 				}),
 			},
 			{
-				Name:   jobmoduletypes.ModuleName,
-				Config: appconfig.WrapAny(&jobmodulev1.Module{}),
-			},
-			{
-				Name:   instantmoduletypes.ModuleName,
-				Config: appconfig.WrapAny(&instantmodulev1.Module{}),
-			},
-			{
 				Name:   restakingmoduletypes.ModuleName,
 				Config: appconfig.WrapAny(&restakingmodulev1.Module{}),
 			},
 			{
 				Name:   executorsmoduletypes.ModuleName,
 				Config: appconfig.WrapAny(&executorsmodulev1.Module{}),
-			},
-			{
-				Name:   taskmanagermoduletypes.ModuleName,
-				Config: appconfig.WrapAny(&taskmanagermodulev1.Module{}),
 			},
 			// this line is used by starport scaffolding # stargate/app/moduleConfig
 		},

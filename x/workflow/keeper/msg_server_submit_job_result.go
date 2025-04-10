@@ -8,7 +8,6 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	jobTypes "github.com/dittonetwork/kepler/x/job/types"
 	"github.com/dittonetwork/kepler/x/workflow/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -33,14 +32,9 @@ func (k msgServer) SubmitJobResult(
 		return nil, status.Error(codes.FailedPrecondition, "automation is not active")
 	}
 
-	jobStatus := jobTypes.Job_STATUS_UNSPECIFIED
-	if st, ok := jobTypes.Job_Status_value[msg.Status]; ok {
-		jobStatus = jobTypes.Job_Status(st)
-	}
-
 	err = k.JobKeeper.CreateJob(
 		ctx,
-		jobStatus,
+		0,
 		msg.GetCommitteeId(),
 		msg.GetChainId(),
 		msg.GetAutomationId(),
