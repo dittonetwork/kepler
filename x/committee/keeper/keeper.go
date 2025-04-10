@@ -4,10 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"cosmossdk.io/collections"
-	"cosmossdk.io/core/store"
 	"cosmossdk.io/log"
-	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"github.com/dittonetwork/kepler/x/committee/types"
@@ -29,11 +26,7 @@ type CommitteeKeeper interface {
 }
 
 type Keeper struct {
-	cdc codec.BinaryCodec
-
-	Schema     collections.Schema
-	Committees *collections.IndexedMap[uint32, types.Committee, Idx]
-	LastEpoch  collections.Item[uint32]
+	repository types.Repository
 
 	executors types.ExecutorsKeeper
 	restaking types.RestakingKeeper
@@ -44,46 +37,21 @@ type Keeper struct {
 }
 
 func NewKeeper(
-	cdc codec.BinaryCodec,
-	storeService store.KVStoreService,
 	authority string,
 	executors types.ExecutorsKeeper,
 	restaking types.RestakingKeeper,
+	repo types.Repository,
 ) Keeper {
 	if _, err := sdk.AccAddressFromBech32(authority); err != nil {
 		panic(fmt.Sprintf("invalid authority address: %s", authority))
 	}
 
-	sb := collections.NewSchemaBuilder(storeService)
-
 	k := Keeper{
-		cdc:       cdc,
-		authority: authority,
-		executors: executors,
-		restaking: restaking,
-
-		Committees: collections.NewIndexedMap(
-			sb,
-			types.CommitteesStoreKeyPrefix,
-			"committees",
-			collections.Uint32Key,
-			codec.CollValue[types.Committee](cdc),
-			NewIndexes(sb),
-		),
-		LastEpoch: collections.NewItem(
-			sb,
-			types.LatestEpochStorePrefix,
-			"last_epoch",
-			collections.Uint32Value,
-		),
+		authority:  authority,
+		executors:  executors,
+		restaking:  restaking,
+		repository: repo,
 	}
-
-	schema, err := sb.Build()
-	if err != nil {
-		panic(err)
-	}
-
-	k.Schema = schema
 
 	return k
 }

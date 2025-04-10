@@ -9,7 +9,6 @@ import (
 	cmtproto "github.com/cometbft/cometbft/proto/tendermint/types"
 	cmttime "github.com/cometbft/cometbft/types/time"
 	"github.com/cosmos/cosmos-sdk/baseapp"
-	"github.com/cosmos/cosmos-sdk/runtime"
 	"github.com/cosmos/cosmos-sdk/testutil"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	moduletestutil "github.com/cosmos/cosmos-sdk/types/module/testutil"
@@ -33,6 +32,7 @@ type TestSuite struct {
 
 	restakingKeeper *committeetestutil.MockRestakingKeeper
 	executorKeeper  *committeetestutil.MockExecutorsKeeper
+	repo            *committeetestutil.MockRepository
 }
 
 func TestNewKeeper(t *testing.T) {
@@ -41,7 +41,6 @@ func TestNewKeeper(t *testing.T) {
 
 func (s *TestSuite) SetupTest() {
 	key := storetypes.NewKVStoreKey(types.StoreKey)
-	storeService := runtime.NewKVStoreService(key)
 	testCtx := testutil.DefaultContextWithDB(s.T(), key, storetypes.NewTransientStoreKey("transient_test"))
 	ctx := testCtx.Ctx.WithBlockHeader(cmtproto.Header{Time: cmttime.Now()})
 	encCfg := moduletestutil.MakeTestEncodingConfig(committeemodule.AppModuleBasic{})
@@ -53,15 +52,16 @@ func (s *TestSuite) SetupTest() {
 
 	pubKey := sr25519.GenPrivKey().PubKey()
 
+	repo := committeetestutil.NewMockRepository(ctrl)
+
 	// Generate Bech32 encoded address
 	s.authority = sdk.MustBech32ifyAddressBytes(sdk.GetConfig().GetBech32AccountAddrPrefix(), pubKey.Address())
 
 	committeeKeeper := keeper.NewKeeper(
-		encCfg.Codec,
-		storeService,
 		s.authority,
 		executorKeeper,
 		restakingKeeper,
+		repo,
 	)
 
 	queryHelper := baseapp.NewQueryServerTestHelper(ctx, encCfg.InterfaceRegistry)
@@ -73,6 +73,7 @@ func (s *TestSuite) SetupTest() {
 	s.queryClient = committee.NewQueryClient(queryHelper)
 	s.ctx = ctx
 	s.msgServer = keeper.NewMsgServerImpl(committeeKeeper)
+	s.repo = repo
 
 	s.Require().Equal(
 		ctx.Logger().With("module", fmt.Sprintf("x/%s", types.ModuleName)),

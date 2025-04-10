@@ -21,6 +21,7 @@ import (
 
 	modulev1 "github.com/dittonetwork/kepler/api/kepler/committee/module"
 	"github.com/dittonetwork/kepler/x/committee/keeper"
+	"github.com/dittonetwork/kepler/x/committee/repository"
 	"github.com/dittonetwork/kepler/x/committee/types"
 )
 
@@ -133,12 +134,12 @@ func (am AppModule) InitGenesis(ctx sdk.Context, cdc codec.JSONCodec, gs json.Ra
 	// Initialize global index to index in genesis state
 	cdc.MustUnmarshalJSON(gs, &genState)
 
-	InitGenesis(ctx, am.keeper, genState)
+	am.keeper.InitGenesis(ctx, genState)
 }
 
 // ExportGenesis returns the module's exported genesis state as raw JSON bytes.
 func (am AppModule) ExportGenesis(ctx sdk.Context, cdc codec.JSONCodec) json.RawMessage {
-	genState := ExportGenesis(ctx, am.keeper)
+	genState := am.keeper.ExportGenesis(ctx)
 	return cdc.MustMarshalJSON(genState)
 }
 
@@ -204,12 +205,14 @@ func ProvideModule(in ModuleInputs) ModuleOutputs {
 	if in.Config.Authority != "" {
 		authority = authtypes.NewModuleAddressOrBech32Address(in.Config.Authority)
 	}
+
+	repo := repository.NewCommitteeRepository(in.StoreService, in.Cdc)
+
 	k := keeper.NewKeeper(
-		in.Cdc,
-		in.StoreService,
 		authority.String(),
 		in.ExecutorsKeeper,
 		in.RestakingKeeper,
+		repo,
 	)
 	m := NewAppModule(
 		in.Cdc,

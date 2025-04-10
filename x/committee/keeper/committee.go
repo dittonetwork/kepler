@@ -11,7 +11,7 @@ import (
 func (k Keeper) CreateCommittee(ctx sdk.Context, epoch uint32) (types.Committee, error) {
 	var committee types.Committee
 
-	ok, err := k.Committees.Has(ctx, epoch)
+	ok, err := k.repository.HasCommittee(ctx, epoch)
 	if err != nil {
 		return types.Committee{}, sdkerrors.Wrap(err, "failed to check if committee exists")
 	}
@@ -22,7 +22,7 @@ func (k Keeper) CreateCommittee(ctx sdk.Context, epoch uint32) (types.Committee,
 	}
 
 	var lastSavedEpoch uint32
-	lastSavedEpoch, err = k.LastEpoch.Get(ctx)
+	lastSavedEpoch, err = k.repository.GetLastEpoch(ctx)
 	if err != nil {
 		return types.Committee{}, sdkerrors.Wrap(err, "failed to get last saved epoch")
 	}
@@ -37,11 +37,11 @@ func (k Keeper) CreateCommittee(ctx sdk.Context, epoch uint32) (types.Committee,
 		return types.Committee{}, sdkerrors.Wrap(err, "failed to create emergency committee")
 	}
 
-	err = k.Committees.Set(ctx, epoch, committee)
+	err = k.repository.SetCommittee(ctx, epoch, committee)
 	if err != nil {
 		return types.Committee{}, sdkerrors.Wrap(err, "failed to set committee")
 	}
-	err = k.LastEpoch.Set(ctx, epoch)
+	err = k.repository.SetLastEpoch(ctx, epoch)
 	if err != nil {
 		return types.Committee{}, sdkerrors.Wrap(err, "failed to set last epoch")
 	}

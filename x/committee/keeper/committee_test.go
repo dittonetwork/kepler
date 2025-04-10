@@ -20,24 +20,42 @@ func (s *TestSuite) TestCreateCommittee() {
 			name:            "Committee already exists",
 			epoch:           10,
 			committeeExists: true,
-			mockSetup:       func() {},
-			expectedError:   types.ErrCommitteeAlreadyExists,
+			mockSetup: func() {
+				s.repo.EXPECT().
+					HasCommittee(gomock.Any(), gomock.Any()).
+					Return(true, nil)
+			},
+			expectedError: types.ErrCommitteeAlreadyExists,
 		},
 		{
 			name:            "Epoch equal to last epoch",
 			epoch:           10,
 			lastEpoch:       10,
 			committeeExists: false,
-			mockSetup:       func() {},
-			expectedError:   types.ErrInvalidEpoch,
+			mockSetup: func() {
+				s.repo.EXPECT().
+					HasCommittee(gomock.Any(), gomock.Any()).
+					Return(false, nil)
+				s.repo.EXPECT().
+					GetLastEpoch(gomock.Any()).
+					Return(uint32(10), nil)
+			},
+			expectedError: types.ErrInvalidEpoch,
 		},
 		{
 			name:            "Epoch less than last epoch",
 			epoch:           5,
 			lastEpoch:       10,
 			committeeExists: false,
-			mockSetup:       func() {},
-			expectedError:   types.ErrInvalidEpoch,
+			mockSetup: func() {
+				s.repo.EXPECT().
+					HasCommittee(gomock.Any(), gomock.Any()).
+					Return(false, nil)
+				s.repo.EXPECT().
+					GetLastEpoch(gomock.Any()).
+					Return(uint32(9), nil)
+			},
+			expectedError: types.ErrInvalidEpoch,
 		},
 		{
 			name:            "Failed to get emergency executors",
@@ -45,6 +63,12 @@ func (s *TestSuite) TestCreateCommittee() {
 			lastEpoch:       10,
 			committeeExists: false,
 			mockSetup: func() {
+				s.repo.EXPECT().
+					HasCommittee(gomock.Any(), gomock.Any()).
+					Return(false, nil)
+				s.repo.EXPECT().
+					GetLastEpoch(gomock.Any()).
+					Return(uint32(10), nil)
 				s.executorKeeper.EXPECT().
 					GetEmergencyExecutors(gomock.Any()).
 					Return(nil, types.ErrInvalidSigner)
@@ -57,6 +81,13 @@ func (s *TestSuite) TestCreateCommittee() {
 			lastEpoch:       10,
 			committeeExists: false,
 			mockSetup: func() {
+				s.repo.EXPECT().
+					HasCommittee(gomock.Any(), gomock.Any()).
+					Return(false, nil)
+				s.repo.EXPECT().
+					GetLastEpoch(gomock.Any()).
+					Return(uint32(10), nil)
+
 				executors := []executortypes.Executor{
 					{
 						Address:      "cosmos1v9jxgun9wdenzc33zgq23q8r9hfv2z4x0762r",
@@ -69,6 +100,27 @@ func (s *TestSuite) TestCreateCommittee() {
 						IsActive:     true,
 					},
 				}
+
+				committeeExecutors := make([]types.Executor, len(executors))
+				for i, executor := range executors {
+					committeeExecutors[i] = types.Executor{
+						Address:     executor.Address,
+						VotingPower: 10,
+					}
+				}
+				s.repo.EXPECT().
+					SetCommittee(gomock.Any(), uint32(11), types.Committee{
+						Epoch:       11,
+						Executors:   committeeExecutors,
+						IsEmergency: true,
+						Seed:        nil,
+					}).
+					Return(nil)
+
+				s.repo.EXPECT().
+					SetLastEpoch(gomock.Any(), uint32(11)).
+					Return(nil)
+
 				s.executorKeeper.EXPECT().
 					GetEmergencyExecutors(gomock.Any()).
 					Return(executors, nil)
@@ -87,6 +139,13 @@ func (s *TestSuite) TestCreateCommittee() {
 			lastEpoch:       10,
 			committeeExists: false,
 			mockSetup: func() {
+				s.repo.EXPECT().
+					HasCommittee(gomock.Any(), gomock.Any()).
+					Return(false, nil)
+				s.repo.EXPECT().
+					GetLastEpoch(gomock.Any()).
+					Return(uint32(10), nil)
+
 				executors := []executortypes.Executor{
 					{
 						Address:      "cosmos1v9jxgun9wdenzc33zgq23q8r9hfv2z4x0762r",
@@ -99,6 +158,28 @@ func (s *TestSuite) TestCreateCommittee() {
 						IsActive:     true,
 					},
 				}
+
+				committeeExecutors := make([]types.Executor, len(executors))
+				for i, executor := range executors {
+					committeeExecutors[i] = types.Executor{
+						Address:     executor.Address,
+						VotingPower: 20,
+					}
+				}
+
+				s.repo.EXPECT().
+					SetCommittee(gomock.Any(), uint32(11), types.Committee{
+						Epoch:       11,
+						Executors:   committeeExecutors,
+						IsEmergency: true,
+						Seed:        nil,
+					}).
+					Return(nil)
+
+				s.repo.EXPECT().
+					SetLastEpoch(gomock.Any(), uint32(11)).
+					Return(nil)
+
 				s.executorKeeper.EXPECT().
 					GetEmergencyExecutors(gomock.Any()).
 					Return(executors, nil)
@@ -125,16 +206,6 @@ func (s *TestSuite) TestCreateCommittee() {
 			// Setup the test case
 			tc.mockSetup()
 
-			// Set last epoch
-			if tc.lastEpoch > 0 {
-				s.Require().NoError(k.LastEpoch.Set(ctx, tc.lastEpoch))
-			}
-
-			// Set committee existence
-			if tc.committeeExists {
-				s.Require().NoError(k.Committees.Set(ctx, tc.epoch, types.Committee{}))
-			}
-
 			// Call the actual CreateCommittee method
 			committee, err := k.CreateCommittee(ctx, tc.epoch)
 
@@ -150,11 +221,6 @@ func (s *TestSuite) TestCreateCommittee() {
 			s.Require().True(committee.IsEmergency)
 			s.Require().Equal(ctx.HeaderInfo().Hash, committee.Seed)
 			s.Require().Len(committee.Executors, 2)
-
-			// Verify that LastEpoch was updated to the new epoch value
-			lastEpoch, err := k.LastEpoch.Get(ctx)
-			s.Require().NoError(err)
-			s.Require().Equal(tc.epoch, lastEpoch, "LastEpoch should be updated to the new epoch value")
 		})
 	}
 }
