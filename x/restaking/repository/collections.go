@@ -18,7 +18,7 @@ func NewIndexes(sb *collections.SchemaBuilder) Idx {
 	return Idx{
 		Emergency: indexes.NewMulti(
 			sb,
-			types.KeyPrefixValidators,
+			types.KeyPrefixEmergencyValidators,
 			"validators_by_emergency",
 			collections.BoolKey,
 			collections.StringKey,
@@ -28,7 +28,7 @@ func NewIndexes(sb *collections.SchemaBuilder) Idx {
 		),
 		Bonded: indexes.NewMulti(
 			sb,
-			types.KeyPrefixValidators,
+			types.KeyPrefixBondedValidators,
 			"validators_by_bonded",
 			collections.BoolKey,
 			collections.StringKey,

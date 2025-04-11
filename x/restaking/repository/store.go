@@ -12,6 +12,8 @@ type RestakingRepository struct {
 	pendingValidators collections.Map[string, types.Validator]
 	validators        *collections.IndexedMap[string, types.Validator, Idx]
 	lastUpdate        collections.Item[types.UpdateInfo]
+
+	cdc codec.BinaryCodec
 }
 
 func New(storeService store.KVStoreService, cdc codec.BinaryCodec) *RestakingRepository {
@@ -39,6 +41,8 @@ func New(storeService store.KVStoreService, cdc codec.BinaryCodec) *RestakingRep
 			"last_update",
 			codec.CollValue[types.UpdateInfo](cdc),
 		),
+
+		cdc: cdc,
 	}
 }
 

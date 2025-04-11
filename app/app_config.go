@@ -4,6 +4,7 @@ import (
 	epochsmodulev1 "github.com/dittonetwork/kepler/api/kepler/epochs/module"
 	_ "github.com/dittonetwork/kepler/x/epochs/module" // import for side effects
 	epochstypes "github.com/dittonetwork/kepler/x/epochs/types"
+	genutiltypes "github.com/dittonetwork/kepler/x/genutil/types"
 
 	workflowmodulev1 "github.com/dittonetwork/kepler/api/kepler/workflow/module"
 	_ "github.com/dittonetwork/kepler/x/workflow/module" // import for side-effects
@@ -18,9 +19,7 @@ import (
 	authmodulev1 "cosmossdk.io/api/cosmos/auth/module/v1"
 	bankmodulev1 "cosmossdk.io/api/cosmos/bank/module/v1"
 	consensusmodulev1 "cosmossdk.io/api/cosmos/consensus/module/v1"
-	distrmodulev1 "cosmossdk.io/api/cosmos/distribution/module/v1"
 	genutilmodulev1 "cosmossdk.io/api/cosmos/genutil/module/v1"
-	stakingmodulev1 "cosmossdk.io/api/cosmos/staking/module/v1"
 	txconfigv1 "cosmossdk.io/api/cosmos/tx/config/v1"
 	"cosmossdk.io/core/appconfig"
 	upgradetypes "cosmossdk.io/x/upgrade/types"
@@ -28,10 +27,6 @@ import (
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	consensustypes "github.com/cosmos/cosmos-sdk/x/consensus/types"
-	distrtypes "github.com/cosmos/cosmos-sdk/x/distribution/types"
-	genutiltypes "github.com/cosmos/cosmos-sdk/x/genutil/types"
-	minttypes "github.com/cosmos/cosmos-sdk/x/mint/types"
-	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	executorsmodulev1 "github.com/dittonetwork/kepler/api/kepler/executors/module"
 	restakingmodulev1 "github.com/dittonetwork/kepler/api/kepler/restaking/module"
 	_ "github.com/dittonetwork/kepler/x/executors/module" // import for side-effects
@@ -53,14 +48,12 @@ var (
 		// cosmos-sdk modules
 		authtypes.ModuleName,
 		banktypes.ModuleName,
-		distrtypes.ModuleName,
-		stakingtypes.ModuleName,
 		genutiltypes.ModuleName,
 		// chain modules
+		restakingmoduletypes.ModuleName,
 		epochstypes.ModuleName,
 		workflowmoduletypes.ModuleName,
 		committeemoduletypes.ModuleName,
-		restakingmoduletypes.ModuleName,
 		executorsmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/initGenesis
 	}
@@ -71,8 +64,6 @@ var (
 	// NOTE: staking module is required if HistoricalEntries param > 0
 	beginBlockers = []string{
 		// cosmos sdk modules
-		distrtypes.ModuleName,
-		stakingtypes.ModuleName,
 		// chain modules
 		epochstypes.ModuleName,
 		workflowmoduletypes.ModuleName,
@@ -84,7 +75,6 @@ var (
 
 	endBlockers = []string{
 		// cosmos sdk modules
-		stakingtypes.ModuleName,
 		// chain modules
 		epochstypes.ModuleName,
 		workflowmoduletypes.ModuleName,
@@ -102,19 +92,12 @@ var (
 	// module account permissions
 	moduleAccPerms = []*authmodulev1.ModuleAccountPermission{
 		{Account: authtypes.FeeCollectorName},
-		{Account: distrtypes.ModuleName},
-		{Account: minttypes.ModuleName, Permissions: []string{authtypes.Minter}},
-		{Account: stakingtypes.BondedPoolName, Permissions: []string{authtypes.Burner, stakingtypes.ModuleName}},
-		{Account: stakingtypes.NotBondedPoolName, Permissions: []string{authtypes.Burner, stakingtypes.ModuleName}},
 		// this line is used by starport scaffolding # stargate/app/maccPerms
 	}
 
 	// blocked account addresses
 	blockAccAddrs = []string{
 		authtypes.FeeCollectorName,
-		distrtypes.ModuleName,
-		stakingtypes.BondedPoolName,
-		stakingtypes.NotBondedPoolName,
 	}
 
 	// appConfig application configuration (used by depinject)
@@ -164,19 +147,6 @@ var (
 			{
 				Name:   consensustypes.ModuleName,
 				Config: appconfig.WrapAny(&consensusmodulev1.Module{}),
-			},
-			{
-				Name:   distrtypes.ModuleName,
-				Config: appconfig.WrapAny(&distrmodulev1.Module{}),
-			},
-			{
-				Name: stakingtypes.ModuleName,
-				Config: appconfig.WrapAny(&stakingmodulev1.Module{
-					// NOTE: specifying a prefix is only necessary when using bech32 addresses
-					// If not specfied, the auth Bech32Prefix appended with "valoper" and "valcons" is used by default
-					Bech32PrefixValidator: AccountAddressPrefix + "valoper",
-					Bech32PrefixConsensus: AccountAddressPrefix + "valcons",
-				}),
 			},
 			{
 				Name:   genutiltypes.ModuleName,

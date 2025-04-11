@@ -1,6 +1,8 @@
 version: 1
 validation: sovereign
-accounts: 
+build:
+  main: cmd/keplerd
+accounts:
 - name: alice
   coins:
   - 20000token
