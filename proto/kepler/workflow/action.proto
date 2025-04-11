@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package ditto.action;
+
+// Input parameter definition for an action
+message Input {
+  // Name of the input parameter
+  string name = 1;
+  
+  // Whether this input is required
+  bool required = 2;
+  
+  // Type of the input (e.g., "string", "int64", "bool")
+  string type = 3;
+  
+  // Optional description of the input
+  optional string description = 4;
+}
+
+// Action execution configuration
+message Runs {
+  // Runtime environment (e.g., "wasm", "docker")
+  string using = 1;
+  
+  // Binary or image identifier
+  string binary = 2;
+  
+  // Arguments to pass to the action
+  repeated string args = 3;
+}
+
+// Complete action definition
+message Action {
+  // Name of the action (e.g., "uniswap/swap-assets")
+  string name = 1;
+  
+  // Description of what the action does
+  string description = 2;
+  
+  // Input parameters for the action
+  map<string, Input> inputs = 3;
+  
+  // Optional reference to a reusable action
+  // Example: "ditto/context" or "github/actions/checkout@v2"
+  optional string uses = 4;
+
+  // Execution configuration
+  Runs runs = 5;
+}

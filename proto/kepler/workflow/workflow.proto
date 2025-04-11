@@ -19,15 +19,23 @@ message Step {
   // Example: "ditto/context" or "github/actions/checkout@v2"
   optional string uses = 4;
   
-  // When true, this step can trigger other workflows
-  optional bool triggers = 5;
+  // Input parameters for the step, if step uses a reusable action
+  optional map<string, string> with = 5;
+}
+
+// Input parameter definition for a step
+message Input {
+  // Name of the input parameter  
+  string name = 1;
   
-  // When true, this step has additional validation requirements
-  // This flag enables pre-execution checks like gas estimation, simulation,
-  // or custom validation logic before the actual execution occurs
-  // Examples of checks: sufficient balance, contract verification, allowance checks
-  // Default: false
-  optional bool checkers = 6;
+  // Whether this input is required
+  bool required = 2;
+  
+  // Type of the input (e.g., "string", "int64", "bool")
+  string type = 3;
+  
+  // Optional description of the input
+  optional string description = 4;
 }
 
 // Universal type for representing arguments of different types
@@ -51,14 +59,13 @@ message OnChainCallChecker {
   // JSON string containing the ABI definition for the function call
   // Example: "[{\"inputs\":[{\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"withdraw\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]"
   string abi = 1;
+
+  // Contract address to be called
+  string contract_address = 2;
   
   // Method name to be called
   // Example: "transfer", "approve", "swap"
-  string method = 2;
-  
-  // The blockchain network ID where to perform the check
-  // Example: 1 (Ethereum Mainnet)
-  int32 chain_id = 3;
+  string method = 3;
   
   // Arguments to pass to the method call
   // Only supporting string and bool values
@@ -69,10 +76,22 @@ message OnChainCallChecker {
 // Gas settings
 message GasLimitChecker {
   // Maximum fee per gas
-  int64 max_fee = 1;
+  string max_fee = 1;
   
   // Maximum priority fee per gas
-  int64 max_priority_fee = 2;
+  string max_priority_fee = 2;
+}
+
+// Asset price checker
+message AssetPriceChecker {
+  // Asset address to monitor
+  string asset_address = 1;
+  
+  // Target price for the limit order
+  string target_price = 2;
+  
+  // Price comparison type (e.g., "lte", "lt", "gte", "gt", "eq")
+  string operator = 3;
 }
 
 // Checkers for jobs
@@ -82,9 +101,12 @@ message Checkers {
   
   // Optional gas limit settings for the job
   optional GasLimitChecker gas_limit = 2;
+
+  // Optional asset price checker
+  optional AssetPriceChecker asset_price = 3;
   
   // Optional maximum number of execution
-  optional int32 count = 3;
+  optional int64 count = 4;
 }
 
 // Job within a workflow
