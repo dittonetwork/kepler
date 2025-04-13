@@ -33,6 +33,8 @@ func CommandsWithCustomMigrationMap(
 		AddGenesisAccountCmd(defaultNodeHome, txConfig.SigningContext().AddressCodec()),
 		AddBulkGenesisAccountCmd(defaultNodeHome, txConfig.SigningContext().AddressCodec()),
 		AddBulkGenesisOperatorCmd(defaultNodeHome),
+		GenTxCmd(defaultNodeHome),
+		CollectGenTxsCmd(defaultNodeHome),
 		ValidateGenesisCmd(moduleBasics),
 	)
 

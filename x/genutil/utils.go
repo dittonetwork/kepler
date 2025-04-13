@@ -27,6 +27,11 @@ func ExportGenesisFile(genesis *types.AppGenesis, genFile string) error {
 	return genesis.SaveAs(genFile)
 }
 
+// InitializeNodeValidatorFiles creates private validator and p2p configuration files.
+func InitializeNodeValidatorFiles(config *cfg.Config) (string, cryptotypes.PubKey, error) {
+	return InitializeNodeValidatorFilesFromMnemonic(config, "")
+}
+
 // InitializeNodeValidatorFilesFromMnemonic creates private validator
 // and p2p configuration files using the given mnemonic.
 // If no valid mnemonic is given, a random one will be used instead.

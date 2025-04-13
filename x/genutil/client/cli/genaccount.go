@@ -91,7 +91,7 @@ contain valid denominations. Accounts may optionally be supplied with vesting pa
 			inBuf := bufio.NewReader(cmd.InOrStdin())
 			keyringBackend, _ := cmd.Flags().GetString(flags.FlagKeyringBackend)
 
-			addr, pubKey, err := getAddressAndPubKeyFromKeyOrAddress(
+			addr, _, err := getAddressAndPubKeyFromKeyOrAddress(
 				clientCtx,
 				args[0],
 				addressCodec,
@@ -105,7 +105,7 @@ contain valid denominations. Accounts may optionally be supplied with vesting pa
 			appendflag, _ := cmd.Flags().GetBool(flagAppendMode)
 			moduleNameStr, _ := cmd.Flags().GetString(flagModuleName)
 
-			return genutil.AddGenesisAccount(clientCtx.Codec, addr, pubKey, appendflag,
+			return genutil.AddGenesisAccount(clientCtx.Codec, addr, appendflag,
 				config.GenesisFile(), args[1], moduleNameStr)
 		},
 	}

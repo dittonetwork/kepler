@@ -2,29 +2,39 @@ version: 1
 validation: sovereign
 build:
   main: cmd/keplerd
+
 accounts:
 - name: alice
   coins:
-  - 20000token
-  - 200000000stake
+    - 20000ditto
+  mnemonic: review coil wise siege crack illness true stomach flee scatter boat silent weather junk acoustic wait concert stay razor police guard crucial wreck diary
+
 - name: bob
   coins:
-  - 10000token
-  - 100000000stake
+    - 10000ditto
+  mnemonic: come cherry beef rack market dinner route tide approve letter rather dice velvet reject task foam cabbage equal capital behind lounge vendor worth twice
+
+- name: sweetie
+  coins:
+    - 30000ditto
+  mnemonic: cherry expire brother addict ready conduct gym useful gym half bind pair catalog arch now prevent letter seven tray fiction unfair first electric double
+
 client:
   openapi:
     path: docs/static/openapi.yml
+
 faucet:
   name: bob
   coins:
-  - 5token
-  - 100000stake
+    - 5ditto
+
 validators:
 - name: alice
-  bonded: 100000000stake
-- name: validator1
-  bonded: 100000000stake
-- name: validator2
-  bonded: 200000000stake
-- name: validator3
-  bonded: 300000000stake
+  bonded: 100000000power
+  app:
+    minimum-gas-prices: "0.0001ditto"
+
+- name: bob
+  bonded: 300000000power
+  app:
+    minimum-gas-prices: "0.0001ditto"

@@ -242,9 +242,6 @@ func InvokeSetHooks(keeper *keeper.Keeper, hooks map[string]types.RestakingHooks
 		}
 		multiHooks = append(multiHooks, hook)
 	}
-
-	keeper.Logger().Info("restaking hooks", len(multiHooks))
-
 	keeper.SetHooks(multiHooks)
 	return nil
 }

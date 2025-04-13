@@ -5,10 +5,8 @@ import (
 	"fmt"
 
 	"cosmossdk.io/core/address"
-	"github.com/cosmos/cosmos-sdk/codec/types"
-	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
-
 	"github.com/cosmos/cosmos-sdk/codec"
+	"github.com/cosmos/cosmos-sdk/codec/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
@@ -24,7 +22,6 @@ import (
 func AddGenesisAccount(
 	cdc codec.Codec,
 	accAddr sdk.AccAddress,
-	pubKey cryptotypes.PubKey,
 	appendAcct bool,
 	genesisFileURL, amountStr,
 	moduleName string,
@@ -38,7 +35,7 @@ func AddGenesisAccount(
 	var genAccount authtypes.GenesisAccount
 
 	balances := banktypes.Balance{Address: accAddr.String(), Coins: coins.Sort()}
-	baseAccount := authtypes.NewBaseAccount(accAddr, pubKey, 0, 0)
+	baseAccount := authtypes.NewBaseAccount(accAddr, nil, 0, 0)
 
 	if moduleName != "" {
 		genAccount = authtypes.NewEmptyModuleAccount(moduleName, authtypes.Burner, authtypes.Minter)
