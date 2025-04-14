@@ -1,7 +1,10 @@
 package types
 
 import (
+	"encoding/json"
 	"time"
+
+	"github.com/cosmos/cosmos-sdk/codec"
 )
 
 // this line is used by starport scaffolding # genesis/types/import
@@ -25,4 +28,16 @@ func (gs GenesisState) Validate() error {
 	// this line is used by starport scaffolding # genesis/types/validate
 
 	return nil
+}
+
+// GetGenesisStateFromAppState returns x/auth GenesisState given raw application
+// genesis state.
+func GetGenesisStateFromAppState(cdc codec.Codec, appState map[string]json.RawMessage) GenesisState {
+	var genesisState GenesisState
+
+	if appState[ModuleName] != nil {
+		cdc.MustUnmarshalJSON(appState[ModuleName], &genesisState)
+	}
+
+	return genesisState
 }

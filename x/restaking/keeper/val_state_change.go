@@ -29,6 +29,10 @@ func (k Keeper) ApplyAndReturnValidatorSetUpdates(ctx context.Context) ([]abci.V
 			continue
 		}
 
+		if err = validator.UnpackInterfaces(k.cdc); err != nil {
+			return nil, err
+		}
+
 		var tmProtoPk cmtprotocrypto.PublicKey
 		tmProtoPk, err = validator.CmtConsPublicKey()
 		if err != nil {

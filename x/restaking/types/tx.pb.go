@@ -30,24 +30,24 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
-// BondValidatorRequest is the request type for the Msg/BondValidator RPC method.
-type BondValidatorRequest struct {
+// MsgBondValidator is the request type for the Msg/BondValidator RPC method.
+type MsgBondValidator struct {
 	// owner is the address of the validator operator.
 	Owner string `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
 }
 
-func (m *BondValidatorRequest) Reset()         { *m = BondValidatorRequest{} }
-func (m *BondValidatorRequest) String() string { return proto.CompactTextString(m) }
-func (*BondValidatorRequest) ProtoMessage()    {}
-func (*BondValidatorRequest) Descriptor() ([]byte, []int) {
+func (m *MsgBondValidator) Reset()         { *m = MsgBondValidator{} }
+func (m *MsgBondValidator) String() string { return proto.CompactTextString(m) }
+func (*MsgBondValidator) ProtoMessage()    {}
+func (*MsgBondValidator) Descriptor() ([]byte, []int) {
 	return fileDescriptor_e08c36557f6f17d6, []int{0}
 }
-func (m *BondValidatorRequest) XXX_Unmarshal(b []byte) error {
+func (m *MsgBondValidator) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *BondValidatorRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *MsgBondValidator) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_BondValidatorRequest.Marshal(b, m, deterministic)
+		return xxx_messageInfo_MsgBondValidator.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -57,41 +57,41 @@ func (m *BondValidatorRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte
 		return b[:n], nil
 	}
 }
-func (m *BondValidatorRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_BondValidatorRequest.Merge(m, src)
+func (m *MsgBondValidator) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgBondValidator.Merge(m, src)
 }
-func (m *BondValidatorRequest) XXX_Size() int {
+func (m *MsgBondValidator) XXX_Size() int {
 	return m.Size()
 }
-func (m *BondValidatorRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_BondValidatorRequest.DiscardUnknown(m)
+func (m *MsgBondValidator) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgBondValidator.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_BondValidatorRequest proto.InternalMessageInfo
+var xxx_messageInfo_MsgBondValidator proto.InternalMessageInfo
 
-func (m *BondValidatorRequest) GetOwner() string {
+func (m *MsgBondValidator) GetOwner() string {
 	if m != nil {
 		return m.Owner
 	}
 	return ""
 }
 
-// BondValidatorResponse is the response type for the Msg/BondValidator RPC method.
-type BondValidatorResponse struct {
+// MsgBondValidatorResponse is the response type for the Msg/BondValidator RPC method.
+type MsgBondValidatorResponse struct {
 }
 
-func (m *BondValidatorResponse) Reset()         { *m = BondValidatorResponse{} }
-func (m *BondValidatorResponse) String() string { return proto.CompactTextString(m) }
-func (*BondValidatorResponse) ProtoMessage()    {}
-func (*BondValidatorResponse) Descriptor() ([]byte, []int) {
+func (m *MsgBondValidatorResponse) Reset()         { *m = MsgBondValidatorResponse{} }
+func (m *MsgBondValidatorResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgBondValidatorResponse) ProtoMessage()    {}
+func (*MsgBondValidatorResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_e08c36557f6f17d6, []int{1}
 }
-func (m *BondValidatorResponse) XXX_Unmarshal(b []byte) error {
+func (m *MsgBondValidatorResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *BondValidatorResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *MsgBondValidatorResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_BondValidatorResponse.Marshal(b, m, deterministic)
+		return xxx_messageInfo_MsgBondValidatorResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -101,46 +101,46 @@ func (m *BondValidatorResponse) XXX_Marshal(b []byte, deterministic bool) ([]byt
 		return b[:n], nil
 	}
 }
-func (m *BondValidatorResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_BondValidatorResponse.Merge(m, src)
+func (m *MsgBondValidatorResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgBondValidatorResponse.Merge(m, src)
 }
-func (m *BondValidatorResponse) XXX_Size() int {
+func (m *MsgBondValidatorResponse) XXX_Size() int {
 	return m.Size()
 }
-func (m *BondValidatorResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_BondValidatorResponse.DiscardUnknown(m)
+func (m *MsgBondValidatorResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgBondValidatorResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_BondValidatorResponse proto.InternalMessageInfo
+var xxx_messageInfo_MsgBondValidatorResponse proto.InternalMessageInfo
 
 func init() {
-	proto.RegisterType((*BondValidatorRequest)(nil), "kepler.restaking.BondValidatorRequest")
-	proto.RegisterType((*BondValidatorResponse)(nil), "kepler.restaking.BondValidatorResponse")
+	proto.RegisterType((*MsgBondValidator)(nil), "kepler.restaking.MsgBondValidator")
+	proto.RegisterType((*MsgBondValidatorResponse)(nil), "kepler.restaking.MsgBondValidatorResponse")
 }
 
 func init() { proto.RegisterFile("kepler/restaking/tx.proto", fileDescriptor_e08c36557f6f17d6) }
 
 var fileDescriptor_e08c36557f6f17d6 = []byte{
-	// 297 bytes of a gzipped FileDescriptorProto
+	// 294 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0xcc, 0x4e, 0x2d, 0xc8,
 	0x49, 0x2d, 0xd2, 0x2f, 0x4a, 0x2d, 0x2e, 0x49, 0xcc, 0xce, 0xcc, 0x4b, 0xd7, 0x2f, 0xa9, 0xd0,
 	0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x12, 0x80, 0x48, 0xe9, 0xc1, 0xa5, 0xa4, 0x04, 0x13, 0x73,
 	0x33, 0xf3, 0xf2, 0xf5, 0xc1, 0x24, 0x44, 0x91, 0x94, 0x78, 0x72, 0x7e, 0x71, 0x6e, 0x7e, 0xb1,
 	0x7e, 0x6e, 0x71, 0xba, 0x7e, 0x99, 0x21, 0x88, 0x82, 0x4a, 0x48, 0x42, 0x24, 0xe2, 0xc1, 0x3c,
-	0x7d, 0x08, 0x07, 0x22, 0xa5, 0x54, 0xc7, 0x25, 0xe2, 0x94, 0x9f, 0x97, 0x12, 0x96, 0x98, 0x93,
-	0x99, 0x92, 0x58, 0x92, 0x5f, 0x14, 0x94, 0x5a, 0x58, 0x9a, 0x5a, 0x5c, 0x22, 0xa4, 0xc7, 0xc5,
-	0x9a, 0x5f, 0x9e, 0x97, 0x5a, 0x24, 0xc1, 0xa8, 0xc0, 0xa8, 0xc1, 0xe9, 0x24, 0x71, 0x69, 0x8b,
-	0xae, 0x08, 0x54, 0xa3, 0x63, 0x4a, 0x4a, 0x51, 0x6a, 0x71, 0x71, 0x70, 0x49, 0x51, 0x66, 0x5e,
-	0x7a, 0x10, 0x44, 0x99, 0x95, 0x59, 0xd3, 0xf3, 0x0d, 0x5a, 0x10, 0x76, 0xd7, 0xf3, 0x0d, 0x5a,
-	0xea, 0x50, 0xaf, 0x54, 0x20, 0x79, 0x06, 0x9b, 0x3d, 0x4a, 0xe2, 0x5c, 0xa2, 0x68, 0xe2, 0xc5,
-	0x05, 0xf9, 0x79, 0xc5, 0xa9, 0x46, 0x79, 0x5c, 0xcc, 0xbe, 0xc5, 0xe9, 0x42, 0x09, 0x5c, 0xbc,
-	0x28, 0xf2, 0x42, 0x6a, 0x7a, 0xe8, 0x41, 0xa1, 0x87, 0xcd, 0x60, 0x29, 0x75, 0x82, 0xea, 0x20,
-	0x16, 0x49, 0xb1, 0x36, 0x3c, 0xdf, 0xa0, 0xc5, 0xe8, 0xe4, 0x75, 0xe2, 0x91, 0x1c, 0xe3, 0x85,
-	0x47, 0x72, 0x8c, 0x0f, 0x1e, 0xc9, 0x31, 0x4e, 0x78, 0x2c, 0xc7, 0x70, 0xe1, 0xb1, 0x1c, 0xc3,
-	0x8d, 0xc7, 0x72, 0x0c, 0x51, 0x06, 0xe9, 0x99, 0x25, 0x19, 0xa5, 0x49, 0x7a, 0xc9, 0xf9, 0xb9,
-	0xfa, 0x29, 0x99, 0x25, 0x25, 0xf9, 0x79, 0xa9, 0x25, 0xe5, 0xf9, 0x45, 0xd9, 0xfa, 0x58, 0xfc,
-	0x58, 0x52, 0x59, 0x90, 0x5a, 0x9c, 0xc4, 0x06, 0x0e, 0x5b, 0x63, 0x40, 0x00, 0x00, 0x00, 0xff,
-	0xff, 0xa7, 0xf8, 0x42, 0xc9, 0xd1, 0x01, 0x00, 0x00,
+	0x7d, 0x08, 0x07, 0x22, 0xa5, 0x54, 0xc6, 0x25, 0xe0, 0x5b, 0x9c, 0xee, 0x94, 0x9f, 0x97, 0x12,
+	0x96, 0x98, 0x93, 0x99, 0x92, 0x58, 0x92, 0x5f, 0x24, 0xa4, 0xc7, 0xc5, 0x9a, 0x5f, 0x9e, 0x97,
+	0x5a, 0x24, 0xc1, 0xa8, 0xc0, 0xa8, 0xc1, 0xe9, 0x24, 0x71, 0x69, 0x8b, 0xae, 0x08, 0x54, 0x93,
+	0x63, 0x4a, 0x4a, 0x51, 0x6a, 0x71, 0x71, 0x70, 0x49, 0x51, 0x66, 0x5e, 0x7a, 0x10, 0x44, 0x99,
+	0x95, 0x51, 0xd3, 0xf3, 0x0d, 0x5a, 0x10, 0x76, 0xd7, 0xf3, 0x0d, 0x5a, 0xca, 0x50, 0x6f, 0x54,
+	0x20, 0x79, 0x04, 0xdd, 0x0e, 0x25, 0x29, 0x2e, 0x09, 0x74, 0xb1, 0xa0, 0xd4, 0xe2, 0x82, 0xfc,
+	0xbc, 0xe2, 0x54, 0xa3, 0x5c, 0x2e, 0x66, 0xdf, 0xe2, 0x74, 0xa1, 0x78, 0x2e, 0x5e, 0x54, 0x77,
+	0x29, 0xe9, 0xa1, 0x87, 0x82, 0x1e, 0xba, 0x19, 0x52, 0x5a, 0x84, 0xd5, 0xc0, 0xec, 0x91, 0x62,
+	0x6d, 0x78, 0xbe, 0x41, 0x8b, 0xd1, 0xc9, 0xeb, 0xc4, 0x23, 0x39, 0xc6, 0x0b, 0x8f, 0xe4, 0x18,
+	0x1f, 0x3c, 0x92, 0x63, 0x9c, 0xf0, 0x58, 0x8e, 0xe1, 0xc2, 0x63, 0x39, 0x86, 0x1b, 0x8f, 0xe5,
+	0x18, 0xa2, 0x0c, 0xd2, 0x33, 0x4b, 0x32, 0x4a, 0x93, 0xf4, 0x92, 0xf3, 0x73, 0xf5, 0x53, 0x32,
+	0x4b, 0x4a, 0xf2, 0xf3, 0x52, 0x4b, 0xca, 0xf3, 0x8b, 0xb2, 0xf5, 0xb1, 0xf8, 0xb0, 0xa4, 0xb2,
+	0x20, 0xb5, 0x38, 0x89, 0x0d, 0x1c, 0xaa, 0xc6, 0x80, 0x00, 0x00, 0x00, 0xff, 0xff, 0xf2, 0xce,
+	0xcf, 0x3b, 0xcb, 0x01, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -156,7 +156,7 @@ const _ = grpc.SupportPackageIsVersion4
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type MsgClient interface {
 	// Complete the bonding process for a validator recognized in Bonding status.
-	BondValidator(ctx context.Context, in *BondValidatorRequest, opts ...grpc.CallOption) (*BondValidatorResponse, error)
+	BondValidator(ctx context.Context, in *MsgBondValidator, opts ...grpc.CallOption) (*MsgBondValidatorResponse, error)
 }
 
 type msgClient struct {
@@ -167,8 +167,8 @@ func NewMsgClient(cc grpc1.ClientConn) MsgClient {
 	return &msgClient{cc}
 }
 
-func (c *msgClient) BondValidator(ctx context.Context, in *BondValidatorRequest, opts ...grpc.CallOption) (*BondValidatorResponse, error) {
-	out := new(BondValidatorResponse)
+func (c *msgClient) BondValidator(ctx context.Context, in *MsgBondValidator, opts ...grpc.CallOption) (*MsgBondValidatorResponse, error) {
+	out := new(MsgBondValidatorResponse)
 	err := c.cc.Invoke(ctx, "/kepler.restaking.Msg/BondValidator", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -179,14 +179,14 @@ func (c *msgClient) BondValidator(ctx context.Context, in *BondValidatorRequest,
 // MsgServer is the server API for Msg service.
 type MsgServer interface {
 	// Complete the bonding process for a validator recognized in Bonding status.
-	BondValidator(context.Context, *BondValidatorRequest) (*BondValidatorResponse, error)
+	BondValidator(context.Context, *MsgBondValidator) (*MsgBondValidatorResponse, error)
 }
 
 // UnimplementedMsgServer can be embedded to have forward compatible implementations.
 type UnimplementedMsgServer struct {
 }
 
-func (*UnimplementedMsgServer) BondValidator(ctx context.Context, req *BondValidatorRequest) (*BondValidatorResponse, error) {
+func (*UnimplementedMsgServer) BondValidator(ctx context.Context, req *MsgBondValidator) (*MsgBondValidatorResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BondValidator not implemented")
 }
 
@@ -195,7 +195,7 @@ func RegisterMsgServer(s grpc1.Server, srv MsgServer) {
 }
 
 func _Msg_BondValidator_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(BondValidatorRequest)
+	in := new(MsgBondValidator)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -207,7 +207,7 @@ func _Msg_BondValidator_Handler(srv interface{}, ctx context.Context, dec func(i
 		FullMethod: "/kepler.restaking.Msg/BondValidator",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).BondValidator(ctx, req.(*BondValidatorRequest))
+		return srv.(MsgServer).BondValidator(ctx, req.(*MsgBondValidator))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -226,7 +226,7 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 	Metadata: "kepler/restaking/tx.proto",
 }
 
-func (m *BondValidatorRequest) Marshal() (dAtA []byte, err error) {
+func (m *MsgBondValidator) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -236,12 +236,12 @@ func (m *BondValidatorRequest) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *BondValidatorRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *MsgBondValidator) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *BondValidatorRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *MsgBondValidator) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -256,7 +256,7 @@ func (m *BondValidatorRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *BondValidatorResponse) Marshal() (dAtA []byte, err error) {
+func (m *MsgBondValidatorResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -266,12 +266,12 @@ func (m *BondValidatorResponse) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *BondValidatorResponse) MarshalTo(dAtA []byte) (int, error) {
+func (m *MsgBondValidatorResponse) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *BondValidatorResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *MsgBondValidatorResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -290,7 +290,7 @@ func encodeVarintTx(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
-func (m *BondValidatorRequest) Size() (n int) {
+func (m *MsgBondValidator) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -303,7 +303,7 @@ func (m *BondValidatorRequest) Size() (n int) {
 	return n
 }
 
-func (m *BondValidatorResponse) Size() (n int) {
+func (m *MsgBondValidatorResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -318,7 +318,7 @@ func sovTx(x uint64) (n int) {
 func sozTx(x uint64) (n int) {
 	return sovTx(uint64((x << 1) ^ uint64((int64(x) >> 63))))
 }
-func (m *BondValidatorRequest) Unmarshal(dAtA []byte) error {
+func (m *MsgBondValidator) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -341,10 +341,10 @@ func (m *BondValidatorRequest) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: BondValidatorRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: MsgBondValidator: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: BondValidatorRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: MsgBondValidator: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -400,7 +400,7 @@ func (m *BondValidatorRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *BondValidatorResponse) Unmarshal(dAtA []byte) error {
+func (m *MsgBondValidatorResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -423,10 +423,10 @@ func (m *BondValidatorResponse) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: BondValidatorResponse: wiretype end group for non-group")
+			return fmt.Errorf("proto: MsgBondValidatorResponse: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: BondValidatorResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: MsgBondValidatorResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		default:

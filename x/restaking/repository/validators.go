@@ -6,29 +6,18 @@ import (
 	"github.com/dittonetwork/kepler/x/restaking/types"
 )
 
-// GetPendingValidators returns all pending validators.
-func (s *RestakingRepository) GetPendingValidators(_ sdk.Context) ([]types.Validator, error) {
-	// @TODO https://github.com/dittonetwork/kepler/issues/175
-	panic("not implemented")
-}
+func (s *RestakingRepository) GetValidatorByEvmAddr(ctx sdk.Context, addr string) (types.Validator, error) {
+	valAddr, err := s.validators.Indexes.EvmAddress.MatchExact(ctx, addr)
+	if err != nil {
+		return types.Validator{}, err
+	}
 
-// SetPendingValidator sets the pending validator in the repository.
-func (s *RestakingRepository) SetPendingValidator(
-	ctx sdk.Context,
-	operatorAddr string,
-	validator types.Validator,
-) error {
-	return s.pendingValidators.Set(ctx, operatorAddr, validator)
-}
-
-// RemovePendingValidator removes the pending validator from the repository.
-func (s *RestakingRepository) RemovePendingValidator(ctx sdk.Context, operatorAddr string) error {
-	return s.pendingValidators.Remove(ctx, operatorAddr)
+	return s.validators.Get(ctx, valAddr)
 }
 
 // SetValidator sets the validator in the repository.
-func (s *RestakingRepository) SetValidator(ctx sdk.Context, operatorAddr string, validator types.Validator) error {
-	return s.validators.Set(ctx, operatorAddr, validator)
+func (s *RestakingRepository) SetValidator(ctx sdk.Context, addr sdk.ValAddress, validator types.Validator) error {
+	return s.validators.Set(ctx, addr.String(), validator)
 }
 
 // GetAllValidators returns all validators.
@@ -64,12 +53,17 @@ func (s *RestakingRepository) GetEmergencyValidators(ctx sdk.Context) ([]types.V
 	return indexes.CollectValues(ctx, s.validators, iter)
 }
 
-// RemoveValidator removes the validator from the repository.
-func (s *RestakingRepository) RemoveValidator(ctx sdk.Context, operatorAddr string) error {
-	return s.validators.Remove(ctx, operatorAddr)
+// RemoveValidatorByOperatorAddr removes the validator from the repository.
+func (s *RestakingRepository) RemoveValidatorByOperatorAddr(ctx sdk.Context, addr string) error {
+	valAddr, err := s.validators.Indexes.EvmAddress.MatchExact(ctx, addr)
+	if err != nil {
+		return err
+	}
+
+	return s.validators.Remove(ctx, valAddr)
 }
 
 // GetValidator returns validator by operator address.
-func (s *RestakingRepository) GetValidator(ctx sdk.Context, operatorAddr string) (types.Validator, error) {
-	return s.validators.Get(ctx, operatorAddr)
+func (s *RestakingRepository) GetValidator(ctx sdk.Context, addr sdk.ValAddress) (types.Validator, error) {
+	return s.validators.Get(ctx, addr.String())
 }

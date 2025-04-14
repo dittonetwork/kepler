@@ -30,7 +30,7 @@ import (
 var (
 	_ module.AppModuleBasic      = (*AppModule)(nil)
 	_ module.AppModuleSimulation = (*AppModule)(nil)
-	_ module.HasGenesis          = (*AppModule)(nil)
+	_ module.HasABCIGenesis      = AppModule{}
 	_ module.HasInvariants       = (*AppModule)(nil)
 	_ module.HasConsensusVersion = (*AppModule)(nil)
 	_ module.HasABCIEndBlock     = (*AppModule)(nil)
@@ -127,14 +127,20 @@ func (am AppModule) RegisterServices(cfg module.Configurator) {
 func (am AppModule) RegisterInvariants(_ sdk.InvariantRegistry) {}
 
 // InitGenesis performs the module's genesis initialization. It returns no validator updates.
-func (am AppModule) InitGenesis(ctx sdk.Context, cdc codec.JSONCodec, gs json.RawMessage) {
+func (am AppModule) InitGenesis(ctx sdk.Context, cdc codec.JSONCodec, gs json.RawMessage) []abci.ValidatorUpdate {
 	var genState types.GenesisState
 	// Initialize global index to index in genesis state
 	cdc.MustUnmarshalJSON(gs, &genState)
 
-	if err := am.keeper.InitGenesis(ctx, genState); err != nil {
+	am.keeper.Logger().Info("init genesis")
+
+	validators, err := am.keeper.InitGenesis(ctx, genState)
+
+	if err != nil {
 		panic(err)
 	}
+
+	return validators
 }
 
 // ExportGenesis returns the module's exported genesis state as raw JSON bytes.
@@ -236,9 +242,6 @@ func InvokeSetHooks(keeper *keeper.Keeper, hooks map[string]types.RestakingHooks
 		}
 		multiHooks = append(multiHooks, hook)
 	}
-
-	keeper.Logger().Info("restaking hooks", len(multiHooks))
-
 	keeper.SetHooks(multiHooks)
 	return nil
 }

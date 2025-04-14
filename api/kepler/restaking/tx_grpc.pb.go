@@ -29,7 +29,7 @@ const (
 // Msg defines the Msg service.
 type MsgClient interface {
 	// Complete the bonding process for a validator recognized in Bonding status.
-	BondValidator(ctx context.Context, in *BondValidatorRequest, opts ...grpc.CallOption) (*BondValidatorResponse, error)
+	BondValidator(ctx context.Context, in *MsgBondValidator, opts ...grpc.CallOption) (*MsgBondValidatorResponse, error)
 }
 
 type msgClient struct {
@@ -40,9 +40,9 @@ func NewMsgClient(cc grpc.ClientConnInterface) MsgClient {
 	return &msgClient{cc}
 }
 
-func (c *msgClient) BondValidator(ctx context.Context, in *BondValidatorRequest, opts ...grpc.CallOption) (*BondValidatorResponse, error) {
+func (c *msgClient) BondValidator(ctx context.Context, in *MsgBondValidator, opts ...grpc.CallOption) (*MsgBondValidatorResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(BondValidatorResponse)
+	out := new(MsgBondValidatorResponse)
 	err := c.cc.Invoke(ctx, Msg_BondValidator_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -57,7 +57,7 @@ func (c *msgClient) BondValidator(ctx context.Context, in *BondValidatorRequest,
 // Msg defines the Msg service.
 type MsgServer interface {
 	// Complete the bonding process for a validator recognized in Bonding status.
-	BondValidator(context.Context, *BondValidatorRequest) (*BondValidatorResponse, error)
+	BondValidator(context.Context, *MsgBondValidator) (*MsgBondValidatorResponse, error)
 	mustEmbedUnimplementedMsgServer()
 }
 
@@ -68,7 +68,7 @@ type MsgServer interface {
 // pointer dereference when methods are called.
 type UnimplementedMsgServer struct{}
 
-func (UnimplementedMsgServer) BondValidator(context.Context, *BondValidatorRequest) (*BondValidatorResponse, error) {
+func (UnimplementedMsgServer) BondValidator(context.Context, *MsgBondValidator) (*MsgBondValidatorResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BondValidator not implemented")
 }
 func (UnimplementedMsgServer) mustEmbedUnimplementedMsgServer() {}
@@ -93,7 +93,7 @@ func RegisterMsgServer(s grpc.ServiceRegistrar, srv MsgServer) {
 }
 
 func _Msg_BondValidator_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(BondValidatorRequest)
+	in := new(MsgBondValidator)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -105,7 +105,7 @@ func _Msg_BondValidator_Handler(srv interface{}, ctx context.Context, dec func(i
 		FullMethod: Msg_BondValidator_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).BondValidator(ctx, req.(*BondValidatorRequest))
+		return srv.(MsgServer).BondValidator(ctx, req.(*MsgBondValidator))
 	}
 	return interceptor(ctx, in, info, handler)
 }

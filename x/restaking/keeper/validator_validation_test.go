@@ -29,10 +29,10 @@ func (s *TestSuite) TestValidateUpdateValidatorSet() {
 					}, nil)
 			},
 			update: types.ValidatorsUpdate{
-				Operators: []types.Validator{
+				Operators: []types.Operator{
 					{
-						OperatorAddress: "0x111222333",
-						Status:          types.Unbonding,
+						Address: "0x111222333",
+						Status:  types.Unbonding,
 						ConsensusPubkey: &codectypes.Any{
 							TypeUrl: "/cosmos.crypto.ed25519.PubKey",
 							Value:   []byte("pubkey1"),
@@ -61,10 +61,10 @@ func (s *TestSuite) TestValidateUpdateValidatorSet() {
 					}, nil)
 			},
 			update: types.ValidatorsUpdate{
-				Operators: []types.Validator{
+				Operators: []types.Operator{
 					{
-						OperatorAddress: "0x111222333",
-						Status:          types.Unbonding,
+						Address: "0x111222333",
+						Status:  types.Unbonding,
 						ConsensusPubkey: &codectypes.Any{
 							TypeUrl: "/cosmos.crypto.ed25519.PubKey",
 							Value:   []byte("pubkey1"),
@@ -93,10 +93,10 @@ func (s *TestSuite) TestValidateUpdateValidatorSet() {
 					}, nil)
 			},
 			update: types.ValidatorsUpdate{
-				Operators: []types.Validator{
+				Operators: []types.Operator{
 					{
-						OperatorAddress: "0x111222333",
-						Status:          types.Unbonding,
+						Address: "0x111222333",
+						Status:  types.Unbonding,
 						ConsensusPubkey: &codectypes.Any{
 							TypeUrl: "/cosmos.crypto.ed25519.PubKey",
 							Value:   []byte("pubkey1"),
@@ -125,10 +125,10 @@ func (s *TestSuite) TestValidateUpdateValidatorSet() {
 					}, nil)
 			},
 			update: types.ValidatorsUpdate{
-				Operators: []types.Validator{
+				Operators: []types.Operator{
 					{
-						OperatorAddress: "", // Empty operator address
-						Status:          types.Unbonding,
+						Address: "", // Empty operator address
+						Status:  types.Unbonding,
 						ConsensusPubkey: &codectypes.Any{
 							TypeUrl: "/cosmos.crypto.ed25519.PubKey",
 							Value:   []byte("pubkey1"),
@@ -157,10 +157,10 @@ func (s *TestSuite) TestValidateUpdateValidatorSet() {
 					}, nil)
 			},
 			update: types.ValidatorsUpdate{
-				Operators: []types.Validator{
+				Operators: []types.Operator{
 					{
-						OperatorAddress: "not-hex-address", // Invalid Ethereum address
-						Status:          types.Unbonding,
+						Address: "not-hex-address", // Invalid Ethereum address
+						Status:  types.Unbonding,
 						ConsensusPubkey: &codectypes.Any{
 							TypeUrl: "/cosmos.crypto.ed25519.PubKey",
 							Value:   []byte("pubkey1"),
@@ -189,9 +189,9 @@ func (s *TestSuite) TestValidateUpdateValidatorSet() {
 					}, nil)
 			},
 			update: types.ValidatorsUpdate{
-				Operators: []types.Validator{
+				Operators: []types.Operator{
 					{
-						OperatorAddress: "0x111222333",
+						Address:         "0x111222333",
 						Status:          types.Unbonding,
 						ConsensusPubkey: nil, // Empty consensus public key
 					},
