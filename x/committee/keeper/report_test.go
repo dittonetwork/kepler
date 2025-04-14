@@ -43,7 +43,6 @@ func (suite *ReportTestSuite) SetupTest() {
 	// Create a test committee
 	suite.committeeID = "test-committee"
 	suite.committee = types.Committee{
-		Id:      suite.committeeID,
 		Address: "cosmos1kkyr80lkuku58h7e2v84egemscmem304mdra4f",
 	}
 
@@ -78,25 +77,6 @@ func (suite *ReportTestSuite) TestHandleReport_InvalidCommitteeAddress() {
 	suite.Require().Contains(err.Error(), "invalid committee")
 }
 
-func (suite *ReportTestSuite) TestHandleReport_InvalidCommitteeID() {
-	// Setup mock expectations
-	suite.repository.EXPECT().
-		GetLastCommittee(suite.ctx).
-		Return(suite.committee, nil)
-
-	// Create a report with invalid committee ID
-	msg := &types.MsgSendReport{
-		Creator: suite.committee.Address,
-		Report: &types.Report{
-			CommitteeId: "invalid-committee-id",
-		},
-	}
-
-	err := suite.keeper.HandleReport(suite.ctx, msg)
-	suite.Require().Error(err)
-	suite.Require().Contains(err.Error(), "invalid committee id")
-}
-
 func (suite *ReportTestSuite) TestHandleReport_ValidReport() {
 	// Setup mock expectations
 	suite.repository.EXPECT().
@@ -119,13 +99,18 @@ func (suite *ReportTestSuite) TestHandleReport_ValidReport() {
 	err := suite.keeper.HandleReport(suite.ctx, msg)
 	suite.Require().NoError(err)
 
+	execCtx := &types.ExecutionContext{
+		KeplerBlockNumber: 1,
+		EthBlockNumber:    2,
+	}
+
 	// Verify events were emitted
 	events := suite.ctx.EventManager().Events()
 	suite.Require().Len(events, 1)
 	suite.Require().Equal(types.EventKeyReportGot, events[0].Type)
-	suite.Require().Equal(suite.committeeID, events[0].Attributes[0].Value)
-	suite.Require().Equal(suite.committee.Address, events[0].Attributes[1].Value)
-	suite.Require().Equal("0", events[0].Attributes[3].Value) // report_count
+	suite.Require().Equal(suite.committee.Address, events[0].Attributes[0].Value)
+	suite.Require().Equal(execCtx.String(), events[0].Attributes[1].Value)
+	suite.Require().Equal("0", events[0].Attributes[2].Value) // report_count
 }
 
 func (suite *ReportTestSuite) TestHandleReport_InvalidMessage() {

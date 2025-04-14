@@ -34,13 +34,13 @@ func CommitteeKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {
 
 	// Mock staking keeper
 	ctrl := gomock.NewController(t)
-	executorsKeeper := committeemock.NewMockExecutorsKeeper(ctrl)
 	restakingKeeper := committeemock.NewMockRestakingKeeper(ctrl)
+	accountKeeper := committeemock.NewMockAccountKeeper(ctrl)
 	repo := committeemock.NewMockRepository(ctrl)
 
 	k := keeper.NewKeeper(
 		authority.String(),
-		executorsKeeper,
+		accountKeeper,
 		restakingKeeper,
 		repo,
 		nil,

@@ -19,14 +19,9 @@ func (k Keeper) HandleReport(ctx sdk.Context, msg *types.MsgSendReport) error {
 		return sdkerrors.Wrapf(errors.New("invalid committee"), "invalid committee")
 	}
 
-	if msg.GetReport().GetCommitteeId() != lastCommittee.GetId() {
-		return sdkerrors.Wrapf(errors.New("invalid committee id"), "invalid committee id")
-	}
-
 	ctx.EventManager().EmitEvent(
 		sdk.NewEvent(
 			types.EventKeyReportGot,
-			sdk.NewAttribute("committee_id", lastCommittee.GetId()),
 			sdk.NewAttribute("creator", msg.GetCreator()),
 			sdk.NewAttribute("context", msg.GetReport().GetExecutionContext().String()),
 			sdk.NewAttribute("report_count", strconv.Itoa(len(msg.GetReport().GetMessages()))),

@@ -4,13 +4,12 @@ import (
 	"context"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	exectypes "github.com/dittonetwork/kepler/x/executors/types"
 	restakingtypes "github.com/dittonetwork/kepler/x/restaking/types"
 )
 
 // AccountKeeper defines the expected interface for the Account module.
 type AccountKeeper interface {
-	GetAccount(context.Context, sdk.AccAddress) sdk.AccountI // only used for simulation
+	GetAccount(context.Context, sdk.AccAddress) sdk.AccountI
 	// Methods imported from account should be defined here
 }
 
@@ -20,14 +19,9 @@ type BankKeeper interface {
 	// Methods imported from bank should be defined here
 }
 
-// ExecutorsKeeper defines the expected interface for the ExecutorsKeeper module.
-type ExecutorsKeeper interface {
-	GetEmergencyExecutors(ctx sdk.Context) ([]exectypes.Executor, error)
-}
-
 // RestakingKeeper defines the expected interface for the Validator module.
 type RestakingKeeper interface {
-	GetValidator(ctx sdk.Context, addr sdk.ValAddress) (restakingtypes.Validator, error)
+	GetActiveEmergencyValidators(ctx sdk.Context) ([]restakingtypes.Validator, error)
 }
 
 // ParamSubspace defines the expected Subspace interface for parameters.

@@ -30,8 +30,8 @@ type TestSuite struct {
 	keeper      keeper.Keeper
 	authority   string
 
+	accountKeeper   *committeetestutil.MockAccountKeeper
 	restakingKeeper *committeetestutil.MockRestakingKeeper
-	executorKeeper  *committeetestutil.MockExecutorsKeeper
 	repo            *committeetestutil.MockRepository
 }
 
@@ -47,7 +47,7 @@ func (s *TestSuite) SetupTest() {
 
 	// gomock initializations
 	ctrl := gomock.NewController(s.T())
-	executorKeeper := committeetestutil.NewMockExecutorsKeeper(ctrl)
+	accountKeeper := committeetestutil.NewMockAccountKeeper(ctrl)
 	restakingKeeper := committeetestutil.NewMockRestakingKeeper(ctrl)
 
 	pubKey := sr25519.GenPrivKey().PubKey()
@@ -59,7 +59,7 @@ func (s *TestSuite) SetupTest() {
 
 	committeeKeeper := keeper.NewKeeper(
 		s.authority,
-		executorKeeper,
+		accountKeeper,
 		restakingKeeper,
 		repo,
 		nil,
@@ -70,7 +70,7 @@ func (s *TestSuite) SetupTest() {
 	queryHelper := baseapp.NewQueryServerTestHelper(ctx, encCfg.InterfaceRegistry)
 	types.RegisterQueryServer(queryHelper, keeper.NewQueryServerImpl(committeeKeeper))
 
-	s.executorKeeper = executorKeeper
+	s.accountKeeper = accountKeeper
 	s.restakingKeeper = restakingKeeper
 	s.keeper = committeeKeeper
 	s.queryClient = committee.NewQueryClient(queryHelper)

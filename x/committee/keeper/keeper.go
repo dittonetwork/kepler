@@ -37,7 +37,7 @@ type Keeper struct {
 
 	repository types.Repository
 
-	executors types.ExecutorsKeeper
+	account   types.AccountKeeper
 	restaking types.RestakingKeeper
 
 	// the address capable of executing a MsgUpdateParams message. Typically, this
@@ -47,7 +47,7 @@ type Keeper struct {
 
 func NewKeeper(
 	authority string,
-	executors types.ExecutorsKeeper,
+	account types.AccountKeeper,
 	restaking types.RestakingKeeper,
 	repo types.Repository,
 	router baseapp.MessageRouter,
@@ -60,7 +60,7 @@ func NewKeeper(
 
 	k := Keeper{
 		authority:  authority,
-		executors:  executors,
+		account:    account,
 		restaking:  restaking,
 		repository: repo,
 		router:     router,

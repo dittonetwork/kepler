@@ -192,7 +192,6 @@ type ModuleInputs struct {
 	AccountKeeper types.AccountKeeper
 	BankKeeper    types.BankKeeper
 
-	ExecutorsKeeper types.ExecutorsKeeper
 	RestakingKeeper types.RestakingKeeper
 }
 
@@ -214,7 +213,7 @@ func ProvideModule(in ModuleInputs) ModuleOutputs {
 
 	k := keeper.NewKeeper(
 		authority.String(),
-		in.ExecutorsKeeper,
+		in.AccountKeeper,
 		in.RestakingKeeper,
 		repo,
 		in.Router,

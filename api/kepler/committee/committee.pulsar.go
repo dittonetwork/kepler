@@ -15,60 +15,59 @@ import (
 	sync "sync"
 )
 
-var _ protoreflect.List = (*_Committee_6_list)(nil)
+var _ protoreflect.List = (*_Committee_5_list)(nil)
 
-type _Committee_6_list struct {
+type _Committee_5_list struct {
 	list *[]*Executor
 }
 
-func (x *_Committee_6_list) Len() int {
+func (x *_Committee_5_list) Len() int {
 	if x.list == nil {
 		return 0
 	}
 	return len(*x.list)
 }
 
-func (x *_Committee_6_list) Get(i int) protoreflect.Value {
+func (x *_Committee_5_list) Get(i int) protoreflect.Value {
 	return protoreflect.ValueOfMessage((*x.list)[i].ProtoReflect())
 }
 
-func (x *_Committee_6_list) Set(i int, value protoreflect.Value) {
+func (x *_Committee_5_list) Set(i int, value protoreflect.Value) {
 	valueUnwrapped := value.Message()
 	concreteValue := valueUnwrapped.Interface().(*Executor)
 	(*x.list)[i] = concreteValue
 }
 
-func (x *_Committee_6_list) Append(value protoreflect.Value) {
+func (x *_Committee_5_list) Append(value protoreflect.Value) {
 	valueUnwrapped := value.Message()
 	concreteValue := valueUnwrapped.Interface().(*Executor)
 	*x.list = append(*x.list, concreteValue)
 }
 
-func (x *_Committee_6_list) AppendMutable() protoreflect.Value {
+func (x *_Committee_5_list) AppendMutable() protoreflect.Value {
 	v := new(Executor)
 	*x.list = append(*x.list, v)
 	return protoreflect.ValueOfMessage(v.ProtoReflect())
 }
 
-func (x *_Committee_6_list) Truncate(n int) {
+func (x *_Committee_5_list) Truncate(n int) {
 	for i := n; i < len(*x.list); i++ {
 		(*x.list)[i] = nil
 	}
 	*x.list = (*x.list)[:n]
 }
 
-func (x *_Committee_6_list) NewElement() protoreflect.Value {
+func (x *_Committee_5_list) NewElement() protoreflect.Value {
 	v := new(Executor)
 	return protoreflect.ValueOfMessage(v.ProtoReflect())
 }
 
-func (x *_Committee_6_list) IsValid() bool {
+func (x *_Committee_5_list) IsValid() bool {
 	return x.list != nil
 }
 
 var (
 	md_Committee              protoreflect.MessageDescriptor
-	fd_Committee_id           protoreflect.FieldDescriptor
 	fd_Committee_epoch        protoreflect.FieldDescriptor
 	fd_Committee_seed         protoreflect.FieldDescriptor
 	fd_Committee_is_emergency protoreflect.FieldDescriptor
@@ -79,7 +78,6 @@ var (
 func init() {
 	file_kepler_committee_committee_proto_init()
 	md_Committee = File_kepler_committee_committee_proto.Messages().ByName("Committee")
-	fd_Committee_id = md_Committee.Fields().ByName("id")
 	fd_Committee_epoch = md_Committee.Fields().ByName("epoch")
 	fd_Committee_seed = md_Committee.Fields().ByName("seed")
 	fd_Committee_is_emergency = md_Committee.Fields().ByName("is_emergency")
@@ -152,12 +150,6 @@ func (x *fastReflection_Committee) Interface() protoreflect.ProtoMessage {
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
 func (x *fastReflection_Committee) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
-	if x.Id != "" {
-		value := protoreflect.ValueOfString(x.Id)
-		if !f(fd_Committee_id, value) {
-			return
-		}
-	}
 	if x.Epoch != uint32(0) {
 		value := protoreflect.ValueOfUint32(x.Epoch)
 		if !f(fd_Committee_epoch, value) {
@@ -183,7 +175,7 @@ func (x *fastReflection_Committee) Range(f func(protoreflect.FieldDescriptor, pr
 		}
 	}
 	if len(x.Executors) != 0 {
-		value := protoreflect.ValueOfList(&_Committee_6_list{list: &x.Executors})
+		value := protoreflect.ValueOfList(&_Committee_5_list{list: &x.Executors})
 		if !f(fd_Committee_executors, value) {
 			return
 		}
@@ -203,8 +195,6 @@ func (x *fastReflection_Committee) Range(f func(protoreflect.FieldDescriptor, pr
 // a repeated field is populated if it is non-empty.
 func (x *fastReflection_Committee) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "kepler.committee.Committee.id":
-		return x.Id != ""
 	case "kepler.committee.Committee.epoch":
 		return x.Epoch != uint32(0)
 	case "kepler.committee.Committee.seed":
@@ -231,8 +221,6 @@ func (x *fastReflection_Committee) Has(fd protoreflect.FieldDescriptor) bool {
 // Clear is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_Committee) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "kepler.committee.Committee.id":
-		x.Id = ""
 	case "kepler.committee.Committee.epoch":
 		x.Epoch = uint32(0)
 	case "kepler.committee.Committee.seed":
@@ -259,9 +247,6 @@ func (x *fastReflection_Committee) Clear(fd protoreflect.FieldDescriptor) {
 // of the value; to obtain a mutable reference, use Mutable.
 func (x *fastReflection_Committee) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "kepler.committee.Committee.id":
-		value := x.Id
-		return protoreflect.ValueOfString(value)
 	case "kepler.committee.Committee.epoch":
 		value := x.Epoch
 		return protoreflect.ValueOfUint32(value)
@@ -276,9 +261,9 @@ func (x *fastReflection_Committee) Get(descriptor protoreflect.FieldDescriptor) 
 		return protoreflect.ValueOfString(value)
 	case "kepler.committee.Committee.executors":
 		if len(x.Executors) == 0 {
-			return protoreflect.ValueOfList(&_Committee_6_list{})
+			return protoreflect.ValueOfList(&_Committee_5_list{})
 		}
-		listValue := &_Committee_6_list{list: &x.Executors}
+		listValue := &_Committee_5_list{list: &x.Executors}
 		return protoreflect.ValueOfList(listValue)
 	default:
 		if descriptor.IsExtension() {
@@ -300,8 +285,6 @@ func (x *fastReflection_Committee) Get(descriptor protoreflect.FieldDescriptor) 
 // Set is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_Committee) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "kepler.committee.Committee.id":
-		x.Id = value.Interface().(string)
 	case "kepler.committee.Committee.epoch":
 		x.Epoch = uint32(value.Uint())
 	case "kepler.committee.Committee.seed":
@@ -312,7 +295,7 @@ func (x *fastReflection_Committee) Set(fd protoreflect.FieldDescriptor, value pr
 		x.Address = value.Interface().(string)
 	case "kepler.committee.Committee.executors":
 		lv := value.List()
-		clv := lv.(*_Committee_6_list)
+		clv := lv.(*_Committee_5_list)
 		x.Executors = *clv.list
 	default:
 		if fd.IsExtension() {
@@ -338,10 +321,8 @@ func (x *fastReflection_Committee) Mutable(fd protoreflect.FieldDescriptor) prot
 		if x.Executors == nil {
 			x.Executors = []*Executor{}
 		}
-		value := &_Committee_6_list{list: &x.Executors}
+		value := &_Committee_5_list{list: &x.Executors}
 		return protoreflect.ValueOfList(value)
-	case "kepler.committee.Committee.id":
-		panic(fmt.Errorf("field id of message kepler.committee.Committee is not mutable"))
 	case "kepler.committee.Committee.epoch":
 		panic(fmt.Errorf("field epoch of message kepler.committee.Committee is not mutable"))
 	case "kepler.committee.Committee.seed":
@@ -363,8 +344,6 @@ func (x *fastReflection_Committee) Mutable(fd protoreflect.FieldDescriptor) prot
 // For lists, maps, and messages, this returns a new, empty, mutable value.
 func (x *fastReflection_Committee) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "kepler.committee.Committee.id":
-		return protoreflect.ValueOfString("")
 	case "kepler.committee.Committee.epoch":
 		return protoreflect.ValueOfUint32(uint32(0))
 	case "kepler.committee.Committee.seed":
@@ -375,7 +354,7 @@ func (x *fastReflection_Committee) NewField(fd protoreflect.FieldDescriptor) pro
 		return protoreflect.ValueOfString("")
 	case "kepler.committee.Committee.executors":
 		list := []*Executor{}
-		return protoreflect.ValueOfList(&_Committee_6_list{list: &list})
+		return protoreflect.ValueOfList(&_Committee_5_list{list: &list})
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.committee.Committee"))
@@ -445,10 +424,6 @@ func (x *fastReflection_Committee) ProtoMethods() *protoiface.Methods {
 		var n int
 		var l int
 		_ = l
-		l = len(x.Id)
-		if l > 0 {
-			n += 1 + l + runtime.Sov(uint64(l))
-		}
 		if x.Epoch != 0 {
 			n += 1 + runtime.Sov(uint64(x.Epoch))
 		}
@@ -511,7 +486,7 @@ func (x *fastReflection_Committee) ProtoMethods() *protoiface.Methods {
 				copy(dAtA[i:], encoded)
 				i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
 				i--
-				dAtA[i] = 0x32
+				dAtA[i] = 0x2a
 			}
 		}
 		if len(x.Address) > 0 {
@@ -519,7 +494,7 @@ func (x *fastReflection_Committee) ProtoMethods() *protoiface.Methods {
 			copy(dAtA[i:], x.Address)
 			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Address)))
 			i--
-			dAtA[i] = 0x2a
+			dAtA[i] = 0x22
 		}
 		if x.IsEmergency {
 			i--
@@ -529,26 +504,19 @@ func (x *fastReflection_Committee) ProtoMethods() *protoiface.Methods {
 				dAtA[i] = 0
 			}
 			i--
-			dAtA[i] = 0x20
+			dAtA[i] = 0x18
 		}
 		if len(x.Seed) > 0 {
 			i -= len(x.Seed)
 			copy(dAtA[i:], x.Seed)
 			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Seed)))
 			i--
-			dAtA[i] = 0x1a
+			dAtA[i] = 0x12
 		}
 		if x.Epoch != 0 {
 			i = runtime.EncodeVarint(dAtA, i, uint64(x.Epoch))
 			i--
-			dAtA[i] = 0x10
-		}
-		if len(x.Id) > 0 {
-			i -= len(x.Id)
-			copy(dAtA[i:], x.Id)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Id)))
-			i--
-			dAtA[i] = 0xa
+			dAtA[i] = 0x8
 		}
 		if input.Buf != nil {
 			input.Buf = append(input.Buf, dAtA...)
@@ -600,38 +568,6 @@ func (x *fastReflection_Committee) ProtoMethods() *protoiface.Methods {
 			}
 			switch fieldNum {
 			case 1:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
-				}
-				var stringLen uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + intStringLen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				x.Id = string(dAtA[iNdEx:postIndex])
-				iNdEx = postIndex
-			case 2:
 				if wireType != 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Epoch", wireType)
 				}
@@ -650,7 +586,7 @@ func (x *fastReflection_Committee) ProtoMethods() *protoiface.Methods {
 						break
 					}
 				}
-			case 3:
+			case 2:
 				if wireType != 2 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Seed", wireType)
 				}
@@ -684,7 +620,7 @@ func (x *fastReflection_Committee) ProtoMethods() *protoiface.Methods {
 					x.Seed = []byte{}
 				}
 				iNdEx = postIndex
-			case 4:
+			case 3:
 				if wireType != 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field IsEmergency", wireType)
 				}
@@ -704,7 +640,7 @@ func (x *fastReflection_Committee) ProtoMethods() *protoiface.Methods {
 					}
 				}
 				x.IsEmergency = bool(v != 0)
-			case 5:
+			case 4:
 				if wireType != 2 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Address", wireType)
 				}
@@ -736,7 +672,7 @@ func (x *fastReflection_Committee) ProtoMethods() *protoiface.Methods {
 				}
 				x.Address = string(dAtA[iNdEx:postIndex])
 				iNdEx = postIndex
-			case 6:
+			case 5:
 				if wireType != 2 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Executors", wireType)
 				}
@@ -808,7 +744,6 @@ func (x *fastReflection_Committee) ProtoMethods() *protoiface.Methods {
 var (
 	md_Executor              protoreflect.MessageDescriptor
 	fd_Executor_address      protoreflect.FieldDescriptor
-	fd_Executor_public_key   protoreflect.FieldDescriptor
 	fd_Executor_voting_power protoreflect.FieldDescriptor
 )
 
@@ -816,7 +751,6 @@ func init() {
 	file_kepler_committee_committee_proto_init()
 	md_Executor = File_kepler_committee_committee_proto.Messages().ByName("Executor")
 	fd_Executor_address = md_Executor.Fields().ByName("address")
-	fd_Executor_public_key = md_Executor.Fields().ByName("public_key")
 	fd_Executor_voting_power = md_Executor.Fields().ByName("voting_power")
 }
 
@@ -891,12 +825,6 @@ func (x *fastReflection_Executor) Range(f func(protoreflect.FieldDescriptor, pro
 			return
 		}
 	}
-	if len(x.PublicKey) != 0 {
-		value := protoreflect.ValueOfBytes(x.PublicKey)
-		if !f(fd_Executor_public_key, value) {
-			return
-		}
-	}
 	if x.VotingPower != int64(0) {
 		value := protoreflect.ValueOfInt64(x.VotingPower)
 		if !f(fd_Executor_voting_power, value) {
@@ -920,8 +848,6 @@ func (x *fastReflection_Executor) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
 	case "kepler.committee.Executor.address":
 		return x.Address != ""
-	case "kepler.committee.Executor.public_key":
-		return len(x.PublicKey) != 0
 	case "kepler.committee.Executor.voting_power":
 		return x.VotingPower != int64(0)
 	default:
@@ -942,8 +868,6 @@ func (x *fastReflection_Executor) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
 	case "kepler.committee.Executor.address":
 		x.Address = ""
-	case "kepler.committee.Executor.public_key":
-		x.PublicKey = nil
 	case "kepler.committee.Executor.voting_power":
 		x.VotingPower = int64(0)
 	default:
@@ -965,9 +889,6 @@ func (x *fastReflection_Executor) Get(descriptor protoreflect.FieldDescriptor) p
 	case "kepler.committee.Executor.address":
 		value := x.Address
 		return protoreflect.ValueOfString(value)
-	case "kepler.committee.Executor.public_key":
-		value := x.PublicKey
-		return protoreflect.ValueOfBytes(value)
 	case "kepler.committee.Executor.voting_power":
 		value := x.VotingPower
 		return protoreflect.ValueOfInt64(value)
@@ -993,8 +914,6 @@ func (x *fastReflection_Executor) Set(fd protoreflect.FieldDescriptor, value pro
 	switch fd.FullName() {
 	case "kepler.committee.Executor.address":
 		x.Address = value.Interface().(string)
-	case "kepler.committee.Executor.public_key":
-		x.PublicKey = value.Bytes()
 	case "kepler.committee.Executor.voting_power":
 		x.VotingPower = value.Int()
 	default:
@@ -1019,8 +938,6 @@ func (x *fastReflection_Executor) Mutable(fd protoreflect.FieldDescriptor) proto
 	switch fd.FullName() {
 	case "kepler.committee.Executor.address":
 		panic(fmt.Errorf("field address of message kepler.committee.Executor is not mutable"))
-	case "kepler.committee.Executor.public_key":
-		panic(fmt.Errorf("field public_key of message kepler.committee.Executor is not mutable"))
 	case "kepler.committee.Executor.voting_power":
 		panic(fmt.Errorf("field voting_power of message kepler.committee.Executor is not mutable"))
 	default:
@@ -1038,8 +955,6 @@ func (x *fastReflection_Executor) NewField(fd protoreflect.FieldDescriptor) prot
 	switch fd.FullName() {
 	case "kepler.committee.Executor.address":
 		return protoreflect.ValueOfString("")
-	case "kepler.committee.Executor.public_key":
-		return protoreflect.ValueOfBytes(nil)
 	case "kepler.committee.Executor.voting_power":
 		return protoreflect.ValueOfInt64(int64(0))
 	default:
@@ -1115,10 +1030,6 @@ func (x *fastReflection_Executor) ProtoMethods() *protoiface.Methods {
 		if l > 0 {
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
-		l = len(x.PublicKey)
-		if l > 0 {
-			n += 1 + l + runtime.Sov(uint64(l))
-		}
 		if x.VotingPower != 0 {
 			n += 1 + runtime.Sov(uint64(x.VotingPower))
 		}
@@ -1154,14 +1065,7 @@ func (x *fastReflection_Executor) ProtoMethods() *protoiface.Methods {
 		if x.VotingPower != 0 {
 			i = runtime.EncodeVarint(dAtA, i, uint64(x.VotingPower))
 			i--
-			dAtA[i] = 0x18
-		}
-		if len(x.PublicKey) > 0 {
-			i -= len(x.PublicKey)
-			copy(dAtA[i:], x.PublicKey)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.PublicKey)))
-			i--
-			dAtA[i] = 0x12
+			dAtA[i] = 0x10
 		}
 		if len(x.Address) > 0 {
 			i -= len(x.Address)
@@ -1252,40 +1156,6 @@ func (x *fastReflection_Executor) ProtoMethods() *protoiface.Methods {
 				x.Address = string(dAtA[iNdEx:postIndex])
 				iNdEx = postIndex
 			case 2:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field PublicKey", wireType)
-				}
-				var byteLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					byteLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				if byteLen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + byteLen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				x.PublicKey = append(x.PublicKey[:0], dAtA[iNdEx:postIndex]...)
-				if x.PublicKey == nil {
-					x.PublicKey = []byte{}
-				}
-				iNdEx = postIndex
-			case 3:
 				if wireType != 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field VotingPower", wireType)
 				}
@@ -1358,18 +1228,16 @@ type Committee struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// id is the id of the committee.
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// epoch is the epoch of the committee.
-	Epoch uint32 `protobuf:"varint,2,opt,name=epoch,proto3" json:"epoch,omitempty"`
+	Epoch uint32 `protobuf:"varint,1,opt,name=epoch,proto3" json:"epoch,omitempty"`
 	// seed is the seed of the committee. Needed for randomness.
-	Seed []byte `protobuf:"bytes,3,opt,name=seed,proto3" json:"seed,omitempty"`
+	Seed []byte `protobuf:"bytes,2,opt,name=seed,proto3" json:"seed,omitempty"`
 	// is_emergency indicates whether this committee was formed for an emergency situation.
-	IsEmergency bool `protobuf:"varint,4,opt,name=is_emergency,json=isEmergency,proto3" json:"is_emergency,omitempty"`
+	IsEmergency bool `protobuf:"varint,3,opt,name=is_emergency,json=isEmergency,proto3" json:"is_emergency,omitempty"`
 	// address is the address of the committee.
-	Address string `protobuf:"bytes,5,opt,name=address,proto3" json:"address,omitempty"`
+	Address string `protobuf:"bytes,4,opt,name=address,proto3" json:"address,omitempty"`
 	// executors is the list of participants in this committee.
-	Executors []*Executor `protobuf:"bytes,6,rep,name=executors,proto3" json:"executors,omitempty"`
+	Executors []*Executor `protobuf:"bytes,5,rep,name=executors,proto3" json:"executors,omitempty"`
 }
 
 func (x *Committee) Reset() {
@@ -1390,13 +1258,6 @@ func (*Committee) ProtoMessage() {}
 // Deprecated: Use Committee.ProtoReflect.Descriptor instead.
 func (*Committee) Descriptor() ([]byte, []int) {
 	return file_kepler_committee_committee_proto_rawDescGZIP(), []int{0}
-}
-
-func (x *Committee) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
 }
 
 func (x *Committee) GetEpoch() uint32 {
@@ -1442,10 +1303,8 @@ type Executor struct {
 
 	// address is the account address of the executor.
 	Address string `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
-	// public_key is the public key of the executor.
-	PublicKey []byte `protobuf:"bytes,2,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty"`
 	// voting_power represents the weight of this executor's vote in committee decisions.
-	VotingPower int64 `protobuf:"varint,3,opt,name=voting_power,json=votingPower,proto3" json:"voting_power,omitempty"`
+	VotingPower int64 `protobuf:"varint,2,opt,name=voting_power,json=votingPower,proto3" json:"voting_power,omitempty"`
 }
 
 func (x *Executor) Reset() {
@@ -1475,13 +1334,6 @@ func (x *Executor) GetAddress() string {
 	return ""
 }
 
-func (x *Executor) GetPublicKey() []byte {
-	if x != nil {
-		return x.PublicKey
-	}
-	return nil
-}
-
 func (x *Executor) GetVotingPower() int64 {
 	if x != nil {
 		return x.VotingPower
@@ -1499,27 +1351,24 @@ var file_kepler_committee_committee_proto_rawDesc = []byte{
 	0x6f, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x19, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x5f,
 	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x70, 0x72, 0x6f,
 	0x74, 0x6f, 0x1a, 0x14, 0x67, 0x6f, 0x67, 0x6f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x67, 0x6f,
-	0x67, 0x6f, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0xcd, 0x01, 0x0a, 0x09, 0x43, 0x6f, 0x6d,
-	0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x14, 0x0a, 0x05, 0x65, 0x70, 0x6f, 0x63, 0x68, 0x18,
-	0x02, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x05, 0x65, 0x70, 0x6f, 0x63, 0x68, 0x12, 0x12, 0x0a, 0x04,
-	0x73, 0x65, 0x65, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x04, 0x73, 0x65, 0x65, 0x64,
+	0x67, 0x6f, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0xbd, 0x01, 0x0a, 0x09, 0x43, 0x6f, 0x6d,
+	0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x65, 0x70, 0x6f, 0x63, 0x68, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x05, 0x65, 0x70, 0x6f, 0x63, 0x68, 0x12, 0x12, 0x0a, 0x04,
+	0x73, 0x65, 0x65, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x04, 0x73, 0x65, 0x65, 0x64,
 	0x12, 0x21, 0x0a, 0x0c, 0x69, 0x73, 0x5f, 0x65, 0x6d, 0x65, 0x72, 0x67, 0x65, 0x6e, 0x63, 0x79,
-	0x18, 0x04, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0b, 0x69, 0x73, 0x45, 0x6d, 0x65, 0x72, 0x67, 0x65,
-	0x6e, 0x63, 0x79, 0x12, 0x18, 0x0a, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x05,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0b, 0x69, 0x73, 0x45, 0x6d, 0x65, 0x72, 0x67, 0x65,
+	0x6e, 0x63, 0x79, 0x12, 0x18, 0x0a, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x04,
 	0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x43, 0x0a,
-	0x09, 0x65, 0x78, 0x65, 0x63, 0x75, 0x74, 0x6f, 0x72, 0x73, 0x18, 0x06, 0x20, 0x03, 0x28, 0x0b,
+	0x09, 0x65, 0x78, 0x65, 0x63, 0x75, 0x74, 0x6f, 0x72, 0x73, 0x18, 0x05, 0x20, 0x03, 0x28, 0x0b,
 	0x32, 0x1a, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x69, 0x74,
 	0x74, 0x65, 0x65, 0x2e, 0x45, 0x78, 0x65, 0x63, 0x75, 0x74, 0x6f, 0x72, 0x42, 0x09, 0xc8, 0xde,
 	0x1f, 0x00, 0xa8, 0xe7, 0xb0, 0x2a, 0x01, 0x52, 0x09, 0x65, 0x78, 0x65, 0x63, 0x75, 0x74, 0x6f,
-	0x72, 0x73, 0x3a, 0x04, 0xe8, 0xa0, 0x1f, 0x01, 0x22, 0x86, 0x01, 0x0a, 0x08, 0x45, 0x78, 0x65,
-	0x63, 0x75, 0x74, 0x6f, 0x72, 0x12, 0x32, 0x0a, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73,
-	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x18, 0xd2, 0xb4, 0x2d, 0x14, 0x63, 0x6f, 0x73, 0x6d,
-	0x6f, 0x73, 0x2e, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67,
-	0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x1d, 0x0a, 0x0a, 0x70, 0x75, 0x62,
-	0x6c, 0x69, 0x63, 0x5f, 0x6b, 0x65, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x09, 0x70,
-	0x75, 0x62, 0x6c, 0x69, 0x63, 0x4b, 0x65, 0x79, 0x12, 0x21, 0x0a, 0x0c, 0x76, 0x6f, 0x74, 0x69,
-	0x6e, 0x67, 0x5f, 0x70, 0x6f, 0x77, 0x65, 0x72, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0b,
+	0x72, 0x73, 0x3a, 0x04, 0xe8, 0xa0, 0x1f, 0x01, 0x22, 0x67, 0x0a, 0x08, 0x45, 0x78, 0x65, 0x63,
+	0x75, 0x74, 0x6f, 0x72, 0x12, 0x32, 0x0a, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x18, 0xd2, 0xb4, 0x2d, 0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f,
+	0x73, 0x2e, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x52,
+	0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x21, 0x0a, 0x0c, 0x76, 0x6f, 0x74, 0x69,
+	0x6e, 0x67, 0x5f, 0x70, 0x6f, 0x77, 0x65, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0b,
 	0x76, 0x6f, 0x74, 0x69, 0x6e, 0x67, 0x50, 0x6f, 0x77, 0x65, 0x72, 0x3a, 0x04, 0xe8, 0xa0, 0x1f,
 	0x01, 0x42, 0xbc, 0x01, 0x0a, 0x14, 0x63, 0x6f, 0x6d, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72,
 	0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x42, 0x0e, 0x43, 0x6f, 0x6d, 0x6d,
