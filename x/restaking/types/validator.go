@@ -3,20 +3,11 @@ package types
 import (
 	"cosmossdk.io/errors"
 	cmtprotocrypto "github.com/cometbft/cometbft/proto/tendermint/crypto"
+	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	cryptocodec "github.com/cosmos/cosmos-sdk/crypto/codec"
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
-
-// IsBonded helper function to check if the validator is bonded.
-func (v Validator) IsBonded() bool {
-	return v.Status == Bonded
-}
-
-// IsUnbonding helper function to check if the validator is unbonding.
-func (v Validator) IsUnbonding() bool {
-	return v.Status == Unbonding
-}
 
 // ConsPubKey returns the validator's PubKey as cryptotypes.PubKey.
 func (v Validator) ConsPubKey() (cryptotypes.PubKey, error) {
@@ -44,4 +35,30 @@ func (v Validator) CmtConsPublicKey() (cmtprotocrypto.PublicKey, error) {
 	}
 
 	return tmPk, nil
+}
+
+// UnpackInterfaces implements UnpackInterfacesMessage.UnpackInterfaces.
+func (v Validator) UnpackInterfaces(unpacker codectypes.AnyUnpacker) error {
+	var pk cryptotypes.PubKey
+	return unpacker.UnpackAny(v.ConsensusPubkey, &pk)
+}
+
+// ConvertToOperator converts a Validator to an Operator.
+func (v Validator) ConvertToOperator() *Operator {
+	return &Operator{
+		Address:         v.OperatorAddress,
+		ConsensusPubkey: v.ConsensusPubkey,
+		IsEmergency:     v.IsEmergency,
+		Status:          v.Status,
+		VotingPower:     v.VotingPower,
+		Protocol:        v.Protocol,
+	}
+}
+
+func (v *Validator) UpdateOperatorInfo(operator Operator) {
+	v.ConsensusPubkey = operator.ConsensusPubkey
+	v.Status = operator.Status
+	v.Protocol = operator.Protocol
+	v.VotingPower = operator.VotingPower
+	v.IsEmergency = operator.IsEmergency
 }

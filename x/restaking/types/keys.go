@@ -22,6 +22,13 @@ var (
 	KeyPrefixValidators = collections.NewPrefix(1)
 	// KeyPrefixLastUpdate is the prefix for last update keys.
 	KeyPrefixLastUpdate = collections.NewPrefix(2)
-	// KeyPrefixPendingValidators is the prefix for pending validators keys.
-	KeyPrefixPendingValidators = collections.NewPrefix(3)
+	// KeyPrefixPendingOperators is the prefix for pending validators keys.
+	KeyPrefixPendingOperators = collections.NewPrefix(3)
+
+	// KeyPrefixBondedValidators is the prefix for bonded validators keys.
+	KeyPrefixBondedValidators = collections.NewPrefix(4)
+	// KeyPrefixEmergencyValidators is the prefix for emergency validators keys.
+	KeyPrefixEmergencyValidators = collections.NewPrefix(5)
+	// KeyPrefixEvmAddressValidators is the prefix for EVM address pending validators keys.
+	KeyPrefixEvmAddressValidators = collections.NewPrefix(6)
 )

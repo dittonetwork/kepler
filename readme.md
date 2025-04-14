@@ -4,6 +4,14 @@
 
 ## Get started
 
+1. **Build chain:**
+```bash
+$ ignite chain build
+```
+
+
+
+
 ```
 ignite chain serve
 ```
@@ -20,7 +28,7 @@ Additionally, Ignite CLI offers both Vue and React options for frontend scaffold
 
 For a Vue frontend, use: `ignite scaffold vue`
 For a React frontend, use: `ignite scaffold react`
-These commands can be run within your scaffolded blockchain project. 
+These commands can be run within your scaffolded blockchain project.
 
 
 For more information see the [monorepo for Ignite front-end development](https://github.com/ignite/web).

@@ -63,7 +63,7 @@ func (k Keeper) createEmergencyCommittee(ctx sdk.Context, epoch uint32) (types.C
 
 	for i, executor := range executors {
 		var validator restaking.Validator
-		validator, err = k.restaking.GetValidator(ctx, executor.GetOwnerAddress())
+		validator, err = k.restaking.GetValidator(ctx, sdk.ValAddress(executor.GetOwnerAddress()))
 
 		if err != nil {
 			return types.Committee{}, sdkerrors.Wrap(err, "failed to get validator")

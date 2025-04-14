@@ -101,62 +101,77 @@ func (mr *MockRepositoryMockRecorder) GetLastUpdate(ctx any) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetLastUpdate", reflect.TypeOf((*MockRepository)(nil).GetLastUpdate), ctx)
 }
 
-// GetPendingValidators mocks base method.
-func (m *MockRepository) GetPendingValidators(ctx types.Context) ([]types0.Validator, error) {
+// GetPendingOperators mocks base method.
+func (m *MockRepository) GetPendingOperators(ctx types.Context) ([]types0.Operator, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetPendingValidators", ctx)
-	ret0, _ := ret[0].([]types0.Validator)
+	ret := m.ctrl.Call(m, "GetPendingOperators", ctx)
+	ret0, _ := ret[0].([]types0.Operator)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// GetPendingValidators indicates an expected call of GetPendingValidators.
-func (mr *MockRepositoryMockRecorder) GetPendingValidators(ctx any) *gomock.Call {
+// GetPendingOperators indicates an expected call of GetPendingOperators.
+func (mr *MockRepositoryMockRecorder) GetPendingOperators(ctx any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPendingValidators", reflect.TypeOf((*MockRepository)(nil).GetPendingValidators), ctx)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPendingOperators", reflect.TypeOf((*MockRepository)(nil).GetPendingOperators), ctx)
 }
 
 // GetValidator mocks base method.
-func (m *MockRepository) GetValidator(ctx types.Context, operatorAddr string) (types0.Validator, error) {
+func (m *MockRepository) GetValidator(ctx types.Context, addr types.ValAddress) (types0.Validator, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetValidator", ctx, operatorAddr)
+	ret := m.ctrl.Call(m, "GetValidator", ctx, addr)
 	ret0, _ := ret[0].(types0.Validator)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetValidator indicates an expected call of GetValidator.
-func (mr *MockRepositoryMockRecorder) GetValidator(ctx, operatorAddr any) *gomock.Call {
+func (mr *MockRepositoryMockRecorder) GetValidator(ctx, addr any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetValidator", reflect.TypeOf((*MockRepository)(nil).GetValidator), ctx, operatorAddr)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetValidator", reflect.TypeOf((*MockRepository)(nil).GetValidator), ctx, addr)
 }
 
-// RemovePendingValidator mocks base method.
-func (m *MockRepository) RemovePendingValidator(ctx types.Context, operatorAddr string) error {
+// GetValidatorByEvmAddr mocks base method.
+func (m *MockRepository) GetValidatorByEvmAddr(ctx types.Context, addr string) (types0.Validator, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "RemovePendingValidator", ctx, operatorAddr)
+	ret := m.ctrl.Call(m, "GetValidatorByEvmAddr", ctx, addr)
+	ret0, _ := ret[0].(types0.Validator)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetValidatorByEvmAddr indicates an expected call of GetValidatorByEvmAddr.
+func (mr *MockRepositoryMockRecorder) GetValidatorByEvmAddr(ctx, addr any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetValidatorByEvmAddr", reflect.TypeOf((*MockRepository)(nil).GetValidatorByEvmAddr), ctx, addr)
+}
+
+// RemovePendingOperator mocks base method.
+func (m *MockRepository) RemovePendingOperator(ctx types.Context, operatorAddr string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "RemovePendingOperator", ctx, operatorAddr)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
-// RemovePendingValidator indicates an expected call of RemovePendingValidator.
-func (mr *MockRepositoryMockRecorder) RemovePendingValidator(ctx, operatorAddr any) *gomock.Call {
+// RemovePendingOperator indicates an expected call of RemovePendingOperator.
+func (mr *MockRepositoryMockRecorder) RemovePendingOperator(ctx, operatorAddr any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RemovePendingValidator", reflect.TypeOf((*MockRepository)(nil).RemovePendingValidator), ctx, operatorAddr)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RemovePendingOperator", reflect.TypeOf((*MockRepository)(nil).RemovePendingOperator), ctx, operatorAddr)
 }
 
-// RemoveValidator mocks base method.
-func (m *MockRepository) RemoveValidator(ctx types.Context, operatorAddr string) error {
+// RemoveValidatorByOperatorAddr mocks base method.
+func (m *MockRepository) RemoveValidatorByOperatorAddr(ctx types.Context, addr string) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "RemoveValidator", ctx, operatorAddr)
+	ret := m.ctrl.Call(m, "RemoveValidatorByOperatorAddr", ctx, addr)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
-// RemoveValidator indicates an expected call of RemoveValidator.
-func (mr *MockRepositoryMockRecorder) RemoveValidator(ctx, operatorAddr any) *gomock.Call {
+// RemoveValidatorByOperatorAddr indicates an expected call of RemoveValidatorByOperatorAddr.
+func (mr *MockRepositoryMockRecorder) RemoveValidatorByOperatorAddr(ctx, addr any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RemoveValidator", reflect.TypeOf((*MockRepository)(nil).RemoveValidator), ctx, operatorAddr)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RemoveValidatorByOperatorAddr", reflect.TypeOf((*MockRepository)(nil).RemoveValidatorByOperatorAddr), ctx, addr)
 }
 
 // SetLastUpdate mocks base method.
@@ -173,30 +188,30 @@ func (mr *MockRepositoryMockRecorder) SetLastUpdate(ctx, info any) *gomock.Call 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetLastUpdate", reflect.TypeOf((*MockRepository)(nil).SetLastUpdate), ctx, info)
 }
 
-// SetPendingValidator mocks base method.
-func (m *MockRepository) SetPendingValidator(ctx types.Context, operatorAddr string, validator types0.Validator) error {
+// SetPendingOperator mocks base method.
+func (m *MockRepository) SetPendingOperator(ctx types.Context, operatorAddr string, operator types0.Operator) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SetPendingValidator", ctx, operatorAddr, validator)
+	ret := m.ctrl.Call(m, "SetPendingOperator", ctx, operatorAddr, operator)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
-// SetPendingValidator indicates an expected call of SetPendingValidator.
-func (mr *MockRepositoryMockRecorder) SetPendingValidator(ctx, operatorAddr, validator any) *gomock.Call {
+// SetPendingOperator indicates an expected call of SetPendingOperator.
+func (mr *MockRepositoryMockRecorder) SetPendingOperator(ctx, operatorAddr, operator any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetPendingValidator", reflect.TypeOf((*MockRepository)(nil).SetPendingValidator), ctx, operatorAddr, validator)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetPendingOperator", reflect.TypeOf((*MockRepository)(nil).SetPendingOperator), ctx, operatorAddr, operator)
 }
 
 // SetValidator mocks base method.
-func (m *MockRepository) SetValidator(ctx types.Context, operatorAddr string, validator types0.Validator) error {
+func (m *MockRepository) SetValidator(ctx types.Context, addr types.ValAddress, validator types0.Validator) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SetValidator", ctx, operatorAddr, validator)
+	ret := m.ctrl.Call(m, "SetValidator", ctx, addr, validator)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // SetValidator indicates an expected call of SetValidator.
-func (mr *MockRepositoryMockRecorder) SetValidator(ctx, operatorAddr, validator any) *gomock.Call {
+func (mr *MockRepositoryMockRecorder) SetValidator(ctx, addr, validator any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetValidator", reflect.TypeOf((*MockRepository)(nil).SetValidator), ctx, operatorAddr, validator)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetValidator", reflect.TypeOf((*MockRepository)(nil).SetValidator), ctx, addr, validator)
 }

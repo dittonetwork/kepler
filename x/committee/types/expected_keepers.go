@@ -27,7 +27,7 @@ type ExecutorsKeeper interface {
 
 // RestakingKeeper defines the expected interface for the Validator module.
 type RestakingKeeper interface {
-	GetValidator(ctx sdk.Context, address string) (restakingtypes.Validator, error)
+	GetValidator(ctx sdk.Context, addr sdk.ValAddress) (restakingtypes.Validator, error)
 }
 
 // ParamSubspace defines the expected Subspace interface for parameters.

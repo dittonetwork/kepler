@@ -18,9 +18,8 @@ import (
 	servertypes "github.com/cosmos/cosmos-sdk/server/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	authcmd "github.com/cosmos/cosmos-sdk/x/auth/client/cli"
-	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	"github.com/cosmos/cosmos-sdk/x/crisis"
-	genutilcli "github.com/cosmos/cosmos-sdk/x/genutil/client/cli"
+	genutilcli "github.com/dittonetwork/kepler/x/genutil/client/cli"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
@@ -34,8 +33,9 @@ func initRootCmd(
 ) {
 	rootCmd.AddCommand(
 		genutilcli.InitCmd(basicManager, app.DefaultNodeHome),
-		NewInPlaceTestnetCmd(addModuleInitFlags),
-		NewTestnetMultiNodeCmd(basicManager, banktypes.GenesisBalancesIterator{}),
+		// @TODO github.com/dittonetwork/kepler/issues/242
+		//NewInPlaceTestnetCmd(addModuleInitFlags),
+		//NewTestnetMultiNodeCmd(basicManager, banktypes.GenesisBalancesIterator{}),
 		debug.Cmd(),
 		confixcmd.ConfigCommand(),
 		pruning.Cmd(newApp, app.DefaultNodeHome),
@@ -127,7 +127,7 @@ func newApp(
 ) servertypes.Application {
 	baseappOptions := server.DefaultBaseappOptions(appOpts)
 
-	app, err := app.New(
+	instance, err := app.New(
 		logger, db, traceStore, true,
 		appOpts,
 		baseappOptions...,
@@ -135,7 +135,7 @@ func newApp(
 	if err != nil {
 		panic(err)
 	}
-	return app
+	return instance
 }
 
 // appExport creates a new app (optionally at a given height) and exports state.

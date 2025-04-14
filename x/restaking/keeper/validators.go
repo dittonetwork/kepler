@@ -33,11 +33,11 @@ func (k Keeper) UpdateValidatorSet(ctx sdk.Context, update types.ValidatorsUpdat
 		return err
 	}
 
-	if err = k.processCreatedValidators(ctx, delta.Created); err != nil {
+	if err = k.processCreatedOperators(ctx, delta.Created); err != nil {
 		return err
 	}
 
-	if err = k.processDeletedValidators(ctx, delta.Deleted); err != nil {
+	if err = k.processDeletedOperators(ctx, delta.Deleted); err != nil {
 		return err
 	}
 
@@ -48,40 +48,47 @@ func (k Keeper) UpdateValidatorSet(ctx sdk.Context, update types.ValidatorsUpdat
 	return k.repository.SetLastUpdate(ctx, update.Info)
 }
 
-// processCreatedValidators handles all newly created validators.
-func (k Keeper) processCreatedValidators(ctx sdk.Context, validators []*types.Validator) error {
-	for _, validator := range validators {
-		if err := k.repository.SetPendingValidator(ctx, validator.OperatorAddress, *validator); err != nil {
+// processCreatedOperators handles all newly created validators.
+func (k Keeper) processCreatedOperators(ctx sdk.Context, operators []*types.Operator) error {
+	for _, operator := range operators {
+		if err := k.repository.SetPendingOperator(ctx, operator.Address, *operator); err != nil {
 			return sdkerrors.Wrap(types.ErrUpdateValidator, "unable to set pending validator")
 		}
 	}
 	return nil
 }
 
-// processDeletedValidators handles all validators that need to be deleted.
-func (k Keeper) processDeletedValidators(ctx sdk.Context, validators []*types.Validator) error {
-	for _, validator := range validators {
-		if err := k.repository.RemovePendingValidator(ctx, validator.OperatorAddress); err != nil {
-			return sdkerrors.Wrap(types.ErrUpdateValidator, "unable to remove pending validator")
+// processDeletedOperators handles all validators that need to be deleted.
+func (k Keeper) processDeletedOperators(ctx sdk.Context, operators []*types.Operator) error {
+	for _, operator := range operators {
+		if err := k.repository.RemovePendingOperator(ctx, operator.Address); err != nil {
+			return sdkerrors.Wrap(types.ErrUpdateValidator, "unable to remove pending operator")
 		}
 
-		if err := k.repository.RemoveValidator(ctx, validator.OperatorAddress); err != nil {
-			return sdkerrors.Wrap(types.ErrUpdateValidator, "unable to remove validator")
+		if err := k.repository.RemoveValidatorByOperatorAddr(ctx, operator.Address); err != nil {
+			return sdkerrors.Wrap(types.ErrUpdateValidator, "unable to remove operator")
 		}
 	}
 	return nil
 }
 
 // processUpdatedValidators handles all validators that have been updated.
-func (k Keeper) processUpdatedValidators(ctx sdk.Context, updates []*validatorUpdate) error {
+func (k Keeper) processUpdatedValidators(ctx sdk.Context, updates []*operatorUpdate) error {
 	for _, update := range updates {
-		if err := k.repository.SetValidator(ctx, update.After.OperatorAddress, *update.After); err != nil {
+		validator, err := k.repository.GetValidatorByEvmAddr(ctx, update.Before.Address)
+		if err != nil {
+			return sdkerrors.Wrap(types.ErrUpdateValidator, "failed to get validator by EVM address")
+		}
+
+		validator.UpdateOperatorInfo(*update.After)
+
+		if err = k.repository.SetValidator(ctx, sdk.ValAddress(validator.OperatorAddress), validator); err != nil {
 			return sdkerrors.Wrap(types.ErrUpdateValidator, "unable to set updated validator")
 		}
 
 		// Validator began unbonding
 		if update.Before.IsBonded() && update.After.IsUnbonding() {
-			if err := k.hooks.BeforeValidatorBeginUnbonding(ctx, *update.After); err != nil {
+			if err = k.hooks.BeforeValidatorBeginUnbonding(ctx, validator); err != nil {
 				return sdkerrors.Wrap(types.ErrUpdateValidator, "error in BeforeValidatorBeginUnbonding hook")
 			}
 		}
@@ -96,18 +103,18 @@ func (k Keeper) makeDeltaUpdates(ctx sdk.Context, update types.ValidatorsUpdate)
 		return validatorChanges{}, sdkerrors.Wrap(types.ErrUpdateValidator, "failed to get all validators")
 	}
 
-	var newValidators []*types.Validator
+	var newOperators []*types.Operator
 	for i := range update.Operators {
-		newValidators = append(newValidators, &update.Operators[i])
+		newOperators = append(newOperators, &update.Operators[i])
 	}
 
-	var currentValidators []*types.Validator
+	var currentValidators []*types.Operator
 
 	for i := range allValidators {
-		currentValidators = append(currentValidators, &allValidators[i])
+		currentValidators = append(currentValidators, allValidators[i].ConvertToOperator())
 	}
 
-	return calculateValidatorDelta(currentValidators, newValidators), nil
+	return calculateOperatorsDelta(currentValidators, newOperators), nil
 }
 
 // validateUpdateValidatorSet validates the parameters for updating the validator set.
@@ -138,11 +145,11 @@ func (k Keeper) validateUpdateValidatorSet(ctx sdk.Context, update types.Validat
 
 	// Check if the validator are valid
 	for _, validator := range update.Operators {
-		if len(validator.OperatorAddress) == 0 {
+		if len(validator.Address) == 0 {
 			return sdkerrors.Wrap(types.ErrUpdateValidator, "operator address is empty")
 		}
 
-		if !common.IsHexAddress(validator.OperatorAddress) {
+		if !common.IsHexAddress(validator.Address) {
 			return sdkerrors.Wrap(
 				types.ErrUpdateValidator,
 				"operator address is not a valid Ethereum address",

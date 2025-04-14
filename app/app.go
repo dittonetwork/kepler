@@ -26,19 +26,14 @@ import (
 	bankkeeper "github.com/cosmos/cosmos-sdk/x/bank/keeper"
 	_ "github.com/cosmos/cosmos-sdk/x/consensus" // import for side-effects
 	consensuskeeper "github.com/cosmos/cosmos-sdk/x/consensus/keeper"
-	_ "github.com/cosmos/cosmos-sdk/x/distribution" // import for side-effects
-	distrkeeper "github.com/cosmos/cosmos-sdk/x/distribution/keeper"
-	"github.com/cosmos/cosmos-sdk/x/genutil"
-	genutiltypes "github.com/cosmos/cosmos-sdk/x/genutil/types"
-	_ "github.com/cosmos/cosmos-sdk/x/mint"    // import for side-effects
-	_ "github.com/cosmos/cosmos-sdk/x/staking" // import for side-effects
-	stakingkeeper "github.com/cosmos/cosmos-sdk/x/staking/keeper"
-
 	epochskeeper "github.com/dittonetwork/kepler/x/epochs/keeper"
+	"github.com/dittonetwork/kepler/x/genutil"
+	genutiltypes "github.com/dittonetwork/kepler/x/genutil/types"
 	workflowmodulekeeper "github.com/dittonetwork/kepler/x/workflow/keeper"
 
 	committeemodulekeeper "github.com/dittonetwork/kepler/x/committee/keeper"
 
+	_ "github.com/dittonetwork/kepler/x/restaking"
 	restakingmodulekeeper "github.com/dittonetwork/kepler/x/restaking/keeper"
 
 	executorsmodulekeeper "github.com/dittonetwork/kepler/x/executors/keeper"
@@ -77,8 +72,6 @@ type App struct {
 	// keepers
 	AccountKeeper         authkeeper.AccountKeeper
 	BankKeeper            bankkeeper.Keeper
-	StakingKeeper         *stakingkeeper.Keeper
-	DistrKeeper           distrkeeper.Keeper
 	ConsensusParamsKeeper consensuskeeper.Keeper
 
 	EpochsKeeper    *epochskeeper.Keeper
@@ -155,12 +148,10 @@ func New(
 		&app.interfaceRegistry,
 		&app.AccountKeeper,
 		&app.BankKeeper,
-		&app.StakingKeeper,
-		&app.DistrKeeper,
 		&app.ConsensusParamsKeeper,
+		&app.RestakingKeeper,
 		&app.EpochsKeeper,
 		&app.WorkflowKeeper,
-		&app.RestakingKeeper,
 		&app.ExecutorsKeeper,
 		&app.CommitteeKeeper,
 		// this line is used by starport scaffolding # stargate/app/keeperDefinition
