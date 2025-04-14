@@ -177,7 +177,7 @@ message Workflow {
   string name = 2;
   
   // Trigger conditions that initiate the workflow execution
-   WorkflowTriggers on = 3;
+  WorkflowTriggers on = 3;
   
   // Optional maximum number of times this workflow can be executed
   // Example: 5 (execute at most 5 times)
