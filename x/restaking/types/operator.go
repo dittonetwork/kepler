@@ -50,7 +50,6 @@ func IsOperatorAddress(pk cryptotypes.PubKey, addr string) (bool, error) {
 		return false, err
 	}
 	address := crypto.PubkeyToAddress(*pubKey.ToECDSA())
-	log.Println(address.Hex(), addr)
 
 	return strings.EqualFold(addr, address.Hex()), nil
 }
