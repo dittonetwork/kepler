@@ -10,16 +10,13 @@ message Input {
   // Whether this input is required
   bool required = 2;
   
-  // Type of the input (e.g., "string", "int64", "bool")
-  string type = 3;
-  
   // Optional description of the input
-  optional string description = 4;
+  optional string description = 3;
 }
 
 // Action execution configuration
 message Runs {
-  // Runtime environment (e.g., "wasm", "docker")
+  // Runtime environment (e.g., "wasm")
   string using = 1;
   
   // Binary or image identifier

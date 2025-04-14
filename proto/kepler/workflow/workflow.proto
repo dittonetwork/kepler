@@ -31,11 +31,8 @@ message Input {
   // Whether this input is required
   bool required = 2;
   
-  // Type of the input (e.g., "string", "int64", "bool")
-  string type = 3;
-  
   // Optional description of the input
-  optional string description = 4;
+  optional string description = 3;
 }
 
 // Universal type for representing arguments of different types
@@ -125,7 +122,7 @@ message Job {
   
   // Optional dependency - ID of another job that must complete before this one
   // Example: "setup-job"
-  optional string needs = 4;
+  optional repeated string needs = 4;
   
   // Configuration for various validation and execution checks
   Checkers checkers = 5;
@@ -168,25 +165,30 @@ message WorkflowTriggers {
 
 // Complete workflow description
 message Workflow {
+  // Unique identifier for the workflow
+  // Example: "token-transfer" 
+  string id = 1;
+  
   // Human-readable name for the workflow
   // Example: "Daily Token Transfer" or "NFT Minting Workflow"
-  string name = 1;
+  string name = 2;
   
   // Trigger conditions that initiate the workflow execution
-  WorkflowTriggers on = 2;
+   WorkflowTriggers on = 3;
   
   // Optional maximum number of times this workflow can be executed
   // Example: 5 (execute at most 5 times)
-  optional int32 count = 3;
+  optional int32 count = 4;
   
   // Optional UNIX timestamp when the workflow should expire and no longer execute
-  optional int64 expired_at = 4;
+  // Example: 1723456789 (Unix timestamp)
+  optional int64 expired_at = 5;
   
   // Cryptographic signature of the merkle root derived from all jobs in the workflow
   // The merkle root is computed by hashing all job details (including their steps) into a tree
   // Example: "0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890"
-  string signature = 5;
+  string signature = 6;
   
   // Array of jobs to be executed as part of this workflow
-  repeated Job jobs = 6;
+  repeated Job jobs = 7;
 }
