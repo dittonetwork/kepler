@@ -33,7 +33,7 @@ func initRootCmd(
 ) {
 	rootCmd.AddCommand(
 		genutilcli.InitCmd(basicManager, app.DefaultNodeHome),
-		// @TODO repair testnet
+		// @TODO github.com/dittonetwork/kepler/issues/242
 		//NewInPlaceTestnetCmd(addModuleInitFlags),
 		//NewTestnetMultiNodeCmd(basicManager, banktypes.GenesisBalancesIterator{}),
 		debug.Cmd(),
