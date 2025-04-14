@@ -9,11 +9,11 @@ message Step {
   
   // Blockchain address of the contract to interact with
   // Example: "0x1234567890123456789012345678901234567890"
-  string address = 2;
+  optional string address = 2;
   
   // Encoded calldata for the contract interaction
   // Example: "0xa9059cbb000000000000000000000000abcdef0123456789abcdef0123456789abcdef0000000000000000000000000000000000000000000000000de0b6b3a7640000"
-  string calldata = 3;
+  optional string calldata = 3;
   
   // Optional reference to a reusable component or action
   // Example: "ditto/context" or "github/actions/checkout@v2"
@@ -81,14 +81,17 @@ message GasLimitChecker {
 
 // Asset price checker
 message AssetPriceChecker {
-  // Asset address to monitor
-  string asset_address = 1;
-  
-  // Target price for the limit order
-  string target_price = 2;
+  // Asset to sell
+  string sell_asset = 1;
+
+  // Asset to buy
+  string buy_asset = 2;
+
+  // Limit price
+  string limit_price = 3;
   
   // Price comparison type (e.g., "lte", "lt", "gte", "gt", "eq")
-  string operator = 3;
+  string operator = 4;
 }
 
 // Checkers for jobs

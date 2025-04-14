@@ -1,0 +1,31 @@
+name: 'ETH Limit Buy Order'
+id: 'eth-limit-buy'
+on:
+  schedule:
+    cron: '*/5 * * * *'  # Check every 5 minutes
+jobs:
+  check-and-swap:
+    chain_id: 1  # Ethereum mainnet
+    checkers:
+      asset_price:
+        sell_asset: 'ETH' 
+        buy_asset: 'USDC'
+        limit_price: '2000'
+        operator: 'lte'
+      gas_limit:
+				max_fee: 1
+				max_priority_fee: 1
+    steps:
+      - name: 'Send money to wallet'
+        address: '0x0000000000000000000000000000000000000000'
+        calldata: 'transfer(address,uint256)' # send money to wallet (for example)
+      - name: 'Approve and Swap'
+        needs: 'Send money to wallet' # need to send money to wallet first
+        uses: 'ditto/approve-and-swap'
+        with:
+          token_in: 'ETH'
+          token_out: 'USDC'
+          amount_in: '1000000000000000000' # 1 ETH
+          amount_out_min: '2000000' # 2000 USDC
+          slippage: '0.01' # 1% slippage
+          spender: '0xE592427A0AEce92De3Edee1F18E0157C05861564'  # Uniswap V3 Router contract address

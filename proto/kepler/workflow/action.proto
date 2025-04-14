@@ -19,7 +19,7 @@ message Runs {
   // Runtime environment (e.g., "wasm")
   string using = 1;
   
-  // Binary or image identifier
+  // Binary name to run
   string binary = 2;
   
   // Arguments to pass to the action
