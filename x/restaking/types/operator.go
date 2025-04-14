@@ -16,6 +16,16 @@ const (
 	CompressedPkLength    = 33
 )
 
+// IsBonded helper function to check if the operator is bonded.
+func (v Operator) IsBonded() bool {
+	return v.Status == Bonded
+}
+
+// IsUnbonding helper function to check if the operator is unbonding.
+func (v Operator) IsUnbonding() bool {
+	return v.Status == Unbonding
+}
+
 // IsOperatorAddress checks if the given public key matches the operator address (in EVM address format).
 func IsOperatorAddress(pk cryptotypes.PubKey, addr string) (bool, error) {
 	if pk == nil {

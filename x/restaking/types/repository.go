@@ -8,14 +8,16 @@ type Repository interface {
 	GetLastUpdate(ctx sdk.Context) (UpdateInfo, error)
 	SetLastUpdate(ctx sdk.Context, info UpdateInfo) error
 
-	GetValidator(ctx sdk.Context, operatorAddr string) (Validator, error)
-	SetValidator(ctx sdk.Context, operatorAddr string, validator Validator) error
+	GetPendingOperators(ctx sdk.Context) ([]Operator, error)
+	SetPendingOperator(ctx sdk.Context, operatorAddr string, operator Operator) error
+	RemovePendingOperator(ctx sdk.Context, operatorAddr string) error
+
+	SetValidator(ctx sdk.Context, addr sdk.ValAddress, validator Validator) error
+	GetValidator(ctx sdk.Context, addr sdk.ValAddress) (Validator, error)
 	GetAllValidators(ctx sdk.Context) ([]Validator, error)
 	GetBondedValidators(ctx sdk.Context) ([]Validator, error)
 	GetEmergencyValidators(ctx sdk.Context) ([]Validator, error)
-	RemoveValidator(ctx sdk.Context, operatorAddr string) error
+	GetValidatorByEvmAddr(ctx sdk.Context, addr string) (Validator, error)
 
-	GetPendingValidators(ctx sdk.Context) ([]Validator, error)
-	SetPendingValidator(ctx sdk.Context, operatorAddr string, validator Validator) error
-	RemovePendingValidator(ctx sdk.Context, operatorAddr string) error
+	RemoveValidatorByOperatorAddr(ctx sdk.Context, addr string) error
 }

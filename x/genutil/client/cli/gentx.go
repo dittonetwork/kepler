@@ -3,21 +3,18 @@ package cli
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"os"
 	"path/filepath"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
-	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	"github.com/cosmos/cosmos-sdk/server"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/x/staking/client/cli"
 	"github.com/dittonetwork/kepler/x/genutil"
 	"github.com/dittonetwork/kepler/x/genutil/types"
 	restakingtypes "github.com/dittonetwork/kepler/x/restaking/types"
-	"github.com/ethereum/go-ethereum/common"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 )
@@ -109,22 +106,6 @@ The command exists solely for backward compatibility during development using ig
 				}
 			}
 
-			var accPk cryptotypes.PubKey
-			accPk, err = key.GetPubKey()
-			if err != nil {
-				return errors.Wrap(err, "failed to get public key")
-			}
-
-			var acc client.Account
-
-			log.Println(acc)
-
-			var operatorKeccakAddress common.Address
-			operatorKeccakAddress, err = restakingtypes.ToKeccakLast20(accPk)
-			if err != nil {
-				return errors.Wrap(err, "failed to convert public key to keccak address")
-			}
-
 			var valPkAny *codectypes.Any
 			if createValCfg.PubKey != nil {
 				if valPkAny, err = codectypes.NewAnyWithValue(createValCfg.PubKey); err != nil {
@@ -132,11 +113,16 @@ The command exists solely for backward compatibility during development using ig
 				}
 			}
 
+			addr, err := key.GetAddress()
+			if err != nil {
+				return errors.Wrap(err, "failed to get address")
+			}
+
 			votingPower := coins.AmountOf("power")
 
 			operators := []restakingtypes.Validator{
 				{
-					OperatorAddress: operatorKeccakAddress.String(),
+					OperatorAddress: addr.String(),
 					ConsensusPubkey: valPkAny,
 					IsEmergency:     true,
 					Status:          restakingtypes.Bonded,

@@ -19,31 +19,51 @@ message EmergencyValidators {
   repeated string addresses = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 }
 
+// Description defines a validator description.
+message Description {
+  option (gogoproto.equal) = true;
+
+  // moniker defines a human-readable name for the validator.
+  string moniker = 1;
+  // identity defines an optional identity signature (ex. UPort or Keybase).
+  string identity = 2;
+  // website defines an optional website link.
+  string website = 3;
+  // security_contact defines an optional email for security contact.
+  string security_contact = 4;
+  // details define other optional details.
+  string details = 5;
+}
+
 // Validator defines a validator in the restaking module.
 message Validator {
   option (gogoproto.equal) = true;
   option (gogoproto.goproto_getters) = false;
 
-  // operator_address is the Ethereum-style address (hex-encoded, 0x-prefixed) derived from
+  // operator_address is account address in Bech32 format.
+  // the same as the operator address but diff algorithm generation.
+  string operator_address = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+
+  // evm_operator_address is the Ethereum-style address (hex-encoded, 0x-prefixed) derived from
   // the last 20 bytes of the keccak256 hash of the operator's public key.
-  // This address uniquely identifies the validator in the network.
-  string operator_address = 1;
+  // This address need for binding updates with bond.
+  string evm_operator_address = 2;
 
   // consensus_pubkey is the consensus ed25519 public key of the validator, as a
   // Protobuf Any.
-  google.protobuf.Any consensus_pubkey = 2 [(cosmos_proto.accepts_interface) = "cosmos.crypto.PubKey"];
+  google.protobuf.Any consensus_pubkey = 3 [(cosmos_proto.accepts_interface) = "cosmos.crypto.PubKey"];
 
   // is_emergency defines whether the validator is an emergency validator
-  bool is_emergency = 3;
+  bool is_emergency = 4;
 
   // status defines the validator's status (bonded/unbonding/unbonded)
-  BondStatus status = 4;
+  BondStatus status = 5;
 
   // voting_power is the voting power of the validator
-  int64 voting_power = 5;
+  int64 voting_power = 6;
 
   // protocol is the protocol of the restaking module
-  Protocol protocol = 6;
+  Protocol protocol = 7;
 }
 
 // BondStatus is the status of a validator

@@ -6,6 +6,6 @@ import (
 )
 
 // GetValidator returns the validator by address.
-func (k Keeper) GetValidator(ctx sdk.Context, operatorAddr string) (types.Validator, error) {
-	return k.repository.GetValidator(ctx, operatorAddr)
+func (k Keeper) GetValidator(ctx sdk.Context, addr sdk.ValAddress) (types.Validator, error) {
+	return k.repository.GetValidator(ctx, addr)
 }

@@ -2,6 +2,8 @@ syntax = "proto3";
 package kepler.restaking;
 
 import "gogoproto/gogo.proto";
+import "cosmos_proto/cosmos.proto";
+import "google/protobuf/any.proto";
 import "google/protobuf/timestamp.proto";
 import "kepler/restaking/validator.proto";
 
@@ -30,8 +32,35 @@ message UpdateInfo {
 // UpdateValidators is a message that contains a list of updates for validators.
 message ValidatorsUpdate {
   // validators defines a list of validators to be updated.
-  repeated Validator operators = 1 [(gogoproto.nullable) = false];
+  repeated Operator operators = 1 [(gogoproto.nullable) = false];
 
   // info contains information about the last update.
   UpdateInfo info = 2 [(gogoproto.nullable) = false];
+}
+
+// Operator is a message that contains information about a validator operator.
+message Operator {
+  option (gogoproto.equal) = true;
+  option (gogoproto.goproto_getters) = false;
+
+  // address is the Ethereum-style address (hex-encoded, 0x-prefixed) derived from
+  // the last 20 bytes of the keccak256 hash of the operator's public key.
+  // This address need for binding updates with bond.
+  string address = 1;
+
+  // consensus_pubkey is the consensus ed25519 public key of the validator, as a
+  // Protobuf Any.
+  google.protobuf.Any consensus_pubkey = 2 [(cosmos_proto.accepts_interface) = "cosmos.crypto.PubKey"];
+
+  // is_emergency defines whether the validator is an emergency validator
+  bool is_emergency = 3;
+
+  // status defines the validator's status (bonded/unbonding/unbonded)
+  BondStatus status = 4;
+
+  // voting_power is the voting power of the validator
+  int64 voting_power = 5;
+
+  // protocol is the protocol of the restaking module
+  Protocol protocol = 6;
 }

@@ -54,7 +54,7 @@ func (k Keeper) InitGenesis(ctx sdk.Context, state types.GenesisState) ([]abci.V
 	}
 
 	for _, validator := range state.Validators {
-		if err := k.repository.SetValidator(ctx, validator.OperatorAddress, validator); err != nil {
+		if err := k.repository.SetValidator(ctx, sdk.ValAddress(validator.OperatorAddress), validator); err != nil {
 			return nil, sdkerrors.Wrap(err, "validators")
 		}
 	}
