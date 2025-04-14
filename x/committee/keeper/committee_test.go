@@ -1,6 +1,14 @@
 package keeper_test
 
 import (
+	"testing"
+
+	cmtcrypto "github.com/cometbft/cometbft/crypto"
+	prototypes "github.com/cosmos/cosmos-sdk/codec/types"
+	"github.com/cosmos/cosmos-sdk/crypto/keys/multisig"
+	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
+	sdksecp "github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/dittonetwork/kepler/x/committee/types"
 	executortypes "github.com/dittonetwork/kepler/x/executors/types"
 	restakingtypes "github.com/dittonetwork/kepler/x/restaking/types"
@@ -108,12 +116,15 @@ func (s *TestSuite) TestCreateCommittee() {
 						VotingPower: 10,
 					}
 				}
+
+				address := s.keeper.GetMultisigAddress(committeeExecutors)
 				s.repo.EXPECT().
 					SetCommittee(gomock.Any(), uint32(11), types.Committee{
 						Epoch:       11,
 						Executors:   committeeExecutors,
 						IsEmergency: true,
 						Seed:        nil,
+						Address:     address,
 					}).
 					Return(nil)
 
@@ -167,12 +178,14 @@ func (s *TestSuite) TestCreateCommittee() {
 					}
 				}
 
+				address := s.keeper.GetMultisigAddress(committeeExecutors)
 				s.repo.EXPECT().
 					SetCommittee(gomock.Any(), uint32(11), types.Committee{
 						Epoch:       11,
 						Executors:   committeeExecutors,
 						IsEmergency: true,
 						Seed:        nil,
+						Address:     address,
 					}).
 					Return(nil)
 
@@ -223,4 +236,62 @@ func (s *TestSuite) TestCreateCommittee() {
 			s.Require().Len(committee.Executors, 2)
 		})
 	}
+}
+
+func (s *TestSuite) TestGetMultisigAddress() {
+	testCases := []struct {
+		name string
+		init func() ([]types.Executor, string)
+	}{
+		{
+			name: "success case",
+			init: func() ([]types.Executor, string) {
+				executors := []types.Executor{
+					{PublicKey: generatePubKey(s.T())},
+					{PublicKey: generatePubKey(s.T())},
+					{PublicKey: generatePubKey(s.T())},
+					{PublicKey: generatePubKey(s.T())},
+				}
+
+				anyPubKeys := make([]*prototypes.Any, 0, len(executors))
+
+				for _, executor := range executors {
+					var pk sdksecp.PubKey
+					copy(pk.Key, executor.PublicKey)
+
+					any, err := prototypes.NewAnyWithValue(&pk)
+					s.Require().NoError(err)
+
+					anyPubKeys = append(anyPubKeys, any)
+				}
+				m := multisig.LegacyAminoPubKey{
+					Threshold: 3,
+					PubKeys:   anyPubKeys,
+				}
+				address := cmtcrypto.AddressHash(m.Bytes())
+
+				return executors, sdk.AccAddress(address).String()
+			},
+		},
+	}
+
+	for _, tc := range testCases {
+		s.Run(tc.name, func() {
+			executors, tcAddress := tc.init()
+
+			address := s.keeper.GetMultisigAddress(executors)
+
+			_, err := sdk.AccAddressFromBech32(address)
+			s.Require().NoError(err)
+			s.Require().NotEmpty(address)
+			s.Require().Equal(tcAddress, address)
+		})
+	}
+}
+
+func generatePubKey(t *testing.T) []byte {
+	t.Helper()
+
+	privKey := secp256k1.GenPrivKey()
+	return privKey.PubKey().Bytes()
 }

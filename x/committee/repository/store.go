@@ -59,6 +59,14 @@ func (r *CommitteeRepository) GetCommittee(ctx sdk.Context, epoch uint32) (types
 	return r.Committees.Get(ctx, epoch)
 }
 
+func (r *CommitteeRepository) GetLastCommittee(ctx sdk.Context) (types.Committee, error) {
+	epoch, err := r.GetLastEpoch(ctx)
+	if err != nil {
+		return types.Committee{}, err
+	}
+	return r.GetCommittee(ctx, epoch)
+}
+
 func (r *CommitteeRepository) SetCommittee(ctx sdk.Context, epoch uint32, committee types.Committee) error {
 	return r.Committees.Set(ctx, epoch, committee)
 }

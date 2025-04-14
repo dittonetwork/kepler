@@ -1,11 +1,11 @@
 syntax = "proto3";
-
 package kepler.committee;
 
 import "amino/amino.proto";
 import "cosmos/msg/v1/msg.proto";
 import "cosmos_proto/cosmos.proto";
 import "gogoproto/gogo.proto";
+import "google/protobuf/any.proto";
 import "kepler/committee/params.proto";
 
 option go_package = "github.com/dittonetwork/kepler/x/committee/types";
@@ -13,34 +13,70 @@ option go_package = "github.com/dittonetwork/kepler/x/committee/types";
 // Msg defines the Msg service.
 service Msg {
   option (cosmos.msg.v1.service) = true;
-  
+
   // UpdateParams defines a (governance) operation for updating the module
   // parameters. The authority defaults to the x/gov module account.
-  rpc UpdateParams (MsgUpdateParams) returns (MsgUpdateParamsResponse);
-  rpc SendReport   (MsgSendReport  ) returns (MsgSendReportResponse  );
+  rpc UpdateParams(MsgUpdateParams) returns (MsgUpdateParamsResponse);
+
+  // SendReport defines a operation for sending a report to the committee.
+  rpc SendReport(MsgSendReport) returns (MsgSendReportResponse);
 }
+
 // MsgUpdateParams is the Msg/UpdateParams request type.
 message MsgUpdateParams {
-  option (cosmos.msg.v1.signer) =                                                  "authority";
-  option           (amino.name) = "github.com/dittonetwork/kepler/x/committee/MsgUpdateParams";
-  
+  option (cosmos.msg.v1.signer) = "authority";
+  option (amino.name) = "github.com/dittonetwork/kepler/x/committee/MsgUpdateParams";
+
   // authority is the address that controls the module (defaults to x/gov unless overwritten).
   string authority = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 
   // params defines the module parameters to update.
-  
+
   // NOTE: All parameters must be supplied.
-  Params params = 2 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+  Params params = 2 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
 }
 
 // MsgUpdateParamsResponse defines the response structure for executing a
 // MsgUpdateParams message.
 message MsgUpdateParamsResponse {}
 
+// MsgSendReport defines report message.
 message MsgSendReport {
   option (cosmos.msg.v1.signer) = "creator";
+  option (amino.name) = "github.com/dittonetwork/kepler/x/committee/MsgSendReport";
+
+  // creator is the address of the creator of the report.
   string creator = 1;
+
+  // report is the report that is being sent.
+  Report report = 2;
 }
 
-message MsgSendReportResponse {}
+// Report is a message that contains a report from the committee.
+message Report {
+  // committee_id is the id of the committee that the report is for.
+  string committee_id = 1;
 
+  // execution_context is the context of the execution of the report.
+  ExecutionContext execution_context = 2;
+
+  // messages are the messages that are being reported.
+  repeated google.protobuf.Any messages = 3;
+}
+
+// ExecutionContext defines the context of the execution on Tess.
+message ExecutionContext {
+  // kepler_block_number is the block number of the kepler chain.
+  uint32 kepler_block_number = 1;
+
+  // eth_block_number is the block number of the ethereum chain.
+  uint32 eth_block_number = 2;
+
+  // etc
+}
+
+// MsgSendReportResponse is the response to a MsgSendReport message.
+message MsgSendReportResponse {}

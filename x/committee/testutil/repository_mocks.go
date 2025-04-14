@@ -56,6 +56,21 @@ func (mr *MockRepositoryMockRecorder) GetCommittee(ctx, epoch any) *gomock.Call 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCommittee", reflect.TypeOf((*MockRepository)(nil).GetCommittee), ctx, epoch)
 }
 
+// GetLastCommittee mocks base method.
+func (m *MockRepository) GetLastCommittee(ctx types.Context) (types0.Committee, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetLastCommittee", ctx)
+	ret0, _ := ret[0].(types0.Committee)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetLastCommittee indicates an expected call of GetLastCommittee.
+func (mr *MockRepositoryMockRecorder) GetLastCommittee(ctx any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetLastCommittee", reflect.TypeOf((*MockRepository)(nil).GetLastCommittee), ctx)
+}
+
 // GetLastEpoch mocks base method.
 func (m *MockRepository) GetLastEpoch(ctx types.Context) (uint32, error) {
 	m.ctrl.T.Helper()

@@ -5,6 +5,8 @@ import (
 	"fmt"
 
 	"cosmossdk.io/log"
+	"github.com/cosmos/cosmos-sdk/baseapp"
+	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"github.com/dittonetwork/kepler/x/committee/types"
@@ -23,9 +25,16 @@ type CommitteeKeeper interface {
 
 	// SetParams updates the committee module's parameters.
 	SetParams(ctx context.Context, params types.Params) error
+
+	// HandleReport handles a report message.
+	HandleReport(ctx sdk.Context, msg *types.MsgSendReport) error
 }
 
 type Keeper struct {
+	cdc    codec.Codec
+	amino  *codec.LegacyAmino
+	router baseapp.MessageRouter
+
 	repository types.Repository
 
 	executors types.ExecutorsKeeper
@@ -41,6 +50,9 @@ func NewKeeper(
 	executors types.ExecutorsKeeper,
 	restaking types.RestakingKeeper,
 	repo types.Repository,
+	router baseapp.MessageRouter,
+	amino *codec.LegacyAmino,
+	cdc codec.Codec,
 ) Keeper {
 	if _, err := sdk.AccAddressFromBech32(authority); err != nil {
 		panic(fmt.Sprintf("invalid authority address: %s", authority))
@@ -51,6 +63,9 @@ func NewKeeper(
 		executors:  executors,
 		restaking:  restaking,
 		repository: repo,
+		router:     router,
+		amino:      amino,
+		cdc:        cdc,
 	}
 
 	return k

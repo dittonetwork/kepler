@@ -62,6 +62,9 @@ func (s *TestSuite) SetupTest() {
 		executorKeeper,
 		restakingKeeper,
 		repo,
+		nil,
+		encCfg.Amino,
+		encCfg.Codec,
 	)
 
 	queryHelper := baseapp.NewQueryServerTestHelper(ctx, encCfg.InterfaceRegistry)

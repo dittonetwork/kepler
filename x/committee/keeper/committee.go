@@ -1,7 +1,12 @@
 package keeper
 
 import (
+	"math"
+
 	sdkerrors "cosmossdk.io/errors"
+	"github.com/cosmos/cosmos-sdk/crypto/keys/multisig"
+	sdksecp "github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
+	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/dittonetwork/kepler/x/committee/types"
 	restaking "github.com/dittonetwork/kepler/x/restaking/types"
@@ -36,6 +41,7 @@ func (k Keeper) CreateCommittee(ctx sdk.Context, epoch uint32) (types.Committee,
 	if err != nil {
 		return types.Committee{}, sdkerrors.Wrap(err, "failed to create emergency committee")
 	}
+	committee.Address = k.GetMultisigAddress(committee.Executors)
 
 	err = k.repository.SetCommittee(ctx, epoch, committee)
 	if err != nil {
@@ -49,6 +55,24 @@ func (k Keeper) CreateCommittee(ctx sdk.Context, epoch uint32) (types.Committee,
 	k.Logger(ctx).With("committee", committee).Info("committee created")
 
 	return committee, nil
+}
+
+func (k Keeper) GetMultisigAddress(executors []types.Executor) string {
+	pubKeys := make([]cryptotypes.PubKey, 0, len(executors))
+	for _, each := range executors {
+		var pk sdksecp.PubKey
+		copy(pk.Key, each.PublicKey)
+
+		pubKeys = append(pubKeys, &pk)
+	}
+
+	// minimum votes for BFT consensus
+	// https://pmg.csail.mit.edu/papers/osdi99.pdf
+	threshold := int(math.Floor(2*(float64(len(executors))-1)/3) + 1) //nolint:mnd // correct formula
+
+	multiPubKey := multisig.NewLegacyAminoPubKey(threshold, pubKeys)
+
+	return sdk.AccAddress(multiPubKey.Address()).String()
 }
 
 // createEmergencyCommittee creates an emergency committee by the given epoch.

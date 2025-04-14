@@ -8,6 +8,7 @@ import (
 	"cosmossdk.io/core/appmodule"
 	"cosmossdk.io/core/store"
 	"cosmossdk.io/depinject"
+	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"
 	cdctypes "github.com/cosmos/cosmos-sdk/codec/types"
@@ -181,8 +182,11 @@ func init() {
 type ModuleInputs struct {
 	depinject.In
 
+	Router baseapp.MessageRouter
+
 	StoreService store.KVStoreService
 	Cdc          codec.Codec
+	Amino        *codec.LegacyAmino
 	Config       *modulev1.Module
 
 	AccountKeeper types.AccountKeeper
@@ -213,6 +217,9 @@ func ProvideModule(in ModuleInputs) ModuleOutputs {
 		in.ExecutorsKeeper,
 		in.RestakingKeeper,
 		repo,
+		in.Router,
+		in.Amino,
+		in.Cdc,
 	)
 	m := NewAppModule(
 		in.Cdc,

@@ -9,6 +9,8 @@ import (
 	storetypes "cosmossdk.io/store/types"
 	cmtproto "github.com/cometbft/cometbft/proto/tendermint/types"
 	dbm "github.com/cosmos/cosmos-db"
+	"github.com/cosmos/cosmos-sdk/codec"
+	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
@@ -41,6 +43,9 @@ func CommitteeKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {
 		executorsKeeper,
 		restakingKeeper,
 		repo,
+		nil,
+		codec.NewLegacyAmino(),
+		codec.NewProtoCodec(codectypes.NewInterfaceRegistry()),
 	)
 
 	ctx := sdk.NewContext(stateStore, cmtproto.Header{}, false, log.NewNopLogger())

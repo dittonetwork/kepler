@@ -11,6 +11,7 @@ import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoiface "google.golang.org/protobuf/runtime/protoiface"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	anypb "google.golang.org/protobuf/types/known/anypb"
 	io "io"
 	reflect "reflect"
 	sync "sync"
@@ -874,12 +875,14 @@ func (x *fastReflection_MsgUpdateParamsResponse) ProtoMethods() *protoiface.Meth
 var (
 	md_MsgSendReport         protoreflect.MessageDescriptor
 	fd_MsgSendReport_creator protoreflect.FieldDescriptor
+	fd_MsgSendReport_report  protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_kepler_committee_tx_proto_init()
 	md_MsgSendReport = File_kepler_committee_tx_proto.Messages().ByName("MsgSendReport")
 	fd_MsgSendReport_creator = md_MsgSendReport.Fields().ByName("creator")
+	fd_MsgSendReport_report = md_MsgSendReport.Fields().ByName("report")
 }
 
 var _ protoreflect.Message = (*fastReflection_MsgSendReport)(nil)
@@ -953,6 +956,12 @@ func (x *fastReflection_MsgSendReport) Range(f func(protoreflect.FieldDescriptor
 			return
 		}
 	}
+	if x.Report != nil {
+		value := protoreflect.ValueOfMessage(x.Report.ProtoReflect())
+		if !f(fd_MsgSendReport_report, value) {
+			return
+		}
+	}
 }
 
 // Has reports whether a field is populated.
@@ -970,6 +979,8 @@ func (x *fastReflection_MsgSendReport) Has(fd protoreflect.FieldDescriptor) bool
 	switch fd.FullName() {
 	case "kepler.committee.MsgSendReport.creator":
 		return x.Creator != ""
+	case "kepler.committee.MsgSendReport.report":
+		return x.Report != nil
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.committee.MsgSendReport"))
@@ -988,6 +999,8 @@ func (x *fastReflection_MsgSendReport) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
 	case "kepler.committee.MsgSendReport.creator":
 		x.Creator = ""
+	case "kepler.committee.MsgSendReport.report":
+		x.Report = nil
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.committee.MsgSendReport"))
@@ -1007,6 +1020,9 @@ func (x *fastReflection_MsgSendReport) Get(descriptor protoreflect.FieldDescript
 	case "kepler.committee.MsgSendReport.creator":
 		value := x.Creator
 		return protoreflect.ValueOfString(value)
+	case "kepler.committee.MsgSendReport.report":
+		value := x.Report
+		return protoreflect.ValueOfMessage(value.ProtoReflect())
 	default:
 		if descriptor.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.committee.MsgSendReport"))
@@ -1029,6 +1045,8 @@ func (x *fastReflection_MsgSendReport) Set(fd protoreflect.FieldDescriptor, valu
 	switch fd.FullName() {
 	case "kepler.committee.MsgSendReport.creator":
 		x.Creator = value.Interface().(string)
+	case "kepler.committee.MsgSendReport.report":
+		x.Report = value.Message().Interface().(*Report)
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.committee.MsgSendReport"))
@@ -1049,6 +1067,11 @@ func (x *fastReflection_MsgSendReport) Set(fd protoreflect.FieldDescriptor, valu
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgSendReport) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
+	case "kepler.committee.MsgSendReport.report":
+		if x.Report == nil {
+			x.Report = new(Report)
+		}
+		return protoreflect.ValueOfMessage(x.Report.ProtoReflect())
 	case "kepler.committee.MsgSendReport.creator":
 		panic(fmt.Errorf("field creator of message kepler.committee.MsgSendReport is not mutable"))
 	default:
@@ -1066,6 +1089,9 @@ func (x *fastReflection_MsgSendReport) NewField(fd protoreflect.FieldDescriptor)
 	switch fd.FullName() {
 	case "kepler.committee.MsgSendReport.creator":
 		return protoreflect.ValueOfString("")
+	case "kepler.committee.MsgSendReport.report":
+		m := new(Report)
+		return protoreflect.ValueOfMessage(m.ProtoReflect())
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.committee.MsgSendReport"))
@@ -1139,6 +1165,10 @@ func (x *fastReflection_MsgSendReport) ProtoMethods() *protoiface.Methods {
 		if l > 0 {
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
+		if x.Report != nil {
+			l = options.Size(x.Report)
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
 		if x.unknownFields != nil {
 			n += len(x.unknownFields)
 		}
@@ -1167,6 +1197,20 @@ func (x *fastReflection_MsgSendReport) ProtoMethods() *protoiface.Methods {
 		if x.unknownFields != nil {
 			i -= len(x.unknownFields)
 			copy(dAtA[i:], x.unknownFields)
+		}
+		if x.Report != nil {
+			encoded, err := options.Marshal(x.Report)
+			if err != nil {
+				return protoiface.MarshalOutput{
+					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+					Buf:               input.Buf,
+				}, err
+			}
+			i -= len(encoded)
+			copy(dAtA[i:], encoded)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+			i--
+			dAtA[i] = 0x12
 		}
 		if len(x.Creator) > 0 {
 			i -= len(x.Creator)
@@ -1256,6 +1300,1131 @@ func (x *fastReflection_MsgSendReport) ProtoMethods() *protoiface.Methods {
 				}
 				x.Creator = string(dAtA[iNdEx:postIndex])
 				iNdEx = postIndex
+			case 2:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Report", wireType)
+				}
+				var msglen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					msglen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if msglen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + msglen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if x.Report == nil {
+					x.Report = &Report{}
+				}
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.Report); err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				iNdEx = postIndex
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
+var _ protoreflect.List = (*_Report_3_list)(nil)
+
+type _Report_3_list struct {
+	list *[]*anypb.Any
+}
+
+func (x *_Report_3_list) Len() int {
+	if x.list == nil {
+		return 0
+	}
+	return len(*x.list)
+}
+
+func (x *_Report_3_list) Get(i int) protoreflect.Value {
+	return protoreflect.ValueOfMessage((*x.list)[i].ProtoReflect())
+}
+
+func (x *_Report_3_list) Set(i int, value protoreflect.Value) {
+	valueUnwrapped := value.Message()
+	concreteValue := valueUnwrapped.Interface().(*anypb.Any)
+	(*x.list)[i] = concreteValue
+}
+
+func (x *_Report_3_list) Append(value protoreflect.Value) {
+	valueUnwrapped := value.Message()
+	concreteValue := valueUnwrapped.Interface().(*anypb.Any)
+	*x.list = append(*x.list, concreteValue)
+}
+
+func (x *_Report_3_list) AppendMutable() protoreflect.Value {
+	v := new(anypb.Any)
+	*x.list = append(*x.list, v)
+	return protoreflect.ValueOfMessage(v.ProtoReflect())
+}
+
+func (x *_Report_3_list) Truncate(n int) {
+	for i := n; i < len(*x.list); i++ {
+		(*x.list)[i] = nil
+	}
+	*x.list = (*x.list)[:n]
+}
+
+func (x *_Report_3_list) NewElement() protoreflect.Value {
+	v := new(anypb.Any)
+	return protoreflect.ValueOfMessage(v.ProtoReflect())
+}
+
+func (x *_Report_3_list) IsValid() bool {
+	return x.list != nil
+}
+
+var (
+	md_Report                   protoreflect.MessageDescriptor
+	fd_Report_committee_id      protoreflect.FieldDescriptor
+	fd_Report_execution_context protoreflect.FieldDescriptor
+	fd_Report_messages          protoreflect.FieldDescriptor
+)
+
+func init() {
+	file_kepler_committee_tx_proto_init()
+	md_Report = File_kepler_committee_tx_proto.Messages().ByName("Report")
+	fd_Report_committee_id = md_Report.Fields().ByName("committee_id")
+	fd_Report_execution_context = md_Report.Fields().ByName("execution_context")
+	fd_Report_messages = md_Report.Fields().ByName("messages")
+}
+
+var _ protoreflect.Message = (*fastReflection_Report)(nil)
+
+type fastReflection_Report Report
+
+func (x *Report) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_Report)(x)
+}
+
+func (x *Report) slowProtoReflect() protoreflect.Message {
+	mi := &file_kepler_committee_tx_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_Report_messageType fastReflection_Report_messageType
+var _ protoreflect.MessageType = fastReflection_Report_messageType{}
+
+type fastReflection_Report_messageType struct{}
+
+func (x fastReflection_Report_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_Report)(nil)
+}
+func (x fastReflection_Report_messageType) New() protoreflect.Message {
+	return new(fastReflection_Report)
+}
+func (x fastReflection_Report_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_Report
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_Report) Descriptor() protoreflect.MessageDescriptor {
+	return md_Report
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_Report) Type() protoreflect.MessageType {
+	return _fastReflection_Report_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_Report) New() protoreflect.Message {
+	return new(fastReflection_Report)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_Report) Interface() protoreflect.ProtoMessage {
+	return (*Report)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_Report) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.CommitteeId != "" {
+		value := protoreflect.ValueOfString(x.CommitteeId)
+		if !f(fd_Report_committee_id, value) {
+			return
+		}
+	}
+	if x.ExecutionContext != nil {
+		value := protoreflect.ValueOfMessage(x.ExecutionContext.ProtoReflect())
+		if !f(fd_Report_execution_context, value) {
+			return
+		}
+	}
+	if len(x.Messages) != 0 {
+		value := protoreflect.ValueOfList(&_Report_3_list{list: &x.Messages})
+		if !f(fd_Report_messages, value) {
+			return
+		}
+	}
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_Report) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	case "kepler.committee.Report.committee_id":
+		return x.CommitteeId != ""
+	case "kepler.committee.Report.execution_context":
+		return x.ExecutionContext != nil
+	case "kepler.committee.Report.messages":
+		return len(x.Messages) != 0
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.committee.Report"))
+		}
+		panic(fmt.Errorf("message kepler.committee.Report does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_Report) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	case "kepler.committee.Report.committee_id":
+		x.CommitteeId = ""
+	case "kepler.committee.Report.execution_context":
+		x.ExecutionContext = nil
+	case "kepler.committee.Report.messages":
+		x.Messages = nil
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.committee.Report"))
+		}
+		panic(fmt.Errorf("message kepler.committee.Report does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_Report) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	case "kepler.committee.Report.committee_id":
+		value := x.CommitteeId
+		return protoreflect.ValueOfString(value)
+	case "kepler.committee.Report.execution_context":
+		value := x.ExecutionContext
+		return protoreflect.ValueOfMessage(value.ProtoReflect())
+	case "kepler.committee.Report.messages":
+		if len(x.Messages) == 0 {
+			return protoreflect.ValueOfList(&_Report_3_list{})
+		}
+		listValue := &_Report_3_list{list: &x.Messages}
+		return protoreflect.ValueOfList(listValue)
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.committee.Report"))
+		}
+		panic(fmt.Errorf("message kepler.committee.Report does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_Report) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	case "kepler.committee.Report.committee_id":
+		x.CommitteeId = value.Interface().(string)
+	case "kepler.committee.Report.execution_context":
+		x.ExecutionContext = value.Message().Interface().(*ExecutionContext)
+	case "kepler.committee.Report.messages":
+		lv := value.List()
+		clv := lv.(*_Report_3_list)
+		x.Messages = *clv.list
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.committee.Report"))
+		}
+		panic(fmt.Errorf("message kepler.committee.Report does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_Report) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "kepler.committee.Report.execution_context":
+		if x.ExecutionContext == nil {
+			x.ExecutionContext = new(ExecutionContext)
+		}
+		return protoreflect.ValueOfMessage(x.ExecutionContext.ProtoReflect())
+	case "kepler.committee.Report.messages":
+		if x.Messages == nil {
+			x.Messages = []*anypb.Any{}
+		}
+		value := &_Report_3_list{list: &x.Messages}
+		return protoreflect.ValueOfList(value)
+	case "kepler.committee.Report.committee_id":
+		panic(fmt.Errorf("field committee_id of message kepler.committee.Report is not mutable"))
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.committee.Report"))
+		}
+		panic(fmt.Errorf("message kepler.committee.Report does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_Report) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "kepler.committee.Report.committee_id":
+		return protoreflect.ValueOfString("")
+	case "kepler.committee.Report.execution_context":
+		m := new(ExecutionContext)
+		return protoreflect.ValueOfMessage(m.ProtoReflect())
+	case "kepler.committee.Report.messages":
+		list := []*anypb.Any{}
+		return protoreflect.ValueOfList(&_Report_3_list{list: &list})
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.committee.Report"))
+		}
+		panic(fmt.Errorf("message kepler.committee.Report does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_Report) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in kepler.committee.Report", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_Report) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_Report) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_Report) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_Report) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*Report)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		l = len(x.CommitteeId)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.ExecutionContext != nil {
+			l = options.Size(x.ExecutionContext)
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if len(x.Messages) > 0 {
+			for _, e := range x.Messages {
+				l = options.Size(e)
+				n += 1 + l + runtime.Sov(uint64(l))
+			}
+		}
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*Report)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if len(x.Messages) > 0 {
+			for iNdEx := len(x.Messages) - 1; iNdEx >= 0; iNdEx-- {
+				encoded, err := options.Marshal(x.Messages[iNdEx])
+				if err != nil {
+					return protoiface.MarshalOutput{
+						NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+						Buf:               input.Buf,
+					}, err
+				}
+				i -= len(encoded)
+				copy(dAtA[i:], encoded)
+				i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+				i--
+				dAtA[i] = 0x1a
+			}
+		}
+		if x.ExecutionContext != nil {
+			encoded, err := options.Marshal(x.ExecutionContext)
+			if err != nil {
+				return protoiface.MarshalOutput{
+					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+					Buf:               input.Buf,
+				}, err
+			}
+			i -= len(encoded)
+			copy(dAtA[i:], encoded)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+			i--
+			dAtA[i] = 0x12
+		}
+		if len(x.CommitteeId) > 0 {
+			i -= len(x.CommitteeId)
+			copy(dAtA[i:], x.CommitteeId)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.CommitteeId)))
+			i--
+			dAtA[i] = 0xa
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*Report)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: Report: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: Report: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			case 1:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field CommitteeId", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.CommitteeId = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 2:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ExecutionContext", wireType)
+				}
+				var msglen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					msglen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if msglen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + msglen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if x.ExecutionContext == nil {
+					x.ExecutionContext = &ExecutionContext{}
+				}
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.ExecutionContext); err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				iNdEx = postIndex
+			case 3:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Messages", wireType)
+				}
+				var msglen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					msglen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if msglen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + msglen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.Messages = append(x.Messages, &anypb.Any{})
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.Messages[len(x.Messages)-1]); err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				iNdEx = postIndex
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
+var (
+	md_ExecutionContext                     protoreflect.MessageDescriptor
+	fd_ExecutionContext_kepler_block_number protoreflect.FieldDescriptor
+	fd_ExecutionContext_eth_block_number    protoreflect.FieldDescriptor
+)
+
+func init() {
+	file_kepler_committee_tx_proto_init()
+	md_ExecutionContext = File_kepler_committee_tx_proto.Messages().ByName("ExecutionContext")
+	fd_ExecutionContext_kepler_block_number = md_ExecutionContext.Fields().ByName("kepler_block_number")
+	fd_ExecutionContext_eth_block_number = md_ExecutionContext.Fields().ByName("eth_block_number")
+}
+
+var _ protoreflect.Message = (*fastReflection_ExecutionContext)(nil)
+
+type fastReflection_ExecutionContext ExecutionContext
+
+func (x *ExecutionContext) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_ExecutionContext)(x)
+}
+
+func (x *ExecutionContext) slowProtoReflect() protoreflect.Message {
+	mi := &file_kepler_committee_tx_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_ExecutionContext_messageType fastReflection_ExecutionContext_messageType
+var _ protoreflect.MessageType = fastReflection_ExecutionContext_messageType{}
+
+type fastReflection_ExecutionContext_messageType struct{}
+
+func (x fastReflection_ExecutionContext_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_ExecutionContext)(nil)
+}
+func (x fastReflection_ExecutionContext_messageType) New() protoreflect.Message {
+	return new(fastReflection_ExecutionContext)
+}
+func (x fastReflection_ExecutionContext_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_ExecutionContext
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_ExecutionContext) Descriptor() protoreflect.MessageDescriptor {
+	return md_ExecutionContext
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_ExecutionContext) Type() protoreflect.MessageType {
+	return _fastReflection_ExecutionContext_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_ExecutionContext) New() protoreflect.Message {
+	return new(fastReflection_ExecutionContext)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_ExecutionContext) Interface() protoreflect.ProtoMessage {
+	return (*ExecutionContext)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_ExecutionContext) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.KeplerBlockNumber != uint32(0) {
+		value := protoreflect.ValueOfUint32(x.KeplerBlockNumber)
+		if !f(fd_ExecutionContext_kepler_block_number, value) {
+			return
+		}
+	}
+	if x.EthBlockNumber != uint32(0) {
+		value := protoreflect.ValueOfUint32(x.EthBlockNumber)
+		if !f(fd_ExecutionContext_eth_block_number, value) {
+			return
+		}
+	}
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_ExecutionContext) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	case "kepler.committee.ExecutionContext.kepler_block_number":
+		return x.KeplerBlockNumber != uint32(0)
+	case "kepler.committee.ExecutionContext.eth_block_number":
+		return x.EthBlockNumber != uint32(0)
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.committee.ExecutionContext"))
+		}
+		panic(fmt.Errorf("message kepler.committee.ExecutionContext does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_ExecutionContext) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	case "kepler.committee.ExecutionContext.kepler_block_number":
+		x.KeplerBlockNumber = uint32(0)
+	case "kepler.committee.ExecutionContext.eth_block_number":
+		x.EthBlockNumber = uint32(0)
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.committee.ExecutionContext"))
+		}
+		panic(fmt.Errorf("message kepler.committee.ExecutionContext does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_ExecutionContext) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	case "kepler.committee.ExecutionContext.kepler_block_number":
+		value := x.KeplerBlockNumber
+		return protoreflect.ValueOfUint32(value)
+	case "kepler.committee.ExecutionContext.eth_block_number":
+		value := x.EthBlockNumber
+		return protoreflect.ValueOfUint32(value)
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.committee.ExecutionContext"))
+		}
+		panic(fmt.Errorf("message kepler.committee.ExecutionContext does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_ExecutionContext) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	case "kepler.committee.ExecutionContext.kepler_block_number":
+		x.KeplerBlockNumber = uint32(value.Uint())
+	case "kepler.committee.ExecutionContext.eth_block_number":
+		x.EthBlockNumber = uint32(value.Uint())
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.committee.ExecutionContext"))
+		}
+		panic(fmt.Errorf("message kepler.committee.ExecutionContext does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_ExecutionContext) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "kepler.committee.ExecutionContext.kepler_block_number":
+		panic(fmt.Errorf("field kepler_block_number of message kepler.committee.ExecutionContext is not mutable"))
+	case "kepler.committee.ExecutionContext.eth_block_number":
+		panic(fmt.Errorf("field eth_block_number of message kepler.committee.ExecutionContext is not mutable"))
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.committee.ExecutionContext"))
+		}
+		panic(fmt.Errorf("message kepler.committee.ExecutionContext does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_ExecutionContext) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "kepler.committee.ExecutionContext.kepler_block_number":
+		return protoreflect.ValueOfUint32(uint32(0))
+	case "kepler.committee.ExecutionContext.eth_block_number":
+		return protoreflect.ValueOfUint32(uint32(0))
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.committee.ExecutionContext"))
+		}
+		panic(fmt.Errorf("message kepler.committee.ExecutionContext does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_ExecutionContext) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in kepler.committee.ExecutionContext", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_ExecutionContext) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_ExecutionContext) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_ExecutionContext) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_ExecutionContext) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*ExecutionContext)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		if x.KeplerBlockNumber != 0 {
+			n += 1 + runtime.Sov(uint64(x.KeplerBlockNumber))
+		}
+		if x.EthBlockNumber != 0 {
+			n += 1 + runtime.Sov(uint64(x.EthBlockNumber))
+		}
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*ExecutionContext)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if x.EthBlockNumber != 0 {
+			i = runtime.EncodeVarint(dAtA, i, uint64(x.EthBlockNumber))
+			i--
+			dAtA[i] = 0x10
+		}
+		if x.KeplerBlockNumber != 0 {
+			i = runtime.EncodeVarint(dAtA, i, uint64(x.KeplerBlockNumber))
+			i--
+			dAtA[i] = 0x8
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*ExecutionContext)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: ExecutionContext: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: ExecutionContext: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			case 1:
+				if wireType != 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field KeplerBlockNumber", wireType)
+				}
+				x.KeplerBlockNumber = 0
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					x.KeplerBlockNumber |= uint32(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+			case 2:
+				if wireType != 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field EthBlockNumber", wireType)
+				}
+				x.EthBlockNumber = 0
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					x.EthBlockNumber |= uint32(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
 			default:
 				iNdEx = preIndex
 				skippy, err := runtime.Skip(dAtA[iNdEx:])
@@ -1309,7 +2478,7 @@ func (x *MsgSendReportResponse) ProtoReflect() protoreflect.Message {
 }
 
 func (x *MsgSendReportResponse) slowProtoReflect() protoreflect.Message {
-	mi := &file_kepler_committee_tx_proto_msgTypes[3]
+	mi := &file_kepler_committee_tx_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1734,12 +2903,16 @@ func (*MsgUpdateParamsResponse) Descriptor() ([]byte, []int) {
 	return file_kepler_committee_tx_proto_rawDescGZIP(), []int{1}
 }
 
+// MsgSendReport defines report message.
 type MsgSendReport struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// creator is the address of the creator of the report.
 	Creator string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	// report is the report that is being sent.
+	Report *Report `protobuf:"bytes,2,opt,name=report,proto3" json:"report,omitempty"`
 }
 
 func (x *MsgSendReport) Reset() {
@@ -1769,6 +2942,115 @@ func (x *MsgSendReport) GetCreator() string {
 	return ""
 }
 
+func (x *MsgSendReport) GetReport() *Report {
+	if x != nil {
+		return x.Report
+	}
+	return nil
+}
+
+// Report is a message that contains a report from the committee.
+type Report struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// committee_id is the id of the committee that the report is for.
+	CommitteeId string `protobuf:"bytes,1,opt,name=committee_id,json=committeeId,proto3" json:"committee_id,omitempty"`
+	// execution_context is the context of the execution of the report.
+	ExecutionContext *ExecutionContext `protobuf:"bytes,2,opt,name=execution_context,json=executionContext,proto3" json:"execution_context,omitempty"`
+	// messages are the messages that are being reported.
+	Messages []*anypb.Any `protobuf:"bytes,3,rep,name=messages,proto3" json:"messages,omitempty"`
+}
+
+func (x *Report) Reset() {
+	*x = Report{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_kepler_committee_tx_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Report) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Report) ProtoMessage() {}
+
+// Deprecated: Use Report.ProtoReflect.Descriptor instead.
+func (*Report) Descriptor() ([]byte, []int) {
+	return file_kepler_committee_tx_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *Report) GetCommitteeId() string {
+	if x != nil {
+		return x.CommitteeId
+	}
+	return ""
+}
+
+func (x *Report) GetExecutionContext() *ExecutionContext {
+	if x != nil {
+		return x.ExecutionContext
+	}
+	return nil
+}
+
+func (x *Report) GetMessages() []*anypb.Any {
+	if x != nil {
+		return x.Messages
+	}
+	return nil
+}
+
+// ExecutionContext defines the context of the execution on Tess.
+type ExecutionContext struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// kepler_block_number is the block number of the kepler chain.
+	KeplerBlockNumber uint32 `protobuf:"varint,1,opt,name=kepler_block_number,json=keplerBlockNumber,proto3" json:"kepler_block_number,omitempty"`
+	// eth_block_number is the block number of the ethereum chain.
+	EthBlockNumber uint32 `protobuf:"varint,2,opt,name=eth_block_number,json=ethBlockNumber,proto3" json:"eth_block_number,omitempty"`
+}
+
+func (x *ExecutionContext) Reset() {
+	*x = ExecutionContext{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_kepler_committee_tx_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ExecutionContext) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExecutionContext) ProtoMessage() {}
+
+// Deprecated: Use ExecutionContext.ProtoReflect.Descriptor instead.
+func (*ExecutionContext) Descriptor() ([]byte, []int) {
+	return file_kepler_committee_tx_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *ExecutionContext) GetKeplerBlockNumber() uint32 {
+	if x != nil {
+		return x.KeplerBlockNumber
+	}
+	return 0
+}
+
+func (x *ExecutionContext) GetEthBlockNumber() uint32 {
+	if x != nil {
+		return x.EthBlockNumber
+	}
+	return 0
+}
+
+// MsgSendReportResponse is the response to a MsgSendReport message.
 type MsgSendReportResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1778,7 +3060,7 @@ type MsgSendReportResponse struct {
 func (x *MsgSendReportResponse) Reset() {
 	*x = MsgSendReportResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_kepler_committee_tx_proto_msgTypes[3]
+		mi := &file_kepler_committee_tx_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1792,7 +3074,7 @@ func (*MsgSendReportResponse) ProtoMessage() {}
 
 // Deprecated: Use MsgSendReportResponse.ProtoReflect.Descriptor instead.
 func (*MsgSendReportResponse) Descriptor() ([]byte, []int) {
-	return file_kepler_committee_tx_proto_rawDescGZIP(), []int{3}
+	return file_kepler_committee_tx_proto_rawDescGZIP(), []int{5}
 }
 
 var File_kepler_committee_tx_proto protoreflect.FileDescriptor
@@ -1806,54 +3088,80 @@ var file_kepler_committee_tx_proto_rawDesc = []byte{
 	0x6d, 0x73, 0x67, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x19, 0x63, 0x6f, 0x73, 0x6d, 0x6f,
 	0x73, 0x5f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x70,
 	0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x14, 0x67, 0x6f, 0x67, 0x6f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f,
-	0x67, 0x6f, 0x67, 0x6f, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1d, 0x6b, 0x65, 0x70, 0x6c,
-	0x65, 0x72, 0x2f, 0x63, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x2f, 0x70, 0x61, 0x72,
-	0x61, 0x6d, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0xd5, 0x01, 0x0a, 0x0f, 0x4d, 0x73,
-	0x67, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x12, 0x36, 0x0a,
-	0x09, 0x61, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x69, 0x74, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
-	0x42, 0x18, 0xd2, 0xb4, 0x2d, 0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64, 0x64,
-	0x72, 0x65, 0x73, 0x73, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x52, 0x09, 0x61, 0x75, 0x74, 0x68,
-	0x6f, 0x72, 0x69, 0x74, 0x79, 0x12, 0x3b, 0x0a, 0x06, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x18,
-	0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x63,
-	0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x2e, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x42,
-	0x09, 0xc8, 0xde, 0x1f, 0x00, 0xa8, 0xe7, 0xb0, 0x2a, 0x01, 0x52, 0x06, 0x70, 0x61, 0x72, 0x61,
-	0x6d, 0x73, 0x3a, 0x4d, 0x82, 0xe7, 0xb0, 0x2a, 0x09, 0x61, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x69,
-	0x74, 0x79, 0x8a, 0xe7, 0xb0, 0x2a, 0x3a, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f,
-	0x6d, 0x2f, 0x64, 0x69, 0x74, 0x74, 0x6f, 0x6e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x2f, 0x6b,
-	0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x78, 0x2f, 0x63, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65,
-	0x65, 0x2f, 0x4d, 0x73, 0x67, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x61, 0x72, 0x61, 0x6d,
-	0x73, 0x22, 0x19, 0x0a, 0x17, 0x4d, 0x73, 0x67, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x61,
-	0x72, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x37, 0x0a, 0x0d,
-	0x4d, 0x73, 0x67, 0x53, 0x65, 0x6e, 0x64, 0x52, 0x65, 0x70, 0x6f, 0x72, 0x74, 0x12, 0x18, 0x0a,
-	0x07, 0x63, 0x72, 0x65, 0x61, 0x74, 0x6f, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07,
-	0x63, 0x72, 0x65, 0x61, 0x74, 0x6f, 0x72, 0x3a, 0x0c, 0x82, 0xe7, 0xb0, 0x2a, 0x07, 0x63, 0x72,
-	0x65, 0x61, 0x74, 0x6f, 0x72, 0x22, 0x17, 0x0a, 0x15, 0x4d, 0x73, 0x67, 0x53, 0x65, 0x6e, 0x64,
-	0x52, 0x65, 0x70, 0x6f, 0x72, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x32, 0xc2,
-	0x01, 0x0a, 0x03, 0x4d, 0x73, 0x67, 0x12, 0x5c, 0x0a, 0x0c, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65,
-	0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x12, 0x21, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e,
-	0x63, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x2e, 0x4d, 0x73, 0x67, 0x55, 0x70, 0x64,
-	0x61, 0x74, 0x65, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x1a, 0x29, 0x2e, 0x6b, 0x65, 0x70, 0x6c,
-	0x65, 0x72, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x2e, 0x4d, 0x73, 0x67,
-	0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x56, 0x0a, 0x0a, 0x53, 0x65, 0x6e, 0x64, 0x52, 0x65, 0x70, 0x6f,
-	0x72, 0x74, 0x12, 0x1f, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x63, 0x6f, 0x6d, 0x6d,
-	0x69, 0x74, 0x74, 0x65, 0x65, 0x2e, 0x4d, 0x73, 0x67, 0x53, 0x65, 0x6e, 0x64, 0x52, 0x65, 0x70,
-	0x6f, 0x72, 0x74, 0x1a, 0x27, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x63, 0x6f, 0x6d,
-	0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x2e, 0x4d, 0x73, 0x67, 0x53, 0x65, 0x6e, 0x64, 0x52, 0x65,
-	0x70, 0x6f, 0x72, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x1a, 0x05, 0x80, 0xe7,
-	0xb0, 0x2a, 0x01, 0x42, 0xb5, 0x01, 0x0a, 0x14, 0x63, 0x6f, 0x6d, 0x2e, 0x6b, 0x65, 0x70, 0x6c,
-	0x65, 0x72, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x42, 0x07, 0x54, 0x78,
-	0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x33, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e,
-	0x63, 0x6f, 0x6d, 0x2f, 0x64, 0x69, 0x74, 0x74, 0x6f, 0x6e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b,
-	0x2f, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6b, 0x65, 0x70, 0x6c,
-	0x65, 0x72, 0x2f, 0x63, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0xa2, 0x02, 0x03, 0x4b,
-	0x43, 0x58, 0xaa, 0x02, 0x10, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x43, 0x6f, 0x6d, 0x6d,
-	0x69, 0x74, 0x74, 0x65, 0x65, 0xca, 0x02, 0x10, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x5c, 0x43,
-	0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0xe2, 0x02, 0x1c, 0x4b, 0x65, 0x70, 0x6c, 0x65,
-	0x72, 0x5c, 0x43, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x5c, 0x47, 0x50, 0x42, 0x4d,
-	0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x11, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72,
-	0x3a, 0x3a, 0x43, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x33,
+	0x67, 0x6f, 0x67, 0x6f, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x19, 0x67, 0x6f, 0x6f, 0x67,
+	0x6c, 0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x61, 0x6e, 0x79, 0x2e,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1d, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x63, 0x6f,
+	0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x2f, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x2e, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x22, 0xd5, 0x01, 0x0a, 0x0f, 0x4d, 0x73, 0x67, 0x55, 0x70, 0x64, 0x61,
+	0x74, 0x65, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x12, 0x36, 0x0a, 0x09, 0x61, 0x75, 0x74, 0x68,
+	0x6f, 0x72, 0x69, 0x74, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x18, 0xd2, 0xb4, 0x2d,
+	0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x53,
+	0x74, 0x72, 0x69, 0x6e, 0x67, 0x52, 0x09, 0x61, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x69, 0x74, 0x79,
+	0x12, 0x3b, 0x0a, 0x06, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x18, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x69, 0x74,
+	0x74, 0x65, 0x65, 0x2e, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x42, 0x09, 0xc8, 0xde, 0x1f, 0x00,
+	0xa8, 0xe7, 0xb0, 0x2a, 0x01, 0x52, 0x06, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x3a, 0x4d, 0x82,
+	0xe7, 0xb0, 0x2a, 0x09, 0x61, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x69, 0x74, 0x79, 0x8a, 0xe7, 0xb0,
+	0x2a, 0x3a, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x64, 0x69, 0x74,
+	0x74, 0x6f, 0x6e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x2f, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72,
+	0x2f, 0x78, 0x2f, 0x63, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x2f, 0x4d, 0x73, 0x67,
+	0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x22, 0x19, 0x0a, 0x17,
+	0x4d, 0x73, 0x67, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0xa6, 0x01, 0x0a, 0x0d, 0x4d, 0x73, 0x67, 0x53,
+	0x65, 0x6e, 0x64, 0x52, 0x65, 0x70, 0x6f, 0x72, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x63, 0x72, 0x65,
+	0x61, 0x74, 0x6f, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x63, 0x72, 0x65, 0x61,
+	0x74, 0x6f, 0x72, 0x12, 0x30, 0x0a, 0x06, 0x72, 0x65, 0x70, 0x6f, 0x72, 0x74, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x63, 0x6f, 0x6d,
+	0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x2e, 0x52, 0x65, 0x70, 0x6f, 0x72, 0x74, 0x52, 0x06, 0x72,
+	0x65, 0x70, 0x6f, 0x72, 0x74, 0x3a, 0x49, 0x82, 0xe7, 0xb0, 0x2a, 0x07, 0x63, 0x72, 0x65, 0x61,
+	0x74, 0x6f, 0x72, 0x8a, 0xe7, 0xb0, 0x2a, 0x38, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63,
+	0x6f, 0x6d, 0x2f, 0x64, 0x69, 0x74, 0x74, 0x6f, 0x6e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x2f,
+	0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x78, 0x2f, 0x63, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74,
+	0x65, 0x65, 0x2f, 0x4d, 0x73, 0x67, 0x53, 0x65, 0x6e, 0x64, 0x52, 0x65, 0x70, 0x6f, 0x72, 0x74,
+	0x22, 0xae, 0x01, 0x0a, 0x06, 0x52, 0x65, 0x70, 0x6f, 0x72, 0x74, 0x12, 0x21, 0x0a, 0x0c, 0x63,
+	0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x0b, 0x63, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x49, 0x64, 0x12, 0x4f,
+	0x0a, 0x11, 0x65, 0x78, 0x65, 0x63, 0x75, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x63, 0x6f, 0x6e, 0x74,
+	0x65, 0x78, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x22, 0x2e, 0x6b, 0x65, 0x70, 0x6c,
+	0x65, 0x72, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x2e, 0x45, 0x78, 0x65,
+	0x63, 0x75, 0x74, 0x69, 0x6f, 0x6e, 0x43, 0x6f, 0x6e, 0x74, 0x65, 0x78, 0x74, 0x52, 0x10, 0x65,
+	0x78, 0x65, 0x63, 0x75, 0x74, 0x69, 0x6f, 0x6e, 0x43, 0x6f, 0x6e, 0x74, 0x65, 0x78, 0x74, 0x12,
+	0x30, 0x0a, 0x08, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x73, 0x18, 0x03, 0x20, 0x03, 0x28,
+	0x0b, 0x32, 0x14, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+	0x62, 0x75, 0x66, 0x2e, 0x41, 0x6e, 0x79, 0x52, 0x08, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65,
+	0x73, 0x22, 0x6c, 0x0a, 0x10, 0x45, 0x78, 0x65, 0x63, 0x75, 0x74, 0x69, 0x6f, 0x6e, 0x43, 0x6f,
+	0x6e, 0x74, 0x65, 0x78, 0x74, 0x12, 0x2e, 0x0a, 0x13, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x5f,
+	0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x5f, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x0d, 0x52, 0x11, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x4e,
+	0x75, 0x6d, 0x62, 0x65, 0x72, 0x12, 0x28, 0x0a, 0x10, 0x65, 0x74, 0x68, 0x5f, 0x62, 0x6c, 0x6f,
+	0x63, 0x6b, 0x5f, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0d, 0x52,
+	0x0e, 0x65, 0x74, 0x68, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x22,
+	0x17, 0x0a, 0x15, 0x4d, 0x73, 0x67, 0x53, 0x65, 0x6e, 0x64, 0x52, 0x65, 0x70, 0x6f, 0x72, 0x74,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x32, 0xc2, 0x01, 0x0a, 0x03, 0x4d, 0x73, 0x67,
+	0x12, 0x5c, 0x0a, 0x0c, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73,
+	0x12, 0x21, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x69, 0x74,
+	0x74, 0x65, 0x65, 0x2e, 0x4d, 0x73, 0x67, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x61, 0x72,
+	0x61, 0x6d, 0x73, 0x1a, 0x29, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x63, 0x6f, 0x6d,
+	0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x2e, 0x4d, 0x73, 0x67, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65,
+	0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x56,
+	0x0a, 0x0a, 0x53, 0x65, 0x6e, 0x64, 0x52, 0x65, 0x70, 0x6f, 0x72, 0x74, 0x12, 0x1f, 0x2e, 0x6b,
+	0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x2e,
+	0x4d, 0x73, 0x67, 0x53, 0x65, 0x6e, 0x64, 0x52, 0x65, 0x70, 0x6f, 0x72, 0x74, 0x1a, 0x27, 0x2e,
+	0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x65,
+	0x2e, 0x4d, 0x73, 0x67, 0x53, 0x65, 0x6e, 0x64, 0x52, 0x65, 0x70, 0x6f, 0x72, 0x74, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x1a, 0x05, 0x80, 0xe7, 0xb0, 0x2a, 0x01, 0x42, 0xb5, 0x01,
+	0x0a, 0x14, 0x63, 0x6f, 0x6d, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x63, 0x6f, 0x6d,
+	0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x42, 0x07, 0x54, 0x78, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50,
+	0x01, 0x5a, 0x33, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x64, 0x69,
+	0x74, 0x74, 0x6f, 0x6e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x2f, 0x6b, 0x65, 0x70, 0x6c, 0x65,
+	0x72, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x63, 0x6f, 0x6d,
+	0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0xa2, 0x02, 0x03, 0x4b, 0x43, 0x58, 0xaa, 0x02, 0x10, 0x4b,
+	0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x43, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0xca,
+	0x02, 0x10, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x5c, 0x43, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74,
+	0x65, 0x65, 0xe2, 0x02, 0x1c, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x5c, 0x43, 0x6f, 0x6d, 0x6d,
+	0x69, 0x74, 0x74, 0x65, 0x65, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74,
+	0x61, 0xea, 0x02, 0x11, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x3a, 0x3a, 0x43, 0x6f, 0x6d, 0x6d,
+	0x69, 0x74, 0x74, 0x65, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1868,25 +3176,31 @@ func file_kepler_committee_tx_proto_rawDescGZIP() []byte {
 	return file_kepler_committee_tx_proto_rawDescData
 }
 
-var file_kepler_committee_tx_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_kepler_committee_tx_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_kepler_committee_tx_proto_goTypes = []interface{}{
 	(*MsgUpdateParams)(nil),         // 0: kepler.committee.MsgUpdateParams
 	(*MsgUpdateParamsResponse)(nil), // 1: kepler.committee.MsgUpdateParamsResponse
 	(*MsgSendReport)(nil),           // 2: kepler.committee.MsgSendReport
-	(*MsgSendReportResponse)(nil),   // 3: kepler.committee.MsgSendReportResponse
-	(*Params)(nil),                  // 4: kepler.committee.Params
+	(*Report)(nil),                  // 3: kepler.committee.Report
+	(*ExecutionContext)(nil),        // 4: kepler.committee.ExecutionContext
+	(*MsgSendReportResponse)(nil),   // 5: kepler.committee.MsgSendReportResponse
+	(*Params)(nil),                  // 6: kepler.committee.Params
+	(*anypb.Any)(nil),               // 7: google.protobuf.Any
 }
 var file_kepler_committee_tx_proto_depIdxs = []int32{
-	4, // 0: kepler.committee.MsgUpdateParams.params:type_name -> kepler.committee.Params
-	0, // 1: kepler.committee.Msg.UpdateParams:input_type -> kepler.committee.MsgUpdateParams
-	2, // 2: kepler.committee.Msg.SendReport:input_type -> kepler.committee.MsgSendReport
-	1, // 3: kepler.committee.Msg.UpdateParams:output_type -> kepler.committee.MsgUpdateParamsResponse
-	3, // 4: kepler.committee.Msg.SendReport:output_type -> kepler.committee.MsgSendReportResponse
-	3, // [3:5] is the sub-list for method output_type
-	1, // [1:3] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	6, // 0: kepler.committee.MsgUpdateParams.params:type_name -> kepler.committee.Params
+	3, // 1: kepler.committee.MsgSendReport.report:type_name -> kepler.committee.Report
+	4, // 2: kepler.committee.Report.execution_context:type_name -> kepler.committee.ExecutionContext
+	7, // 3: kepler.committee.Report.messages:type_name -> google.protobuf.Any
+	0, // 4: kepler.committee.Msg.UpdateParams:input_type -> kepler.committee.MsgUpdateParams
+	2, // 5: kepler.committee.Msg.SendReport:input_type -> kepler.committee.MsgSendReport
+	1, // 6: kepler.committee.Msg.UpdateParams:output_type -> kepler.committee.MsgUpdateParamsResponse
+	5, // 7: kepler.committee.Msg.SendReport:output_type -> kepler.committee.MsgSendReportResponse
+	6, // [6:8] is the sub-list for method output_type
+	4, // [4:6] is the sub-list for method input_type
+	4, // [4:4] is the sub-list for extension type_name
+	4, // [4:4] is the sub-list for extension extendee
+	0, // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_kepler_committee_tx_proto_init() }
@@ -1933,6 +3247,30 @@ func file_kepler_committee_tx_proto_init() {
 			}
 		}
 		file_kepler_committee_tx_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Report); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_kepler_committee_tx_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ExecutionContext); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_kepler_committee_tx_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MsgSendReportResponse); i {
 			case 0:
 				return &v.state
@@ -1951,7 +3289,7 @@ func file_kepler_committee_tx_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_kepler_committee_tx_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

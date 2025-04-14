@@ -27,3 +27,7 @@ var (
 	// LatestEpochStorePrefix is the prefix for the latest epoch store key.
 	LatestEpochStorePrefix = collections.NewPrefix(latestEpochStorePrefixIndex)
 )
+
+const (
+	EventKeyReportGot = "report_got"
+)
