@@ -1,11 +1,9 @@
 syntax = "proto3";
 package kepler.epochs;
 
-import "amino/amino.proto";
 import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "kepler/epochs/genesis.proto";
-import "kepler/epochs/params.proto";
 
 option go_package = "github.com/dittonetwork/kepler/x/epochs/types";
 
@@ -19,41 +17,28 @@ service Query {
   rpc CurrentEpoch(QueryCurrentEpochRequest) returns (QueryCurrentEpochResponse) {
     option (google.api.http).get = "/cosmos/epochs/v1beta1/current_epoch";
   }
-
-  // Params queries the parameters of the module.
-  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
-    option (google.api.http).get = "/cosmos/epochs/v1beta1/params";
-  }
-}
-
-// QueryParamsRequest is request type for the Query/Params RPC method.
-message QueryParamsRequest {}
-
-// QueryParamsResponse is response type for the Query/Params RPC method.
-message QueryParamsResponse {
-  // params holds all the parameters of this module.
-  Params params = 1 [
-    (gogoproto.nullable) = false,
-    (amino.dont_omitempty) = true
-  ];
 }
 
 // QueryEpochsInfoRequest is request type for the Query/Epochs RPC method.
+// querying all epoch info.
 message QueryEpochsInfoRequest {}
 
 // QueryEpochsInfoResponse is response type for the Query/Epochs RPC method.
+// querying all epoch info.
 message QueryEpochsInfoResponse {
   // epochs holds all the epochInfos of this module.
   repeated EpochInfo epochs = 1 [(gogoproto.nullable) = false];
 }
 
 // QueryCurrentEpochRequest is request type for the Query/CurrentEpoch RPC method.
+// querying an epoch by its identifier.
 message QueryCurrentEpochRequest {
   // identifier is the identifier of the epoch.
   string identifier = 1;
 }
 
 // QueryCurrentEpochResponse is response type for the Query/CurrentEpoch RPC method.
+// querying an epoch by its identifier.
 message QueryCurrentEpochResponse {
   // current_epoch holds the current epoch of this module.
   int64 current_epoch = 1;

@@ -52,10 +52,3 @@ func (q Querier) CurrentEpoch(
 		CurrentEpoch: info.CurrentEpoch,
 	}, nil
 }
-
-func (q Querier) Params(
-	_ context.Context,
-	_ *types.QueryParamsRequest,
-) (*types.QueryParamsResponse, error) {
-	return &types.QueryParamsResponse{Params: types.Params{}}, nil
-}

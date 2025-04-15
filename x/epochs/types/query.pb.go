@@ -30,90 +30,8 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
-// QueryParamsRequest is request type for the Query/Params RPC method.
-type QueryParamsRequest struct {
-}
-
-func (m *QueryParamsRequest) Reset()         { *m = QueryParamsRequest{} }
-func (m *QueryParamsRequest) String() string { return proto.CompactTextString(m) }
-func (*QueryParamsRequest) ProtoMessage()    {}
-func (*QueryParamsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f56a550b69648ed5, []int{0}
-}
-func (m *QueryParamsRequest) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *QueryParamsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_QueryParamsRequest.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *QueryParamsRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryParamsRequest.Merge(m, src)
-}
-func (m *QueryParamsRequest) XXX_Size() int {
-	return m.Size()
-}
-func (m *QueryParamsRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryParamsRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_QueryParamsRequest proto.InternalMessageInfo
-
-// QueryParamsResponse is response type for the Query/Params RPC method.
-type QueryParamsResponse struct {
-	// params holds all the parameters of this module.
-	Params Params `protobuf:"bytes,1,opt,name=params,proto3" json:"params"`
-}
-
-func (m *QueryParamsResponse) Reset()         { *m = QueryParamsResponse{} }
-func (m *QueryParamsResponse) String() string { return proto.CompactTextString(m) }
-func (*QueryParamsResponse) ProtoMessage()    {}
-func (*QueryParamsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f56a550b69648ed5, []int{1}
-}
-func (m *QueryParamsResponse) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *QueryParamsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_QueryParamsResponse.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *QueryParamsResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryParamsResponse.Merge(m, src)
-}
-func (m *QueryParamsResponse) XXX_Size() int {
-	return m.Size()
-}
-func (m *QueryParamsResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryParamsResponse.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_QueryParamsResponse proto.InternalMessageInfo
-
-func (m *QueryParamsResponse) GetParams() Params {
-	if m != nil {
-		return m.Params
-	}
-	return Params{}
-}
-
 // QueryEpochsInfoRequest is request type for the Query/Epochs RPC method.
+// querying all epoch info.
 type QueryEpochsInfoRequest struct {
 }
 
@@ -121,7 +39,7 @@ func (m *QueryEpochsInfoRequest) Reset()         { *m = QueryEpochsInfoRequest{}
 func (m *QueryEpochsInfoRequest) String() string { return proto.CompactTextString(m) }
 func (*QueryEpochsInfoRequest) ProtoMessage()    {}
 func (*QueryEpochsInfoRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f56a550b69648ed5, []int{2}
+	return fileDescriptor_f56a550b69648ed5, []int{0}
 }
 func (m *QueryEpochsInfoRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -151,6 +69,7 @@ func (m *QueryEpochsInfoRequest) XXX_DiscardUnknown() {
 var xxx_messageInfo_QueryEpochsInfoRequest proto.InternalMessageInfo
 
 // QueryEpochsInfoResponse is response type for the Query/Epochs RPC method.
+// querying all epoch info.
 type QueryEpochsInfoResponse struct {
 	// epochs holds all the epochInfos of this module.
 	Epochs []EpochInfo `protobuf:"bytes,1,rep,name=epochs,proto3" json:"epochs"`
@@ -160,7 +79,7 @@ func (m *QueryEpochsInfoResponse) Reset()         { *m = QueryEpochsInfoResponse
 func (m *QueryEpochsInfoResponse) String() string { return proto.CompactTextString(m) }
 func (*QueryEpochsInfoResponse) ProtoMessage()    {}
 func (*QueryEpochsInfoResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f56a550b69648ed5, []int{3}
+	return fileDescriptor_f56a550b69648ed5, []int{1}
 }
 func (m *QueryEpochsInfoResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -197,6 +116,7 @@ func (m *QueryEpochsInfoResponse) GetEpochs() []EpochInfo {
 }
 
 // QueryCurrentEpochRequest is request type for the Query/CurrentEpoch RPC method.
+// querying an epoch by its identifier.
 type QueryCurrentEpochRequest struct {
 	// identifier is the identifier of the epoch.
 	Identifier string `protobuf:"bytes,1,opt,name=identifier,proto3" json:"identifier,omitempty"`
@@ -206,7 +126,7 @@ func (m *QueryCurrentEpochRequest) Reset()         { *m = QueryCurrentEpochReque
 func (m *QueryCurrentEpochRequest) String() string { return proto.CompactTextString(m) }
 func (*QueryCurrentEpochRequest) ProtoMessage()    {}
 func (*QueryCurrentEpochRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f56a550b69648ed5, []int{4}
+	return fileDescriptor_f56a550b69648ed5, []int{2}
 }
 func (m *QueryCurrentEpochRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -243,6 +163,7 @@ func (m *QueryCurrentEpochRequest) GetIdentifier() string {
 }
 
 // QueryCurrentEpochResponse is response type for the Query/CurrentEpoch RPC method.
+// querying an epoch by its identifier.
 type QueryCurrentEpochResponse struct {
 	// current_epoch holds the current epoch of this module.
 	CurrentEpoch int64 `protobuf:"varint,1,opt,name=current_epoch,json=currentEpoch,proto3" json:"current_epoch,omitempty"`
@@ -252,7 +173,7 @@ func (m *QueryCurrentEpochResponse) Reset()         { *m = QueryCurrentEpochResp
 func (m *QueryCurrentEpochResponse) String() string { return proto.CompactTextString(m) }
 func (*QueryCurrentEpochResponse) ProtoMessage()    {}
 func (*QueryCurrentEpochResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f56a550b69648ed5, []int{5}
+	return fileDescriptor_f56a550b69648ed5, []int{3}
 }
 func (m *QueryCurrentEpochResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -289,8 +210,6 @@ func (m *QueryCurrentEpochResponse) GetCurrentEpoch() int64 {
 }
 
 func init() {
-	proto.RegisterType((*QueryParamsRequest)(nil), "kepler.epochs.QueryParamsRequest")
-	proto.RegisterType((*QueryParamsResponse)(nil), "kepler.epochs.QueryParamsResponse")
 	proto.RegisterType((*QueryEpochsInfoRequest)(nil), "kepler.epochs.QueryEpochsInfoRequest")
 	proto.RegisterType((*QueryEpochsInfoResponse)(nil), "kepler.epochs.QueryEpochsInfoResponse")
 	proto.RegisterType((*QueryCurrentEpochRequest)(nil), "kepler.epochs.QueryCurrentEpochRequest")
@@ -300,37 +219,33 @@ func init() {
 func init() { proto.RegisterFile("kepler/epochs/query.proto", fileDescriptor_f56a550b69648ed5) }
 
 var fileDescriptor_f56a550b69648ed5 = []byte{
-	// 477 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x53, 0xc1, 0x6e, 0x13, 0x31,
-	0x10, 0x8d, 0x09, 0x44, 0xea, 0xb4, 0x3d, 0x60, 0x0a, 0x6c, 0x17, 0xd8, 0x96, 0x85, 0x96, 0x08,
-	0xc1, 0x5a, 0x0d, 0x12, 0x42, 0x9c, 0x50, 0x10, 0x42, 0x9c, 0xa0, 0x7b, 0xe4, 0x82, 0x36, 0x5b,
-	0x77, 0x6b, 0xb5, 0xf1, 0x6c, 0x6d, 0xa7, 0xd0, 0x6b, 0x7f, 0x00, 0x24, 0x24, 0xbe, 0x81, 0x23,
-	0x9f, 0xd1, 0x63, 0x25, 0x2e, 0x9c, 0x10, 0x4a, 0x90, 0xf8, 0x0d, 0x14, 0xdb, 0x41, 0xd9, 0xb2,
-	0x90, 0x5e, 0x22, 0x67, 0xde, 0x9b, 0xf7, 0x9e, 0x67, 0xc7, 0xb0, 0xbc, 0xcb, 0xcb, 0x3d, 0xae,
-	0x18, 0x2f, 0x31, 0xdf, 0xd1, 0x6c, 0x7f, 0xc0, 0xd5, 0x61, 0x52, 0x2a, 0x34, 0x48, 0x17, 0x1d,
-	0x94, 0x38, 0x28, 0xbc, 0x98, 0xf5, 0x85, 0x44, 0x66, 0x7f, 0x1d, 0x23, 0x5c, 0x2a, 0xb0, 0x40,
-	0x7b, 0x64, 0xe3, 0x93, 0xaf, 0x5e, 0x2f, 0x10, 0x8b, 0x3d, 0xce, 0xb2, 0x52, 0xb0, 0x4c, 0x4a,
-	0x34, 0x99, 0x11, 0x28, 0xb5, 0x47, 0xaf, 0x55, 0x0d, 0x0b, 0x2e, 0xb9, 0x16, 0x13, 0x30, 0xac,
-	0x82, 0x65, 0xa6, 0xb2, 0xbe, 0xc7, 0xe2, 0x25, 0xa0, 0x9b, 0xe3, 0x74, 0xaf, 0x6c, 0x31, 0xe5,
-	0xfb, 0x03, 0xae, 0x4d, 0xfc, 0x12, 0x2e, 0x55, 0xaa, 0xba, 0x44, 0xa9, 0x39, 0x7d, 0x04, 0x2d,
-	0xd7, 0x1c, 0x90, 0x55, 0xd2, 0x9e, 0xef, 0x5c, 0x4e, 0x2a, 0x97, 0x49, 0x1c, 0xbd, 0x3b, 0x77,
-	0xfc, 0x7d, 0xa5, 0xf1, 0xf9, 0xd7, 0x97, 0xbb, 0x24, 0xf5, 0xfc, 0x38, 0x80, 0x2b, 0x56, 0xf0,
-	0x99, 0x25, 0xbe, 0x90, 0xdb, 0x38, 0xb1, 0xda, 0x84, 0xab, 0x7f, 0x21, 0xde, 0xee, 0x21, 0xb4,
-	0x9c, 0x70, 0x40, 0x56, 0x9b, 0xed, 0xf9, 0x4e, 0x70, 0xca, 0xce, 0xb6, 0x8c, 0x3b, 0xba, 0xe7,
-	0xc7, 0x8e, 0xa9, 0x67, 0xc7, 0x8f, 0x21, 0xb0, 0x92, 0x4f, 0x07, 0x4a, 0x71, 0x69, 0x2c, 0xcd,
-	0xdb, 0xd1, 0x08, 0x40, 0x6c, 0x71, 0x69, 0xc4, 0xb6, 0xe0, 0xca, 0x5e, 0x63, 0x2e, 0x9d, 0xaa,
-	0xc4, 0x4f, 0x60, 0xb9, 0xa6, 0xd7, 0x07, 0xba, 0x05, 0x8b, 0xb9, 0xab, 0xbf, 0xb1, 0x56, 0xb6,
-	0xbf, 0x99, 0x2e, 0xe4, 0x53, 0xe4, 0xce, 0xa7, 0x26, 0x5c, 0xb0, 0x12, 0xf4, 0x88, 0x00, 0xfc,
-	0xc9, 0xa8, 0xe9, 0xda, 0xa9, 0xf8, 0xf5, 0x03, 0x09, 0xd7, 0x67, 0xd1, 0x5c, 0x98, 0x78, 0xed,
-	0xe8, 0xeb, 0xcf, 0x8f, 0xe7, 0x56, 0xe8, 0x0d, 0x96, 0xa3, 0xee, 0xa3, 0x9e, 0x7c, 0xde, 0x83,
-	0x8d, 0x1e, 0x37, 0xd9, 0x86, 0xff, 0x4b, 0xdf, 0x13, 0x58, 0x98, 0xbe, 0x0c, 0xbd, 0x53, 0xa7,
-	0x5f, 0x33, 0xaa, 0xb0, 0x3d, 0x9b, 0xe8, 0xa3, 0xdc, 0xb3, 0x51, 0xd6, 0xe9, 0xed, 0x7f, 0x44,
-	0xa9, 0x0c, 0x8d, 0x1e, 0x40, 0xcb, 0x2d, 0x0a, 0xbd, 0x59, 0xe7, 0x50, 0xd9, 0xc4, 0x30, 0xfe,
-	0x1f, 0xe5, 0x8c, 0x93, 0x70, 0x3b, 0xd8, 0x7d, 0x7e, 0x3c, 0x8c, 0xc8, 0xc9, 0x30, 0x22, 0x3f,
-	0x86, 0x11, 0xf9, 0x30, 0x8a, 0x1a, 0x27, 0xa3, 0xa8, 0xf1, 0x6d, 0x14, 0x35, 0x5e, 0xdf, 0x2f,
-	0x84, 0xd9, 0x19, 0xf4, 0x92, 0x1c, 0xfb, 0x6c, 0x4b, 0x18, 0x83, 0x92, 0x9b, 0xb7, 0xa8, 0x76,
-	0x99, 0x7f, 0x38, 0xef, 0x26, 0x8a, 0xe6, 0xb0, 0xe4, 0xba, 0xd7, 0xb2, 0x4f, 0xe7, 0xc1, 0xef,
-	0x00, 0x00, 0x00, 0xff, 0xff, 0x7b, 0xde, 0x5a, 0xf1, 0xe6, 0x03, 0x00, 0x00,
+	// 401 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x92, 0x41, 0x8f, 0xd2, 0x40,
+	0x14, 0xc7, 0x3b, 0xbb, 0xba, 0x89, 0xe3, 0xee, 0xc1, 0x89, 0xd1, 0x6e, 0xd5, 0x42, 0xaa, 0x20,
+	0x07, 0xed, 0x04, 0x4c, 0x3c, 0x78, 0x32, 0x18, 0x63, 0x3c, 0xd2, 0xa3, 0x17, 0x53, 0xca, 0xa3,
+	0x4c, 0x80, 0x79, 0xa5, 0x33, 0x55, 0xb9, 0xf2, 0x05, 0x34, 0xf1, 0xee, 0xe7, 0xe1, 0x48, 0xe2,
+	0xc5, 0x93, 0x31, 0xe0, 0x07, 0x31, 0x4c, 0x07, 0x03, 0xda, 0x0d, 0x97, 0x66, 0xfa, 0xfe, 0xff,
+	0xf7, 0x7f, 0xbf, 0x79, 0x19, 0x7a, 0x39, 0x86, 0x6c, 0x02, 0x39, 0x87, 0x0c, 0x93, 0x91, 0xe2,
+	0xb3, 0x02, 0xf2, 0x79, 0x98, 0xe5, 0xa8, 0x91, 0x5d, 0x94, 0x52, 0x58, 0x4a, 0xde, 0xad, 0x78,
+	0x2a, 0x24, 0x72, 0xf3, 0x2d, 0x1d, 0xde, 0xed, 0x14, 0x53, 0x34, 0x47, 0xbe, 0x3d, 0xd9, 0xea,
+	0xfd, 0x14, 0x31, 0x9d, 0x00, 0x8f, 0x33, 0xc1, 0x63, 0x29, 0x51, 0xc7, 0x5a, 0xa0, 0x54, 0x56,
+	0xbd, 0x77, 0x38, 0x30, 0x05, 0x09, 0x4a, 0x58, 0x31, 0x70, 0xe9, 0x9d, 0xde, 0x96, 0xe0, 0xb5,
+	0x11, 0xdf, 0xca, 0x21, 0x46, 0x30, 0x2b, 0x40, 0xe9, 0xa0, 0x47, 0xef, 0xfe, 0xa7, 0xa8, 0x0c,
+	0xa5, 0x02, 0xf6, 0x9c, 0x9e, 0x95, 0x61, 0x2e, 0xa9, 0x9f, 0xb6, 0x6e, 0x76, 0xdc, 0xf0, 0x00,
+	0x3c, 0x34, 0x2d, 0xdb, 0x8e, 0xee, 0xb5, 0xe5, 0xcf, 0x9a, 0x13, 0x59, 0x77, 0xf0, 0x82, 0xba,
+	0x26, 0xf2, 0x55, 0x91, 0xe7, 0x20, 0xb5, 0xb1, 0xd9, 0x71, 0xcc, 0xa7, 0x54, 0x0c, 0x40, 0x6a,
+	0x31, 0x14, 0x90, 0xbb, 0xa4, 0x4e, 0x5a, 0x37, 0xa2, 0xbd, 0x4a, 0xf0, 0x92, 0x5e, 0x56, 0xf4,
+	0x5a, 0xa0, 0x87, 0xf4, 0x22, 0x29, 0xeb, 0xef, 0xcd, 0x28, 0xd3, 0x7f, 0x1a, 0x9d, 0x27, 0x7b,
+	0xe6, 0xce, 0xb7, 0x13, 0x7a, 0xdd, 0x44, 0xb0, 0x05, 0xa1, 0xf4, 0x2f, 0xa3, 0x62, 0x8d, 0x7f,
+	0xf0, 0xab, 0x17, 0xe2, 0x35, 0x8f, 0xd9, 0x4a, 0x98, 0xa0, 0xb1, 0xf8, 0xfe, 0xfb, 0xeb, 0x49,
+	0x8d, 0x3d, 0xe0, 0x09, 0xaa, 0x29, 0xaa, 0xdd, 0xe2, 0x3f, 0xb4, 0xfb, 0xa0, 0xe3, 0xb6, 0xfd,
+	0x65, 0x9f, 0x09, 0x3d, 0xdf, 0xbf, 0x0c, 0x7b, 0x5c, 0x95, 0x5f, 0xb1, 0x2a, 0xaf, 0x75, 0xdc,
+	0x68, 0x51, 0x9e, 0x18, 0x94, 0x26, 0x7b, 0x74, 0x05, 0xca, 0xc1, 0xd2, 0xba, 0x6f, 0x96, 0x6b,
+	0x9f, 0xac, 0xd6, 0x3e, 0xf9, 0xb5, 0xf6, 0xc9, 0x97, 0x8d, 0xef, 0xac, 0x36, 0xbe, 0xf3, 0x63,
+	0xe3, 0x3b, 0xef, 0x9e, 0xa6, 0x42, 0x8f, 0x8a, 0x7e, 0x98, 0xe0, 0x94, 0x0f, 0x84, 0xd6, 0x28,
+	0x41, 0x7f, 0xc4, 0x7c, 0xcc, 0xed, 0xd3, 0xfa, 0xb4, 0x0b, 0xd6, 0xf3, 0x0c, 0x54, 0xff, 0xcc,
+	0xbc, 0xad, 0x67, 0x7f, 0x02, 0x00, 0x00, 0xff, 0xff, 0xb3, 0x73, 0x90, 0x31, 0xeb, 0x02, 0x00,
+	0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -349,8 +264,6 @@ type QueryClient interface {
 	EpochInfos(ctx context.Context, in *QueryEpochsInfoRequest, opts ...grpc.CallOption) (*QueryEpochsInfoResponse, error)
 	// CurrentEpoch provide current epoch of specified identifier
 	CurrentEpoch(ctx context.Context, in *QueryCurrentEpochRequest, opts ...grpc.CallOption) (*QueryCurrentEpochResponse, error)
-	// Params queries the parameters of the module.
-	Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error)
 }
 
 type queryClient struct {
@@ -379,23 +292,12 @@ func (c *queryClient) CurrentEpoch(ctx context.Context, in *QueryCurrentEpochReq
 	return out, nil
 }
 
-func (c *queryClient) Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error) {
-	out := new(QueryParamsResponse)
-	err := c.cc.Invoke(ctx, "/kepler.epochs.Query/Params", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // QueryServer is the server API for Query service.
 type QueryServer interface {
 	// EpochInfos provide running epochInfos
 	EpochInfos(context.Context, *QueryEpochsInfoRequest) (*QueryEpochsInfoResponse, error)
 	// CurrentEpoch provide current epoch of specified identifier
 	CurrentEpoch(context.Context, *QueryCurrentEpochRequest) (*QueryCurrentEpochResponse, error)
-	// Params queries the parameters of the module.
-	Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error)
 }
 
 // UnimplementedQueryServer can be embedded to have forward compatible implementations.
@@ -407,9 +309,6 @@ func (*UnimplementedQueryServer) EpochInfos(ctx context.Context, req *QueryEpoch
 }
 func (*UnimplementedQueryServer) CurrentEpoch(ctx context.Context, req *QueryCurrentEpochRequest) (*QueryCurrentEpochResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CurrentEpoch not implemented")
-}
-func (*UnimplementedQueryServer) Params(ctx context.Context, req *QueryParamsRequest) (*QueryParamsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Params not implemented")
 }
 
 func RegisterQueryServer(s grpc1.Server, srv QueryServer) {
@@ -452,24 +351,6 @@ func _Query_CurrentEpoch_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Query_Params_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryParamsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(QueryServer).Params(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/kepler.epochs.Query/Params",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).Params(ctx, req.(*QueryParamsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 var Query_serviceDesc = _Query_serviceDesc
 var _Query_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "kepler.epochs.Query",
@@ -483,69 +364,9 @@ var _Query_serviceDesc = grpc.ServiceDesc{
 			MethodName: "CurrentEpoch",
 			Handler:    _Query_CurrentEpoch_Handler,
 		},
-		{
-			MethodName: "Params",
-			Handler:    _Query_Params_Handler,
-		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "kepler/epochs/query.proto",
-}
-
-func (m *QueryParamsRequest) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *QueryParamsRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *QueryParamsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	return len(dAtA) - i, nil
-}
-
-func (m *QueryParamsResponse) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *QueryParamsResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *QueryParamsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	{
-		size, err := m.Params.MarshalToSizedBuffer(dAtA[:i])
-		if err != nil {
-			return 0, err
-		}
-		i -= size
-		i = encodeVarintQuery(dAtA, i, uint64(size))
-	}
-	i--
-	dAtA[i] = 0xa
-	return len(dAtA) - i, nil
 }
 
 func (m *QueryEpochsInfoRequest) Marshal() (dAtA []byte, err error) {
@@ -677,26 +498,6 @@ func encodeVarintQuery(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
-func (m *QueryParamsRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	return n
-}
-
-func (m *QueryParamsResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = m.Params.Size()
-	n += 1 + l + sovQuery(uint64(l))
-	return n
-}
-
 func (m *QueryEpochsInfoRequest) Size() (n int) {
 	if m == nil {
 		return 0
@@ -751,139 +552,6 @@ func sovQuery(x uint64) (n int) {
 }
 func sozQuery(x uint64) (n int) {
 	return sovQuery(uint64((x << 1) ^ uint64((int64(x) >> 63))))
-}
-func (m *QueryParamsRequest) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowQuery
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: QueryParamsRequest: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryParamsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		default:
-			iNdEx = preIndex
-			skippy, err := skipQuery(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthQuery
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *QueryParamsResponse) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowQuery
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: QueryParamsResponse: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryParamsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Params", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowQuery
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthQuery
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthQuery
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if err := m.Params.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipQuery(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthQuery
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
 }
 func (m *QueryEpochsInfoRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)

@@ -1,8 +1,8 @@
 syntax = "proto3";
 package kepler.restaking;
 
-import "gogoproto/gogo.proto";
 import "cosmos_proto/cosmos.proto";
+import "gogoproto/gogo.proto";
 import "google/protobuf/any.proto";
 import "google/protobuf/timestamp.proto";
 import "kepler/restaking/validator.proto";
