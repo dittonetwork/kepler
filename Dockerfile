@@ -1,4 +1,4 @@
-FROM debian:slim as copy
+FROM 12.10-slim as copy
 RUN echo '' > /app/config/data/priv_validator_state.json && echo '' > /app/config/config/addrbook.json
 
 FROM gcr.io/distroless/base-debian12
