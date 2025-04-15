@@ -1,11 +1,20 @@
 name: 'ETH Limit Buy Order'
 id: 'eth-limit-buy'
-on:
-  schedule:
-    cron: '*/5 * * * *'  # Check every 5 minutes
 jobs:
+  send-money:
+    chain_id: 1  # Ethereum mainnet
+    checkers:
+      asset_price:
+      gas_limit:
+				max_fee: 1
+				max_priority_fee: 1
+    steps:
+      - name: 'Send money to wallet'
+        address: '0x0000000000000000000000000000000000000000'
+        calldata: 'transfer(address,uint256)' # send money to wallet (for example)
   check-and-swap:
     chain_id: 1  # Ethereum mainnet
+    needs: 'send-money'
     checkers:
       asset_price:
         sell_asset: 'ETH' 
@@ -16,11 +25,7 @@ jobs:
 				max_fee: 1
 				max_priority_fee: 1
     steps:
-      - name: 'Send money to wallet'
-        address: '0x0000000000000000000000000000000000000000'
-        calldata: 'transfer(address,uint256)' # send money to wallet (for example)
       - name: 'Approve and Swap'
-        needs: 'Send money to wallet' # need to send money to wallet first
         uses: 'ditto/approve-and-swap'
         with:
           token_in: 'ETH'

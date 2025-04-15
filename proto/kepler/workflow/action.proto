@@ -20,10 +20,13 @@ message Runs {
   string using = 1;
   
   // Binary name to run
-  string binary = 2;
+  optional string binary = 2;
   
   // Arguments to pass to the action
-  repeated string args = 3;
+  optional repeated string args = 3;
+
+  // Steps to execute as part of the run
+  optional repeated Step steps = 4;
 }
 
 // Action step      
@@ -45,9 +48,6 @@ message Step {
     
     // Input parameters for the step, if step uses a reusable action
     optional map<string, string> with = 5;
-    
-    // Execution configuration if step runs some binary
-    optional Runs runs = 6;
 }
 
 // Complete action definition
@@ -61,8 +61,8 @@ message Action {
   // Input parameters for the action
   map<string, Input> inputs = 3;
 
-  // Steps to execute as part of the action
-  repeated Step steps = 4;
+  // Runs to execute as part of the action
+  Runs runs = 4;
 }
 
 

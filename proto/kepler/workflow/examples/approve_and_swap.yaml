@@ -19,15 +19,13 @@ inputs:
   spender:
     required: true
     description: "Address of the Uniswap router contract"
-steps:
-  - name: 'Approve and Swap'
-    runs:
-      using: 'wasm'
-      binary: 'approve_and_swap'
-      args:
-        - ${{ inputs.token_in }}
-        - ${{ inputs.token_out }}
-        - ${{ inputs.amount_in }}
-        - ${{ inputs.amount_out_min }}
-        - ${{ inputs.spender }} 
-        - ${{ inputs.slippage }}
+  runs:
+    using: 'wasm'
+    binary: 'approve_and_swap'
+    args:
+      - ${{ inputs.token_in }}
+      - ${{ inputs.token_out }}
+      - ${{ inputs.amount_in }}
+      - ${{ inputs.amount_out_min }}
+      - ${{ inputs.spender }} 
+      - ${{ inputs.slippage }}
