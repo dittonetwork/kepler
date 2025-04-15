@@ -7,10 +7,13 @@ import (
 	cmtproto "github.com/cometbft/cometbft/proto/tendermint/types"
 	cmttime "github.com/cometbft/cometbft/types/time"
 	"github.com/cosmos/cosmos-sdk/baseapp"
+	"github.com/cosmos/cosmos-sdk/codec/address"
 	"github.com/cosmos/cosmos-sdk/testutil"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	moduletestutil "github.com/cosmos/cosmos-sdk/types/module/testutil"
+	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	"github.com/dittonetwork/kepler/api/kepler/restaking"
+	committeetypes "github.com/dittonetwork/kepler/x/committee/types"
 	"github.com/dittonetwork/kepler/x/restaking/keeper"
 	restakingmodule "github.com/dittonetwork/kepler/x/restaking/module"
 	restakingtestutils "github.com/dittonetwork/kepler/x/restaking/testutil"
@@ -42,11 +45,16 @@ func (s *TestSuite) SetupTest() {
 	// gomock initializations
 	ctrl := gomock.NewController(s.T())
 	s.repository = restakingtestutils.NewMockRepository(ctrl)
+	accountKeeper := restakingtestutils.NewMockAccountKeeper(ctrl)
+
+	accountKeeper.EXPECT().AddressCodec().Return(address.NewBech32Codec("cosmos")).Times(1)
 
 	restakingKeeper := keeper.NewKeeper(
 		encCfg.Codec,
 		ctx.Logger(),
 		s.repository,
+		accountKeeper,
+		authtypes.NewModuleAddress(committeetypes.ModuleName).String(),
 	)
 
 	queryHelper := baseapp.NewQueryServerTestHelper(ctx, encCfg.InterfaceRegistry)
