@@ -49,6 +49,6 @@ func (q queryServer) NeedValidatorsUpdate(
 	}
 
 	return &types.QueryNeedValidatorsUpdateResponse{
-		Result: lastUpdate.EpochNum <= epoch.CurrentEpoch,
+		Result: lastUpdate.EpochNum < epoch.CurrentEpoch,
 	}, nil
 }
