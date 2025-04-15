@@ -30,6 +30,9 @@ type TestSuite struct {
 	msgServer   types.MsgServer
 	keeper      keeper.Keeper
 	repository  *restakingtestutils.MockRepository
+
+	accountsKeeper *restakingtestutils.MockAccountKeeper
+	epochsKeeper   *restakingtestutils.MockEpochsKeeper
 }
 
 func TestKeeper(t *testing.T) {
@@ -45,16 +48,18 @@ func (s *TestSuite) SetupTest() {
 	// gomock initializations
 	ctrl := gomock.NewController(s.T())
 	s.repository = restakingtestutils.NewMockRepository(ctrl)
-	accountKeeper := restakingtestutils.NewMockAccountKeeper(ctrl)
+	s.accountsKeeper = restakingtestutils.NewMockAccountKeeper(ctrl)
 
-	accountKeeper.EXPECT().AddressCodec().Return(address.NewBech32Codec("cosmos")).Times(1)
+	s.accountsKeeper.EXPECT().AddressCodec().Return(address.NewBech32Codec("cosmos")).Times(1)
 
 	restakingKeeper := keeper.NewKeeper(
 		encCfg.Codec,
 		ctx.Logger(),
 		s.repository,
-		accountKeeper,
+		s.accountsKeeper,
 		authtypes.NewModuleAddress(committeetypes.ModuleName).String(),
+		s.epochsKeeper,
+		"hour",
 	)
 
 	queryHelper := baseapp.NewQueryServerTestHelper(ctx, encCfg.InterfaceRegistry)

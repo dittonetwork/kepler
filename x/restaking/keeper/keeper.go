@@ -18,7 +18,11 @@ type (
 		// should be the x/committee module account.
 		authority string
 
-		repository types.Repository
+		// keeper dependencies
+		epochs types.EpochsKeeper
+
+		repository  types.Repository
+		mainEpochID string
 	}
 )
 
@@ -28,6 +32,8 @@ func NewKeeper(
 	repo types.Repository,
 	ak types.AccountKeeper,
 	authority string,
+	epochs types.EpochsKeeper,
+	mainEpochID string,
 ) *Keeper {
 	// ensure that authority is a valid AccAddress
 	if _, err := ak.AddressCodec().StringToBytes(authority); err != nil {
@@ -35,10 +41,12 @@ func NewKeeper(
 	}
 
 	return &Keeper{
-		cdc:        cdc,
-		logger:     logger,
-		authority:  authority,
-		repository: repo,
+		cdc:         cdc,
+		logger:      logger,
+		authority:   authority,
+		repository:  repo,
+		epochs:      epochs,
+		mainEpochID: mainEpochID,
 	}
 }
 

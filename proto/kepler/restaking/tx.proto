@@ -4,6 +4,8 @@ package kepler.restaking;
 import "amino/amino.proto";
 import "cosmos/msg/v1/msg.proto";
 import "cosmos_proto/cosmos.proto";
+import "gogoproto/gogo.proto";
+import "kepler/restaking/update.proto";
 
 option go_package = "github.com/dittonetwork/kepler/x/restaking/types";
 
@@ -13,6 +15,9 @@ service Msg {
 
   // Complete the bonding process for a validator recognized in Bonding status.
   rpc BondValidator(MsgBondValidator) returns (MsgBondValidatorResponse);
+
+  // UpdateValidatorsSet is the request type for the Msg/UpdateValidatorsSet RPC method.
+  rpc UpdateValidatorsSet(MsgUpdateValidatorsSet) returns (MsgUpdateValidatorsSetResponse);
 }
 
 // MsgBondValidator is the request type for the Msg/BondValidator RPC method.
@@ -24,5 +29,23 @@ message MsgBondValidator {
   string owner = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 }
 
-// MsgBondValidatorResponse is the response type for the Msg/BondValidator RPC method.
+// MsgBondValidatorResponse is the response type for the Msg/BondValidator.
 message MsgBondValidatorResponse {}
+
+// MsgUpdateValidatorsSet is the request type for the Msg/UpdateValidatorsSet.
+message MsgUpdateValidatorsSet {
+  option (cosmos.msg.v1.signer) = "authority";
+  option (amino.name) = "kepler/x/restaking/MsgUpdateValidatorsSet";
+
+  // authority is the address that controls the module (defaults to x/committee unless overwritten).
+  string authority = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+
+  // operators is the list of operators to update.
+  repeated Operator operators = 2 [(gogoproto.nullable) = false];
+
+  // info contains information about the last update.
+  UpdateInfo info = 3 [(gogoproto.nullable) = false];
+}
+
+// MsgUpdateValidatorsSetResponse is the response type for the Msg/UpdateValidatorsSet.
+message MsgUpdateValidatorsSetResponse {}
