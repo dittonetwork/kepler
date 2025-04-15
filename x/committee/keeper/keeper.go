@@ -4,9 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"cosmossdk.io/collections"
-	"cosmossdk.io/core/store"
 	"cosmossdk.io/log"
+	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
@@ -26,16 +25,19 @@ type CommitteeKeeper interface {
 
 	// SetParams updates the committee module's parameters.
 	SetParams(ctx context.Context, params types.Params) error
+
+	// HandleReport handles a report message.
+	HandleReport(ctx sdk.Context, msg *types.MsgSendReport) error
 }
 
 type Keeper struct {
-	cdc codec.BinaryCodec
+	cdc    codec.Codec
+	amino  *codec.LegacyAmino
+	router baseapp.MessageRouter
 
-	Schema     collections.Schema
-	Committees *collections.IndexedMap[uint32, types.Committee, Idx]
-	LastEpoch  collections.Item[uint32]
+	repository types.Repository
 
-	executors types.ExecutorsKeeper
+	account   types.AccountKeeper
 	restaking types.RestakingKeeper
 
 	// the address capable of executing a MsgUpdateParams message. Typically, this
@@ -44,46 +46,27 @@ type Keeper struct {
 }
 
 func NewKeeper(
-	cdc codec.BinaryCodec,
-	storeService store.KVStoreService,
 	authority string,
-	executors types.ExecutorsKeeper,
+	account types.AccountKeeper,
 	restaking types.RestakingKeeper,
+	repo types.Repository,
+	router baseapp.MessageRouter,
+	amino *codec.LegacyAmino,
+	cdc codec.Codec,
 ) Keeper {
 	if _, err := sdk.AccAddressFromBech32(authority); err != nil {
 		panic(fmt.Sprintf("invalid authority address: %s", authority))
 	}
 
-	sb := collections.NewSchemaBuilder(storeService)
-
 	k := Keeper{
-		cdc:       cdc,
-		authority: authority,
-		executors: executors,
-		restaking: restaking,
-
-		Committees: collections.NewIndexedMap(
-			sb,
-			types.CommitteesStoreKeyPrefix,
-			"committees",
-			collections.Uint32Key,
-			codec.CollValue[types.Committee](cdc),
-			NewIndexes(sb),
-		),
-		LastEpoch: collections.NewItem(
-			sb,
-			types.LatestEpochStorePrefix,
-			"last_epoch",
-			collections.Uint32Value,
-		),
+		authority:  authority,
+		account:    account,
+		restaking:  restaking,
+		repository: repo,
+		router:     router,
+		amino:      amino,
+		cdc:        cdc,
 	}
-
-	schema, err := sb.Build()
-	if err != nil {
-		panic(err)
-	}
-
-	k.Schema = schema
 
 	return k
 }

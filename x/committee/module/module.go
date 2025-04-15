@@ -8,6 +8,7 @@ import (
 	"cosmossdk.io/core/appmodule"
 	"cosmossdk.io/core/store"
 	"cosmossdk.io/depinject"
+	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"
 	cdctypes "github.com/cosmos/cosmos-sdk/codec/types"
@@ -21,6 +22,7 @@ import (
 
 	modulev1 "github.com/dittonetwork/kepler/api/kepler/committee/module"
 	"github.com/dittonetwork/kepler/x/committee/keeper"
+	"github.com/dittonetwork/kepler/x/committee/repository"
 	"github.com/dittonetwork/kepler/x/committee/types"
 )
 
@@ -133,12 +135,12 @@ func (am AppModule) InitGenesis(ctx sdk.Context, cdc codec.JSONCodec, gs json.Ra
 	// Initialize global index to index in genesis state
 	cdc.MustUnmarshalJSON(gs, &genState)
 
-	InitGenesis(ctx, am.keeper, genState)
+	am.keeper.InitGenesis(ctx, genState)
 }
 
 // ExportGenesis returns the module's exported genesis state as raw JSON bytes.
 func (am AppModule) ExportGenesis(ctx sdk.Context, cdc codec.JSONCodec) json.RawMessage {
-	genState := ExportGenesis(ctx, am.keeper)
+	genState := am.keeper.ExportGenesis(ctx)
 	return cdc.MustMarshalJSON(genState)
 }
 
@@ -180,14 +182,16 @@ func init() {
 type ModuleInputs struct {
 	depinject.In
 
+	Router baseapp.MessageRouter
+
 	StoreService store.KVStoreService
 	Cdc          codec.Codec
+	Amino        *codec.LegacyAmino
 	Config       *modulev1.Module
 
 	AccountKeeper types.AccountKeeper
 	BankKeeper    types.BankKeeper
 
-	ExecutorsKeeper types.ExecutorsKeeper
 	RestakingKeeper types.RestakingKeeper
 }
 
@@ -204,12 +208,17 @@ func ProvideModule(in ModuleInputs) ModuleOutputs {
 	if in.Config.Authority != "" {
 		authority = authtypes.NewModuleAddressOrBech32Address(in.Config.Authority)
 	}
+
+	repo := repository.NewCommitteeRepository(in.StoreService, in.Cdc)
+
 	k := keeper.NewKeeper(
-		in.Cdc,
-		in.StoreService,
 		authority.String(),
-		in.ExecutorsKeeper,
+		in.AccountKeeper,
 		in.RestakingKeeper,
+		repo,
+		in.Router,
+		in.Amino,
+		in.Cdc,
 	)
 	m := NewAppModule(
 		in.Cdc,

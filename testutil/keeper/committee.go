@@ -11,7 +11,6 @@ import (
 	dbm "github.com/cosmos/cosmos-db"
 	"github.com/cosmos/cosmos-sdk/codec"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
-	"github.com/cosmos/cosmos-sdk/runtime"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
@@ -31,21 +30,22 @@ func CommitteeKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {
 	stateStore.MountStoreWithDB(storeKey, storetypes.StoreTypeIAVL, db)
 	require.NoError(t, stateStore.LoadLatestVersion())
 
-	registry := codectypes.NewInterfaceRegistry()
-	cdc := codec.NewProtoCodec(registry)
 	authority := authtypes.NewModuleAddress(govtypes.ModuleName)
 
 	// Mock staking keeper
 	ctrl := gomock.NewController(t)
-	executorsKeeper := committeemock.NewMockExecutorsKeeper(ctrl)
 	restakingKeeper := committeemock.NewMockRestakingKeeper(ctrl)
+	accountKeeper := committeemock.NewMockAccountKeeper(ctrl)
+	repo := committeemock.NewMockRepository(ctrl)
 
 	k := keeper.NewKeeper(
-		cdc,
-		runtime.NewKVStoreService(storeKey),
 		authority.String(),
-		executorsKeeper,
+		accountKeeper,
 		restakingKeeper,
+		repo,
+		nil,
+		codec.NewLegacyAmino(),
+		codec.NewProtoCodec(codectypes.NewInterfaceRegistry()),
 	)
 
 	ctx := sdk.NewContext(stateStore, cmtproto.Header{}, false, log.NewNopLogger())

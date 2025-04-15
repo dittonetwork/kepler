@@ -9,7 +9,6 @@ import (
 	cmtproto "github.com/cometbft/cometbft/proto/tendermint/types"
 	cmttime "github.com/cometbft/cometbft/types/time"
 	"github.com/cosmos/cosmos-sdk/baseapp"
-	"github.com/cosmos/cosmos-sdk/runtime"
 	"github.com/cosmos/cosmos-sdk/testutil"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	moduletestutil "github.com/cosmos/cosmos-sdk/types/module/testutil"
@@ -31,8 +30,9 @@ type TestSuite struct {
 	keeper      keeper.Keeper
 	authority   string
 
+	accountKeeper   *committeetestutil.MockAccountKeeper
 	restakingKeeper *committeetestutil.MockRestakingKeeper
-	executorKeeper  *committeetestutil.MockExecutorsKeeper
+	repo            *committeetestutil.MockRepository
 }
 
 func TestNewKeeper(t *testing.T) {
@@ -41,38 +41,42 @@ func TestNewKeeper(t *testing.T) {
 
 func (s *TestSuite) SetupTest() {
 	key := storetypes.NewKVStoreKey(types.StoreKey)
-	storeService := runtime.NewKVStoreService(key)
 	testCtx := testutil.DefaultContextWithDB(s.T(), key, storetypes.NewTransientStoreKey("transient_test"))
 	ctx := testCtx.Ctx.WithBlockHeader(cmtproto.Header{Time: cmttime.Now()})
 	encCfg := moduletestutil.MakeTestEncodingConfig(committeemodule.AppModuleBasic{})
 
 	// gomock initializations
 	ctrl := gomock.NewController(s.T())
-	executorKeeper := committeetestutil.NewMockExecutorsKeeper(ctrl)
+	accountKeeper := committeetestutil.NewMockAccountKeeper(ctrl)
 	restakingKeeper := committeetestutil.NewMockRestakingKeeper(ctrl)
 
 	pubKey := sr25519.GenPrivKey().PubKey()
+
+	repo := committeetestutil.NewMockRepository(ctrl)
 
 	// Generate Bech32 encoded address
 	s.authority = sdk.MustBech32ifyAddressBytes(sdk.GetConfig().GetBech32AccountAddrPrefix(), pubKey.Address())
 
 	committeeKeeper := keeper.NewKeeper(
-		encCfg.Codec,
-		storeService,
 		s.authority,
-		executorKeeper,
+		accountKeeper,
 		restakingKeeper,
+		repo,
+		nil,
+		encCfg.Amino,
+		encCfg.Codec,
 	)
 
 	queryHelper := baseapp.NewQueryServerTestHelper(ctx, encCfg.InterfaceRegistry)
 	types.RegisterQueryServer(queryHelper, keeper.NewQueryServerImpl(committeeKeeper))
 
-	s.executorKeeper = executorKeeper
+	s.accountKeeper = accountKeeper
 	s.restakingKeeper = restakingKeeper
 	s.keeper = committeeKeeper
 	s.queryClient = committee.NewQueryClient(queryHelper)
 	s.ctx = ctx
 	s.msgServer = keeper.NewMsgServerImpl(committeeKeeper)
+	s.repo = repo
 
 	s.Require().Equal(
 		ctx.Logger().With("module", fmt.Sprintf("x/%s", types.ModuleName)),
