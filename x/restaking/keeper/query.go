@@ -36,7 +36,8 @@ func (q queryServer) Validators(
 
 func (q queryServer) NeedValidatorsUpdate(
 	ctx context.Context,
-	_ *types.QueryNeedValidatorsUpdateRequest) (*types.QueryNeedValidatorsUpdateResponse, error) {
+	_ *types.QueryNeedValidatorsUpdateRequest,
+) (*types.QueryNeedValidatorsUpdateResponse, error) {
 	lastUpdate, err := q.repository.GetLastUpdate(sdk.UnwrapSDKContext(ctx))
 	if err != nil {
 		return nil, err
