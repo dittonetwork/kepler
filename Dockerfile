@@ -1,13 +1,9 @@
-FROM 12.10-slim as copy
-RUN echo '' > /app/config/data/priv_validator_state.json && echo '' > /app/config/config/addrbook.json
-
-FROM gcr.io/distroless/base-debian12
+FROM golang:1.24.2-bookworm
 
 WORKDIR /app
 
 COPY main kepler
 COPY docs/static/openapi.yml docs/static/openapi.yml
-COPY --from=copy /app/config/data/priv_validator_state.json /app/config/data/priv_validator_state.json
-COPY --from=copy /app/config/config/addrbook.json /app/config/config/addrbook.json
+RUN echo '' > /app/config/data/priv_validator_state.json && echo '' > /app/config/config/addrbook.json
 
 CMD ["/app/kepler", "start", "--home", "/app/config"]
