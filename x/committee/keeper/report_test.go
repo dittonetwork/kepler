@@ -43,6 +43,7 @@ func (suite *ReportTestSuite) SetupTest() {
 	// Create a test committee
 	suite.committeeID = "test-committee"
 	suite.committee = types.Committee{
+		Epoch: 10,
 		Address: "cosmos1kkyr80lkuku58h7e2v84egemscmem304mdra4f",
 	}
 
@@ -63,6 +64,39 @@ func (suite *ReportTestSuite) TestHandleReport_InvalidCommitteeAddress() {
 	suite.repository.EXPECT().
 		GetLastCommittee(suite.ctx).
 		Return(suite.committee, nil)
+
+	suite.repository.EXPECT().
+		GetCommittee(suite.ctx, gomock.Any()).
+		Return(types.Committee{
+			Epoch: 10,
+			Address: "cosmos1testaddressererer",
+		}, nil)
+
+	// Create a report with invalid committee address
+	msg := &types.MsgSendReport{
+		Creator: "cosmos1testaddress",
+		Report: &types.Report{
+			CommitteeId: suite.committeeID,
+		},
+	}
+
+	err := suite.keeper.HandleReport(suite.ctx, msg)
+	suite.Require().Error(err)
+	suite.Require().Contains(err.Error(), "invalid committee")
+}
+
+func (suite *ReportTestSuite) TestHandleReport_InvalidEpoch() {
+	// Setup mock expectations
+	suite.repository.EXPECT().
+		GetLastCommittee(suite.ctx).
+		Return(suite.committee, nil)
+
+	suite.repository.EXPECT().
+		GetCommittee(suite.ctx, gomock.Any()).
+		Return(types.Committee{
+			Epoch: 8,
+			Address: "cosmos1testaddress",
+		}, nil)
 
 	// Create a report with invalid committee address
 	msg := &types.MsgSendReport{
@@ -88,29 +122,19 @@ func (suite *ReportTestSuite) TestHandleReport_ValidReport() {
 		Creator: suite.committee.Address,
 		Report: &types.Report{
 			CommitteeId: suite.committeeID,
-			ExecutionContext: &types.ExecutionContext{
-				KeplerBlockNumber: 1,
-				EthBlockNumber:    2,
-			},
-			Messages: []*cdctypes.Any{},
+			Messages:    []*cdctypes.Any{},
 		},
 	}
 
 	err := suite.keeper.HandleReport(suite.ctx, msg)
 	suite.Require().NoError(err)
 
-	execCtx := &types.ExecutionContext{
-		KeplerBlockNumber: 1,
-		EthBlockNumber:    2,
-	}
-
 	// Verify events were emitted
 	events := suite.ctx.EventManager().Events()
 	suite.Require().Len(events, 1)
-	suite.Require().Equal(types.EventKeyReportGot, events[0].Type)
-	suite.Require().Equal(suite.committee.Address, events[0].Attributes[0].Value)
-	suite.Require().Equal(execCtx.String(), events[0].Attributes[1].Value)
-	suite.Require().Equal("0", events[0].Attributes[2].Value) // report_count
+	suite.Require().Equal("kepler.committee.EventReportReceived", events[0].Type)
+	suite.Require().Equal("\""+suite.committee.Address+"\"", events[0].Attributes[0].Value)
+	suite.Require().Equal("\"0\"", events[0].Attributes[2].Value) // report_count
 }
 
 func (suite *ReportTestSuite) TestHandleReport_InvalidMessage() {
@@ -124,10 +148,6 @@ func (suite *ReportTestSuite) TestHandleReport_InvalidMessage() {
 		Creator: suite.committee.Address,
 		Report: &types.Report{
 			CommitteeId: suite.committeeID,
-			ExecutionContext: &types.ExecutionContext{
-				KeplerBlockNumber: 1,
-				EthBlockNumber:    2,
-			},
 			Messages: []*cdctypes.Any{
 				{
 					TypeUrl: "invalid-type-url",

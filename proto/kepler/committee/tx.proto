@@ -49,10 +49,13 @@ message MsgSendReport {
   option (amino.name) = "github.com/dittonetwork/kepler/x/committee/MsgSendReport";
 
   // creator is the address of the creator of the report.
-  string creator = 1;
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+
+  // epoch_id is the id of the epoch that the report is for.
+  uint32 epoch_id = 2;
 
   // report is the report that is being sent.
-  Report report = 2;
+  Report report = 3;
 }
 
 // Report is a message that contains a report from the committee.
@@ -61,21 +64,10 @@ message Report {
   string committee_id = 1;
 
   // execution_context is the context of the execution of the report.
-  ExecutionContext execution_context = 2;
+  google.protobuf.Any execution_context = 2 [(cosmos_proto.accepts_interface) = "cosmos.base.v1beta1.Msg"];
 
   // messages are the messages that are being reported.
-  repeated google.protobuf.Any messages = 3;
-}
-
-// ExecutionContext defines the context of the execution on Tess.
-message ExecutionContext {
-  // kepler_block_number is the block number of the kepler chain.
-  uint32 kepler_block_number = 1;
-
-  // eth_block_number is the block number of the ethereum chain.
-  uint32 eth_block_number = 2;
-
-  // etc
+  repeated google.protobuf.Any messages = 3 [(cosmos_proto.accepts_interface) = "cosmos.base.v1beta1.Msg"];
 }
 
 // MsgSendReportResponse is the response to a MsgSendReport message.

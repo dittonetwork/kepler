@@ -2,7 +2,6 @@ package keeper
 
 import (
 	"errors"
-	"strconv"
 
 	sdkerrors "cosmossdk.io/errors"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -10,22 +9,17 @@ import (
 )
 
 func (k Keeper) HandleReport(ctx sdk.Context, msg *types.MsgSendReport) error {
-	lastCommittee, err := k.repository.GetLastCommittee(ctx)
+	err := k.checkCommitteeValidity(ctx, msg.GetCreator(), msg.GetEpochId())
 	if err != nil {
-		return err
+		return sdkerrors.Wrapf(err, "invalid committee")
 	}
 
-	if lastCommittee.GetAddress() != msg.GetCreator() {
-		return sdkerrors.Wrapf(errors.New("invalid committee"), "invalid committee")
-	}
-
-	ctx.EventManager().EmitEvent(
-		sdk.NewEvent(
-			types.EventKeyReportGot,
-			sdk.NewAttribute("creator", msg.GetCreator()),
-			sdk.NewAttribute("context", msg.GetReport().GetExecutionContext().String()),
-			sdk.NewAttribute("report_count", strconv.Itoa(len(msg.GetReport().GetMessages()))),
-		),
+	ctx.EventManager().EmitTypedEvent(
+		&types.EventReportReceived{
+			Creator:     msg.Creator,
+			EpochId:     msg.GetEpochId(),
+			ReportCount: int64(len(msg.GetReport().GetMessages())),
+		},
 	)
 
 	// Route the message to the correct handler
@@ -47,5 +41,35 @@ func (k Keeper) HandleReport(ctx sdk.Context, msg *types.MsgSendReport) error {
 			return err
 		}
 	}
+	return nil
+}
+
+func (k Keeper) checkCommitteeValidity(ctx sdk.Context, address string, epochID uint32) error {
+	lastCommittee, err := k.repository.GetLastCommittee(ctx)
+	if err != nil {
+		return err
+	}
+
+	if lastCommittee.GetAddress() != address {
+		return k.epochIsValid(ctx, address, epochID, lastCommittee)
+	}
+
+	return nil
+}
+
+func (k Keeper) epochIsValid(ctx sdk.Context, address string, epochID uint32, lastCommittee types.Committee) error {
+	epochCommittee, err := k.repository.GetCommittee(ctx, epochID)
+	if err != nil {
+		return err
+	}
+
+	if lastCommittee.GetEpoch()-epochID > 1 {
+		return sdkerrors.Wrapf(errors.New("epoch is too old"), "epoch is too old")
+	}
+
+	if epochCommittee.GetAddress() != address {
+		return sdkerrors.Wrapf(errors.New("invalid committee"), "invalid committee")
+	}
+
 	return nil
 }
