@@ -46,7 +46,7 @@ import (
 const (
 	AccountAddressPrefix = "ditto"
 	Name                 = "kepler"
-	MainEpochID          = "main"
+	MainEpochID          = "minute"
 )
 
 var (

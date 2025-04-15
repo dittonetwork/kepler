@@ -3,6 +3,7 @@ package keeper
 import (
 	"context"
 
+	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/dittonetwork/kepler/x/restaking/types"
 )
 
@@ -31,4 +32,22 @@ func (q queryServer) Validators(
 ) (*types.QueryValidatorsResponse, error) {
 	// TODO github.com/dittonetwork/kepler/issues/177
 	panic("implement me")
+}
+
+func (q queryServer) NeedValidatorsUpdate(
+	ctx context.Context,
+	_ *types.QueryNeedValidatorsUpdateRequest) (*types.QueryNeedValidatorsUpdateResponse, error) {
+	lastUpdate, err := q.repository.GetLastUpdate(sdk.UnwrapSDKContext(ctx))
+	if err != nil {
+		return nil, err
+	}
+
+	epoch, err := q.epochs.GetEpochInfo(ctx, q.mainEpochID)
+	if err != nil {
+		return nil, err
+	}
+
+	return &types.QueryNeedValidatorsUpdateResponse{
+		Result: lastUpdate.EpochNum <= epoch.CurrentEpoch,
+	}, nil
 }

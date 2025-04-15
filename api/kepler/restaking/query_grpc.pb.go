@@ -19,8 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Query_PendingValidators_FullMethodName = "/kepler.restaking.Query/PendingValidators"
-	Query_Validators_FullMethodName        = "/kepler.restaking.Query/Validators"
+	Query_PendingValidators_FullMethodName    = "/kepler.restaking.Query/PendingValidators"
+	Query_Validators_FullMethodName           = "/kepler.restaking.Query/Validators"
+	Query_NeedValidatorsUpdate_FullMethodName = "/kepler.restaking.Query/NeedValidatorsUpdate"
 )
 
 // QueryClient is the client API for Query service.
@@ -33,6 +34,8 @@ type QueryClient interface {
 	PendingValidators(ctx context.Context, in *QueryPendingValidatorsRequest, opts ...grpc.CallOption) (*QueryPendingValidatorsResponse, error)
 	// Retrieve a list of all validators.
 	Validators(ctx context.Context, in *QueryValidatorsRequest, opts ...grpc.CallOption) (*QueryValidatorsResponse, error)
+	// Return true if need update validators set
+	NeedValidatorsUpdate(ctx context.Context, in *QueryNeedValidatorsUpdateRequest, opts ...grpc.CallOption) (*QueryNeedValidatorsUpdateResponse, error)
 }
 
 type queryClient struct {
@@ -63,6 +66,16 @@ func (c *queryClient) Validators(ctx context.Context, in *QueryValidatorsRequest
 	return out, nil
 }
 
+func (c *queryClient) NeedValidatorsUpdate(ctx context.Context, in *QueryNeedValidatorsUpdateRequest, opts ...grpc.CallOption) (*QueryNeedValidatorsUpdateResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(QueryNeedValidatorsUpdateResponse)
+	err := c.cc.Invoke(ctx, Query_NeedValidatorsUpdate_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueryServer is the server API for Query service.
 // All implementations must embed UnimplementedQueryServer
 // for forward compatibility.
@@ -73,6 +86,8 @@ type QueryServer interface {
 	PendingValidators(context.Context, *QueryPendingValidatorsRequest) (*QueryPendingValidatorsResponse, error)
 	// Retrieve a list of all validators.
 	Validators(context.Context, *QueryValidatorsRequest) (*QueryValidatorsResponse, error)
+	// Return true if need update validators set
+	NeedValidatorsUpdate(context.Context, *QueryNeedValidatorsUpdateRequest) (*QueryNeedValidatorsUpdateResponse, error)
 	mustEmbedUnimplementedQueryServer()
 }
 
@@ -88,6 +103,9 @@ func (UnimplementedQueryServer) PendingValidators(context.Context, *QueryPending
 }
 func (UnimplementedQueryServer) Validators(context.Context, *QueryValidatorsRequest) (*QueryValidatorsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Validators not implemented")
+}
+func (UnimplementedQueryServer) NeedValidatorsUpdate(context.Context, *QueryNeedValidatorsUpdateRequest) (*QueryNeedValidatorsUpdateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method NeedValidatorsUpdate not implemented")
 }
 func (UnimplementedQueryServer) mustEmbedUnimplementedQueryServer() {}
 func (UnimplementedQueryServer) testEmbeddedByValue()               {}
@@ -146,6 +164,24 @@ func _Query_Validators_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_NeedValidatorsUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryNeedValidatorsUpdateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).NeedValidatorsUpdate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Query_NeedValidatorsUpdate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).NeedValidatorsUpdate(ctx, req.(*QueryNeedValidatorsUpdateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Query_ServiceDesc is the grpc.ServiceDesc for Query service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -160,6 +196,10 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Validators",
 			Handler:    _Query_Validators_Handler,
+		},
+		{
+			MethodName: "NeedValidatorsUpdate",
+			Handler:    _Query_NeedValidatorsUpdate_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

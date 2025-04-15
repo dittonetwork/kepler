@@ -9,6 +9,7 @@ import (
 	_ "github.com/cosmos/cosmos-proto"
 	_ "github.com/cosmos/cosmos-sdk/types/msgservice"
 	_ "github.com/cosmos/cosmos-sdk/types/tx/amino"
+	_ "github.com/cosmos/gogoproto/gogoproto"
 	grpc1 "github.com/cosmos/gogoproto/grpc"
 	proto "github.com/cosmos/gogoproto/proto"
 	grpc "google.golang.org/grpc"
@@ -76,7 +77,7 @@ func (m *MsgBondValidator) GetOwner() string {
 	return ""
 }
 
-// MsgBondValidatorResponse is the response type for the Msg/BondValidator RPC method.
+// MsgBondValidatorResponse is the response type for the Msg/BondValidator.
 type MsgBondValidatorResponse struct {
 }
 
@@ -113,34 +114,147 @@ func (m *MsgBondValidatorResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgBondValidatorResponse proto.InternalMessageInfo
 
+// MsgUpdateValidatorsSet is the request type for the Msg/UpdateValidatorsSet.
+type MsgUpdateValidatorsSet struct {
+	// authority is the address that controls the module (defaults to x/committee unless overwritten).
+	Authority string `protobuf:"bytes,1,opt,name=authority,proto3" json:"authority,omitempty"`
+	// operators is the list of operators to update.
+	Operators []Operator `protobuf:"bytes,2,rep,name=operators,proto3" json:"operators"`
+	// info contains information about the last update.
+	Info UpdateInfo `protobuf:"bytes,3,opt,name=info,proto3" json:"info"`
+}
+
+func (m *MsgUpdateValidatorsSet) Reset()         { *m = MsgUpdateValidatorsSet{} }
+func (m *MsgUpdateValidatorsSet) String() string { return proto.CompactTextString(m) }
+func (*MsgUpdateValidatorsSet) ProtoMessage()    {}
+func (*MsgUpdateValidatorsSet) Descriptor() ([]byte, []int) {
+	return fileDescriptor_e08c36557f6f17d6, []int{2}
+}
+func (m *MsgUpdateValidatorsSet) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgUpdateValidatorsSet) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgUpdateValidatorsSet.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgUpdateValidatorsSet) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgUpdateValidatorsSet.Merge(m, src)
+}
+func (m *MsgUpdateValidatorsSet) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgUpdateValidatorsSet) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgUpdateValidatorsSet.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgUpdateValidatorsSet proto.InternalMessageInfo
+
+func (m *MsgUpdateValidatorsSet) GetAuthority() string {
+	if m != nil {
+		return m.Authority
+	}
+	return ""
+}
+
+func (m *MsgUpdateValidatorsSet) GetOperators() []Operator {
+	if m != nil {
+		return m.Operators
+	}
+	return nil
+}
+
+func (m *MsgUpdateValidatorsSet) GetInfo() UpdateInfo {
+	if m != nil {
+		return m.Info
+	}
+	return UpdateInfo{}
+}
+
+// MsgUpdateValidatorsSetResponse is the response type for the Msg/UpdateValidatorsSet.
+type MsgUpdateValidatorsSetResponse struct {
+}
+
+func (m *MsgUpdateValidatorsSetResponse) Reset()         { *m = MsgUpdateValidatorsSetResponse{} }
+func (m *MsgUpdateValidatorsSetResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgUpdateValidatorsSetResponse) ProtoMessage()    {}
+func (*MsgUpdateValidatorsSetResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_e08c36557f6f17d6, []int{3}
+}
+func (m *MsgUpdateValidatorsSetResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgUpdateValidatorsSetResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgUpdateValidatorsSetResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgUpdateValidatorsSetResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgUpdateValidatorsSetResponse.Merge(m, src)
+}
+func (m *MsgUpdateValidatorsSetResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgUpdateValidatorsSetResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgUpdateValidatorsSetResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgUpdateValidatorsSetResponse proto.InternalMessageInfo
+
 func init() {
 	proto.RegisterType((*MsgBondValidator)(nil), "kepler.restaking.MsgBondValidator")
 	proto.RegisterType((*MsgBondValidatorResponse)(nil), "kepler.restaking.MsgBondValidatorResponse")
+	proto.RegisterType((*MsgUpdateValidatorsSet)(nil), "kepler.restaking.MsgUpdateValidatorsSet")
+	proto.RegisterType((*MsgUpdateValidatorsSetResponse)(nil), "kepler.restaking.MsgUpdateValidatorsSetResponse")
 }
 
 func init() { proto.RegisterFile("kepler/restaking/tx.proto", fileDescriptor_e08c36557f6f17d6) }
 
 var fileDescriptor_e08c36557f6f17d6 = []byte{
-	// 294 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0xcc, 0x4e, 0x2d, 0xc8,
-	0x49, 0x2d, 0xd2, 0x2f, 0x4a, 0x2d, 0x2e, 0x49, 0xcc, 0xce, 0xcc, 0x4b, 0xd7, 0x2f, 0xa9, 0xd0,
-	0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x12, 0x80, 0x48, 0xe9, 0xc1, 0xa5, 0xa4, 0x04, 0x13, 0x73,
-	0x33, 0xf3, 0xf2, 0xf5, 0xc1, 0x24, 0x44, 0x91, 0x94, 0x78, 0x72, 0x7e, 0x71, 0x6e, 0x7e, 0xb1,
-	0x7e, 0x6e, 0x71, 0xba, 0x7e, 0x99, 0x21, 0x88, 0x82, 0x4a, 0x48, 0x42, 0x24, 0xe2, 0xc1, 0x3c,
-	0x7d, 0x08, 0x07, 0x22, 0xa5, 0x54, 0xc6, 0x25, 0xe0, 0x5b, 0x9c, 0xee, 0x94, 0x9f, 0x97, 0x12,
-	0x96, 0x98, 0x93, 0x99, 0x92, 0x58, 0x92, 0x5f, 0x24, 0xa4, 0xc7, 0xc5, 0x9a, 0x5f, 0x9e, 0x97,
-	0x5a, 0x24, 0xc1, 0xa8, 0xc0, 0xa8, 0xc1, 0xe9, 0x24, 0x71, 0x69, 0x8b, 0xae, 0x08, 0x54, 0x93,
-	0x63, 0x4a, 0x4a, 0x51, 0x6a, 0x71, 0x71, 0x70, 0x49, 0x51, 0x66, 0x5e, 0x7a, 0x10, 0x44, 0x99,
-	0x95, 0x51, 0xd3, 0xf3, 0x0d, 0x5a, 0x10, 0x76, 0xd7, 0xf3, 0x0d, 0x5a, 0xca, 0x50, 0x6f, 0x54,
-	0x20, 0x79, 0x04, 0xdd, 0x0e, 0x25, 0x29, 0x2e, 0x09, 0x74, 0xb1, 0xa0, 0xd4, 0xe2, 0x82, 0xfc,
-	0xbc, 0xe2, 0x54, 0xa3, 0x5c, 0x2e, 0x66, 0xdf, 0xe2, 0x74, 0xa1, 0x78, 0x2e, 0x5e, 0x54, 0x77,
-	0x29, 0xe9, 0xa1, 0x87, 0x82, 0x1e, 0xba, 0x19, 0x52, 0x5a, 0x84, 0xd5, 0xc0, 0xec, 0x91, 0x62,
-	0x6d, 0x78, 0xbe, 0x41, 0x8b, 0xd1, 0xc9, 0xeb, 0xc4, 0x23, 0x39, 0xc6, 0x0b, 0x8f, 0xe4, 0x18,
-	0x1f, 0x3c, 0x92, 0x63, 0x9c, 0xf0, 0x58, 0x8e, 0xe1, 0xc2, 0x63, 0x39, 0x86, 0x1b, 0x8f, 0xe5,
-	0x18, 0xa2, 0x0c, 0xd2, 0x33, 0x4b, 0x32, 0x4a, 0x93, 0xf4, 0x92, 0xf3, 0x73, 0xf5, 0x53, 0x32,
-	0x4b, 0x4a, 0xf2, 0xf3, 0x52, 0x4b, 0xca, 0xf3, 0x8b, 0xb2, 0xf5, 0xb1, 0xf8, 0xb0, 0xa4, 0xb2,
-	0x20, 0xb5, 0x38, 0x89, 0x0d, 0x1c, 0xaa, 0xc6, 0x80, 0x00, 0x00, 0x00, 0xff, 0xff, 0xf2, 0xce,
-	0xcf, 0x3b, 0xcb, 0x01, 0x00, 0x00,
+	// 453 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x52, 0xcf, 0x6b, 0xd4, 0x40,
+	0x14, 0xde, 0xe9, 0xb6, 0xc2, 0x4e, 0x11, 0x6a, 0x2c, 0x9a, 0x06, 0x8d, 0x4b, 0xbc, 0xc4, 0x80,
+	0x99, 0x1a, 0xa1, 0x87, 0x22, 0x82, 0xb9, 0x29, 0x2c, 0xc2, 0x16, 0x3d, 0x78, 0x29, 0x69, 0x33,
+	0x9d, 0x0e, 0xdb, 0xcc, 0x8b, 0x33, 0xb3, 0xfd, 0x71, 0x13, 0x0f, 0x1e, 0x3c, 0xf9, 0xa7, 0xec,
+	0xc1, 0x3f, 0xa2, 0xc7, 0xe2, 0xc9, 0x93, 0x94, 0xdd, 0xc3, 0xfe, 0x1b, 0x92, 0x4c, 0xb6, 0xab,
+	0xd9, 0xc0, 0xf6, 0x92, 0xcc, 0xbc, 0xef, 0x7b, 0xef, 0xfb, 0xf2, 0xbd, 0xe0, 0xad, 0x01, 0xcd,
+	0x4f, 0xa8, 0x24, 0x92, 0x2a, 0x9d, 0x0c, 0xb8, 0x60, 0x44, 0x9f, 0x87, 0xb9, 0x04, 0x0d, 0xd6,
+	0x86, 0x81, 0xc2, 0x1b, 0xc8, 0xb9, 0x97, 0x64, 0x5c, 0x00, 0x29, 0x9f, 0x86, 0xe4, 0x3c, 0x3c,
+	0x04, 0x95, 0x81, 0x22, 0x99, 0x62, 0xe4, 0xf4, 0x45, 0xf1, 0xaa, 0x80, 0x2d, 0x03, 0xec, 0x97,
+	0x37, 0x62, 0x2e, 0x15, 0xb4, 0xc9, 0x80, 0x81, 0xa9, 0x17, 0xa7, 0xaa, 0xfa, 0x78, 0xc1, 0xc9,
+	0x30, 0x4f, 0x13, 0x4d, 0x0d, 0xec, 0x9d, 0xe2, 0x8d, 0x9e, 0x62, 0x31, 0x88, 0xf4, 0x63, 0x72,
+	0xc2, 0xd3, 0x44, 0x83, 0xb4, 0x42, 0xbc, 0x06, 0x67, 0x82, 0x4a, 0x1b, 0x75, 0x91, 0xdf, 0x89,
+	0xed, 0x5f, 0x3f, 0x9f, 0x6f, 0x56, 0x4a, 0x6f, 0xd2, 0x54, 0x52, 0xa5, 0xf6, 0xb4, 0xe4, 0x82,
+	0xf5, 0x0d, 0x6d, 0x37, 0xfa, 0x3a, 0x1d, 0x05, 0xe6, 0xfc, 0x7d, 0x3a, 0x0a, 0x9e, 0x56, 0x8a,
+	0xe7, 0xff, 0x68, 0xd6, 0x35, 0x3c, 0x07, 0xdb, 0xf5, 0x5a, 0x9f, 0xaa, 0x1c, 0x84, 0xa2, 0xde,
+	0xb7, 0x15, 0xfc, 0xa0, 0xa7, 0xd8, 0x87, 0xd2, 0xe7, 0x0d, 0xac, 0xf6, 0xa8, 0xb6, 0x76, 0x70,
+	0x27, 0x19, 0xea, 0x63, 0x90, 0x5c, 0x5f, 0x2c, 0xb5, 0x37, 0xa7, 0x5a, 0xaf, 0x71, 0x07, 0x72,
+	0x2a, 0xcb, 0x39, 0xf6, 0x4a, 0xb7, 0xed, 0xaf, 0x47, 0x4e, 0x58, 0x5f, 0x44, 0xf8, 0xbe, 0xa2,
+	0xc4, 0xab, 0x97, 0x7f, 0x9e, 0xb4, 0xfa, 0xf3, 0x16, 0x6b, 0x07, 0xaf, 0x72, 0x71, 0x04, 0x76,
+	0xbb, 0x8b, 0xfc, 0xf5, 0xe8, 0xd1, 0x62, 0xab, 0x31, 0xfb, 0x56, 0x1c, 0x41, 0xd5, 0x5c, 0xf2,
+	0x77, 0x5f, 0x15, 0xd1, 0xcc, 0x7d, 0x14, 0xf1, 0x3c, 0x6b, 0x8e, 0xa7, 0xe1, 0x6b, 0xbd, 0x2e,
+	0x76, 0x9b, 0x91, 0x59, 0x54, 0xd1, 0x35, 0xc2, 0xed, 0x9e, 0x62, 0xd6, 0x3e, 0xbe, 0xfb, 0xff,
+	0x0e, 0xbd, 0x45, 0x8b, 0xf5, 0xbc, 0x9d, 0x60, 0x39, 0x67, 0x26, 0x64, 0x7d, 0xc6, 0xf7, 0x9b,
+	0xf6, 0xe1, 0x37, 0x8e, 0x68, 0x60, 0x3a, 0xdb, 0xb7, 0x65, 0xce, 0x24, 0x9d, 0xb5, 0x2f, 0xd3,
+	0x51, 0x80, 0xe2, 0x77, 0x97, 0x63, 0x17, 0x5d, 0x8d, 0x5d, 0x74, 0x3d, 0x76, 0xd1, 0x8f, 0x89,
+	0xdb, 0xba, 0x9a, 0xb8, 0xad, 0xdf, 0x13, 0xb7, 0xf5, 0x69, 0x9b, 0x71, 0x7d, 0x3c, 0x3c, 0x08,
+	0x0f, 0x21, 0x23, 0x29, 0xd7, 0x1a, 0x04, 0xd5, 0x67, 0x20, 0x07, 0xa4, 0x21, 0x61, 0x7d, 0x91,
+	0x53, 0x75, 0x70, 0xa7, 0xfc, 0xe9, 0x5f, 0xfe, 0x0d, 0x00, 0x00, 0xff, 0xff, 0xaa, 0xe7, 0x5f,
+	0x01, 0x9f, 0x03, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -157,6 +271,8 @@ const _ = grpc.SupportPackageIsVersion4
 type MsgClient interface {
 	// Complete the bonding process for a validator recognized in Bonding status.
 	BondValidator(ctx context.Context, in *MsgBondValidator, opts ...grpc.CallOption) (*MsgBondValidatorResponse, error)
+	// UpdateValidatorsSet is the request type for the Msg/UpdateValidatorsSet RPC method.
+	UpdateValidatorsSet(ctx context.Context, in *MsgUpdateValidatorsSet, opts ...grpc.CallOption) (*MsgUpdateValidatorsSetResponse, error)
 }
 
 type msgClient struct {
@@ -176,10 +292,21 @@ func (c *msgClient) BondValidator(ctx context.Context, in *MsgBondValidator, opt
 	return out, nil
 }
 
+func (c *msgClient) UpdateValidatorsSet(ctx context.Context, in *MsgUpdateValidatorsSet, opts ...grpc.CallOption) (*MsgUpdateValidatorsSetResponse, error) {
+	out := new(MsgUpdateValidatorsSetResponse)
+	err := c.cc.Invoke(ctx, "/kepler.restaking.Msg/UpdateValidatorsSet", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 type MsgServer interface {
 	// Complete the bonding process for a validator recognized in Bonding status.
 	BondValidator(context.Context, *MsgBondValidator) (*MsgBondValidatorResponse, error)
+	// UpdateValidatorsSet is the request type for the Msg/UpdateValidatorsSet RPC method.
+	UpdateValidatorsSet(context.Context, *MsgUpdateValidatorsSet) (*MsgUpdateValidatorsSetResponse, error)
 }
 
 // UnimplementedMsgServer can be embedded to have forward compatible implementations.
@@ -188,6 +315,9 @@ type UnimplementedMsgServer struct {
 
 func (*UnimplementedMsgServer) BondValidator(ctx context.Context, req *MsgBondValidator) (*MsgBondValidatorResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BondValidator not implemented")
+}
+func (*UnimplementedMsgServer) UpdateValidatorsSet(ctx context.Context, req *MsgUpdateValidatorsSet) (*MsgUpdateValidatorsSetResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateValidatorsSet not implemented")
 }
 
 func RegisterMsgServer(s grpc1.Server, srv MsgServer) {
@@ -212,6 +342,24 @@ func _Msg_BondValidator_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_UpdateValidatorsSet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgUpdateValidatorsSet)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).UpdateValidatorsSet(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/kepler.restaking.Msg/UpdateValidatorsSet",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).UpdateValidatorsSet(ctx, req.(*MsgUpdateValidatorsSet))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var Msg_serviceDesc = _Msg_serviceDesc
 var _Msg_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "kepler.restaking.Msg",
@@ -220,6 +368,10 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "BondValidator",
 			Handler:    _Msg_BondValidator_Handler,
+		},
+		{
+			MethodName: "UpdateValidatorsSet",
+			Handler:    _Msg_UpdateValidatorsSet_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -279,6 +431,83 @@ func (m *MsgBondValidatorResponse) MarshalToSizedBuffer(dAtA []byte) (int, error
 	return len(dAtA) - i, nil
 }
 
+func (m *MsgUpdateValidatorsSet) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgUpdateValidatorsSet) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgUpdateValidatorsSet) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	{
+		size, err := m.Info.MarshalToSizedBuffer(dAtA[:i])
+		if err != nil {
+			return 0, err
+		}
+		i -= size
+		i = encodeVarintTx(dAtA, i, uint64(size))
+	}
+	i--
+	dAtA[i] = 0x1a
+	if len(m.Operators) > 0 {
+		for iNdEx := len(m.Operators) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Operators[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintTx(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x12
+		}
+	}
+	if len(m.Authority) > 0 {
+		i -= len(m.Authority)
+		copy(dAtA[i:], m.Authority)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Authority)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgUpdateValidatorsSetResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgUpdateValidatorsSetResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgUpdateValidatorsSetResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintTx(dAtA []byte, offset int, v uint64) int {
 	offset -= sovTx(v)
 	base := offset
@@ -304,6 +533,36 @@ func (m *MsgBondValidator) Size() (n int) {
 }
 
 func (m *MsgBondValidatorResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *MsgUpdateValidatorsSet) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Authority)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	if len(m.Operators) > 0 {
+		for _, e := range m.Operators {
+			l = e.Size()
+			n += 1 + l + sovTx(uint64(l))
+		}
+	}
+	l = m.Info.Size()
+	n += 1 + l + sovTx(uint64(l))
+	return n
+}
+
+func (m *MsgUpdateValidatorsSetResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -427,6 +686,205 @@ func (m *MsgBondValidatorResponse) Unmarshal(dAtA []byte) error {
 		}
 		if fieldNum <= 0 {
 			return fmt.Errorf("proto: MsgBondValidatorResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgUpdateValidatorsSet) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgUpdateValidatorsSet: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgUpdateValidatorsSet: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Authority", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Authority = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Operators", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Operators = append(m.Operators, Operator{})
+			if err := m.Operators[len(m.Operators)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Info", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if err := m.Info.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgUpdateValidatorsSetResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgUpdateValidatorsSetResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgUpdateValidatorsSetResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		default:
