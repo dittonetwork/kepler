@@ -12,6 +12,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/codec"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
+	committeetypes "github.com/dittonetwork/kepler/x/committee/types"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/mock/gomock"
 
@@ -39,6 +41,8 @@ func RestakingKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {
 		cdc,
 		log.NewNopLogger(),
 		repository,
+		restakingtestutil.NewMockAccountKeeper(ctrl),
+		authtypes.NewModuleAddress(committeetypes.ModuleName).String(),
 	)
 
 	ctx := sdk.NewContext(stateStore, cmtproto.Header{}, false, log.NewNopLogger())
