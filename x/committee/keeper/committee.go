@@ -92,16 +92,8 @@ func (k Keeper) createEmergencyCommittee(ctx sdk.Context, epoch uint32) (types.C
 		return types.Committee{}, sdkerrors.Wrap(err, "failed to get emergency executors")
 	}
 
-	committeeExecutors := make([]types.Executor, len(executors))
-
-	for i, executor := range executors {
-		var validator restaking.Validator
-		validator, err = k.restaking.GetValidator(ctx, sdk.ValAddress(executor.GetOwnerAddress()))
-
-		if err != nil {
-			return types.Committee{}, sdkerrors.Wrap(err, "failed to get validator")
-		}
-
+	committeeExecutors := make([]types.Executor, len(emergencyValidators))
+	for i, validator := range emergencyValidators {
 		committeeExecutors[i] = types.Executor{
 			Address:     validator.OperatorAddress,
 			VotingPower: validator.VotingPower,

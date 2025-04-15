@@ -64,7 +64,7 @@ message Report {
   string committee_id = 1;
 
   // execution_context is the context of the execution of the report.
-  google.protobuf.Any execution_context = 2 [(cosmos_proto.accepts_interface) = "cosmos.base.v1beta1.Msg"];
+  google.protobuf.Any execution_context = 2;
 
   // messages are the messages that are being reported.
   repeated google.protobuf.Any messages = 3 [(cosmos_proto.accepts_interface) = "cosmos.base.v1beta1.Msg"];
