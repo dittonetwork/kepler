@@ -20,8 +20,11 @@ message Committee {
   // is_emergency indicates whether this committee was formed for an emergency situation.
   bool is_emergency = 3;
 
+  // address is the address of the committee.
+  string address = 4;
+
   // executors is the list of participants in this committee.
-  repeated Executor executors = 4 [
+  repeated Executor executors = 5 [
     (gogoproto.nullable) = false,
     (amino.dont_omitempty) = true
   ];

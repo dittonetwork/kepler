@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package kepler.committee;
+
+option go_package = "github.com/dittonetwork/kepler/x/committee/types";
+
+// EventReportReceived is an event that is emitted when a report is received.
+message EventReportReceived {
+  string creator = 1;
+  uint32 epoch_id = 2;
+  int64 report_count = 3;
+}

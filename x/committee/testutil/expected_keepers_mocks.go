@@ -14,8 +14,7 @@ import (
 	reflect "reflect"
 
 	types "github.com/cosmos/cosmos-sdk/types"
-	types0 "github.com/dittonetwork/kepler/x/executors/types"
-	types1 "github.com/dittonetwork/kepler/x/restaking/types"
+	types0 "github.com/dittonetwork/kepler/x/restaking/types"
 	gomock "go.uber.org/mock/gomock"
 )
 
@@ -95,45 +94,6 @@ func (mr *MockBankKeeperMockRecorder) SpendableCoins(arg0, arg1 any) *gomock.Cal
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SpendableCoins", reflect.TypeOf((*MockBankKeeper)(nil).SpendableCoins), arg0, arg1)
 }
 
-// MockExecutorsKeeper is a mock of ExecutorsKeeper interface.
-type MockExecutorsKeeper struct {
-	ctrl     *gomock.Controller
-	recorder *MockExecutorsKeeperMockRecorder
-	isgomock struct{}
-}
-
-// MockExecutorsKeeperMockRecorder is the mock recorder for MockExecutorsKeeper.
-type MockExecutorsKeeperMockRecorder struct {
-	mock *MockExecutorsKeeper
-}
-
-// NewMockExecutorsKeeper creates a new mock instance.
-func NewMockExecutorsKeeper(ctrl *gomock.Controller) *MockExecutorsKeeper {
-	mock := &MockExecutorsKeeper{ctrl: ctrl}
-	mock.recorder = &MockExecutorsKeeperMockRecorder{mock}
-	return mock
-}
-
-// EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockExecutorsKeeper) EXPECT() *MockExecutorsKeeperMockRecorder {
-	return m.recorder
-}
-
-// GetEmergencyExecutors mocks base method.
-func (m *MockExecutorsKeeper) GetEmergencyExecutors(ctx types.Context) ([]types0.Executor, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetEmergencyExecutors", ctx)
-	ret0, _ := ret[0].([]types0.Executor)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// GetEmergencyExecutors indicates an expected call of GetEmergencyExecutors.
-func (mr *MockExecutorsKeeperMockRecorder) GetEmergencyExecutors(ctx any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetEmergencyExecutors", reflect.TypeOf((*MockExecutorsKeeper)(nil).GetEmergencyExecutors), ctx)
-}
-
 // MockRestakingKeeper is a mock of RestakingKeeper interface.
 type MockRestakingKeeper struct {
 	ctrl     *gomock.Controller
@@ -158,19 +118,19 @@ func (m *MockRestakingKeeper) EXPECT() *MockRestakingKeeperMockRecorder {
 	return m.recorder
 }
 
-// GetValidator mocks base method.
-func (m *MockRestakingKeeper) GetValidator(ctx types.Context, addr types.ValAddress) (types1.Validator, error) {
+// GetActiveEmergencyValidators mocks base method.
+func (m *MockRestakingKeeper) GetActiveEmergencyValidators(ctx types.Context) ([]types0.Validator, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetValidator", ctx, addr)
-	ret0, _ := ret[0].(types1.Validator)
+	ret := m.ctrl.Call(m, "GetActiveEmergencyValidators", ctx)
+	ret0, _ := ret[0].([]types0.Validator)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// GetValidator indicates an expected call of GetValidator.
-func (mr *MockRestakingKeeperMockRecorder) GetValidator(ctx, addr any) *gomock.Call {
+// GetActiveEmergencyValidators indicates an expected call of GetActiveEmergencyValidators.
+func (mr *MockRestakingKeeperMockRecorder) GetActiveEmergencyValidators(ctx any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetValidator", reflect.TypeOf((*MockRestakingKeeper)(nil).GetValidator), ctx, addr)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetActiveEmergencyValidators", reflect.TypeOf((*MockRestakingKeeper)(nil).GetActiveEmergencyValidators), ctx)
 }
 
 // MockParamSubspace is a mock of ParamSubspace interface.
