@@ -13,22 +13,15 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 			Service: modulev1.Query_ServiceDesc.ServiceName,
 			RpcCommandOptions: []*autocliv1.RpcCommandOptions{
 				{
-					RpcMethod: "Params",
-					Use:       "params",
-					Short:     "Shows the parameters of the module",
+					RpcMethod: "EpochInfos",
+					Use:       "epoch-infos",
+					Short:     "Query running epoch infos",
 				},
-				// this line is used by ignite scaffolding # autocli/query
-			},
-		},
-		Tx: &autocliv1.ServiceCommandDescriptor{
-			Service:              modulev1.Msg_ServiceDesc.ServiceName,
-			EnhanceCustomCommand: true, // only required if you want to use the custom command
-			RpcCommandOptions: []*autocliv1.RpcCommandOptions{
 				{
-					RpcMethod: "UpdateParams",
-					Skip:      true, // skipped because authority gated
+					RpcMethod: "CurrentEpoch",
+					Use:       "current-epoch",
+					Short:     "Query current epoch by specified identifier",
 				},
-				// this line is used by ignite scaffolding # autocli/tx
 			},
 		},
 	}
