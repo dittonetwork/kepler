@@ -17,6 +17,8 @@ import (
 	cdctypes "github.com/cosmos/cosmos-sdk/codec/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
+	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
+	committeetypes "github.com/dittonetwork/kepler/x/committee/types"
 	"github.com/dittonetwork/kepler/x/restaking/repository"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 
@@ -209,12 +211,20 @@ type ModuleOutputs struct {
 
 func ProvideModule(in ModuleInputs) ModuleOutputs {
 	repo := repository.New(in.StoreService, in.Cdc)
+	authority := authtypes.NewModuleAddress(committeetypes.ModuleName)
+
+	if in.Config.Authority != "" {
+		authority = authtypes.NewModuleAddressOrBech32Address(in.Config.Authority)
+	}
 
 	k := keeper.NewKeeper(
 		in.Cdc,
 		in.Logger,
 		repo,
+		in.AccountKeeper,
+		authority.String(),
 	)
+
 	m := NewAppModule(
 		in.Cdc,
 		k,

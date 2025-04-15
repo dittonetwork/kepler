@@ -12,4 +12,7 @@ message Module {
 
   // bech_32_prefix_consensus is the bech32 prefix for consensus addresses.
   string bech32_prefix_consensus = 2;
+
+  // authority defines the custom module authority. If not set, defaults to the committee module.
+  string authority = 3;
 }

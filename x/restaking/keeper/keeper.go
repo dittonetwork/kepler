@@ -14,6 +14,10 @@ type (
 		logger log.Logger
 		hooks  types.RestakingHooks
 
+		// the address capable of executing a MsgUpdateValidatorsSet message. Typically, this
+		// should be the x/committee module account.
+		authority string
+
 		repository types.Repository
 	}
 )
@@ -22,10 +26,18 @@ func NewKeeper(
 	cdc codec.BinaryCodec,
 	logger log.Logger,
 	repo types.Repository,
+	ak types.AccountKeeper,
+	authority string,
 ) *Keeper {
+	// ensure that authority is a valid AccAddress
+	if _, err := ak.AddressCodec().StringToBytes(authority); err != nil {
+		panic(fmt.Sprintf("authority is not valid acc address: %s", authority))
+	}
+
 	return &Keeper{
 		cdc:        cdc,
 		logger:     logger,
+		authority:  authority,
 		repository: repo,
 	}
 }
@@ -44,4 +56,9 @@ func (k *Keeper) SetHooks(rh types.RestakingHooks) *Keeper {
 	k.hooks = rh
 
 	return k
+}
+
+// GetAuthority returns the x/restaking module's authority.
+func (k Keeper) GetAuthority() string {
+	return k.authority
 }
