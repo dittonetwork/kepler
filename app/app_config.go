@@ -27,10 +27,7 @@ import (
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	consensustypes "github.com/cosmos/cosmos-sdk/x/consensus/types"
-	executorsmodulev1 "github.com/dittonetwork/kepler/api/kepler/executors/module"
 	restakingmodulev1 "github.com/dittonetwork/kepler/api/kepler/restaking/module"
-	_ "github.com/dittonetwork/kepler/x/executors/module" // import for side-effects
-	executorsmoduletypes "github.com/dittonetwork/kepler/x/executors/types"
 	_ "github.com/dittonetwork/kepler/x/restaking/module" // import for side-effects
 	restakingmoduletypes "github.com/dittonetwork/kepler/x/restaking/types"
 	// this line is used by starport scaffolding # stargate/app/moduleImport
@@ -54,7 +51,6 @@ var (
 		epochstypes.ModuleName,
 		workflowmoduletypes.ModuleName,
 		committeemoduletypes.ModuleName,
-		executorsmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/initGenesis
 	}
 
@@ -69,7 +65,6 @@ var (
 		workflowmoduletypes.ModuleName,
 		committeemoduletypes.ModuleName,
 		restakingmoduletypes.ModuleName,
-		executorsmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/beginBlockers
 	}
 
@@ -80,7 +75,6 @@ var (
 		workflowmoduletypes.ModuleName,
 		committeemoduletypes.ModuleName,
 		restakingmoduletypes.ModuleName,
-		executorsmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/endBlockers
 	}
 
@@ -177,10 +171,6 @@ var (
 					// Authority: "ditto1kprsj8y2x9d7pyzvfnurkuygsttnjy90fv6gkk", // specific address (alice for exam)
 					// Authority: "abracadabra" // or a custom module authority can be set using a module name
 				}),
-			},
-			{
-				Name:   executorsmoduletypes.ModuleName,
-				Config: appconfig.WrapAny(&executorsmodulev1.Module{}),
 			},
 			// this line is used by starport scaffolding # stargate/app/moduleConfig
 		},

@@ -36,8 +36,6 @@ import (
 	_ "github.com/dittonetwork/kepler/x/restaking"
 	restakingmodulekeeper "github.com/dittonetwork/kepler/x/restaking/keeper"
 
-	executorsmodulekeeper "github.com/dittonetwork/kepler/x/executors/keeper"
-
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 
 	"github.com/dittonetwork/kepler/docs"
@@ -78,7 +76,6 @@ type App struct {
 	WorkflowKeeper  workflowmodulekeeper.Keeper
 	CommitteeKeeper committeemodulekeeper.Keeper
 	RestakingKeeper *restakingmodulekeeper.Keeper
-	ExecutorsKeeper executorsmodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
 	// simulation manager
@@ -152,7 +149,6 @@ func New(
 		&app.RestakingKeeper,
 		&app.EpochsKeeper,
 		&app.WorkflowKeeper,
-		&app.ExecutorsKeeper,
 		&app.CommitteeKeeper,
 		// this line is used by starport scaffolding # stargate/app/keeperDefinition
 	); err != nil {
