@@ -18,6 +18,19 @@ service Query {
   rpc Validators(QueryValidatorsRequest) returns (QueryValidatorsResponse) {
     option (google.api.http).get = "/dittonetwork/kepler/restaking/validators";
   }
+
+  // Return true if need update validators set
+  rpc NeedValidatorsUpdate(QueryNeedValidatorsUpdateRequest) returns (QueryNeedValidatorsUpdateResponse) {
+    option (google.api.http).get = "/dittonetwork/kepler/restaking/need_update";
+  }
+}
+
+// Empty message params for query/NeedValidatorsUpdate.
+message QueryNeedValidatorsUpdateRequest {}
+
+// QueryNeedValidatorsUpdateResponse returns bool result.
+message QueryNeedValidatorsUpdateResponse {
+  bool result = 1;
 }
 
 // QueryPendingValidatorsRequest is the request type for the Query/PendingValidators RPC method.

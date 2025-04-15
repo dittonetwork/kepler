@@ -43,6 +43,8 @@ func RestakingKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {
 		repository,
 		restakingtestutil.NewMockAccountKeeper(ctrl),
 		authtypes.NewModuleAddress(committeetypes.ModuleName).String(),
+		restakingtestutil.NewMockEpochsKeeper(ctrl),
+		"hour",
 	)
 
 	ctx := sdk.NewContext(stateStore, cmtproto.Header{}, false, log.NewNopLogger())

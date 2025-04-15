@@ -19,14 +19,10 @@ func NewMsgServerImpl(keeper Keeper) types.MsgServer {
 var _ types.MsgServer = msgServer{}
 
 // BondValidator complete the bonding process for a validator recognized in Bonding status.
-func (k msgServer) BondValidator(
+func (s msgServer) BondValidator(
 	_ context.Context,
 	_ *types.MsgBondValidator,
 ) (*types.MsgBondValidatorResponse, error) {
 	// TODO github.com/dittonetwork/kepler/issues/175
 	panic("implement me")
-}
-
-func (k msgServer) UpdateValidatorSet() {
-
 }

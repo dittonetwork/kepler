@@ -167,10 +167,13 @@ var (
 				}),
 			},
 			{
-				Name:   restakingmoduletypes.ModuleName,
+				Name: restakingmoduletypes.ModuleName,
 				Config: appconfig.WrapAny(&restakingmodulev1.Module{
+					// By default, main epoch id is "hour". This is configurable with the following:
+					// MainEpochId: "main"
+					MainEpochId: MainEpochID,
 
-					// By default modules authority is the committee module. This is configurable with the following:
+					// By default, modules authority is the committee module. This is configurable with the following:
 					// Authority: "ditto1kprsj8y2x9d7pyzvfnurkuygsttnjy90fv6gkk", // specific address (alice for exam)
 					// Authority: "abracadabra" // or a custom module authority can be set using a module name
 				}),

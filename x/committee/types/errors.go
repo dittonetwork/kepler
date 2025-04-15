@@ -17,7 +17,7 @@ var (
 	ErrInvalidSigner = sdkerrors.Register(
 		ModuleName,
 		ErrCodeInvalidSigner,
-		"expected gov account as only signer for proposal message",
+		"expected committee account as only signer for proposal message",
 	)
 	ErrCommitteeAlreadyExists = sdkerrors.Register(
 		ModuleName,

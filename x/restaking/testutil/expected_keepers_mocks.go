@@ -15,6 +15,7 @@ import (
 
 	address "cosmossdk.io/core/address"
 	types "github.com/cosmos/cosmos-sdk/types"
+	types0 "github.com/dittonetwork/kepler/x/epochs/types"
 	gomock "go.uber.org/mock/gomock"
 )
 
@@ -106,6 +107,45 @@ func (m *MockBankKeeper) SpendableCoins(arg0 context.Context, arg1 types.AccAddr
 func (mr *MockBankKeeperMockRecorder) SpendableCoins(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SpendableCoins", reflect.TypeOf((*MockBankKeeper)(nil).SpendableCoins), arg0, arg1)
+}
+
+// MockEpochsKeeper is a mock of EpochsKeeper interface.
+type MockEpochsKeeper struct {
+	ctrl     *gomock.Controller
+	recorder *MockEpochsKeeperMockRecorder
+	isgomock struct{}
+}
+
+// MockEpochsKeeperMockRecorder is the mock recorder for MockEpochsKeeper.
+type MockEpochsKeeperMockRecorder struct {
+	mock *MockEpochsKeeper
+}
+
+// NewMockEpochsKeeper creates a new mock instance.
+func NewMockEpochsKeeper(ctrl *gomock.Controller) *MockEpochsKeeper {
+	mock := &MockEpochsKeeper{ctrl: ctrl}
+	mock.recorder = &MockEpochsKeeperMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockEpochsKeeper) EXPECT() *MockEpochsKeeperMockRecorder {
+	return m.recorder
+}
+
+// GetEpochInfo mocks base method.
+func (m *MockEpochsKeeper) GetEpochInfo(ctx context.Context, id string) (types0.EpochInfo, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetEpochInfo", ctx, id)
+	ret0, _ := ret[0].(types0.EpochInfo)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetEpochInfo indicates an expected call of GetEpochInfo.
+func (mr *MockEpochsKeeperMockRecorder) GetEpochInfo(ctx, id any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetEpochInfo", reflect.TypeOf((*MockEpochsKeeper)(nil).GetEpochInfo), ctx, id)
 }
 
 // MockParamSubspace is a mock of ParamSubspace interface.

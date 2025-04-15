@@ -5,6 +5,7 @@ import (
 
 	"cosmossdk.io/core/address"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	epochstypes "github.com/dittonetwork/kepler/x/epochs/types"
 )
 
 // AccountKeeper defines the expected interface for the Account module.
@@ -17,6 +18,11 @@ type AccountKeeper interface {
 type BankKeeper interface {
 	SpendableCoins(context.Context, sdk.AccAddress) sdk.Coins
 	// Methods imported from bank should be defined here
+}
+
+// EpochsKeeper defines the expected interface for the Epochs module.
+type EpochsKeeper interface {
+	GetEpochInfo(ctx context.Context, id string) (epochstypes.EpochInfo, error)
 }
 
 // ParamSubspace defines the expected Subspace interface for parameters.

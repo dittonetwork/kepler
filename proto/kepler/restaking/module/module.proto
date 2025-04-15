@@ -15,4 +15,7 @@ message Module {
 
   // authority defines the custom module authority. If not set, defaults to the committee module.
   string authority = 3;
+
+  // main_epoch_id is the main epoch ID. If not set, defaults to "hour".
+  string main_epoch_id = 4;
 }

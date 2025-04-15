@@ -200,6 +200,7 @@ type ModuleInputs struct {
 
 	AccountKeeper types.AccountKeeper
 	BankKeeper    types.BankKeeper
+	EpochsKeeper  types.EpochsKeeper
 }
 
 type ModuleOutputs struct {
@@ -217,12 +218,20 @@ func ProvideModule(in ModuleInputs) ModuleOutputs {
 		authority = authtypes.NewModuleAddressOrBech32Address(in.Config.Authority)
 	}
 
+	// Set the main epoch ID if provided in the config. Otherwise, use "hour".
+	mainEpochID := "hour"
+	if in.Config.MainEpochId != "" {
+		mainEpochID = in.Config.MainEpochId
+	}
+
 	k := keeper.NewKeeper(
 		in.Cdc,
 		in.Logger,
 		repo,
 		in.AccountKeeper,
 		authority.String(),
+		in.EpochsKeeper,
+		mainEpochID,
 	)
 
 	m := NewAppModule(

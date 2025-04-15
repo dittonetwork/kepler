@@ -19,7 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Msg_BondValidator_FullMethodName = "/kepler.restaking.Msg/BondValidator"
+	Msg_BondValidator_FullMethodName       = "/kepler.restaking.Msg/BondValidator"
+	Msg_UpdateValidatorsSet_FullMethodName = "/kepler.restaking.Msg/UpdateValidatorsSet"
 )
 
 // MsgClient is the client API for Msg service.
@@ -30,6 +31,8 @@ const (
 type MsgClient interface {
 	// Complete the bonding process for a validator recognized in Bonding status.
 	BondValidator(ctx context.Context, in *MsgBondValidator, opts ...grpc.CallOption) (*MsgBondValidatorResponse, error)
+	// UpdateValidatorsSet is the request type for the Msg/UpdateValidatorsSet RPC method.
+	UpdateValidatorsSet(ctx context.Context, in *MsgUpdateValidatorsSet, opts ...grpc.CallOption) (*MsgUpdateValidatorsSetResponse, error)
 }
 
 type msgClient struct {
@@ -50,6 +53,16 @@ func (c *msgClient) BondValidator(ctx context.Context, in *MsgBondValidator, opt
 	return out, nil
 }
 
+func (c *msgClient) UpdateValidatorsSet(ctx context.Context, in *MsgUpdateValidatorsSet, opts ...grpc.CallOption) (*MsgUpdateValidatorsSetResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MsgUpdateValidatorsSetResponse)
+	err := c.cc.Invoke(ctx, Msg_UpdateValidatorsSet_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 // All implementations must embed UnimplementedMsgServer
 // for forward compatibility.
@@ -58,6 +71,8 @@ func (c *msgClient) BondValidator(ctx context.Context, in *MsgBondValidator, opt
 type MsgServer interface {
 	// Complete the bonding process for a validator recognized in Bonding status.
 	BondValidator(context.Context, *MsgBondValidator) (*MsgBondValidatorResponse, error)
+	// UpdateValidatorsSet is the request type for the Msg/UpdateValidatorsSet RPC method.
+	UpdateValidatorsSet(context.Context, *MsgUpdateValidatorsSet) (*MsgUpdateValidatorsSetResponse, error)
 	mustEmbedUnimplementedMsgServer()
 }
 
@@ -70,6 +85,9 @@ type UnimplementedMsgServer struct{}
 
 func (UnimplementedMsgServer) BondValidator(context.Context, *MsgBondValidator) (*MsgBondValidatorResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BondValidator not implemented")
+}
+func (UnimplementedMsgServer) UpdateValidatorsSet(context.Context, *MsgUpdateValidatorsSet) (*MsgUpdateValidatorsSetResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateValidatorsSet not implemented")
 }
 func (UnimplementedMsgServer) mustEmbedUnimplementedMsgServer() {}
 func (UnimplementedMsgServer) testEmbeddedByValue()             {}
@@ -110,6 +128,24 @@ func _Msg_BondValidator_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_UpdateValidatorsSet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgUpdateValidatorsSet)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).UpdateValidatorsSet(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_UpdateValidatorsSet_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).UpdateValidatorsSet(ctx, req.(*MsgUpdateValidatorsSet))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Msg_ServiceDesc is the grpc.ServiceDesc for Msg service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -120,6 +156,10 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "BondValidator",
 			Handler:    _Msg_BondValidator_Handler,
+		},
+		{
+			MethodName: "UpdateValidatorsSet",
+			Handler:    _Msg_UpdateValidatorsSet_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

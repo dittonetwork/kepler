@@ -13,9 +13,15 @@ import (
 func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 	return &autocliv1.ModuleOptions{
 		Query: &autocliv1.ServiceCommandDescriptor{
-			Service:           modulev1.Query_ServiceDesc.ServiceName,
+			Service: modulev1.Query_ServiceDesc.ServiceName,
 			RpcCommandOptions: []*autocliv1.RpcCommandOptions{
 				// this line is used by ignite scaffolding # autocli/query
+				{
+					RpcMethod: "NeedValidatorsUpdate",
+					Use:       "need-update",
+					Short:     "Need validators update",
+					Long:      "Check whether the validators set has been updated in the current epoch.",
+				},
 			},
 		},
 		Tx: &autocliv1.ServiceCommandDescriptor{
@@ -28,6 +34,12 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 					Short:     "Bond a validator",
 					Long:      "Bond a new validator already initialized on L1",
 					Example:   fmt.Sprintf(`$ %s tx restaking bond-validator --from [mykey]`, version.AppName),
+				},
+				{
+					RpcMethod: "UpdateValidatorsSet",
+					Use:       "update-validators",
+					Short:     "Update validators set",
+					Long:      "Update validators set for the current epochs",
 				},
 			},
 		},
