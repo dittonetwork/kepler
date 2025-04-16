@@ -12,7 +12,7 @@ message Committee {
   option (gogoproto.equal) = true;
 
   // epoch is the epoch of the committee.
-  uint32 epoch = 1;
+  int64 epoch = 1;
 
   // seed is the seed of the committee. Needed for randomness.
   bytes seed = 2;

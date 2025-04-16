@@ -12,7 +12,7 @@ import (
 )
 
 // CreateCommittee creates a new committee by the given epoch.
-func (k Keeper) CreateCommittee(ctx sdk.Context, epoch uint32) (types.Committee, error) {
+func (k Keeper) CreateCommittee(ctx sdk.Context, epoch int64) (types.Committee, error) {
 	var committee types.Committee
 
 	ok, err := k.repository.HasCommittee(ctx, epoch)
@@ -25,7 +25,7 @@ func (k Keeper) CreateCommittee(ctx sdk.Context, epoch uint32) (types.Committee,
 		return types.Committee{}, types.ErrCommitteeAlreadyExists
 	}
 
-	var lastSavedEpoch uint32
+	var lastSavedEpoch int64
 	lastSavedEpoch, err = k.repository.GetLastEpoch(ctx)
 	if err != nil {
 		return types.Committee{}, sdkerrors.Wrap(err, "failed to get last saved epoch")
@@ -85,7 +85,7 @@ func (k Keeper) GetMultisigAddress(ctx sdk.Context, executors []types.Executor) 
 }
 
 // createEmergencyCommittee creates an emergency committee by the given epoch.
-func (k Keeper) createEmergencyCommittee(ctx sdk.Context, epoch uint32) (types.Committee, error) {
+func (k Keeper) createEmergencyCommittee(ctx sdk.Context, epoch int64) (types.Committee, error) {
 	emergencyValidators, err := k.restaking.GetActiveEmergencyValidators(ctx)
 	if err != nil {
 		return types.Committee{}, sdkerrors.Wrap(err, "failed to get emergency executors")

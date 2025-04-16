@@ -44,7 +44,7 @@ func (k Keeper) HandleReport(ctx sdk.Context, msg *types.MsgSendReport) error {
 	return nil
 }
 
-func (k Keeper) checkCommitteeValidity(ctx sdk.Context, address string, epochID uint32) error {
+func (k Keeper) checkCommitteeValidity(ctx sdk.Context, address string, epochID int64) error {
 	lastCommittee, err := k.repository.GetLastCommittee(ctx)
 	if err != nil {
 		return err
@@ -57,7 +57,7 @@ func (k Keeper) checkCommitteeValidity(ctx sdk.Context, address string, epochID 
 	return nil
 }
 
-func (k Keeper) epochIsValid(ctx sdk.Context, address string, epochID uint32, lastCommittee types.Committee) error {
+func (k Keeper) epochIsValid(ctx sdk.Context, address string, epochID int64, lastCommittee types.Committee) error {
 	epochCommittee, err := k.repository.GetCommittee(ctx, epochID)
 	if err != nil {
 		return err

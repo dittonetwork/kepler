@@ -25,7 +25,7 @@ service Query {
 
 // QueryCommitteeRequest is request type for the Query/Committee RPC method.
 message QueryCommitteeRequest {
-  uint32 epoch = 1;
+  int64 epoch = 1;
 }
 
 // QueryCommitteeResponse is response type for the Query/Committee RPC method.

@@ -18,7 +18,7 @@ type CommitteeKeeper interface {
 	IsCommitteeExists(ctx sdk.Context, committeeID string) (bool, error)
 
 	// CreateCommittee creates a new committee for the given epoch.
-	CreateCommittee(ctx sdk.Context, epoch uint32) (types.Committee, error)
+	CreateCommittee(ctx sdk.Context, epoch int64) (types.Committee, error)
 
 	// GetAuthority returns the module's authority.
 	GetAuthority() string

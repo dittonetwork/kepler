@@ -151,8 +151,8 @@ func (x *fastReflection_GenesisState) Range(f func(protoreflect.FieldDescriptor,
 			return
 		}
 	}
-	if x.LastEpoch != uint32(0) {
-		value := protoreflect.ValueOfUint32(x.LastEpoch)
+	if x.LastEpoch != int64(0) {
+		value := protoreflect.ValueOfInt64(x.LastEpoch)
 		if !f(fd_GenesisState_last_epoch, value) {
 			return
 		}
@@ -181,7 +181,7 @@ func (x *fastReflection_GenesisState) Has(fd protoreflect.FieldDescriptor) bool 
 	case "kepler.committee.GenesisState.committees":
 		return len(x.Committees) != 0
 	case "kepler.committee.GenesisState.last_epoch":
-		return x.LastEpoch != uint32(0)
+		return x.LastEpoch != int64(0)
 	case "kepler.committee.GenesisState.params":
 		return x.Params != nil
 	default:
@@ -203,7 +203,7 @@ func (x *fastReflection_GenesisState) Clear(fd protoreflect.FieldDescriptor) {
 	case "kepler.committee.GenesisState.committees":
 		x.Committees = nil
 	case "kepler.committee.GenesisState.last_epoch":
-		x.LastEpoch = uint32(0)
+		x.LastEpoch = int64(0)
 	case "kepler.committee.GenesisState.params":
 		x.Params = nil
 	default:
@@ -230,7 +230,7 @@ func (x *fastReflection_GenesisState) Get(descriptor protoreflect.FieldDescripto
 		return protoreflect.ValueOfList(listValue)
 	case "kepler.committee.GenesisState.last_epoch":
 		value := x.LastEpoch
-		return protoreflect.ValueOfUint32(value)
+		return protoreflect.ValueOfInt64(value)
 	case "kepler.committee.GenesisState.params":
 		value := x.Params
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
@@ -259,7 +259,7 @@ func (x *fastReflection_GenesisState) Set(fd protoreflect.FieldDescriptor, value
 		clv := lv.(*_GenesisState_1_list)
 		x.Committees = *clv.list
 	case "kepler.committee.GenesisState.last_epoch":
-		x.LastEpoch = uint32(value.Uint())
+		x.LastEpoch = value.Int()
 	case "kepler.committee.GenesisState.params":
 		x.Params = value.Message().Interface().(*Params)
 	default:
@@ -312,7 +312,7 @@ func (x *fastReflection_GenesisState) NewField(fd protoreflect.FieldDescriptor) 
 		list := []*Committee{}
 		return protoreflect.ValueOfList(&_GenesisState_1_list{list: &list})
 	case "kepler.committee.GenesisState.last_epoch":
-		return protoreflect.ValueOfUint32(uint32(0))
+		return protoreflect.ValueOfInt64(int64(0))
 	case "kepler.committee.GenesisState.params":
 		m := new(Params)
 		return protoreflect.ValueOfMessage(m.ProtoReflect())
@@ -559,7 +559,7 @@ func (x *fastReflection_GenesisState) ProtoMethods() *protoiface.Methods {
 					}
 					b := dAtA[iNdEx]
 					iNdEx++
-					x.LastEpoch |= uint32(b&0x7F) << shift
+					x.LastEpoch |= int64(b&0x7F) << shift
 					if b < 0x80 {
 						break
 					}
@@ -657,7 +657,7 @@ type GenesisState struct {
 	// committees is the list of committees.
 	Committees []*Committee `protobuf:"bytes,1,rep,name=committees,proto3" json:"committees,omitempty"`
 	// latest_epoch is the latest epoch.
-	LastEpoch uint32 `protobuf:"varint,2,opt,name=last_epoch,json=lastEpoch,proto3" json:"last_epoch,omitempty"`
+	LastEpoch int64 `protobuf:"varint,2,opt,name=last_epoch,json=lastEpoch,proto3" json:"last_epoch,omitempty"`
 	// params defines all the parameters of the module.
 	Params *Params `protobuf:"bytes,3,opt,name=params,proto3" json:"params,omitempty"`
 }
@@ -689,7 +689,7 @@ func (x *GenesisState) GetCommittees() []*Committee {
 	return nil
 }
 
-func (x *GenesisState) GetLastEpoch() uint32 {
+func (x *GenesisState) GetLastEpoch() int64 {
 	if x != nil {
 		return x.LastEpoch
 	}
@@ -722,7 +722,7 @@ var file_kepler_committee_genesis_proto_rawDesc = []byte{
 	0x74, 0x74, 0x65, 0x65, 0x2e, 0x43, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x42, 0x04,
 	0xc8, 0xde, 0x1f, 0x00, 0x52, 0x0a, 0x63, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x73,
 	0x12, 0x1d, 0x0a, 0x0a, 0x6c, 0x61, 0x73, 0x74, 0x5f, 0x65, 0x70, 0x6f, 0x63, 0x68, 0x18, 0x02,
-	0x20, 0x01, 0x28, 0x0d, 0x52, 0x09, 0x6c, 0x61, 0x73, 0x74, 0x45, 0x70, 0x6f, 0x63, 0x68, 0x12,
+	0x20, 0x01, 0x28, 0x03, 0x52, 0x09, 0x6c, 0x61, 0x73, 0x74, 0x45, 0x70, 0x6f, 0x63, 0x68, 0x12,
 	0x3b, 0x0a, 0x06, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32,
 	0x18, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74,
 	0x65, 0x65, 0x2e, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x42, 0x09, 0xc8, 0xde, 0x1f, 0x00, 0xa8,

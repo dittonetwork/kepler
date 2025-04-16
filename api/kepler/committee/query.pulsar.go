@@ -91,8 +91,8 @@ func (x *fastReflection_QueryCommitteeRequest) Interface() protoreflect.ProtoMes
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
 func (x *fastReflection_QueryCommitteeRequest) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
-	if x.Epoch != uint32(0) {
-		value := protoreflect.ValueOfUint32(x.Epoch)
+	if x.Epoch != int64(0) {
+		value := protoreflect.ValueOfInt64(x.Epoch)
 		if !f(fd_QueryCommitteeRequest_epoch, value) {
 			return
 		}
@@ -113,7 +113,7 @@ func (x *fastReflection_QueryCommitteeRequest) Range(f func(protoreflect.FieldDe
 func (x *fastReflection_QueryCommitteeRequest) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
 	case "kepler.committee.QueryCommitteeRequest.epoch":
-		return x.Epoch != uint32(0)
+		return x.Epoch != int64(0)
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.committee.QueryCommitteeRequest"))
@@ -131,7 +131,7 @@ func (x *fastReflection_QueryCommitteeRequest) Has(fd protoreflect.FieldDescript
 func (x *fastReflection_QueryCommitteeRequest) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
 	case "kepler.committee.QueryCommitteeRequest.epoch":
-		x.Epoch = uint32(0)
+		x.Epoch = int64(0)
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.committee.QueryCommitteeRequest"))
@@ -150,7 +150,7 @@ func (x *fastReflection_QueryCommitteeRequest) Get(descriptor protoreflect.Field
 	switch descriptor.FullName() {
 	case "kepler.committee.QueryCommitteeRequest.epoch":
 		value := x.Epoch
-		return protoreflect.ValueOfUint32(value)
+		return protoreflect.ValueOfInt64(value)
 	default:
 		if descriptor.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.committee.QueryCommitteeRequest"))
@@ -172,7 +172,7 @@ func (x *fastReflection_QueryCommitteeRequest) Get(descriptor protoreflect.Field
 func (x *fastReflection_QueryCommitteeRequest) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
 	case "kepler.committee.QueryCommitteeRequest.epoch":
-		x.Epoch = uint32(value.Uint())
+		x.Epoch = value.Int()
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.committee.QueryCommitteeRequest"))
@@ -209,7 +209,7 @@ func (x *fastReflection_QueryCommitteeRequest) Mutable(fd protoreflect.FieldDesc
 func (x *fastReflection_QueryCommitteeRequest) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
 	case "kepler.committee.QueryCommitteeRequest.epoch":
-		return protoreflect.ValueOfUint32(uint32(0))
+		return protoreflect.ValueOfInt64(int64(0))
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.committee.QueryCommitteeRequest"))
@@ -379,7 +379,7 @@ func (x *fastReflection_QueryCommitteeRequest) ProtoMethods() *protoiface.Method
 					}
 					b := dAtA[iNdEx]
 					iNdEx++
-					x.Epoch |= uint32(b&0x7F) << shift
+					x.Epoch |= int64(b&0x7F) << shift
 					if b < 0x80 {
 						break
 					}
@@ -1664,7 +1664,7 @@ type QueryCommitteeRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Epoch uint32 `protobuf:"varint,1,opt,name=epoch,proto3" json:"epoch,omitempty"`
+	Epoch int64 `protobuf:"varint,1,opt,name=epoch,proto3" json:"epoch,omitempty"`
 }
 
 func (x *QueryCommitteeRequest) Reset() {
@@ -1687,7 +1687,7 @@ func (*QueryCommitteeRequest) Descriptor() ([]byte, []int) {
 	return file_kepler_committee_query_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *QueryCommitteeRequest) GetEpoch() uint32 {
+func (x *QueryCommitteeRequest) GetEpoch() int64 {
 	if x != nil {
 		return x.Epoch
 	}
@@ -1810,7 +1810,7 @@ var file_kepler_committee_query_proto_rawDesc = []byte{
 	0x72, 0x2f, 0x63, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x2f, 0x70, 0x61, 0x72, 0x61,
 	0x6d, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x2d, 0x0a, 0x15, 0x51, 0x75, 0x65, 0x72,
 	0x79, 0x43, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
-	0x74, 0x12, 0x14, 0x0a, 0x05, 0x65, 0x70, 0x6f, 0x63, 0x68, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0d,
+	0x74, 0x12, 0x14, 0x0a, 0x05, 0x65, 0x70, 0x6f, 0x63, 0x68, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03,
 	0x52, 0x05, 0x65, 0x70, 0x6f, 0x63, 0x68, 0x22, 0x53, 0x0a, 0x16, 0x51, 0x75, 0x65, 0x72, 0x79,
 	0x43, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
 	0x65, 0x12, 0x39, 0x0a, 0x09, 0x63, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x18, 0x01,

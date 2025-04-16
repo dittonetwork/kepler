@@ -42,7 +42,7 @@ func (m *MockRepository) EXPECT() *MockRepositoryMockRecorder {
 }
 
 // GetCommittee mocks base method.
-func (m *MockRepository) GetCommittee(ctx types.Context, epoch uint32) (types0.Committee, error) {
+func (m *MockRepository) GetCommittee(ctx types.Context, epoch int64) (types0.Committee, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetCommittee", ctx, epoch)
 	ret0, _ := ret[0].(types0.Committee)
@@ -72,10 +72,10 @@ func (mr *MockRepositoryMockRecorder) GetLastCommittee(ctx any) *gomock.Call {
 }
 
 // GetLastEpoch mocks base method.
-func (m *MockRepository) GetLastEpoch(ctx types.Context) (uint32, error) {
+func (m *MockRepository) GetLastEpoch(ctx types.Context) (int64, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetLastEpoch", ctx)
-	ret0, _ := ret[0].(uint32)
+	ret0, _ := ret[0].(int64)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -87,7 +87,7 @@ func (mr *MockRepositoryMockRecorder) GetLastEpoch(ctx any) *gomock.Call {
 }
 
 // HasCommittee mocks base method.
-func (m *MockRepository) HasCommittee(ctx types.Context, epoch uint32) (bool, error) {
+func (m *MockRepository) HasCommittee(ctx types.Context, epoch int64) (bool, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "HasCommittee", ctx, epoch)
 	ret0, _ := ret[0].(bool)
@@ -116,7 +116,7 @@ func (mr *MockRepositoryMockRecorder) IterateCommittees(ctx, fn any) *gomock.Cal
 }
 
 // SetCommittee mocks base method.
-func (m *MockRepository) SetCommittee(ctx types.Context, epoch uint32, committee types0.Committee) error {
+func (m *MockRepository) SetCommittee(ctx types.Context, epoch int64, committee types0.Committee) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SetCommittee", ctx, epoch, committee)
 	ret0, _ := ret[0].(error)
@@ -130,7 +130,7 @@ func (mr *MockRepositoryMockRecorder) SetCommittee(ctx, epoch, committee any) *g
 }
 
 // SetLastEpoch mocks base method.
-func (m *MockRepository) SetLastEpoch(ctx types.Context, epoch uint32) error {
+func (m *MockRepository) SetLastEpoch(ctx types.Context, epoch int64) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SetLastEpoch", ctx, epoch)
 	ret0, _ := ret[0].(error)
