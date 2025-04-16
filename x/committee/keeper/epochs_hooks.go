@@ -9,7 +9,7 @@ import (
 	"github.com/dittonetwork/kepler/x/committee/types"
 )
 
-var _ types.EpochsHooks = EpochsHooks{}
+var _ types.EpochHooks = EpochsHooks{}
 
 type EpochsHooks struct {
 	keeper Keeper
