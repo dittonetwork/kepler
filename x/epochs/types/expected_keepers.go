@@ -23,3 +23,20 @@ type ParamSubspace interface {
 	Get(context.Context, []byte, interface{})
 	Set(context.Context, []byte, interface{})
 }
+
+// EpochHooks is event hooks.
+// These can be utilized to communicate between the epochs keeper and another
+// keeper which must take particular actions.
+type EpochHooks interface {
+	// AfterEpochEnd the first block whose timestamp is after the duration is counted as the end of the epoch.
+	AfterEpochEnd(ctx context.Context, epochID string, epochNumber int64) error
+
+	// BeforeEpochStart new epoch is next block of epoch end block.
+	BeforeEpochStart(ctx context.Context, epochID string, epochNumber int64) error
+}
+
+// EpochHooksWrapper is a wrapper for modules to inject EpochHooks using depinject.
+type EpochHooksWrapper struct{ EpochHooks }
+
+// IsOnePerModuleType implements the depinject.OnePerModuleType interface.
+func (EpochHooksWrapper) IsOnePerModuleType() {}

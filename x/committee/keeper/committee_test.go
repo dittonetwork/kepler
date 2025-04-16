@@ -18,8 +18,8 @@ import (
 func (s *TestSuite) TestCreateCommittee() {
 	testCases := []struct {
 		name            string
-		epoch           uint32
-		lastEpoch       uint32
+		epoch           int64
+		lastEpoch       int64
 		committeeExists bool
 		mockSetup       func()
 		expectedError   error
@@ -46,7 +46,7 @@ func (s *TestSuite) TestCreateCommittee() {
 					Return(false, nil)
 				s.repo.EXPECT().
 					GetLastEpoch(gomock.Any()).
-					Return(uint32(10), nil)
+					Return(int64(10), nil)
 			},
 			expectedError: types.ErrInvalidEpoch,
 		},
@@ -61,7 +61,7 @@ func (s *TestSuite) TestCreateCommittee() {
 					Return(false, nil)
 				s.repo.EXPECT().
 					GetLastEpoch(gomock.Any()).
-					Return(uint32(9), nil)
+					Return(int64(9), nil)
 			},
 			expectedError: types.ErrInvalidEpoch,
 		},
@@ -76,7 +76,7 @@ func (s *TestSuite) TestCreateCommittee() {
 					Return(false, nil)
 				s.repo.EXPECT().
 					GetLastEpoch(gomock.Any()).
-					Return(uint32(10), nil)
+					Return(int64(10), nil)
 				s.restakingKeeper.EXPECT().
 					GetActiveEmergencyValidators(gomock.Any()).
 					Return(nil, types.ErrInvalidSigner)
@@ -94,7 +94,7 @@ func (s *TestSuite) TestCreateCommittee() {
 					Return(false, nil)
 				s.repo.EXPECT().
 					GetLastEpoch(gomock.Any()).
-					Return(uint32(10), nil)
+					Return(int64(10), nil)
 				s.restakingKeeper.EXPECT().
 					GetActiveEmergencyValidators(gomock.Any()).
 					Return([]restakingtypes.Validator{
@@ -143,11 +143,11 @@ func (s *TestSuite) TestCreateCommittee() {
 						AccountNumber: uint64(1),
 					}).Times(2)
 
-				address, err := s.keeper.GetMultisigAddress(executors)
+				address, err := s.keeper.GetMultisigAddress(s.ctx, executors)
 				s.Require().NoError(err)
 
 				s.repo.EXPECT().
-					SetCommittee(gomock.Any(), uint32(11), types.Committee{
+					SetCommittee(gomock.Any(), int64(11), types.Committee{
 						Epoch:       11,
 						Executors:   executors,
 						IsEmergency: true,
@@ -157,7 +157,7 @@ func (s *TestSuite) TestCreateCommittee() {
 					Return(nil)
 
 				s.repo.EXPECT().
-					SetLastEpoch(gomock.Any(), uint32(11)).
+					SetLastEpoch(gomock.Any(), int64(11)).
 					Return(nil)
 			},
 			expectedError: nil,
@@ -173,7 +173,7 @@ func (s *TestSuite) TestCreateCommittee() {
 					Return(false, nil)
 				s.repo.EXPECT().
 					GetLastEpoch(gomock.Any()).
-					Return(uint32(10), nil)
+					Return(int64(10), nil)
 
 				s.restakingKeeper.EXPECT().
 					GetActiveEmergencyValidators(gomock.Any()).
@@ -223,10 +223,10 @@ func (s *TestSuite) TestCreateCommittee() {
 						AccountNumber: uint64(1),
 					}).Times(2)
 
-				address, err := s.keeper.GetMultisigAddress(executors)
+				address, err := s.keeper.GetMultisigAddress(s.ctx, executors)
 				s.Require().NoError(err)
 				s.repo.EXPECT().
-					SetCommittee(gomock.Any(), uint32(11), types.Committee{
+					SetCommittee(gomock.Any(), int64(11), types.Committee{
 						Epoch:       11,
 						Executors:   executors,
 						IsEmergency: true,
@@ -236,7 +236,7 @@ func (s *TestSuite) TestCreateCommittee() {
 					Return(nil)
 
 				s.repo.EXPECT().
-					SetLastEpoch(gomock.Any(), uint32(11)).
+					SetLastEpoch(gomock.Any(), int64(11)).
 					Return(nil)
 			},
 			expectedError: nil,
@@ -333,7 +333,7 @@ func (s *TestSuite) TestGetMultisigAddress() {
 		s.Run(tc.name, func() {
 			executors, tcAddress := tc.init()
 
-			address, err := s.keeper.GetMultisigAddress(executors)
+			address, err := s.keeper.GetMultisigAddress(s.ctx, executors)
 			s.Require().NoError(err)
 
 			_, err = sdk.AccAddressFromBech32(address)

@@ -46,6 +46,7 @@ func CommitteeKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {
 		nil,
 		codec.NewLegacyAmino(),
 		codec.NewProtoCodec(codectypes.NewInterfaceRegistry()),
+		"hour",
 	)
 
 	ctx := sdk.NewContext(stateStore, cmtproto.Header{}, false, log.NewNopLogger())
