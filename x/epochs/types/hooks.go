@@ -5,14 +5,6 @@ import (
 	"errors"
 )
 
-type EpochHooks interface {
-	// AfterEpochEnd the first block whose timestamp is after the duration is counted as the end of the epoch.
-	AfterEpochEnd(ctx context.Context, epochID string, epochNumber int64) error
-
-	// BeforeEpochStart new epoch is next block of epoch end block.
-	BeforeEpochStart(ctx context.Context, epochID string, epochNumber int64) error
-}
-
 var _ EpochHooks = MultiEpochHooks{}
 
 type MultiEpochHooks []EpochHooks
@@ -42,9 +34,3 @@ func (m MultiEpochHooks) BeforeEpochStart(ctx context.Context, epochID string, e
 
 	return errs
 }
-
-// EpochHooksWrapper is a wrapper for modules to inject EpochHooks using depinject.
-type EpochHooksWrapper struct{ EpochHooks }
-
-// IsOnePerModuleType implements the depinject.OnePerModuleType interface.
-func (EpochHooksWrapper) IsOnePerModuleType() {}

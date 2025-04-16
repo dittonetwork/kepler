@@ -43,7 +43,7 @@ func (suite *ReportTestSuite) SetupTest() {
 	// Create a test committee
 	suite.committeeID = "test-committee"
 	suite.committee = types.Committee{
-		Epoch: 10,
+		Epoch:   10,
 		Address: "cosmos1kkyr80lkuku58h7e2v84egemscmem304mdra4f",
 	}
 
@@ -56,6 +56,7 @@ func (suite *ReportTestSuite) SetupTest() {
 		nil,                    // router
 		codec.NewLegacyAmino(), // amino codec
 		codec.NewProtoCodec(cdctypes.NewInterfaceRegistry()), // proto codec
+		"hour",
 	)
 }
 
@@ -68,7 +69,7 @@ func (suite *ReportTestSuite) TestHandleReport_InvalidCommitteeAddress() {
 	suite.repository.EXPECT().
 		GetCommittee(suite.ctx, gomock.Any()).
 		Return(types.Committee{
-			Epoch: 10,
+			Epoch:   10,
 			Address: "cosmos1testaddressererer",
 		}, nil)
 
@@ -94,7 +95,7 @@ func (suite *ReportTestSuite) TestHandleReport_InvalidEpoch() {
 	suite.repository.EXPECT().
 		GetCommittee(suite.ctx, gomock.Any()).
 		Return(types.Committee{
-			Epoch: 8,
+			Epoch:   8,
 			Address: "cosmos1testaddress",
 		}, nil)
 

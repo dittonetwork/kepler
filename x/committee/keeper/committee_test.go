@@ -143,7 +143,7 @@ func (s *TestSuite) TestCreateCommittee() {
 						AccountNumber: uint64(1),
 					}).Times(2)
 
-				address, err := s.keeper.GetMultisigAddress(executors)
+				address, err := s.keeper.GetMultisigAddress(s.ctx, executors)
 				s.Require().NoError(err)
 
 				s.repo.EXPECT().
@@ -223,7 +223,7 @@ func (s *TestSuite) TestCreateCommittee() {
 						AccountNumber: uint64(1),
 					}).Times(2)
 
-				address, err := s.keeper.GetMultisigAddress(executors)
+				address, err := s.keeper.GetMultisigAddress(s.ctx, executors)
 				s.Require().NoError(err)
 				s.repo.EXPECT().
 					SetCommittee(gomock.Any(), uint32(11), types.Committee{
@@ -333,7 +333,7 @@ func (s *TestSuite) TestGetMultisigAddress() {
 		s.Run(tc.name, func() {
 			executors, tcAddress := tc.init()
 
-			address, err := s.keeper.GetMultisigAddress(executors)
+			address, err := s.keeper.GetMultisigAddress(s.ctx, executors)
 			s.Require().NoError(err)
 
 			_, err = sdk.AccAddressFromBech32(address)

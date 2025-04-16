@@ -5,16 +5,32 @@ package kepler.committee;
 import "amino/amino.proto";
 import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
+import "kepler/committee/committee.proto";
 import "kepler/committee/params.proto";
 
 option go_package = "github.com/dittonetwork/kepler/x/committee/types";
 
 // Query defines the gRPC querier service.
 service Query {
+  // Get current committee
+  rpc Committee(QueryCommitteeRequest) returns (QueryCommitteeResponse) {
+    option (google.api.http).get = "/kepler/committee/committee";
+  }
+
   // Parameters queries the parameters of the module.
   rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/kepler/committee/params";
   }
+}
+
+// QueryCommitteeRequest is request type for the Query/Committee RPC method.
+message QueryCommitteeRequest {
+  uint32 epoch = 1;
+}
+
+// QueryCommitteeResponse is response type for the Query/Committee RPC method.
+message QueryCommitteeResponse {
+  Committee committee = 1;
 }
 
 // QueryParamsRequest is request type for the Query/Params RPC method.
