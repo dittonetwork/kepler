@@ -14,7 +14,7 @@ message GenesisState {
   repeated Committee committees = 1 [(gogoproto.nullable) = false];
 
   // latest_epoch is the latest epoch.
-  uint32 last_epoch = 2;
+  int64 last_epoch = 2;
 
   // params defines all the parameters of the module.
   Params params = 3 [

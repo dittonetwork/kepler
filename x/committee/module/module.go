@@ -16,6 +16,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/module"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
+	epochstypes "github.com/dittonetwork/kepler/x/epochs/types"
+
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 
 	// this line is used by starport scaffolding # 1.
@@ -200,6 +202,7 @@ type ModuleOutputs struct {
 
 	CommitteeKeeper keeper.Keeper
 	Module          appmodule.AppModule
+	EpochsHooks     epochstypes.EpochHooksWrapper
 }
 
 func ProvideModule(in ModuleInputs) ModuleOutputs {
@@ -207,6 +210,11 @@ func ProvideModule(in ModuleInputs) ModuleOutputs {
 	authority := authtypes.NewModuleAddress(govtypes.ModuleName)
 	if in.Config.Authority != "" {
 		authority = authtypes.NewModuleAddressOrBech32Address(in.Config.Authority)
+	}
+
+	mainEpochID := "hour"
+	if in.Config.EpochId != "" {
+		mainEpochID = in.Config.EpochId
 	}
 
 	repo := repository.NewCommitteeRepository(in.StoreService, in.Cdc)
@@ -219,6 +227,7 @@ func ProvideModule(in ModuleInputs) ModuleOutputs {
 		in.Router,
 		in.Amino,
 		in.Cdc,
+		mainEpochID,
 	)
 	m := NewAppModule(
 		in.Cdc,
@@ -228,5 +237,9 @@ func ProvideModule(in ModuleInputs) ModuleOutputs {
 		in.Config.EpochId,
 	)
 
-	return ModuleOutputs{CommitteeKeeper: k, Module: m}
+	return ModuleOutputs{
+		CommitteeKeeper: k,
+		Module:          m,
+		EpochsHooks:     epochstypes.EpochHooksWrapper{EpochHooks: k.EpochsHooks()},
+	}
 }

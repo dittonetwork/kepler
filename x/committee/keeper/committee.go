@@ -1,7 +1,6 @@
 package keeper
 
 import (
-	"context"
 	"math"
 
 	sdkerrors "cosmossdk.io/errors"
@@ -13,7 +12,7 @@ import (
 )
 
 // CreateCommittee creates a new committee by the given epoch.
-func (k Keeper) CreateCommittee(ctx sdk.Context, epoch uint32) (types.Committee, error) {
+func (k Keeper) CreateCommittee(ctx sdk.Context, epoch int64) (types.Committee, error) {
 	var committee types.Committee
 
 	ok, err := k.repository.HasCommittee(ctx, epoch)
@@ -26,7 +25,7 @@ func (k Keeper) CreateCommittee(ctx sdk.Context, epoch uint32) (types.Committee,
 		return types.Committee{}, types.ErrCommitteeAlreadyExists
 	}
 
-	var lastSavedEpoch uint32
+	var lastSavedEpoch int64
 	lastSavedEpoch, err = k.repository.GetLastEpoch(ctx)
 	if err != nil {
 		return types.Committee{}, sdkerrors.Wrap(err, "failed to get last saved epoch")
@@ -41,7 +40,7 @@ func (k Keeper) CreateCommittee(ctx sdk.Context, epoch uint32) (types.Committee,
 	if err != nil {
 		return types.Committee{}, sdkerrors.Wrap(err, "failed to create emergency committee")
 	}
-	committee.Address, err = k.GetMultisigAddress(committee.Executors)
+	committee.Address, err = k.GetMultisigAddress(ctx, committee.Executors)
 	if err != nil {
 		return types.Committee{}, sdkerrors.Wrap(err, "failed to get multisig address")
 	}
@@ -60,14 +59,14 @@ func (k Keeper) CreateCommittee(ctx sdk.Context, epoch uint32) (types.Committee,
 	return committee, nil
 }
 
-func (k Keeper) GetMultisigAddress(executors []types.Executor) (string, error) {
+func (k Keeper) GetMultisigAddress(ctx sdk.Context, executors []types.Executor) (string, error) {
 	pubKeys := make([]cryptotypes.PubKey, 0, len(executors))
 	for _, each := range executors {
 		addr, err := sdk.AccAddressFromBech32(each.GetAddress())
 		if err != nil {
 			return "", err
 		}
-		acc := k.account.GetAccount(context.Background(), addr)
+		acc := k.account.GetAccount(ctx, addr)
 
 		var pk sdksecp.PubKey
 		pk.Key = make([]byte, len(acc.GetPubKey().Bytes()))
@@ -86,7 +85,7 @@ func (k Keeper) GetMultisigAddress(executors []types.Executor) (string, error) {
 }
 
 // createEmergencyCommittee creates an emergency committee by the given epoch.
-func (k Keeper) createEmergencyCommittee(ctx sdk.Context, epoch uint32) (types.Committee, error) {
+func (k Keeper) createEmergencyCommittee(ctx sdk.Context, epoch int64) (types.Committee, error) {
 	emergencyValidators, err := k.restaking.GetActiveEmergencyValidators(ctx)
 	if err != nil {
 		return types.Committee{}, sdkerrors.Wrap(err, "failed to get emergency executors")

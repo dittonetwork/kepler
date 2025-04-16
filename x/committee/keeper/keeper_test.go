@@ -65,6 +65,7 @@ func (s *TestSuite) SetupTest() {
 		nil,
 		encCfg.Amino,
 		encCfg.Codec,
+		"hour",
 	)
 
 	queryHelper := baseapp.NewQueryServerTestHelper(ctx, encCfg.InterfaceRegistry)

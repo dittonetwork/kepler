@@ -180,3 +180,55 @@ func (mr *MockParamSubspaceMockRecorder) Set(arg0, arg1, arg2 any) *gomock.Call 
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Set", reflect.TypeOf((*MockParamSubspace)(nil).Set), arg0, arg1, arg2)
 }
+
+// MockEpochHooks is a mock of EpochHooks interface.
+type MockEpochHooks struct {
+	ctrl     *gomock.Controller
+	recorder *MockEpochHooksMockRecorder
+	isgomock struct{}
+}
+
+// MockEpochHooksMockRecorder is the mock recorder for MockEpochHooks.
+type MockEpochHooksMockRecorder struct {
+	mock *MockEpochHooks
+}
+
+// NewMockEpochHooks creates a new mock instance.
+func NewMockEpochHooks(ctrl *gomock.Controller) *MockEpochHooks {
+	mock := &MockEpochHooks{ctrl: ctrl}
+	mock.recorder = &MockEpochHooksMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockEpochHooks) EXPECT() *MockEpochHooksMockRecorder {
+	return m.recorder
+}
+
+// AfterEpochEnd mocks base method.
+func (m *MockEpochHooks) AfterEpochEnd(ctx context.Context, epochID string, epochNumber int64) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AfterEpochEnd", ctx, epochID, epochNumber)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// AfterEpochEnd indicates an expected call of AfterEpochEnd.
+func (mr *MockEpochHooksMockRecorder) AfterEpochEnd(ctx, epochID, epochNumber any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AfterEpochEnd", reflect.TypeOf((*MockEpochHooks)(nil).AfterEpochEnd), ctx, epochID, epochNumber)
+}
+
+// BeforeEpochStart mocks base method.
+func (m *MockEpochHooks) BeforeEpochStart(ctx context.Context, epochID string, epochNumber int64) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "BeforeEpochStart", ctx, epochID, epochNumber)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// BeforeEpochStart indicates an expected call of BeforeEpochStart.
+func (mr *MockEpochHooksMockRecorder) BeforeEpochStart(ctx, epochID, epochNumber any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BeforeEpochStart", reflect.TypeOf((*MockEpochHooks)(nil).BeforeEpochStart), ctx, epochID, epochNumber)
+}

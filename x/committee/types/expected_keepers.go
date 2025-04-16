@@ -29,3 +29,10 @@ type ParamSubspace interface {
 	Get(context.Context, []byte, interface{})
 	Set(context.Context, []byte, interface{})
 }
+
+type EpochHooks interface {
+	AfterEpochEnd(ctx context.Context, epochID string, epochNumber int64) error
+
+	// BeforeEpochStart new epoch is next block of epoch end block.
+	BeforeEpochStart(ctx context.Context, epochID string, epochNumber int64) error
+}

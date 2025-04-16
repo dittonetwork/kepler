@@ -18,7 +18,7 @@ type CommitteeKeeper interface {
 	IsCommitteeExists(ctx sdk.Context, committeeID string) (bool, error)
 
 	// CreateCommittee creates a new committee for the given epoch.
-	CreateCommittee(ctx sdk.Context, epoch uint32) (types.Committee, error)
+	CreateCommittee(ctx sdk.Context, epoch int64) (types.Committee, error)
 
 	// GetAuthority returns the module's authority.
 	GetAuthority() string
@@ -40,6 +40,8 @@ type Keeper struct {
 	account   types.AccountKeeper
 	restaking types.RestakingKeeper
 
+	epochMainID string
+
 	// the address capable of executing a MsgUpdateParams message. Typically, this
 	// should be the x/gov module account.
 	authority string
@@ -53,19 +55,21 @@ func NewKeeper(
 	router baseapp.MessageRouter,
 	amino *codec.LegacyAmino,
 	cdc codec.Codec,
+	epochMainID string,
 ) Keeper {
 	if _, err := sdk.AccAddressFromBech32(authority); err != nil {
 		panic(fmt.Sprintf("invalid authority address: %s", authority))
 	}
 
 	k := Keeper{
-		authority:  authority,
-		account:    account,
-		restaking:  restaking,
-		repository: repo,
-		router:     router,
-		amino:      amino,
-		cdc:        cdc,
+		authority:   authority,
+		account:     account,
+		restaking:   restaking,
+		repository:  repo,
+		router:      router,
+		amino:       amino,
+		cdc:         cdc,
+		epochMainID: epochMainID,
 	}
 
 	return k

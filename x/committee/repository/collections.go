@@ -8,7 +8,7 @@ import (
 
 type Idx struct {
 	// Emergency index by emergency status
-	Emergency *indexes.Multi[bool, uint32, types.Committee]
+	Emergency *indexes.Multi[bool, int64, types.Committee]
 }
 
 func NewIndexes(sb *collections.SchemaBuilder) Idx {
@@ -18,16 +18,16 @@ func NewIndexes(sb *collections.SchemaBuilder) Idx {
 			types.CommitteesEmergencyIdxPrefix,
 			"committees_by_emergency",
 			collections.BoolKey,
-			collections.Uint32Key,
-			func(_ uint32, committee types.Committee) (bool, error) {
+			collections.Int64Key,
+			func(_ int64, committee types.Committee) (bool, error) {
 				return committee.IsEmergency, nil
 			},
 		),
 	}
 }
 
-func (a Idx) IndexesList() []collections.Index[uint32, types.Committee] {
-	return []collections.Index[uint32, types.Committee]{
+func (a Idx) IndexesList() []collections.Index[int64, types.Committee] {
+	return []collections.Index[int64, types.Committee]{
 		a.Emergency,
 	}
 }

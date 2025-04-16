@@ -958,8 +958,8 @@ func (x *fastReflection_MsgSendReport) Range(f func(protoreflect.FieldDescriptor
 			return
 		}
 	}
-	if x.EpochId != uint32(0) {
-		value := protoreflect.ValueOfUint32(x.EpochId)
+	if x.EpochId != int64(0) {
+		value := protoreflect.ValueOfInt64(x.EpochId)
 		if !f(fd_MsgSendReport_epoch_id, value) {
 			return
 		}
@@ -988,7 +988,7 @@ func (x *fastReflection_MsgSendReport) Has(fd protoreflect.FieldDescriptor) bool
 	case "kepler.committee.MsgSendReport.creator":
 		return x.Creator != ""
 	case "kepler.committee.MsgSendReport.epoch_id":
-		return x.EpochId != uint32(0)
+		return x.EpochId != int64(0)
 	case "kepler.committee.MsgSendReport.report":
 		return x.Report != nil
 	default:
@@ -1010,7 +1010,7 @@ func (x *fastReflection_MsgSendReport) Clear(fd protoreflect.FieldDescriptor) {
 	case "kepler.committee.MsgSendReport.creator":
 		x.Creator = ""
 	case "kepler.committee.MsgSendReport.epoch_id":
-		x.EpochId = uint32(0)
+		x.EpochId = int64(0)
 	case "kepler.committee.MsgSendReport.report":
 		x.Report = nil
 	default:
@@ -1034,7 +1034,7 @@ func (x *fastReflection_MsgSendReport) Get(descriptor protoreflect.FieldDescript
 		return protoreflect.ValueOfString(value)
 	case "kepler.committee.MsgSendReport.epoch_id":
 		value := x.EpochId
-		return protoreflect.ValueOfUint32(value)
+		return protoreflect.ValueOfInt64(value)
 	case "kepler.committee.MsgSendReport.report":
 		value := x.Report
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
@@ -1061,7 +1061,7 @@ func (x *fastReflection_MsgSendReport) Set(fd protoreflect.FieldDescriptor, valu
 	case "kepler.committee.MsgSendReport.creator":
 		x.Creator = value.Interface().(string)
 	case "kepler.committee.MsgSendReport.epoch_id":
-		x.EpochId = uint32(value.Uint())
+		x.EpochId = value.Int()
 	case "kepler.committee.MsgSendReport.report":
 		x.Report = value.Message().Interface().(*Report)
 	default:
@@ -1109,7 +1109,7 @@ func (x *fastReflection_MsgSendReport) NewField(fd protoreflect.FieldDescriptor)
 	case "kepler.committee.MsgSendReport.creator":
 		return protoreflect.ValueOfString("")
 	case "kepler.committee.MsgSendReport.epoch_id":
-		return protoreflect.ValueOfUint32(uint32(0))
+		return protoreflect.ValueOfInt64(int64(0))
 	case "kepler.committee.MsgSendReport.report":
 		m := new(Report)
 		return protoreflect.ValueOfMessage(m.ProtoReflect())
@@ -1343,7 +1343,7 @@ func (x *fastReflection_MsgSendReport) ProtoMethods() *protoiface.Methods {
 					}
 					b := dAtA[iNdEx]
 					iNdEx++
-					x.EpochId |= uint32(b&0x7F) << shift
+					x.EpochId |= int64(b&0x7F) << shift
 					if b < 0x80 {
 						break
 					}
@@ -2508,7 +2508,7 @@ type MsgSendReport struct {
 	// creator is the address of the creator of the report.
 	Creator string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
 	// epoch_id is the id of the epoch that the report is for.
-	EpochId uint32 `protobuf:"varint,2,opt,name=epoch_id,json=epochId,proto3" json:"epoch_id,omitempty"`
+	EpochId int64 `protobuf:"varint,2,opt,name=epoch_id,json=epochId,proto3" json:"epoch_id,omitempty"`
 	// report is the report that is being sent.
 	Report *Report `protobuf:"bytes,3,opt,name=report,proto3" json:"report,omitempty"`
 }
@@ -2540,7 +2540,7 @@ func (x *MsgSendReport) GetCreator() string {
 	return ""
 }
 
-func (x *MsgSendReport) GetEpochId() uint32 {
+func (x *MsgSendReport) GetEpochId() int64 {
 	if x != nil {
 		return x.EpochId
 	}
@@ -2671,7 +2671,7 @@ var file_kepler_committee_tx_proto_rawDesc = []byte{
 	0x61, 0x74, 0x6f, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x18, 0xd2, 0xb4, 0x2d, 0x14,
 	0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x53, 0x74,
 	0x72, 0x69, 0x6e, 0x67, 0x52, 0x07, 0x63, 0x72, 0x65, 0x61, 0x74, 0x6f, 0x72, 0x12, 0x19, 0x0a,
-	0x08, 0x65, 0x70, 0x6f, 0x63, 0x68, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0d, 0x52,
+	0x08, 0x65, 0x70, 0x6f, 0x63, 0x68, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52,
 	0x07, 0x65, 0x70, 0x6f, 0x63, 0x68, 0x49, 0x64, 0x12, 0x30, 0x0a, 0x06, 0x72, 0x65, 0x70, 0x6f,
 	0x72, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65,
 	0x72, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x2e, 0x52, 0x65, 0x70, 0x6f,

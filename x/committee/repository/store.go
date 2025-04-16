@@ -12,8 +12,8 @@ import (
 
 type CommitteeRepository struct {
 	Schema     collections.Schema
-	Committees *collections.IndexedMap[uint32, types.Committee, Idx]
-	LastEpoch  collections.Item[uint32]
+	Committees *collections.IndexedMap[int64, types.Committee, Idx]
+	LastEpoch  collections.Item[int64]
 }
 
 var _ types.Repository = &CommitteeRepository{}
@@ -26,7 +26,7 @@ func NewCommitteeRepository(storeService store.KVStoreService, cdc codec.BinaryC
 			sb,
 			types.CommitteesStoreKeyPrefix,
 			"committees",
-			collections.Uint32Key,
+			collections.Int64Key,
 			codec.CollValue[types.Committee](cdc),
 			NewIndexes(sb),
 		),
@@ -34,7 +34,7 @@ func NewCommitteeRepository(storeService store.KVStoreService, cdc codec.BinaryC
 			sb,
 			types.LatestEpochStorePrefix,
 			"last_epoch",
-			collections.Uint32Value,
+			collections.Int64Value,
 		),
 	}
 
@@ -47,15 +47,15 @@ func NewCommitteeRepository(storeService store.KVStoreService, cdc codec.BinaryC
 	return cr
 }
 
-func (r *CommitteeRepository) GetLastEpoch(ctx sdk.Context) (uint32, error) {
+func (r *CommitteeRepository) GetLastEpoch(ctx sdk.Context) (int64, error) {
 	return r.LastEpoch.Get(ctx)
 }
 
-func (r *CommitteeRepository) SetLastEpoch(ctx sdk.Context, epoch uint32) error {
+func (r *CommitteeRepository) SetLastEpoch(ctx sdk.Context, epoch int64) error {
 	return r.LastEpoch.Set(ctx, epoch)
 }
 
-func (r *CommitteeRepository) GetCommittee(ctx sdk.Context, epoch uint32) (types.Committee, error) {
+func (r *CommitteeRepository) GetCommittee(ctx sdk.Context, epoch int64) (types.Committee, error) {
 	return r.Committees.Get(ctx, epoch)
 }
 
@@ -67,11 +67,11 @@ func (r *CommitteeRepository) GetLastCommittee(ctx sdk.Context) (types.Committee
 	return r.GetCommittee(ctx, epoch)
 }
 
-func (r *CommitteeRepository) SetCommittee(ctx sdk.Context, epoch uint32, committee types.Committee) error {
+func (r *CommitteeRepository) SetCommittee(ctx sdk.Context, epoch int64, committee types.Committee) error {
 	return r.Committees.Set(ctx, epoch, committee)
 }
 
-func (r *CommitteeRepository) HasCommittee(ctx sdk.Context, epoch uint32) (bool, error) {
+func (r *CommitteeRepository) HasCommittee(ctx sdk.Context, epoch int64) (bool, error) {
 	return r.Committees.Has(ctx, epoch)
 }
 
