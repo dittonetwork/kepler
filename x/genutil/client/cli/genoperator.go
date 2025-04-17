@@ -13,6 +13,60 @@ import (
 	"github.com/spf13/cobra"
 )
 
+func GetGenesisOperatorCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:     "get-operator [key_name]",
+		Short:   "Get operator EVM address and consensus public key",
+		Long:    `Generate operator.`,
+		Example: "$ keplerd genesis get-operator alice",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx := client.GetClientContextFromCmd(cmd)
+			serverCtx := server.GetServerContextFromCmd(cmd)
+			valPk, err := genutil.GetValidatorPubKey(serverCtx.Config)
+			if err != nil {
+				return fmt.Errorf("failed to get validator pubkey: %w", err)
+			}
+
+			name := args[0]
+			key, err := clientCtx.Keyring.Key(name)
+			if err != nil {
+				return fmt.Errorf("failed to get key: %w", err)
+			}
+
+			pk, err := key.GetPubKey()
+			if err != nil {
+				return fmt.Errorf("failed to get pubkey: %w", err)
+			}
+
+			valPkAny := clientCtx.Codec.MustMarshalJSON(valPk)
+
+			evmaddr, err := restakingtypes.ToKeccakLast20(pk)
+			if err != nil {
+				return fmt.Errorf("failed to get EVM address: %w", err)
+			}
+
+			data := struct {
+				OperatorAddress string          `json:"operator_address" yaml:"operator_address"`
+				ConsensusPubkey json.RawMessage `json:"consensus_pubkey" yaml:"consensus_pubkey"`
+			}{
+				OperatorAddress: evmaddr.String(),
+				ConsensusPubkey: valPkAny,
+			}
+
+			out, err := json.MarshalIndent(data, "", " ")
+			if err != nil {
+				return err
+			}
+
+			_, err = fmt.Fprintf(os.Stderr, "%s\n", out)
+
+			return err
+		},
+	}
+
+	return cmd
+}
+
 func AddBulkGenesisOperatorCmd(defaultNodeHome string) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "bulk-add-genesis-operators [/file/path.json]",
