@@ -56,6 +56,21 @@ func InitializeNodeValidatorFilesFromMnemonic(config *cfg.Config, mnemonic strin
 		return "", nil, fmt.Errorf("could not create directory %q: %w", filepath.Dir(pvStateFile), err)
 	}
 
+	// Check if the localnet priv_validator.json file exists
+	// and copy it to the pvKeyFile location if it does.
+	localKeyFile := CheckLocalnetValidatorKey(config.Moniker)
+	if localKeyFile != "" {
+		var data []byte
+		data, err = os.ReadFile(localKeyFile)
+		if err != nil {
+			return "", nil, fmt.Errorf("could not read localnet priv_validator.json file: %w", err)
+		}
+
+		if err = os.WriteFile(pvKeyFile, data, 0o600); err != nil {
+			return "", nil, fmt.Errorf("could not write localnet priv_validator.json file: %w", err)
+		}
+	}
+
 	var filePV *privval.FilePV
 	if len(mnemonic) == 0 {
 		filePV = privval.LoadOrGenFilePV(pvKeyFile, pvStateFile)
@@ -77,4 +92,15 @@ func InitializeNodeValidatorFilesFromMnemonic(config *cfg.Config, mnemonic strin
 	}
 
 	return nodeID, valPubKey, nil
+}
+
+// CheckLocalnetValidatorKey checks if a private validator key exists for the given moniker
+// in the .localnet directory and returns its path if found, or nil if not.
+func CheckLocalnetValidatorKey(moniker string) string {
+	privValidatorFile := filepath.Join(".localnet", fmt.Sprintf("%s_priv_validator_key.json", moniker))
+	if _, err := os.Stat(privValidatorFile); os.IsNotExist(err) {
+		return ""
+	}
+
+	return privValidatorFile
 }

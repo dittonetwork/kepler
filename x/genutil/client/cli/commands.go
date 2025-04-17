@@ -1,6 +1,9 @@
 package cli
 
 import (
+	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
+	"github.com/dittonetwork/kepler/x/genutil"
+	genutiltypes "github.com/dittonetwork/kepler/x/genutil/types"
 	"github.com/spf13/cobra"
 
 	"github.com/cosmos/cosmos-sdk/client"
@@ -28,13 +31,17 @@ func CommandsWithCustomMigrationMap(
 		SuggestionsMinimumDistance: suggestionMinimumDistance,
 		RunE:                       client.ValidateCmd,
 	}
+	genTxModule, ok := moduleBasics[genutiltypes.ModuleName].(genutil.AppModuleBasic)
+	if !ok {
+		panic("genutil module is not registered")
+	}
 
 	cmd.AddCommand(
 		AddGenesisAccountCmd(defaultNodeHome, txConfig.SigningContext().AddressCodec()),
 		AddBulkGenesisAccountCmd(defaultNodeHome, txConfig.SigningContext().AddressCodec()),
 		AddBulkGenesisOperatorCmd(defaultNodeHome),
-		GenTxCmd(defaultNodeHome),
-		CollectGenTxsCmd(defaultNodeHome),
+		GenTxCmd(defaultNodeHome, txConfig.SigningContext().ValidatorAddressCodec()),
+		CollectGenTxsCmd(banktypes.GenesisBalancesIterator{}, defaultNodeHome, genTxModule.GenTxValidator),
 		ValidateGenesisCmd(moduleBasics),
 	)
 

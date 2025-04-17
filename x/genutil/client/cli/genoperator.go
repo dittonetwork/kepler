@@ -58,10 +58,10 @@ The command validates each entry before adding it to ensure proper configuration
 				return fmt.Errorf("failed to decode genesis file: %w", err)
 			}
 
-			var genesis restakingtypes.Validators
+			var genesis restakingtypes.Operators
 			clientCtx.Codec.MustUnmarshalJSON(jsonData, &genesis)
 
-			return genutil.AddGenesisOperators(clientCtx.Codec, genesis.Validators, config.GenesisFile())
+			return genutil.AddGenesisOperators(clientCtx.Codec, genesis.Operators, config.GenesisFile())
 		},
 	}
 

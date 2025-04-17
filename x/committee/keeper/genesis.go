@@ -1,6 +1,9 @@
 package keeper
 
 import (
+	"errors"
+
+	"cosmossdk.io/collections"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"github.com/dittonetwork/kepler/x/committee/types"
@@ -31,7 +34,7 @@ func (k Keeper) ExportGenesis(ctx sdk.Context) *types.GenesisState {
 	genesis.Params = k.GetParams(ctx)
 
 	lastEpoch, err := k.repository.GetLastEpoch(ctx)
-	if err != nil {
+	if err != nil && !errors.Is(err, collections.ErrNotFound) {
 		panic(err)
 	}
 

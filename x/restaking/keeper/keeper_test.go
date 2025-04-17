@@ -60,6 +60,7 @@ func (s *TestSuite) SetupTest() {
 		authtypes.NewModuleAddress(committeetypes.ModuleName).String(),
 		s.epochsKeeper,
 		"hour",
+		address.NewBech32Codec("dittovaloper"),
 	)
 
 	queryHelper := baseapp.NewQueryServerTestHelper(ctx, encCfg.InterfaceRegistry)

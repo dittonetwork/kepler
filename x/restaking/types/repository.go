@@ -8,6 +8,8 @@ type Repository interface {
 	GetLastUpdate(ctx sdk.Context) (UpdateInfo, error)
 	SetLastUpdate(ctx sdk.Context, info UpdateInfo) error
 
+	GetPendingOperator(ctx sdk.Context, addr string) (Operator, error)
+
 	GetPendingOperators(ctx sdk.Context) ([]Operator, error)
 	SetPendingOperator(ctx sdk.Context, operatorAddr string, operator Operator) error
 	RemovePendingOperator(ctx sdk.Context, operatorAddr string) error

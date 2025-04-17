@@ -9,7 +9,7 @@ import (
 	restakingtypes "github.com/dittonetwork/kepler/x/restaking/types"
 )
 
-func AddGenesisOperators(cdc codec.Codec, operators []restakingtypes.Validator, genesisFileURL string) error {
+func AddGenesisOperators(cdc codec.Codec, operators []restakingtypes.Operator, genesisFileURL string) error {
 	appState, appGenesis, err := genutiltypes.GenesisStateFromGenFile(genesisFileURL)
 	if err != nil {
 		return fmt.Errorf("failed to unmarshal genesis state: %w", err)
@@ -18,8 +18,8 @@ func AddGenesisOperators(cdc codec.Codec, operators []restakingtypes.Validator, 
 	restakingGenState := restakingtypes.GetGenesisStateFromAppState(cdc, appState)
 
 	for _, operator := range operators {
-		restakingGenState.Validators = append(restakingGenState.Validators, restakingtypes.Validator{
-			OperatorAddress: operator.OperatorAddress,
+		restakingGenState.PendingValidators = append(restakingGenState.PendingValidators, restakingtypes.Operator{
+			Address:         operator.Address,
 			ConsensusPubkey: operator.ConsensusPubkey,
 			Status:          operator.Status,
 			Protocol:        operator.Protocol,

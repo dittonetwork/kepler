@@ -29,12 +29,26 @@ faucet:
     - 5ditto
 
 validators:
-- name: alice
-  bonded: 100000000power
-  app:
-    minimum-gas-prices: "0.0001ditto"
+  - name: alice
+    bonded: 100000000power
+    app:
+      minimum-gas-prices: "0.0001ditto"
 
-- name: bob
-  bonded: 300000000power
-  app:
-    minimum-gas-prices: "0.0001ditto"
+  - name: bob
+    bonded: 300000000power
+    app:
+      minimum-gas-prices: "0.0001ditto"
+
+genesis:
+  app_state:
+    restaking:
+      pending_validators:
+        - address: 0x910cB6A0937ECeBA1EDF4F505F1b86D3234a4Fe9
+          consensus_pubkey:
+            '@type': /cosmos.crypto.ed25519.PubKey
+            key: dcHikhOeHpXzLzX+IFlz6HuNs5ILr3v/OG5NfGQuvKE=
+          is_emergency: true
+          status: BOND_STATUS_BONDED
+          voting_power: 10000000
+          protocol: PROTOCOL_DITTO
+

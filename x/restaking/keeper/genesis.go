@@ -1,6 +1,9 @@
 package keeper
 
 import (
+	"errors"
+
+	"cosmossdk.io/collections"
 	sdkerrors "cosmossdk.io/errors"
 	abci "github.com/cometbft/cometbft/abci/types"
 	"github.com/cometbft/cometbft/crypto"
@@ -53,6 +56,12 @@ func (k Keeper) InitGenesis(ctx sdk.Context, state types.GenesisState) ([]abci.V
 		return nil, sdkerrors.Wrap(err, "last update")
 	}
 
+	for _, operator := range state.PendingValidators {
+		if err := k.repository.SetPendingOperator(ctx, operator.Address, operator); err != nil {
+			return nil, sdkerrors.Wrap(err, "set operator")
+		}
+	}
+
 	for _, validator := range state.Validators {
 		if err := k.repository.SetValidator(ctx, sdk.ValAddress(validator.OperatorAddress), validator); err != nil {
 			return nil, sdkerrors.Wrap(err, "validators")
@@ -67,7 +76,7 @@ func (k Keeper) ExportGenesis(ctx sdk.Context) (*types.GenesisState, error) {
 
 	var err error
 	genesis.LastUpdate, err = k.repository.GetLastUpdate(ctx)
-	if err != nil {
+	if err != nil && !errors.Is(err, collections.ErrNotFound) {
 		return genesis, sdkerrors.Wrap(err, "last update")
 	}
 
@@ -76,5 +85,7 @@ func (k Keeper) ExportGenesis(ctx sdk.Context) (*types.GenesisState, error) {
 		return genesis, err
 	}
 
-	return genesis, nil
+	genesis.PendingValidators, err = k.repository.GetPendingOperators(ctx)
+
+	return genesis, err
 }

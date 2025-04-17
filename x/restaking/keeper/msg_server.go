@@ -1,8 +1,6 @@
 package keeper
 
 import (
-	"context"
-
 	"github.com/dittonetwork/kepler/x/restaking/types"
 )
 
@@ -17,12 +15,3 @@ func NewMsgServerImpl(keeper Keeper) types.MsgServer {
 }
 
 var _ types.MsgServer = msgServer{}
-
-// BondValidator complete the bonding process for a validator recognized in Bonding status.
-func (s msgServer) BondValidator(
-	_ context.Context,
-	_ *types.MsgBondValidator,
-) (*types.MsgBondValidatorResponse, error) {
-	// TODO github.com/dittonetwork/kepler/issues/175
-	panic("implement me")
-}

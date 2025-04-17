@@ -38,6 +38,11 @@ message ValidatorsUpdate {
   UpdateInfo info = 2 [(gogoproto.nullable) = false];
 }
 
+// Operators is a message that contains a list of validators.
+message Operators {
+  repeated Operator operators = 1 [(gogoproto.nullable) = false];
+}
+
 // Operator is a message that contains information about a validator operator.
 message Operator {
   option (gogoproto.equal) = true;

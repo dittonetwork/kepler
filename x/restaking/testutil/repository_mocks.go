@@ -101,6 +101,21 @@ func (mr *MockRepositoryMockRecorder) GetLastUpdate(ctx any) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetLastUpdate", reflect.TypeOf((*MockRepository)(nil).GetLastUpdate), ctx)
 }
 
+// GetPendingOperator mocks base method.
+func (m *MockRepository) GetPendingOperator(ctx types.Context, addr string) (types0.Operator, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetPendingOperator", ctx, addr)
+	ret0, _ := ret[0].(types0.Operator)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetPendingOperator indicates an expected call of GetPendingOperator.
+func (mr *MockRepositoryMockRecorder) GetPendingOperator(ctx, addr any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPendingOperator", reflect.TypeOf((*MockRepository)(nil).GetPendingOperator), ctx, addr)
+}
+
 // GetPendingOperators mocks base method.
 func (m *MockRepository) GetPendingOperators(ctx types.Context) ([]types0.Operator, error) {
 	m.ctrl.T.Helper()
