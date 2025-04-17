@@ -104,8 +104,15 @@ func (AppModule) IsOnePerModuleType() {}
 func (AppModule) IsAppModule() {}
 
 // InitGenesis performs genesis initialization for the genutil module.
-func (am AppModule) InitGenesis(_ sdk.Context, _ codec.JSONCodec, _ json.RawMessage) []abci.ValidatorUpdate {
-	return nil
+func (am AppModule) InitGenesis(ctx sdk.Context, cdc codec.JSONCodec, data json.RawMessage) []abci.ValidatorUpdate {
+	var genesisState types.GenesisState
+	cdc.MustUnmarshalJSON(data, &genesisState)
+	validators, err := InitGenesis(ctx, am.restakingKeeper, am.deliverTx, genesisState, am.txEncodingConfig)
+	if err != nil {
+		panic(fmt.Errorf("failed to initialize genesis state: %w", err))
+	}
+
+	return validators
 }
 
 // ExportGenesis returns the exported genesis state as raw bytes for the genutil

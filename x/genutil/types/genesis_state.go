@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
@@ -86,4 +87,22 @@ func ValidateAndGetGenTx(
 	}
 
 	return tx, validator(tx.GetMsgs())
+}
+
+// GetGenesisStateFromAppState gets the genutil genesis state from the expected app state.
+func GetGenesisStateFromAppState(cdc codec.JSONCodec, appState map[string]json.RawMessage) *GenesisState {
+	var genesisState GenesisState
+	if appState[ModuleName] != nil {
+		cdc.MustUnmarshalJSON(appState[ModuleName], &genesisState)
+	}
+	return &genesisState
+}
+
+// SetGenesisStateInAppState sets the genutil genesis state within the expected app state.
+func SetGenesisStateInAppState(
+	cdc codec.JSONCodec, appState map[string]json.RawMessage, genesisState *GenesisState,
+) map[string]json.RawMessage {
+	genesisStateBz := cdc.MustMarshalJSON(genesisState)
+	appState[ModuleName] = genesisStateBz
+	return appState
 }

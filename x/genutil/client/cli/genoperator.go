@@ -13,6 +13,61 @@ import (
 	"github.com/spf13/cobra"
 )
 
+func GetGenesisOperatorCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:     "get-operator [key_name]",
+		Short:   "Get operator EVM address and consensus public key",
+		Long:    `Generate operator.`,
+		Example: "$ keplerd genesis get-operator alice",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx := client.GetClientContextFromCmd(cmd)
+			serverCtx := server.GetServerContextFromCmd(cmd)
+			valPk, err := genutil.GetValidatorPubKey(serverCtx.Config)
+			if err != nil {
+				return fmt.Errorf("failed to get validator pubkey: %w", err)
+			}
+
+			name := args[0]
+			key, err := clientCtx.Keyring.Key(name)
+			if err != nil {
+				return fmt.Errorf("failed to get key: %w", err)
+			}
+
+			pk, err := key.GetPubKey()
+			if err != nil {
+				return fmt.Errorf("failed to get pubkey: %w", err)
+			}
+
+			valPkAny := clientCtx.Codec.MustMarshalJSON(valPk)
+
+			evmaddr, err := restakingtypes.ToKeccakLast20(pk)
+			if err != nil {
+				return fmt.Errorf("failed to get EVM address: %w", err)
+			}
+
+			data := struct {
+				OperatorAddress string          `json:"operator_address" yaml:"operator_address"`
+				ConsensusPubkey json.RawMessage `json:"consensus_pubkey" yaml:"consensus_pubkey"`
+			}{
+				OperatorAddress: evmaddr.String(),
+				ConsensusPubkey: valPkAny,
+			}
+
+			out, err := json.MarshalIndent(data, "", " ")
+			if err != nil {
+				return err
+			}
+
+			//nolint:forbidigo // no matter
+			fmt.Printf("%s\n", out)
+
+			return nil
+		},
+	}
+
+	return cmd
+}
+
 func AddBulkGenesisOperatorCmd(defaultNodeHome string) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "bulk-add-genesis-operators [/file/path.json]",
@@ -58,10 +113,10 @@ The command validates each entry before adding it to ensure proper configuration
 				return fmt.Errorf("failed to decode genesis file: %w", err)
 			}
 
-			var genesis restakingtypes.Validators
+			var genesis restakingtypes.Operators
 			clientCtx.Codec.MustUnmarshalJSON(jsonData, &genesis)
 
-			return genutil.AddGenesisOperators(clientCtx.Codec, genesis.Validators, config.GenesisFile())
+			return genutil.AddGenesisOperators(clientCtx.Codec, genesis.Operators, config.GenesisFile())
 		},
 	}
 

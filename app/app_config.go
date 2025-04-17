@@ -45,9 +45,9 @@ var (
 		// cosmos-sdk modules
 		authtypes.ModuleName,
 		banktypes.ModuleName,
+		restakingmoduletypes.ModuleName,
 		genutiltypes.ModuleName,
 		// chain modules
-		restakingmoduletypes.ModuleName,
 		epochstypes.ModuleName,
 		workflowmoduletypes.ModuleName,
 		committeemoduletypes.ModuleName,

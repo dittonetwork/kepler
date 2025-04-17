@@ -10,6 +10,7 @@ import (
 	cmtproto "github.com/cometbft/cometbft/proto/tendermint/types"
 	dbm "github.com/cosmos/cosmos-db"
 	"github.com/cosmos/cosmos-sdk/codec"
+	"github.com/cosmos/cosmos-sdk/codec/address"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
@@ -45,6 +46,7 @@ func RestakingKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {
 		authtypes.NewModuleAddress(committeetypes.ModuleName).String(),
 		restakingtestutil.NewMockEpochsKeeper(ctrl),
 		"hour",
+		address.NewBech32Codec("dittovaloper"),
 	)
 
 	ctx := sdk.NewContext(stateStore, cmtproto.Header{}, false, log.NewNopLogger())

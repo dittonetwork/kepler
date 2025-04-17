@@ -12,6 +12,8 @@ message GenesisState {
   // last_update is the last update information from L1.
   UpdateInfo last_update = 1 [(gogoproto.nullable) = false];
 
+  repeated Operator pending_validators = 2 [(gogoproto.nullable) = false];
+
   // params defines all the parameters of the module.
-  repeated Validator validators = 2 [(gogoproto.nullable) = false];
+  repeated Validator validators = 3 [(gogoproto.nullable) = false];
 }

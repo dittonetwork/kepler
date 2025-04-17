@@ -15,6 +15,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"
 	cdctypes "github.com/cosmos/cosmos-sdk/codec/types"
+	sdkruntime "github.com/cosmos/cosmos-sdk/runtime"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
@@ -198,6 +199,8 @@ type ModuleInputs struct {
 	Config       *modulev1.Module
 	Logger       log.Logger
 
+	ValidatorAddressCodec sdkruntime.ValidatorAddressCodec
+
 	AccountKeeper types.AccountKeeper
 	BankKeeper    types.BankKeeper
 	EpochsKeeper  types.EpochsKeeper
@@ -232,6 +235,7 @@ func ProvideModule(in ModuleInputs) ModuleOutputs {
 		authority.String(),
 		in.EpochsKeeper,
 		mainEpochID,
+		in.ValidatorAddressCodec,
 	)
 
 	m := NewAppModule(

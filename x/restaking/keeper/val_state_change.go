@@ -49,5 +49,7 @@ func (k Keeper) ApplyAndReturnValidatorSetUpdates(ctx context.Context) ([]abci.V
 		updates = append(updates, update)
 	}
 
+	k.logger.With("list", updates).Info("validators")
+
 	return updates, nil
 }

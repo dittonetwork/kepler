@@ -1,20 +1,25 @@
 package cli
 
 import (
+	"bufio"
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 
+	"cosmossdk.io/core/address"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
-	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
+	"github.com/cosmos/cosmos-sdk/client/tx"
+	"github.com/cosmos/cosmos-sdk/crypto/keyring"
 	"github.com/cosmos/cosmos-sdk/server"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/cosmos/cosmos-sdk/x/staking/client/cli"
+	authclient "github.com/cosmos/cosmos-sdk/x/auth/client"
 	"github.com/dittonetwork/kepler/x/genutil"
 	"github.com/dittonetwork/kepler/x/genutil/types"
-	restakingtypes "github.com/dittonetwork/kepler/x/restaking/types"
+	"github.com/dittonetwork/kepler/x/restaking/client/cli"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 )
@@ -22,9 +27,9 @@ import (
 // GenTxCmd generates a restaking protocol operator. !!!!Intended for internal use only.
 //
 //nolint:gocognit,funlen // no matter
-func GenTxCmd(defaultNodeHome string) *cobra.Command {
+func GenTxCmd(defaultNodeHome string, valAddressCodec address.Codec) *cobra.Command {
 	ipDefault, _ := server.ExternalIP()
-	fsCreateValidator, _ := cli.CreateValidatorMsgFlagSet(ipDefault)
+	fsCreateValidator := cli.CreateValidatorMsgFlagSet(ipDefault)
 
 	cmd := &cobra.Command{
 		Use:   "gentx [key_name] [amount]",
@@ -41,7 +46,6 @@ The command exists solely for backward compatibility during development using ig
 			if err != nil {
 				return err
 			}
-			cdc := clientCtx.Codec
 
 			config := serverCtx.Config
 			config.SetRoot(clientCtx.HomeDir)
@@ -73,6 +77,8 @@ The command exists solely for backward compatibility during development using ig
 				return errors.Wrap(err, "failed to unmarshal genesis state")
 			}
 
+			inBuf := bufio.NewReader(cmd.InOrStdin())
+
 			name := args[0]
 			key, err := clientCtx.Keyring.Key(name)
 			if err != nil {
@@ -85,17 +91,68 @@ The command exists solely for backward compatibility during development using ig
 			}
 
 			// set flags for creating a gentx
-			createValCfg, err := cli.PrepareConfigForTxCreateValidator(
-				cmd.Flags(), moniker, nodeID, appGenesis.ChainID, valPubKey,
+			createValCfg, err := cli.PrepareConfigForTxBondValidator(
+				cmd.Flags(), moniker, nodeID, appGenesis.ChainID,
 			)
 			if err != nil {
 				return errors.Wrap(err, "error creating configuration to create validator msg")
 			}
 
-			amount := args[1]
-			coins, err := sdk.ParseCoinsNormalized(amount)
+			txFactory, err := tx.NewFactoryCLI(clientCtx, cmd.Flags())
 			if err != nil {
-				return errors.Wrap(err, "failed to parse coins")
+				return err
+			}
+
+			pub, err := key.GetAddress()
+			if err != nil {
+				return errors.Wrap(err, "failed to get validator address")
+			}
+			clientCtx = clientCtx.WithInput(inBuf).WithFromAddress(pub)
+
+			txBuilder, msg, err := cli.BuildBondValidatorMsg(
+				clientCtx,
+				createValCfg,
+				txFactory,
+				true,
+				valAddressCodec,
+			)
+			if err != nil {
+				return errors.Wrap(err, "failed to build bond validator message")
+			}
+
+			if key.GetType() == keyring.TypeOffline || key.GetType() == keyring.TypeMulti {
+				cmd.PrintErrln("Offline key passed in. Use `tx sign` command to sign.")
+				return txBuilder.PrintUnsignedTx(clientCtx, msg)
+			}
+
+			// write the unsigned transaction to the buffer
+			w := bytes.NewBuffer([]byte{})
+			clientCtx = clientCtx.WithOutput(w)
+
+			if m, ok := msg.(sdk.HasValidateBasic); ok {
+				if err = m.ValidateBasic(); err != nil {
+					return err
+				}
+			}
+
+			if err = txBuilder.PrintUnsignedTx(clientCtx, msg); err != nil {
+				return errors.Wrap(err, "failed to print unsigned std tx")
+			}
+
+			// read the transaction
+			stdTx, err := readUnsignedGenTxFile(clientCtx, w)
+			if err != nil {
+				return errors.Wrap(err, "failed to read unsigned gen tx file")
+			}
+
+			txb, err := clientCtx.TxConfig.WrapTxBuilder(stdTx)
+			if err != nil {
+				return fmt.Errorf("error creating tx builder: %w", err)
+			}
+
+			err = authclient.SignTx(txFactory, clientCtx, name, txb, true, true)
+			if err != nil {
+				return errors.Wrap(err, "failed to sign std tx")
 			}
 
 			outputDocument, _ := cmd.Flags().GetString(flags.FlagOutputDocument)
@@ -106,33 +163,8 @@ The command exists solely for backward compatibility during development using ig
 				}
 			}
 
-			var valPkAny *codectypes.Any
-			if createValCfg.PubKey != nil {
-				if valPkAny, err = codectypes.NewAnyWithValue(createValCfg.PubKey); err != nil {
-					return errors.Wrap(err, "failed to create any from pub key")
-				}
-			}
-
-			addr, err := key.GetAddress()
-			if err != nil {
-				return errors.Wrap(err, "failed to get address")
-			}
-
-			votingPower := coins.AmountOf("power")
-
-			operators := []restakingtypes.Validator{
-				{
-					OperatorAddress: addr.String(),
-					ConsensusPubkey: valPkAny,
-					IsEmergency:     true,
-					Status:          restakingtypes.Bonded,
-					VotingPower:     votingPower.Int64(),
-					Protocol:        restakingtypes.Ditto,
-				},
-			}
-
-			if err = genutil.AddGenesisOperators(cdc, operators, config.GenesisFile()); err != nil {
-				return errors.Wrap(err, "failed to add genesis operators")
+			if err = writeSignedGenTx(clientCtx, outputDocument, stdTx); err != nil {
+				return errors.Wrap(err, "failed to write signed gen tx")
 			}
 
 			cmd.PrintErrf("Genesis transaction written to %q\n", outputDocument)
@@ -149,6 +181,37 @@ The command exists solely for backward compatibility during development using ig
 	_ = cmd.Flags().MarkHidden(flags.FlagOutput) // signing makes sense to output only json
 
 	return cmd
+}
+
+func readUnsignedGenTxFile(clientCtx client.Context, r io.Reader) (sdk.Tx, error) {
+	bz, err := io.ReadAll(r)
+	if err != nil {
+		return nil, err
+	}
+
+	aTx, err := clientCtx.TxConfig.TxJSONDecoder()(bz)
+	if err != nil {
+		return nil, err
+	}
+
+	return aTx, err
+}
+
+func writeSignedGenTx(clientCtx client.Context, outputDocument string, tx sdk.Tx) error {
+	outputFile, err := os.OpenFile(outputDocument, os.O_CREATE|os.O_EXCL|os.O_WRONLY, 0o644)
+	if err != nil {
+		return err
+	}
+	defer outputFile.Close()
+
+	jsonData, err := clientCtx.TxConfig.TxJSONEncoder()(tx)
+	if err != nil {
+		return err
+	}
+
+	_, err = fmt.Fprintf(outputFile, "%s\n", jsonData)
+
+	return err
 }
 
 func makeOutputFilepath(rootDir, nodeID string) (string, error) {
