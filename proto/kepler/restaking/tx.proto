@@ -6,6 +6,7 @@ import "cosmos/msg/v1/msg.proto";
 import "cosmos_proto/cosmos.proto";
 import "gogoproto/gogo.proto";
 import "kepler/restaking/update.proto";
+import "kepler/restaking/validator.proto";
 
 option go_package = "github.com/dittonetwork/kepler/x/restaking/types";
 
@@ -25,8 +26,16 @@ message MsgBondValidator {
   option (amino.name) = "kepler/x/restaking/MsgBondValidator";
   option (cosmos.msg.v1.signer) = "owner";
 
+  option (gogoproto.equal) = false;
+  option (gogoproto.goproto_getters) = false;
+
   // owner is the address of the validator operator.
-  string owner = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string owner = 1 [(cosmos_proto.scalar) = "cosmos.ValidatorAddressString"];
+
+  Description description = 2 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
 }
 
 // MsgBondValidatorResponse is the response type for the Msg/BondValidator.

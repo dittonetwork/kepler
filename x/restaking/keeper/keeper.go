@@ -3,6 +3,7 @@ package keeper
 import (
 	"fmt"
 
+	addresscodec "cosmossdk.io/core/address"
 	"cosmossdk.io/log"
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/dittonetwork/kepler/x/restaking/types"
@@ -10,16 +11,18 @@ import (
 
 type (
 	Keeper struct {
-		cdc    codec.BinaryCodec
-		logger log.Logger
-		hooks  types.RestakingHooks
+		cdc                   codec.BinaryCodec
+		logger                log.Logger
+		hooks                 types.RestakingHooks
+		validatorAddressCodec addresscodec.Codec
 
 		// the address capable of executing a MsgUpdateValidatorsSet message. Typically, this
 		// should be the x/committee module account.
 		authority string
 
 		// keeper dependencies
-		epochs types.EpochsKeeper
+		epochs   types.EpochsKeeper
+		accounts types.AccountKeeper
 
 		repository  types.Repository
 		mainEpochID string
@@ -34,6 +37,7 @@ func NewKeeper(
 	authority string,
 	epochs types.EpochsKeeper,
 	mainEpochID string,
+	validatorAddressCodec addresscodec.Codec,
 ) *Keeper {
 	// ensure that authority is a valid AccAddress
 	if _, err := ak.AddressCodec().StringToBytes(authority); err != nil {
@@ -41,12 +45,14 @@ func NewKeeper(
 	}
 
 	return &Keeper{
-		cdc:         cdc,
-		logger:      logger,
-		authority:   authority,
-		repository:  repo,
-		epochs:      epochs,
-		mainEpochID: mainEpochID,
+		cdc:                   cdc,
+		logger:                logger,
+		authority:             authority,
+		repository:            repo,
+		epochs:                epochs,
+		accounts:              ak,
+		mainEpochID:           mainEpochID,
+		validatorAddressCodec: validatorAddressCodec,
 	}
 }
 

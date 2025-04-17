@@ -7,10 +7,11 @@ import (
 )
 
 const (
-	ErrCodeInvalidSigner   = 1100
-	ErrCodeValidatorUpdate = 1101
-	ErrCodeGenesisInit     = 1102
-	ErrCodeGenesisExport   = 1103
+	ErrCodeInvalidSigner     = 1100
+	ErrCodeValidatorUpdate   = 1101
+	ErrCodeGenesisInit       = 1102
+	ErrCodeGenesisExport     = 1103
+	ErrCodeNoPendingOperator = 1104
 )
 
 var (
@@ -25,4 +26,7 @@ var (
 
 	// ErrGenesisExport defines an error when the genesis state cannot be exported.
 	ErrGenesisExport = sdkerrors.Register(ModuleName, ErrCodeGenesisExport, "genesis export failed")
+
+	// ErrNoPendingOperator defines an error when the no pending operator is found.
+	ErrNoPendingOperator = sdkerrors.Register(ModuleName, ErrCodeNoPendingOperator, "no pending operator")
 )

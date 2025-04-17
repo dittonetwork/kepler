@@ -1,6 +1,7 @@
 syntax = "proto3";
 package kepler.restaking;
 
+import "amino/amino.proto";
 import "cosmos_proto/cosmos.proto";
 import "gogoproto/gogo.proto";
 import "google/protobuf/any.proto";
@@ -64,6 +65,11 @@ message Validator {
 
   // protocol is the protocol of the restaking module
   Protocol protocol = 7;
+
+  Description description = 8 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
 }
 
 // BondStatus is the status of a validator

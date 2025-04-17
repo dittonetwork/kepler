@@ -17,14 +17,16 @@ import (
 )
 
 var (
-	md_MsgBondValidator       protoreflect.MessageDescriptor
-	fd_MsgBondValidator_owner protoreflect.FieldDescriptor
+	md_MsgBondValidator             protoreflect.MessageDescriptor
+	fd_MsgBondValidator_owner       protoreflect.FieldDescriptor
+	fd_MsgBondValidator_description protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_kepler_restaking_tx_proto_init()
 	md_MsgBondValidator = File_kepler_restaking_tx_proto.Messages().ByName("MsgBondValidator")
 	fd_MsgBondValidator_owner = md_MsgBondValidator.Fields().ByName("owner")
+	fd_MsgBondValidator_description = md_MsgBondValidator.Fields().ByName("description")
 }
 
 var _ protoreflect.Message = (*fastReflection_MsgBondValidator)(nil)
@@ -98,6 +100,12 @@ func (x *fastReflection_MsgBondValidator) Range(f func(protoreflect.FieldDescrip
 			return
 		}
 	}
+	if x.Description != nil {
+		value := protoreflect.ValueOfMessage(x.Description.ProtoReflect())
+		if !f(fd_MsgBondValidator_description, value) {
+			return
+		}
+	}
 }
 
 // Has reports whether a field is populated.
@@ -115,6 +123,8 @@ func (x *fastReflection_MsgBondValidator) Has(fd protoreflect.FieldDescriptor) b
 	switch fd.FullName() {
 	case "kepler.restaking.MsgBondValidator.owner":
 		return x.Owner != ""
+	case "kepler.restaking.MsgBondValidator.description":
+		return x.Description != nil
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.MsgBondValidator"))
@@ -133,6 +143,8 @@ func (x *fastReflection_MsgBondValidator) Clear(fd protoreflect.FieldDescriptor)
 	switch fd.FullName() {
 	case "kepler.restaking.MsgBondValidator.owner":
 		x.Owner = ""
+	case "kepler.restaking.MsgBondValidator.description":
+		x.Description = nil
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.MsgBondValidator"))
@@ -152,6 +164,9 @@ func (x *fastReflection_MsgBondValidator) Get(descriptor protoreflect.FieldDescr
 	case "kepler.restaking.MsgBondValidator.owner":
 		value := x.Owner
 		return protoreflect.ValueOfString(value)
+	case "kepler.restaking.MsgBondValidator.description":
+		value := x.Description
+		return protoreflect.ValueOfMessage(value.ProtoReflect())
 	default:
 		if descriptor.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.MsgBondValidator"))
@@ -174,6 +189,8 @@ func (x *fastReflection_MsgBondValidator) Set(fd protoreflect.FieldDescriptor, v
 	switch fd.FullName() {
 	case "kepler.restaking.MsgBondValidator.owner":
 		x.Owner = value.Interface().(string)
+	case "kepler.restaking.MsgBondValidator.description":
+		x.Description = value.Message().Interface().(*Description)
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.MsgBondValidator"))
@@ -194,6 +211,11 @@ func (x *fastReflection_MsgBondValidator) Set(fd protoreflect.FieldDescriptor, v
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgBondValidator) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
+	case "kepler.restaking.MsgBondValidator.description":
+		if x.Description == nil {
+			x.Description = new(Description)
+		}
+		return protoreflect.ValueOfMessage(x.Description.ProtoReflect())
 	case "kepler.restaking.MsgBondValidator.owner":
 		panic(fmt.Errorf("field owner of message kepler.restaking.MsgBondValidator is not mutable"))
 	default:
@@ -211,6 +233,9 @@ func (x *fastReflection_MsgBondValidator) NewField(fd protoreflect.FieldDescript
 	switch fd.FullName() {
 	case "kepler.restaking.MsgBondValidator.owner":
 		return protoreflect.ValueOfString("")
+	case "kepler.restaking.MsgBondValidator.description":
+		m := new(Description)
+		return protoreflect.ValueOfMessage(m.ProtoReflect())
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.MsgBondValidator"))
@@ -284,6 +309,10 @@ func (x *fastReflection_MsgBondValidator) ProtoMethods() *protoiface.Methods {
 		if l > 0 {
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
+		if x.Description != nil {
+			l = options.Size(x.Description)
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
 		if x.unknownFields != nil {
 			n += len(x.unknownFields)
 		}
@@ -312,6 +341,20 @@ func (x *fastReflection_MsgBondValidator) ProtoMethods() *protoiface.Methods {
 		if x.unknownFields != nil {
 			i -= len(x.unknownFields)
 			copy(dAtA[i:], x.unknownFields)
+		}
+		if x.Description != nil {
+			encoded, err := options.Marshal(x.Description)
+			if err != nil {
+				return protoiface.MarshalOutput{
+					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+					Buf:               input.Buf,
+				}, err
+			}
+			i -= len(encoded)
+			copy(dAtA[i:], encoded)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+			i--
+			dAtA[i] = 0x12
 		}
 		if len(x.Owner) > 0 {
 			i -= len(x.Owner)
@@ -400,6 +443,42 @@ func (x *fastReflection_MsgBondValidator) ProtoMethods() *protoiface.Methods {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
 				x.Owner = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 2:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Description", wireType)
+				}
+				var msglen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					msglen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if msglen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + msglen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if x.Description == nil {
+					x.Description = &Description{}
+				}
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.Description); err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
 				iNdEx = postIndex
 			default:
 				iNdEx = preIndex
@@ -1805,7 +1884,8 @@ type MsgBondValidator struct {
 	unknownFields protoimpl.UnknownFields
 
 	// owner is the address of the validator operator.
-	Owner string `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner       string       `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
+	Description *Description `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
 }
 
 func (x *MsgBondValidator) Reset() {
@@ -1833,6 +1913,13 @@ func (x *MsgBondValidator) GetOwner() string {
 		return x.Owner
 	}
 	return ""
+}
+
+func (x *MsgBondValidator) GetDescription() *Description {
+	if x != nil {
+		return x.Description
+	}
+	return nil
 }
 
 // MsgBondValidatorResponse is the response type for the Msg/BondValidator.
@@ -1957,11 +2044,19 @@ var file_kepler_restaking_tx_proto_rawDesc = []byte{
 	0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x14, 0x67, 0x6f, 0x67, 0x6f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f,
 	0x67, 0x6f, 0x67, 0x6f, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1d, 0x6b, 0x65, 0x70, 0x6c,
 	0x65, 0x72, 0x2f, 0x72, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2f, 0x75, 0x70, 0x64,
-	0x61, 0x74, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x76, 0x0a, 0x10, 0x4d, 0x73, 0x67,
-	0x42, 0x6f, 0x6e, 0x64, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f, 0x72, 0x12, 0x2e, 0x0a,
-	0x05, 0x6f, 0x77, 0x6e, 0x65, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x18, 0xd2, 0xb4,
-	0x2d, 0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73,
-	0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x52, 0x05, 0x6f, 0x77, 0x6e, 0x65, 0x72, 0x3a, 0x32, 0x82,
+	0x61, 0x74, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x20, 0x6b, 0x65, 0x70, 0x6c, 0x65,
+	0x72, 0x2f, 0x72, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2f, 0x76, 0x61, 0x6c, 0x69,
+	0x64, 0x61, 0x74, 0x6f, 0x72, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0xd3, 0x01, 0x0a, 0x10,
+	0x4d, 0x73, 0x67, 0x42, 0x6f, 0x6e, 0x64, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f, 0x72,
+	0x12, 0x37, 0x0a, 0x05, 0x6f, 0x77, 0x6e, 0x65, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42,
+	0x21, 0xd2, 0xb4, 0x2d, 0x1d, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x56, 0x61, 0x6c, 0x69,
+	0x64, 0x61, 0x74, 0x6f, 0x72, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x53, 0x74, 0x72, 0x69,
+	0x6e, 0x67, 0x52, 0x05, 0x6f, 0x77, 0x6e, 0x65, 0x72, 0x12, 0x4a, 0x0a, 0x0b, 0x64, 0x65, 0x73,
+	0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1d,
+	0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x72, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e,
+	0x67, 0x2e, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x42, 0x09, 0xc8,
+	0xde, 0x1f, 0x00, 0xa8, 0xe7, 0xb0, 0x2a, 0x01, 0x52, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69,
+	0x70, 0x74, 0x69, 0x6f, 0x6e, 0x3a, 0x3a, 0x88, 0xa0, 0x1f, 0x00, 0xe8, 0xa0, 0x1f, 0x00, 0x82,
 	0xe7, 0xb0, 0x2a, 0x05, 0x6f, 0x77, 0x6e, 0x65, 0x72, 0x8a, 0xe7, 0xb0, 0x2a, 0x23, 0x6b, 0x65,
 	0x70, 0x6c, 0x65, 0x72, 0x2f, 0x78, 0x2f, 0x72, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67,
 	0x2f, 0x4d, 0x73, 0x67, 0x42, 0x6f, 0x6e, 0x64, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f,
@@ -2032,21 +2127,23 @@ var file_kepler_restaking_tx_proto_goTypes = []interface{}{
 	(*MsgBondValidatorResponse)(nil),       // 1: kepler.restaking.MsgBondValidatorResponse
 	(*MsgUpdateValidatorsSet)(nil),         // 2: kepler.restaking.MsgUpdateValidatorsSet
 	(*MsgUpdateValidatorsSetResponse)(nil), // 3: kepler.restaking.MsgUpdateValidatorsSetResponse
-	(*Operator)(nil),                       // 4: kepler.restaking.Operator
-	(*UpdateInfo)(nil),                     // 5: kepler.restaking.UpdateInfo
+	(*Description)(nil),                    // 4: kepler.restaking.Description
+	(*Operator)(nil),                       // 5: kepler.restaking.Operator
+	(*UpdateInfo)(nil),                     // 6: kepler.restaking.UpdateInfo
 }
 var file_kepler_restaking_tx_proto_depIdxs = []int32{
-	4, // 0: kepler.restaking.MsgUpdateValidatorsSet.operators:type_name -> kepler.restaking.Operator
-	5, // 1: kepler.restaking.MsgUpdateValidatorsSet.info:type_name -> kepler.restaking.UpdateInfo
-	0, // 2: kepler.restaking.Msg.BondValidator:input_type -> kepler.restaking.MsgBondValidator
-	2, // 3: kepler.restaking.Msg.UpdateValidatorsSet:input_type -> kepler.restaking.MsgUpdateValidatorsSet
-	1, // 4: kepler.restaking.Msg.BondValidator:output_type -> kepler.restaking.MsgBondValidatorResponse
-	3, // 5: kepler.restaking.Msg.UpdateValidatorsSet:output_type -> kepler.restaking.MsgUpdateValidatorsSetResponse
-	4, // [4:6] is the sub-list for method output_type
-	2, // [2:4] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	4, // 0: kepler.restaking.MsgBondValidator.description:type_name -> kepler.restaking.Description
+	5, // 1: kepler.restaking.MsgUpdateValidatorsSet.operators:type_name -> kepler.restaking.Operator
+	6, // 2: kepler.restaking.MsgUpdateValidatorsSet.info:type_name -> kepler.restaking.UpdateInfo
+	0, // 3: kepler.restaking.Msg.BondValidator:input_type -> kepler.restaking.MsgBondValidator
+	2, // 4: kepler.restaking.Msg.UpdateValidatorsSet:input_type -> kepler.restaking.MsgUpdateValidatorsSet
+	1, // 5: kepler.restaking.Msg.BondValidator:output_type -> kepler.restaking.MsgBondValidatorResponse
+	3, // 6: kepler.restaking.Msg.UpdateValidatorsSet:output_type -> kepler.restaking.MsgUpdateValidatorsSetResponse
+	5, // [5:7] is the sub-list for method output_type
+	3, // [3:5] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_kepler_restaking_tx_proto_init() }
@@ -2055,6 +2152,7 @@ func file_kepler_restaking_tx_proto_init() {
 		return
 	}
 	file_kepler_restaking_update_proto_init()
+	file_kepler_restaking_validator_proto_init()
 	if !protoimpl.UnsafeEnabled {
 		file_kepler_restaking_tx_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MsgBondValidator); i {
