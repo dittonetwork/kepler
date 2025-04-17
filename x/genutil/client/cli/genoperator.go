@@ -58,9 +58,10 @@ func GetGenesisOperatorCmd() *cobra.Command {
 				return err
 			}
 
-			_, err = fmt.Fprintf(os.Stderr, "%s\n", out)
+			//nolint:forbidigo // no matter
+			fmt.Printf("%s\n", out)
 
-			return err
+			return nil
 		},
 	}
 
