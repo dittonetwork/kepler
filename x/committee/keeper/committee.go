@@ -54,7 +54,7 @@ func (k Keeper) CreateCommittee(ctx sdk.Context, epoch int64) (types.Committee, 
 		return types.Committee{}, sdkerrors.Wrap(err, "failed to set last epoch")
 	}
 
-	k.Logger(ctx).With("committee", committee).Info("committee created")
+	k.logger.With("committee", committee).Info("committee created")
 
 	return committee, nil
 }
@@ -66,6 +66,9 @@ func (k Keeper) GetMultisigAddress(ctx sdk.Context, executors []types.Executor) 
 		if err != nil {
 			return "", err
 		}
+
+		k.logger.With("address", addr).Info("get account")
+
 		acc := k.account.GetAccount(ctx, addr)
 
 		var pk sdksecp.PubKey
@@ -93,8 +96,14 @@ func (k Keeper) createEmergencyCommittee(ctx sdk.Context, epoch int64) (types.Co
 
 	committeeExecutors := make([]types.Executor, len(emergencyValidators))
 	for i, validator := range emergencyValidators {
+		var valAddr []byte
+		valAddr, err = k.valAddressCodec.StringToBytes(validator.OperatorAddress)
+		if err != nil {
+			return types.Committee{}, sdkerrors.Wrap(err, "failed to convert validator address")
+		}
+
 		committeeExecutors[i] = types.Executor{
-			Address:     validator.OperatorAddress,
+			Address:     sdk.AccAddress(valAddr).String(),
 			VotingPower: validator.VotingPower,
 		}
 	}

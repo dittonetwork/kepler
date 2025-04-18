@@ -10,6 +10,7 @@ import (
 	cmtproto "github.com/cometbft/cometbft/proto/tendermint/types"
 	dbm "github.com/cosmos/cosmos-db"
 	"github.com/cosmos/cosmos-sdk/codec"
+	"github.com/cosmos/cosmos-sdk/codec/address"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
@@ -37,19 +38,20 @@ func CommitteeKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {
 	restakingKeeper := committeemock.NewMockRestakingKeeper(ctrl)
 	accountKeeper := committeemock.NewMockAccountKeeper(ctrl)
 	repo := committeemock.NewMockRepository(ctrl)
+	ctx := sdk.NewContext(stateStore, cmtproto.Header{}, false, log.NewNopLogger())
 
 	k := keeper.NewKeeper(
 		authority.String(),
 		accountKeeper,
 		restakingKeeper,
 		repo,
+		ctx.Logger(),
 		nil,
 		codec.NewLegacyAmino(),
 		codec.NewProtoCodec(codectypes.NewInterfaceRegistry()),
 		"hour",
+		address.NewBech32Codec("dittovaloper"),
 	)
-
-	ctx := sdk.NewContext(stateStore, cmtproto.Header{}, false, log.NewNopLogger())
 
 	// Initialize params
 	if err := k.SetParams(ctx, types.DefaultParams()); err != nil {

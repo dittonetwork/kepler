@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	addresscodec "cosmossdk.io/core/address"
 	"cosmossdk.io/log"
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/codec"
@@ -31,9 +32,11 @@ type CommitteeKeeper interface {
 }
 
 type Keeper struct {
-	cdc    codec.Codec
-	amino  *codec.LegacyAmino
-	router baseapp.MessageRouter
+	cdc             codec.Codec
+	amino           *codec.LegacyAmino
+	router          baseapp.MessageRouter
+	valAddressCodec addresscodec.Codec
+	logger          log.Logger
 
 	repository types.Repository
 
@@ -52,24 +55,28 @@ func NewKeeper(
 	account types.AccountKeeper,
 	restaking types.RestakingKeeper,
 	repo types.Repository,
+	logger log.Logger,
 	router baseapp.MessageRouter,
 	amino *codec.LegacyAmino,
 	cdc codec.Codec,
 	epochMainID string,
+	valAddressCodec addresscodec.Codec,
 ) Keeper {
 	if _, err := sdk.AccAddressFromBech32(authority); err != nil {
 		panic(fmt.Sprintf("invalid authority address: %s", authority))
 	}
 
 	k := Keeper{
-		authority:   authority,
-		account:     account,
-		restaking:   restaking,
-		repository:  repo,
-		router:      router,
-		amino:       amino,
-		cdc:         cdc,
-		epochMainID: epochMainID,
+		authority:       authority,
+		account:         account,
+		restaking:       restaking,
+		repository:      repo,
+		router:          router,
+		logger:          logger,
+		amino:           amino,
+		cdc:             cdc,
+		epochMainID:     epochMainID,
+		valAddressCodec: valAddressCodec,
 	}
 
 	return k
@@ -93,8 +100,6 @@ func (k Keeper) GetAuthority() string {
 }
 
 // Logger returns a module-specific logger.
-func (k Keeper) Logger(ctx context.Context) log.Logger {
-	sdkCtx := sdk.UnwrapSDKContext(ctx)
-
-	return sdkCtx.Logger().With("module", fmt.Sprintf("x/%s", types.ModuleName))
+func (k Keeper) Logger() log.Logger {
+	return k.logger.With("module", fmt.Sprintf("x/%s", types.ModuleName))
 }
