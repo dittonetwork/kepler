@@ -27,7 +27,7 @@ import (
 // GenTxCmd generates a restaking protocol operator. !!!!Intended for internal use only.
 //
 //nolint:gocognit,funlen // no matter
-func GenTxCmd(defaultNodeHome string, valAddressCodec address.Codec) *cobra.Command {
+func GenTxCmd(defaultNodeHome string, accAddressCodec address.Codec) *cobra.Command {
 	ipDefault, _ := server.ExternalIP()
 	fsCreateValidator := cli.CreateValidatorMsgFlagSet(ipDefault)
 
@@ -114,7 +114,7 @@ The command exists solely for backward compatibility during development using ig
 				createValCfg,
 				txFactory,
 				true,
-				valAddressCodec,
+				accAddressCodec,
 			)
 			if err != nil {
 				return errors.Wrap(err, "failed to build bond validator message")
