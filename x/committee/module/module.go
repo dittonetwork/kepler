@@ -8,10 +8,12 @@ import (
 	"cosmossdk.io/core/appmodule"
 	"cosmossdk.io/core/store"
 	"cosmossdk.io/depinject"
+	"cosmossdk.io/log"
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"
 	cdctypes "github.com/cosmos/cosmos-sdk/codec/types"
+	sdkruntime "github.com/cosmos/cosmos-sdk/runtime"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
@@ -190,6 +192,9 @@ type ModuleInputs struct {
 	Cdc          codec.Codec
 	Amino        *codec.LegacyAmino
 	Config       *modulev1.Module
+	Logger       log.Logger
+
+	ValidatorAddressCodec sdkruntime.ValidatorAddressCodec
 
 	AccountKeeper types.AccountKeeper
 	BankKeeper    types.BankKeeper
@@ -224,10 +229,12 @@ func ProvideModule(in ModuleInputs) ModuleOutputs {
 		in.AccountKeeper,
 		in.RestakingKeeper,
 		repo,
+		in.Logger,
 		in.Router,
 		in.Amino,
 		in.Cdc,
 		mainEpochID,
+		in.ValidatorAddressCodec,
 	)
 	m := NewAppModule(
 		in.Cdc,

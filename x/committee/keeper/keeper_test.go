@@ -4,15 +4,18 @@ import (
 	"fmt"
 	"testing"
 
+	addresscodec "cosmossdk.io/core/address"
 	storetypes "cosmossdk.io/store/types"
 	"github.com/cometbft/cometbft/crypto/sr25519"
 	cmtproto "github.com/cometbft/cometbft/proto/tendermint/types"
 	cmttime "github.com/cometbft/cometbft/types/time"
 	"github.com/cosmos/cosmos-sdk/baseapp"
+	"github.com/cosmos/cosmos-sdk/codec/address"
 	"github.com/cosmos/cosmos-sdk/testutil"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	moduletestutil "github.com/cosmos/cosmos-sdk/types/module/testutil"
 	"github.com/dittonetwork/kepler/api/kepler/committee"
+	"github.com/dittonetwork/kepler/testutil/sample"
 	"github.com/dittonetwork/kepler/x/committee/keeper"
 	committeemodule "github.com/dittonetwork/kepler/x/committee/module"
 	committeetestutil "github.com/dittonetwork/kepler/x/committee/testutil"
@@ -24,15 +27,19 @@ import (
 type TestSuite struct {
 	suite.Suite
 
-	ctx         sdk.Context
-	queryClient committee.QueryClient
-	msgServer   types.MsgServer
-	keeper      keeper.Keeper
-	authority   string
+	ctx             sdk.Context
+	queryClient     committee.QueryClient
+	msgServer       types.MsgServer
+	keeper          keeper.Keeper
+	authority       string
+	valAddressCodec addresscodec.Codec
 
 	accountKeeper   *committeetestutil.MockAccountKeeper
 	restakingKeeper *committeetestutil.MockRestakingKeeper
 	repo            *committeetestutil.MockRepository
+
+	alice sample.Account
+	bob   sample.Account
 }
 
 func TestNewKeeper(t *testing.T) {
@@ -54,18 +61,25 @@ func (s *TestSuite) SetupTest() {
 
 	repo := committeetestutil.NewMockRepository(ctrl)
 
+	// Set sample accounts
+	s.alice = sample.GetAccount("alice")
+	s.bob = sample.GetAccount("bob")
+
 	// Generate Bech32 encoded address
 	s.authority = sdk.MustBech32ifyAddressBytes(sdk.GetConfig().GetBech32AccountAddrPrefix(), pubKey.Address())
+	s.valAddressCodec = address.NewBech32Codec("cosmosvaloper")
 
 	committeeKeeper := keeper.NewKeeper(
 		s.authority,
 		accountKeeper,
 		restakingKeeper,
 		repo,
+		ctx.Logger(),
 		nil,
 		encCfg.Amino,
 		encCfg.Codec,
 		"hour",
+		s.valAddressCodec,
 	)
 
 	queryHelper := baseapp.NewQueryServerTestHelper(ctx, encCfg.InterfaceRegistry)
@@ -81,6 +95,6 @@ func (s *TestSuite) SetupTest() {
 
 	s.Require().Equal(
 		ctx.Logger().With("module", fmt.Sprintf("x/%s", types.ModuleName)),
-		s.keeper.Logger(ctx),
+		s.keeper.Logger(),
 	)
 }

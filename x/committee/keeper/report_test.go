@@ -6,6 +6,7 @@ import (
 	"cosmossdk.io/errors"
 	storetypes "cosmossdk.io/store/types"
 	"github.com/cosmos/cosmos-sdk/codec"
+	"github.com/cosmos/cosmos-sdk/codec/address"
 	cdctypes "github.com/cosmos/cosmos-sdk/codec/types"
 	"github.com/cosmos/cosmos-sdk/testutil"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -53,10 +54,12 @@ func (suite *ReportTestSuite) SetupTest() {
 		nil, // executor keeper
 		nil, // restaking keeper
 		suite.repository,
+		suite.ctx.Logger(),
 		nil,                    // router
 		codec.NewLegacyAmino(), // amino codec
 		codec.NewProtoCodec(cdctypes.NewInterfaceRegistry()), // proto codec
 		"hour",
+		address.NewBech32Codec("dittovaloper"),
 	)
 }
 

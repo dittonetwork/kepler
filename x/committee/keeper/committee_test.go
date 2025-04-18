@@ -99,47 +99,43 @@ func (s *TestSuite) TestCreateCommittee() {
 					GetActiveEmergencyValidators(gomock.Any()).
 					Return([]restakingtypes.Validator{
 						{
-							OperatorAddress: "cosmos1kkyr80lkuku58h7e2v84egemscmem304mdra4f",
+							OperatorAddress: s.alice.ValAddress.String(),
 							VotingPower:     10,
 						},
 						{
-							OperatorAddress: "cosmos1w3k88z6h0q5nsylh68xxdjh909qch82dlp3g5e",
+							OperatorAddress: s.bob.ValAddress.String(),
 							VotingPower:     10,
 						},
 					}, nil)
 
 				executors := []types.Executor{
 					{
-						Address:     "cosmos1kkyr80lkuku58h7e2v84egemscmem304mdra4f",
+						Address:     s.alice.Address.String(),
 						VotingPower: 10,
 					},
 					{
-						Address:     "cosmos1w3k88z6h0q5nsylh68xxdjh909qch82dlp3g5e",
+						Address:     s.bob.Address.String(),
 						VotingPower: 10,
 					},
 				}
 
-				var pk1 secp256k1.PubKey
-				pk1.Key = []byte{3, 35, 137, 5, 237, 152, 146, 214, 9, 136, 235, 5, 3, 177, 22, 250, 12, 125, 38, 196, 108, 145, 211, 192, 1, 55, 245, 134, 223, 206, 52, 19, 14}
-				pubKey1, err := prototypes.NewAnyWithValue(&pk1)
+				pubKeyAlice, err := prototypes.NewAnyWithValue(s.alice.PubKey)
 				s.Require().NoError(err)
 				s.accountKeeper.EXPECT().
 					GetAccount(gomock.Any(), sdk.MustAccAddressFromBech32(executors[0].Address)).
 					Return(&authtypes.BaseAccount{
 						Address:       executors[0].Address,
-						PubKey:        pubKey1,
+						PubKey:        pubKeyAlice,
 						AccountNumber: uint64(0),
 					}).Times(2)
 
-				var pk2 secp256k1.PubKey
-				pk2.Key = []byte{3, 251, 110, 231, 205, 75, 69, 84, 2, 243, 138, 31, 184, 101, 131, 102, 110, 80, 73, 82, 234, 132, 253, 101, 117, 228, 30, 163, 41, 134, 159, 196, 72}
-				pubKey2, err := prototypes.NewAnyWithValue(&pk2)
+				pubKeyBob, err := prototypes.NewAnyWithValue(s.bob.PubKey)
 				s.Require().NoError(err)
 				s.accountKeeper.EXPECT().
 					GetAccount(gomock.Any(), sdk.MustAccAddressFromBech32(executors[1].Address)).
 					Return(&authtypes.BaseAccount{
 						Address:       executors[1].Address,
-						PubKey:        pubKey2,
+						PubKey:        pubKeyBob,
 						AccountNumber: uint64(1),
 					}).Times(2)
 
@@ -179,47 +175,43 @@ func (s *TestSuite) TestCreateCommittee() {
 					GetActiveEmergencyValidators(gomock.Any()).
 					Return([]restakingtypes.Validator{
 						{
-							OperatorAddress: "cosmos1kkyr80lkuku58h7e2v84egemscmem304mdra4f",
+							OperatorAddress: s.alice.ValAddress.String(),
 							VotingPower:     20,
 						},
 						{
-							OperatorAddress: "cosmos1w3k88z6h0q5nsylh68xxdjh909qch82dlp3g5e",
+							OperatorAddress: s.bob.ValAddress.String(),
 							VotingPower:     20,
 						},
 					}, nil)
 
 				executors := []types.Executor{
 					{
-						Address:     "cosmos1kkyr80lkuku58h7e2v84egemscmem304mdra4f",
+						Address:     s.alice.Address.String(),
 						VotingPower: 20,
 					},
 					{
-						Address:     "cosmos1w3k88z6h0q5nsylh68xxdjh909qch82dlp3g5e",
+						Address:     s.bob.Address.String(),
 						VotingPower: 20,
 					},
 				}
 
-				var pk1 secp256k1.PubKey
-				pk1.Key = []byte{3, 35, 137, 5, 237, 152, 146, 214, 9, 136, 235, 5, 3, 177, 22, 250, 12, 125, 38, 196, 108, 145, 211, 192, 1, 55, 245, 134, 223, 206, 52, 19, 14}
-				pubKey1, err := prototypes.NewAnyWithValue(&pk1)
+				pubKeyAlice, err := prototypes.NewAnyWithValue(s.alice.PubKey)
 				s.Require().NoError(err)
 				s.accountKeeper.EXPECT().
 					GetAccount(gomock.Any(), sdk.MustAccAddressFromBech32(executors[0].Address)).
 					Return(&authtypes.BaseAccount{
 						Address:       executors[0].Address,
-						PubKey:        pubKey1,
+						PubKey:        pubKeyAlice,
 						AccountNumber: uint64(0),
 					}).Times(2)
 
-				var pk2 secp256k1.PubKey
-				pk2.Key = []byte{3, 251, 110, 231, 205, 75, 69, 84, 2, 243, 138, 31, 184, 101, 131, 102, 110, 80, 73, 82, 234, 132, 253, 101, 117, 228, 30, 163, 41, 134, 159, 196, 72}
-				pubKey2, err := prototypes.NewAnyWithValue(&pk2)
+				pubKeyBob, err := prototypes.NewAnyWithValue(s.bob.PubKey)
 				s.Require().NoError(err)
 				s.accountKeeper.EXPECT().
 					GetAccount(gomock.Any(), sdk.MustAccAddressFromBech32(executors[1].Address)).
 					Return(&authtypes.BaseAccount{
 						Address:       executors[1].Address,
-						PubKey:        pubKey2,
+						PubKey:        pubKeyBob,
 						AccountNumber: uint64(1),
 					}).Times(2)
 
@@ -296,12 +288,12 @@ func (s *TestSuite) TestGetMultisigAddress() {
 					var pk sdksecp.PubKey
 					pk.Key = make([]byte, len(p))
 					copy(pk.Key[:], p)
-					addresses = append(addresses, sdk.AccAddress(pk.Bytes()))
+					addresses = append(addresses, pk.Bytes())
 
-					any, err := prototypes.NewAnyWithValue(&pk)
+					anyPk, err := prototypes.NewAnyWithValue(&pk)
 					s.Require().NoError(err)
 
-					anyPubKeys = append(anyPubKeys, any)
+					anyPubKeys = append(anyPubKeys, anyPk)
 				}
 				m := multisig.LegacyAminoPubKey{
 					Threshold: 3,

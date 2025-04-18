@@ -57,7 +57,7 @@ func (k Keeper) BeginBlocker(ctx context.Context) error {
 
 				if err := k.AfterEpochEnd(ctx, epochInfo.Identifier, epochInfo.CurrentEpoch); err != nil {
 					// purposely ignoring the error here not to halt the chain if the hook fails
-					k.Logger().Error(
+					k.Logger().With("error", err).Error(
 						fmt.Sprintf(
 							"Error after epoch end with identifier %s epoch number %d",
 							epochInfo.Identifier,
