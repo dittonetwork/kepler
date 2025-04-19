@@ -1,7 +1,6 @@
 package keeper
 
 import (
-	"context"
 	"fmt"
 
 	"github.com/dittonetwork/kepler/x/epochs/types"
@@ -11,13 +10,11 @@ import (
 )
 
 // BeginBlocker runs at the start of every block.
-func (k Keeper) BeginBlocker(ctx context.Context) error {
+func (k Keeper) BeginBlocker(ctx sdk.Context) error {
 	start := telemetry.Now()
 	defer telemetry.ModuleMeasureSince(types.ModuleName, start, telemetry.MetricKeyBeginBlocker)
 
-	sdkCtx := sdk.UnwrapSDKContext(ctx)
-
-	headerInfo := sdkCtx.HeaderInfo()
+	headerInfo := ctx.HeaderInfo()
 
 	return k.EpochInfo.Walk(
 		ctx,
@@ -49,21 +46,25 @@ func (k Keeper) BeginBlocker(ctx context.Context) error {
 					),
 				)
 			} else {
-				if err := sdkCtx.EventManager().EmitTypedEvent(&types.EventEpochEnd{
+				if err := ctx.EventManager().EmitTypedEvent(&types.EventEpochEnd{
 					EpochNumber: epochInfo.CurrentEpoch,
 				}); err != nil {
 					return false, nil //nolint:nilerr // error is logged
 				}
 
-				if err := k.AfterEpochEnd(ctx, epochInfo.Identifier, epochInfo.CurrentEpoch); err != nil {
+				cacheCtx, writeFn := ctx.CacheContext()
+
+				if err := k.AfterEpochEnd(cacheCtx, epochInfo.Identifier, epochInfo.CurrentEpoch); err != nil {
 					// purposely ignoring the error here not to halt the chain if the hook fails
-					k.Logger().With("error", err).Error(
+					k.Logger().Error(
 						fmt.Sprintf(
 							"Error after epoch end with identifier %s epoch number %d",
 							epochInfo.Identifier,
 							epochInfo.CurrentEpoch,
 						),
 					)
+				} else {
+					writeFn()
 				}
 
 				epochInfo.CurrentEpoch++
@@ -78,7 +79,7 @@ func (k Keeper) BeginBlocker(ctx context.Context) error {
 			}
 
 			// emit new epoch start event, set epoch info, and run BeforeEpochStart hook
-			err := sdkCtx.EventManager().EmitTypedEvent(&types.EventEpochStart{
+			err := ctx.EventManager().EmitTypedEvent(&types.EventEpochStart{
 				EpochNumber:    epochInfo.CurrentEpoch,
 				EpochStartTime: epochInfo.CurrentEpochStartTime.Unix(),
 			})
@@ -97,7 +98,8 @@ func (k Keeper) BeginBlocker(ctx context.Context) error {
 				return false, nil //nolint:nilerr // error is logged
 			}
 
-			if err = k.BeforeEpochStart(ctx, epochInfo.Identifier, epochInfo.CurrentEpoch); err != nil {
+			cacheCtx, writeFn := ctx.CacheContext()
+			if err = k.BeforeEpochStart(cacheCtx, epochInfo.Identifier, epochInfo.CurrentEpoch); err != nil {
 				// purposely ignoring the error here not to halt the chain if the hook fails
 				k.Logger().Error(
 					fmt.Sprintf(
@@ -106,7 +108,10 @@ func (k Keeper) BeginBlocker(ctx context.Context) error {
 						epochInfo.CurrentEpoch,
 					),
 				)
+			} else {
+				writeFn()
 			}
+
 			return false, nil
 		},
 	)
