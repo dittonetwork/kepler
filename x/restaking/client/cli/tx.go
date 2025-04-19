@@ -69,6 +69,7 @@ func PrepareConfigForTxBondValidator(
 	if ip == "" {
 		_, _ = fmt.Fprintf(os.Stderr, "failed to retrieve an external IP; the tx's memo field will be unset")
 	}
+	c.IP = ip
 
 	c.P2PPort, err = flagSet.GetUint(FlagP2PPort)
 	if err != nil {
