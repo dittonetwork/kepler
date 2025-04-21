@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package ditto.action;
+
+// Input parameter definition for an action
+message Input {
+  // Name of the input parameter
+  string name = 1;
+  
+  // Whether this input is required
+  bool required = 2;
+  
+  // Optional description of the input
+  optional string description = 3;
+}
+
+// Action execution configuration
+message Runs {
+  // Runtime environment (e.g., "wasm")
+  string using = 1;
+  
+  // Binary name to run
+  optional string binary = 2;
+  
+  // Arguments to pass to the action
+  optional repeated string args = 3;
+
+  // Steps to execute as part of the run
+  optional repeated Step steps = 4;
+}
+
+// Action step      
+message Step {
+    // Name of the step (e.g., "Transfer ETH", "Swap tokens", "Deploy contract")
+    string name = 1;
+    
+    // Blockchain address of the contract to interact with
+    // Example: "0x1234567890123456789012345678901234567890"
+    optional string address = 2;
+    
+    // Encoded calldata for the contract interaction
+    // Example: "0xa9059cbb000000000000000000000000abcdef0123456789abcdef0123456789abcdef0000000000000000000000000000000000000000000000000de0b6b3a7640000"
+    optional string calldata = 3;
+    
+    // Optional reference to a reusable component or action
+    // Example: "ditto/context" or "github/actions/checkout@v2"
+    optional string uses = 4;
+    
+    // Input parameters for the step, if step uses a reusable action
+    optional map<string, string> with = 5;
+}
+
+// Complete action definition
+message Action {
+  // Name of the action (e.g., "uniswap/swap-assets")
+  string name = 1;
+  
+  // Description of what the action does
+  string description = 2;
+  
+  // Input parameters for the action
+  map<string, Input> inputs = 3;
+
+  // Runs to execute as part of the action
+  Runs runs = 4;
+}
+
+

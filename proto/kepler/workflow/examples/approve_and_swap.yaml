@@ -1,0 +1,31 @@
+name: 'uniswap/approve-and-swap'
+description: 'Approve token spending and execute swap on Uniswap'
+inputs:
+  token_in:
+    required: true
+    description: "Address of the input token to approve and swap"
+  token_out:
+    required: true
+    description: "Address of the output token to receive"
+  amount_in:
+    required: true
+    description: "Amount of input token to swap"
+  amount_out_min:
+    required: true
+    description: "Minimum amount of output token to receive"
+  slippage:
+    required: true
+    description: "Slippage tolerance for the swap"
+  spender:
+    required: true
+    description: "Address of the Uniswap router contract"
+  runs:
+    using: 'wasm'
+    binary: 'approve_and_swap'
+    args:
+      - ${{ inputs.token_in }}
+      - ${{ inputs.token_out }}
+      - ${{ inputs.amount_in }}
+      - ${{ inputs.amount_out_min }}
+      - ${{ inputs.spender }} 
+      - ${{ inputs.slippage }}

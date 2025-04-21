@@ -1,0 +1,197 @@
+syntax = "proto3";
+
+package ditto.workflow;
+
+// Step within a job
+message Step {
+  // Name of the step (e.g., "Transfer ETH", "Swap tokens", "Deploy contract")
+  string name = 1;
+  
+  // Blockchain address of the contract to interact with
+  // Example: "0x1234567890123456789012345678901234567890"
+  optional string address = 2;
+  
+  // Encoded calldata for the contract interaction
+  // Example: "0xa9059cbb000000000000000000000000abcdef0123456789abcdef0123456789abcdef0000000000000000000000000000000000000000000000000de0b6b3a7640000"
+  optional string calldata = 3;
+  
+  // Optional reference to a reusable component or action
+  // Example: "ditto/context" or "github/actions/checkout@v2"
+  optional string uses = 4;
+  
+  // Input parameters for the step, if step uses a reusable action
+  optional map<string, string> with = 5;
+}
+
+// Input parameter definition for a step
+message Input {
+  // Name of the input parameter  
+  string name = 1;
+  
+  // Whether this input is required
+  bool required = 2;
+  
+  // Optional description of the input
+  optional string description = 3;
+}
+
+// Universal type for representing arguments of different types
+// Note: This implementation supports only string and boolean values
+// to match the TypeScript definition in entities.ts
+message ArgumentValue {
+  // One of the following value types must be set
+  oneof value {
+    // String value for text, addresses, or large numbers
+    // Example: "Hello" or "0x1234567890123456789012345678901234567890"
+    string string_value = 1;
+    
+    // Boolean value for true/false conditions
+    // Example: true
+    bool bool_value = 2;
+  }
+}
+
+// On-chain call checker
+message OnChainCallChecker {
+  // JSON string containing the ABI definition for the function call
+  // Example: "[{\"inputs\":[{\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"withdraw\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]"
+  string abi = 1;
+
+  // Contract address to be called
+  string contract_address = 2;
+  
+  // Method name to be called
+  // Example: "transfer", "approve", "swap"
+  string method = 3;
+  
+  // Arguments to pass to the method call
+  // Only supporting string and bool values
+  // Example: ["0x1234..."] or [true] or ["feature-name", false]
+  repeated ArgumentValue args = 4;
+}
+
+// Gas settings
+message GasLimitChecker {
+  // Maximum fee per gas
+  string max_fee = 1;
+  
+  // Maximum priority fee per gas
+  string max_priority_fee = 2;
+}
+
+// Asset price checker
+message AssetPriceChecker {
+  // Asset to sell
+  string sell_asset = 1;
+
+  // Asset to buy
+  string buy_asset = 2;
+
+  // Limit price
+  string limit_price = 3;
+  
+  // Price comparison type (e.g., "lte", "lt", "gte", "gt", "eq")
+  string operator = 4;
+}
+
+// Checkers for jobs
+message Checkers {
+  // Array of on-chain call checks to perform
+  repeated OnChainCallChecker onchain_calls = 1;
+  
+  // Optional gas limit settings for the job
+  optional GasLimitChecker gas_limit = 2;
+
+  // Optional asset price checker
+  optional AssetPriceChecker asset_price = 3;
+  
+  // Optional maximum number of execution
+  optional int64 count = 4;
+}
+
+// Job within a workflow
+message Job {
+  // Unique identifier for the job
+  // Example: "token-transfer" 
+  string id = 1;
+  
+  // The blockchain network ID where this job will execute
+  // Example: 1 (Ethereum Mainnet)
+  int32 chain_id = 2;
+  
+  // Optional account abstraction contract address for execution
+  // Example: "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  optional string account_abstraction = 3;
+  
+  // Optional dependency - ID of another job that must complete before this one
+  // Example: "setup-job"
+  optional repeated string needs = 4;
+  
+  // Configuration for various validation and execution checks
+  Checkers checkers = 5;
+  
+  // Array of steps to be executed in sequence
+  repeated Step steps = 6;
+}
+
+// Schedule-based trigger
+message ScheduleTrigger {
+  // Cron expression defining when the workflow should be executed
+  // Example: "0 0 * * *" (daily at midnight)
+  // Example: "*/15 * * * *" (every 15 minutes)
+  string cron = 1;
+}
+
+// Blockchain event-based trigger
+message OnchainEventTrigger {
+  // JSON string containing the ABI definition for the event
+  // Example: "[{\"type\":\"event\",\"name\":\"Transfer\",\"inputs\":[{\"name\":\"from\",\"type\":\"address\"},{\"name\":\"to\",\"type\":\"address\"},{\"name\":\"value\",\"type\":\"uint256\"}]}]"
+  string abi = 1;
+  
+  // Array of contract addresses to monitor for events
+  // Example: ["0x1234567890123456789012345678901234567890"]
+  repeated string addresses = 2;
+  
+  // Name of the event to listen for
+  // Example: "Transfer", "Approval", "Swap"
+  string event_name = 3;
+}
+
+// Workflow triggers
+message WorkflowTriggers {
+  // Schedule-based trigger for time-dependent execution
+  optional ScheduleTrigger schedule = 1;
+  
+  // Event-based trigger for blockchain event dependent execution
+  optional OnchainEventTrigger onchain_event = 2;
+}
+
+// Complete workflow description
+message Workflow {
+  // Unique identifier for the workflow
+  // Example: "token-transfer" 
+  string id = 1;
+  
+  // Human-readable name for the workflow
+  // Example: "Daily Token Transfer" or "NFT Minting Workflow"
+  string name = 2;
+  
+  // Trigger conditions that initiate the workflow execution
+  WorkflowTriggers on = 3;
+  
+  // Optional maximum number of times this workflow can be executed
+  // Example: 5 (execute at most 5 times)
+  optional int32 count = 4;
+  
+  // Optional UNIX timestamp when the workflow should expire and no longer execute
+  // Example: 1723456789 (Unix timestamp)
+  optional int64 expired_at = 5;
+  
+  // Cryptographic signature of the merkle root derived from all jobs in the workflow
+  // The merkle root is computed by hashing all job details (including their steps) into a tree
+  // Example: "0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890"
+  string signature = 6;
+  
+  // Array of jobs to be executed as part of this workflow
+  repeated Job jobs = 7;
+}
