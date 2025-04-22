@@ -15,6 +15,29 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 		Query: &autocliv1.ServiceCommandDescriptor{
 			Service: modulev1.Query_ServiceDesc.ServiceName,
 			RpcCommandOptions: []*autocliv1.RpcCommandOptions{
+				{
+					RpcMethod: "PendingOperators",
+					Use:       "pending-operators",
+					Short:     "Get all pending operators",
+				},
+				{
+					RpcMethod: "Validators",
+					Use:       "validators",
+					Short:     "Get all validators",
+					Long:      "Get all validators with pagination and status filter",
+					Example: fmt.Sprintf(`$ %s query restaking validators --status bonded --page-offset 2`,
+						version.AppName,
+					),
+				},
+				{
+					RpcMethod: "OperatorStatus",
+					Use:       "operator-status",
+					Short:     "Get operator status by EVM address",
+					Long:      "Get operator status by EVM address",
+					Example: fmt.Sprintf(`$ %s query restaking operator-status --evm-address 0x...`,
+						version.AppName,
+					),
+				},
 				// this line is used by ignite scaffolding # autocli/query
 				{
 					RpcMethod: "NeedValidatorsUpdate",

@@ -6,6 +6,7 @@ import (
 	"cosmossdk.io/collections"
 	"cosmossdk.io/collections/indexes"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	q "github.com/cosmos/cosmos-sdk/types/query"
 	"github.com/dittonetwork/kepler/x/restaking/types"
 )
 
@@ -118,4 +119,26 @@ func (s *RestakingRepository) GetValidatorsChanges(ctx sdk.Context) (types.Valid
 
 func (s *RestakingRepository) PruneValidatorsChanges(ctx sdk.Context) error {
 	return s.changes.Remove(ctx)
+}
+
+// GetPaginatedValidatorsByStatus returns a paginated list of validators by status.
+func (s *RestakingRepository) GetPaginatedValidatorsByStatus(
+	ctx sdk.Context,
+	query *q.PageRequest,
+	status types.BondStatus,
+) ([]types.Validator, *q.PageResponse, error) {
+	return q.CollectionFilteredPaginate(
+		ctx, s.validators, query,
+		func(_ string, validator types.Validator) (bool, error) {
+			// return all validators if status is unspecified
+			if status == types.UnspecifiedStatus {
+				return true, nil
+			}
+
+			return validator.Status == status, nil
+		},
+		func(_ string, validator types.Validator) (types.Validator, error) {
+			return validator, nil
+		},
+	)
 }

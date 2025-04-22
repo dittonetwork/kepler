@@ -1,6 +1,8 @@
 syntax = "proto3";
 package kepler.restaking;
 
+import "amino/amino.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
 import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "kepler/restaking/update.proto";
@@ -78,10 +80,22 @@ message QueryPendingOperatorsResponse {
 }
 
 // QueryValidatorsRequest is the request type for the Query/Validators RPC method.
-message QueryValidatorsRequest {}
+message QueryValidatorsRequest {
+  // status enables to query for validators matching a given status.
+  BondStatus status = 1;
+
+  // pagination defines an optional pagination for the request.
+  cosmos.base.query.v1beta1.PageRequest pagination = 2;
+}
 
 // QueryValidatorsResponse is the response type for the Query/Validators RPC method.
 message QueryValidatorsResponse {
   // validators is a list of validators.
-  repeated Validator validators = 1;
+  repeated Validator validators = 1 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+
+  // pagination defines an optional pagination for the response.
+  cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }

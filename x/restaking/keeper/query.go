@@ -7,6 +7,8 @@ import (
 	"cosmossdk.io/collections"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/dittonetwork/kepler/x/restaking/types"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 var _ types.QueryServer = queryServer{}
@@ -36,11 +38,26 @@ func (q queryServer) PendingOperators(
 
 // Validators returns the list of all validators.
 func (q queryServer) Validators(
-	_ context.Context,
-	_ *types.QueryValidatorsRequest,
+	ctx context.Context,
+	req *types.QueryValidatorsRequest,
 ) (*types.QueryValidatorsResponse, error) {
-	// TODO github.com/dittonetwork/kepler/issues/177
-	panic("implement me")
+	if req == nil {
+		return nil, status.Error(codes.InvalidArgument, "request cannot be nil")
+	}
+
+	validators, pagination, err := q.repository.GetPaginatedValidatorsByStatus(
+		sdk.UnwrapSDKContext(ctx),
+		req.Pagination,
+		req.Status,
+	)
+	if err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
+	return &types.QueryValidatorsResponse{
+		Validators: validators,
+		Pagination: pagination,
+	}, nil
 }
 
 func (q queryServer) NeedValidatorsUpdate(
