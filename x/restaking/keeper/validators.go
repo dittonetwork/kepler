@@ -1,6 +1,9 @@
 package keeper
 
 import (
+	"errors"
+
+	"cosmossdk.io/collections"
 	sdkerrors "cosmossdk.io/errors"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/dittonetwork/kepler/x/restaking/types"
@@ -34,32 +37,32 @@ func (k Keeper) processDeletedOperators(ctx sdk.Context, operators []*types.Oper
 			return sdkerrors.Wrap(types.ErrUpdateValidator, "unable to remove pending operator")
 		}
 
-		if err := k.repository.RemoveValidatorByOperatorAddr(ctx, operator.Address); err != nil {
-			return sdkerrors.Wrap(types.ErrUpdateValidator, "unable to remove operator")
+		validator, err := k.repository.GetValidatorByEvmAddr(ctx, operator.Address)
+		if err != nil {
+			if errors.Is(err, collections.ErrNotFound) {
+				return nil
+			}
+
+			return sdkerrors.Wrap(types.ErrUpdateValidator, "failed to get validator by EVM address")
+		}
+
+		if err = k.repository.AddValidatorsChange(ctx, validator, types.ValidatorChangeTypeDelete); err != nil {
+			return sdkerrors.Wrap(types.ErrUpdateValidator, "unable to add validator change")
 		}
 	}
 	return nil
 }
 
-// processUpdatedValidators handles all validators that have been updated.
-func (k Keeper) processUpdatedValidators(ctx sdk.Context, updates []*operatorUpdate) error {
+// processUpdatedOperators handles all validators that have been updated.
+func (k Keeper) processUpdatedOperators(ctx sdk.Context, updates []*operatorUpdate) error {
 	for _, update := range updates {
 		validator, err := k.repository.GetValidatorByEvmAddr(ctx, update.Before.Address)
 		if err != nil {
 			return sdkerrors.Wrap(types.ErrUpdateValidator, "failed to get validator by EVM address")
 		}
 
-		validator.UpdateOperatorInfo(*update.After)
-
-		if err = k.repository.SetValidator(ctx, sdk.ValAddress(validator.OperatorAddress), validator); err != nil {
-			return sdkerrors.Wrap(types.ErrUpdateValidator, "unable to set updated validator")
-		}
-
-		// Validator began unbonding
-		if update.Before.IsBonded() && update.After.IsUnbonding() {
-			if err = k.hooks.BeforeValidatorBeginUnbonding(ctx, validator); err != nil {
-				return sdkerrors.Wrap(types.ErrUpdateValidator, "error in BeforeValidatorBeginUnbonding hook")
-			}
+		if err = k.repository.AddValidatorsChange(ctx, validator, types.ValidatorChangeTypeUpdate); err != nil {
+			return sdkerrors.Wrap(types.ErrUpdateValidator, "unable to add validator change")
 		}
 	}
 	return nil

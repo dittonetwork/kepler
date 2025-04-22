@@ -46,7 +46,7 @@ func (s *TestSuite) TestMsgUpdateValidatorsSet() {
 					GetAllValidators(gomock.Any()).
 					Return([]types.Validator{}, nil)
 
-				// Prepare for processUpdatedValidators, processCreatedOperators, processDeletedOperators
+				// Prepare for processUpdatedOperators, processCreatedOperators, processDeletedOperators
 				s.repository.EXPECT().
 					SetPendingOperator(gomock.Any(), gomock.Eq(validOperatorAddress), gomock.Any()).
 					Return(nil).
@@ -63,12 +63,7 @@ func (s *TestSuite) TestMsgUpdateValidatorsSet() {
 					AnyTimes()
 
 				s.repository.EXPECT().
-					RemoveValidatorByOperatorAddr(gomock.Any(), gomock.Any()).
-					Return(nil).
-					AnyTimes()
-
-				s.repository.EXPECT().
-					SetValidator(gomock.Any(), gomock.Any(), gomock.Any()).
+					AddValidatorsChange(gomock.Any(), gomock.Any(), types.ValidatorChangeTypeDelete).
 					Return(nil).
 					AnyTimes()
 
