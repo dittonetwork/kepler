@@ -12,6 +12,7 @@ const (
 	ErrCodeGenesisInit       = 1102
 	ErrCodeGenesisExport     = 1103
 	ErrCodeNoPendingOperator = 1104
+	ErrCodeNotFoundValidator = 1105
 )
 
 var (
@@ -29,4 +30,7 @@ var (
 
 	// ErrNoPendingOperator defines an error when the no pending operator is found.
 	ErrNoPendingOperator = sdkerrors.Register(ModuleName, ErrCodeNoPendingOperator, "no pending operator")
+
+	// ErrNotFoundValidator defines an error when the validator is not found.
+	ErrNotFoundValidator = sdkerrors.Register(ModuleName, ErrCodeNotFoundValidator, "validator not found")
 )
