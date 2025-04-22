@@ -19,7 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Query_PendingValidators_FullMethodName    = "/kepler.restaking.Query/PendingValidators"
+	Query_PendingOperators_FullMethodName     = "/kepler.restaking.Query/PendingOperators"
 	Query_Validators_FullMethodName           = "/kepler.restaking.Query/Validators"
 	Query_NeedValidatorsUpdate_FullMethodName = "/kepler.restaking.Query/NeedValidatorsUpdate"
 	Query_OperatorStatus_FullMethodName       = "/kepler.restaking.Query/OperatorStatus"
@@ -32,7 +32,7 @@ const (
 // Query defines the gRPC querier service.
 type QueryClient interface {
 	// PendingValidators returns currently pending validators of the module.
-	PendingValidators(ctx context.Context, in *QueryPendingValidatorsRequest, opts ...grpc.CallOption) (*QueryPendingValidatorsResponse, error)
+	PendingOperators(ctx context.Context, in *QueryPendingOperatorsRequest, opts ...grpc.CallOption) (*QueryPendingOperatorsResponse, error)
 	// Retrieve a list of all validators.
 	Validators(ctx context.Context, in *QueryValidatorsRequest, opts ...grpc.CallOption) (*QueryValidatorsResponse, error)
 	// Return true if need update validators set
@@ -49,10 +49,10 @@ func NewQueryClient(cc grpc.ClientConnInterface) QueryClient {
 	return &queryClient{cc}
 }
 
-func (c *queryClient) PendingValidators(ctx context.Context, in *QueryPendingValidatorsRequest, opts ...grpc.CallOption) (*QueryPendingValidatorsResponse, error) {
+func (c *queryClient) PendingOperators(ctx context.Context, in *QueryPendingOperatorsRequest, opts ...grpc.CallOption) (*QueryPendingOperatorsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(QueryPendingValidatorsResponse)
-	err := c.cc.Invoke(ctx, Query_PendingValidators_FullMethodName, in, out, cOpts...)
+	out := new(QueryPendingOperatorsResponse)
+	err := c.cc.Invoke(ctx, Query_PendingOperators_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -96,7 +96,7 @@ func (c *queryClient) OperatorStatus(ctx context.Context, in *QueryOperatorStatu
 // Query defines the gRPC querier service.
 type QueryServer interface {
 	// PendingValidators returns currently pending validators of the module.
-	PendingValidators(context.Context, *QueryPendingValidatorsRequest) (*QueryPendingValidatorsResponse, error)
+	PendingOperators(context.Context, *QueryPendingOperatorsRequest) (*QueryPendingOperatorsResponse, error)
 	// Retrieve a list of all validators.
 	Validators(context.Context, *QueryValidatorsRequest) (*QueryValidatorsResponse, error)
 	// Return true if need update validators set
@@ -113,8 +113,8 @@ type QueryServer interface {
 // pointer dereference when methods are called.
 type UnimplementedQueryServer struct{}
 
-func (UnimplementedQueryServer) PendingValidators(context.Context, *QueryPendingValidatorsRequest) (*QueryPendingValidatorsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PendingValidators not implemented")
+func (UnimplementedQueryServer) PendingOperators(context.Context, *QueryPendingOperatorsRequest) (*QueryPendingOperatorsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PendingOperators not implemented")
 }
 func (UnimplementedQueryServer) Validators(context.Context, *QueryValidatorsRequest) (*QueryValidatorsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Validators not implemented")
@@ -146,20 +146,20 @@ func RegisterQueryServer(s grpc.ServiceRegistrar, srv QueryServer) {
 	s.RegisterService(&Query_ServiceDesc, srv)
 }
 
-func _Query_PendingValidators_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryPendingValidatorsRequest)
+func _Query_PendingOperators_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryPendingOperatorsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(QueryServer).PendingValidators(ctx, in)
+		return srv.(QueryServer).PendingOperators(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Query_PendingValidators_FullMethodName,
+		FullMethod: Query_PendingOperators_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).PendingValidators(ctx, req.(*QueryPendingValidatorsRequest))
+		return srv.(QueryServer).PendingOperators(ctx, req.(*QueryPendingOperatorsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -226,8 +226,8 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*QueryServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "PendingValidators",
-			Handler:    _Query_PendingValidators_Handler,
+			MethodName: "PendingOperators",
+			Handler:    _Query_PendingOperators_Handler,
 		},
 		{
 			MethodName: "Validators",

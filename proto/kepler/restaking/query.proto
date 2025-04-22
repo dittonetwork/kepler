@@ -11,8 +11,8 @@ option go_package = "github.com/dittonetwork/kepler/x/restaking/types";
 // Query defines the gRPC querier service.
 service Query {
   // PendingValidators returns currently pending validators of the module.
-  rpc PendingValidators(QueryPendingValidatorsRequest) returns (QueryPendingValidatorsResponse) {
-    option (google.api.http).get = "/dittonetwork/kepler/restaking/v1/pending_validators";
+  rpc PendingOperators(QueryPendingOperatorsRequest) returns (QueryPendingOperatorsResponse) {
+    option (google.api.http).get = "/dittonetwork/kepler/restaking/v1/pending_operators";
   }
 
   // Retrieve a list of all validators.
@@ -69,12 +69,12 @@ message QueryNeedValidatorsUpdateResponse {
 }
 
 // QueryPendingValidatorsRequest is the request type for the Query/PendingValidators RPC method.
-message QueryPendingValidatorsRequest {}
+message QueryPendingOperatorsRequest {}
 
 // QueryPendingValidatorsResponse is the response type for the Query/PendingValidators RPC method.
-message QueryPendingValidatorsResponse {
+message QueryPendingOperatorsResponse {
   // Pending is the returned pending validators from the module.
-  repeated Validator pending = 1 [(gogoproto.nullable) = false];
+  repeated Operator pending = 1 [(gogoproto.nullable) = false];
 }
 
 // QueryValidatorsRequest is the request type for the Query/Validators RPC method.

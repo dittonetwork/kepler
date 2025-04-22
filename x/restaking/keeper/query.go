@@ -19,12 +19,19 @@ func NewQueryServerImpl(keeper Keeper) types.QueryServer {
 	return queryServer{Keeper: keeper}
 }
 
-func (q queryServer) PendingValidators(
-	_ context.Context,
-	_ *types.QueryPendingValidatorsRequest,
-) (*types.QueryPendingValidatorsResponse, error) {
-	// @TODO https://github.com/dittonetwork/kepler/issues/175
-	panic("implement me")
+// PendingOperators returns the list of pending operators.
+func (q queryServer) PendingOperators(
+	ctx context.Context,
+	_ *types.QueryPendingOperatorsRequest,
+) (*types.QueryPendingOperatorsResponse, error) {
+	operators, err := q.repository.GetPendingOperators(sdk.UnwrapSDKContext(ctx))
+	if err != nil {
+		return nil, err
+	}
+
+	return &types.QueryPendingOperatorsResponse{
+		Pending: operators,
+	}, nil
 }
 
 // Validators returns the list of all validators.
