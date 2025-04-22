@@ -13,6 +13,7 @@ import (
 	reflect "reflect"
 
 	types "github.com/cosmos/cosmos-sdk/types"
+	query "github.com/cosmos/cosmos-sdk/types/query"
 	types0 "github.com/dittonetwork/kepler/x/restaking/types"
 	gomock "go.uber.org/mock/gomock"
 )
@@ -113,6 +114,22 @@ func (m *MockRepository) GetLastUpdate(ctx types.Context) (types0.UpdateInfo, er
 func (mr *MockRepositoryMockRecorder) GetLastUpdate(ctx any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetLastUpdate", reflect.TypeOf((*MockRepository)(nil).GetLastUpdate), ctx)
+}
+
+// GetPaginatedValidatorsByStatus mocks base method.
+func (m *MockRepository) GetPaginatedValidatorsByStatus(ctx types.Context, q *query.PageRequest, status types0.BondStatus) ([]types0.Validator, *query.PageResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetPaginatedValidatorsByStatus", ctx, q, status)
+	ret0, _ := ret[0].([]types0.Validator)
+	ret1, _ := ret[1].(*query.PageResponse)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// GetPaginatedValidatorsByStatus indicates an expected call of GetPaginatedValidatorsByStatus.
+func (mr *MockRepositoryMockRecorder) GetPaginatedValidatorsByStatus(ctx, q, status any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPaginatedValidatorsByStatus", reflect.TypeOf((*MockRepository)(nil).GetPaginatedValidatorsByStatus), ctx, q, status)
 }
 
 // GetPendingOperator mocks base method.

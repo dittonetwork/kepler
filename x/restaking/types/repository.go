@@ -2,6 +2,7 @@ package types
 
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/cosmos/cosmos-sdk/types/query"
 )
 
 type ValidatorChangeType int
@@ -33,4 +34,10 @@ type Repository interface {
 	AddValidatorsChange(ctx sdk.Context, validator Validator, ctype ValidatorChangeType) error
 	GetValidatorsChanges(ctx sdk.Context) (ValidatorsChanges, error)
 	PruneValidatorsChanges(ctx sdk.Context) error
+
+	GetPaginatedValidatorsByStatus(
+		ctx sdk.Context,
+		q *query.PageRequest,
+		status BondStatus,
+	) ([]Validator, *query.PageResponse, error)
 }
