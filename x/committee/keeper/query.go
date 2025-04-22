@@ -28,15 +28,15 @@ func (k queryServer) Committee(
 	}
 
 	for i, executor := range committee.Executors {
-		accAddress, err := sdk.AccAddressFromBech32(executor.GetAddress())
-		if err != nil {
-			return nil, err
+		accAddress, addrErr := sdk.AccAddressFromBech32(executor.GetAddress())
+		if addrErr != nil {
+			return nil, addrErr
 		}
 		account := k.account.GetAccount(sdk.UnwrapSDKContext(ctx), accAddress)
 		pubkey := account.GetPubKey()
-		anyPubkey, err := codectypes.NewAnyWithValue(pubkey)
-		if err != nil {
-			return nil, err
+		anyPubkey, anyErr := codectypes.NewAnyWithValue(pubkey)
+		if anyErr != nil {
+			return nil, anyErr
 		}
 		committee.Executors[i].Pubkey = anyPubkey
 	}
