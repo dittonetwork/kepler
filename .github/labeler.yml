@@ -24,11 +24,11 @@ x/epochs:
 x/committee:
   - 'x/committee/**'
 
-x/instant:
-  - 'x/instant/**'
-
-x/job:
-  - 'x/job/**'
-
 x/workflow:
   - 'x/workflow/**'
+
+x/restaking:
+  - 'x/restaking/**'
+
+x/genutil:
+  - 'x/genutil/**'
