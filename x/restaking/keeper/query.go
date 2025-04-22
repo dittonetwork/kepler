@@ -2,7 +2,9 @@ package keeper
 
 import (
 	"context"
+	"errors"
 
+	"cosmossdk.io/collections"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/dittonetwork/kepler/x/restaking/types"
 )
@@ -50,5 +52,63 @@ func (q queryServer) NeedValidatorsUpdate(
 
 	return &types.QueryNeedValidatorsUpdateResponse{
 		Result: lastUpdate.EpochNum < epoch.CurrentEpoch,
+	}, nil
+}
+
+// OperatorStatus returns the status of an operator by its EVM address.
+func (q queryServer) OperatorStatus(
+	ctx context.Context,
+	req *types.QueryOperatorStatusRequest,
+) (*types.QueryOperatorStatusResponse, error) {
+	sdkCtx := sdk.UnwrapSDKContext(ctx)
+
+	// check in pending pool
+	operator, err := q.repository.GetPendingOperator(sdkCtx, req.EvmAddress)
+	if err == nil {
+		// operator found in pending pool
+		return &types.QueryOperatorStatusResponse{
+			Status: types.PendingOperatorStatus,
+			Info:   operator,
+		}, nil
+	}
+
+	if !errors.Is(err, collections.ErrNotFound) {
+		return nil, err
+	}
+
+	// check in validators pool
+	validator, err := q.repository.GetValidatorByEvmAddr(sdkCtx, req.EvmAddress)
+	if err != nil {
+		if errors.Is(err, collections.ErrNotFound) {
+			return nil, types.ErrNotFoundValidator.Wrapf("operator %s not found", req.EvmAddress)
+		}
+
+		return nil, err
+	}
+
+	operator = *validator.ConvertToOperator()
+
+	switch validator.Status {
+	case types.Bonded:
+		return &types.QueryOperatorStatusResponse{
+			Status: types.ActiveOperatorStatus,
+			Info:   operator,
+		}, nil
+	case types.Unbonding, types.Unbonded:
+		return &types.QueryOperatorStatusResponse{
+			Status: types.InactiveOperatorStatus,
+			Info:   operator,
+		}, nil
+
+	case types.UnspecifiedStatus:
+		return &types.QueryOperatorStatusResponse{
+			Status: types.UnknownOperatorStatus,
+			Info:   operator,
+		}, nil
+	}
+
+	return &types.QueryOperatorStatusResponse{
+		Status: types.UnknownOperatorStatus,
+		Info:   operator,
 	}, nil
 }

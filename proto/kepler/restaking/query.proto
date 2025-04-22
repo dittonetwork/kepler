@@ -3,6 +3,7 @@ package kepler.restaking;
 
 import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
+import "kepler/restaking/update.proto";
 import "kepler/restaking/validator.proto";
 
 option go_package = "github.com/dittonetwork/kepler/x/restaking/types";
@@ -23,6 +24,40 @@ service Query {
   rpc NeedValidatorsUpdate(QueryNeedValidatorsUpdateRequest) returns (QueryNeedValidatorsUpdateResponse) {
     option (google.api.http).get = "/dittonetwork/kepler/restaking/need_update";
   }
+
+  // Retrieve the status of a validator by its operator address.
+  rpc OperatorStatus(QueryOperatorStatusRequest) returns (QueryOperatorStatusResponse) {
+    option (google.api.http).get = "/dittonetwork/kepler/restaking/operator_status/{evm_address}";
+  }
+}
+
+// QueryValidatorStatusRequest is the request type for the Query/ValidatorStatus RPC method.
+message QueryOperatorStatusRequest {
+  // evm_address is the EVM address on L1.
+  string evm_address = 1;
+}
+
+// QueryValidatorStatusResponse is the response type for the Query/ValidatorStatus RPC method.
+message QueryOperatorStatusResponse {
+  // status of the validator.
+  enum Status {
+    option (gogoproto.goproto_enum_prefix) = false;
+
+    // UnspecifiedStatus is the default status.
+    STATUS_UNSPECIFIED = 0 [(gogoproto.enumvalue_customname) = "UnknownOperatorStatus"];
+    // ActiveStatus - validator is active and participate in chain.
+    STATUS_ACTIVE = 1 [(gogoproto.enumvalue_customname) = "ActiveOperatorStatus"];
+    // PendingStatus - validator is pending and waiting for BondValidator tx.
+    STATUS_PENDING = 2 [(gogoproto.enumvalue_customname) = "PendingOperatorStatus"];
+    // InactiveStatus - validator is inactive and not participate in chain.
+    STATUS_INACTIVE = 3 [(gogoproto.enumvalue_customname) = "InactiveOperatorStatus"];
+  }
+
+  // status is the status of the validator.
+  Status status = 1;
+
+  // operator info
+  Operator info = 2 [(gogoproto.nullable) = false];
 }
 
 // Empty message params for query/NeedValidatorsUpdate.
