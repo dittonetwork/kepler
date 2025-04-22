@@ -48,7 +48,7 @@ func (s msgServer) UpdateValidatorsSet(
 		return nil, err
 	}
 
-	if err = s.processUpdatedValidators(sdkCtx, delta.Updated); err != nil {
+	if err = s.processUpdatedOperators(sdkCtx, delta.Updated); err != nil {
 		return nil, err
 	}
 

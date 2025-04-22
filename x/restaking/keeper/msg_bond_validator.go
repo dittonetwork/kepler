@@ -51,7 +51,7 @@ func (s msgServer) BondValidator(
 		Status:             operator.Status,
 	}
 
-	err = s.repository.SetValidator(sdkCtx, valAddr, *validator)
+	err = s.repository.AddValidatorsChange(sdkCtx, *validator, types.ValidatorChangeTypeCreate)
 	if err != nil {
 		return nil, err
 	}

@@ -31,4 +31,6 @@ var (
 	KeyPrefixEmergencyValidators = collections.NewPrefix(5)
 	// KeyPrefixEvmAddressValidators is the prefix for EVM address pending validators keys.
 	KeyPrefixEvmAddressValidators = collections.NewPrefix(6)
+	// KeyPrefixDeltaUpdates is the prefix for validator updates keys.
+	KeyPrefixDeltaUpdates = collections.NewPrefix(7)
 )

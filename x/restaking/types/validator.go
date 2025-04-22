@@ -34,7 +34,7 @@ func (v Validator) ConsPubKey() (cryptotypes.PubKey, error) {
 func (v Validator) CmtConsPublicKey() (cmtprotocrypto.PublicKey, error) {
 	pk, err := v.ConsPubKey()
 	if err != nil {
-		return cmtprotocrypto.PublicKey{}, err
+		return cmtprotocrypto.PublicKey{}, errors.Wrapf(err, "failed to get consensus public key")
 	}
 
 	tmPk, err := cryptocodec.ToCmtProtoPublicKey(pk)
@@ -63,12 +63,27 @@ func (v Validator) ConvertToOperator() *Operator {
 	}
 }
 
-func (v *Validator) UpdateOperatorInfo(operator Operator) {
-	v.ConsensusPubkey = operator.ConsensusPubkey
-	v.Status = operator.Status
-	v.Protocol = operator.Protocol
-	v.VotingPower = operator.VotingPower
-	v.IsEmergency = operator.IsEmergency
+func (v Validator) GetConsensusPubkey(unpacker codectypes.AnyUnpacker) (cmtprotocrypto.PublicKey, error) {
+	var pk cryptotypes.PubKey
+	if err := unpacker.UnpackAny(v.ConsensusPubkey, &pk); err != nil {
+		return cmtprotocrypto.PublicKey{}, errors.Wrapf(err, "failed to unpack consensus public key")
+	}
+
+	return v.CmtConsPublicKey()
+}
+
+// Len represents the changes to be applied to validators.
+func (c ValidatorsChanges) Len() int {
+	return len(c.Created) + len(c.Updated) + len(c.Deleted)
+}
+
+// GetCreatedAndUpdated returns a slice of validators that were either created or updated.
+func (c ValidatorsChanges) GetCreatedAndUpdated() []Validator {
+	createdAndUpdated := make([]Validator, 0, len(c.Created)+len(c.Updated))
+	createdAndUpdated = append(createdAndUpdated, c.Created...)
+	createdAndUpdated = append(createdAndUpdated, c.Updated...)
+
+	return createdAndUpdated
 }
 
 // DoNotModifyDesc constant used in flags to indicate that description field should not be updated.
@@ -154,4 +169,17 @@ func (d Description) EnsureLength() (Description, error) {
 	}
 
 	return d, nil
+}
+
+// HasConsensusParamsChanges checks if the operator has any changes in consensus parameters.
+func (v Validator) HasConsensusParamsChanges(change *Validator) bool {
+	if !v.ConsensusPubkey.Equal(change.ConsensusPubkey) {
+		return true
+	}
+
+	if v.VotingPower != change.VotingPower {
+		return true
+	}
+
+	return false
 }

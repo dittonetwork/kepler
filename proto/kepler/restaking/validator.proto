@@ -14,6 +14,18 @@ message Validators {
   repeated Validator validators = 1 [(gogoproto.nullable) = false];
 }
 
+// ValidatorsChanges is a collection of validator changes before ABCI EndBlock.
+message ValidatorsChanges {
+  // created defines a list of created validators.
+  repeated Validator created = 1 [(gogoproto.nullable) = false];
+
+  // updated defines a list of updated validators.
+  repeated Validator updated = 2 [(gogoproto.nullable) = false];
+
+  // deleted defines a list of deleted validators.
+  repeated Validator deleted = 3 [(gogoproto.nullable) = false];
+}
+
 // EmergencyValidators is a collection of emergency validators.
 message EmergencyValidators {
   // validators defines a list of emergency validators.

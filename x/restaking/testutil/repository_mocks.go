@@ -41,6 +41,20 @@ func (m *MockRepository) EXPECT() *MockRepositoryMockRecorder {
 	return m.recorder
 }
 
+// AddValidatorsChange mocks base method.
+func (m *MockRepository) AddValidatorsChange(ctx types.Context, validator types0.Validator, ctype types0.ValidatorChangeType) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AddValidatorsChange", ctx, validator, ctype)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// AddValidatorsChange indicates an expected call of AddValidatorsChange.
+func (mr *MockRepositoryMockRecorder) AddValidatorsChange(ctx, validator, ctype any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddValidatorsChange", reflect.TypeOf((*MockRepository)(nil).AddValidatorsChange), ctx, validator, ctype)
+}
+
 // GetAllValidators mocks base method.
 func (m *MockRepository) GetAllValidators(ctx types.Context) ([]types0.Validator, error) {
 	m.ctrl.T.Helper()
@@ -161,6 +175,35 @@ func (mr *MockRepositoryMockRecorder) GetValidatorByEvmAddr(ctx, addr any) *gomo
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetValidatorByEvmAddr", reflect.TypeOf((*MockRepository)(nil).GetValidatorByEvmAddr), ctx, addr)
 }
 
+// GetValidatorsChanges mocks base method.
+func (m *MockRepository) GetValidatorsChanges(ctx types.Context) (types0.ValidatorsChanges, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetValidatorsChanges", ctx)
+	ret0, _ := ret[0].(types0.ValidatorsChanges)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetValidatorsChanges indicates an expected call of GetValidatorsChanges.
+func (mr *MockRepositoryMockRecorder) GetValidatorsChanges(ctx any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetValidatorsChanges", reflect.TypeOf((*MockRepository)(nil).GetValidatorsChanges), ctx)
+}
+
+// PruneValidatorsChanges mocks base method.
+func (m *MockRepository) PruneValidatorsChanges(ctx types.Context) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "PruneValidatorsChanges", ctx)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// PruneValidatorsChanges indicates an expected call of PruneValidatorsChanges.
+func (mr *MockRepositoryMockRecorder) PruneValidatorsChanges(ctx any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PruneValidatorsChanges", reflect.TypeOf((*MockRepository)(nil).PruneValidatorsChanges), ctx)
+}
+
 // RemovePendingOperator mocks base method.
 func (m *MockRepository) RemovePendingOperator(ctx types.Context, operatorAddr string) error {
 	m.ctrl.T.Helper()
@@ -175,18 +218,18 @@ func (mr *MockRepositoryMockRecorder) RemovePendingOperator(ctx, operatorAddr an
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RemovePendingOperator", reflect.TypeOf((*MockRepository)(nil).RemovePendingOperator), ctx, operatorAddr)
 }
 
-// RemoveValidatorByOperatorAddr mocks base method.
-func (m *MockRepository) RemoveValidatorByOperatorAddr(ctx types.Context, addr string) error {
+// RemoveValidator mocks base method.
+func (m *MockRepository) RemoveValidator(ctx types.Context, addr string) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "RemoveValidatorByOperatorAddr", ctx, addr)
+	ret := m.ctrl.Call(m, "RemoveValidator", ctx, addr)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
-// RemoveValidatorByOperatorAddr indicates an expected call of RemoveValidatorByOperatorAddr.
-func (mr *MockRepositoryMockRecorder) RemoveValidatorByOperatorAddr(ctx, addr any) *gomock.Call {
+// RemoveValidator indicates an expected call of RemoveValidator.
+func (mr *MockRepositoryMockRecorder) RemoveValidator(ctx, addr any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RemoveValidatorByOperatorAddr", reflect.TypeOf((*MockRepository)(nil).RemoveValidatorByOperatorAddr), ctx, addr)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RemoveValidator", reflect.TypeOf((*MockRepository)(nil).RemoveValidator), ctx, addr)
 }
 
 // SetLastUpdate mocks base method.

@@ -12,6 +12,7 @@ type RestakingRepository struct {
 	pending    collections.Map[string, types.Operator]
 	validators *collections.IndexedMap[string, types.Validator, Idx]
 	lastUpdate collections.Item[types.UpdateInfo]
+	changes    collections.Item[types.ValidatorsChanges]
 
 	cdc codec.BinaryCodec
 }
@@ -34,6 +35,12 @@ func New(storeService store.KVStoreService, cdc codec.BinaryCodec) *RestakingRep
 			collections.StringKey,
 			codec.CollValue[types.Validator](cdc),
 			NewIndexes(sb),
+		),
+		changes: collections.NewItem(
+			sb,
+			types.KeyPrefixDeltaUpdates,
+			"delta_updates",
+			codec.CollValue[types.ValidatorsChanges](cdc),
 		),
 		lastUpdate: collections.NewItem(
 			sb,
