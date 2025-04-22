@@ -1684,23 +1684,23 @@ func (x *fastReflection_QueryNeedValidatorsUpdateResponse) ProtoMethods() *proto
 }
 
 var (
-	md_QueryPendingValidatorsRequest protoreflect.MessageDescriptor
+	md_QueryPendingOperatorsRequest protoreflect.MessageDescriptor
 )
 
 func init() {
 	file_kepler_restaking_query_proto_init()
-	md_QueryPendingValidatorsRequest = File_kepler_restaking_query_proto.Messages().ByName("QueryPendingValidatorsRequest")
+	md_QueryPendingOperatorsRequest = File_kepler_restaking_query_proto.Messages().ByName("QueryPendingOperatorsRequest")
 }
 
-var _ protoreflect.Message = (*fastReflection_QueryPendingValidatorsRequest)(nil)
+var _ protoreflect.Message = (*fastReflection_QueryPendingOperatorsRequest)(nil)
 
-type fastReflection_QueryPendingValidatorsRequest QueryPendingValidatorsRequest
+type fastReflection_QueryPendingOperatorsRequest QueryPendingOperatorsRequest
 
-func (x *QueryPendingValidatorsRequest) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_QueryPendingValidatorsRequest)(x)
+func (x *QueryPendingOperatorsRequest) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_QueryPendingOperatorsRequest)(x)
 }
 
-func (x *QueryPendingValidatorsRequest) slowProtoReflect() protoreflect.Message {
+func (x *QueryPendingOperatorsRequest) slowProtoReflect() protoreflect.Message {
 	mi := &file_kepler_restaking_query_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1712,43 +1712,43 @@ func (x *QueryPendingValidatorsRequest) slowProtoReflect() protoreflect.Message 
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_QueryPendingValidatorsRequest_messageType fastReflection_QueryPendingValidatorsRequest_messageType
-var _ protoreflect.MessageType = fastReflection_QueryPendingValidatorsRequest_messageType{}
+var _fastReflection_QueryPendingOperatorsRequest_messageType fastReflection_QueryPendingOperatorsRequest_messageType
+var _ protoreflect.MessageType = fastReflection_QueryPendingOperatorsRequest_messageType{}
 
-type fastReflection_QueryPendingValidatorsRequest_messageType struct{}
+type fastReflection_QueryPendingOperatorsRequest_messageType struct{}
 
-func (x fastReflection_QueryPendingValidatorsRequest_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_QueryPendingValidatorsRequest)(nil)
+func (x fastReflection_QueryPendingOperatorsRequest_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_QueryPendingOperatorsRequest)(nil)
 }
-func (x fastReflection_QueryPendingValidatorsRequest_messageType) New() protoreflect.Message {
-	return new(fastReflection_QueryPendingValidatorsRequest)
+func (x fastReflection_QueryPendingOperatorsRequest_messageType) New() protoreflect.Message {
+	return new(fastReflection_QueryPendingOperatorsRequest)
 }
-func (x fastReflection_QueryPendingValidatorsRequest_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryPendingValidatorsRequest
+func (x fastReflection_QueryPendingOperatorsRequest_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryPendingOperatorsRequest
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_QueryPendingValidatorsRequest) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryPendingValidatorsRequest
+func (x *fastReflection_QueryPendingOperatorsRequest) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryPendingOperatorsRequest
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_QueryPendingValidatorsRequest) Type() protoreflect.MessageType {
-	return _fastReflection_QueryPendingValidatorsRequest_messageType
+func (x *fastReflection_QueryPendingOperatorsRequest) Type() protoreflect.MessageType {
+	return _fastReflection_QueryPendingOperatorsRequest_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_QueryPendingValidatorsRequest) New() protoreflect.Message {
-	return new(fastReflection_QueryPendingValidatorsRequest)
+func (x *fastReflection_QueryPendingOperatorsRequest) New() protoreflect.Message {
+	return new(fastReflection_QueryPendingOperatorsRequest)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_QueryPendingValidatorsRequest) Interface() protoreflect.ProtoMessage {
-	return (*QueryPendingValidatorsRequest)(x)
+func (x *fastReflection_QueryPendingOperatorsRequest) Interface() protoreflect.ProtoMessage {
+	return (*QueryPendingOperatorsRequest)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -1756,7 +1756,7 @@ func (x *fastReflection_QueryPendingValidatorsRequest) Interface() protoreflect.
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_QueryPendingValidatorsRequest) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+func (x *fastReflection_QueryPendingOperatorsRequest) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
 }
 
 // Has reports whether a field is populated.
@@ -1770,13 +1770,13 @@ func (x *fastReflection_QueryPendingValidatorsRequest) Range(f func(protoreflect
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_QueryPendingValidatorsRequest) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_QueryPendingOperatorsRequest) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.QueryPendingValidatorsRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.QueryPendingOperatorsRequest"))
 		}
-		panic(fmt.Errorf("message kepler.restaking.QueryPendingValidatorsRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message kepler.restaking.QueryPendingOperatorsRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1786,13 +1786,13 @@ func (x *fastReflection_QueryPendingValidatorsRequest) Has(fd protoreflect.Field
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryPendingValidatorsRequest) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_QueryPendingOperatorsRequest) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.QueryPendingValidatorsRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.QueryPendingOperatorsRequest"))
 		}
-		panic(fmt.Errorf("message kepler.restaking.QueryPendingValidatorsRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message kepler.restaking.QueryPendingOperatorsRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1802,13 +1802,13 @@ func (x *fastReflection_QueryPendingValidatorsRequest) Clear(fd protoreflect.Fie
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_QueryPendingValidatorsRequest) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryPendingOperatorsRequest) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.QueryPendingValidatorsRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.QueryPendingOperatorsRequest"))
 		}
-		panic(fmt.Errorf("message kepler.restaking.QueryPendingValidatorsRequest does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message kepler.restaking.QueryPendingOperatorsRequest does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -1822,13 +1822,13 @@ func (x *fastReflection_QueryPendingValidatorsRequest) Get(descriptor protorefle
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryPendingValidatorsRequest) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_QueryPendingOperatorsRequest) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.QueryPendingValidatorsRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.QueryPendingOperatorsRequest"))
 		}
-		panic(fmt.Errorf("message kepler.restaking.QueryPendingValidatorsRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message kepler.restaking.QueryPendingOperatorsRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1842,36 +1842,36 @@ func (x *fastReflection_QueryPendingValidatorsRequest) Set(fd protoreflect.Field
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryPendingValidatorsRequest) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryPendingOperatorsRequest) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.QueryPendingValidatorsRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.QueryPendingOperatorsRequest"))
 		}
-		panic(fmt.Errorf("message kepler.restaking.QueryPendingValidatorsRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message kepler.restaking.QueryPendingOperatorsRequest does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_QueryPendingValidatorsRequest) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryPendingOperatorsRequest) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.QueryPendingValidatorsRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.QueryPendingOperatorsRequest"))
 		}
-		panic(fmt.Errorf("message kepler.restaking.QueryPendingValidatorsRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message kepler.restaking.QueryPendingOperatorsRequest does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_QueryPendingValidatorsRequest) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_QueryPendingOperatorsRequest) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in kepler.restaking.QueryPendingValidatorsRequest", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in kepler.restaking.QueryPendingOperatorsRequest", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -1879,7 +1879,7 @@ func (x *fastReflection_QueryPendingValidatorsRequest) WhichOneof(d protoreflect
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_QueryPendingValidatorsRequest) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_QueryPendingOperatorsRequest) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -1890,7 +1890,7 @@ func (x *fastReflection_QueryPendingValidatorsRequest) GetUnknown() protoreflect
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryPendingValidatorsRequest) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_QueryPendingOperatorsRequest) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -1902,7 +1902,7 @@ func (x *fastReflection_QueryPendingValidatorsRequest) SetUnknown(fields protore
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_QueryPendingValidatorsRequest) IsValid() bool {
+func (x *fastReflection_QueryPendingOperatorsRequest) IsValid() bool {
 	return x != nil
 }
 
@@ -1912,9 +1912,9 @@ func (x *fastReflection_QueryPendingValidatorsRequest) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_QueryPendingValidatorsRequest) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_QueryPendingOperatorsRequest) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*QueryPendingValidatorsRequest)
+		x := input.Message.Interface().(*QueryPendingOperatorsRequest)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1936,7 +1936,7 @@ func (x *fastReflection_QueryPendingValidatorsRequest) ProtoMethods() *protoifac
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*QueryPendingValidatorsRequest)
+		x := input.Message.Interface().(*QueryPendingOperatorsRequest)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1966,7 +1966,7 @@ func (x *fastReflection_QueryPendingValidatorsRequest) ProtoMethods() *protoifac
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*QueryPendingValidatorsRequest)
+		x := input.Message.Interface().(*QueryPendingOperatorsRequest)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1998,10 +1998,10 @@ func (x *fastReflection_QueryPendingValidatorsRequest) ProtoMethods() *protoifac
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryPendingValidatorsRequest: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryPendingOperatorsRequest: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryPendingValidatorsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryPendingOperatorsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			default:
@@ -2039,77 +2039,77 @@ func (x *fastReflection_QueryPendingValidatorsRequest) ProtoMethods() *protoifac
 	}
 }
 
-var _ protoreflect.List = (*_QueryPendingValidatorsResponse_1_list)(nil)
+var _ protoreflect.List = (*_QueryPendingOperatorsResponse_1_list)(nil)
 
-type _QueryPendingValidatorsResponse_1_list struct {
-	list *[]*Validator
+type _QueryPendingOperatorsResponse_1_list struct {
+	list *[]*Operator
 }
 
-func (x *_QueryPendingValidatorsResponse_1_list) Len() int {
+func (x *_QueryPendingOperatorsResponse_1_list) Len() int {
 	if x.list == nil {
 		return 0
 	}
 	return len(*x.list)
 }
 
-func (x *_QueryPendingValidatorsResponse_1_list) Get(i int) protoreflect.Value {
+func (x *_QueryPendingOperatorsResponse_1_list) Get(i int) protoreflect.Value {
 	return protoreflect.ValueOfMessage((*x.list)[i].ProtoReflect())
 }
 
-func (x *_QueryPendingValidatorsResponse_1_list) Set(i int, value protoreflect.Value) {
+func (x *_QueryPendingOperatorsResponse_1_list) Set(i int, value protoreflect.Value) {
 	valueUnwrapped := value.Message()
-	concreteValue := valueUnwrapped.Interface().(*Validator)
+	concreteValue := valueUnwrapped.Interface().(*Operator)
 	(*x.list)[i] = concreteValue
 }
 
-func (x *_QueryPendingValidatorsResponse_1_list) Append(value protoreflect.Value) {
+func (x *_QueryPendingOperatorsResponse_1_list) Append(value protoreflect.Value) {
 	valueUnwrapped := value.Message()
-	concreteValue := valueUnwrapped.Interface().(*Validator)
+	concreteValue := valueUnwrapped.Interface().(*Operator)
 	*x.list = append(*x.list, concreteValue)
 }
 
-func (x *_QueryPendingValidatorsResponse_1_list) AppendMutable() protoreflect.Value {
-	v := new(Validator)
+func (x *_QueryPendingOperatorsResponse_1_list) AppendMutable() protoreflect.Value {
+	v := new(Operator)
 	*x.list = append(*x.list, v)
 	return protoreflect.ValueOfMessage(v.ProtoReflect())
 }
 
-func (x *_QueryPendingValidatorsResponse_1_list) Truncate(n int) {
+func (x *_QueryPendingOperatorsResponse_1_list) Truncate(n int) {
 	for i := n; i < len(*x.list); i++ {
 		(*x.list)[i] = nil
 	}
 	*x.list = (*x.list)[:n]
 }
 
-func (x *_QueryPendingValidatorsResponse_1_list) NewElement() protoreflect.Value {
-	v := new(Validator)
+func (x *_QueryPendingOperatorsResponse_1_list) NewElement() protoreflect.Value {
+	v := new(Operator)
 	return protoreflect.ValueOfMessage(v.ProtoReflect())
 }
 
-func (x *_QueryPendingValidatorsResponse_1_list) IsValid() bool {
+func (x *_QueryPendingOperatorsResponse_1_list) IsValid() bool {
 	return x.list != nil
 }
 
 var (
-	md_QueryPendingValidatorsResponse         protoreflect.MessageDescriptor
-	fd_QueryPendingValidatorsResponse_pending protoreflect.FieldDescriptor
+	md_QueryPendingOperatorsResponse         protoreflect.MessageDescriptor
+	fd_QueryPendingOperatorsResponse_pending protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_kepler_restaking_query_proto_init()
-	md_QueryPendingValidatorsResponse = File_kepler_restaking_query_proto.Messages().ByName("QueryPendingValidatorsResponse")
-	fd_QueryPendingValidatorsResponse_pending = md_QueryPendingValidatorsResponse.Fields().ByName("pending")
+	md_QueryPendingOperatorsResponse = File_kepler_restaking_query_proto.Messages().ByName("QueryPendingOperatorsResponse")
+	fd_QueryPendingOperatorsResponse_pending = md_QueryPendingOperatorsResponse.Fields().ByName("pending")
 }
 
-var _ protoreflect.Message = (*fastReflection_QueryPendingValidatorsResponse)(nil)
+var _ protoreflect.Message = (*fastReflection_QueryPendingOperatorsResponse)(nil)
 
-type fastReflection_QueryPendingValidatorsResponse QueryPendingValidatorsResponse
+type fastReflection_QueryPendingOperatorsResponse QueryPendingOperatorsResponse
 
-func (x *QueryPendingValidatorsResponse) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_QueryPendingValidatorsResponse)(x)
+func (x *QueryPendingOperatorsResponse) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_QueryPendingOperatorsResponse)(x)
 }
 
-func (x *QueryPendingValidatorsResponse) slowProtoReflect() protoreflect.Message {
+func (x *QueryPendingOperatorsResponse) slowProtoReflect() protoreflect.Message {
 	mi := &file_kepler_restaking_query_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -2121,43 +2121,43 @@ func (x *QueryPendingValidatorsResponse) slowProtoReflect() protoreflect.Message
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_QueryPendingValidatorsResponse_messageType fastReflection_QueryPendingValidatorsResponse_messageType
-var _ protoreflect.MessageType = fastReflection_QueryPendingValidatorsResponse_messageType{}
+var _fastReflection_QueryPendingOperatorsResponse_messageType fastReflection_QueryPendingOperatorsResponse_messageType
+var _ protoreflect.MessageType = fastReflection_QueryPendingOperatorsResponse_messageType{}
 
-type fastReflection_QueryPendingValidatorsResponse_messageType struct{}
+type fastReflection_QueryPendingOperatorsResponse_messageType struct{}
 
-func (x fastReflection_QueryPendingValidatorsResponse_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_QueryPendingValidatorsResponse)(nil)
+func (x fastReflection_QueryPendingOperatorsResponse_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_QueryPendingOperatorsResponse)(nil)
 }
-func (x fastReflection_QueryPendingValidatorsResponse_messageType) New() protoreflect.Message {
-	return new(fastReflection_QueryPendingValidatorsResponse)
+func (x fastReflection_QueryPendingOperatorsResponse_messageType) New() protoreflect.Message {
+	return new(fastReflection_QueryPendingOperatorsResponse)
 }
-func (x fastReflection_QueryPendingValidatorsResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryPendingValidatorsResponse
+func (x fastReflection_QueryPendingOperatorsResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryPendingOperatorsResponse
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_QueryPendingValidatorsResponse) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryPendingValidatorsResponse
+func (x *fastReflection_QueryPendingOperatorsResponse) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryPendingOperatorsResponse
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_QueryPendingValidatorsResponse) Type() protoreflect.MessageType {
-	return _fastReflection_QueryPendingValidatorsResponse_messageType
+func (x *fastReflection_QueryPendingOperatorsResponse) Type() protoreflect.MessageType {
+	return _fastReflection_QueryPendingOperatorsResponse_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_QueryPendingValidatorsResponse) New() protoreflect.Message {
-	return new(fastReflection_QueryPendingValidatorsResponse)
+func (x *fastReflection_QueryPendingOperatorsResponse) New() protoreflect.Message {
+	return new(fastReflection_QueryPendingOperatorsResponse)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_QueryPendingValidatorsResponse) Interface() protoreflect.ProtoMessage {
-	return (*QueryPendingValidatorsResponse)(x)
+func (x *fastReflection_QueryPendingOperatorsResponse) Interface() protoreflect.ProtoMessage {
+	return (*QueryPendingOperatorsResponse)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -2165,10 +2165,10 @@ func (x *fastReflection_QueryPendingValidatorsResponse) Interface() protoreflect
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_QueryPendingValidatorsResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+func (x *fastReflection_QueryPendingOperatorsResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
 	if len(x.Pending) != 0 {
-		value := protoreflect.ValueOfList(&_QueryPendingValidatorsResponse_1_list{list: &x.Pending})
-		if !f(fd_QueryPendingValidatorsResponse_pending, value) {
+		value := protoreflect.ValueOfList(&_QueryPendingOperatorsResponse_1_list{list: &x.Pending})
+		if !f(fd_QueryPendingOperatorsResponse_pending, value) {
 			return
 		}
 	}
@@ -2185,15 +2185,15 @@ func (x *fastReflection_QueryPendingValidatorsResponse) Range(f func(protoreflec
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_QueryPendingValidatorsResponse) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_QueryPendingOperatorsResponse) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "kepler.restaking.QueryPendingValidatorsResponse.pending":
+	case "kepler.restaking.QueryPendingOperatorsResponse.pending":
 		return len(x.Pending) != 0
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.QueryPendingValidatorsResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.QueryPendingOperatorsResponse"))
 		}
-		panic(fmt.Errorf("message kepler.restaking.QueryPendingValidatorsResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message kepler.restaking.QueryPendingOperatorsResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2203,15 +2203,15 @@ func (x *fastReflection_QueryPendingValidatorsResponse) Has(fd protoreflect.Fiel
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryPendingValidatorsResponse) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_QueryPendingOperatorsResponse) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "kepler.restaking.QueryPendingValidatorsResponse.pending":
+	case "kepler.restaking.QueryPendingOperatorsResponse.pending":
 		x.Pending = nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.QueryPendingValidatorsResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.QueryPendingOperatorsResponse"))
 		}
-		panic(fmt.Errorf("message kepler.restaking.QueryPendingValidatorsResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message kepler.restaking.QueryPendingOperatorsResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2221,19 +2221,19 @@ func (x *fastReflection_QueryPendingValidatorsResponse) Clear(fd protoreflect.Fi
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_QueryPendingValidatorsResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryPendingOperatorsResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "kepler.restaking.QueryPendingValidatorsResponse.pending":
+	case "kepler.restaking.QueryPendingOperatorsResponse.pending":
 		if len(x.Pending) == 0 {
-			return protoreflect.ValueOfList(&_QueryPendingValidatorsResponse_1_list{})
+			return protoreflect.ValueOfList(&_QueryPendingOperatorsResponse_1_list{})
 		}
-		listValue := &_QueryPendingValidatorsResponse_1_list{list: &x.Pending}
+		listValue := &_QueryPendingOperatorsResponse_1_list{list: &x.Pending}
 		return protoreflect.ValueOfList(listValue)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.QueryPendingValidatorsResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.QueryPendingOperatorsResponse"))
 		}
-		panic(fmt.Errorf("message kepler.restaking.QueryPendingValidatorsResponse does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message kepler.restaking.QueryPendingOperatorsResponse does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -2247,17 +2247,17 @@ func (x *fastReflection_QueryPendingValidatorsResponse) Get(descriptor protorefl
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryPendingValidatorsResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_QueryPendingOperatorsResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "kepler.restaking.QueryPendingValidatorsResponse.pending":
+	case "kepler.restaking.QueryPendingOperatorsResponse.pending":
 		lv := value.List()
-		clv := lv.(*_QueryPendingValidatorsResponse_1_list)
+		clv := lv.(*_QueryPendingOperatorsResponse_1_list)
 		x.Pending = *clv.list
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.QueryPendingValidatorsResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.QueryPendingOperatorsResponse"))
 		}
-		panic(fmt.Errorf("message kepler.restaking.QueryPendingValidatorsResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message kepler.restaking.QueryPendingOperatorsResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2271,45 +2271,45 @@ func (x *fastReflection_QueryPendingValidatorsResponse) Set(fd protoreflect.Fiel
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryPendingValidatorsResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryPendingOperatorsResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "kepler.restaking.QueryPendingValidatorsResponse.pending":
+	case "kepler.restaking.QueryPendingOperatorsResponse.pending":
 		if x.Pending == nil {
-			x.Pending = []*Validator{}
+			x.Pending = []*Operator{}
 		}
-		value := &_QueryPendingValidatorsResponse_1_list{list: &x.Pending}
+		value := &_QueryPendingOperatorsResponse_1_list{list: &x.Pending}
 		return protoreflect.ValueOfList(value)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.QueryPendingValidatorsResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.QueryPendingOperatorsResponse"))
 		}
-		panic(fmt.Errorf("message kepler.restaking.QueryPendingValidatorsResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message kepler.restaking.QueryPendingOperatorsResponse does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_QueryPendingValidatorsResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryPendingOperatorsResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "kepler.restaking.QueryPendingValidatorsResponse.pending":
-		list := []*Validator{}
-		return protoreflect.ValueOfList(&_QueryPendingValidatorsResponse_1_list{list: &list})
+	case "kepler.restaking.QueryPendingOperatorsResponse.pending":
+		list := []*Operator{}
+		return protoreflect.ValueOfList(&_QueryPendingOperatorsResponse_1_list{list: &list})
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.QueryPendingValidatorsResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.restaking.QueryPendingOperatorsResponse"))
 		}
-		panic(fmt.Errorf("message kepler.restaking.QueryPendingValidatorsResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message kepler.restaking.QueryPendingOperatorsResponse does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_QueryPendingValidatorsResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_QueryPendingOperatorsResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in kepler.restaking.QueryPendingValidatorsResponse", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in kepler.restaking.QueryPendingOperatorsResponse", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -2317,7 +2317,7 @@ func (x *fastReflection_QueryPendingValidatorsResponse) WhichOneof(d protoreflec
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_QueryPendingValidatorsResponse) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_QueryPendingOperatorsResponse) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -2328,7 +2328,7 @@ func (x *fastReflection_QueryPendingValidatorsResponse) GetUnknown() protoreflec
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryPendingValidatorsResponse) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_QueryPendingOperatorsResponse) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -2340,7 +2340,7 @@ func (x *fastReflection_QueryPendingValidatorsResponse) SetUnknown(fields protor
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_QueryPendingValidatorsResponse) IsValid() bool {
+func (x *fastReflection_QueryPendingOperatorsResponse) IsValid() bool {
 	return x != nil
 }
 
@@ -2350,9 +2350,9 @@ func (x *fastReflection_QueryPendingValidatorsResponse) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_QueryPendingValidatorsResponse) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_QueryPendingOperatorsResponse) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*QueryPendingValidatorsResponse)
+		x := input.Message.Interface().(*QueryPendingOperatorsResponse)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -2380,7 +2380,7 @@ func (x *fastReflection_QueryPendingValidatorsResponse) ProtoMethods() *protoifa
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*QueryPendingValidatorsResponse)
+		x := input.Message.Interface().(*QueryPendingOperatorsResponse)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -2426,7 +2426,7 @@ func (x *fastReflection_QueryPendingValidatorsResponse) ProtoMethods() *protoifa
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*QueryPendingValidatorsResponse)
+		x := input.Message.Interface().(*QueryPendingOperatorsResponse)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -2458,10 +2458,10 @@ func (x *fastReflection_QueryPendingValidatorsResponse) ProtoMethods() *protoifa
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryPendingValidatorsResponse: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryPendingOperatorsResponse: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryPendingValidatorsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryPendingOperatorsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			case 1:
@@ -2493,7 +2493,7 @@ func (x *fastReflection_QueryPendingValidatorsResponse) ProtoMethods() *protoifa
 				if postIndex > l {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
-				x.Pending = append(x.Pending, &Validator{})
+				x.Pending = append(x.Pending, &Operator{})
 				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.Pending[len(x.Pending)-1]); err != nil {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
 				}
@@ -3600,14 +3600,14 @@ func (x *QueryNeedValidatorsUpdateResponse) GetResult() bool {
 }
 
 // QueryPendingValidatorsRequest is the request type for the Query/PendingValidators RPC method.
-type QueryPendingValidatorsRequest struct {
+type QueryPendingOperatorsRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 }
 
-func (x *QueryPendingValidatorsRequest) Reset() {
-	*x = QueryPendingValidatorsRequest{}
+func (x *QueryPendingOperatorsRequest) Reset() {
+	*x = QueryPendingOperatorsRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_kepler_restaking_query_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -3615,29 +3615,29 @@ func (x *QueryPendingValidatorsRequest) Reset() {
 	}
 }
 
-func (x *QueryPendingValidatorsRequest) String() string {
+func (x *QueryPendingOperatorsRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*QueryPendingValidatorsRequest) ProtoMessage() {}
+func (*QueryPendingOperatorsRequest) ProtoMessage() {}
 
-// Deprecated: Use QueryPendingValidatorsRequest.ProtoReflect.Descriptor instead.
-func (*QueryPendingValidatorsRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use QueryPendingOperatorsRequest.ProtoReflect.Descriptor instead.
+func (*QueryPendingOperatorsRequest) Descriptor() ([]byte, []int) {
 	return file_kepler_restaking_query_proto_rawDescGZIP(), []int{4}
 }
 
 // QueryPendingValidatorsResponse is the response type for the Query/PendingValidators RPC method.
-type QueryPendingValidatorsResponse struct {
+type QueryPendingOperatorsResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
 	// Pending is the returned pending validators from the module.
-	Pending []*Validator `protobuf:"bytes,1,rep,name=pending,proto3" json:"pending,omitempty"`
+	Pending []*Operator `protobuf:"bytes,1,rep,name=pending,proto3" json:"pending,omitempty"`
 }
 
-func (x *QueryPendingValidatorsResponse) Reset() {
-	*x = QueryPendingValidatorsResponse{}
+func (x *QueryPendingOperatorsResponse) Reset() {
+	*x = QueryPendingOperatorsResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_kepler_restaking_query_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -3645,18 +3645,18 @@ func (x *QueryPendingValidatorsResponse) Reset() {
 	}
 }
 
-func (x *QueryPendingValidatorsResponse) String() string {
+func (x *QueryPendingOperatorsResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*QueryPendingValidatorsResponse) ProtoMessage() {}
+func (*QueryPendingOperatorsResponse) ProtoMessage() {}
 
-// Deprecated: Use QueryPendingValidatorsResponse.ProtoReflect.Descriptor instead.
-func (*QueryPendingValidatorsResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use QueryPendingOperatorsResponse.ProtoReflect.Descriptor instead.
+func (*QueryPendingOperatorsResponse) Descriptor() ([]byte, []int) {
 	return file_kepler_restaking_query_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *QueryPendingValidatorsResponse) GetPending() []*Validator {
+func (x *QueryPendingOperatorsResponse) GetPending() []*Operator {
 	if x != nil {
 		return x.Pending
 	}
@@ -3773,79 +3773,78 @@ var file_kepler_restaking_query_proto_rawDesc = []byte{
 	0x21, 0x51, 0x75, 0x65, 0x72, 0x79, 0x4e, 0x65, 0x65, 0x64, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x61,
 	0x74, 0x6f, 0x72, 0x73, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
 	0x73, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x08, 0x52, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0x1f, 0x0a, 0x1d, 0x51, 0x75,
-	0x65, 0x72, 0x79, 0x50, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x61,
-	0x74, 0x6f, 0x72, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x22, 0x5d, 0x0a, 0x1e, 0x51,
-	0x75, 0x65, 0x72, 0x79, 0x50, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x56, 0x61, 0x6c, 0x69, 0x64,
-	0x61, 0x74, 0x6f, 0x72, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x3b, 0x0a,
-	0x07, 0x70, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1b,
-	0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x72, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e,
-	0x67, 0x2e, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f, 0x72, 0x42, 0x04, 0xc8, 0xde, 0x1f,
-	0x00, 0x52, 0x07, 0x70, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x22, 0x18, 0x0a, 0x16, 0x51, 0x75,
-	0x65, 0x72, 0x79, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f, 0x72, 0x73, 0x52, 0x65, 0x71,
-	0x75, 0x65, 0x73, 0x74, 0x22, 0x56, 0x0a, 0x17, 0x51, 0x75, 0x65, 0x72, 0x79, 0x56, 0x61, 0x6c,
-	0x69, 0x64, 0x61, 0x74, 0x6f, 0x72, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
-	0x3b, 0x0a, 0x0a, 0x76, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f, 0x72, 0x73, 0x18, 0x01, 0x20,
-	0x03, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x72, 0x65, 0x73,
-	0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f, 0x72,
-	0x52, 0x0a, 0x76, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f, 0x72, 0x73, 0x32, 0xc1, 0x05, 0x0a,
-	0x05, 0x51, 0x75, 0x65, 0x72, 0x79, 0x12, 0xb4, 0x01, 0x0a, 0x11, 0x50, 0x65, 0x6e, 0x64, 0x69,
-	0x6e, 0x67, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f, 0x72, 0x73, 0x12, 0x2f, 0x2e, 0x6b,
+	0x28, 0x08, 0x52, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0x1e, 0x0a, 0x1c, 0x51, 0x75,
+	0x65, 0x72, 0x79, 0x50, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74,
+	0x6f, 0x72, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x22, 0x5b, 0x0a, 0x1d, 0x51, 0x75,
+	0x65, 0x72, 0x79, 0x50, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74,
+	0x6f, 0x72, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x3a, 0x0a, 0x07, 0x70,
+	0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x6b,
 	0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x72, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e,
-	0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x56, 0x61, 0x6c, 0x69,
-	0x64, 0x61, 0x74, 0x6f, 0x72, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x30, 0x2e,
-	0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x72, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67,
-	0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x56, 0x61, 0x6c,
-	0x69, 0x64, 0x61, 0x74, 0x6f, 0x72, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22,
-	0x3c, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x36, 0x12, 0x34, 0x2f, 0x64, 0x69, 0x74, 0x74, 0x6f, 0x6e,
-	0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x2f, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x72, 0x65,
-	0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2f, 0x76, 0x31, 0x2f, 0x70, 0x65, 0x6e, 0x64, 0x69,
-	0x6e, 0x67, 0x5f, 0x76, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f, 0x72, 0x73, 0x12, 0x94, 0x01,
-	0x0a, 0x0a, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f, 0x72, 0x73, 0x12, 0x28, 0x2e, 0x6b,
-	0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x72, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e,
-	0x51, 0x75, 0x65, 0x72, 0x79, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f, 0x72, 0x73, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x29, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e,
-	0x72, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x56,
-	0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f, 0x72, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
-	0x65, 0x22, 0x31, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x2b, 0x12, 0x29, 0x2f, 0x64, 0x69, 0x74, 0x74,
-	0x6f, 0x6e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x2f, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f,
-	0x72, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2f, 0x76, 0x61, 0x6c, 0x69, 0x64, 0x61,
-	0x74, 0x6f, 0x72, 0x73, 0x12, 0xb3, 0x01, 0x0a, 0x14, 0x4e, 0x65, 0x65, 0x64, 0x56, 0x61, 0x6c,
-	0x69, 0x64, 0x61, 0x74, 0x6f, 0x72, 0x73, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x12, 0x32, 0x2e,
-	0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x72, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67,
-	0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x4e, 0x65, 0x65, 0x64, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x61,
-	0x74, 0x6f, 0x72, 0x73, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
-	0x74, 0x1a, 0x33, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x72, 0x65, 0x73, 0x74, 0x61,
-	0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x4e, 0x65, 0x65, 0x64, 0x56, 0x61,
-	0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f, 0x72, 0x73, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x32, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x2c, 0x12, 0x2a,
-	0x2f, 0x64, 0x69, 0x74, 0x74, 0x6f, 0x6e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x2f, 0x6b, 0x65,
-	0x70, 0x6c, 0x65, 0x72, 0x2f, 0x72, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2f, 0x6e,
-	0x65, 0x65, 0x64, 0x5f, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x12, 0xb3, 0x01, 0x0a, 0x0e, 0x4f,
-	0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x2c, 0x2e,
-	0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x72, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67,
-	0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x53, 0x74,
-	0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2d, 0x2e, 0x6b, 0x65,
-	0x70, 0x6c, 0x65, 0x72, 0x2e, 0x72, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x51,
-	0x75, 0x65, 0x72, 0x79, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x53, 0x74, 0x61, 0x74,
-	0x75, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x44, 0x82, 0xd3, 0xe4, 0x93,
-	0x02, 0x3e, 0x12, 0x3c, 0x2f, 0x64, 0x69, 0x74, 0x74, 0x6f, 0x6e, 0x65, 0x74, 0x77, 0x6f, 0x72,
+	0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x07,
+	0x70, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x22, 0x18, 0x0a, 0x16, 0x51, 0x75, 0x65, 0x72, 0x79,
+	0x56, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f, 0x72, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x22, 0x56, 0x0a, 0x17, 0x51, 0x75, 0x65, 0x72, 0x79, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x61,
+	0x74, 0x6f, 0x72, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x3b, 0x0a, 0x0a,
+	0x76, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f, 0x72, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b,
+	0x32, 0x1b, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x72, 0x65, 0x73, 0x74, 0x61, 0x6b,
+	0x69, 0x6e, 0x67, 0x2e, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f, 0x72, 0x52, 0x0a, 0x76,
+	0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f, 0x72, 0x73, 0x32, 0xbd, 0x05, 0x0a, 0x05, 0x51, 0x75,
+	0x65, 0x72, 0x79, 0x12, 0xb0, 0x01, 0x0a, 0x10, 0x50, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x4f,
+	0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x73, 0x12, 0x2e, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65,
+	0x72, 0x2e, 0x72, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x51, 0x75, 0x65, 0x72,
+	0x79, 0x50, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72,
+	0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2f, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65,
+	0x72, 0x2e, 0x72, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x51, 0x75, 0x65, 0x72,
+	0x79, 0x50, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72,
+	0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x3b, 0x82, 0xd3, 0xe4, 0x93, 0x02,
+	0x35, 0x12, 0x33, 0x2f, 0x64, 0x69, 0x74, 0x74, 0x6f, 0x6e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b,
+	0x2f, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x72, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e,
+	0x67, 0x2f, 0x76, 0x31, 0x2f, 0x70, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x5f, 0x6f, 0x70, 0x65,
+	0x72, 0x61, 0x74, 0x6f, 0x72, 0x73, 0x12, 0x94, 0x01, 0x0a, 0x0a, 0x56, 0x61, 0x6c, 0x69, 0x64,
+	0x61, 0x74, 0x6f, 0x72, 0x73, 0x12, 0x28, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x72,
+	0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x56, 0x61,
+	0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f, 0x72, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a,
+	0x29, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x72, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69,
+	0x6e, 0x67, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f,
+	0x72, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x31, 0x82, 0xd3, 0xe4, 0x93,
+	0x02, 0x2b, 0x12, 0x29, 0x2f, 0x64, 0x69, 0x74, 0x74, 0x6f, 0x6e, 0x65, 0x74, 0x77, 0x6f, 0x72,
 	0x6b, 0x2f, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x72, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69,
-	0x6e, 0x67, 0x2f, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x5f, 0x73, 0x74, 0x61, 0x74,
-	0x75, 0x73, 0x2f, 0x7b, 0x65, 0x76, 0x6d, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x7d,
-	0x42, 0xb8, 0x01, 0x0a, 0x14, 0x63, 0x6f, 0x6d, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e,
-	0x72, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x42, 0x0a, 0x51, 0x75, 0x65, 0x72, 0x79,
-	0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x33, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e,
-	0x63, 0x6f, 0x6d, 0x2f, 0x64, 0x69, 0x74, 0x74, 0x6f, 0x6e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b,
-	0x2f, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6b, 0x65, 0x70, 0x6c,
-	0x65, 0x72, 0x2f, 0x72, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0xa2, 0x02, 0x03, 0x4b,
-	0x52, 0x58, 0xaa, 0x02, 0x10, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x52, 0x65, 0x73, 0x74,
-	0x61, 0x6b, 0x69, 0x6e, 0x67, 0xca, 0x02, 0x10, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x5c, 0x52,
-	0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0xe2, 0x02, 0x1c, 0x4b, 0x65, 0x70, 0x6c, 0x65,
-	0x72, 0x5c, 0x52, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x5c, 0x47, 0x50, 0x42, 0x4d,
-	0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x11, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72,
-	0x3a, 0x3a, 0x52, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x62, 0x06, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x33,
+	0x6e, 0x67, 0x2f, 0x76, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f, 0x72, 0x73, 0x12, 0xb3, 0x01,
+	0x0a, 0x14, 0x4e, 0x65, 0x65, 0x64, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f, 0x72, 0x73,
+	0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x12, 0x32, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e,
+	0x72, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x4e,
+	0x65, 0x65, 0x64, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f, 0x72, 0x73, 0x55, 0x70, 0x64,
+	0x61, 0x74, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x33, 0x2e, 0x6b, 0x65, 0x70,
+	0x6c, 0x65, 0x72, 0x2e, 0x72, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x51, 0x75,
+	0x65, 0x72, 0x79, 0x4e, 0x65, 0x65, 0x64, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f, 0x72,
+	0x73, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22,
+	0x32, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x2c, 0x12, 0x2a, 0x2f, 0x64, 0x69, 0x74, 0x74, 0x6f, 0x6e,
+	0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x2f, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x72, 0x65,
+	0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2f, 0x6e, 0x65, 0x65, 0x64, 0x5f, 0x75, 0x70, 0x64,
+	0x61, 0x74, 0x65, 0x12, 0xb3, 0x01, 0x0a, 0x0e, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72,
+	0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x2c, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e,
+	0x72, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x4f,
+	0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x1a, 0x2d, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x72, 0x65,
+	0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x4f, 0x70, 0x65,
+	0x72, 0x61, 0x74, 0x6f, 0x72, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x22, 0x44, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x3e, 0x12, 0x3c, 0x2f, 0x64, 0x69,
+	0x74, 0x74, 0x6f, 0x6e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x2f, 0x6b, 0x65, 0x70, 0x6c, 0x65,
+	0x72, 0x2f, 0x72, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2f, 0x6f, 0x70, 0x65, 0x72,
+	0x61, 0x74, 0x6f, 0x72, 0x5f, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x2f, 0x7b, 0x65, 0x76, 0x6d,
+	0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x7d, 0x42, 0xb8, 0x01, 0x0a, 0x14, 0x63, 0x6f,
+	0x6d, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x72, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69,
+	0x6e, 0x67, 0x42, 0x0a, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01,
+	0x5a, 0x33, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x64, 0x69, 0x74,
+	0x74, 0x6f, 0x6e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x2f, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72,
+	0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2f, 0x72, 0x65, 0x73, 0x74,
+	0x61, 0x6b, 0x69, 0x6e, 0x67, 0xa2, 0x02, 0x03, 0x4b, 0x52, 0x58, 0xaa, 0x02, 0x10, 0x4b, 0x65,
+	0x70, 0x6c, 0x65, 0x72, 0x2e, 0x52, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0xca, 0x02,
+	0x10, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x5c, 0x52, 0x65, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e,
+	0x67, 0xe2, 0x02, 0x1c, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x5c, 0x52, 0x65, 0x73, 0x74, 0x61,
+	0x6b, 0x69, 0x6e, 0x67, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
+	0xea, 0x02, 0x11, 0x4b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x3a, 0x3a, 0x52, 0x65, 0x73, 0x74, 0x61,
+	0x6b, 0x69, 0x6e, 0x67, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -3868,8 +3867,8 @@ var file_kepler_restaking_query_proto_goTypes = []interface{}{
 	(*QueryOperatorStatusResponse)(nil),       // 2: kepler.restaking.QueryOperatorStatusResponse
 	(*QueryNeedValidatorsUpdateRequest)(nil),  // 3: kepler.restaking.QueryNeedValidatorsUpdateRequest
 	(*QueryNeedValidatorsUpdateResponse)(nil), // 4: kepler.restaking.QueryNeedValidatorsUpdateResponse
-	(*QueryPendingValidatorsRequest)(nil),     // 5: kepler.restaking.QueryPendingValidatorsRequest
-	(*QueryPendingValidatorsResponse)(nil),    // 6: kepler.restaking.QueryPendingValidatorsResponse
+	(*QueryPendingOperatorsRequest)(nil),      // 5: kepler.restaking.QueryPendingOperatorsRequest
+	(*QueryPendingOperatorsResponse)(nil),     // 6: kepler.restaking.QueryPendingOperatorsResponse
 	(*QueryValidatorsRequest)(nil),            // 7: kepler.restaking.QueryValidatorsRequest
 	(*QueryValidatorsResponse)(nil),           // 8: kepler.restaking.QueryValidatorsResponse
 	(*Operator)(nil),                          // 9: kepler.restaking.Operator
@@ -3878,13 +3877,13 @@ var file_kepler_restaking_query_proto_goTypes = []interface{}{
 var file_kepler_restaking_query_proto_depIdxs = []int32{
 	0,  // 0: kepler.restaking.QueryOperatorStatusResponse.status:type_name -> kepler.restaking.QueryOperatorStatusResponse.Status
 	9,  // 1: kepler.restaking.QueryOperatorStatusResponse.info:type_name -> kepler.restaking.Operator
-	10, // 2: kepler.restaking.QueryPendingValidatorsResponse.pending:type_name -> kepler.restaking.Validator
+	9,  // 2: kepler.restaking.QueryPendingOperatorsResponse.pending:type_name -> kepler.restaking.Operator
 	10, // 3: kepler.restaking.QueryValidatorsResponse.validators:type_name -> kepler.restaking.Validator
-	5,  // 4: kepler.restaking.Query.PendingValidators:input_type -> kepler.restaking.QueryPendingValidatorsRequest
+	5,  // 4: kepler.restaking.Query.PendingOperators:input_type -> kepler.restaking.QueryPendingOperatorsRequest
 	7,  // 5: kepler.restaking.Query.Validators:input_type -> kepler.restaking.QueryValidatorsRequest
 	3,  // 6: kepler.restaking.Query.NeedValidatorsUpdate:input_type -> kepler.restaking.QueryNeedValidatorsUpdateRequest
 	1,  // 7: kepler.restaking.Query.OperatorStatus:input_type -> kepler.restaking.QueryOperatorStatusRequest
-	6,  // 8: kepler.restaking.Query.PendingValidators:output_type -> kepler.restaking.QueryPendingValidatorsResponse
+	6,  // 8: kepler.restaking.Query.PendingOperators:output_type -> kepler.restaking.QueryPendingOperatorsResponse
 	8,  // 9: kepler.restaking.Query.Validators:output_type -> kepler.restaking.QueryValidatorsResponse
 	4,  // 10: kepler.restaking.Query.NeedValidatorsUpdate:output_type -> kepler.restaking.QueryNeedValidatorsUpdateResponse
 	2,  // 11: kepler.restaking.Query.OperatorStatus:output_type -> kepler.restaking.QueryOperatorStatusResponse
@@ -3952,7 +3951,7 @@ func file_kepler_restaking_query_proto_init() {
 			}
 		}
 		file_kepler_restaking_query_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QueryPendingValidatorsRequest); i {
+			switch v := v.(*QueryPendingOperatorsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3964,7 +3963,7 @@ func file_kepler_restaking_query_proto_init() {
 			}
 		}
 		file_kepler_restaking_query_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QueryPendingValidatorsResponse); i {
+			switch v := v.(*QueryPendingOperatorsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
