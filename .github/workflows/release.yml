@@ -17,7 +17,6 @@ on: push
 permissions:
   contents: write
 
-
 jobs:
   might_release:
     runs-on: ubuntu-latest
@@ -32,20 +31,13 @@ jobs:
         uses: ignite/cli/actions/release/vars@v28.9.0
 
       - name: Issue Release Assets
-        uses: ignite/cli/actions/cli@v28.9.0
+        uses: dittonetwork/ignite-cli/actions/cli@main
         if: ${{ steps.vars.outputs.should_release == 'true' }}
         with:
           args: chain build --release --release.prefix ${{ steps.vars.outputs.tarball_prefix }} -t linux:amd64 -t darwin:amd64 -t darwin:arm64 -y
         env:
           DO_NOT_TRACK: 1
           GOFLAGS: "-buildvcs=false"
-
-      - name: Fix permissions for release files
-        if: ${{ steps.vars.outputs.should_release == 'true' }}
-        run: |
-          ls -la release/ || echo "Release directory not found"
-          chmod -R 755 release/ || echo "Failed to change permissions"
-          find release/ -type f -exec chmod 644 {} \; || echo "Failed to change file permissions"
 
       - name: Delete the "latest" Release
         uses: dev-drprasad/delete-tag-and-release@v0.2.1
@@ -55,6 +47,12 @@ jobs:
           delete_release: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check contents of the release
+        id: check_release
+        run: |
+          ls -la release
+          cat release/release_checksum
 
       - name: Publish the Release
         uses: softprops/action-gh-release@v1
