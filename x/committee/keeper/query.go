@@ -3,6 +3,7 @@ package keeper
 import (
 	"context"
 
+	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/dittonetwork/kepler/x/committee/types"
 )
@@ -25,7 +26,20 @@ func (k queryServer) Committee(
 	if err != nil {
 		return nil, err
 	}
-
+	unwrappedCtx := sdk.UnwrapSDKContext(ctx)
+	for i, executor := range committee.Executors {
+		accAddress, addrErr := sdk.AccAddressFromBech32(executor.GetAddress())
+		if addrErr != nil {
+			return nil, addrErr
+		}
+		account := k.account.GetAccount(unwrappedCtx, accAddress)
+		pubkey := account.GetPubKey()
+		anyPubkey, anyErr := codectypes.NewAnyWithValue(pubkey)
+		if anyErr != nil {
+			return nil, anyErr
+		}
+		committee.Executors[i].Pubkey = anyPubkey
+	}
 	return &types.QueryCommitteeResponse{
 		Committee: &committee,
 	}, nil
