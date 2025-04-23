@@ -17,6 +17,7 @@ on: push
 permissions:
   contents: write
 
+
 jobs:
   might_release:
     runs-on: ubuntu-latest
@@ -38,6 +39,13 @@ jobs:
         env:
           DO_NOT_TRACK: 1
           GOFLAGS: "-buildvcs=false"
+
+      - name: Fix permissions for release files
+        if: ${{ steps.vars.outputs.should_release == 'true' }}
+        run: |
+          ls -la release/ || echo "Release directory not found"
+          chmod -R 755 release/ || echo "Failed to change permissions"
+          find release/ -type f -exec chmod 644 {} \; || echo "Failed to change file permissions"
 
       - name: Delete the "latest" Release
         uses: dev-drprasad/delete-tag-and-release@v0.2.1
