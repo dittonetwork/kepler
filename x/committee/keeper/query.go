@@ -26,13 +26,13 @@ func (k queryServer) Committee(
 	if err != nil {
 		return nil, err
 	}
-
+	unwrappedCtx := sdk.UnwrapSDKContext(ctx)
 	for i, executor := range committee.Executors {
 		accAddress, addrErr := sdk.AccAddressFromBech32(executor.GetAddress())
 		if addrErr != nil {
 			return nil, addrErr
 		}
-		account := k.account.GetAccount(sdk.UnwrapSDKContext(ctx), accAddress)
+		account := k.account.GetAccount(unwrappedCtx, accAddress)
 		pubkey := account.GetPubKey()
 		anyPubkey, anyErr := codectypes.NewAnyWithValue(pubkey)
 		if anyErr != nil {

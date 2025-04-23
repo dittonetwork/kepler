@@ -22,7 +22,8 @@ func (s *TestSuite) TestQueryCommittee() {
 					GetCommittee(gomock.Any(), gomock.Any()).
 					Return(types.Committee{
 						Executors: []types.Executor{
-							{Address: s.alice.Address.String(),
+							{
+								Address:     s.alice.Address.String(),
 								VotingPower: 1,
 							},
 						},
