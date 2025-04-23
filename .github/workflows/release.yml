@@ -50,6 +50,7 @@ jobs:
 
       - name: Check contents of the release
         id: check_release
+        if: ${{ steps.vars.outputs.should_release == 'true' }}
         run: |
           ls -la release
           cat release/release_checksum
