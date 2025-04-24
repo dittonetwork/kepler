@@ -92,13 +92,14 @@ jobs:
         uses: actions/cache@v3
         id: cache-ignite
         with:
-          path: /usr/local/bin/ignite
+          path: ${{ github.workspace }}/ignite
           key: ${{ runner.os }}-ignite-latest
 
       - name: Install Ignite
         if: steps.cache-ignite.outputs.cache-hit != 'true'
         run: |
           curl -sSL "https://get.ignite.com/cli" | bash
+          echo "${{ github.workspace }}/ignite" >> $GITHUB_PATH
 
       - name: Check proto files
         run: |
