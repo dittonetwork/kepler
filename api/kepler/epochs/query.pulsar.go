@@ -370,77 +370,77 @@ func (x *fastReflection_QueryEpochsInfoRequest) ProtoMethods() *protoiface.Metho
 	}
 }
 
-var _ protoreflect.List = (*_QueryEpochsInfoResponse_1_list)(nil)
+var _ protoreflect.List = (*_QueryEpochInfosResponse_1_list)(nil)
 
-type _QueryEpochsInfoResponse_1_list struct {
+type _QueryEpochInfosResponse_1_list struct {
 	list *[]*EpochInfo
 }
 
-func (x *_QueryEpochsInfoResponse_1_list) Len() int {
+func (x *_QueryEpochInfosResponse_1_list) Len() int {
 	if x.list == nil {
 		return 0
 	}
 	return len(*x.list)
 }
 
-func (x *_QueryEpochsInfoResponse_1_list) Get(i int) protoreflect.Value {
+func (x *_QueryEpochInfosResponse_1_list) Get(i int) protoreflect.Value {
 	return protoreflect.ValueOfMessage((*x.list)[i].ProtoReflect())
 }
 
-func (x *_QueryEpochsInfoResponse_1_list) Set(i int, value protoreflect.Value) {
+func (x *_QueryEpochInfosResponse_1_list) Set(i int, value protoreflect.Value) {
 	valueUnwrapped := value.Message()
 	concreteValue := valueUnwrapped.Interface().(*EpochInfo)
 	(*x.list)[i] = concreteValue
 }
 
-func (x *_QueryEpochsInfoResponse_1_list) Append(value protoreflect.Value) {
+func (x *_QueryEpochInfosResponse_1_list) Append(value protoreflect.Value) {
 	valueUnwrapped := value.Message()
 	concreteValue := valueUnwrapped.Interface().(*EpochInfo)
 	*x.list = append(*x.list, concreteValue)
 }
 
-func (x *_QueryEpochsInfoResponse_1_list) AppendMutable() protoreflect.Value {
+func (x *_QueryEpochInfosResponse_1_list) AppendMutable() protoreflect.Value {
 	v := new(EpochInfo)
 	*x.list = append(*x.list, v)
 	return protoreflect.ValueOfMessage(v.ProtoReflect())
 }
 
-func (x *_QueryEpochsInfoResponse_1_list) Truncate(n int) {
+func (x *_QueryEpochInfosResponse_1_list) Truncate(n int) {
 	for i := n; i < len(*x.list); i++ {
 		(*x.list)[i] = nil
 	}
 	*x.list = (*x.list)[:n]
 }
 
-func (x *_QueryEpochsInfoResponse_1_list) NewElement() protoreflect.Value {
+func (x *_QueryEpochInfosResponse_1_list) NewElement() protoreflect.Value {
 	v := new(EpochInfo)
 	return protoreflect.ValueOfMessage(v.ProtoReflect())
 }
 
-func (x *_QueryEpochsInfoResponse_1_list) IsValid() bool {
+func (x *_QueryEpochInfosResponse_1_list) IsValid() bool {
 	return x.list != nil
 }
 
 var (
-	md_QueryEpochsInfoResponse        protoreflect.MessageDescriptor
-	fd_QueryEpochsInfoResponse_epochs protoreflect.FieldDescriptor
+	md_QueryEpochInfosResponse        protoreflect.MessageDescriptor
+	fd_QueryEpochInfosResponse_epochs protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_kepler_epochs_query_proto_init()
-	md_QueryEpochsInfoResponse = File_kepler_epochs_query_proto.Messages().ByName("QueryEpochsInfoResponse")
-	fd_QueryEpochsInfoResponse_epochs = md_QueryEpochsInfoResponse.Fields().ByName("epochs")
+	md_QueryEpochInfosResponse = File_kepler_epochs_query_proto.Messages().ByName("QueryEpochInfosResponse")
+	fd_QueryEpochInfosResponse_epochs = md_QueryEpochInfosResponse.Fields().ByName("epochs")
 }
 
-var _ protoreflect.Message = (*fastReflection_QueryEpochsInfoResponse)(nil)
+var _ protoreflect.Message = (*fastReflection_QueryEpochInfosResponse)(nil)
 
-type fastReflection_QueryEpochsInfoResponse QueryEpochsInfoResponse
+type fastReflection_QueryEpochInfosResponse QueryEpochInfosResponse
 
-func (x *QueryEpochsInfoResponse) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_QueryEpochsInfoResponse)(x)
+func (x *QueryEpochInfosResponse) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_QueryEpochInfosResponse)(x)
 }
 
-func (x *QueryEpochsInfoResponse) slowProtoReflect() protoreflect.Message {
+func (x *QueryEpochInfosResponse) slowProtoReflect() protoreflect.Message {
 	mi := &file_kepler_epochs_query_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -452,43 +452,43 @@ func (x *QueryEpochsInfoResponse) slowProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_QueryEpochsInfoResponse_messageType fastReflection_QueryEpochsInfoResponse_messageType
-var _ protoreflect.MessageType = fastReflection_QueryEpochsInfoResponse_messageType{}
+var _fastReflection_QueryEpochInfosResponse_messageType fastReflection_QueryEpochInfosResponse_messageType
+var _ protoreflect.MessageType = fastReflection_QueryEpochInfosResponse_messageType{}
 
-type fastReflection_QueryEpochsInfoResponse_messageType struct{}
+type fastReflection_QueryEpochInfosResponse_messageType struct{}
 
-func (x fastReflection_QueryEpochsInfoResponse_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_QueryEpochsInfoResponse)(nil)
+func (x fastReflection_QueryEpochInfosResponse_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_QueryEpochInfosResponse)(nil)
 }
-func (x fastReflection_QueryEpochsInfoResponse_messageType) New() protoreflect.Message {
-	return new(fastReflection_QueryEpochsInfoResponse)
+func (x fastReflection_QueryEpochInfosResponse_messageType) New() protoreflect.Message {
+	return new(fastReflection_QueryEpochInfosResponse)
 }
-func (x fastReflection_QueryEpochsInfoResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryEpochsInfoResponse
+func (x fastReflection_QueryEpochInfosResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryEpochInfosResponse
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_QueryEpochsInfoResponse) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryEpochsInfoResponse
+func (x *fastReflection_QueryEpochInfosResponse) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryEpochInfosResponse
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_QueryEpochsInfoResponse) Type() protoreflect.MessageType {
-	return _fastReflection_QueryEpochsInfoResponse_messageType
+func (x *fastReflection_QueryEpochInfosResponse) Type() protoreflect.MessageType {
+	return _fastReflection_QueryEpochInfosResponse_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_QueryEpochsInfoResponse) New() protoreflect.Message {
-	return new(fastReflection_QueryEpochsInfoResponse)
+func (x *fastReflection_QueryEpochInfosResponse) New() protoreflect.Message {
+	return new(fastReflection_QueryEpochInfosResponse)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_QueryEpochsInfoResponse) Interface() protoreflect.ProtoMessage {
-	return (*QueryEpochsInfoResponse)(x)
+func (x *fastReflection_QueryEpochInfosResponse) Interface() protoreflect.ProtoMessage {
+	return (*QueryEpochInfosResponse)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -496,10 +496,10 @@ func (x *fastReflection_QueryEpochsInfoResponse) Interface() protoreflect.ProtoM
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_QueryEpochsInfoResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+func (x *fastReflection_QueryEpochInfosResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
 	if len(x.Epochs) != 0 {
-		value := protoreflect.ValueOfList(&_QueryEpochsInfoResponse_1_list{list: &x.Epochs})
-		if !f(fd_QueryEpochsInfoResponse_epochs, value) {
+		value := protoreflect.ValueOfList(&_QueryEpochInfosResponse_1_list{list: &x.Epochs})
+		if !f(fd_QueryEpochInfosResponse_epochs, value) {
 			return
 		}
 	}
@@ -516,15 +516,15 @@ func (x *fastReflection_QueryEpochsInfoResponse) Range(f func(protoreflect.Field
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_QueryEpochsInfoResponse) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_QueryEpochInfosResponse) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "kepler.epochs.QueryEpochsInfoResponse.epochs":
+	case "kepler.epochs.QueryEpochInfosResponse.epochs":
 		return len(x.Epochs) != 0
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.epochs.QueryEpochsInfoResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.epochs.QueryEpochInfosResponse"))
 		}
-		panic(fmt.Errorf("message kepler.epochs.QueryEpochsInfoResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message kepler.epochs.QueryEpochInfosResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -534,15 +534,15 @@ func (x *fastReflection_QueryEpochsInfoResponse) Has(fd protoreflect.FieldDescri
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryEpochsInfoResponse) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_QueryEpochInfosResponse) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "kepler.epochs.QueryEpochsInfoResponse.epochs":
+	case "kepler.epochs.QueryEpochInfosResponse.epochs":
 		x.Epochs = nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.epochs.QueryEpochsInfoResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.epochs.QueryEpochInfosResponse"))
 		}
-		panic(fmt.Errorf("message kepler.epochs.QueryEpochsInfoResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message kepler.epochs.QueryEpochInfosResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -552,19 +552,19 @@ func (x *fastReflection_QueryEpochsInfoResponse) Clear(fd protoreflect.FieldDesc
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_QueryEpochsInfoResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryEpochInfosResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "kepler.epochs.QueryEpochsInfoResponse.epochs":
+	case "kepler.epochs.QueryEpochInfosResponse.epochs":
 		if len(x.Epochs) == 0 {
-			return protoreflect.ValueOfList(&_QueryEpochsInfoResponse_1_list{})
+			return protoreflect.ValueOfList(&_QueryEpochInfosResponse_1_list{})
 		}
-		listValue := &_QueryEpochsInfoResponse_1_list{list: &x.Epochs}
+		listValue := &_QueryEpochInfosResponse_1_list{list: &x.Epochs}
 		return protoreflect.ValueOfList(listValue)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.epochs.QueryEpochsInfoResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.epochs.QueryEpochInfosResponse"))
 		}
-		panic(fmt.Errorf("message kepler.epochs.QueryEpochsInfoResponse does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message kepler.epochs.QueryEpochInfosResponse does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -578,17 +578,17 @@ func (x *fastReflection_QueryEpochsInfoResponse) Get(descriptor protoreflect.Fie
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryEpochsInfoResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_QueryEpochInfosResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "kepler.epochs.QueryEpochsInfoResponse.epochs":
+	case "kepler.epochs.QueryEpochInfosResponse.epochs":
 		lv := value.List()
-		clv := lv.(*_QueryEpochsInfoResponse_1_list)
+		clv := lv.(*_QueryEpochInfosResponse_1_list)
 		x.Epochs = *clv.list
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.epochs.QueryEpochsInfoResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.epochs.QueryEpochInfosResponse"))
 		}
-		panic(fmt.Errorf("message kepler.epochs.QueryEpochsInfoResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message kepler.epochs.QueryEpochInfosResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -602,45 +602,45 @@ func (x *fastReflection_QueryEpochsInfoResponse) Set(fd protoreflect.FieldDescri
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryEpochsInfoResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryEpochInfosResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "kepler.epochs.QueryEpochsInfoResponse.epochs":
+	case "kepler.epochs.QueryEpochInfosResponse.epochs":
 		if x.Epochs == nil {
 			x.Epochs = []*EpochInfo{}
 		}
-		value := &_QueryEpochsInfoResponse_1_list{list: &x.Epochs}
+		value := &_QueryEpochInfosResponse_1_list{list: &x.Epochs}
 		return protoreflect.ValueOfList(value)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.epochs.QueryEpochsInfoResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.epochs.QueryEpochInfosResponse"))
 		}
-		panic(fmt.Errorf("message kepler.epochs.QueryEpochsInfoResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message kepler.epochs.QueryEpochInfosResponse does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_QueryEpochsInfoResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryEpochInfosResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "kepler.epochs.QueryEpochsInfoResponse.epochs":
+	case "kepler.epochs.QueryEpochInfosResponse.epochs":
 		list := []*EpochInfo{}
-		return protoreflect.ValueOfList(&_QueryEpochsInfoResponse_1_list{list: &list})
+		return protoreflect.ValueOfList(&_QueryEpochInfosResponse_1_list{list: &list})
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.epochs.QueryEpochsInfoResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: kepler.epochs.QueryEpochInfosResponse"))
 		}
-		panic(fmt.Errorf("message kepler.epochs.QueryEpochsInfoResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message kepler.epochs.QueryEpochInfosResponse does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_QueryEpochsInfoResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_QueryEpochInfosResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in kepler.epochs.QueryEpochsInfoResponse", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in kepler.epochs.QueryEpochInfosResponse", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -648,7 +648,7 @@ func (x *fastReflection_QueryEpochsInfoResponse) WhichOneof(d protoreflect.Oneof
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_QueryEpochsInfoResponse) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_QueryEpochInfosResponse) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -659,7 +659,7 @@ func (x *fastReflection_QueryEpochsInfoResponse) GetUnknown() protoreflect.RawFi
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryEpochsInfoResponse) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_QueryEpochInfosResponse) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -671,7 +671,7 @@ func (x *fastReflection_QueryEpochsInfoResponse) SetUnknown(fields protoreflect.
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_QueryEpochsInfoResponse) IsValid() bool {
+func (x *fastReflection_QueryEpochInfosResponse) IsValid() bool {
 	return x != nil
 }
 
@@ -681,9 +681,9 @@ func (x *fastReflection_QueryEpochsInfoResponse) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_QueryEpochsInfoResponse) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_QueryEpochInfosResponse) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*QueryEpochsInfoResponse)
+		x := input.Message.Interface().(*QueryEpochInfosResponse)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -711,7 +711,7 @@ func (x *fastReflection_QueryEpochsInfoResponse) ProtoMethods() *protoiface.Meth
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*QueryEpochsInfoResponse)
+		x := input.Message.Interface().(*QueryEpochInfosResponse)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -757,7 +757,7 @@ func (x *fastReflection_QueryEpochsInfoResponse) ProtoMethods() *protoiface.Meth
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*QueryEpochsInfoResponse)
+		x := input.Message.Interface().(*QueryEpochInfosResponse)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -789,10 +789,10 @@ func (x *fastReflection_QueryEpochsInfoResponse) ProtoMethods() *protoiface.Meth
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryEpochsInfoResponse: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryEpochInfosResponse: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryEpochsInfoResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryEpochInfosResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			case 1:
@@ -1729,9 +1729,9 @@ func (*QueryEpochsInfoRequest) Descriptor() ([]byte, []int) {
 	return file_kepler_epochs_query_proto_rawDescGZIP(), []int{0}
 }
 
-// QueryEpochsInfoResponse is response type for the Query/Epochs RPC method.
+// QueryEpochInfosResponse is response type for the Query/Epochs RPC method.
 // querying all epoch info.
-type QueryEpochsInfoResponse struct {
+type QueryEpochInfosResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -1740,8 +1740,8 @@ type QueryEpochsInfoResponse struct {
 	Epochs []*EpochInfo `protobuf:"bytes,1,rep,name=epochs,proto3" json:"epochs,omitempty"`
 }
 
-func (x *QueryEpochsInfoResponse) Reset() {
-	*x = QueryEpochsInfoResponse{}
+func (x *QueryEpochInfosResponse) Reset() {
+	*x = QueryEpochInfosResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_kepler_epochs_query_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1749,18 +1749,18 @@ func (x *QueryEpochsInfoResponse) Reset() {
 	}
 }
 
-func (x *QueryEpochsInfoResponse) String() string {
+func (x *QueryEpochInfosResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*QueryEpochsInfoResponse) ProtoMessage() {}
+func (*QueryEpochInfosResponse) ProtoMessage() {}
 
-// Deprecated: Use QueryEpochsInfoResponse.ProtoReflect.Descriptor instead.
-func (*QueryEpochsInfoResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use QueryEpochInfosResponse.ProtoReflect.Descriptor instead.
+func (*QueryEpochInfosResponse) Descriptor() ([]byte, []int) {
 	return file_kepler_epochs_query_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *QueryEpochsInfoResponse) GetEpochs() []*EpochInfo {
+func (x *QueryEpochInfosResponse) GetEpochs() []*EpochInfo {
 	if x != nil {
 		return x.Epochs
 	}
@@ -1856,7 +1856,7 @@ var file_kepler_epochs_query_proto_rawDesc = []byte{
 	0x6e, 0x65, 0x73, 0x69, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x18, 0x0a, 0x16, 0x51,
 	0x75, 0x65, 0x72, 0x79, 0x45, 0x70, 0x6f, 0x63, 0x68, 0x73, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65,
 	0x71, 0x75, 0x65, 0x73, 0x74, 0x22, 0x51, 0x0a, 0x17, 0x51, 0x75, 0x65, 0x72, 0x79, 0x45, 0x70,
-	0x6f, 0x63, 0x68, 0x73, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x6f, 0x63, 0x68, 0x49, 0x6e, 0x66, 0x6f, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
 	0x12, 0x36, 0x0a, 0x06, 0x65, 0x70, 0x6f, 0x63, 0x68, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b,
 	0x32, 0x18, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e, 0x65, 0x70, 0x6f, 0x63, 0x68, 0x73,
 	0x2e, 0x45, 0x70, 0x6f, 0x63, 0x68, 0x49, 0x6e, 0x66, 0x6f, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00,
@@ -1874,7 +1874,7 @@ var file_kepler_epochs_query_proto_rawDesc = []byte{
 	0x51, 0x75, 0x65, 0x72, 0x79, 0x45, 0x70, 0x6f, 0x63, 0x68, 0x73, 0x49, 0x6e, 0x66, 0x6f, 0x52,
 	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x26, 0x2e, 0x6b, 0x65, 0x70, 0x6c, 0x65, 0x72, 0x2e,
 	0x65, 0x70, 0x6f, 0x63, 0x68, 0x73, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x45, 0x70, 0x6f, 0x63,
-	0x68, 0x73, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x25,
+	0x68, 0x49, 0x6e, 0x66, 0x6f, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x25,
 	0x82, 0xd3, 0xe4, 0x93, 0x02, 0x1f, 0x12, 0x1d, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2f,
 	0x65, 0x70, 0x6f, 0x63, 0x68, 0x73, 0x2f, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2f, 0x65,
 	0x70, 0x6f, 0x63, 0x68, 0x73, 0x12, 0x8f, 0x01, 0x0a, 0x0c, 0x43, 0x75, 0x72, 0x72, 0x65, 0x6e,
@@ -1915,16 +1915,16 @@ func file_kepler_epochs_query_proto_rawDescGZIP() []byte {
 var file_kepler_epochs_query_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_kepler_epochs_query_proto_goTypes = []interface{}{
 	(*QueryEpochsInfoRequest)(nil),    // 0: kepler.epochs.QueryEpochsInfoRequest
-	(*QueryEpochsInfoResponse)(nil),   // 1: kepler.epochs.QueryEpochsInfoResponse
+	(*QueryEpochInfosResponse)(nil),   // 1: kepler.epochs.QueryEpochInfosResponse
 	(*QueryCurrentEpochRequest)(nil),  // 2: kepler.epochs.QueryCurrentEpochRequest
 	(*QueryCurrentEpochResponse)(nil), // 3: kepler.epochs.QueryCurrentEpochResponse
 	(*EpochInfo)(nil),                 // 4: kepler.epochs.EpochInfo
 }
 var file_kepler_epochs_query_proto_depIdxs = []int32{
-	4, // 0: kepler.epochs.QueryEpochsInfoResponse.epochs:type_name -> kepler.epochs.EpochInfo
+	4, // 0: kepler.epochs.QueryEpochInfosResponse.epochs:type_name -> kepler.epochs.EpochInfo
 	0, // 1: kepler.epochs.Query.EpochInfos:input_type -> kepler.epochs.QueryEpochsInfoRequest
 	2, // 2: kepler.epochs.Query.CurrentEpoch:input_type -> kepler.epochs.QueryCurrentEpochRequest
-	1, // 3: kepler.epochs.Query.EpochInfos:output_type -> kepler.epochs.QueryEpochsInfoResponse
+	1, // 3: kepler.epochs.Query.EpochInfos:output_type -> kepler.epochs.QueryEpochInfosResponse
 	3, // 4: kepler.epochs.Query.CurrentEpoch:output_type -> kepler.epochs.QueryCurrentEpochResponse
 	3, // [3:5] is the sub-list for method output_type
 	1, // [1:3] is the sub-list for method input_type
@@ -1953,7 +1953,7 @@ func file_kepler_epochs_query_proto_init() {
 			}
 		}
 		file_kepler_epochs_query_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QueryEpochsInfoResponse); i {
+			switch v := v.(*QueryEpochInfosResponse); i {
 			case 0:
 				return &v.state
 			case 1:
