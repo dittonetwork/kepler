@@ -10,7 +10,7 @@ option go_package = "github.com/dittonetwork/kepler/x/epochs/types";
 // Query defines the gRPC querier service.
 service Query {
   // EpochInfos provide running epochInfos
-  rpc EpochInfos(QueryEpochsInfoRequest) returns (QueryEpochInfosResponse) {
+  rpc EpochInfos(QueryEpochsInfoRequest) returns (EpochsInfoResponse) {
     option (google.api.http).get = "/cosmos/epochs/v1beta1/epochs";
   }
   // CurrentEpoch provide current epoch of specified identifier
@@ -25,7 +25,7 @@ message QueryEpochsInfoRequest {}
 
 // QueryEpochInfosResponse is response type for the Query/Epochs RPC method.
 // querying all epoch info.
-message QueryEpochInfosResponse {
+message EpochsInfoResponse {
   // epochs holds all the epochInfos of this module.
   repeated EpochInfo epochs = 1 [(gogoproto.nullable) = false];
 }
