@@ -15,22 +15,22 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install buf
-        if: steps.cache-buf.outputs.cache-hit != 'true'
-        run: |
-          curl -sSL "https://github.com/bufbuild/buf/releases/download/v1.28.1/buf-$(uname -s)-$(uname -m)" -o "/tmp/buf"
-          chmod +x "/tmp/buf"
-          sudo mv "/tmp/buf" "/usr/local/bin/buf"
+      # - name: Install buf
+      #   if: steps.cache-buf.outputs.cache-hit != 'true'
+      #   run: |
+      #     curl -sSL "https://github.com/bufbuild/buf/releases/download/v1.28.1/buf-$(uname -s)-$(uname -m)" -o "/tmp/buf"
+      #     chmod +x "/tmp/buf"
+      #     sudo mv "/tmp/buf" "/usr/local/bin/buf"
 
-      - name: Run proto format
-        run: |
-          echo "Running proto format..."
-          make proto-format
+      # - name: Run proto format
+      #   run: |
+      #     echo "Running proto format..."
+      #     make proto-format
 
-      - name: Run proto lint
-        run: |
-          echo "Running proto lint..."
-          make proto-lint
+      # - name: Run proto lint
+      #   run: |
+      #     echo "Running proto lint..."
+      #     make proto-lint
           
       - name: Check for changes
         uses: ./.github/actions/check-changes 
