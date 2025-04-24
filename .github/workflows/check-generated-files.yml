@@ -21,16 +21,6 @@ jobs:
           go-version: '1.x'
           cache: true
 
-      # - name: Cache Go modules
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: |
-      #       ~/go/pkg/mod
-      #       ~/.cache/go-build
-      #     key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-go-
-
       - name: Check mock files
         run: |
           echo "Running make generate-mocks..."
@@ -64,36 +54,12 @@ jobs:
           go-version: '1.x'
           cache: true
 
-      # - name: Cache Go modules
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: |
-      #       ~/go/pkg/mod
-      #       ~/.cache/go-build
-      #     key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-go-
-
-      # - name: Cache buf binary
-      #   uses: actions/cache@v3
-      #   id: cache-buf
-      #   with:
-      #     path: /usr/local/bin/buf
-      #     key: ${{ runner.os }}-buf-v1.28.1
-
       - name: Install buf
         if: steps.cache-buf.outputs.cache-hit != 'true'
         run: |
           curl -sSL "https://github.com/bufbuild/buf/releases/download/v1.28.1/buf-$(uname -s)-$(uname -m)" -o "/tmp/buf"
           chmod +x "/tmp/buf"
           sudo mv "/tmp/buf" "/usr/local/bin/buf"
-
-      # - name: Cache ignite binary
-      #   uses: actions/cache@v3
-      #   id: cache-ignite
-      #   with:
-      #     path: ${{ github.workspace }}/ignite
-      #     key: ${{ runner.os }}-ignite-latest
 
       - name: Install Ignite
         if: steps.cache-ignite.outputs.cache-hit != 'true'
@@ -102,6 +68,8 @@ jobs:
           echo "${{ github.workspace }}" >> $GITHUB_PATH
 
       - name: Check proto files
+        env:
+          DO_NOT_TRACK: 1
         run: |
           echo "Running proto format and generation..."
           # Run proto-format and proto-lint in parallel
