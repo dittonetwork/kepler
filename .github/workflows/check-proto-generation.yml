@@ -21,13 +21,10 @@ jobs:
           go-version: '1.24.*'
           cache: true
 
-      - name: Run proto generation
+      - name: Run Proto Generation
         uses: ignite/cli/actions/cli@main
-        env:
-          DO_NOT_TRACK: 1
-        run: |
-          echo "Running proto generation..."
-          make proto-gen > /dev/null
-          
+        with:
+          args: generate proto-go --yes
+
       - name: Check for changes
         uses: ./.github/actions/check-changes
