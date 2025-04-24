@@ -22,15 +22,15 @@ jobs:
       #     chmod +x "/tmp/buf"
       #     sudo mv "/tmp/buf" "/usr/local/bin/buf"
 
-      # - name: Run proto format
-      #   run: |
-      #     echo "Running proto format..."
-      #     make proto-format
+      - name: Run proto format
+        run: |
+          echo "Running proto format..."
+          make proto-format
 
-      # - name: Run proto lint
-      #   run: |
-      #     echo "Running proto lint..."
-      #     make proto-lint
+      - name: Run proto lint
+        run: |
+          echo "Running proto lint..."
+          make proto-lint
           
       - name: Check for changes
         uses: ./.github/actions/check-changes 
