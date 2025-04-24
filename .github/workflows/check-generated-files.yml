@@ -99,7 +99,7 @@ jobs:
         if: steps.cache-ignite.outputs.cache-hit != 'true'
         run: |
           curl -sSL "https://get.ignite.com/cli" | bash
-          echo "${{ github.workspace }}/ignite" >> $GITHUB_PATH
+          echo "${{ github.workspace }}" >> $GITHUB_PATH
 
       - name: Check proto files
         run: |
