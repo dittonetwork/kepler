@@ -26,9 +26,9 @@ func NewQuerier(k Keeper) Querier {
 func (q Querier) EpochInfos(
 	ctx context.Context,
 	_ *types.QueryEpochsInfoRequest,
-) (*types.QueryEpochsInfoResponse, error) {
+) (*types.QueryEpochInfosResponse, error) {
 	epochs, err := q.keeper.AllEpochInfos(ctx)
-	return &types.QueryEpochsInfoResponse{Epochs: epochs}, err
+	return &types.QueryEpochInfosResponse{Epochs: epochs}, err
 }
 
 // CurrentEpoch provides current epoch of specified identifier.
