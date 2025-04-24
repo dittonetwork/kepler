@@ -18,18 +18,18 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.x'
+          go-version: '1.23'
           cache: true
 
-      - name: Cache Go modules
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/go/pkg/mod
-            ~/.cache/go-build
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
+      # - name: Cache Go modules
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: |
+      #       ~/go/pkg/mod
+      #       ~/.cache/go-build
+      #     key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-go-
 
       - name: Check mock files
         run: |
@@ -61,25 +61,25 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.x'
+          go-version: '1.23'
           cache: true
 
-      - name: Cache Go modules
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/go/pkg/mod
-            ~/.cache/go-build
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
+      # - name: Cache Go modules
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: |
+      #       ~/go/pkg/mod
+      #       ~/.cache/go-build
+      #     key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-go-
 
-      - name: Cache buf binary
-        uses: actions/cache@v3
-        id: cache-buf
-        with:
-          path: /usr/local/bin/buf
-          key: ${{ runner.os }}-buf-v1.28.1
+      # - name: Cache buf binary
+      #   uses: actions/cache@v3
+      #   id: cache-buf
+      #   with:
+      #     path: /usr/local/bin/buf
+      #     key: ${{ runner.os }}-buf-v1.28.1
 
       - name: Install buf
         if: steps.cache-buf.outputs.cache-hit != 'true'
@@ -88,12 +88,12 @@ jobs:
           chmod +x "/tmp/buf"
           sudo mv "/tmp/buf" "/usr/local/bin/buf"
 
-      - name: Cache ignite binary
-        uses: actions/cache@v3
-        id: cache-ignite
-        with:
-          path: ${{ github.workspace }}/ignite
-          key: ${{ runner.os }}-ignite-latest
+      # - name: Cache ignite binary
+      #   uses: actions/cache@v3
+      #   id: cache-ignite
+      #   with:
+      #     path: ${{ github.workspace }}/ignite
+      #     key: ${{ runner.os }}-ignite-latest
 
       - name: Install Ignite
         if: steps.cache-ignite.outputs.cache-hit != 'true'
