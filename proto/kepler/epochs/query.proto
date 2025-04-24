@@ -23,9 +23,9 @@ service Query {
 // querying all epoch info.
 message QueryEpochsInfoRequest {}
 
-// QueryEpochsInfoResponse is response type for the Query/Epochs RPC method.
+// EpochsInfoResponse is response type for the Query/Epochs RPC method.
 // querying all epoch info.
-message QueryEpochsInfoResponse {
+message EpochsInfoResponse {
   // epochs holds all the epochInfos of this module.
   repeated EpochInfo epochs = 1 [(gogoproto.nullable) = false];
 }
