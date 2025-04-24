@@ -19,6 +19,17 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: '1.21'
+          cache: true
+
+      - name: Cache Go modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/go/pkg/mod
+            ~/.cache/go-build
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
 
       - name: Check mock files
         run: |
@@ -51,6 +62,17 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: '1.21'
+          cache: true
+
+      - name: Cache Go modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/go/pkg/mod
+            ~/.cache/go-build
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
 
       - name: Cache buf binary
         uses: actions/cache@v3
@@ -65,6 +87,18 @@ jobs:
           curl -sSL "https://github.com/bufbuild/buf/releases/download/v1.28.1/buf-$(uname -s)-$(uname -m)" -o "/tmp/buf"
           chmod +x "/tmp/buf"
           sudo mv "/tmp/buf" "/usr/local/bin/buf"
+
+      - name: Cache ignite binary
+        uses: actions/cache@v3
+        id: cache-ignite
+        with:
+          path: /usr/local/bin/ignite
+          key: ${{ runner.os }}-ignite-latest
+
+      - name: Install Ignite
+        if: steps.cache-ignite.outputs.cache-hit != 'true'
+        run: |
+          curl -sSL "https://get.ignite.com/cli" | bash
 
       - name: Check proto files
         run: |
