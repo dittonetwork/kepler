@@ -6,10 +6,6 @@ import (
 	epochstypes "github.com/dittonetwork/kepler/x/epochs/types"
 	genutiltypes "github.com/dittonetwork/kepler/x/genutil/types"
 
-	workflowmodulev1 "github.com/dittonetwork/kepler/api/kepler/workflow/module"
-	_ "github.com/dittonetwork/kepler/x/workflow/module" // import for side-effects
-	workflowmoduletypes "github.com/dittonetwork/kepler/x/workflow/types"
-
 	committeemodulev1 "github.com/dittonetwork/kepler/api/kepler/committee/module"
 	_ "github.com/dittonetwork/kepler/x/committee/module" // import for side-effects
 	committeemoduletypes "github.com/dittonetwork/kepler/x/committee/types"
@@ -49,7 +45,6 @@ var (
 		genutiltypes.ModuleName,
 		// chain modules
 		epochstypes.ModuleName,
-		workflowmoduletypes.ModuleName,
 		committeemoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/initGenesis
 	}
@@ -62,7 +57,6 @@ var (
 		// cosmos sdk modules
 		// chain modules
 		epochstypes.ModuleName,
-		workflowmoduletypes.ModuleName,
 		committeemoduletypes.ModuleName,
 		restakingmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/beginBlockers
@@ -72,7 +66,6 @@ var (
 		// cosmos sdk modules
 		// chain modules
 		epochstypes.ModuleName,
-		workflowmoduletypes.ModuleName,
 		committeemoduletypes.ModuleName,
 		restakingmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/endBlockers
@@ -149,10 +142,6 @@ var (
 			{
 				Name:   epochstypes.ModuleName,
 				Config: appconfig.WrapAny(&epochsmodulev1.Module{}),
-			},
-			{
-				Name:   workflowmoduletypes.ModuleName,
-				Config: appconfig.WrapAny(&workflowmodulev1.Module{}),
 			},
 			{
 				Name: committeemoduletypes.ModuleName,
