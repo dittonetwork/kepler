@@ -29,7 +29,6 @@ import (
 	epochskeeper "github.com/dittonetwork/kepler/x/epochs/keeper"
 	"github.com/dittonetwork/kepler/x/genutil"
 	genutiltypes "github.com/dittonetwork/kepler/x/genutil/types"
-	workflowmodulekeeper "github.com/dittonetwork/kepler/x/workflow/keeper"
 
 	committeemodulekeeper "github.com/dittonetwork/kepler/x/committee/keeper"
 
@@ -73,7 +72,6 @@ type App struct {
 	ConsensusParamsKeeper consensuskeeper.Keeper
 
 	EpochsKeeper    *epochskeeper.Keeper
-	WorkflowKeeper  workflowmodulekeeper.Keeper
 	CommitteeKeeper committeemodulekeeper.Keeper
 	RestakingKeeper *restakingmodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
@@ -148,7 +146,6 @@ func New(
 		&app.ConsensusParamsKeeper,
 		&app.RestakingKeeper,
 		&app.EpochsKeeper,
-		&app.WorkflowKeeper,
 		&app.CommitteeKeeper,
 		// this line is used by starport scaffolding # stargate/app/keeperDefinition
 	); err != nil {
