@@ -22,6 +22,8 @@ jobs:
           cache: true
 
       - name: Run Proto Generation
+        env:
+          DO_NOT_TRACK: 1
         uses: ignite/cli/actions/cli@main
         with:
           args: generate proto-go --yes
