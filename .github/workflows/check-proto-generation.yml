@@ -1,0 +1,35 @@
+name: Check Proto Generation Files
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  check-proto-gen:
+    name: Check Proto Generation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.24.*'
+          cache: true
+        
+      - name: Install Ignite CLI
+        uses: ignite/cli/actions/cli@main
+
+      - name: Run proto generation
+        env:
+          DO_NOT_TRACK: 1
+        run: |
+          echo "Running proto generation..."
+          make proto-gen > /dev/null
+          
+      - name: Check for changes
+        uses: ./.github/actions/check-changes

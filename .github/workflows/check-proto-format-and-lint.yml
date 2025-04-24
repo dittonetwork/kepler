@@ -1,0 +1,31 @@
+name: Check Proto Files Format and Lint
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  check-proto-format-lint:
+    name: Check Proto Format and Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install buf
+        if: steps.cache-buf.outputs.cache-hit != 'true'
+        run: |
+          curl -sSL "https://github.com/bufbuild/buf/releases/download/v1.28.1/buf-$(uname -s)-$(uname -m)" -o "/tmp/buf"
+          chmod +x "/tmp/buf"
+          sudo mv "/tmp/buf" "/usr/local/bin/buf"
+
+      - name: Run proto format and lint
+        run: |
+          echo "Running proto format and generation..."
+          make proto-format & make proto-lint & wait
+          
+      - name: Check for changes
+        uses: ./.github/actions/check-changes 
