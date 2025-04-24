@@ -2,9 +2,8 @@ name: Check Generated Mock Files
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main, develop, testnet ]
   pull_request:
-    branches: [ main, develop ]
 
 jobs:
   check-mock-files:

@@ -2,9 +2,8 @@ name: Check Proto Files Format and Lint
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main, develop, testnet ]
   pull_request:
-    branches: [ main, develop ]
 
 jobs:
   check-proto-format-lint:
