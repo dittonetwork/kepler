@@ -64,8 +64,9 @@ jobs:
       - name: Install Ignite
         if: steps.cache-ignite.outputs.cache-hit != 'true'
         run: |
-          curl -sSL "https://get.ignite.com/cli" | bash
-          echo "${{ github.workspace }}" >> $GITHUB_PATH
+          mkdir -p $HOME/bin
+          curl -sSL "https://get.ignite.com/cli" | OUT_DIR=$HOME/bin bash
+          echo "$HOME/bin" >> $GITHUB_PATH
 
       - name: Check proto files
         env:
@@ -75,10 +76,10 @@ jobs:
           # Run proto-format and proto-lint in parallel
           make proto-format & make proto-lint & wait
           # Run proto-gen after the parallel tasks complete
-          make proto-gen
+          make proto-gen > /dev/null
 
           echo "Checking for changes in generated files..."
-          if [ -n "$(git status --porcelain)" ]; then
+          if [ -n "$(git status --porcelain ]; then
             echo "Following files are changed..."
             git status
 
