@@ -28,7 +28,7 @@ jobs:
 
       - name: Prepare Release Variables
         id: vars
-        uses: ignite/cli/actions/release/vars@v28.9.0
+        uses: ignite/cli/actions/release/vars@main
 
       - name: Issue Release Assets
         uses: dittonetwork/ignite-cli/actions/cli@main
