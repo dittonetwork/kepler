@@ -28,6 +28,10 @@ jobs:
       - uses: bufbuild/buf-lint-action@v1
       - name: lint format
         run: buf format -d --exit-code
+      - name: ignite version
+        uses: ignite/cli/actions/cli@main
+        with:
+          args: version
       - name: Run proto generation
         env:
           DO_NOT_TRACK: 1
