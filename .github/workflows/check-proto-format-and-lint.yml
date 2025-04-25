@@ -28,11 +28,7 @@ jobs:
         run: buf format -w
 
       - name: Run proto generation
-        env:
-          DO_NOT_TRACK: 1
-        uses: ignite/cli/actions/cli@main
-        with:
-          args: generate proto-go --yes
+        run: buf generate
 
       - name: Check for changes
         uses: ./.github/actions/check-changes 
