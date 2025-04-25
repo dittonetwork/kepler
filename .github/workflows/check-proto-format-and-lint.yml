@@ -28,7 +28,7 @@ jobs:
         run: buf format -w
 
       - name: Run proto generation
-        run: buf generate
+        run: buf generate --path proto
 
       - name: Check for changes
         uses: ./.github/actions/check-changes 
