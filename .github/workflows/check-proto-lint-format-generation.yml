@@ -27,7 +27,15 @@ jobs:
       - name: Proto format
         run: buf format -d --exit-code
 
-      - name: Proto generation
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.24.*'
+          cache: true
+
+      - name: Run proto generation
+        env:
+          DO_NOT_TRACK: 1
         uses: ignite/cli/actions/cli@main
         with:
           args: generate proto-go --yes
