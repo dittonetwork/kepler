@@ -14,21 +14,25 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install buf
-        run: |
-          curl -sSL "https://github.com/bufbuild/buf/releases/download/v1.28.1/buf-$(uname -s)-$(uname -m)" -o "/tmp/buf"
-          chmod +x "/tmp/buf"
-          sudo mv "/tmp/buf" "/usr/local/bin/buf"
+      - uses: bufbuild/buf-setup-action@v1
+        with:
+          version: "1.46.0"
+          buf_api_token: ${{ secrets.BUF_TOKEN }}
 
-      - name: Run proto format
-        run: |
-          echo "Running proto format..."
-          make proto-format
+      - name: install deps
+        run: buf mod update
 
-      - name: Run proto lint
-        run: |
-          echo "Running proto lint..."
-          make proto-lint
-          
+      - uses: bufbuild/buf-lint-action@v1
+
+      - name: lint format
+        run: buf format -w
+
+      - name: Run proto generation
+        env:
+          DO_NOT_TRACK: 1
+        uses: ignite/cli/actions/cli@main
+        with:
+          args: generate proto-go --yes
+
       - name: Check for changes
         uses: ./.github/actions/check-changes 

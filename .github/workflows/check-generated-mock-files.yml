@@ -21,9 +21,7 @@ jobs:
           cache: true
 
       - name: Generate mocks
-        run: |
-          echo "Running make generate-mocks..."
-          make generate-mocks
-          
+        run: make generate-mocks
+
       - name: Check for changes
         uses: ./.github/actions/check-changes
