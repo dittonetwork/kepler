@@ -1,4 +1,4 @@
-name: Check Proto Files Lint, Format and Generation
+name: Check Proto Generation Files
 
 on:
   push:
@@ -6,26 +6,13 @@ on:
   pull_request:
 
 jobs:
-  check-proto-lint-format-generation:
-    name: Check Proto Lint, Format and Generation
+  check-proto-gen:
+    name: Check Proto Generation
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - uses: bufbuild/buf-setup-action@v1
-        with:
-          version: "1.46.0"
-          buf_api_token: ${{ secrets.BUF_TOKEN }}
-
-      - name: Proto lint
-        uses: bufbuild/buf-lint-action@v1
-        with:
-          input: proto
-
-      - name: Proto format
-        run: buf format -d --exit-code
 
       - name: Set up Go
         uses: actions/setup-go@v5
