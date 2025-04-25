@@ -11,14 +11,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
           go-version: '1.24.*'
           cache: true
+
+      - uses: bufbuild/buf-setup-action@v1
+        with:
+          version: "1.46.0"
+          buf_api_token: ${{ secrets.BUF_TOKEN }}
+
+      - uses: bufbuild/buf-lint-action@v1
+
+      - name: Format proto files
+        run: buf format -d --exit-code
 
       - name: Install ignite
         run: curl https://get.ignite.com/cli! | bash
@@ -27,6 +35,8 @@ jobs:
         run: which ignite
 
       - name: Run proto generation
+        env:
+          DO_NOT_TRACK: 1
         run: ignite generate proto-go --yes
         
       - name: Check for changes
