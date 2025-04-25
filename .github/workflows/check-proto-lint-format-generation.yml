@@ -30,13 +30,9 @@ jobs:
         run: buf format -d --exit-code
       
       # Install buf as a Go module for ignite
-      - name: Install buf as a Go module
-        run: go install github.com/bufbuild/buf/cmd/buf@v1.46.0
-      
-      - name: ignite version
-        uses: ignite/cli/actions/cli@main
-        with:
-          args: version
+      - name: run go mod tidy
+        run: go mod tidy
+
       - name: Run proto generation
         env:
           DO_NOT_TRACK: 1
