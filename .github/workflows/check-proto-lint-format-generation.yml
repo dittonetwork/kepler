@@ -25,7 +25,7 @@ jobs:
           input: proto
 
       - name: Proto format
-        run: buf format -w
+        run: buf format -d --exit-code
 
       - name: Proto generation
         uses: ignite/cli/actions/cli@main
