@@ -28,7 +28,9 @@ jobs:
         run: buf format -w
 
       - name: Run proto generation
-        run: buf generate --path proto
+        uses: ignite/cli/actions/cli@main
+        with:
+          args: generate proto-go --yes
 
       - name: Check for changes
         uses: ./.github/actions/check-changes 
