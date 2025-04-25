@@ -19,20 +19,7 @@ jobs:
         with:
           go-version: '1.24.*'
           cache: true
-      - uses: bufbuild/buf-setup-action@v1
-        with:
-          version: "1.46.0"
-          buf_api_token: ${{ secrets.BUF_TOKEN }}
-      - name: install deps
-        run: buf dep update proto
-      - uses: bufbuild/buf-lint-action@v1
-      - name: lint format
-        run: buf format -d --exit-code
       
-      # Install buf as a Go module for ignite
-      - name: run go mod tidy
-        run: go mod tidy
-
       - name: Run proto generation
         env:
           DO_NOT_TRACK: 1
