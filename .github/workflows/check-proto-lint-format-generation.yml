@@ -20,9 +20,9 @@ jobs:
           buf_api_token: ${{ secrets.BUF_TOKEN }}
 
       - name: Proto lint
-      uses: bufbuild/buf-lint-action@v1
-        with:
-          input: proto
+        uses: bufbuild/buf-lint-action@v1
+          with:
+            input: proto
 
       - name: Proto format
         run: buf format -w
