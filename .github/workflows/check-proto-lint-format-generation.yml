@@ -27,10 +27,10 @@ jobs:
       - name: Proto format
         run: buf format -w
 
-      - name: Proto generation
-        uses: ignite/cli/actions/cli@main
-        with:
-          args: generate proto-go --yes
+      # - name: Proto generation
+      #   uses: ignite/cli/actions/cli@main
+      #   with:
+      #     args: generate proto-go --yes
 
       - name: Check for changes
         uses: ./.github/actions/check-changes 
