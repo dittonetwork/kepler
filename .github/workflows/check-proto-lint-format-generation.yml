@@ -20,12 +20,14 @@ jobs:
           go-version: '1.24.*'
           cache: true
 
-      - name: Run proto generation
-        env:
-          DO_NOT_TRACK: 1
-        uses: ignite/cli/actions/cli@v28.9.0
-        with:
-          args: generate proto-go --yes
+      - name: Install ignite
+        run: curl https://get.ignite.com/cli! | bash
 
+      - name: Check ignite
+        run: which ignite
+
+      - name: Run proto generation
+        run: ignite generate proto-go --yes
+        
       - name: Check for changes
         uses: ./.github/actions/check-changes
