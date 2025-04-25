@@ -23,7 +23,7 @@ jobs:
       - name: Run proto generation
         env:
           DO_NOT_TRACK: 1
-        uses: ignite/cli/actions/cli@v28.9.0
+        uses: ignite/cli/actions/cli@main
         with:
           args: generate proto-go --yes
 
