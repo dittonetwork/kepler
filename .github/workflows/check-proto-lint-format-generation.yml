@@ -21,8 +21,8 @@ jobs:
 
       - name: Proto lint
         uses: bufbuild/buf-lint-action@v1
-          with:
-            input: proto
+        with:
+          input: proto
 
       - name: Proto format
         run: buf format -w
