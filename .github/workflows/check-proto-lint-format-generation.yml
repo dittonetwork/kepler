@@ -24,7 +24,7 @@ jobs:
           version: "1.46.0"
           buf_api_token: ${{ secrets.BUF_TOKEN }}
       - name: install deps
-        run: buf mod update
+        run: buf dep update
       - uses: bufbuild/buf-lint-action@v1
       - name: lint format
         run: buf format -d --exit-code
