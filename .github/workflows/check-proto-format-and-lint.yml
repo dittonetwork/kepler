@@ -26,7 +26,7 @@ jobs:
           buf_api_token: ${{ secrets.BUF_TOKEN }}
 
       - name: install deps
-        run: buf mod update
+        run: buf mod update proto
 
       - uses: bufbuild/buf-lint-action@v1
 
