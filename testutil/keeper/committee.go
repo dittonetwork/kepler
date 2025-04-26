@@ -37,12 +37,14 @@ func CommitteeKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {
 	ctrl := gomock.NewController(t)
 	restakingKeeper := committeemock.NewMockRestakingKeeper(ctrl)
 	accountKeeper := committeemock.NewMockAccountKeeper(ctrl)
+	bankKeeper := committeemock.NewMockBankKeeper(ctrl)
 	repo := committeemock.NewMockRepository(ctrl)
 	ctx := sdk.NewContext(stateStore, cmtproto.Header{}, false, log.NewNopLogger())
 
 	k := keeper.NewKeeper(
 		authority.String(),
 		accountKeeper,
+		bankKeeper,
 		restakingKeeper,
 		repo,
 		ctx.Logger(),

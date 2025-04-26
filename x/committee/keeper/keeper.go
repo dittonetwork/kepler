@@ -41,6 +41,7 @@ type Keeper struct {
 	repository types.Repository
 
 	account   types.AccountKeeper
+	bank      types.BankKeeper
 	restaking types.RestakingKeeper
 
 	epochMainID string
@@ -53,6 +54,7 @@ type Keeper struct {
 func NewKeeper(
 	authority string,
 	account types.AccountKeeper,
+	bank types.BankKeeper,
 	restaking types.RestakingKeeper,
 	repo types.Repository,
 	logger log.Logger,
@@ -69,6 +71,7 @@ func NewKeeper(
 	k := Keeper{
 		authority:       authority,
 		account:         account,
+		bank:            bank,
 		restaking:       restaking,
 		repository:      repo,
 		router:          router,
