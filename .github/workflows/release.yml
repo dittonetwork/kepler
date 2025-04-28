@@ -30,6 +30,17 @@ jobs:
         id: vars
         uses: ignite/cli/actions/release/vars@main
 
+      - name: Install git-chglog
+        # if: ${{ steps.vars.outputs.should_release == 'true' }}
+        run: |
+          go install github.com/git-chglog/git-chglog/cmd/git-chglog@latest
+
+      - name: Generate Changelog
+        # if: ${{ steps.vars.outputs.should_release == 'true' }}
+        run: |
+          git-chglog -o CHANGELOG.md
+          cat CHANGELOG.md
+
       - name: Issue Release Assets
         uses: ignite/cli/actions/cli@main
         if: ${{ steps.vars.outputs.should_release == 'true' }}
@@ -61,6 +72,7 @@ jobs:
         with:
           tag_name: ${{ steps.vars.outputs.tag_name }}
           files: release/*
+          body_path: CHANGELOG.md
           prerelease: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
