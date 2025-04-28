@@ -45,6 +45,15 @@ func (k Keeper) CreateCommittee(ctx sdk.Context, epoch int64) (types.Committee, 
 		return types.Committee{}, sdkerrors.Wrap(err, "failed to get multisig address")
 	}
 
+	coins := sdk.NewCoins(sdk.NewInt64Coin("ditto", 100000)) //nolint: mnd // @TODO workaround
+	if err = k.bank.MintCoins(ctx, "committee", coins); err != nil {
+		return types.Committee{}, err
+	}
+	if err = k.bank.SendCoinsFromModuleToAccount(ctx, "committee",
+		sdk.MustAccAddressFromBech32(committee.Address), coins); err != nil {
+		return types.Committee{}, err
+	}
+
 	err = k.repository.SetCommittee(ctx, epoch, committee)
 	if err != nil {
 		return types.Committee{}, sdkerrors.Wrap(err, "failed to set committee")

@@ -227,6 +227,7 @@ func ProvideModule(in ModuleInputs) ModuleOutputs {
 	k := keeper.NewKeeper(
 		authority.String(),
 		in.AccountKeeper,
+		in.BankKeeper,
 		in.RestakingKeeper,
 		repo,
 		in.Logger,
