@@ -35,6 +35,10 @@ jobs:
         run: |
           docker pull quay.io/git-chglog/git-chglog:latest
           docker run -v "$PWD":/workdir quay.io/git-chglog/git-chglog -o CHANGELOG.md
+
+      - name: Deduplicate Changelog
+        run: |
+          ./scripts/deduplicate-changelog.sh
           cat CHANGELOG.md
 
       - name: Issue Release Assets
