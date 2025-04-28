@@ -1,0 +1,45 @@
+name: Check Proto Files Lint, Format and Generation
+
+on:
+  push:
+    branches: [ main, develop, testnet ]
+  pull_request:
+
+jobs:
+  check-proto-lint-format-generation:
+    name: Check Proto Generation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: bufbuild/buf-setup-action@v1
+        with:
+          version: "1.46.0"
+          buf_api_token: ${{ secrets.BUF_TOKEN }}
+
+      - uses: bufbuild/buf-lint-action@v1
+
+      - name: Format proto files
+        run: buf format -d --exit-code
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.24.*'
+          cache: true
+
+      - name: Install ignite
+        run: curl https://get.ignite.com/cli! | bash
+
+      - name: Check ignite
+        run: which ignite
+
+      - name: Run proto generation
+        env:
+          DO_NOT_TRACK: true
+        run: ignite generate proto-go --yes
+        
+      - name: Check for changes
+        uses: ./.github/actions/check-changes

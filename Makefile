@@ -28,6 +28,11 @@ BUILD_FLAGS := -ldflags '$(ldflags)'
 toolchain:
 	go install go.uber.org/mock/mockgen@v0.5.0
 
+.PHONY: generate-mocks
+generate-mocks: toolchain
+	@echo "Generating mocks..."
+	@go generate ./...
+
 ##############
 ###  Test  ###
 ##############

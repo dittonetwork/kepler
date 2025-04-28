@@ -1,0 +1,25 @@
+name: Check Generated Mock Files
+
+on:
+  push:
+    branches: [ main, develop, testnet ]
+  pull_request:
+
+jobs:
+  check-mock-files:
+    name: Check Mock Files
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.x'
+          cache: true
+
+      - name: Generate mocks
+        run: make generate-mocks
+
+      - name: Check for changes
+        uses: ./.github/actions/check-changes

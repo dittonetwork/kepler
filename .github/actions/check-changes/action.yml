@@ -1,0 +1,22 @@
+name: 'Check Generated Files'
+description: 'Checks if there are any uncommitted changes in generated files'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Check for changes
+      shell: bash
+      run: |
+        echo "Checking for changes in generated files..."
+        if [ -n "$(git status --porcelain)" ]; then
+          echo "Following files are changed..."
+          git status
+
+          echo "Changes:"
+          git diff
+
+          exit 1
+        else
+          echo "No changes detected in generated files."
+          exit 0
+        fi 
