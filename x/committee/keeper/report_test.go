@@ -52,6 +52,7 @@ func (suite *ReportTestSuite) SetupTest() {
 	suite.keeper = keeper.NewKeeper(
 		"cosmos1kkyr80lkuku58h7e2v84egemscmem304mdra4f",
 		nil, // executor keeper
+		nil, // bank keeper,
 		nil, // restaking keeper
 		suite.repository,
 		suite.ctx.Logger(),
