@@ -18,6 +18,7 @@ options:
         - revert
         - style
         - test
+    dedup: true
   commit_groups:
     title_maps:
       build: Build System
