@@ -30,15 +30,11 @@ jobs:
         id: vars
         uses: ignite/cli/actions/release/vars@main
 
-      - name: Install git-chglog
-        # if: ${{ steps.vars.outputs.should_release == 'true' }}
-        run: |
-          go install github.com/git-chglog/git-chglog/cmd/git-chglog@latest
-
       - name: Generate Changelog
         # if: ${{ steps.vars.outputs.should_release == 'true' }}
         run: |
-          git-chglog -o CHANGELOG.md
+          docker pull quay.io/git-chglog/git-chglog:latest
+          docker run -v "$PWD":/workdir quay.io/git-chglog/git-chglog -o CHANGELOG.md
           cat CHANGELOG.md
 
       - name: Issue Release Assets
