@@ -79,7 +79,7 @@ var (
 	// module account permissions
 	moduleAccPerms = []*authmodulev1.ModuleAccountPermission{
 		{Account: authtypes.FeeCollectorName},
-		{Account: committeemoduletypes.ModuleName},
+		{Account: committeemoduletypes.ModuleName, Permissions: []string{authtypes.Minter}},
 	}
 
 	// blocked account addresses

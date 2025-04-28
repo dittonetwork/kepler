@@ -34,6 +34,7 @@ type TestSuite struct {
 	authority       string
 	valAddressCodec addresscodec.Codec
 
+	bankKeeper      *committeetestutil.MockBankKeeper
 	accountKeeper   *committeetestutil.MockAccountKeeper
 	restakingKeeper *committeetestutil.MockRestakingKeeper
 	repo            *committeetestutil.MockRepository
@@ -48,13 +49,16 @@ func TestNewKeeper(t *testing.T) {
 
 func (s *TestSuite) SetupTest() {
 	key := storetypes.NewKVStoreKey(types.StoreKey)
-	testCtx := testutil.DefaultContextWithDB(s.T(), key, storetypes.NewTransientStoreKey("transient_test"))
+	testCtx := testutil.DefaultContextWithDB(
+		s.T(), key, storetypes.NewTransientStoreKey("transient_test"),
+	)
 	ctx := testCtx.Ctx.WithBlockHeader(cmtproto.Header{Time: cmttime.Now()})
 	encCfg := moduletestutil.MakeTestEncodingConfig(committeemodule.AppModuleBasic{})
 
 	// gomock initializations
 	ctrl := gomock.NewController(s.T())
 	accountKeeper := committeetestutil.NewMockAccountKeeper(ctrl)
+	bankKeeper := committeetestutil.NewMockBankKeeper(ctrl)
 	restakingKeeper := committeetestutil.NewMockRestakingKeeper(ctrl)
 
 	pubKey := sr25519.GenPrivKey().PubKey()
@@ -66,12 +70,15 @@ func (s *TestSuite) SetupTest() {
 	s.bob = sample.GetAccount("bob")
 
 	// Generate Bech32 encoded address
-	s.authority = sdk.MustBech32ifyAddressBytes(sdk.GetConfig().GetBech32AccountAddrPrefix(), pubKey.Address())
+	s.authority = sdk.MustBech32ifyAddressBytes(
+		sdk.GetConfig().GetBech32AccountAddrPrefix(), pubKey.Address(),
+	)
 	s.valAddressCodec = address.NewBech32Codec("cosmosvaloper")
 
 	committeeKeeper := keeper.NewKeeper(
 		s.authority,
 		accountKeeper,
+		bankKeeper,
 		restakingKeeper,
 		repo,
 		ctx.Logger(),
@@ -86,6 +93,7 @@ func (s *TestSuite) SetupTest() {
 	types.RegisterQueryServer(queryHelper, keeper.NewQueryServerImpl(committeeKeeper))
 
 	s.accountKeeper = accountKeeper
+	s.bankKeeper = bankKeeper
 	s.restakingKeeper = restakingKeeper
 	s.keeper = committeeKeeper
 	s.queryClient = committee.NewQueryClient(queryHelper)
@@ -97,4 +105,11 @@ func (s *TestSuite) SetupTest() {
 		ctx.Logger().With("module", fmt.Sprintf("x/%s", types.ModuleName)),
 		s.keeper.Logger(),
 	)
+
+	// workaround
+	// @TODO link or create issue
+	s.bankKeeper.EXPECT().MintCoins(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil).AnyTimes()
+	s.bankKeeper.EXPECT().SendCoinsFromModuleToAccount(
+		gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(),
+	).Return(nil).AnyTimes()
 }
