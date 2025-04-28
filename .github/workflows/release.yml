@@ -30,6 +30,18 @@ jobs:
         id: vars
         uses: ignite/cli/actions/release/vars@main
 
+      - name: Generate Changelog
+        if: ${{ steps.vars.outputs.should_release == 'true' }}
+        run: |
+          docker pull quay.io/git-chglog/git-chglog:latest
+          docker run -v "$PWD":/workdir quay.io/git-chglog/git-chglog -o CHANGELOG.md
+
+      - name: Deduplicate Changelog
+        if: ${{ steps.vars.outputs.should_release == 'true' }}
+        run: |
+          awk '!seen[$0]++' CHANGELOG.md > CHANGELOG.tmp && mv CHANGELOG.tmp CHANGELOG.md
+          cat CHANGELOG.md
+
       - name: Issue Release Assets
         uses: ignite/cli/actions/cli@main
         if: ${{ steps.vars.outputs.should_release == 'true' }}
@@ -61,6 +73,7 @@ jobs:
         with:
           tag_name: ${{ steps.vars.outputs.tag_name }}
           files: release/*
+          body_path: CHANGELOG.md
           prerelease: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
