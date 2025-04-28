@@ -11,12 +11,9 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/cometbft/cometbft/rpc/client/http"
-	cryptomultisig "github.com/cosmos/cosmos-sdk/crypto/types/multisig"
-	"github.com/cosmos/cosmos-sdk/x/auth/signing"
-	restakingtypes "github.com/dittonetwork/kepler/x/restaking/types"
-
+	txtypes "cosmossdk.io/api/cosmos/tx/v1beta1"
 	sdkmath "cosmossdk.io/math"
+	"github.com/cometbft/cometbft/rpc/client/http"
 	"github.com/cometbft/cometbft/types"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/tx"
@@ -27,14 +24,23 @@ import (
 	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/multisig"
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
+	cryptomultisig "github.com/cosmos/cosmos-sdk/crypto/types/multisig"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdktypes "github.com/cosmos/cosmos-sdk/types"
 	signingtypes "github.com/cosmos/cosmos-sdk/types/tx/signing"
+	"github.com/cosmos/cosmos-sdk/x/auth/signing"
 	authtx "github.com/cosmos/cosmos-sdk/x/auth/tx"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	"github.com/dittonetwork/kepler/api/kepler/restaking"
+	"github.com/dittonetwork/kepler/scripts/validatorset-update/contracts/network"
 	committeetypes "github.com/dittonetwork/kepler/x/committee/types"
+	epochstypes "github.com/dittonetwork/kepler/x/epochs/types"
+	restakingtypes "github.com/dittonetwork/kepler/x/restaking/types"
+	"github.com/ethereum/go-ethereum/accounts/abi/bind"
+	"github.com/ethereum/go-ethereum/common"
+	ethtypes "github.com/ethereum/go-ethereum/core/types"
+	"github.com/ethereum/go-ethereum/ethclient"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/protobuf/types/known/anypb"
@@ -42,7 +48,7 @@ import (
 )
 
 const (
-	epochNum   = 1
+	epoch      = "minute"
 	defaultFee = 30
 	gasLimit   = 100_000
 )
@@ -75,21 +81,17 @@ func main() {
 		log.Fatal("create client: ", err)
 	}
 
-	clientConn, err := grpc.NewClient(
-		"localhost:9090", grpc.WithTransportCredentials(insecure.NewCredentials()),
-	)
+	clientConn, err := grpc.NewClient("localhost:9090", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	// Register interfaces
-	banktypes.RegisterInterfaces(interfaceRegistry)
-	authtypes.RegisterInterfaces(interfaceRegistry)
-	cryptocodec.RegisterInterfaces(interfaceRegistry)
-	committeetypes.RegisterInterfaces(interfaceRegistry)
-	restakingtypes.RegisterInterfaces(interfaceRegistry)
-	sdktypes.RegisterInterfaces(interfaceRegistry)
+	ethNodeClient, err := ethclient.Dial(os.Getenv("ETH_NODE_URL"))
+	if err != nil {
+		log.Fatal(err)
+	}
 
+	registerInterfaces()
 	// Configure the SDK
 	config.SetBech32PrefixForAccount("ditto", "dittopub")
 
@@ -102,9 +104,14 @@ func main() {
 	participants := []string{"alice"}
 
 	// Create a new report message
-	proposal, clientCtx, acc, err := CreateProposal(clientConn, cometRPC, ckr, participants)
+	proposal, clientCtx, acc, needUpdate, err := CreateProposal(
+		clientConn, cometRPC, ckr, participants, ethNodeClient, restaking.NewQueryClient(clientConn))
 	if err != nil {
 		log.Fatal(err)
+	}
+	if !needUpdate {
+		log.Println("no need to update")
+		return
 	}
 
 	signatures := make([]signingtypes.SignatureV2, 0, len(participants))
@@ -151,27 +158,53 @@ func main() {
 	}
 
 	log.Println(
-		"Transaction sent successfully. ",
+		"Transaction sent. ",
 		txRes.TxHash,
 		txRes.Info,
 		txRes.Code,
 	)
+
+	time.Sleep(time.Second)
+	txCli := txtypes.NewServiceClient(clientConn)
+	getTx, err := txCli.GetTx(context.Background(), &txtypes.GetTxRequest{Hash: txRes.TxHash})
+	if err != nil {
+		log.Panic("get tx: ", err)
+	}
+	if getTx.TxResponse.Code != 0 {
+		log.Panicf("error log: %s", getTx.TxResponse.RawLog)
+	}
+}
+
+func registerInterfaces() {
+	// Register interfaces
+	banktypes.RegisterInterfaces(interfaceRegistry)
+	authtypes.RegisterInterfaces(interfaceRegistry)
+	cryptocodec.RegisterInterfaces(interfaceRegistry)
+	committeetypes.RegisterInterfaces(interfaceRegistry)
+	restakingtypes.RegisterInterfaces(interfaceRegistry)
+	sdktypes.RegisterInterfaces(interfaceRegistry)
 }
 
 func CreateProposal(
-	clientConn *grpc.ClientConn, cometRPC *http.HTTP, ckr keyring.Keyring, participants []string,
-) (*Proposal, *client.Context, *multisig.LegacyAminoPubKey, error) {
+	clientConn *grpc.ClientConn, cometRPC *http.HTTP,
+	ckr keyring.Keyring, participants []string,
+	ethCli *ethclient.Client, restakingQuery restaking.QueryClient,
+) (*Proposal, *client.Context, *multisig.LegacyAminoPubKey, bool, error) {
+	if !needUpdateValSet(restakingQuery) {
+		return nil, nil, nil, false, nil
+	}
+
 	participantsPks := make([]cryptotypes.PubKey, 0, len(participants))
 
 	for _, name := range participants {
 		record, err := ckr.Key(name)
 		if err != nil {
-			return nil, nil, nil, fmt.Errorf("failed to get key: %w", err)
+			return nil, nil, nil, false, fmt.Errorf("failed to get key: %w", err)
 		}
 
 		pk, err := record.GetPubKey()
 		if err != nil {
-			return nil, nil, nil, fmt.Errorf("failed to get key: %w", err)
+			return nil, nil, nil, false, fmt.Errorf("failed to get key: %w", err)
 		}
 
 		participantsPks = append(participantsPks, pk)
@@ -208,7 +241,8 @@ func CreateProposal(
 		WithAccountNumber(accnum)
 
 	// Create a new report message
-	validatorSetUpdateMsg := BuildValidatorSetUpdateMsg(epochNum)
+	epochNum := GetCurrentEpochNum(clientConn)
+	validatorSetUpdateMsg := BuildValidatorSetUpdateMsg(epochNum, ethCli)
 	reportMsg := BuildReportMsg(multisigAcc.Address(), epochNum, []sdk.Msg{validatorSetUpdateMsg})
 
 	if m, ok := reportMsg.(sdk.HasValidateBasic); ok {
@@ -223,7 +257,7 @@ func CreateProposal(
 	txBuilder.SetGasLimit(gasLimit)
 
 	if err = txBuilder.SetMsgs(reportMsg); err != nil {
-		return nil, nil, nil, fmt.Errorf("set messages: %w", err)
+		return nil, nil, nil, false, fmt.Errorf("set messages: %w", err)
 	}
 
 	proposal := &Proposal{
@@ -236,7 +270,7 @@ func CreateProposal(
 		"generated proposal with accnum: %d and sequence: %d", txf.AccountNumber(), txf.Sequence(),
 	)
 
-	return proposal, &clientCtx, multisigAcc, nil
+	return proposal, &clientCtx, multisigAcc, true, nil
 }
 
 func AggregateSignatures(
@@ -346,58 +380,20 @@ func BuildReportMsg(addr types.Address, epochNum int64, messages []sdk.Msg) sdk.
 }
 
 // BuildValidatorSetUpdateMsg creates a MsgUpdateValidatorsSet message.
-func BuildValidatorSetUpdateMsg(epochNum int64) sdk.Msg {
-	aliceValPk := &ed25519.PubKey{
-		Key: []byte("KJPZk9bTZGdgsJ0xDIpcg9RbIRHuPwjlh3oiZ2C+5Cs="),
-	}
-
-	aliceValPkAny, err := codectypes.NewAnyWithValue(aliceValPk)
-	if err != nil {
-		panic(err)
-	}
-
-	bobValPk := &ed25519.PubKey{
-		Key: []byte("dcHikhOeHpXzLzX+IFlz6HuNs5ILr3v/OG5NfGQuvKE="),
-	}
-
-	bobValPkAny, err := codectypes.NewAnyWithValue(bobValPk)
+func BuildValidatorSetUpdateMsg(epochNum int64, ethCli *ethclient.Client) sdk.Msg {
+	operators, blockHeader, err := readValSetFromEthAndConvert(ethCli)
 	if err != nil {
 		panic(err)
 	}
 
 	return &restaking.MsgUpdateValidatorsSet{
 		Authority: authtypes.NewModuleAddress(committeetypes.ModuleName).String(),
-		Operators: []*restaking.Operator{
-			// Bob
-			{
-				Address: "0xf7e1dCd1d199f7C42BD12502b68f58301b5b4d98",
-				ConsensusPubkey: &anypb.Any{
-					TypeUrl: "/cosmos.crypto.ed25519.PubKey",
-					Value:   aliceValPkAny.Value,
-				},
-				IsEmergency: true,
-				Status:      restaking.BondStatus_BOND_STATUS_BONDED,
-				VotingPower: 1000000, //nolint: mnd // no matter
-				Protocol:    restaking.Protocol_PROTOCOL_DITTO,
-			},
-			// Alice
-			{
-				Address: "0x910cB6A0937ECeBA1EDF4F505F1b86D3234a4Fe9",
-				ConsensusPubkey: &anypb.Any{
-					TypeUrl: "/cosmos.crypto.ed25519.PubKey",
-					Value:   bobValPkAny.Value,
-				},
-				IsEmergency: true,
-				Status:      restaking.BondStatus_BOND_STATUS_BONDED,
-				VotingPower: 1000000, //nolint: mnd // no matter
-				Protocol:    restaking.Protocol_PROTOCOL_DITTO,
-			},
-		},
+		Operators: operators,
 		Info: &restaking.UpdateInfo{
 			EpochNum:    epochNum,
-			Timestamp:   timestamppb.New(time.Now()),
-			BlockHeight: 14188, //nolint: mnd // no matter
-			BlockHash:   "0x1234567890abcdef",
+			Timestamp:   timestamppb.New(time.Unix(int64(blockHeader.Time), 0)), //nolint:gosec // impossible
+			BlockHeight: blockHeader.Number.Int64(),
+			BlockHash:   blockHeader.Hash().String(),
 		},
 	}
 }
@@ -420,4 +416,88 @@ func prettyPrintJSON(data []byte) {
 		return
 	}
 	log.Println(pretty.String())
+}
+
+var keyToProtocol = map[uint8]restaking.Protocol{
+	0: restaking.Protocol_PROTOCOL_DITTO,
+	1: restaking.Protocol_PROTOCOL_SYMBIOTIC,
+	2: restaking.Protocol_PROTOCOL_EIGENLAYER,
+}
+
+var keyToStatus = map[uint8]restaking.BondStatus{
+	0: restaking.BondStatus_BOND_STATUS_BONDED,
+	1: restaking.BondStatus_BOND_STATUS_UNBONDING,
+}
+
+func needUpdateValSet(queryClient restaking.QueryClient) bool {
+	needUpdate, err := queryClient.NeedValidatorsUpdate(context.Background(),
+		&restaking.QueryNeedValidatorsUpdateRequest{})
+	if err != nil {
+		panic(err)
+	}
+
+	return needUpdate.GetResult()
+}
+
+var networkProxyAddr = common.HexToAddress("0xCD514FFe2a82cE520Cc72CFf41c181c06B03D3Ce")
+
+func readValSetFromEthAndConvert(ethCli *ethclient.Client) ([]*restaking.Operator, *ethtypes.Header, error) {
+	networkContract, err := network.NewINetwork(networkProxyAddr, ethCli)
+	if err != nil {
+		panic(err)
+	}
+
+	blockHeader, err := ethCli.HeaderByNumber(context.Background(), nil)
+	if err != nil {
+		panic(err)
+	}
+
+	validatorSet, err := networkContract.GetValidatorSet(&bind.CallOpts{
+		BlockNumber: blockHeader.Number,
+		BlockHash:   blockHeader.Hash(),
+	})
+	if err != nil {
+		return nil, nil, fmt.Errorf("failed to get validator set: %w", err)
+	}
+
+	operators := make([]*restaking.Operator, 0, len(validatorSet))
+	for _, validator := range validatorSet {
+		protocol, ok := keyToProtocol[validator.Protocol]
+		if !ok {
+			log.Panicf("unknown validator protocol: %v", validator.Protocol)
+		}
+		status, ok := keyToStatus[validator.Status]
+		if !ok {
+			log.Panicf("unknown validator status: %v", validator.Status)
+		}
+		var pubKey ed25519.PubKey
+		pubKey.Key = validator.PublicKey[:]
+		pubKeyAny, codecErr := codectypes.NewAnyWithValue(&pubKey)
+		if codecErr != nil {
+			panic(codecErr)
+		}
+
+		operators = append(operators, &restaking.Operator{
+			Address: validator.Operator.String(),
+			ConsensusPubkey: &anypb.Any{
+				TypeUrl: "/cosmos.crypto.ed25519.PubKey",
+				Value:   pubKeyAny.Value,
+			},
+			IsEmergency: validator.IsEmergency,
+			Status:      status,
+			VotingPower: validator.VotingPower.Int64(),
+			Protocol:    protocol,
+		})
+	}
+
+	return operators, blockHeader, nil
+}
+
+func GetCurrentEpochNum(conn *grpc.ClientConn) int64 {
+	cli := epochstypes.NewQueryClient(conn)
+	currentEpoch, err := cli.CurrentEpoch(context.Background(), &epochstypes.QueryCurrentEpochRequest{Identifier: epoch})
+	if err != nil {
+		panic(err)
+	}
+	return currentEpoch.GetCurrentEpoch()
 }
