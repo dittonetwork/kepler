@@ -39,7 +39,7 @@ jobs:
       - name: Deduplicate Changelog
         if: ${{ steps.vars.outputs.should_release == 'true' }}
         run: |
-          ./scripts/deduplicate-changelog.sh
+          awk '!seen[$0]++' CHANGELOG.md > CHANGELOG.tmp && mv CHANGELOG.tmp CHANGELOG.md
           cat CHANGELOG.md
 
       - name: Issue Release Assets
