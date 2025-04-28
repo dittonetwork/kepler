@@ -13,9 +13,10 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 			Service: modulev1.Query_ServiceDesc.ServiceName,
 			RpcCommandOptions: []*autocliv1.RpcCommandOptions{
 				{
-					RpcMethod: "Committee",
-					Use:       "committee",
-					Short:     "Get committee by epoch",
+					RpcMethod:      "Committee",
+					Use:            "committee",
+					Short:          "Get committee by epoch",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "epoch"}},
 				},
 				{
 					RpcMethod: "Params",
