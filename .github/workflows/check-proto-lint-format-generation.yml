@@ -37,6 +37,8 @@ jobs:
         run: which ignite
 
       - name: Run proto generation
+        env:
+          DO_NOT_TRACK: true
         run: ignite generate proto-go --yes
         
       - name: Check for changes
