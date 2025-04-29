@@ -18,11 +18,11 @@ cd ~/.kepler/config
 ```yml
 [telemetry]
 enabled = true
-prometheus-retention-time = 180  
+prometheus-retention-time = 180
 ```
 3. Edit config.toml
 ```yml
-prometheus = true 
+prometheus = true
 ```
 
 ### 2. Start Monitoring Stack
@@ -38,3 +38,4 @@ docker-compose up -d
 ```bash
 docker-compose ps
 ```
+4. Login to grafana with `admin/admin` and set your own password
