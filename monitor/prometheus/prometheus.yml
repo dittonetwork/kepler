@@ -4,7 +4,7 @@ global:
 scrape_configs:
   - job_name: "kepler"
     static_configs:
-      - targets: ["host.docker.internal:1317"]
+      - targets: ["host.docker.internal:26660"]
     params:
       format: ["prometheus"]
 

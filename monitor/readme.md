@@ -23,6 +23,12 @@ prometheus-retention-time = 180
 3. Edit config.toml
 ```yml
 prometheus = true
+prometheus_listen_addr = "0.0.0.0:26660"
+```
+
+4. Add to `/etc/hosts`
+```
+172.17.0.1 host.docker.internal
 ```
 
 ### 2. Start Monitoring Stack
@@ -32,10 +38,10 @@ cd /path/to/kepler-repo/monitor
 ```
 2. Start Docker containers:
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 3. Verify services are running:
 ```bash
-docker-compose ps
+docker compose ps
 ```
 4. Login to grafana with `admin/admin` and set your own password
