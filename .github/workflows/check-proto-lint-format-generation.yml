@@ -42,4 +42,4 @@ jobs:
         run: ignite generate proto-go --yes
         
       - name: Check for changes
-        uses: ./.github/actions/check-changes
+        run: git diff --exit-code

@@ -22,4 +22,4 @@ jobs:
         run: make generate-mocks
 
       - name: Check for changes
-        uses: ./.github/actions/check-changes
+        run: git diff --exit-code
