@@ -54,7 +54,7 @@ func (v Validator) UnpackInterfaces(unpacker codectypes.AnyUnpacker) error {
 // ConvertToOperator converts a Validator to an Operator.
 func (v Validator) ConvertToOperator() *Operator {
 	return &Operator{
-		Address:         v.OperatorAddress,
+		Address:         v.EvmOperatorAddress,
 		ConsensusPubkey: v.ConsensusPubkey,
 		IsEmergency:     v.IsEmergency,
 		Status:          v.Status,
