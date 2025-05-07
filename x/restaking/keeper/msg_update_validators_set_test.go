@@ -44,7 +44,11 @@ func (s *TestSuite) TestMsgUpdateValidatorsSet() {
 				// Prepare for makeDeltaUpdates
 				s.repository.EXPECT().
 					GetAllValidators(gomock.Any()).
-					Return([]types.Validator{}, nil)
+					Return([]types.Validator{
+						{
+							EvmOperatorAddress: "existed",
+						},
+					}, nil)
 
 				// Prepare for processUpdatedOperators, processCreatedOperators, processDeletedOperators
 				s.repository.EXPECT().
@@ -79,6 +83,9 @@ func (s *TestSuite) TestMsgUpdateValidatorsSet() {
 						Address:         validOperatorAddress,
 						Status:          types.Bonded,
 						ConsensusPubkey: validPubkey,
+					},
+					{
+						Address: "existed",
 					},
 				},
 				Info: types.UpdateInfo{
