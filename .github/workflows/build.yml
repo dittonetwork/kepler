@@ -93,17 +93,18 @@ jobs:
         run: |
           docker build --build-arg TARGETARCH=${{ matrix.arch }} -f ./Dockerfile --tag $IMAGE_NAME .
           docker push $IMAGE_NAME
-
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Push to GitHub Container Registry
+      - name: Tag and Push to GitHub Container Registry
         env:
-          IMAGE_NAME: ghcr.io/${{ github.repository }}:${{ env.IMAGE_TAG }}
+          IMAGE_TAG: ${{ env.IMAGE_TAG }}
+          ECR_IMAGE: ${{ vars.ECR_REGISTRY }}:${{ env.IMAGE_TAG }}
+          GHCR_IMAGE: ghcr.io/${{ github.repository }}:${{ env.IMAGE_TAG }}
         run: |
-          docker tag $IMAGE_NAME ghcr.io/${{ github.repository }}:${{ env.IMAGE_TAG }}
-          docker push ghcr.io/${{ github.repository }}:${{ env.IMAGE_TAG }}
+          echo "Tagging $ECR_IMAGE -> $GHCR_IMAGE"
+          docker tag $ECR_IMAGE $GHCR_IMAGE
+          docker push $GHCR_IMAGE
