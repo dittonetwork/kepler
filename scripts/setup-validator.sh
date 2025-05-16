@@ -36,7 +36,8 @@ fi
 # Check if kepler is already initialized
 if [ -d "$USER_HOME/.kepler" ]; then
     print_warning "Kepler is already initialized in $USER_HOME/.kepler"
-    read -p "Do you want to reinitialize? This will remove the existing configuration. (y/N) " -n 1 -r
+    echo -n "Do you want to reinitialize? This will remove the existing configuration. (y/N) " > /dev/tty
+    read -n 1 -r REPLY < /dev/tty
     echo
     if [[ ! $REPLY =~ ^[Yy]$ ]]; then
         print_status "Setup cancelled"
