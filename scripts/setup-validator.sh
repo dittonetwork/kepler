@@ -86,10 +86,7 @@ sudo -u "$SUDO_USER" curl -s https://static.dittonetwork.io/genesis.json > "$USE
 # Generate validator key
 print_status "Setting up validator key..."
 echo -n "Enter your 64-byte hex private key (128 hex characters) (input will be hidden): " > /dev/tty
-stty -echo < /dev/tty
-read HEX_PRIV < /dev/tty
-stty echo < /dev/tty
-echo > /dev/tty
+IFS= read -rs HEX_PRIV < /dev/tty
 echo # Add a newline after the hidden input
 
 if [ -z "$HEX_PRIV" ]; then
