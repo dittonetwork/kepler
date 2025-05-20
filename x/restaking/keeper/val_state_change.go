@@ -133,7 +133,7 @@ func (k Keeper) handleDeletedValidators(
 	for _, validator := range validators {
 		tmProtoPk, err := validator.GetConsensusPubkey(k.cdc)
 		if err != nil {
-			k.Logger().With("error", err, "validator", validator.OperatorAddress).
+			k.Logger().With("error", err, "validator", validator.EvmOperatorAddress).
 				Error("failed to get consensus public key when deleting validator")
 			continue
 		}
@@ -146,9 +146,9 @@ func (k Keeper) handleDeletedValidators(
 		updates = append(updates, update)
 
 		// Remove validator from state
-		err = k.repository.RemoveValidator(ctx, validator.OperatorAddress)
+		err = k.repository.RemoveValidator(ctx, validator.EvmOperatorAddress)
 		if err != nil {
-			k.Logger().With("validator", validator.OperatorAddress, "err", err).
+			k.Logger().With("validator", validator.EvmOperatorAddress, "err", err).
 				Error("failed to remove validator")
 			return nil, err
 		}
